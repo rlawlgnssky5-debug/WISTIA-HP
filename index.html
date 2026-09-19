@@ -3,6 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <script>
+    if (new URLSearchParams(location.search).get('preview') === 'phone') {
+      document.documentElement.classList.add('phone-preview-shell')
+      addEventListener('DOMContentLoaded', () => {
+        const frameUrl = `${location.pathname}?v=133&frame=1${location.hash || '#/'}`
+        document.body.innerHTML = `<iframe class="phone-preview-frame" src="${frameUrl}" title="휴대폰 디자인 미리보기"></iframe>`
+      })
+    }
+  </script>
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="위스티아 WISTIA — 웨딩 축가 녹음과 AR, 식전 영상, 축가 영상, 프로포즈 영상까지 내 목소리로 남기는 특별한 순간">
   <meta property="og:type" content="website">
@@ -15,8 +24,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="css/design.css?v=112">
-  <script src="js/app.js?v=112" defer></script>
+  <link rel="stylesheet" href="css/design.css?v=133">
+  <link rel="stylesheet" href="css/hero-editor.css?v=115">
+  <link rel="stylesheet" href="css/process-editor.css?v=116">
+  <link rel="stylesheet" href="css/home-finder.css?v=128">
+  <script src="js/hero-editor.js?v=115" defer></script>
+  <script src="js/process-editor.js?v=116" defer></script>
+  <script src="js/app.js?v=133" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#app">본문으로 바로가기</a>

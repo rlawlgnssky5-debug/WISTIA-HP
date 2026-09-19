@@ -1,0 +1,621 @@
+--- PAGE 1 ---
+W I S T I A · V O I C E & F I L M
+리디자인 핸드오프 문서 · 은비 → Codex / GPT
+SITE INVENTORY + CAPTURES
+WISTIA
+사이트 현황 핸드오프
+현행 사이트의 라우트 · 카피 · 스크린샷을 한 권으로 묶은
+리디자인용 현황 캡처 + 인벤토리입니다.
+브랜드 한줄 — 노래와 영상으로 남기는, 우리의 순간
+포지션 — 웨딩 보이스 & 필름 스튜디오 (축가 녹음 · AR · 식전/축가/프로포즈 영상)
+라이브 URL — https://wistiahp.vercel.app/#/
+날짜 — 2026-09-12
+주의 — 미국 동영상 플랫폼 Wistia와 무관. 워드마크 서브카피(VOICE & FILM)를 유지할 것.
+소스 오브 트루스: INVENTORY.md ← app.js 해시 라우팅 SPA. 이 문서의 상품명·가격·카피는 현행 코드 기준이며 창작하지 말 것.
+캡처 누락: #/event/proposal/making 미캡처 (본문 말미 명시).
+
+--- PAGE 2 ---
+HOW TO USE
+Codex / GPT에 넣는 방법
+이 PDF를 대화에 첨부한 뒤, 아래 프롬프트를 그대로 넣으면 됩니다. 목표는 구조 / 멘트 / 비주얼 방향 제안입니다. 구현
+코드나 새 가격을 만들지 말고, 현행을 읽고 리디자인 방향을 제안하게 하세요.
+프롬프트 예시 (복사해서 사용)
+이 PDF는 웨딩 보이스&필름 스튜디오 WISTIA(위스티아. 미국 동영상 플랫폼 Wistia와 무관)의 현행 사이트 현황 핸드오프입니다.
+라이브 URL은 https://wistiahp.vercel.app/#/ 입니다.
+PDF의 사이트맵·유저플로우·상품 카탈로그·페이지별 스크린샷/카피/CTA를 기준으로, 리디자인을 위한 다음 세 가지를 제안해 주세
+요.
+1) 구조 — 유지할 분기, 합치거나 빠져 있는 진입점, 헤더 MENU가 비어 있는 상태를 어떻게 쓸지
+2) 멘트 — 톤은 부드럽고 안심시키는 웨딩 보이스. 「떨림/실수 걱정 → 미리 준비 → 본식에서는 안정적으로」. 상품명·가격·포맷명
+(뮤비 클립 / 녹음 메이킹)은 PDF 밖 창작 금지
+3) 비주얼 방향 — 현행 미니멀 화이트, 큰 타이포, 필(pill) 상황 선택, 하단 고정 가격바, 노란 카카오 플로팅을 기준으로 한 개선안
+제약: 카카오톡 채널 채팅이 예약·견적·일정의 단일 전환점. wedding만 포맷가(live 300,000 / making 250,000)가 다르고 나머
+지는 정상가. 홈에는 푸터가 없음. #/song은 홈에서 링크되지 않음. detail의 {format} 세그먼트는 UI에 반영되지 않음.
+읽는 순서 권장 — 표지 · 사이트맵/플로우 · 카탈로그를 먼저 보고, 그다음 페이지별 섹션(홈 → 피커 → AR → 상세 → choose 별칭
+→ 이벤트)에서 스크린샷과 카피를 대조하세요. 마지막 장의 현황 메모·갭을 리디자인 제약으로 쓰세요.
+문서 구성
+장 내용
+표지 / 사용법 목적, 브랜드, URL, Codex 프롬프트
+사이트맵 + 유저플로우 전 라우트, 상황 분기, 전환 경로
+상품 카탈로그 6개 키 · 가격 · 한줄 · 사용 시점
+페이지별 섹션 URL, 역할, 스크린샷, 섹션, 카피/CTA, 클릭 목적지, 폼
+글로벌 크롬 헤더 / 푸터 / 플로팅 카카오 / 모달
+현황 메모 + 갭 비주얼·UX 관찰, 리디자인 참고점, 미캡처 명시
+
+--- PAGE 3 ---
+INFORMATION ARCHITECTURE
+사이트맵 + 유저플로우
+Vanilla JS 해시 라우팅 SPA. route() 가 location.hash 를 파싱해 #app 에 렌더. MENU = [] 이라 헤더 내비는 없음.
+해시 라우트 렌더러 목적
+#/ renderHome 상황 선택 홈 「저는 지금,」
+#/film renderPicker("film") 축가 영상 피커 (듀엣/솔로 필름)
+#/song renderPicker("song") 축가 녹음 피커 (솔로/2인) — 홈 직접 링크 없음
+#/ar/self renderArPurpose("self") 본인 결혼식 축가 AR
+#/ar/friend renderArPurpose("friend") 지인 결혼식 축가 AR
+#/detail/{product} renderDetail 상품 상세. wedding, duet-film, solo-film, proposal, solo, duo
+#/detail/{product}/{format} renderDetail format(live/making) 가능 — 상세 UI는 format 미반영
+#/choose/{filmProduct} renderDetail 필름 상세 별칭. 포맷 선택 UI 없음
+#/event/{product} renderEvent 구성·가격·옵션·이벤트·상담 폼
+#/event/{product}/{format} renderEvent 필름 live/making 초기값. solo+friend = 지인 옵션
+#/event/solo/friend renderEvent("solo","friend") AR friend 플로우 가격바 목적지
+#/section/{id} home + scroll MENU 비어 있어 사실상 미사용
+(미매칭) 인라인 404 찾으시는 페이지가 없습니다 → 홈
+상황 분기 플로우
+홈(#/)
+├─ 식전 영상 → detail/wedding → event/wedding[/live|making] → 카카오 상담
+├─ 축가 영상 → film picker → detail/duet-film | solo-film → event/… → 카카오
+├─ 프로포즈 → detail/proposal → event/proposal → 카카오
+├─ 본인 축가 AR → ar/self → (비율 체험)
+│ → detail/solo | duo 또는 priceBar → event/solo → 카카오
+├─ 지인 축가 AR → ar/friend → … → event/solo/friend → 카카오
+└─ 신랑신부 함께 → detail/duo → event/duo → 카카오
+병렬: 헤더「예약 상담」 / 푸터 카카오 / 플로팅 카카오 → 즉시 카카오 (폼 없이)
+
+--- PAGE 4 ---
+CONVERSION
+전환 경로 · 가격 공식 · 공유 블록
+가격 확인 경로 예상 금액 공식
+Detail · AR 하단 고정바 이벤트 적용 가격 확인하기 → 정상가(±포맷가) + 옵션 − min(이벤트합, 60,000) =
+Event에서 옵션·이벤트 선택 → 이 구성으로 카카오톡 예상 금액
+상담하기 (문의 문구 클립보드 복사 + 카카오 새 창).
+최종 적용은 상담 확인 — fine print 명시. 임의 가격 창작 금지.
+이벤트 할인 (상한 60,000원)
+key 라벨 할인 조건
+blog 블로그 리뷰 −30,000 일 방문자 100명 이상 · 가이드에 따라 작성
+reaction 현장 리액션 영상 −10,000 본식 현장 촬영 파일 제공
+cafe 웨딩 카페 후기 −10,000 300자 이상 · 관련 사진 4장 이상
+instagram 인스타그램 후기 −10,000 후기 50자+ · 사진 4장+ · BGM · 공식 계정 태그 · 공개 계정
+여러 페이지가 공유하는 UI 블록
+AR 비율 섹션 후기 · FAQ · 프로세스
+실제 AR을 들어보고 / 내 목소리 비율을 골라보세요 후기: 「실제 고객 후기 / 직접 보내주신 카카오톡 후기
+원문입니다」 이미지 11장 캐러셀.
+버튼: 30% · 50% · 70% 가장 인기 · 100% 완전 안
+전 범용 PROCESS: 상담과 예약 → 곡과 구성 결정 → 스
+튜디오 녹음 → 음원·영상 제작 → 완성본 확인 → 최종
+70% = 현장 라이브 받침 / 100% = 립싱크용 · 100% 시 현장 마이
+크 OFF 요청. 샘플곡 「그중에 그대를 만나」 본 전달
+GENERAL_FAQ 상수는 홈에 미마운트. 리디자인 자산으로 활용 가
+능.
+
+--- PAGE 5 ---
+CATALOG
+상품 카탈로그 요약
+SERVICE_ORDER: wedding → duet-film → solo-film → solo → duo → proposal. 필름 포맷 상품: wedding, duet-film, solo-film,
+proposal. live = 뮤비 클립 필름 / making = 녹음 메이킹 필름.
+key title cat 정상가 oneLine
+wedding 듀엣 식전 영상 wedding 290,000※ 우리의 이야기와 목소리로 하객에게 건네는 첫인사
+duet-film 듀엣 축가 영상 wedding 290,000 무대에 서지 않아도 우리의 목소리로 완성하는 특별한 축가
+solo-film 솔로 축가 영상 wedding 200,000 직접 부르는 부담은 덜고 내 목소리로 전하는 축가
+solo 솔로 축가 녹음 song 120,000 떨리는 축가를 미리 준비하고 본식에서는 더 안정적으로
+duo 2인 축가 song 160,000 두 사람의 목소리를 미리 맞추고 본식에서는 더 편안하게
+proposal 프로포즈 / 답프로포즈 proposal 200,000 직접 부른 노래와 우리의 추억으로 마음을 전하는 프로포즈 영상
+※ wedding만 이벤트 화면에서 포맷가 적용: 뮤비 클립 300,000 / 녹음 메이킹 250,000. 그 외 필름은 normal 사용.
+key type label 사용 시점 누가 SERVICE_META.short
+wedding OUR STORY 식전 영상 예식 시작 전 신랑신부 두 사람 우리의 이야기를 들려주는 식전 영상
+duet- OUR DUET 듀엣 축가 영상 본식 축가 순서 신랑신부 두 사람 우리 둘의 노래로 채우는 축가 시간
+film
+solo-film A SONG FOR 솔로 축가 영상 본식 축가 순서 신랑 또는 신부 한 한 사람이 직접 부른 노래를 영상으로
+YOU 사람
+solo YOUR VOICE, 솔로 축가 녹음 현장에서 직접 한 사람 떨리는 순간, 내 목소리를 받쳐주는 AR
+LIVE 노래
+duo TWO VOICES, 2인 축가 현장에서 직접 두 사람 두 목소리와 화음을 미리 맞추는 축가
+LIVE 노래
+proposal ONLY FOR YOU 프로포즈 / 답프로 둘만의 고백 순 마음을 전하는 한 말로 다 전하지 못한 마음을 한 편의 영상
+포즈 간 사람 으로
+상품별 추가 옵션 (이벤트 페이지)
+상품 옵션
+wedding 신부 입장곡 AR·립싱크 +40,000 / 3일 이내 빠른 작업 +30,000 / 추가 수정 안내(notice)
+duet-film 추가 촬영, 사진·영상 자료 추가, 추가 수정 (가격 상담)
+solo-film 인터뷰 및 전하는 편지, 뮤비 클립
+proposal 고백 장면 추가, 추가 촬영/장소 변경, 추가 수정
+song 공통 가사 영상 +40,000 / 가사 영상+녹음 메이킹 필름 (상담 후 안내)
+solo + friend 인원 추가 (notice, 상담)
+
+--- PAGE 6 ---
+PAGE · 01
+홈 — 상황 선택 게이트
+#/ · https://wistiahp.vercel.app/#/ · 렌더러 renderHome
+역할 — 사용자가 「지금 준비하는 순간」을 고르는 게이트. 상품 나열보다 상황 분기. 문서 타이틀: WISTIA — 우리의 목소
+리로 남기는 특별한 순간.
+01-home-top.png — 상단(헤더 + 「저는 지금,」)
+01-home-full.png — 홈 풀 프레임 (푸터 없음)
+섹션 구성 (위→아래)
+1. 글로벌 헤더 — 로고 WISTIA / VOICE & FILM · 예약 상담(카카오, 외부아이콘). 뒤로 버튼 없음(홈).
+2. situation-home H1 저는 지금, (화면 중앙, 큰 디스플레이 타이포)
+3. 2열 그룹
+영상으로 준비하기 — 직접 부른 노래와 두 분의 이야기를 영상으로 완성해 예식이나 고백 순간에 재생합니다
+현장에서 직접 부르기 · 사전 녹음 — 스튜디오에서 사전 녹음한 목소리가 담긴 AR과 함께 예식 당일 직접 축가를 부
+릅니다
+4. 각 그룹 아래 흰 pill 카드 3개 + 오른쪽 화살표. 플로팅 카카오(노란 TALK)만 있고 footer는 붙이지 않음.
+폼 없음.
+
+--- PAGE 7 ---
+PAGE · 01 이어서
+홈 — 필 카피 · 클릭 목적지
+필 타이틀 description 클릭하면
+식전 영상 만들기 뮤비 클립 필름 또는 녹음 메이킹 필름으로 두 분의 이야기를 전합니다 #/detail/wedding
+축가 영상 만들기 직접 부른 노래를 뮤직비디오로 완성해 본식 축가 순서에 상영합니다 #/film
+프로포즈 · 답프로포즈 영상 만들 직접 부른 노래에 원하는 영상 구성을 선택해 한 사람을 위한 고백을 완성합니 #/detail/proposal
+기 다
+신랑 또는 신부가 직접 부르기 자신의 결혼식에서 신랑이나 신부 한 사람이 직접 부르는 축가입니다 #/ar/self
+지인이 친구에게 불러주기 친구의 결혼식에서 한 명 또는 여러 명이 마음을 전하는 축가입니다 #/ar/friend
+신랑 신부가 함께 축가 부르기 두 사람의 음역과 파트를 맞춰 신랑 신부가 함께 부르는 축가입니다 #/detail/duo
+홈에서 #/song · 솔로 상세 · 듀엣/솔로 필름 상세로는 바로 가지 않음. 축가 영상만 피커를 한 단 거침. 솔로 녹음은 AR self를 통해
+서만 도달.
+리디자인 포인트: 홈은 푸터·가격·후기가 없어 브랜드 신뢰 신호가 헤더 워드마크와 카카오뿐입니다. 의도적 미니멀인지, 누락인지 확
+인 후 결정.
+
+--- PAGE 8 ---
+PAGE · 02
+축가 영상 피커
+#/film · 렌더러 renderPicker("film") · 캡처 02-film.png
+역할 — 축가 영상 상품 2종(듀엣/솔로 필름)을 비교한 뒤 상세로 진입.
+02-film.png — 풀페이지. 히어로 + 2열 카드 + 푸터
+
+--- PAGE 9 ---
+PAGE · 02 이어서
+필름 피커 — 구성 · 카피 · CTA
+1. 헤더(뒤로 + 로고 + 예약 상담)
+2. Eyebrow: WEDDING SONG FILM
+3. H1: 축가 시간에 상영하는 / 우리의 뮤직비디오
+4. Lead: 하객 앞에서 직접 부르지 않아도, 직접 부른 노래로 마음을 전합니다
+5. picker-grid 카드 2장 — type 라벨, 커버 이미지, title, short, dl(노래하는 사람 / 받는 결과물), CTA
+6. Footer (브랜드 · 소셜 · © 2026 WISTIA)
+듀엣 축가 영상 솔로 축가 영상
+type OUR DUET A SONG FOR YOU
+short 우리 둘의 노래로 채우는 축가 시간 한 사람이 직접 부른 노래를 영상으로
+누가 신랑신부 두 사람 신랑 또는 신부 한 사람
+결과물 본식 상영용 듀엣 축가 영상 MP4 + 보정·믹싱 음원 WAV·MP3 본식 상영용 솔로 축가 영상 MP4 + 보정·믹싱 음원 WAV·MP3
+CTA 상품 알아보기 → #/detail/duet-film 상품 알아보기 → #/detail/solo-film
+폼 없음. 비주얼: 검정 CTA pill, 웨딩/스튜디오 커버 사진, 여백 큰 2열.
+
+--- PAGE 10 ---
+PAGE · 03
+축가 녹음 피커
+#/song · 렌더러 renderPicker("song") · 캡처 21-song.png
+역할 — 현장 라이브용 축가 녹음(AR) 상품 비교. 홈에서 직접 링크 없음. 라우트·내부 진입만 가능.
+21-song.png — 필름 피커와 동일 골격, 상품만 solo / duo
+
+--- PAGE 11 ---
+PAGE · 03 이어서
+송 피커 — 구성 · 카피 · CTA
+1. Eyebrow: VOICE RECORDING
+2. H1: 현장에서는 편안하게 / 목소리는 미리 준비하세요
+3. Lead: 미리 녹음한 목소리가 함께 흐르는 AR로 본식의 긴장을 덜어보세요
+4. picker-grid — solo, duo (동일 카드 구조)
+5. Footer
+솔로 축가 녹음 2인 축가
+type YOUR VOICE, LIVE TWO VOICES, LIVE
+short 떨리는 순간, 내 목소리를 받쳐주는 AR 두 목소리와 화음을 미리 맞추는 축가
+누가 한 사람 두 사람
+결과물 보컬 비율별 AR + 완성 음원 듀엣 AR + 완성 음원
+CTA 상품 알아보기 → #/detail/solo 상품 알아보기 → #/detail/duo
+리디자인 포인트: 홈 IA와 불일치. 「현장에서 직접 부르기」 그룹이 AR 랜딩으로 가고, 송 피커는 고아 라우트. 노출할지/AR로만 남을
+지 결정 필요.
+폼 없음.
+
+--- PAGE 12 ---
+PAGE · 04
+AR Self — 본인 결혼식 축가
+#/ar/self · 렌더러 renderArPurpose("self") · 캡처 08-ar-self.png
+역할 — 신랑/신부가 본인 결혼식에서 부를 축가 AR 소개 → 솔로/듀오 선택 → 이벤트/상담.
+Eyebrow WEDDING SONG AR
+H1 떨리는 축가에도 / 내 목소리 그대로
+Lead 직접 축가를 부르고 싶은데 실수가 걱정돼요
+useCase 신랑 또는 신부가 자신의 결혼식에서 직접 부르는 축가
+커버 assets/img/song/solo.webp (마이크/보면대)
+Price bar 선택한 구성의 혜택까지 / 이벤트 적용 가격 확인하기 → #/event/solo
+섹션 (위→아래)
+1. Hero (카피 + 커버 + 검정 고정바 「이벤트 적용 가격 확인하기」)
+2. Intro H2 미리 준비하는 축가 AR / lead: 떨리는 축가를 미리 준비하고 본식에서는 더 안정적으로
+3. 진행 과정 (self.items 7스텝 + 제작기간 약 7일)
+4. AR 비율 청취 (30/50/70/100%, 샘플곡 · 그중에 그대를 만나) — 캡처상 70% 선택
+5. 실제 고객 후기 캐러셀 (검정 플레이스홀더 3장 보임)
+6. CHOOSE YOUR VOICE — H2 한 사람 또는 두 사람 / serviceRows solo, duo → #/detail/solo , #/detail/duo
+7. Footer + 플로팅 카카오
+폼 없음 (상담은 event 또는 헤더 카카오).
+
+--- PAGE 13 ---
+SCREENSHOT · 08-AR-SELF.PNG
+AR Self 풀페이지
+긴 스크롤(5821px). 히어로 → 프로세스 → AR 비율 70% → 후기 캐러셀 → 푸터. 하단 검정 가격바 + 노란 TALK.
+
+--- PAGE 14 ---
+PAGE · 05
+AR Friend — 지인 결혼식 축가
+#/ar/friend · 렌더러 renderArPurpose("friend") · 캡처 09-ar-friend.png
+역할 — 지인 결혼식 축가 AR. Self와 골격 동일 + 선택 옵션 배너. Price bar 목적지만 다름.
+H1 소중한 사람에게 / 떨림 대신 진심을
+title 지인의 결혼식에서 축가를 부르는데 떨려요
+lead 소중한 사람의 결혼식에서 실수 부담은 줄이고 마음은 그대로
+useCase 친구나 지인의 결혼식에서 직접 불러주는 축가
+옵션 배너 가사 영상 추가 — +40,000원 / 인원 추가 — 상담 후 안내
+Price bar 이벤트 적용 가격 확인하기 → #/event/solo/friend
+그 외 섹션(프로세스, AR 비율, 후기, CHOOSE YOUR VOICE → solo/duo detail, 푸터)은 Self와 동일.
+폼 없음.
+
+--- PAGE 15 ---
+SCREENSHOT · 09-AR-FRIEND.PNG
+AR Friend 풀페이지
+09-ar-friend.png (6067px). Self 대비 H1·옵션 배너·가격바 목적지(#/event/solo/friend)만 다름.
+
+--- PAGE 16 ---
+PATTERN
+Detail 공통 골격
+필름 상품( wedding | duet-film | solo-film | proposal )과 송 상품( solo | duo )의 섹션 순서가 다릅니다.
+#/detail/{key}/{format} 과 #/choose/{filmProduct} 도 모두 renderDetail — 포맷 UI는 없음.
+필름 detail 송 detail
+1. detail-hero (title, sub, 사용 시점, 참여 인원, 결과 1. detail-hero
+카드/영상) 2. AR 비율 섹션
+2. 진행 과정 — 뮤비 클립 / 녹음 메이킹 탭 3. 진행 과정 (상품 steps)
+3. 실제 고객 후기 4. 후기
+4. 자주 묻는 질문 (상품 FAQ) 5. FAQ
+5. detail-next: 상품 구성과 가격을 확인해 보세요 → 6. detail-next → event
+#/event/{key} 7. Footer + price bar
+6. Footer + Fixed price bar → #/event/{key}
+PRODUCTS.*.composition 장면 데이터(하객 메시지 · 인터뷰 · 립싱크 MV · 녹음 메이킹 · 둘의 사진 · 편지)는 코드에만 있고 현재
+필름 detail에는 미노출. 리디자인 시 콘텐츠 자산.
+공통 CTA 카피: 하단 블록 「상품 구성과 가격을 확인해 보세요」 + 검정 버튼, 고정바 「이벤트 적용 가격 확인하기」. 둘 다 #/event/{key}.
+
+--- PAGE 17 ---
+PAGE · 06
+상세 — 듀엣 식전 영상
+#/detail/wedding · 캡처 05-detail-wedding.png · 별칭 라이브 11 · choose 22
+title / kicker 듀엣 식전 영상 · DUET WEDDING FILM
+sub 직접 부른 노래와 두 분의 이야기를 원하는 영상 구성에 맞춰 한 편의 웨딩 필름으로 완성합니다
+oneLine 우리의 이야기와 목소리로 하객에게 건네는 첫인사
+사용 / 인원 예식 시작 전 · 신랑신부 두 사람
+result 이야기가 있는 영상 + 완성 음원
+가격 normal 290,000 · 포맷가 live 300,000 / making 250,000
+video YouTube 5ZuTmQWCRJk (inline)
+CTA 상품 구성·가격 확인하기 → #/event/wedding
+Composition 자산(미렌더): 하객 메시지 · 두 사람의 인터뷰 · 립싱크 뮤직비디오 · 녹음 메이킹 영상 · 우리 둘의 사진 · 서로에게 전하는 편지
+폼 없음. 클릭: 프로세스 탭은 페이지 내 전환. 가격 CTA·고정바 → event/wedding. 헤더 로고 → 홈. 예약 상담 → 카카
+오.
+
+--- PAGE 18 ---
+SCREENSHOT · 05-DETAIL-WEDDING.PNG
+#/detail/wedding 풀페이지
+히어로+영상 · 뮤비클립/메이킹 탭 · 후기 · FAQ · 가격 CTA · 푸터. 5602px.
+
+--- PAGE 19 ---
+PAGE · 07
+상세 — 듀엣 축가 영상
+#/detail/duet-film · 캡처 03-detail-duet-film.png · 라이브 13 · choose 23
+title 듀엣 축가 영상
+sub 축가 섭외 대신 신랑신부가 함께 부른 노래와 영상을 축가 순서에 상영할 수 있도록 완성합니다
+oneLine 무대에 서지 않아도 우리의 목소리로 완성하는 특별한 축가
+사용 본식 축가 순서
+result 본식 상영용 듀엣 축가 영상 MP4 + 보컬 보정·믹싱을 마친 완성 음원 WAV·MP3
+가격 290,000 (포맷 오버라이드 없음)
+video aSKrlQwmnHI (모달 WORKS, inlineVideo false) — 커버 「우리 사랑하게 됐어요」
+CTA → #/event/duet-film
+폼 없음.
+
+--- PAGE 20 ---
+SCREENSHOT · 03-DETAIL-DUET-FILM.PNG
+#/detail/duet-film 풀페이지
+5669px. 히어로 오른쪽에 작품 커버+재생. 프로세스 탭 · 후기 · FAQ · 「상품 구성과 가격을 확인해 보세요」.
+
+--- PAGE 21 ---
+PAGE · 08
+상세 — 솔로 축가 영상
+#/detail/solo-film · 캡처 04-detail-solo-film.png · 라이브 15 · choose 24
+title 솔로 축가 영상
+sub 신랑 또는 신부 한 사람이 직접 부른 노래를 영상으로 완성해 본식 축가 순서에 상영합니다
+oneLine 직접 부르는 부담은 덜고 내 목소리로 전하는 축가
+who 신랑 또는 신부 한 사람
+가격 200,000
+CTA → #/event/solo-film
+폼 없음. 골격은 필름 detail 공통.
+
+--- PAGE 22 ---
+SCREENSHOT · 04-DETAIL-SOLO-FILM.PNG
+#/detail/solo-film 풀페이지
+04-detail-solo-film.png · 5563px.
+
+--- PAGE 23 ---
+PAGE · 09
+상세 — 프로포즈 / 답프로포즈
+#/detail/proposal · 캡처 06-detail-proposal.png · 라이브 17 · choose 25
+title 프로포즈 / 답프로포즈
+sub 직접 부른 노래와 전하고 싶은 이야기를 원하는 영상 구성에 맞춰 한 편의 프로포즈 필름으로 완성합니다
+oneLine 직접 부른 노래와 우리의 추억으로 마음을 전하는 프로포즈 영상
+사용 둘만의 고백 순간
+가격 200,000
+video pTBfPEWlyZU (inline)
+CTA → #/event/proposal
+폼 없음.
+
+--- PAGE 24 ---
+SCREENSHOT · 06-DETAIL-PROPOSAL.PNG
+#/detail/proposal 풀페이지
+06-detail-proposal.png · 3904px (다른 필름 상세보다 짧음).
+
+--- PAGE 25 ---
+PAGE · 10
+상세 — 솔로 축가 녹음
+#/detail/solo · 캡처 10-detail-solo.png
+역할 — AR 상품의 솔로 상세. 히어로 다음에 AR 비율이 오고, 프로세스 탭 대신 녹음 스텝.
+title 솔로 축가 녹음
+sub 미리 완성한 목소리를 AR로 함께 틀어 본식에서는 더 안정적으로, 녹음한 노래는 오래도록 남깁니다
+oneLine 떨리는 축가를 미리 준비하고 본식에서는 더 안정적으로
+가격 120,000
+result 보컬 비율별 AR + 완성 음원
+포함 녹음 및 1대1 디렉팅, 음정·박자 보정, 믹싱·마스터링, 최종 음원 전달
+CTA → #/event/solo
+폼 없음. 진입: AR self 「CHOOSE YOUR VOICE」 또는 송 피커(고아).
+
+--- PAGE 26 ---
+SCREENSHOT · 10-DETAIL-SOLO.PNG
+#/detail/solo 풀페이지
+10-detail-solo.png · 6121px. 히어로 직후 AR 70% 플레이어가 큼직하게 노출.
+
+--- PAGE 27 ---
+PAGE · 11
+상세 — 2인 축가
+#/detail/duo · 캡처 07-detail-duo.png
+역할 — 신랑신부 듀엣 라이브 축가 음원. 홈 「신랑 신부가 함께 축가 부르기」의 직접 목적지이자 AR CHOOSE YOUR
+VOICE의 두 번째 카드.
+title 2인 축가
+sub 두 사람의 음역과 파트, 화음을 맞춰 자연스럽고 안정적인 듀엣 축가 음원으로 완성합니다
+oneLine 두 사람의 목소리를 미리 맞추고 본식에서는 더 편안하게
+가격 160,000
+CTA → #/event/duo
+폼 없음. 골격은 송 detail (AR 비율 + 프로세스 + 후기 + FAQ).
+
+--- PAGE 28 ---
+SCREENSHOT · 07-DETAIL-DUO.PNG
+#/detail/duo 풀페이지
+07-detail-duo.png · 6121px.
+
+--- PAGE 29 ---
+ALIASES
+Detail format 세그먼트 · Choose 별칭
+아래 캡처는 모두 renderDetail이라 기본 상세와 픽셀이 같습니다. format(live/making)은 URL에만 있고 UI에 반영되
+지 않습니다. choose는 필름 상세 별칭이며 포맷 선택 UI가 없습니다.
+리디자인 시: URL에 live/making이 있으면 프로세스 탭 초기값을 맞추거나, choose를 없애고 detail로 정규화하는 편이 혼란이 적습
+니다.
+1) #/detail/{film}/live — UI 동일, 캡처 4장
+11-detail-wedding-live.png · #/detail/wedding/live 13-detail-duet-film-live.png · #/detail/duet-film/live
+15-detail-solo-film-live.png · #/detail/solo-film/live 17-detail-proposal-live.png · #/detail/proposal/live
+
+--- PAGE 30 ---
+ALIASES · CHOOSE
+#/choose/{filmProduct} — 상세 별칭 4장
+CTA·섹션·카피는 대응 detail과 동일. 클릭 목적지도 그대로 #/event/{key}.
+캡처 라우트 동일 대상
+22-choose-wedding.png #/choose/wedding #/detail/wedding
+23-choose-duet-film.png #/choose/duet-film #/detail/duet-film
+24-choose-solo-film.png #/choose/solo-film #/detail/solo-film
+25-choose-proposal.png #/choose/proposal #/detail/proposal
+22-choose-wedding.png 23-choose-duet-film.png
+24-choose-solo-film.png 25-choose-proposal.png
+
+--- PAGE 31 ---
+PATTERN
+Event / Booking 공통
+목적: 영상 구성(필름) · 포함 작업 · 추가 옵션 · 이벤트 할인 · 예상 금액 · 카카오 상담 폼. H1은 전 상품 동일.
+H1 구성은 명확하게 / 선택은 편안하게
+Lead 포함 작업과 추가 옵션, 이벤트 혜택을 한눈에 확인해 주세요
+뒤로 {title} 상품 안내 → detail (필름은 #/detail/{key}/{selectedFilmFormat})
+섹션 (위→아래, renderEvent)
+1. booking-head (뒤로 링크 + H1 + lead)
+2. booking-layout 2열
+01 영상 구성 선택 (필름만): 뮤비 클립 필름 / 녹음 메이킹 필름 + 가격
+기본 제작 포함 작업 (필름은 details 아코디언, 송은 체크 리스트)
+추가 옵션 (상품별 / 송은 SONG_OPTIONS 카드)
+aside checkout: 가격 계산 요약(#bookingSummary) · 이벤트 혜택 details 「얼마나 싸질까?」 · 예약 상담 폼
+#consultForm
+3. 다른 상품 선택하기 → #/
+4. Footer
+5. 모바일 바: 예상 금액 + 카카오톡 상담
+포맷 key title summary
+live 뮤비 클립 필름 하객 메시지 + 인터뷰 + 라이브 뮤비 클립 + 서로에게 전하는 편지 구성
+making 녹음 메이킹 필름 인서트 컷 + 녹음실 메이킹 컷 구성
+making notes: 인터뷰·편지 기본 제외 / 인트로·아웃트로 문구 타이포 / 직접 촬영 편지 가능 / 인터뷰 촬영 없음.
+
+--- PAGE 32 ---
+FORM
+상담 폼 필드 · 클릭 목적지
+컴포넌트 compactConsultationForm · form id #consultForm . Submit 시 문의 문구를 클립보드에 복사하고 카카오
+채널을 새 창으로 엽니다.
+id 라벨 타입 옵션 / 플레이스홀더
+contactSource 알게 된 경로 select 인스타그램, 스레드, 광고, 카페, 블로그
+contactName 성함 text 성함 입력
+eventDate 예식일 또는 사용 예정일 text 미정이라면 미정이라고 적어주세요
+contactPurpose 상영 시점 select 식전, 식중, 축가 순서, 기타
+(submit) 이 구성으로 카카오톡 상담하기 button 복사 + 카카오 오픈
+가용 안내: 목요일부터 일요일까지 예약 가능 · 날짜와 시간은 상담 시 협의
+요소 목적지
+상품 안내 링크 해당 detail (± format)
+다른 상품 선택하기 #/
+헤더 예약 상담 / 플로팅 TALK / 푸터 카카오 카카오 채널 (폼 없이)
+폼 submit 카카오 URL + 클립보드 Contact Form 텍스트
+카카오 폴백: http://pf.kakao.com/_GbExjX/chat · IG: instagram.com/wistia.film · YT: youtube.com/@wistia_film
+
+--- PAGE 33 ---
+PAGE · EVENT · DUET-FILM
+이벤트 — 듀엣 축가 영상
+#/event/duet-film (기본 live) · 캡처 12-event-duet-film.png
+역할 — 듀엣 축가 영상의 구성·가격·상담. 정상가 290,000 (포맷 동일가).
+12-event-duet-film.png — 뮤비 클립 선택(290,000). 메이킹 카드 나란히. aside 예상금액 290,000. 포함작업 아코디언 접힘.
+클릭: 「듀엣 축가 영상 상품 안내」 → detail/duet-film(/live) · 다른 상품 → 홈. 옵션: 추가 촬영, 자료 추가, 추가 수정(상
+담가). 폼은 공통 consultForm.
+
+--- PAGE 34 ---
+PAGE · EVENT · SOLO-FILM
+이벤트 — 솔로 축가 영상
+#/event/solo-film · 캡처 14-event-solo-film.png
+역할 — 솔로 축가 영상 부킹. 정상가 200,000. 옵션: 인터뷰 및 전하는 편지, 뮤비 클립.
+14-event-solo-film.png — 필름 2포맷 카드 + 체크아웃. 1956px.
+클릭: 상품 안내 → #/detail/solo-film(/live) · 다른 상품 → 홈. 폼 있음(공통).
+
+--- PAGE 35 ---
+PAGE · EVENT · PROPOSAL
+이벤트 — 프로포즈 / 답프로포즈
+#/event/proposal · 캡처 16-event-proposal.png
+역할 — 프로포즈 필름 부킹. 정상가 200,000. 옵션: 고백 장면 추가, 추가 촬영/장소 변경, 추가 수정.
+16-event-proposal.png — 필름 선택 UI 있음(live 기본). making 초기값 캡처는 없음.
+캡처 누락: #/event/proposal/making 은 촬영되지 않았습니다. 포맷 카드만 making으로 선택된 상태이며, 골격은 이 페이지와 동
+일합니다.
+클릭: 상품 안내 → #/detail/proposal(/live) · 다른 상품 → 홈. 폼 있음.
+
+--- PAGE 36 ---
+PAGE · EVENT · SONG
+이벤트 — 2인 축가 · 솔로 녹음 · 지인
+송 상품 이벤트는 필름 포맷 선택(01 영상 구성)이 없고, 포함 작업이 체크 리스트로 펼쳐집니다.
+#/event/duo · 18-event-duo.png · 정상가 160,000 #/event/solo · 19-event-solo.png · 정상가 120,000 ·
+AR self 가격바 목적지
+18-event-duo.png — 포함 작업 4항 + 체크아웃. 상담 폼은 하단.
+19-event-solo.png — 1:1 레코딩·디렉팅 / 보정 / 믹싱 / AR·음원.
+포함 작업 (solo/duo 공통 톤) 1:1 레코딩·보컬 디렉팅 · 디렉팅 음정·박자 보정 · 보컬 믹싱·최종 마스터링 · 본식용 AR·
+완성 음원.
+옵션: 가사 영상 +40,000 / 가사 영상+녹음 메이킹 필름(상담). 클릭: 상품 안내 → 각 detail · 다른 상품 → 홈. 폼 있음.
+
+--- PAGE 37 ---
+PAGE · EVENT · SOLO/FRIEND
+이벤트 — 솔로 축가 녹음 (지인)
+#/event/solo/friend · 캡처 20-event-solo-friend.png · AR friend 가격바 목적지
+역할 — 솔로 이벤트와 동일 가격(120,000) + 지인 플로우 옵션(인원 추가 notice). 캡처상 레이아웃은 solo와 거의 같
+고, 옵션 영역에 인원 추가가 붙습니다.
+20-event-solo-friend.png — 1750px. 체크아웃 「얼마나 싸질까?」 접힘.
+클릭: 솔로 축가 녹음 상품 안내 → #/detail/solo · 다른 상품 → 홈. 폼 있음. 헤더/플로팅 카카오 병행.
+
+--- PAGE 38 ---
+MAKING VARIANTS
+이벤트 — 녹음 메이킹 초기값 3장
+필름 이벤트에 /{making} 이 붙으면 오른쪽 카드(녹음 메이킹 필름)가 선택된 채로 열립니다. wedding만 포맷가가 갈라
+집니다.
+캡처 라우트 선택 포맷가 비고
+26-event-wedding- #/event/wedding/making 메이킹 250,000 (live는 wedding 기본 live 캡처는 없음.
+making.png 300,000) making만 있음.
+27-event-duet-film- #/event/duet-film/making 290,000 (live와 동일) 12번 live와 선택 상태만 다름
+making.png
+28-event-solo-film- #/event/solo-film/making 200,000 (live와 동일) 14번 live와 선택 상태만 다름
+making.png
+26 · #/event/wedding/making · 예상 250,000원. 식전 영상 유일 포맷가 27 · #/event/duet-film/making · 예상 290,000원.
+분기.
+
+--- PAGE 39 ---
+28-event-solo-film-making.png · #/event/solo-film/making · 예상 200,000원.
+폼 공통 consultForm. 클릭: 상품 안내 → detail/{key}/making · 다른 상품 → 홈.
+
+--- PAGE 40 ---
+GLOBAL CHROME
+헤더 · 푸터 · 카카오 · 모달
+별도 크롬 캡처는 없음. 모든 페이지 스크린샷 상·하단에 보입니다. 홈만 푸터 없음.
+Header (#siteHeader) Footer (footer())
+뒤로 버튼 #headerBack — 홈이 아닐 때만 브랜드 링크 → #/ + WISTIA / VOICE & FILM
+로고 워드마크 → #/ — 이미지 assets/img/wistia- STUDIO
+logo-transparent.webp + 텍스트 WISTIA / small 카피: 노래와 영상으로 남기는, 우리의 순간
+VOICE & FILM 소셜: Instagram · YouTube · 카카오톡 상담
+MENU = [] — 주 내비·햄버거 없음 © {year} WISTIA
+예약 상담 → 카카오 새 탭 (header-consult, 외부 홈 renderHome에는 footer를 붙이지 않음
+아이콘)
+스크롤 시 is-scrolled 클래스
+Floating Kakao (#floatingKakao) Dialog / 기타
+노란 원형 TALK 배지, 우측 하단 고정 작품 YouTube 재생 모달 (openVideo) — 닫기 / 배
+href = kakao() (config 또는 폴백 경 / Escape
+http://pf.kakao.com/_GbExjX/chat) wistia-config.json fetch, 실패 시 폴백
+모달 열릴 때 inert IntersectionObserver 모션, 후기 캐러셀
+모든 페이지에 존재 (홈 포함) 상담 UX: 폼 submit → 클립보드 복사 + 카카오 새
+창
+404
+캡처 없음. H1 찾으시는 페이지가 없습니다 · p: 상품 목록에서 준비 중인 순간을 다시 찾아보세요 · CTA 상품 찾아보기
+→ #/ · Footer.
+
+--- PAGE 41 ---
+VISUAL & UX
+현황 비주얼 · UX 메모
+비주얼 시스템 (관찰) UX 관찰
+배경 #f7f6f3~화이트, 잉크 블랙 타이포, 극단적 여 홈이 상황 게이트라 상품 비교가 한 단 뒤에 숨어 있
+백 음
+큰 한글 헤드라인(2행 슬래시 리듬: 「구성은 명확하 가격은 detail이 아니라 event에만 숫자로 모임 —
+게 / 선택은 편안하게」) 탐색 비용
+영문 eyebrow 트래킹 (WEDDING SONG FILM 등) 고정바와 detail-next가 같은 목적지(event)를 중복
+필/카드: 흰 면 + 큰 라운드 + 화살표. CTA는 검정 제공
+pill 헤더 내비 없음 → 뒤로/로고/카카오만으로 이동. 상
+커버 사진: 웨딩 토스트, 스튜디오 마이크, 실루엣 — 품 간 점프 어려움
+따뜻하고 정돈된 톤 카카오 출구가 3곳(헤더/플로팅/푸터) + 폼 1곳. 계
+노란 카카오 TALK이 유일한 강한 액센트 컬러 층은 있으나 라벨이 조금씩 다름
+하단 검정 고정 가격바 + 우측 상품 체크아웃 패널 AR 비율 체험은 차별점이나, 후기 이미지가 비어 보
+후기 슬롯이 캡처에서 검정 사각형으로 보임(이미지 이면 신뢰가 약해짐
+미로드 또는 자리표시) 상담 폼이 체크아웃 아래라 데스크톱에서 접혀 있을
+수 있음
+보이스/톤 (코드 카피 기준)
+부드럽고 안심시키는 웨딩 톤. 「떨림/실수 걱정 → 미리 준비 → 본식에서는 안정적으로」, 「원래 목소리는 살리고 보정」,
+「예식이 끝난 뒤에도 남는 음원/영상」. 과장 세일즈보다 상황·결과물 중심.
+
+--- PAGE 42 ---
+REDESIGN NOTES
+리디자인 시 참고점
+1. 홈에 footer 없음 — 의도인지 누락인지 확인. 소셜·카피·연도를 홈에도 둘지 결정.
+2. #/song은 홈에서 링크되지 않음 — AR → solo/duo detail로만 진입. 피커를 살릴지 숨길지.
+3. Detail의 {format} 세그먼트는 UI 미반영 — 포맷 선택은 Event에서. live 캡처 4장은 기본 상세와 동일.
+4. choose는 renderDetail 별칭 — 정규 경로를 detail로 통일하는 것을 권장.
+5. Composition 장면 카피·이미지는 데이터만 존재 — 현재 필름 상세에 미노출. 리디자인 콘텐츠 자산.
+6. GENERAL_FAQ / REVIEW_QUOTES / WORKS — 상수·모달용. 홈 FAQ 섹션 없음.
+7. 가격 정확성 — wedding 포맷가만 FILM_FORMAT_PRICES 오버라이드 (live 300,000 / making 250,000). 임의
+가격 창작 금지.
+8. 카카오가 단일 전환점 — 리디자인에서도 상담 CTA 계층 유지 권장. 예약 폼은 복사+오픈 패턴.
+9. 미국 Wistia와 혼동되지 않도록 워드마크·서브카피(VOICE & FILM / 웨딩) 유지.
+0. MENU가 비어 있음 — 리디자인에서 내비를 넣을 경우 상황 분기(홈)와 상품 카탈로그의 관계를 먼저 정할 것.
+유지하면 좋은 현행 강점
+「저는 지금,」 상황 게이트 — 상품명보다 순간에 말을 걺
+2행 헤드라인 리듬과 부드러운 한글 톤
+AR 비율을 직접 들어보게 하는 인터랙션
+이벤트 할인을 체크아웃에 투명하게 보여주는 「얼마나 싸질까?」
+카카오 한 곳으로 모으는 전환 설계
+
+--- PAGE 43 ---
+CAPTURE GAPS
+캡처 누락 · 스크린샷 인덱스
+미캡처 명시: #/event/proposal/making — 프로포즈 이벤트의 녹음 메이킹 초기값 화면은 촬영되지 않았습니다. 골격은 16-
+event-proposal.png와 같고, 오른쪽 「녹음 메이킹 필름」 카드가 선택된 상태입니다. 가격은 proposal normal 200,000 (포맷 오버
+라이드 없음).
+그 밖에 없는 것: 404, 헤더/푸터 단독 크롬, #/event/wedding 기본(live) — making(26)만 있음. 상세 making URL 캡
+처 없음(UI 미반영이라 live와 동일할 가능성 큼).
+이 문서에 넣은 PNG 전체 (논리 순)
+# 파일 라우트
+01 01-home-top.png / 01-home-full.png #/
+02 02-film.png #/film
+21 21-song.png #/song
+08 08-ar-self.png #/ar/self
+09 09-ar-friend.png #/ar/friend
+05 05-detail-wedding.png #/detail/wedding
+03 03-detail-duet-film.png #/detail/duet-film
+04 04-detail-solo-film.png #/detail/solo-film
+06 06-detail-proposal.png #/detail/proposal
+10 10-detail-solo.png #/detail/solo
+07 07-detail-duo.png #/detail/duo
+11·13·15·17 *-live.png 4장 #/detail/{film}/live (UI 동일)
+22–25 choose-*.png 4장 #/choose/{film} (detail 별칭)
+12 12-event-duet-film.png #/event/duet-film
+14 14-event-solo-film.png #/event/solo-film
+16 16-event-proposal.png #/event/proposal
+18 18-event-duo.png #/event/duo
+19 19-event-solo.png #/event/solo
+20 20-event-solo-friend.png #/event/solo/friend
+26–28 event-*-making.png 3장 #/event/{wedding|duet-film|solo-film}/making
+Generated 2026-09-12 from /workspace/wistia-audit/INVENTORY.md + 로컬 PNG. Do not invent titles or prices beyond this file. 미국
+Wistia와 무관.
