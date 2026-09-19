@@ -32,3 +32,4 @@
 .finder-summary-line dd{max-width:65%;text-align:right;line-height:1.45}
 @media(min-width:701px){.finder-intro h1{font-size:clamp(38px,4.2vw,54px);white-space:nowrap}}
 @media(max-width:700px){.finder-home{padding-top:42px;padding-bottom:80px}.finder-intro{margin-bottom:48px}.finder-intro h1{font-size:39px}.finder-steps{gap:45px}.finder-options{gap:10px}.finder-choice{min-height:112px;padding:20px}.finder-choice:has(input:checked){padding:19px}.finder-choice strong{font-size:18px}.finder-choice small{font-size:13px}.finder-result h2{font-size:26px}.finder-result h3{font-size:21px}.finder-result .finder-picked{font-size:15px}.finder-next{font-size:16px}}
+@media(max-width:700px){.finder-stage-role .finder-intro h1{font-size:29px;white-space:nowrap;letter-spacing:-.06em}}
