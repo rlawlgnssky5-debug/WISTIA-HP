@@ -1108,9 +1108,16 @@ html.phone-preview-shell body{
 /* v151 — AR detail hook and single-benefit opening */
 .ar-hook-hero{position:relative;isolation:isolate;min-height:clamp(560px,calc(100svh - 310px),700px);display:flex;align-items:flex-end;overflow:hidden;background:#182024;color:#fff}
 .ar-hook-media{position:absolute;inset:0;z-index:-2}
-.ar-hook-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0d131714 18%,#0d131759 56%,#0d1317e8 100%)}
-.ar-hook-media video{width:100%;height:100%;object-fit:cover;object-position:center 42%}
-.ar-hook-media>span{position:absolute;top:24px;right:28px;z-index:1;padding:8px 11px;border:1px solid #ffffff80;background:#18202480;font-size:10px;letter-spacing:.08em}
+.ar-hook-media:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0d131714 18%,#0d131759 56%,#0d1317e8 100%)}
+.ar-hook-fallback,.ar-hook-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.ar-hook-fallback{z-index:0}
+.ar-hook-media video{z-index:1;opacity:0;transition:opacity .35s ease}
+.ar-hook-media video.is-playing{opacity:1}
+.ar-hook-video-control{position:absolute;top:24px;right:28px;z-index:3;display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #ffffff80;background:#182024a8;color:#fff;font-size:10px;letter-spacing:.06em}
+.ar-hook-video-control span{font-size:9px}
+.ar-hook-video-control b{font-weight:500}
+.ar-hook-video-control.is-playing span{font-size:0}
+.ar-hook-video-control.is-playing span:after{content:"Ⅱ";font-size:9px}
 .ar-hook-copy{padding-top:160px;padding-bottom:clamp(58px,7vw,94px)}
 .ar-hook-copy .eyebrow{color:#fff;opacity:.78}
 .ar-hook-copy h1{max-width:920px;margin-top:18px;font-size:clamp(46px,6.5vw,88px);font-weight:400;line-height:1.27;letter-spacing:-.065em;text-shadow:0 2px 22px #0009}
@@ -1142,8 +1149,8 @@ html.phone-preview-shell body{
 }
 @media(max-width:540px){
  .ar-hook-hero{min-height:clamp(520px,calc(100svh - var(--header) - 165px),640px);margin-top:0}
- .ar-hook-media video{object-position:center 38%}
- .ar-hook-media>span{top:16px;right:14px;padding:6px 8px;font-size:9px}
+ .ar-hook-fallback,.ar-hook-media video{object-position:center 38%}
+ .ar-hook-video-control{top:16px;right:14px;padding:7px 9px;font-size:9px}
  .ar-hook-copy{width:calc(100% - 44px);padding-top:130px;padding-bottom:58px}
  .ar-hook-copy h1{margin-top:14px;font-size:38px;line-height:1.35}
  .ar-hook-copy>p{margin-top:19px;font-size:14px;line-height:1.8}
