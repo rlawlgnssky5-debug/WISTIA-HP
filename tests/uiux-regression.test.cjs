@@ -35,3 +35,18 @@ test('solo detail puts price and AR before reviews and provides native video con
   assert.match(html,/<video[^>]*controls/);
   assert.doesNotMatch(html,/3배 이상|autoplay|완전 안전|가장 인기/);
 });
+test('all product detail templates render with a price summary',()=>{
+  const {run,elements}=appContext();
+  for(const key of ['solo','duo','wedding','duet-film','solo-film','proposal']){
+    run(`renderDetail(${JSON.stringify(key)})`);
+    assert.match(elements.get('#app').innerHTML,/booking-facts/);
+    assert.doesNotMatch(elements.get('#app').innerHTML,/undefined/);
+  }
+});
+test('unknown film extras do not display as a free line item',()=>{
+  const {run,elements}=appContext();
+  run('currentEventProduct="duet-film";selectedFilmFormat="making";selectedOptions.add("extra-shoot");updatePrice()');
+  const html=elements.get('#bookingSummary').innerHTML;
+  assert.match(html,/추가 촬영<\/dt><dd class="plus">별도 견적/);
+  assert.match(elements.get('#mobilePrice').innerHTML,/별도 견적 옵션/);
+});
