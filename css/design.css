@@ -1234,7 +1234,7 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 .solo-detail-scope .ar-hook-video-control{top:14px;right:14px;width:40px;height:40px;min-width:40px;min-height:40px}
 
 /* AR 장점 섹션 재설계 (v155) — 해시태그 + 카피 + 원형 강점 인덱스, 세로 스택 레이아웃 (500px 캔버스 안에서 항상) */
-.ar-primary-benefit{padding-top:64px;padding-bottom:72px;display:flex;flex-direction:column;gap:40px;align-items:center}
+.ar-primary-benefit{padding-top:64px;padding-bottom:72px;display:flex;flex-direction:column;gap:48px;align-items:center;min-width:0;box-sizing:border-box}
 .ar-benefit-copy{width:100%}
 .ar-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
 .ar-tag{display:inline-block;padding:6px 11px;border:1px solid #d8dbdd;border-radius:5px;background:#f5f6f680;font-size:12px;font-weight:500;letter-spacing:.01em;color:#555d61;opacity:0;transform:translateY(10px);animation:arTagIn .5s ease-out forwards}
@@ -1277,65 +1277,51 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 .ar-index-item.is-active .ar-index-num{color:var(--ink)}
 .ar-index-item.is-active .ar-index-label{color:var(--ink);font-weight:600}
 .ar-index-item:focus-visible{outline:2px solid #526b7a;outline-offset:3px;border-radius:6px}
-@media(min-width:461px){.ar-index-wheel{width:272px}}
-@media(min-width:900px){
- .ar-primary-benefit{flex-direction:row;align-items:center;justify-content:space-between;gap:28px}
- .ar-benefit-copy{flex:1 1 auto;min-width:0}
- .ar-primary-benefit h2{font-size:22px;line-height:1.45}
- .ar-benefit-desc{font-size:12px;max-width:none}
- .ar-index-wheel{flex:0 0 auto;width:150px;margin:0}
-}
+/* AR 강점 섹션은 실제 컨테이너 폭(~452px)이 뷰포트와 무관하게 유지되므로,
+   viewport 기준 min-width 미디어쿼리로 좌우 2열을 만들지 않는다.
+   PC·모바일 모두 세로 구조로 통일하고, 원형 인덱스는 컨테이너 폭(cqw) 기준으로만 크기를 조절한다. */
+.ar-index-wheel{width:clamp(220px,68cqw,270px)}
 
 /* 제작 범위 비교 — 전문가 스토리 바로 아래, solo 전용 정적 그리드 (v158) */
 .ar-compare{background:#ecefed;padding-top:56px;padding-bottom:64px}
 .ar-compare-title{margin:0 0 32px;font-size:clamp(24px,7vw,28px);line-height:1.4;letter-spacing:-.02em;font-weight:400;color:var(--ink);opacity:0;transform:translateY(8px)}
 .ar-compare-title-2{font-weight:700}
 .ar-compare.is-visible .ar-compare-title{animation:arCompareIn .45s ease-out forwards}
-.ar-compare-table{position:relative;display:grid;grid-template-columns:24% 34% 42%}
-.ar-compare-wistia-panel{position:absolute;left:58%;right:0;top:0;bottom:0;z-index:0;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px #1c232808;transform-origin:top;transform:scaleY(0)}
-.ar-compare.is-visible .ar-compare-wistia-panel{animation:arCompareScaleIn .5s ease-out forwards;animation-delay:.18s}
-.ar-compare-head{display:contents}
-.ar-compare-head>span{padding:0 14px 14px;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--silver);opacity:0}
-.ar-compare-head>span:last-child{position:relative;z-index:1;color:var(--ink);padding-left:26px}
-.ar-compare.is-visible .ar-compare-head>span{animation:arCompareIn .4s ease-out forwards;animation-delay:.34s}
-.ar-compare-rows{display:contents}
-.ar-compare-row{display:contents}
-.ar-compare-cell{padding:16px 14px;position:relative;opacity:0;transform:translateY(8px)}
-.ar-compare-row:not(:first-child) .ar-compare-criteria,.ar-compare-row:not(:first-child) .ar-compare-general{border-top:1px solid var(--line)}
-.ar-compare.is-visible .ar-compare-row .ar-compare-criteria{animation:arCompareIn .4s ease-out forwards;animation-delay:calc(.42s + var(--row-i) * .14s)}
-.ar-compare.is-visible .ar-compare-row .ar-compare-general{animation:arCompareIn .4s ease-out forwards;animation-delay:calc(.48s + var(--row-i) * .14s)}
-.ar-compare.is-visible .ar-compare-row .ar-compare-wistia{animation:arCompareIn .4s ease-out forwards;animation-delay:calc(.54s + var(--row-i) * .14s)}
 @keyframes arCompareIn{to{opacity:1;transform:translateY(0)}}
-@keyframes arCompareScaleIn{to{transform:scaleY(1)}}
-.ar-compare-criteria{display:flex;flex-direction:column;gap:4px}
+/* 각 비교 기준을 독립된 행으로 세로 배치, 행 안에서는 일반 제작/WISTIA 2열만 사용
+   (기존 3열 그리드 + 절대배치 WISTIA 패널 구조를 완전히 제거) */
+.ar-compare-list{display:flex;flex-direction:column;min-width:0}
+.ar-compare-row{padding:20px 0;border-top:1px solid var(--line);cursor:pointer;min-width:0;box-sizing:border-box;opacity:0;transform:translateY(8px)}
+.ar-compare-row:first-child{border-top:0;padding-top:0}
+.ar-compare.is-visible .ar-compare-row{animation:arCompareIn .4s ease-out forwards;animation-delay:calc(.2s + var(--row-i) * .14s)}
+.ar-compare-criteria{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
 .ar-compare-index{font-size:10px;letter-spacing:.08em;color:var(--silver);font-weight:600}
 .ar-compare-criteria strong{font-size:14px;font-weight:600;color:var(--ink)}
-.ar-compare-general{display:flex;align-items:center;font-size:13px;color:var(--muted)}
-.ar-compare-wistia{display:flex;align-items:center;padding-left:26px;font-size:13.5px;font-weight:700;color:var(--ink);z-index:1;transition:background-color .2s ease-out}
-.ar-compare-wistia strong{position:relative;font-weight:700}
-.ar-compare-wistia-underline{position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--silver);transform:scaleX(0);transform-origin:left}
-.ar-compare.is-visible .ar-compare-row .ar-compare-wistia-underline{animation:arCompareUnderline .35s ease-out forwards;animation-delay:calc(.66s + var(--row-i) * .14s)}
-@keyframes arCompareUnderline{to{transform:scaleX(1)}}
-.ar-compare-arrow{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:0;font-size:13px;color:var(--silver);transition:opacity .2s ease-out}
-.ar-compare-row.is-focused .ar-compare-wistia{background:linear-gradient(90deg,#ffffff,#f4f5f6)}
+.ar-compare-cells{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;min-width:0}
+.ar-compare-cell{min-width:0;box-sizing:border-box;padding:14px 14px;border-radius:8px;display:flex;flex-direction:column;gap:6px}
+.ar-compare-cell-label{font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--silver)}
+.ar-compare-cell-value{font-size:13px;line-height:1.5;word-break:keep-all}
+.ar-compare-general{background:transparent}
+.ar-compare-general .ar-compare-cell-value{color:var(--muted)}
+.ar-compare-wistia{background:#fff;border:1px solid var(--line);box-shadow:0 1px 2px #1c232808}
+.ar-compare-wistia .ar-compare-cell-label{color:#8b9296}
+.ar-compare-wistia .ar-compare-cell-value{color:var(--ink);font-weight:700;position:relative;display:inline-flex;align-items:center;gap:6px}
+.ar-compare-arrow{opacity:0;font-size:12px;color:var(--silver);transition:opacity .2s ease-out}
+.ar-compare-row.is-focused .ar-compare-wistia{background:linear-gradient(135deg,#ffffff,#f4f5f6)}
 .ar-compare-row.is-focused .ar-compare-arrow{opacity:1}
-.ar-compare-row.is-dimmed .ar-compare-cell{opacity:.5}
-.ar-compare-row{cursor:pointer}
-.ar-compare-criteria:focus{outline:none}
-.ar-compare-criteria:focus-visible{outline:2px solid #526b7a;outline-offset:2px;border-radius:4px}
+.ar-compare-row.is-dimmed{opacity:.5}
+.ar-compare-row:focus-visible{outline:2px solid #526b7a;outline-offset:3px;border-radius:6px}
 .ar-compare-note{margin:20px 0 0;font-size:12px;line-height:1.6;color:var(--silver)}
-@media(prefers-reduced-motion:reduce){
- .ar-compare-title,.ar-compare-wistia-panel,.ar-compare-head>span,.ar-compare-cell,.ar-compare-wistia-underline{opacity:1;transform:none;animation:none}
+@container solo-detail (max-width:300px){
+ .ar-compare-cells{grid-template-columns:1fr}
 }
-@media(max-width:420px){
- .ar-compare-table{grid-template-columns:30% 33% 37%}
- .ar-compare-head>span,.ar-compare-cell{padding-left:10px;padding-right:10px}
- .ar-compare-wistia{padding-left:22px}
- .ar-compare-arrow{left:6px}
- .ar-compare-criteria strong{font-size:13px}
- .ar-compare-general,.ar-compare-wistia{font-size:12.5px}
+@media(prefers-reduced-motion:reduce){
+ .ar-compare-title,.ar-compare-row{opacity:1;transform:none;animation:none}
 }
 
+/* 이 페이지는 PC에서도 실제 콘텐츠 폭이 ~500px 모바일 캔버스로 고정되므로,
+   내부 섹션은 뷰포트 min-width가 아니라 이 컨테이너의 실제 inline 크기를 기준으로 반응한다 */
+.solo-detail-scope{container-type:inline-size;container-name:solo-detail;min-width:0}
 .solo-detail-scope .ar-expert-story{padding-top:56px;padding-bottom:64px}
 
 /* 진행 과정 아코디언 — 카드 제목 18~21px 범위로 */
@@ -1456,24 +1442,27 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 @media(prefers-reduced-motion:reduce){.solo-person-indicator{transition:none}}
 
 /* 3) 전문가 스토리 — 2분할 확장 패널 */
-.solo-detail-scope .ar-expert-split{position:relative;display:grid;grid-template-columns:35fr 65fr;gap:0;border-radius:17px;overflow:hidden;aspect-ratio:4/5;transition:grid-template-columns .4s cubic-bezier(.4,0,.2,1)}
+.solo-detail-scope .ar-expert-split{position:relative;display:grid;grid-template-columns:35fr 65fr;gap:0;border-radius:17px;overflow:hidden;height:clamp(340px,84cqw,380px);min-width:0;box-sizing:border-box;transition:grid-template-columns .4s cubic-bezier(.4,0,.2,1)}
 .solo-detail-scope .ar-expert-split[data-active="0"]{grid-template-columns:65fr 35fr}
 .ar-expert-panel{position:relative;display:block;min-width:0;border:0;padding:0;margin:0;background:none;cursor:pointer;text-align:left;overflow:hidden}
-.ar-expert-panel-media{position:absolute;inset:0}
+.ar-expert-panel-media{position:absolute;inset:0;z-index:0}
 .ar-expert-panel-media img{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:saturate(.94) brightness(.98);transition:filter .4s ease-out}
+.ar-expert-panel[data-expert-panel="1"] .ar-expert-panel-media img{object-position:center 30%}
 .ar-expert-panel.is-active .ar-expert-panel-media img{filter:saturate(1.04) brightness(1.02)}
-.ar-expert-panel-overlay{position:absolute;inset:0;background:linear-gradient(180deg,#1c202299 0%,#1c202266 45%,#1c202299 100%);opacity:1;transition:opacity .4s ease-out}
-.ar-expert-panel.is-active .ar-expert-panel-overlay{opacity:0;background:linear-gradient(0deg,#14171866 0%,transparent 45%)}
-.ar-expert-panel-toggle{position:absolute;top:14px;right:14px;z-index:2;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#ffffffe6;color:#1c2022;font-size:15px;line-height:1}
-.ar-expert-panel-content{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;gap:3px;padding:16px 16px 18px;color:#fff}
-.ar-expert-panel-index{font-size:10px;letter-spacing:.06em;color:#e7e9ea;opacity:.85}
-.ar-expert-panel-keyword{font-size:15px;font-weight:700;letter-spacing:-.01em}
-.ar-expert-panel-sub{font-size:11.5px;color:#e7e9ea;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
-.ar-expert-panel-detail{display:block;font-size:12px;line-height:1.7;color:#f1f2f2;margin-top:4px;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
-.ar-expert-panel.is-active .ar-expert-panel-sub,.ar-expert-panel.is-active .ar-expert-panel-detail{opacity:1;max-height:200px;transition-delay:.18s}
+.ar-expert-panel-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#1c2022b3 0%,#1c202273 42%,#1c2022cc 100%);opacity:1;transition:opacity .4s ease-out,background .4s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-overlay{background:linear-gradient(to top,rgba(8,10,11,.88) 0%,rgba(8,10,11,.62) 35%,rgba(8,10,11,.18) 72%,transparent 100%)}
+.ar-expert-panel-toggle{position:absolute;top:14px;right:14px;z-index:3;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#ffffffe6;color:#1c2022;font-size:15px;line-height:1}
+.ar-expert-panel-content{position:absolute;left:20px;right:20px;bottom:20px;z-index:2;display:flex;flex-direction:column;gap:4px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.ar-expert-panel-index{font-size:10px;letter-spacing:.06em;color:#fff;opacity:.8}
+.ar-expert-panel-keyword{font-size:15px;font-weight:700;letter-spacing:-.01em;color:#fff}
+.ar-expert-panel-sub{font-size:11.5px;color:#fff;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-sub{opacity:.82}
+.ar-expert-panel-detail{display:block;font-size:12px;line-height:1.7;color:#fff;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-detail{opacity:.86;max-height:200px;transition-delay:.18s}
+.ar-expert-panel.is-active .ar-expert-panel-sub{max-height:60px;transition-delay:.18s}
+.ar-expert-panel:not(.is-active) .ar-expert-panel-sub,.ar-expert-panel:not(.is-active) .ar-expert-panel-detail{transition-delay:0s}
 .ar-expert-panel:focus-visible{outline:2px solid #fff;outline-offset:-3px}
 .ar-expert-hint{margin:14px 0 0;font-size:12px;color:var(--silver);text-align:center}
-@media(min-width:461px){.solo-detail-scope .ar-expert-split{aspect-ratio:16/11}}
 @media(prefers-reduced-motion:reduce){
  .solo-detail-scope .ar-expert-split,.ar-expert-panel-media img,.ar-expert-panel-overlay,.ar-expert-panel-sub,.ar-expert-panel-detail{transition:none}
 }
@@ -1533,4 +1522,52 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 .solo-ratio.solo-ratio .fine{margin-top:14px;font-size:11px;color:var(--silver);text-align:left}
 @media(prefers-reduced-motion:reduce){
  .solo-ratio,.solo-ratio-center,.solo-ratio-bubble,.solo-ratio-slider,.solo-ratio-compare{transition:none}
+}
+
+/* ============ 배포 화면 레이아웃 교정 (v161) ============ */
+
+/* 5) 고정 CTA 중복 제거 — 솔로 페이지는 상단 sticky 가격 CTA가 가격 이동의 유일한 CTA.
+   하단 fixed-price는 완전히 숨기고(뷰포트 폭 무관), 카카오 문의는 모바일에서 48~52px 아이콘 버튼으로 축소 */
+body.is-solo-detail .fixed-price{display:none}
+body.is-solo-detail .floating-kakao{bottom:max(16px,calc(env(safe-area-inset-bottom) + 16px))}
+@media(max-width:1179px){
+ body.is-solo-detail .floating-kakao{width:50px;height:50px;min-width:50px;padding:0;border-radius:50%;justify-content:center;gap:0}
+ body.is-solo-detail .floating-kakao .kakao-channel-label,body.is-solo-detail .floating-kakao>b{display:none}
+ body.is-solo-detail .floating-kakao .kakao-channel-icon{font-size:15px}
+}
+
+/* 상단 sticky 헤더(72px 전후) + 가격 CTA(52px)에 섹션 제목이 가려지지 않도록 앵커 여백 확보 */
+html{scroll-padding-top:140px}
+.solo-detail-scope section{scroll-margin-top:140px}
+
+/* 4) 진행 과정: 아코디언 → 7단계 가로 카드 슬라이더 (container query 기반, 뷰포트 폭 무관하게 실제 컨테이너 폭으로 크기 결정) */
+.solo-process-section{min-width:0}
+.solo-process-hl{background-image:linear-gradient(rgba(30,32,34,.12),rgba(30,32,34,.12));background-repeat:no-repeat;background-size:0% 40%;background-position:0 90%;transition:background-size 1.1s cubic-bezier(.16,.84,.44,1);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.solo-process-hl.is-visible{background-size:100% 40%}
+.solo-process-slider{margin-top:28px;min-width:0;box-sizing:border-box}
+.solo-process-rail{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-left:4px;padding:4px 4px 20px;margin:0;list-style:none;-webkit-overflow-scrolling:touch;scrollbar-width:none;min-width:0;box-sizing:border-box}
+.solo-process-rail::-webkit-scrollbar{display:none}
+.solo-process-rail:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.solo-process-rail.is-hinting{animation:soloProcessHint .7s ease}
+@keyframes soloProcessHint{0%{transform:translateX(0)}30%{transform:translateX(-22px)}60%{transform:translateX(4px)}100%{transform:translateX(0)}}
+.solo-process-card{flex:0 0 auto;scroll-snap-align:center;width:min(300px,72cqw);min-width:0;box-sizing:border-box;opacity:.5;transform:scale(.94);transition:opacity .35s ease,transform .35s ease}
+.solo-process-card.is-active{opacity:1;transform:scale(1)}
+.solo-process-card-inner{display:flex;flex-direction:column;height:100%;min-width:0;box-sizing:border-box;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.solo-process-media{aspect-ratio:4/5;overflow:hidden;background:#eef0f1;min-width:0}
+.solo-process-media img{width:100%;height:100%;object-fit:cover;display:block}
+.solo-process-media-info{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#f4f1ea,#e9e4d8)}
+.solo-process-info-icon{color:#8a7c5c;display:inline-flex}
+.solo-process-body{padding:18px 18px 22px;min-width:0;box-sizing:border-box}
+.solo-process-num{font:400 14px/1 Georgia,serif;color:#8d989d;display:block;margin-bottom:8px}
+.solo-process-num i{font-style:normal;opacity:.6;margin-left:2px}
+.solo-process-body h3{font-size:17px;font-weight:600;margin-bottom:8px;line-height:1.4}
+.solo-process-body p{font-size:13.5px;line-height:1.7;color:#59666c}
+.solo-process-indicator{display:flex;align-items:center;gap:10px;padding:0 4px;font:400 13px/1 Georgia,serif;color:#8d989d}
+.solo-process-indicator-track{flex:1;height:1px;background:var(--line);position:relative;min-width:0}
+.solo-process-indicator-fill{position:absolute;left:0;top:0;height:1px;background:#1a1a1a;transition:width .3s ease;width:0}
+@container solo-detail (max-width:340px){.solo-process-card{width:80cqw}}
+@media(prefers-reduced-motion:reduce){
+ .solo-process-rail.is-hinting{animation:none}
+ .solo-process-card{transition:none}
+ .solo-process-hl{transition:none}
 }
