@@ -1571,3 +1571,205 @@ html{scroll-padding-top:140px}
  .solo-process-card{transition:none}
  .solo-process-hl{transition:none}
 }
+
+/* ============ Solo AR editorial redesign (v166) ============ */
+body.is-solo-detail main{background:#121516}
+.solo-detail-scope{container-type:inline-size;container-name:solo-detail;background:#121516;overflow:clip;padding-bottom:1px}
+.solo-detail-scope>.ar-hook-hero{width:100%;aspect-ratio:4/5;min-height:0;border-radius:0 0 50% 50%/0 0 36px 36px}
+.solo-detail-scope .ar-hook-media:after{background:linear-gradient(180deg,rgba(8,10,11,.16) 12%,rgba(8,10,11,.24) 45%,rgba(8,10,11,.9) 100%)}
+.solo-detail-scope .ar-hook-fallback,.solo-detail-scope .ar-hook-media video{object-position:center 42%}
+.solo-detail-scope .ar-hook-copy{padding-top:110px;padding-bottom:72px}
+.solo-detail-scope .ar-hook-copy h1{font-size:clamp(32px,8.4cqw,41px);line-height:1.34;letter-spacing:-.035em}
+
+.solo-detail-scope .ar-primary-benefit{width:calc(100% - 18px);margin:78px 18px 0 0;padding:76px 24px 82px;box-sizing:border-box;background:#fff;align-items:center}
+.solo-detail-scope .ar-benefit-copy{min-width:0}
+.solo-detail-scope .ar-primary-benefit h2{font-size:clamp(25px,7cqw,31px)}
+.solo-detail-scope .ar-copy-emphasis{max-width:100%}
+.solo-detail-scope .ar-index-wheel{width:clamp(210px,66cqw,260px);margin-inline:auto}
+
+.solo-editorial-sheet{width:calc(100% - 34px);margin:78px 10px 0 24px;background:#f7f8f7;box-sizing:border-box}
+.solo-editorial-sheet .reviews-section,.solo-editorial-sheet .ar-expert-story{background:transparent}
+.solo-editorial-sheet .reviews-section{padding-top:72px;padding-bottom:84px}
+.solo-editorial-sheet .ar-expert-story{padding-top:16px;padding-bottom:80px}
+.solo-editorial-sheet .shell{width:calc(100% - 48px)}
+.solo-editorial-sheet .review-captures{margin-right:-24px;padding-right:24px}
+
+.solo-detail-scope .ar-expert-split{height:410px;border-radius:14px}
+.solo-detail-scope .ar-expert-panel-media img{object-position:center 38%}
+.solo-detail-scope .ar-expert-panel[data-expert-panel="1"] .ar-expert-panel-media img{object-position:center 34%}
+.solo-detail-scope .ar-expert-panel-overlay{background:linear-gradient(to top,rgba(4,5,6,.93),rgba(4,5,6,.62) 46%,rgba(4,5,6,.2) 78%)}
+.solo-detail-scope .ar-expert-panel.is-active .ar-expert-panel-overlay{background:linear-gradient(to top,rgba(3,4,5,.94),rgba(3,4,5,.68) 38%,rgba(3,4,5,.14) 76%,transparent)}
+.solo-detail-scope .ar-expert-panel-content{left:18px;right:18px;bottom:22px}
+
+.solo-detail-scope .ar-compare{width:calc(100% - 20px);margin:78px 0 0 20px;padding:72px 0 76px;background:#e8ebea;box-sizing:border-box}
+.solo-detail-scope .ar-compare .shell{width:calc(100% - 44px)}
+.ar-compare-cells{grid-template-columns:minmax(0,1fr) 28px minmax(0,1.12fr);gap:0;align-items:stretch}
+.ar-compare-cell{border-radius:0;padding:16px 14px;justify-content:center}
+.ar-compare-general{background:#dde1df}
+.ar-compare-wistia{background:#fff;border:0;box-shadow:none}
+.ar-compare-arrow{display:grid;place-items:center;opacity:1!important;color:#747c7f;font-size:15px;background:transparent}
+.ar-compare-row.is-focused .ar-compare-wistia{background:#fff}
+.ar-compare-row.is-dimmed{opacity:1}
+
+.solo-detail-scope .solo-process-section{width:calc(100% - 18px);margin:78px 18px 0 0;padding:72px 24px 78px;background:#fff;box-sizing:border-box}
+.solo-process-media-info{flex-direction:column;gap:9px;background:radial-gradient(circle at 50% 36%,#fff,#e7e4dc 70%,#dad5c9)}
+.solo-process-media-info small{font-size:9px;letter-spacing:.16em;color:#8a8375}
+.solo-process-media-info strong{font:500 30px/1.1 var(--serif);color:#3b3a36}
+.solo-process-rail{cursor:grab;touch-action:pan-y}
+.solo-process-rail.is-dragging{cursor:grabbing;scroll-snap-type:none}
+
+.solo-detail-scope .solo-ratio{width:calc(100% - 30px);margin:78px 15px 0;padding:72px 22px 76px;box-sizing:border-box;background:radial-gradient(110% 72% at 50% 34%,#fff 0%,#eef0ef 55%,#d9dddc 100%)}
+.solo-ratio-panel{max-width:410px}
+.solo-ratio-dial-stage{position:relative;width:min(100%,340px);height:350px;margin:18px auto 0}
+.solo-ratio-dial{--dial-index:2;position:absolute;left:50%;top:58px;width:220px;height:220px;transform:translateX(-50%);border-radius:50%;display:grid;place-items:center;outline:none;touch-action:none;cursor:grab}
+.solo-ratio-dial:active{cursor:grabbing}
+.solo-ratio-dial:focus-visible{outline:2px solid #596469;outline-offset:8px}
+.solo-ratio-dial-face{position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(104deg,rgba(255,255,255,.13) 0 1px,rgba(85,91,94,.05) 1px 2px),conic-gradient(from 210deg,#8d9497,#f8f9f9 18%,#aeb4b6 38%,#f7f8f8 57%,#8f9699 78%,#dfe2e3);box-shadow:inset 0 0 0 1px #ffffffcc,inset 0 0 0 9px #b9bec0,inset 0 0 28px #fff,0 18px 35px #343a3d30,0 3px 8px #343a3d3b}
+.solo-ratio-dial-face:before{content:"";position:absolute;inset:18px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#fff,#d9ddde 44%,#a1a7aa 76%,#eef0f0);box-shadow:inset 0 1px 3px #fff,inset 0 -7px 16px #555d6230}
+.solo-ratio-dial-face i{position:absolute;left:50%;top:50%;width:3px;height:28px;border-radius:3px;background:#252b2e;transform-origin:50% 82px;transform:translate(-50%,-82px) rotate(calc(-120deg + var(--dial-index) * 80deg));transition:transform .28s cubic-bezier(.2,.8,.2,1);z-index:2}
+.solo-ratio-center{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0}
+.solo-ratio-value{font-weight:500;letter-spacing:-.055em}
+.solo-ratio-value .solo-ratio-num{font-size:48px}
+.solo-ratio-value small{font-size:16px}
+.solo-ratio-label{font-size:12px;letter-spacing:.01em}
+.solo-ratio-desc{min-height:22px;margin:0 0 16px;font-size:12.5px;text-align:center;color:#687277}
+.solo-ratio-mark{position:absolute;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:66px;min-height:52px;padding:6px;color:#848d91;transition:color .18s,transform .18s}
+.solo-ratio-mark b{font-size:13px;font-weight:600}
+.solo-ratio-mark span{font-size:9.5px;white-space:nowrap}
+.solo-ratio-mark.is-active{color:#171b1d;transform:scale(1.06)}
+.solo-ratio-mark.is-active b{font-weight:800}
+.solo-ratio-mark-30{left:0;top:70px}.solo-ratio-mark-50{right:0;top:70px}.solo-ratio-mark-70{right:5px;bottom:18px}.solo-ratio-mark-100{left:5px;bottom:18px}
+.solo-ratio-recommend{position:absolute;top:-17px;padding:3px 8px;border-radius:999px;background:#1c2022;color:#fff;font-size:9px;white-space:nowrap}
+.solo-ratio-player{margin-top:0;background:#ffffffb8;border-color:#cdd2d2;border-radius:999px}
+.solo-ratio-bar,.solo-ratio-bar-fill{height:2px}
+.solo-ratio-compare{width:auto;align-self:center;min-height:42px;margin-top:20px;padding:10px 18px;border-radius:999px;background:#252a2c;color:#fff;border-color:#252a2c}
+.solo-ratio-status.is-error{color:#8a3f3f}
+
+.solo-detail-scope .worry-section{width:calc(100% - 30px);margin:78px 15px 0;padding:68px 22px;background:#fff;box-sizing:border-box}
+.solo-inline-contact{width:100%;margin-top:24px;box-sizing:border-box}
+body.is-solo-detail #floatingKakao{display:none!important}
+body.is-solo-detail .solo-desktop-cta-price{display:none!important}
+body.is-solo-detail .solo-desktop-cta{grid-template-columns:minmax(190px,1fr);width:230px}
+body.is-solo-detail .footer{width:100%;padding:72px 24px 110px;background:#fff;box-sizing:border-box}
+
+@container solo-detail (min-width:430px){
+ .solo-detail-scope .ar-hook-fallback,.solo-detail-scope .ar-hook-media video{object-position:center 45%}
+ .solo-detail-scope .ar-primary-benefit{display:grid;grid-template-columns:minmax(0,55fr) minmax(28px,8fr) minmax(180px,37fr);gap:0;padding-left:28px;padding-right:16px}
+ .solo-detail-scope .ar-benefit-copy{grid-column:1}
+ .solo-detail-scope .ar-primary-benefit h2{font-size:22px;line-height:1.55}
+ .solo-detail-scope .ar-benefit-desc{font-size:12px}
+ .solo-detail-scope .ar-index-wheel{grid-column:3;width:190px;margin:0}
+}
+@container solo-detail (max-width:429px){
+ .solo-detail-scope>.ar-hook-hero{aspect-ratio:auto;min-height:560px}
+ .solo-detail-scope .ar-primary-benefit{display:flex;flex-direction:column;gap:52px}
+ .solo-editorial-sheet{width:calc(100% - 16px);margin-left:8px;margin-right:8px}
+ .solo-editorial-sheet .shell{width:calc(100% - 36px)}
+ .solo-detail-scope .ar-compare,.solo-detail-scope .solo-process-section{width:calc(100% - 10px)}
+ .solo-detail-scope .ar-compare{margin-left:10px}
+ .solo-detail-scope .solo-process-section{margin-right:10px}
+ .solo-ratio-dial-stage{height:330px}
+ .solo-ratio-dial{width:198px;height:198px}
+ .solo-ratio-dial-face i{transform-origin:50% 73px;transform:translate(-50%,-73px) rotate(calc(-120deg + var(--dial-index) * 80deg))}
+}
+@container solo-detail (max-width:339px){.ar-compare-cells{grid-template-columns:1fr}.ar-compare-arrow{height:28px;transform:rotate(90deg)}}
+@media(min-width:1180px){body.is-solo-detail .solo-inline-contact{display:none}}
+@media(prefers-reduced-motion:reduce){.solo-ratio-dial-face i,.solo-ratio-mark{transition:none}}
+
+/* ============ Solo review + reference process carousel (v167) ============ */
+/* Keep the benefit copy and index wheel stacked inside the constrained canvas. */
+.solo-detail-scope .ar-primary-benefit{display:flex;flex-direction:column;gap:52px;padding-left:24px;padding-right:24px}
+.solo-detail-scope .ar-primary-benefit h2{font-size:clamp(25px,7cqw,31px);line-height:1.5}
+.solo-detail-scope .ar-benefit-desc{font-size:13px}
+.solo-detail-scope .ar-index-wheel{width:clamp(210px,66cqw,260px);margin-inline:auto}
+@container solo-detail (min-width:430px){
+ .solo-detail-scope .ar-primary-benefit{display:flex;grid-template-columns:none;padding-left:28px;padding-right:28px}
+ .solo-detail-scope .ar-benefit-copy,.solo-detail-scope .ar-index-wheel{grid-column:auto}
+ .solo-detail-scope .ar-primary-benefit h2{font-size:30px;line-height:1.5}
+ .solo-detail-scope .ar-benefit-desc{font-size:13px}
+ .solo-detail-scope .ar-index-wheel{width:260px;margin-inline:auto}
+}
+
+.solo-review-showcase{position:relative;width:100%;height:590px;margin-top:78px;padding:70px 0 0 32px;display:grid;grid-template-columns:42% 58%;box-sizing:border-box;background:rgb(8,9,9);color:#fff;overflow:hidden;isolation:isolate}
+.solo-review-copy{position:relative;z-index:4;align-self:start;padding-top:20px}
+.solo-review-kicker{display:block;margin-bottom:24px;font-size:11px;font-weight:600;letter-spacing:.17em;color:#f4f4f2}
+.solo-review-copy h2{margin:0;font-size:clamp(28px,7cqw,34px);line-height:1.2;letter-spacing:-.045em;font-weight:400;color:#fff}
+.solo-review-copy h2 strong{font-weight:700;color:#fff}
+.solo-review-copy p{margin:34px 0 0;font-size:12.5px;line-height:1.9;letter-spacing:-.015em;color:#c7c9c9}
+.solo-review-visual{position:relative;min-width:0;height:100%}
+.solo-review-phone{position:absolute;left:-8px;top:14px;width:286px;height:570px;border:2px solid #55595b;border-radius:48px;background:linear-gradient(145deg,#303335,#080909 28%,#2e3133 70%,#070808);box-shadow:inset 0 0 0 3px #0b0c0d,inset 0 0 0 5px #85898a,0 25px 48px #0009;overflow:hidden}
+.solo-review-phone:before{content:"";position:absolute;z-index:4;left:50%;top:10px;width:106px;height:24px;transform:translateX(-50%);border-radius:0 0 16px 16px;background:#050606}
+.solo-review-phone-speaker{position:absolute;z-index:5;left:50%;top:14px;width:36px;height:4px;transform:translateX(-50%);border-radius:999px;background:#292c2d}
+.solo-review-phone-screen{position:absolute;inset:8px;border-radius:39px;background:#0a0b0b;overflow:hidden}
+.solo-review-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;padding:46px 12px 20px;box-sizing:border-box;opacity:0;transform:translateX(14%) scale(.96);transition:opacity .42s ease,transform .52s cubic-bezier(.2,.75,.2,1);pointer-events:none}
+.solo-review-slide.is-active{opacity:1;transform:translateX(0) scale(1)}
+.solo-review-slide img{display:block;width:112%;max-width:none;height:auto;max-height:88%;object-fit:contain}
+.solo-review-navigation{position:absolute;z-index:6;right:4px;top:130px;width:46px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.solo-review-progress{display:flex;flex-direction:column;align-items:center;gap:5px}
+.solo-review-progress button{width:18px;height:9px;padding:0;display:grid;place-items:center}
+.solo-review-progress button span{display:block;width:2px;height:8px;border-radius:999px;background:#6e7273;transition:height .22s,background .22s}
+.solo-review-progress button[aria-selected="true"] span{height:24px;background:#fff}
+.solo-review-status{font:500 9px/1.2 var(--sans);letter-spacing:.05em;color:#b9bcbc;white-space:nowrap;font-variant-numeric:tabular-nums}
+.solo-review-arrows{display:flex;flex-direction:column;gap:8px}
+.solo-review-arrows button{display:grid;place-items:center;width:38px;height:38px;border:1px solid #f1f2f2;border-radius:50%;color:#fff;font-size:24px;line-height:1;transition:background .18s,color .18s}
+.solo-review-arrows button:hover,.solo-review-arrows button:focus-visible{background:#fff;color:#080909}
+
+.solo-editorial-sheet{margin-top:78px}
+.solo-editorial-sheet .ar-expert-story{padding-top:72px}
+
+.solo-detail-scope .solo-process-section{padding-top:68px;padding-left:0;padding-right:0;background:#f7f8f7;overflow:hidden}
+.solo-process-head{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:24px;align-items:end;padding:0 26px}
+.solo-process-kicker{display:block;margin-bottom:18px;font-size:10px;font-weight:600;letter-spacing:.16em;color:#5f696d}
+.solo-process-head h2{margin:0;font-size:clamp(27px,7cqw,34px);line-height:1.18;letter-spacing:-.045em;font-weight:400;color:#15191a}
+.solo-process-head h2 strong{font-weight:700;color:#2d7a78}
+.solo-process-head p{margin:0 0 3px;font-size:11.5px;line-height:1.75;color:#727c80}
+.solo-process-slider{margin-top:42px}
+.solo-process-rail{height:430px;gap:12px;align-items:flex-end;padding:22px calc(50% - min(120px,27cqw)) 16px;scroll-padding-inline:calc(50% - min(120px,27cqw));box-sizing:border-box}
+.solo-process-card{flex:0 0 105px;width:105px;height:270px;opacity:1;transform:none;scroll-snap-align:center;transition:width .42s cubic-bezier(.2,.75,.2,1),flex-basis .42s cubic-bezier(.2,.75,.2,1),height .42s cubic-bezier(.2,.75,.2,1),opacity .3s}
+.solo-process-card.is-active{flex-basis:min(240px,54cqw);width:min(240px,54cqw);height:390px;transform:none}
+.solo-process-card-inner{position:relative;width:100%;height:100%;padding:0;border:1px solid #e8eaea;border-radius:0;background:#fcfcfb;color:#171a1b;text-align:left;overflow:hidden;box-shadow:none;transition:box-shadow .35s,border-color .35s}
+.solo-process-card.is-active .solo-process-card-inner{background:#fff;border-color:#e0e3e2;box-shadow:0 18px 38px #20272818}
+.solo-process-media{display:none;aspect-ratio:16/9;background:#e8edec}
+.solo-process-card.is-active .solo-process-media{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.solo-process-media img{object-fit:cover;object-position:center}
+.solo-process-card-mark{position:absolute;left:18px;bottom:84px;display:block;width:22px;height:22px;color:#24292b}
+.solo-process-card-mark svg{width:22px;height:22px}
+.solo-process-card.is-active .solo-process-card-mark{position:static;display:block;margin:24px 24px 0;width:20px;height:20px}
+.solo-process-card.is-active .solo-process-card-mark svg{width:20px;height:20px}
+.solo-process-body{position:absolute;left:18px;right:14px;bottom:22px;padding:0}
+.solo-process-card.is-active .solo-process-body{position:static;padding:14px 24px 26px}
+.solo-process-num{position:absolute;left:0;bottom:166px;margin:0;font:300 46px/.9 var(--sans);letter-spacing:-.055em;color:#e1e4e4}
+.solo-process-num i{display:none}
+.solo-process-card.is-active .solo-process-num{position:absolute;left:22px;top:18px;bottom:auto;z-index:3;color:#fff;font-size:13px;font-weight:600;letter-spacing:.02em;text-shadow:0 1px 8px #0008}
+.solo-process-body h3{margin:0;font-size:14px;line-height:1.28;font-weight:600;letter-spacing:-.025em}
+.solo-process-card.is-active .solo-process-body h3{font-size:23px;line-height:1.16;letter-spacing:-.04em}
+.solo-process-body p{display:none}
+.solo-process-card.is-active .solo-process-body p{display:block;margin-top:18px;font-size:12px;line-height:1.75;color:#6d777b}
+.solo-process-card.is-info.is-active .solo-process-media{display:flex;aspect-ratio:16/9}
+.solo-process-card.is-info .solo-process-media-info small,.solo-process-card.is-info .solo-process-media-info strong{display:none}
+.solo-process-card.is-info.is-active .solo-process-media-info small,.solo-process-card.is-info.is-active .solo-process-media-info strong{display:block}
+.solo-process-controls{display:grid;grid-template-columns:auto minmax(40px,1fr) auto;gap:13px;align-items:center;padding:8px 26px 0}
+.solo-process-status{font:500 11px/1 var(--sans);color:#626d71;font-variant-numeric:tabular-nums;white-space:nowrap}
+.solo-process-indicator-track{height:2px;background:#dfe2e2}
+.solo-process-indicator-fill{height:2px;background:#161a1b}
+.solo-process-arrows{display:flex;gap:8px}
+.solo-process-arrows button{display:grid;place-items:center;width:40px;height:40px;border:1px solid #1d2224;border-radius:50%;color:#1d2224;font-size:24px;line-height:1}
+.solo-process-arrows button:hover,.solo-process-arrows button:focus-visible{background:#1d2224;color:#fff}
+
+@container solo-detail (max-width:429px){
+ .solo-review-showcase{height:790px;padding:54px 20px 0;display:block}
+ .solo-review-copy{padding:0;width:100%}
+ .solo-review-copy h2{font-size:32px}
+ .solo-review-copy p{margin-top:22px;font-size:12px}
+ .solo-review-visual{position:absolute;left:0;right:0;top:236px;height:610px}
+ .solo-review-phone{left:50%;top:10px;width:min(310px,80cqw);height:610px;transform:translateX(-50%)}
+ .solo-review-navigation{right:8px;top:150px}
+ .solo-process-head{display:block;padding:0 22px}
+ .solo-process-head p{margin-top:22px;max-width:280px}
+ .solo-process-rail{height:410px;padding-inline:calc(50% - min(116px,31cqw));scroll-padding-inline:calc(50% - min(116px,31cqw))}
+ .solo-process-card{flex-basis:96px;width:96px;height:250px}
+ .solo-process-card.is-active{flex-basis:min(232px,62cqw);width:min(232px,62cqw);height:370px}
+ .solo-process-card.is-active .solo-process-body h3{font-size:20px}
+ .solo-process-controls{padding-left:22px;padding-right:22px}
+}
+@media(prefers-reduced-motion:reduce){.solo-review-slide,.solo-review-progress button span,.solo-process-card{transition:none}}

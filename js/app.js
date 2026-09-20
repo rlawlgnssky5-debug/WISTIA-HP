@@ -266,6 +266,7 @@ const EVENTS = [
 ]
 
 const ACTUAL_REVIEW_IMAGES = Array.from({ length: 11 }, (_, index) => index===5?"assets/img/reviews/review-06-clean.webp":`assets/img/reviews/review-${String(index + 1).padStart(2, "0")}.png`)
+const SOLO_REVIEW_IMAGES=[...Array.from({length:8},(_,index)=>`assets/img/reviews/showcase/review-${String(index+1).padStart(2,"0")}-black.webp`),...Array.from({length:3},(_,index)=>`assets/img/reviews/showcase/review-${String(index+9).padStart(2,"0")}-light.webp`)]
 
 const DETAIL_STORIES = {
   wedding: [
@@ -350,6 +351,8 @@ let reviewFrame
 let reviewTarget=0
 let reviewDisplay=0
 let reviewLast=0
+let soloReviewTimer=null
+let soloReviewIndex=0
 const dialog = document.querySelector("#mediaDialog")
 const MENU = []
 const SERVICE_ORDER = ["wedding","duet-film","solo-film","solo","duo","proposal"]
@@ -492,6 +495,7 @@ function footer(){return '<footer class="footer shell"><a class="footer-brand" h
 function serviceRows(keys){return keys.map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="#/detail/'+key+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
 function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image">'+img(src,"실제 고객 카카오톡 후기 "+(i+1))+'</span></figure>'}
 function reviews(productKey=""){const cards=ACTUAL_REVIEW_IMAGES.map((src,i)=>reviewCard(src,i)).join("");const clones=ACTUAL_REVIEW_IMAGES.map((src,i)=>reviewCard(src,i,true)).join("");return '<section class="section reviews-section'+(productKey==="proposal"?' proposal-reviews':'')+'" id="reviews"><div class="shell"><div class="review-carousel-head">'+heading("","실제 고객 후기","직접 보내주신 카카오톡 후기 원문입니다")+'<div class="review-carousel-controls"><button type="button" data-review-prev aria-label="이전 후기">←</button><button type="button" data-review-next aria-label="다음 후기">→</button></div></div><div class="review-captures" id="reviewTrack" aria-label="실제 고객 후기가 자동으로 순환합니다"><div class="review-loop"><div class="review-set">'+cards+'</div><div class="review-set" aria-hidden="true">'+clones+'</div></div></div></div></section>'}
+function soloReviewShowcase(){const total=SOLO_REVIEW_IMAGES.length;return '<section class="solo-review-showcase" id="reviews" data-review-showcase aria-labelledby="soloReviewTitle"><div class="solo-review-copy"><span class="solo-review-kicker">REVIEW</span><h2 id="soloReviewTitle">결과는,<br><strong>고객님의 말로 증명됩니다.</strong></h2><p>녹음이 처음이었던 분들이<br>직접 보내주신 카카오톡 후기입니다.</p></div><div class="solo-review-visual"><div class="solo-review-phone" aria-live="polite"><span class="solo-review-phone-speaker" aria-hidden="true"></span><div class="solo-review-phone-screen">'+SOLO_REVIEW_IMAGES.map((src,i)=>'<figure class="solo-review-slide'+(i===0?' is-active':'')+'" data-review-slide="'+i+'" aria-hidden="'+(i!==0)+'">'+img(src,'실제 고객 카카오톡 후기 '+(i+1))+'</figure>').join('')+'</div></div><div class="solo-review-navigation"><div class="solo-review-progress" role="tablist" aria-label="후기 위치">'+SOLO_REVIEW_IMAGES.map((_,i)=>'<button type="button" data-solo-review-goto="'+i+'" role="tab" aria-label="후기 '+(i+1)+' 보기" aria-selected="'+(i===0)+'"><span></span></button>').join('')+'</div><span class="solo-review-status" data-review-status>01 / '+String(total).padStart(2,"0")+'</span><div class="solo-review-arrows"><button type="button" data-solo-review-prev aria-label="이전 후기">‹</button><button type="button" data-solo-review-next aria-label="다음 후기">›</button></div></div></div></section>'}
 function arHookHero(p){return '<section class="ar-hook-hero" aria-labelledby="arHookTitle"><div class="ar-hook-media">'+img("assets/img/ar-detail/solo-live-proof.jpg","실제 고객의 본식 AR 축가 현장",true).replace('<img ','<img class="ar-hook-fallback" ')+'<video autoplay muted loop playsinline preload="auto" poster="assets/img/ar-detail/solo-live-proof.jpg" aria-label="실제 고객의 본식 AR 축가 현장 영상"><source src="'+escapeHtml(p.resultVideo)+'" type="video/mp4">영상을 재생할 수 없는 브라우저입니다</video><span class="ar-hook-video-source">※ 실제 고객님의 본식 영상입니다</span><button type="button" class="ar-hook-video-control" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span><span class="ar-icon-pause" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></span></button></div><div class="ar-hook-copy shell">'+label("1인 AR 축가")+'<h1 id="arHookTitle"><span class="hero-line hero-line1">떨리는 본식 무대,</span><br><strong class="hero-line hero-line2">미리 준비한 내 목소리가 함께합니다</strong></h1><p>미리 녹음하고 자연스럽게 보정한 내 목소리를 AR로 함께 재생해,<br>현장에서는 노래와 마음에만 집중할 수 있습니다.</p></div></section>'}
 const AR_INDEX_KEYWORDS=[["01","프로 녹음 퀄리티"],["02","1:1 디렉팅"],["03","노래 못해도 OK"],["04","AR 밸런스"],["05","라이브 안정"]]
 const AR_MIC_ICON='<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>'
@@ -514,9 +518,9 @@ function startExpertAuto(root,count){stopExpertAuto();if(matchMedia("(prefers-re
 function setExpertIndex(root,index){const track=root.querySelector("[data-expert-track]");if(!track)return;const cards=[...root.querySelectorAll("[data-expert-card]")],dots=[...root.querySelectorAll("[data-expert-goto]")],status=root.querySelector("[data-expert-status]");track.dataset.index=index;track.style.transform="translateX(-"+(index*100)+"%)";cards.forEach((c,i)=>c.classList.toggle("is-active",i===index));dots.forEach((d,i)=>d.setAttribute("aria-selected",String(i===index)));if(status)status.textContent=(index+1)+" / "+cards.length+" 강점을 보고 있습니다"}
 function initExpertSlider(){const root=document.querySelector(".ar-expert-story");stopExpertAuto();clearTimeout(expertResumeTimer);if(!root)return;const track=root.querySelector("[data-expert-track]"),cards=[...root.querySelectorAll("[data-expert-card]")];if(!track||!cards.length)return;const count=cards.length;setExpertIndex(root,0);const pause=()=>{stopExpertAuto();clearTimeout(expertResumeTimer)},resume=()=>{clearTimeout(expertResumeTimer);expertResumeTimer=setTimeout(()=>{if(!root.matches(":hover")&&!root.matches(":focus-within"))startExpertAuto(root,count)},4200)},go=delta=>{const i=Number(track.dataset.index||0);setExpertIndex(root,(i+delta+count)%count);pause();resume()};root.addEventListener("mouseenter",pause);root.addEventListener("mouseleave",()=>{if(!root.matches(":focus-within"))resume()});root.addEventListener("focusin",pause);root.addEventListener("focusout",()=>{if(!root.matches(":hover"))resume()});root.querySelector("[data-expert-prev]")?.addEventListener("click",()=>go(-1));root.querySelector("[data-expert-next]")?.addEventListener("click",()=>go(1));root.querySelectorAll("[data-expert-goto]").forEach(btn=>btn.addEventListener("click",()=>{setExpertIndex(root,Number(btn.dataset.expertGoto));pause();resume()}));const viewport=root.querySelector(".ar-expert-viewport");viewport.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(1)}else if(e.key==="ArrowLeft"){e.preventDefault();go(-1)}});let dragging=false,startX=0,deltaX=0;viewport.addEventListener("pointerdown",e=>{dragging=true;startX=e.clientX;deltaX=0;track.style.transition="none";pause();viewport.setPointerCapture(e.pointerId)});viewport.addEventListener("pointermove",e=>{if(!dragging)return;deltaX=e.clientX-startX;if(Math.abs(deltaX)>6)e.preventDefault();const i=Number(track.dataset.index||0);track.style.transform="translateX(calc(-"+(i*100)+"% + "+deltaX+"px))"});const endDrag=()=>{if(!dragging)return;dragging=false;track.style.transition="";const i=Number(track.dataset.index||0);if(Math.abs(deltaX)>60)setExpertIndex(root,Math.min(count-1,Math.max(0,i+(deltaX<0?1:-1))));else setExpertIndex(root,i);resume()};viewport.addEventListener("pointerup",endDrag);viewport.addEventListener("pointercancel",endDrag);startExpertAuto(root,count)}
 const AR_COMPARE_ROWS=[["준비 범위","단계별 확인","상담부터 AR까지"],["녹음 방식","완곡 중심","구간별 1:1 디렉팅"],["보컬 보정","범위·비용 확인","음색을 살린 수작업 보정"],["최종 전달","제공 파일 확인","완성 음원 + 본식용 AR"]]
-function arComparisonSection(){return '<section class="ar-compare section" aria-labelledby="arCompareTitle" data-ar-compare><div class="shell"><h2 id="arCompareTitle" class="ar-compare-title"><span class="ar-compare-title-1">같은 축가,</span><br><strong class="ar-compare-title-2">다른 준비.</strong></h2><div class="ar-compare-list">'+AR_COMPARE_ROWS.map((row,i)=>'<div class="ar-compare-row" data-ar-compare-row tabindex="0" style="--row-i:'+i+'"><div class="ar-compare-criteria"><span class="ar-compare-index">'+String(i+1).padStart(2,"0")+'</span><strong>'+row[0]+'</strong></div><div class="ar-compare-cells"><div class="ar-compare-cell ar-compare-general"><span class="ar-compare-cell-label">일반 제작</span><span class="ar-compare-cell-value">'+row[1]+'</span></div><div class="ar-compare-cell ar-compare-wistia"><span class="ar-compare-cell-label">WISTIA</span><span class="ar-compare-cell-value">'+row[2]+'<span class="ar-compare-arrow" aria-hidden="true">→</span></span></div></div></div>').join("")+'</div><p class="ar-compare-note">제공 범위는 업체와 상품에 따라 달라질 수 있습니다.</p></div></section>'}
+function arComparisonSection(){return '<section class="ar-compare section" aria-labelledby="arCompareTitle" data-ar-compare><div class="shell"><h2 id="arCompareTitle" class="ar-compare-title"><span class="ar-compare-title-1">같은 축가,</span><br><strong class="ar-compare-title-2">다른 준비.</strong></h2><div class="ar-compare-list">'+AR_COMPARE_ROWS.map((row,i)=>'<div class="ar-compare-row" data-ar-compare-row style="--row-i:'+i+'"><div class="ar-compare-criteria"><span class="ar-compare-index">'+String(i+1).padStart(2,"0")+'</span><strong>'+row[0]+'</strong></div><div class="ar-compare-cells"><div class="ar-compare-cell ar-compare-general"><span class="ar-compare-cell-label">일반 제작</span><span class="ar-compare-cell-value">'+row[1]+'</span></div><span class="ar-compare-arrow" aria-hidden="true">→</span><div class="ar-compare-cell ar-compare-wistia"><span class="ar-compare-cell-label">WISTIA</span><span class="ar-compare-cell-value">'+row[2]+'</span></div></div></div>').join("")+'</div><p class="ar-compare-note">제공 범위는 업체와 상품에 따라 달라질 수 있습니다.</p></div></section>'}
 let arCompareObserver=null
-function initArCompare(){arCompareObserver?.disconnect();const section=document.querySelector("[data-ar-compare]");if(!section)return;const rows=[...section.querySelectorAll("[data-ar-compare-row]")];const clearFocus=()=>rows.forEach(r=>{r.classList.remove("is-focused","is-dimmed")});const focusRow=target=>{rows.forEach(r=>{const active=r===target;r.classList.toggle("is-focused",active);r.classList.toggle("is-dimmed",!active)})};rows.forEach(row=>{row.addEventListener("mouseenter",()=>focusRow(row));row.addEventListener("focusin",()=>focusRow(row));row.addEventListener("click",()=>{if(row.classList.contains("is-focused"))clearFocus();else focusRow(row)})});const list=section.querySelector(".ar-compare-list");list.addEventListener("mouseleave",()=>{if(!list.matches(":focus-within"))clearFocus()});list.addEventListener("focusout",e=>{if(!list.contains(e.relatedTarget)&&!list.matches(":hover"))clearFocus()});document.addEventListener("click",e=>{if(!list.contains(e.target))clearFocus()});if(matchMedia("(prefers-reduced-motion: reduce)").matches){section.classList.add("is-visible");return}arCompareObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){section.classList.add("is-visible");arCompareObserver.disconnect()}}),{threshold:.2,rootMargin:"0px 0px -8% 0px"});arCompareObserver.observe(section)}
+function initArCompare(){arCompareObserver?.disconnect();const section=document.querySelector("[data-ar-compare]");if(!section)return;if(matchMedia("(prefers-reduced-motion: reduce)").matches){section.classList.add("is-visible");return}arCompareObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){section.classList.add("is-visible");arCompareObserver.disconnect()}}),{threshold:.2,rootMargin:"0px 0px -8% 0px"});arCompareObserver.observe(section)}
 function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media video"),button=document.querySelector("[data-ar-video-toggle]");if(!video||!button)return;const update=()=>{const playing=!video.paused&&!video.ended&&video.readyState>=2;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",()=>video.classList.remove("is-playing"));video.play().catch(update);update()}
 function detailBenefit(p){const highlights=p.highlights||[],main=highlights[0]||[p.oneLine,p.sub],support=highlights.slice(1,3);return '<section class="shell section detail-benefit" aria-labelledby="detailBenefitTitle"><div class="detail-benefit-intro">'+label("핵심 장점")+'<h2 id="detailBenefitTitle">'+main[0]+'</h2><p>'+main[1]+'</p></div><div class="detail-benefit-points">'+support.map((item,i)=>'<article><span>'+String(i+2).padStart(2,"0")+'</span><h3>'+item[0]+'</h3><p>'+item[1]+'</p></article>').join("")+'</div></section>'}
 function detailComparison(p){const film=p.category!=="song",rows=film?[["준비 방식","녹음·촬영·편집을 각각 확인","한 곳에서 녹음부터 상영본까지"],["녹음 진행","연습 후 전체 곡 녹음","구간별 1:1 보컬 디렉팅"],["보컬 보정","보정 범위와 비용을 별도 확인","음정·박자·호흡까지 수작업 보정"],["최종 전달","제공 파일을 항목별로 확인","완성 음원과 상영용 영상 함께 전달"]]:[["준비 방식","반주·녹음·보정을 각각 확인","녹음부터 본식용 AR까지 한 번에"],["녹음 진행","연습 후 전체 곡 녹음","구간별 1:1 보컬 디렉팅"],["보컬 보정","보정 범위와 비용을 별도 확인","원래 목소리를 살린 수작업 보정"],["최종 전달","최종 음원 종류를 별도 확인","완성 음원과 본식용 AR 함께 전달"]];return '<section class="comparison-band section" aria-labelledby="comparisonTitle"><div class="shell">'+heading("","타사 비교","예약 전에 반드시 확인해야 할 제작 범위를 기준으로 정리했습니다")+'<div class="comparison-table" role="table" aria-label="일반 제작 방식과 위스티아 비교"><div class="comparison-head" role="row"><span></span><strong>일반 제작 방식</strong><strong>WISTIA</strong></div>'+rows.map(row=>'<div class="comparison-row" role="row"><strong>'+row[0]+'</strong><span><small>일반 제작 방식</small>'+row[1]+'</span><span><small>WISTIA</small>'+row[2]+'</span></div>').join("")+'</div><p class="comparison-note">업체별 상품 구성은 다를 수 있으므로 실제 포함 범위와 추가 비용은 예약 전에 확인해 주세요</p></div></section>'}
@@ -525,6 +529,10 @@ function reviewMetrics(){const loop=document.querySelector(".review-loop"),set=l
 function paintReviews(){const metrics=reviewMetrics();if(metrics)metrics.loop.style.transform='translate3d('+(-reviewDisplay)+'px,0,0)'}
 function moveReviews(direction=1){const metrics=reviewMetrics();if(!metrics)return;reviewTarget+=direction*metrics.step}
 function startReviewCarousel(reset=true){cancelAnimationFrame(reviewFrame);const initial=reviewMetrics();if(!initial)return;if(reset){reviewTarget=0;reviewDisplay=0;reviewLast=0}const tick=now=>{const track=document.querySelector("#reviewTrack");if(!track)return;const metrics=reviewMetrics();if(!metrics)return;const elapsed=reviewLast?Math.min(now-reviewLast,50):0;reviewLast=now;const paused=track.matches(":hover")||track.contains(document.activeElement);if(!paused)reviewTarget+=elapsed*.04;const ease=1-Math.exp(-elapsed/180);reviewDisplay+=(reviewTarget-reviewDisplay)*(ease||1);if(reviewTarget>=metrics.setWidth){reviewTarget-=metrics.setWidth;reviewDisplay-=metrics.setWidth}if(reviewTarget<0){reviewTarget+=metrics.setWidth;reviewDisplay+=metrics.setWidth}paintReviews();reviewFrame=requestAnimationFrame(tick)};reviewFrame=requestAnimationFrame(tick)}
+function stopSoloReviewAuto(){clearInterval(soloReviewTimer);soloReviewTimer=null}
+function setSoloReview(index){const root=document.querySelector("[data-review-showcase]");if(!root)return;const slides=[...root.querySelectorAll("[data-review-slide]")],tabs=[...root.querySelectorAll("[data-solo-review-goto]")],total=slides.length;if(!total)return;soloReviewIndex=(index+total)%total;slides.forEach((slide,i)=>{const active=i===soloReviewIndex;slide.classList.toggle("is-active",active);slide.setAttribute("aria-hidden",String(!active))});tabs.forEach((tab,i)=>tab.setAttribute("aria-selected",String(i===soloReviewIndex)));const status=root.querySelector("[data-review-status]");if(status)status.textContent=String(soloReviewIndex+1).padStart(2,"0")+" / "+String(total).padStart(2,"0")}
+function startSoloReviewAuto(){stopSoloReviewAuto();const root=document.querySelector("[data-review-showcase]");if(!root||matchMedia("(prefers-reduced-motion: reduce)").matches)return;soloReviewTimer=setInterval(()=>{if(!root.matches(":hover")&&!root.matches(":focus-within"))setSoloReview(soloReviewIndex+1)},3600)}
+function initSoloReviewShowcase(){const root=document.querySelector("[data-review-showcase]");stopSoloReviewAuto();if(!root)return;soloReviewIndex=0;setSoloReview(0);const move=delta=>{setSoloReview(soloReviewIndex+delta);startSoloReviewAuto()};root.querySelector("[data-solo-review-prev]")?.addEventListener("click",()=>move(-1));root.querySelector("[data-solo-review-next]")?.addEventListener("click",()=>move(1));root.querySelectorAll("[data-solo-review-goto]").forEach(button=>button.addEventListener("click",()=>{setSoloReview(Number(button.dataset.soloReviewGoto));startSoloReviewAuto()}));root.addEventListener("keydown",event=>{if(event.key==="ArrowRight"){event.preventDefault();move(1)}else if(event.key==="ArrowLeft"){event.preventDefault();move(-1)}});startSoloReviewAuto()}
 function processMedia(step){const media=step[2];if(!media)return "";if(Array.isArray(media))return '<div class="process-image is-pair">'+media.map((source,index)=>img(source,step[0]+' 예시 사진 '+(index+1))).join("")+'</div>';if(typeof media==="object"&&media.duration)return '<div class="process-duration-card"><span>PRODUCTION PERIOD</span><strong>'+escapeHtml(media.duration)+'</strong><small>'+escapeHtml(media.note||"")+'</small></div>';return '<div class="process-image">'+img(media,step[0]+' 과정 이미지')+'</div>'}
 function processSection(steps=PROCESS){const hasImages=steps.some(step=>step[2]);return '<section class="shell section" id="process">'+heading("","진행 과정","상담부터 최종본 전달까지 순서대로 진행합니다")+'<ol class="process-list'+(hasImages?' has-images':'')+'">'+steps.map((s,i)=>'<li>'+processMedia(s)+'<span>'+String(i+1).padStart(2,"0")+'</span><div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div></li>').join("")+'</ol></section>'}
 function processList(steps){const hasImages=steps.some(step=>step[2]);return '<ol class="process-list'+(hasImages?' has-images':'')+'">'+steps.map((s,i)=>'<li>'+processMedia(s)+'<span>'+String(i+1).padStart(2,"0")+'</span><div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div></li>').join("")+'</ol>'}
@@ -534,17 +542,17 @@ function songProcessSection(steps){return '<section class="shell section song-pr
 const SOLO_PROCESS_IMAGES=["assets/img/song-process/01-consultation.webp","assets/img/song-process/02-recording.webp","assets/img/song-process/03-vocal-directing.webp","assets/img/song-process/04-ratio.webp","assets/img/song-process/05-melodyne.webp","assets/img/song-process/06-mixing.webp"]
 function soloProcessInfoIcon(){return '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 17.5l4.2 4.2L23.5 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
 function soloProcessCard(step,i,total){
- const hasImage=i<SOLO_PROCESS_IMAGES.length,num=String(i+1).padStart(2,"0")
- const media=hasImage?'<div class="solo-process-media">'+img(SOLO_PROCESS_IMAGES[i],step[0]+' 과정 사진')+'</div>':'<div class="solo-process-media solo-process-media-info"><span class="solo-process-info-icon">'+soloProcessInfoIcon()+'</span></div>'
- return '<li class="solo-process-card'+(hasImage?"":" is-info")+'" data-solo-process-card="'+i+'"><div class="solo-process-card-inner">'+media+'<div class="solo-process-body"><span class="solo-process-num">'+num+'<i>/'+String(total).padStart(2,"0")+'</i></span><h3>'+step[0]+'</h3><p>'+step[1]+'</p></div></div></li>'
+ const hasImage=i<SOLO_PROCESS_IMAGES.length,num=String(i+1).padStart(2,"0"),duration=typeof step[2]==="object"?step[2].duration:""
+ const media=hasImage?'<div class="solo-process-media">'+img(SOLO_PROCESS_IMAGES[i],step[0]+' 과정 사진')+'</div>':'<div class="solo-process-media solo-process-media-info"><span class="solo-process-info-icon">'+soloProcessInfoIcon()+'</span><small>PRODUCTION TIME</small><strong>'+escapeHtml(duration)+'</strong></div>'
+ return '<li class="solo-process-card'+(i===0?' is-active':'')+(hasImage?"":" is-info")+'" data-solo-process-card="'+i+'" aria-current="'+(i===0?'step':'false')+'"><button type="button" class="solo-process-card-inner" data-process-goto="'+i+'" aria-label="'+num+' '+escapeHtml(step[0])+' 단계 보기">'+media+'<span class="solo-process-card-mark" aria-hidden="true">'+soloProcessInfoIcon()+'</span><div class="solo-process-body"><span class="solo-process-num">'+num+'<i>/'+String(total).padStart(2,"0")+'</i></span><h3>'+step[0]+'</h3><p>'+step[1]+'</p></div></button></li>'
 }
 function soloProcessSlider(steps){
  const total=steps.length
  return '<section class="shell section song-process-section solo-process-section" id="process">'
-  +heading("","진행 과정","촬영과 편집은 정해진 순서대로 진행됩니다<br><strong class=\"solo-process-hl\" data-solo-process-hl>담당 엔지니어가 상담부터 완성까지 처음부터 끝까지 함께합니다</strong>")
+  +'<header class="solo-process-head"><div><span class="solo-process-kicker">PROCESS</span><h2>노래가 익숙하지 않아도<br><strong>완성까지 함께합니다.</strong></h2></div><p>상담부터 녹음과 보정, 본식용 AR 전달까지<br>일곱 단계를 순서대로 확인해 보세요.</p></header>'
   +'<div class="solo-process-slider" data-solo-process>'
   +'<ul class="solo-process-rail" data-solo-process-rail role="list" tabindex="0" aria-label="진행 과정 '+total+'단계, 좌우로 스크롤하여 확인하세요">'+steps.map((s,i)=>soloProcessCard(s,i,total)).join("")+'</ul>'
-  +'<div class="solo-process-indicator" aria-hidden="true"><span class="solo-process-indicator-current" data-solo-process-current>01</span><span class="solo-process-indicator-track"><span class="solo-process-indicator-fill" data-solo-process-fill></span></span><span class="solo-process-indicator-total">'+String(total).padStart(2,"0")+'</span></div>'
+  +'<div class="solo-process-controls"><span class="solo-process-status" data-process-status>01 / '+String(total).padStart(2,"0")+'</span><span class="solo-process-indicator-track" aria-hidden="true"><span class="solo-process-indicator-fill" data-solo-process-fill></span></span><div class="solo-process-arrows"><button type="button" data-process-prev aria-label="이전 단계">‹</button><button type="button" data-process-next aria-label="다음 단계">›</button></div></div>'
   +'</div></section>'
 }
 function processTypeButton(productKey,formatKey,icon){const format=FILM_FORMATS[formatKey],expanded=selectedFilmFormat===formatKey;return '<button type="button" aria-expanded="'+expanded+'" aria-controls="processType'+(formatKey==="live"?'Live':'Making')+'" data-process-format="'+formatKey+'"><span class="process-type-preview">'+img(FILM_FORMAT_IMAGES[productKey][formatKey],format.title+' 예시 사진')+'</span><span class="process-type-label"><span class="process-type-marker" aria-hidden="true"></span><strong><span aria-hidden="true">'+icon+'</span> '+format.title+'</strong></span></button>'}
@@ -675,22 +683,58 @@ function renderDetail(key,purpose=""){
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arExpertStory()+arComparisonSection()+soloProcessSlider(p.steps)+soloArRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)+'</div>'
+  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+soloReviewShowcase()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+arComparisonSection()+soloProcessSlider(p.steps)+soloArRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<a class="solo-inline-contact button light" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기 <span aria-hidden="true">↗</span></a></section>'+footer()+priceBar(key)+'</div>'
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
  (song?detailNext(key)+process+arRatio():(filmProduct?process+filmUpgradeDetail(key):composition(p)+process))+
  detailComparison(p)+detailIncluded(p)+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'</section>'+footer()+priceBar(key)
 }
-const RATIO_SOURCES={"30":"assets/audio/ar-samples/voice-30.wav","50":"assets/audio/ar-samples/voice-50.wav","70":"assets/audio/ar-samples/voice-70.wav","100":"assets/audio/ar-samples/voice-100.wav"}
+const RATIO_SOURCES={"30":"assets/audio/ar-samples/voice-30-web.wav","50":"assets/audio/ar-samples/voice-50-web.wav","70":"assets/audio/ar-samples/voice-70-web.wav","100":"assets/audio/ar-samples/voice-100-web.wav"}
 const ratioAudioUrls=new Map()
+const ratioAudioPromises=new Map()
+let ratioAudioGeneration=0
 function arRatio(){const ratios=["30","50","70","100"];if(!ratios.includes(voiceRatio))voiceRatio="70";return '<section class="shell section ratio-section is-loading" aria-busy="true">'+heading("","실제 AR을 들어보고<br>내 목소리 비율을 골라보세요","같은 노래를 30%부터 100%까지 비교할 수 있습니다")+'<div class="ratio-explainer"><div class="ratio-display"><span>현재 선택한 목소리 비율</span><strong id="ratioValue">'+voiceRatio+'<small>%</small></strong></div><div><div class="ratio-buttons" role="group" aria-label="AR 목소리 비율 듣기">'+ratios.map(n=>'<button class="'+(n==="70"?'is-popular':n==="100"?'is-safe':'')+'" data-ratio="'+n+'" aria-pressed="'+(n===voiceRatio)+'" disabled>'+(n==="70"?'<small>가장 인기</small>':n==="100"?'<small>완전 안전</small>':'<small aria-hidden="true">&nbsp;</small>')+'<span>'+n+'%</span></button>').join("")+'</div><div class="ratio-audio-stack"><audio id="ratioAudio" class="ratio-audio is-active" data-ratio-audio="'+voiceRatio+'" controls preload="auto">오디오를 재생할 수 없는 브라우저입니다</audio></div><p id="ratioHelp">폐하께서 제공하신 비율별 원본 음원을 준비하고 있습니다</p><p class="ratio-guide"><strong>본식에 맞는 비율을 함께 결정합니다</strong><span>스튜디오에서 리허설과 AR 연습 방법을 안내해 드리며, 실제 노래 방식에 맞춰 1:1 맞춤 비율을 결정합니다</span></p><p class="fine">샘플곡 · 그중에 그대를 만나</p></div></div></section>'}
-function ratioSource(ratio){return RATIO_SOURCES[ratio]+"?v=89"}
-async function ratioBlobSource(ratio){if(ratioAudioUrls.has(ratio))return ratioAudioUrls.get(ratio);const response=await fetch(ratioSource(ratio));if(!response.ok)throw new Error("audio load failed");const url=URL.createObjectURL(await response.blob());ratioAudioUrls.set(ratio,url);return url}
-function waitForRatioAudio(audio){return new Promise((resolve,reject)=>{if(audio.readyState>=1)return resolve();audio.addEventListener("loadedmetadata",resolve,{once:true});audio.addEventListener("error",reject,{once:true})})}
-async function prepareRatioAudioSources(){const section=document.querySelector(".ratio-section"),audio=document.querySelector("#ratioAudio");if(!section||!audio)return;try{await Promise.all(Object.keys(RATIO_SOURCES).map(ratio=>ratioBlobSource(ratio)));if(!section.isConnected)return;audio.src=ratioAudioUrls.get(voiceRatio);audio.dataset.ratioAudio=voiceRatio;audio.load();await waitForRatioAudio(audio);section.classList.remove("is-loading");section.removeAttribute("aria-busy");section.querySelectorAll("[data-ratio]").forEach(button=>button.disabled=false);section.querySelector("#ratioHelp").textContent="각 비율은 서로 다른 원본 음원이며 재생 위치를 유지해 전환됩니다"}catch{if(section.isConnected)section.querySelector("#ratioHelp").textContent="음원을 불러오지 못했습니다 잠시 후 새로고침해 주세요"}}
+function ratioSource(ratio){return RATIO_SOURCES[ratio]+"?v=167"}
+async function ratioBlobSource(ratio){
+ if(ratioAudioUrls.has(ratio))return ratioAudioUrls.get(ratio)
+ if(ratioAudioPromises.has(ratio))return ratioAudioPromises.get(ratio)
+ const generation=ratioAudioGeneration
+ const pending=fetch(ratioSource(ratio)).then(response=>{if(!response.ok)throw new Error("audio load failed: "+response.status);return response.blob()}).then(blob=>{const url=URL.createObjectURL(blob);if(generation!==ratioAudioGeneration){URL.revokeObjectURL(url);throw new Error("ratio audio route changed")};ratioAudioUrls.set(ratio,url);ratioAudioPromises.delete(ratio);return url}).catch(error=>{ratioAudioPromises.delete(ratio);throw error})
+ ratioAudioPromises.set(ratio,pending)
+ return pending
+}
+function releaseRatioAudioSources(){
+ ratioAudioGeneration++;ratioSwitchToken++;stopSoloAutoCompare()
+ const audio=document.querySelector("#ratioAudio");if(audio){audio.pause();audio.removeAttribute("src");audio.load()}
+ ratioAudioUrls.forEach(url=>URL.revokeObjectURL(url));ratioAudioUrls.clear();ratioAudioPromises.clear()
+}
+function waitForRatioAudio(audio){return new Promise((resolve,reject)=>{if(audio.readyState>=3)return resolve();let timer;const done=callback=>event=>{clearTimeout(timer);audio.removeEventListener("canplay",onReady);audio.removeEventListener("error",onError);callback(event)},onReady=done(resolve),onError=done(()=>reject(audio.error||new Error("audio load failed")));audio.addEventListener("canplay",onReady,{once:true});audio.addEventListener("error",onError,{once:true});timer=setTimeout(onError,12000)})}
+function setRatioStatus(message,isError=false){const help=document.querySelector("#ratioHelp");if(!help)return;help.textContent=message;help.classList.toggle("is-error",isError)}
+async function prepareRatioAudioSources(){const section=document.querySelector(".ratio-section"),audio=document.querySelector("#ratioAudio");if(!section||!audio)return;try{audio.src=await ratioBlobSource(voiceRatio);if(!section.isConnected)return;audio.dataset.ratioAudio=voiceRatio;audio.load();await waitForRatioAudio(audio);section.classList.remove("is-loading");section.removeAttribute("aria-busy");section.querySelectorAll("[data-ratio]").forEach(button=>button.disabled=false);setRatioStatus("각 비율은 서로 다른 원본 음원이며 재생 위치를 유지해 전환됩니다")}catch{if(section.isConnected)setRatioStatus("음원을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.",true)}}
 function fadeRatioAudio(audio,from,to,duration,token){return new Promise(resolve=>{if(!audio)return resolve(false);const started=performance.now();audio.dataset.ratioFading="true";const tick=now=>{if(token!==ratioSwitchToken){delete audio.dataset.ratioFading;resolve(false);return}const progress=Math.min(1,(now-started)/duration);audio.volume=Math.max(0,Math.min(1,from+(to-from)*progress));if(progress<1)requestAnimationFrame(tick);else{delete audio.dataset.ratioFading;resolve(true)}};requestAnimationFrame(tick)})}
-async function switchRatioAudio(ratio){const audio=document.querySelector("#ratioAudio");if(!audio||audio.dataset.ratioAudio===ratio)return;const token=++ratioSwitchToken,position=audio.currentTime||0,wasPlaying=!audio.paused,volume=audio.volume,muted=audio.muted,rate=audio.playbackRate;if(wasPlaying){const faded=await fadeRatioAudio(audio,volume,0,70,token);if(!faded)return}audio.pause();let source;try{source=await ratioBlobSource(ratio)}catch{return}if(token!==ratioSwitchToken)return;audio.src=source;audio.dataset.ratioAudio=ratio;audio.muted=muted;audio.playbackRate=rate;audio.load();try{await waitForRatioAudio(audio)}catch{return}if(token!==ratioSwitchToken)return;const limit=Number.isFinite(audio.duration)?Math.max(0,audio.duration-.05):position;try{audio.currentTime=Math.min(position,limit)}catch{}audio.volume=0;try{await audio.play()}catch{audio.volume=volume;return}if(token!==ratioSwitchToken){audio.pause();return}await fadeRatioAudio(audio,0,volume,100,token)}
+async function switchRatioAudio(ratio,options={}){
+ const audio=document.querySelector("#ratioAudio");if(!audio||audio.dataset.ratioAudio===ratio)return
+ const token=++ratioSwitchToken,position=audio.currentTime||0,oldDuration=audio.duration,wasPlaying=!audio.paused,shouldPlay=options.play??wasPlaying,volume=audio.volume,muted=audio.muted,rate=audio.playbackRate,previousSrc=audio.src,previousRatio=audio.dataset.ratioAudio
+ const nearEnd=audio.ended||(Number.isFinite(oldDuration)&&oldDuration-position<.75),nextPosition=nearEnd?0:position
+ setRatioStatus(ratio+"% 음원을 불러오는 중입니다")
+ if(wasPlaying){const faded=await fadeRatioAudio(audio,volume,0,70,token);if(!faded)return}
+ audio.pause()
+ try{
+  const source=await ratioBlobSource(ratio);if(token!==ratioSwitchToken)return
+  audio.src=source;audio.dataset.ratioAudio=ratio;audio.muted=muted;audio.playbackRate=rate;audio.load();await waitForRatioAudio(audio);if(token!==ratioSwitchToken)return
+  const limit=Number.isFinite(audio.duration)?Math.max(0,audio.duration-.75):nextPosition
+  try{audio.currentTime=Math.min(nextPosition,limit)}catch{}
+  audio.volume=volume
+  if(shouldPlay){audio.volume=0;await audio.play();if(token!==ratioSwitchToken){audio.pause();return}await fadeRatioAudio(audio,0,volume,100,token)}
+  setRatioStatus(ratio+"% · 재생 준비 완료")
+ }catch{
+  if(token!==ratioSwitchToken)return
+  audio.src=previousSrc;audio.dataset.ratioAudio=previousRatio;audio.muted=muted;audio.playbackRate=rate;audio.volume=volume;audio.load()
+  try{await waitForRatioAudio(audio);audio.currentTime=Math.min(position,Math.max(0,audio.duration-.75));if(wasPlaying)await audio.play()}catch{}
+  setRatioStatus(ratio+"% 음원을 불러오지 못했습니다. 다시 선택해 주세요.",true)
+ }
+}
 const SOLO_RATIO_STEPS=["30","50","70","100"]
 const SOLO_RATIO_META={"30":{label:"안정감 중심",desc:"AR의 도움을 충분히 받는 편안한 비율"},"50":{label:"균형 있게",desc:"내 목소리와 AR이 고르게 들리는 비율"},"70":{label:"자연스럽게",desc:"라이브의 생동감과 안정감이 잘 맞는 추천 비율"},"100":{label:"목소리 중심",desc:"녹음한 내 목소리를 가장 선명하게 듣는 비율"}}
 function soloRatioIndex(ratio){return Math.max(0,SOLO_RATIO_STEPS.indexOf(ratio))}
@@ -700,9 +744,11 @@ function soloArRatioSection(){
  return '<section class="shell section ratio-section solo-ratio is-loading" aria-busy="true" data-ratio="'+voiceRatio+'">'
   +heading("","본식에서 가장 편안한 비율을,<br>직접 들어보세요","30%부터 100%까지 같은 곡으로 비교할 수 있습니다")
   +'<div class="solo-ratio-panel">'
-  +'<div class="solo-ratio-center"><span class="solo-ratio-glow" aria-hidden="true"></span><strong class="solo-ratio-value"><span class="solo-ratio-num">'+voiceRatio+'</span><small>%</small></strong><span id="soloRatioLabel" class="solo-ratio-label">'+meta.label+'</span><span id="soloRatioDesc" class="solo-ratio-desc">'+meta.desc+'</span></div>'
+  +'<div class="solo-ratio-dial-stage" role="group" aria-label="AR 목소리 비율 선택">'
+  +SOLO_RATIO_STEPS.map(ratio=>'<button type="button" class="solo-ratio-mark solo-ratio-mark-'+ratio+(ratio===voiceRatio?' is-active':'')+'" data-ratio="'+ratio+'" aria-pressed="'+(ratio===voiceRatio)+'" disabled>'+(ratio==="70"?'<small class="solo-ratio-recommend">추천</small>':'')+'<b>'+ratio+'</b><span>'+SOLO_RATIO_META[ratio].label+'</span></button>').join("")
+  +'<div class="solo-ratio-dial" data-ratio-dial role="slider" tabindex="0" aria-label="AR 목소리 비율" aria-valuemin="30" aria-valuemax="100" aria-valuenow="'+voiceRatio+'" aria-valuetext="'+voiceRatio+'%, '+meta.label+'" style="--dial-index:'+soloRatioIndex(voiceRatio)+'"><span class="solo-ratio-dial-face" aria-hidden="true"><i></i></span><span class="solo-ratio-center"><strong class="solo-ratio-value"><span class="solo-ratio-num">'+voiceRatio+'</span><small>%</small></strong><span id="soloRatioLabel" class="solo-ratio-label">'+meta.label+'</span></span></div>'
+  +'</div><p id="soloRatioDesc" class="solo-ratio-desc">'+meta.desc+'</p>'
   +'<div class="solo-ratio-player"><audio id="ratioAudio" class="ratio-audio is-active" data-ratio-audio="'+voiceRatio+'" preload="auto">오디오를 재생할 수 없는 브라우저입니다</audio><button type="button" class="solo-ratio-play" id="soloRatioPlay" aria-label="재생" disabled><svg class="icon-play" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg><svg class="icon-pause" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" hidden><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></button><div class="solo-ratio-progress"><span class="solo-ratio-time" id="soloRatioCurrent">0:00</span><div class="solo-ratio-bar" id="soloRatioBar"><span class="solo-ratio-bar-fill" id="soloRatioBarFill"></span></div><span class="solo-ratio-time" id="soloRatioDuration">0:00</span></div><button type="button" class="solo-ratio-mute" id="soloRatioMute" aria-label="음소거"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6v4h2.5l3.5 3V3l-3.5 3H2Z" fill="currentColor"/><path class="mute-wave" d="M10.5 5.5a3 3 0 0 1 0 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></button></div>'
-  +'<div class="solo-ratio-slider-wrap"><span class="solo-ratio-bubble'+(voiceRatio==="70"?" is-active":"")+'" id="soloRatioBubble" aria-hidden="true">추천</span><input type="range" id="soloRatioSlider" class="solo-ratio-slider" style="--solo-ratio-fill:'+(soloRatioIndex(voiceRatio)/3*100)+'%" min="0" max="3" step="1" value="'+soloRatioIndex(voiceRatio)+'" aria-label="AR 목소리 비율" aria-valuemin="30" aria-valuemax="100" aria-valuenow="'+voiceRatio+'" aria-valuetext="'+voiceRatio+'%, '+meta.label+'" disabled/><div class="solo-ratio-ticks" aria-hidden="true">'+SOLO_RATIO_STEPS.map(n=>'<span class="'+(n===voiceRatio?'is-active':'')+'"><b>'+n+'%</b><small>'+SOLO_RATIO_META[n].label+'</small></span>').join("")+'</div></div>'
   +'<button type="button" class="solo-ratio-compare" id="soloRatioCompare" disabled>4가지 비율 자동 비교</button>'
   +'<p id="ratioHelp" class="solo-ratio-status" role="status" aria-live="polite">비율별 원본 음원을 준비하고 있습니다</p>'
   +'<p class="solo-ratio-guide"><strong>본식에 맞는 비율은 함께 결정합니다</strong><span>스튜디오 리허설과 AR 연습을 통해<br>실제 노래 방식에 맞는 비율을 안내해드립니다.</span></p>'
@@ -722,13 +768,11 @@ function applySoloRatioText(section,ratio){
  section.querySelector(".solo-ratio-num").textContent=ratio
  section.querySelector("#soloRatioLabel").textContent=meta.label
  section.querySelector("#soloRatioDesc").textContent=meta.desc
- const slider=section.querySelector("#soloRatioSlider")
- slider.value=soloRatioIndex(ratio)
- slider.style.setProperty("--solo-ratio-fill",(soloRatioIndex(ratio)/3*100)+"%")
- slider.setAttribute("aria-valuenow",ratio)
- slider.setAttribute("aria-valuetext",ratio+"%, "+meta.label)
- section.querySelectorAll(".solo-ratio-ticks span").forEach((el,i)=>el.classList.toggle("is-active",SOLO_RATIO_STEPS[i]===ratio))
- section.querySelector("#soloRatioBubble").classList.toggle("is-active",ratio==="70")
+ const dial=section.querySelector("[data-ratio-dial]")
+ dial.style.setProperty("--dial-index",soloRatioIndex(ratio))
+ dial.setAttribute("aria-valuenow",ratio)
+ dial.setAttribute("aria-valuetext",ratio+"%, "+meta.label)
+ section.querySelectorAll(".solo-ratio-mark").forEach(button=>{const active=button.dataset.ratio===ratio;button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",String(active))})
 }
 function togglseSoloPlayIcon(btn,playing){btn.querySelector(".icon-play").hidden=playing;btn.querySelector(".icon-pause").hidden=!playing;btn.setAttribute("aria-label",playing?"일시정지":"재생")}
 let soloAutoCompareToken=0
@@ -737,25 +781,34 @@ function stopSoloAutoCompare(){soloAutoCompareToken++;const compareBtn=document.
 async function startSoloAutoCompare(section,compareBtn,audio){
  const token=++soloAutoCompareToken
  compareBtn.classList.add("is-running");compareBtn.textContent="자동 비교 중지"
+ try{await Promise.all(SOLO_RATIO_STEPS.filter(ratio=>ratio!==audio.dataset.ratioAudio).map(ratio=>ratioBlobSource(ratio)))}catch{if(token===soloAutoCompareToken){compareBtn.classList.remove("is-running");compareBtn.textContent="4가지 비율 자동 비교";setRatioStatus("비교할 음원을 모두 불러오지 못했습니다. 다시 시도해 주세요.",true)}return}
+ if(token!==soloAutoCompareToken)return
  if(audio.paused){try{await audio.play()}catch{}}
  for(const ratio of SOLO_RATIO_STEPS){
   if(token!==soloAutoCompareToken)return
-  if(ratio!==voiceRatio){voiceRatio=ratio;animateSoloRatioValue(section,ratio);await switchRatioAudio(ratio)}
+  if(ratio!==voiceRatio){voiceRatio=ratio;animateSoloRatioValue(section,ratio);await switchRatioAudio(ratio,{play:true})}
   if(token!==soloAutoCompareToken)return
   const ok=await soloSleep(4500,token)
   if(!ok)return
  }
  if(token!==soloAutoCompareToken)return
- voiceRatio="70";animateSoloRatioValue(section,"70");await switchRatioAudio("70")
+ voiceRatio="70";animateSoloRatioValue(section,"70");await switchRatioAudio("70",{play:true})
  if(token!==soloAutoCompareToken)return
  audio.pause()
  compareBtn.classList.remove("is-running");compareBtn.textContent="4가지 비율 자동 비교"
 }
 function initSoloArRatio(){
  const section=document.querySelector(".solo-ratio");if(!section)return
- const slider=section.querySelector("#soloRatioSlider"),playBtn=section.querySelector("#soloRatioPlay"),muteBtn=section.querySelector("#soloRatioMute"),bar=section.querySelector("#soloRatioBar"),barFill=section.querySelector("#soloRatioBarFill"),curEl=section.querySelector("#soloRatioCurrent"),durEl=section.querySelector("#soloRatioDuration"),compareBtn=section.querySelector("#soloRatioCompare"),audio=section.querySelector("#ratioAudio")
- if(!slider||!audio)return
- slider.addEventListener("input",()=>{stopSoloAutoCompare();const ratio=SOLO_RATIO_STEPS[Number(slider.value)];if(ratio===voiceRatio)return;voiceRatio=ratio;animateSoloRatioValue(section,ratio);switchRatioAudio(ratio)})
+ const dial=section.querySelector("[data-ratio-dial]"),marks=[...section.querySelectorAll(".solo-ratio-mark")],playBtn=section.querySelector("#soloRatioPlay"),muteBtn=section.querySelector("#soloRatioMute"),bar=section.querySelector("#soloRatioBar"),barFill=section.querySelector("#soloRatioBarFill"),curEl=section.querySelector("#soloRatioCurrent"),durEl=section.querySelector("#soloRatioDuration"),compareBtn=section.querySelector("#soloRatioCompare"),audio=section.querySelector("#ratioAudio")
+ if(!dial||!audio)return
+ const choose=ratio=>{if(ratio===voiceRatio)return;stopSoloAutoCompare();voiceRatio=ratio;animateSoloRatioValue(section,ratio);switchRatioAudio(ratio)}
+ marks.forEach(button=>button.addEventListener("click",()=>choose(button.dataset.ratio)))
+ dial.addEventListener("keydown",e=>{if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();const delta=e.key==="ArrowRight"?1:-1,index=Math.min(SOLO_RATIO_STEPS.length-1,Math.max(0,soloRatioIndex(voiceRatio)+delta));choose(SOLO_RATIO_STEPS[index])})
+ let turning=false
+ const chooseFromPointer=e=>{const rect=dial.getBoundingClientRect(),x=e.clientX-(rect.left+rect.width/2),y=e.clientY-(rect.top+rect.height/2),index=y<0?(x<0?0:1):(x<0?3:2);choose(SOLO_RATIO_STEPS[index])}
+ dial.addEventListener("pointerdown",e=>{turning=true;chooseFromPointer(e);try{dial.setPointerCapture(e.pointerId)}catch{}})
+ dial.addEventListener("pointermove",e=>{if(turning)chooseFromPointer(e)})
+ dial.addEventListener("pointerup",()=>turning=false);dial.addEventListener("pointercancel",()=>turning=false)
  playBtn.addEventListener("click",()=>{if(audio.paused)audio.play().catch(()=>{});else audio.pause()})
  audio.addEventListener("play",()=>togglseSoloPlayIcon(playBtn,true))
  audio.addEventListener("pause",()=>togglseSoloPlayIcon(playBtn,false))
@@ -764,7 +817,7 @@ function initSoloArRatio(){
  bar.addEventListener("click",e=>{if(!Number.isFinite(audio.duration))return;const rect=bar.getBoundingClientRect(),pos=Math.min(1,Math.max(0,(e.clientX-rect.left)/rect.width));audio.currentTime=pos*audio.duration})
  muteBtn.addEventListener("click",()=>{audio.muted=!audio.muted;muteBtn.classList.toggle("is-muted",audio.muted);muteBtn.setAttribute("aria-label",audio.muted?"음소거 해제":"음소거")})
  compareBtn.addEventListener("click",()=>{if(compareBtn.classList.contains("is-running")){stopSoloAutoCompare();return}startSoloAutoCompare(section,compareBtn,audio)})
- const enableWhenReady=()=>{if(!section.classList.contains("is-loading")){slider.disabled=false;playBtn.disabled=false;compareBtn.disabled=false;return}requestAnimationFrame(enableWhenReady)}
+ const enableWhenReady=()=>{if(!section.classList.contains("is-loading")){marks.forEach(button=>button.disabled=false);playBtn.disabled=false;compareBtn.disabled=false;return}requestAnimationFrame(enableWhenReady)}
  enableWhenReady()
 }
 let soloProcessHintDone=false,soloProcessHlObserver=null
@@ -776,9 +829,9 @@ function initSoloProcessHighlight(){
  soloProcessHlObserver.observe(target)
 }
 function setSoloProcessActive(rail,cards,index){
- const total=cards.length,current=document.querySelector("[data-solo-process-current]"),fill=document.querySelector("[data-solo-process-fill]")
- cards.forEach((card,i)=>card.classList.toggle("is-active",i===index))
- if(current)current.textContent=String(index+1).padStart(2,"0")
+ const total=cards.length,status=document.querySelector("[data-process-status]"),fill=document.querySelector("[data-solo-process-fill]")
+ cards.forEach((card,i)=>{const active=i===index;card.classList.toggle("is-active",active);card.setAttribute("aria-current",active?"step":"false")})
+ if(status)status.textContent=String(index+1).padStart(2,"0")+" / "+String(total).padStart(2,"0")
  if(fill)fill.style.width=(total>1?index/(total-1)*100:0)+"%"
 }
 function closestSoloProcessCard(rail,cards){
@@ -791,15 +844,23 @@ function initSoloProcessSlider(){
  const rail=document.querySelector("[data-solo-process-rail]");if(!rail)return
  const cards=[...rail.querySelectorAll("[data-solo-process-card]")]
  setSoloProcessActive(rail,cards,0)
+ const go=(index,behavior="smooth")=>{const next=Math.min(cards.length-1,Math.max(0,index));setSoloProcessActive(rail,cards,next);requestAnimationFrame(()=>cards[next].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":behavior,inline:"center",block:"nearest"}))}
+ rail.querySelectorAll("[data-process-goto]").forEach(button=>button.addEventListener("click",()=>go(Number(button.dataset.processGoto))))
+ document.querySelector("[data-process-prev]")?.addEventListener("click",()=>go(closestSoloProcessCard(rail,cards)-1))
+ document.querySelector("[data-process-next]")?.addEventListener("click",()=>go(closestSoloProcessCard(rail,cards)+1))
  let ticking=false
  const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{setSoloProcessActive(rail,cards,closestSoloProcessCard(rail,cards));ticking=false})}
  rail.addEventListener("scroll",onScroll,{passive:true})
  rail.addEventListener("keydown",e=>{
   if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return
   e.preventDefault()
-  const current=closestSoloProcessCard(rail,cards),next=cards[Math.min(cards.length-1,Math.max(0,current+(e.key==="ArrowRight"?1:-1)))]
-  next.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",inline:"center",block:"nearest"})
+  const current=closestSoloProcessCard(rail,cards);go(current+(e.key==="ArrowRight"?1:-1))
  })
+ let dragging=false,startX=0,startScroll=0
+ rail.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;dragging=true;startX=e.clientX;startScroll=rail.scrollLeft;rail.classList.add("is-dragging");rail.setPointerCapture(e.pointerId)})
+ rail.addEventListener("pointermove",e=>{if(!dragging)return;const delta=e.clientX-startX;if(Math.abs(delta)>6)e.preventDefault();rail.scrollLeft=startScroll-delta})
+ const endDrag=()=>{if(!dragging)return;dragging=false;rail.classList.remove("is-dragging");go(closestSoloProcessCard(rail,cards))}
+ rail.addEventListener("pointerup",endDrag);rail.addEventListener("pointercancel",endDrag)
  initSoloProcessHighlight()
  if(soloProcessHintDone||matchMedia("(prefers-reduced-motion: reduce)").matches||cards.length<2)return
  const cancelHint=()=>{soloProcessHintDone=true;rail.classList.remove("is-hinting");["pointerdown","wheel","touchstart","keydown"].forEach(evt=>rail.removeEventListener(evt,cancelHint))}
@@ -892,6 +953,7 @@ let firstRender=true
 function route(){
  closeDialog();routeObserver?.disconnect();const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const purpose=parts[2]||"";const validDetail=detail||choice;
+ const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  document.body.dataset.page=home?"home":event?"event":validDetail?"detail":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",Boolean(detail&&key==="solo"));
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!(detail&&key==="solo");
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
@@ -904,6 +966,7 @@ function route(){
  initArCompare();
  initSoloTopCta();
  initSoloPersonTabs();
+ initSoloReviewShowcase();
  initSoloArRatio();
  initSoloProcessSlider();
  startReviewCarousel();
@@ -928,7 +991,7 @@ document.addEventListener("click",e=>{
  if(el.hasAttribute("data-review-prev")){moveReviews(-1);startReviewCarousel(false)}
  if(el.hasAttribute("data-review-next")){moveReviews(1);startReviewCarousel(false)}
  if(el.dataset.optionPlus||el.dataset.optionMinus){const key=el.dataset.optionPlus||el.dataset.optionMinus,option=eventProductOptions(currentEventProduct,currentEventPurpose).find(item=>item.key===key),delta=el.dataset.optionPlus?1:-1,max=option?.max??Infinity;optionQuantities[key]=Math.min(max,Math.max(0,(optionQuantities[key]||0)+delta));const output=document.querySelector('[data-option-count="'+key+'"]');if(output)output.textContent=optionQuantities[key]+(option?.unit||'회');updatePrice()}
- if(el.dataset.ratio){voiceRatio=el.dataset.ratio;document.querySelector("#ratioValue").innerHTML=voiceRatio+"<small>%</small>";document.querySelectorAll("[data-ratio]").forEach(b=>b.setAttribute("aria-pressed",String(b===el)));switchRatioAudio(voiceRatio)}
+ if(el.dataset.ratio&&!el.closest(".solo-ratio")){voiceRatio=el.dataset.ratio;const value=document.querySelector("#ratioValue");if(value)value.innerHTML=voiceRatio+"<small>%</small>";document.querySelectorAll("[data-ratio]").forEach(b=>b.setAttribute("aria-pressed",String(b===el)));switchRatioAudio(voiceRatio)}
  if(el.hasAttribute("data-ar-video-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){if(video.paused)video.play().catch(()=>{});else video.pause()}}
  if(el.dataset.processFormat){const section=el.closest(".film-process-section"),format=el.dataset.processFormat,expand=el.getAttribute("aria-expanded")!=="true";section?.querySelectorAll("[data-process-format]").forEach(button=>button.setAttribute("aria-expanded",String(expand&&button===el)));section?.querySelectorAll("[data-process-panel]").forEach(panel=>panel.hidden=!expand||panel.dataset.processPanel!==format)}
  if(el.matches("summary[data-process-step]")){const current=el.closest("details");current?.parentElement.querySelectorAll(":scope > details[open]").forEach(item=>{if(item!==current)item.open=false})}
