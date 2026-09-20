@@ -137,13 +137,11 @@ async function testContent(browser) {
     'comparison arrows should remain visible without hover or focus'
   )
 
-  const expert = page.locator('[data-expert-split]')
-  const before = await expert.locator('[data-expert-panel]').evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width))
-  assert.ok(before[1] > before[0] * 1.6, 'second expert panel should start at approximately 65 percent')
-  await expert.locator('[data-expert-panel]').first().click()
-  await page.waitForTimeout(450)
-  const after = await expert.locator('[data-expert-panel]').evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width))
-  assert.ok(after[0] > after[1] * 1.6, 'click should reverse the 35:65 expert panel emphasis')
+  const expert = page.locator('[data-story-carousel]')
+  assert.equal(await expert.locator('[data-story-slide]').count(), 2)
+  await expert.locator('[data-story-next]').click()
+  await page.waitForTimeout(650)
+  assert.equal(await expert.locator('[data-story-slide="1"].is-active').count(), 1, 'brand story next control should slide to the second editorial story')
 
   assert.equal(await page.locator('[data-solo-process-card]').count(), 7)
   assert.equal(await page.locator('[data-solo-process-card] img').count(), 6)
@@ -164,13 +162,9 @@ async function testControls(browser) {
   assert.equal(await mobile.locator('.solo-ratio [data-ratio]').count(), 4, 'dial should expose four direct ratio controls')
   const dial = mobile.locator('[data-ratio-dial]')
   assert.equal(await dial.getAttribute('aria-valuenow'), '70')
-  await dial.press('ArrowRight')
+  await mobile.locator('[data-ratio-choice="100"]').click()
   await mobile.waitForTimeout(300)
-  assert.equal(await dial.getAttribute('aria-valuenow'), '100', 'ArrowRight should move the dial to the next ratio')
-  const dialBox = await dial.boundingBox()
-  await mobile.mouse.click(dialBox.x + 60, dialBox.y + 60)
-  await mobile.waitForTimeout(300)
-  assert.equal(await dial.getAttribute('aria-valuenow'), '30', 'turning toward the upper-left mark should select 30 percent')
+  assert.equal(await dial.getAttribute('aria-valuenow'), '100', 'ratio choice should update the visual dial')
   assert.equal(await mobile.locator('.solo-top-cta a[href="#/event/solo"]:visible').count(), 1)
   assert.equal(await mobile.locator('.detail-faq-price:visible,.fixed-price:visible').count(), 0, 'duplicate price calls to action should be removed')
   assert.equal(await mobile.locator('#floatingKakao:visible').count(), 0, 'mobile Kakao control must not cover content')
@@ -178,7 +172,7 @@ async function testControls(browser) {
   await mobile.close()
 
   const desktop = await openSolo(browser, { width: 1280, height: 720 })
-  assert.equal(await desktop.locator('#soloDesktopCta .solo-desktop-cta-price:visible').count(), 0, 'desktop must not repeat the sticky price CTA')
+  assert.equal(await desktop.locator('#soloDesktopCta .solo-desktop-cta-price:visible').count(), 1, 'desktop should retain the price action beside contact')
   assert.equal(await desktop.locator('#soloDesktopCta .solo-desktop-cta-kakao:visible').count(), 1, 'desktop should retain the compact contact helper')
   await desktop.close()
 }
@@ -187,7 +181,7 @@ async function testReviewShowcase(browser) {
   const page = await openSolo(browser, { width: 768, height: 1024 })
   const showcase = page.locator('[data-review-showcase]')
   await showcase.scrollIntoViewIfNeeded()
-  assert.match(await showcase.innerText(), /결과는,\s*고객님의 말로 증명됩니다\./)
+  assert.match(await showcase.innerText(), /실제 고객 후기/)
   assert.equal(await showcase.locator('[data-review-slide]').count(), 11, 'phone showcase should contain all eleven customer captures')
   assert.equal(await showcase.locator('[data-review-slide].is-active').count(), 1, 'only one review should be emphasized inside the phone')
   assert.match(await showcase.locator('[data-review-status]').innerText(), /01\s*\/\s*11/)
@@ -263,6 +257,98 @@ async function testReferenceProcess(browser) {
   await page.close()
 }
 
+async function testFinalPolish(browser) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' })
+  await page.goto(`${BASE}?solo-final-polish=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
+  await page.locator('.solo-detail-scope').waitFor()
+
+  const desktopCta = page.locator('#soloDesktopCta')
+  assert.equal(await desktopCta.locator('a').count(), 2, 'desktop floating CTA should include price and contact actions')
+  assert.notEqual(await desktopCta.locator('.solo-desktop-cta-price').evaluate(node => getComputedStyle(node).display), 'none', 'price action must remain visible')
+  assert.equal(await desktopCta.evaluate(node => getComputedStyle(node).position), 'fixed', 'desktop actions should float at the right edge instead of entering page flow')
+  assert.equal(await page.locator('.solo-top-cta').evaluate(node => getComputedStyle(node).position), 'static', 'top event bar should stay in document flow')
+
+  const benefit = await page.locator('.ar-primary-benefit').evaluate(section => {
+    const box = section.getBoundingClientRect()
+    const copy = section.querySelector('.ar-benefit-copy').getBoundingClientRect()
+    const wheel = section.querySelector('.ar-index-wheel').getBoundingClientRect()
+    return {
+      textAlign: getComputedStyle(section.querySelector('.ar-benefit-copy')).textAlign,
+      copyCenterError: Math.abs((copy.left + copy.width / 2) - (box.left + box.width / 2)),
+      wheelCenterError: Math.abs((wheel.left + wheel.width / 2) - (box.left + box.width / 2)),
+      copyWidth: copy.width,
+      sectionWidth: box.width
+    }
+  })
+  assert.equal(benefit.textAlign, 'center')
+  assert.ok(benefit.copyCenterError < 3 && benefit.wheelCenterError < 3, 'benefit copy and wheel should share the same visual center')
+  assert.ok(benefit.copyWidth < benefit.sectionWidth * 0.82, 'benefit copy should not leave an accidental blank column')
+
+  const story = page.locator('[data-story-carousel]')
+  assert.equal(await story.locator('[data-story-slide]').count(), 2, 'brand story should use two editorial slides')
+  assert.equal(await story.locator('[data-story-slide].is-active').count(), 1)
+  assert.match(await story.locator('[data-story-status]').innerText(), /01\s*\/\s*02/)
+  const storyLayout = await story.locator('[data-story-slide].is-active').evaluate(slide => {
+    const image = slide.querySelector('.ar-story-image').getBoundingClientRect()
+    return {
+      columns: getComputedStyle(slide.querySelector('.ar-story-copy')).gridTemplateColumns,
+      imageRatio: image.width / image.height
+    }
+  })
+  assert.ok(storyLayout.columns.split(' ').length >= 2, 'desktop story copy should follow the reference two-column editorial layout')
+  assert.ok(storyLayout.imageRatio > 1.8, 'story image should be a wide editorial photograph')
+  await story.locator('[data-story-next]').click()
+  await page.waitForTimeout(650)
+  assert.match(await story.locator('[data-story-status]').innerText(), /02\s*\/\s*02/)
+
+  const review = page.locator('[data-review-showcase]')
+  assert.match(await review.innerText(), /실제 고객 후기/)
+  const reviewGeometry = await review.evaluate(section => {
+    const phone = section.querySelector('.solo-review-phone').getBoundingClientRect()
+    const copy = section.querySelector('.solo-review-copy').getBoundingClientRect()
+    return { height: section.getBoundingClientRect().height, phoneWidth: phone.width, copyWidth: copy.width }
+  })
+  assert.ok(reviewGeometry.height >= 580 && reviewGeometry.height <= 680, 'review stage should keep the reference landscape proportion')
+  assert.ok(reviewGeometry.phoneWidth > reviewGeometry.copyWidth, 'phone should be the dominant visual')
+
+  const process = page.locator('.solo-process-section')
+  const processStyle = await process.evaluate(section => {
+    const active = section.querySelector('.solo-process-card.is-active')
+    const inactive = section.querySelector('.solo-process-card:not(.is-active)')
+    return {
+      accent: getComputedStyle(section.querySelector('.solo-process-head strong')).color,
+      shadow: getComputedStyle(active.querySelector('.solo-process-card-inner')).boxShadow,
+      transition: getComputedStyle(active).transitionDuration,
+      inactiveOpacity: Number(getComputedStyle(inactive).opacity)
+    }
+  })
+  assert.equal(processStyle.accent, 'rgb(21, 25, 26)', 'process heading should use the neutral black reference color')
+  assert.notEqual(processStyle.shadow, 'none', 'active process card should have a soft elevated shadow')
+  assert.ok(processStyle.transition.split(',').some(value => parseFloat(value) >= 0.45), 'process card motion should be deliberate and smooth')
+  assert.ok(processStyle.inactiveOpacity < 0.7, 'side cards should recede softly behind the active card')
+
+  const ratio = page.locator('.solo-ratio')
+  const ratioLayout = await ratio.evaluate(section => ({
+    columns: getComputedStyle(section.querySelector('.solo-ratio-experience')).gridTemplateColumns,
+    glow: section.querySelectorAll('.solo-ratio-orbit-glow').length,
+    choices: section.querySelectorAll('[data-ratio-choice]').length
+  }))
+  assert.ok(ratioLayout.columns.split(' ').length >= 2, 'desktop AR ratio experience should use copy/controls and dial columns')
+  assert.equal(ratioLayout.glow, 1, 'ratio dial should expose one glowing current-position marker')
+  assert.equal(ratioLayout.choices, 4)
+  await ratio.locator('[data-ratio-choice="50"]').click()
+  await page.waitForFunction(() => document.querySelector('#ratioAudio')?.dataset.ratioAudio === '50')
+  await page.waitForFunction(() => document.querySelector('.solo-ratio-num')?.textContent === '50')
+  assert.equal(await ratio.locator('.solo-ratio-num').innerText(), '50')
+
+  const revealTargets = ['.solo-review-copy', '.solo-review-visual', '.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.solo-ratio-control header', '.solo-ratio-visual']
+  for (const selector of revealTargets) {
+    assert.equal(await page.locator(selector).first().evaluate(node => node.classList.contains('motion-reveal')), true, `${selector} should participate in restrained scroll motion`)
+  }
+
+  await page.close()
+}
+
 async function captureVisuals(browser) {
   const output = path.join(__dirname, 'qa')
   fs.mkdirSync(output, { recursive: true })
@@ -289,6 +375,7 @@ async function captureVisuals(browser) {
     if (runs('controls')) await testControls(browser)
     if (runs('reviews')) await testReviewShowcase(browser)
     if (runs('process-ref')) await testReferenceProcess(browser)
+    if (runs('final-polish')) await testFinalPolish(browser)
     if (groups.size === 0) await captureVisuals(browser)
     console.log('solo detail redesign checks passed')
   } finally {
