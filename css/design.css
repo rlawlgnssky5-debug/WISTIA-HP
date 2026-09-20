@@ -1128,23 +1128,9 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 .ar-hook-copy h1 strong{font-weight:600}
 .ar-hook-copy>p{max-width:630px;margin-top:24px;font-size:17px;line-height:1.8;color:#f4f6f6;text-shadow:none}
 .ar-primary-benefit{padding-block:clamp(64px,9vw,96px)}
-.ar-origin-story{background:#f1f3f3}
-.ar-origin-kicker{display:block;margin-bottom:24px;font-size:11px;letter-spacing:.16em;color:#738087}
-.ar-origin-story h2{max-width:1100px;font-size:clamp(36px,4.5vw,58px);line-height:1.42;font-weight:600;letter-spacing:-.055em;word-break:keep-all}
-.ar-origin-lead{max-width:780px;margin:24px 0 48px;font-size:17px;line-height:1.9;color:#56636a;word-break:keep-all}
-.ar-origin-photo,.ar-origin-ending{overflow:hidden;background:#d7dcde}
-.ar-origin-photo{aspect-ratio:2.1}
-.ar-origin-photo img,.ar-origin-ending img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(.8)}
-.ar-origin-ending{position:relative;aspect-ratio:2.1;margin-top:24px;color:#fff}
-.ar-origin-ending figure{position:absolute;inset:0}
-.ar-origin-ending:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#101a2108 5%,#101a21a8 48%,#101a21eb 100%)}
-.ar-origin-ending p{position:absolute;left:clamp(25px,5vw,70px);right:25px;bottom:clamp(24px,4vw,55px);z-index:1;color:#fff;font-size:clamp(20px,2.4vw,34px);line-height:1.65;letter-spacing:-.04em;text-shadow:0 1px 7px #0008}
-.ar-origin-ending strong{font-weight:600}
-.ar-origin-star{display:block;margin-bottom:8px;font-size:32px;line-height:1;color:#e0c893}
 /* [promoted from @media(max-width:800px)] */
 .ar-hook-hero{min-height:clamp(580px,calc(100svh - 300px),680px)}
 .ar-hook-copy h1{font-size:52px}
-.ar-origin-photo,.ar-origin-ending{aspect-ratio:1.5}
 
 @media(max-width:540px){
  .ar-hook-hero{min-height:clamp(520px,calc(100svh - var(--header) - 165px),640px);margin-top:0}
@@ -1155,19 +1141,60 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
  .ar-hook-copy h1{margin-top:14px;font-size:38px;line-height:1.35}
  .ar-hook-copy>p{margin-top:19px;font-size:14px;line-height:1.8}
  .ar-primary-benefit{padding-top:56px;padding-bottom:64px}
- .ar-origin-story{padding-block:74px 82px}
- .ar-origin-kicker{font-size:10px}
- .ar-origin-story h2{font-size:31px}
- .ar-origin-lead{margin:22px 0 34px;font-size:14px;line-height:1.85}
- .ar-origin-photo{aspect-ratio:1.4}
- .ar-origin-ending{aspect-ratio:auto;min-height:390px;margin-top:14px}
- .ar-origin-ending p{left:22px;right:18px;bottom:21px;font-size:17px;line-height:1.6}
 }
 @media(max-width:360px){
  .ar-hook-copy{width:calc(100% - 36px)}
  .ar-hook-copy h1{font-size:34px}
- .ar-origin-story h2{font-size:28px}
- .ar-origin-ending p{font-size:16px}
+}
+
+/* WISTIA · 제작 이야기 — 전문가 스토리 슬라이더 (v157) */
+.ar-expert-story{background:#f7f8f8}
+.ar-expert-head{max-width:100%}
+.ar-expert-kicker{display:block;margin-bottom:16px;font-size:11px;letter-spacing:.16em;color:var(--silver);font-weight:500}
+.ar-expert-story h2{margin:0;font-size:clamp(24px,7.2vw,30px);line-height:1.4;letter-spacing:-.02em}
+.ar-expert-line1{display:inline-block;font-weight:400;color:var(--ink)}
+.ar-expert-line2-wrap{position:relative;display:inline-block;margin-top:4px}
+.ar-expert-line2{display:inline-block;font-weight:700;color:var(--ink)}
+.ar-expert-underline{display:block;width:100%;height:10px;margin-top:3px}
+.ar-expert-underline path{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-dasharray:360;stroke-dashoffset:360;animation:arExpertUnderline .7s ease-out forwards;animation-delay:.25s}
+@keyframes arExpertUnderline{to{stroke-dashoffset:0}}
+.ar-expert-desc{margin:18px 0 0;font-size:14px;line-height:1.8;color:var(--muted)}
+.ar-expert-stage{position:relative;padding-block:28px}
+.ar-expert-connection-line{position:absolute;left:-48px;right:-48px;top:50%;height:180px;transform:translateY(-50%);z-index:0;pointer-events:none;opacity:.85;background-image:url("../assets/img/wistia-seamless-connection-line.svg");background-repeat:repeat-x;background-position:0 center;background-size:1600px 180px;animation:arExpertLineLoop 20s linear infinite}
+@keyframes arExpertLineLoop{from{background-position-x:0}to{background-position-x:-1600px}}
+.ar-expert-viewport{position:relative;z-index:1;overflow:hidden;border-radius:18px;touch-action:pan-y;user-select:none}
+.ar-expert-viewport:focus-visible{outline:2px solid #526b7a;outline-offset:4px}
+.ar-expert-track{display:flex;transition:transform .6s cubic-bezier(.22,.61,.36,1)}
+.ar-expert-card{flex:0 0 100%;min-width:0;display:grid;grid-template-columns:1.7fr 1fr;gap:18px;align-items:center;background:#fff;border-radius:18px;padding:28px 24px}
+.ar-expert-card-text{display:flex;flex-direction:column;gap:8px;min-width:0;opacity:0;transform:translateY(10px)}
+.ar-expert-card.is-active .ar-expert-card-text{animation:arExpertTextIn .5s ease-out forwards}
+@keyframes arExpertTextIn{to{opacity:1;transform:translateY(0)}}
+.ar-expert-index{font-size:11px;letter-spacing:.09em;color:var(--silver);font-weight:600}
+.ar-expert-keyword{font-size:clamp(20px,6.2vw,25px);font-weight:700;color:var(--ink);line-height:1.25}
+.ar-expert-sub{font-size:13px;font-weight:600;color:#4b5459}
+.ar-expert-detail{margin-top:6px;font-size:12.5px;line-height:1.75;color:var(--muted)}
+.ar-expert-card-media{aspect-ratio:.82;border-radius:12px;overflow:hidden;background:#dfe2e3;align-self:stretch}
+.ar-expert-card-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.75) contrast(1.02);-webkit-user-drag:none;user-select:none;pointer-events:none}
+.ar-expert-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px}
+.ar-expert-nav{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:transparent;color:var(--silver);font-size:16px;transition:background-color .15s ease-out,color .15s ease-out}
+.ar-expert-nav:hover,.ar-expert-nav:focus-visible{color:var(--ink);background:var(--wash)}
+.ar-expert-dots{display:flex;gap:4px}
+.ar-expert-dots button{min-width:44px;min-height:44px;padding:0 4px;font-size:11px;letter-spacing:.05em;color:var(--silver);font-weight:600;border-bottom:2px solid transparent;transition:color .2s ease-out,border-color .2s ease-out}
+.ar-expert-dots button[aria-selected=true]{color:var(--ink);border-color:var(--ink)}
+.ar-expert-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:380px){
+ .ar-expert-card{grid-template-columns:1fr;gap:16px;padding:24px 20px}
+ .ar-expert-card-media{aspect-ratio:1.7}
+}
+@media(max-width:540px){
+ .ar-expert-story h2{font-size:26px}
+ .ar-expert-stage{padding-block:20px}
+ .ar-expert-connection-line{height:120px}
+}
+@media(prefers-reduced-motion:reduce){
+ .ar-expert-connection-line{animation:none}
+ .ar-expert-underline path{stroke-dashoffset:0;animation:none}
+ .ar-expert-card-text{opacity:1;transform:none;animation:none}
 }
 
 /* Kakao channel inquiry, kept separate from the price-check bar */
@@ -1250,17 +1277,7 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 .ar-index-item:focus-visible{outline:2px solid #526b7a;outline-offset:3px;border-radius:6px}
 @media(min-width:461px){.ar-index-wheel{width:272px}}
 
-.solo-detail-scope .ar-origin-story{padding-block:64px}
-.solo-detail-scope .ar-origin-kicker{margin-bottom:14px;font-size:11px}
-.solo-detail-scope .ar-origin-story h2{max-width:100%;margin-top:0;font-size:clamp(23px,6.2vw,27px);line-height:1.4;letter-spacing:-.02em}
-.solo-detail-scope .ar-origin-lead{max-width:100%;margin:14px 0 28px;font-size:15px;line-height:1.75}
-
-/* 3) 제작자 소개 이미지 위 문구 — 이미지가 보이도록 그라디언트를 약하게 낮추고
-   글자 크기를 24~28px 범위로, 줄간격은 1.45 전후로 정리합니다 */
-.solo-detail-scope .ar-origin-ending{aspect-ratio:1.35;min-height:0;margin-top:16px}
-.solo-detail-scope .ar-origin-ending:after{background:linear-gradient(180deg,#10182100 45%,#101a2199 78%,#101a21d6 100%)}
-.solo-detail-scope .ar-origin-ending p{left:20px;right:20px;bottom:20px;font-size:clamp(20px,5.6vw,24px);line-height:1.45}
-.solo-detail-scope .ar-origin-star{margin-bottom:6px;font-size:24px}
+.solo-detail-scope .ar-expert-story{padding-top:56px;padding-bottom:64px}
 
 /* 진행 과정 아코디언 — 카드 제목 18~21px 범위로 */
 .solo-detail-scope .process-accordion summary h3{font-size:19px;line-height:1.4}

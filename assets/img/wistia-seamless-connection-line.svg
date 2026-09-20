@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="180" viewBox="0 0 1600 180" fill="none">
+  <defs>
+    <linearGradient id="wistia-line" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#C7CDD0"/>
+      <stop offset="0.18" stop-color="#87949A"/>
+      <stop offset="0.36" stop-color="#D6D9DA"/>
+      <stop offset="0.55" stop-color="#59676D"/>
+      <stop offset="0.74" stop-color="#AAB4B8"/>
+      <stop offset="1" stop-color="#C7CDD0"/>
+    </linearGradient>
+    <filter id="soft-halo" x="-2%" y="-25%" width="104%" height="150%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- The first and last points share the same y-position and horizontal tangent.
+       This allows the 1600px tile to repeat along the x-axis without a visible seam. -->
+  <path
+    d="M0 90
+       C150 90 248 46 400 46
+       C552 46 648 90 800 90
+       C952 90 1048 134 1200 134
+       C1352 134 1450 90 1600 90"
+    stroke="url(#wistia-line)"
+    stroke-width="7"
+    stroke-linecap="round"
+    opacity="0.08"
+    filter="url(#soft-halo)"
+    vector-effect="non-scaling-stroke"
+  />
+  <path
+    d="M0 90
+       C150 90 248 46 400 46
+       C552 46 648 90 800 90
+       C952 90 1048 134 1200 134
+       C1352 134 1450 90 1600 90"
+    stroke="url(#wistia-line)"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    vector-effect="non-scaling-stroke"
+  />
+</svg>
