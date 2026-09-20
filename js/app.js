@@ -632,7 +632,7 @@ function renderDetail(key,purpose=""){
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=detailPersonTabs(key)+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arOriginStory()+process+arRatio()+detailComparison(p)+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)
+  app.innerHTML=detailPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arOriginStory()+process+arRatio()+detailComparison(p)+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)+'</div>'
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
@@ -733,7 +733,7 @@ let firstRender=true
 function route(){
  closeDialog();routeObserver?.disconnect();const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const purpose=parts[2]||"";const validDetail=detail||choice;
- document.body.dataset.page=home?"home":event?"event":validDetail?"detail":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));
+ document.body.dataset.page=home?"home":event?"event":validDetail?"detail":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",Boolean(detail&&key==="solo"));
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  document.querySelector("#headerBack").hidden=home&&type!=="find";
  if(home)renderHome(type==="find"?key:"role");else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
