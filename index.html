@@ -7,7 +7,7 @@
     if (new URLSearchParams(location.search).get('preview') === 'phone') {
       document.documentElement.classList.add('phone-preview-shell')
       addEventListener('DOMContentLoaded', () => {
-        const frameUrl = `${location.pathname}?v=160&frame=1${location.hash || '#/'}`
+        const frameUrl = `${location.pathname}?v=162&frame=1${location.hash || '#/'}`
         document.body.innerHTML = `<iframe class="phone-preview-frame" src="${frameUrl}" title="휴대폰 디자인 미리보기"></iframe>`
       })
     }
@@ -24,18 +24,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="css/design.css?v=160">
+  <link rel="stylesheet" href="css/design.css?v=162">
   <link rel="stylesheet" href="css/hero-editor.css?v=115">
   <link rel="stylesheet" href="css/process-editor.css?v=116">
   <link rel="stylesheet" href="css/home-finder.css?v=135">
   <script src="js/hero-editor.js?v=115" defer></script>
   <script src="js/process-editor.js?v=116" defer></script>
-  <script src="js/app.js?v=160" defer></script>
+  <script src="js/app.js?v=162" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#app">본문으로 바로가기</a>
   <header id="siteHeader"></header>
-  <a class="floating-kakao" id="floatingKakao" href="http://pf.kakao.com/_GbExjX/chat" target="_blank" rel="noopener noreferrer" aria-label="카카오톡으로 상담하기"><img src="assets/img/kakao-talk.png" alt="" width="56" height="56"><span>카카오톡 상담</span></a>
+  <a class="floating-kakao" id="floatingKakao" href="http://pf.kakao.com/_GbExjX/chat" target="_blank" rel="noopener noreferrer" aria-label="카카오채널 1:1 문의하기"><span class="kakao-channel-icon" aria-hidden="true">Ch</span><span class="kakao-channel-label">카카오채널 1:1 문의하기</span><b aria-hidden="true">›</b></a>
   <main id="app" tabindex="-1"></main>
   <dialog id="mediaDialog" aria-label="영상, 고객 후기 및 상담 내용"></dialog>
   <noscript>상품 탐색과 이벤트 계산을 이용하려면 JavaScript를 활성화해 주세요<br><a href="http://pf.kakao.com/_GbExjX/chat">카카오톡 상담 바로가기</a></noscript>
