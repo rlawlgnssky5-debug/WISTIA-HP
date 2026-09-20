@@ -1115,6 +1115,7 @@ html.phone-preview-shell body{
 .ar-hook-fallback{z-index:0}
 .ar-hook-media video{z-index:1;opacity:0;transition:opacity .35s ease}
 .ar-hook-media video.is-playing{opacity:1}
+.ar-hook-video-source{position:absolute;top:24px;left:28px;z-index:3;max-width:calc(100% - 180px);padding:8px 11px;border:1px solid #ffffff80;background:#182024a8;color:#fff;font-size:10px;line-height:1.5;letter-spacing:.02em}
 .ar-hook-video-control{position:absolute;top:24px;right:28px;z-index:3;display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #ffffff80;background:#182024a8;color:#fff;font-size:10px;letter-spacing:.06em}
 .ar-hook-video-control span{font-size:9px}
 .ar-hook-video-control b{font-weight:500}
@@ -1151,6 +1152,7 @@ html.phone-preview-shell body{
 @media(max-width:540px){
  .ar-hook-hero{min-height:clamp(520px,calc(100svh - var(--header) - 165px),640px);margin-top:0}
  .ar-hook-fallback,.ar-hook-media video{object-position:center 38%}
+ .ar-hook-video-source{top:16px;left:14px;max-width:calc(100% - 120px);padding:7px 9px;font-size:9px}
  .ar-hook-video-control{top:16px;right:14px;padding:7px 9px;font-size:9px}
  .ar-hook-copy{width:calc(100% - 44px);padding-top:130px;padding-bottom:58px}
  .ar-hook-copy h1{margin-top:14px;font-size:38px;line-height:1.35}
