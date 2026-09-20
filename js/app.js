@@ -632,7 +632,7 @@ function renderDetail(key,purpose=""){
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=detailPersonTabs(key)+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arOriginStory()+detailNext(key)+process+arRatio()+detailComparison(p)+detailIncluded(p)+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'</section>'+footer()+priceBar(key)
+  app.innerHTML=detailPersonTabs(key)+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arOriginStory()+process+arRatio()+detailComparison(p)+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+

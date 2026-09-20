@@ -1045,6 +1045,8 @@ html.phone-preview-shell body{
 .detail-included li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start;padding:20px 0;border-top:1px solid #d5dade}
 .detail-included li span{font:400 12px/1.7 Georgia,serif;color:#8b969b}
 .detail-included li strong{font-size:15px;font-weight:500;line-height:1.75}
+.detail-faq-price{margin-top:40px;text-align:center}
+.detail-faq-price .button{width:min(100%,480px)}
 .comparison-band{background:#f5f7f9}
 .comparison-table{border:1px solid #cbd3db;overflow:hidden;border-radius:5px}
 .comparison-head,.comparison-row{display:grid;grid-template-columns:minmax(130px,.7fr) minmax(0,1fr) minmax(0,1fr);gap:0}
