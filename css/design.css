@@ -1043,6 +1043,18 @@ html.phone-preview-shell body{
 .detail-included li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start;padding:20px 0;border-top:1px solid #d5dade}
 .detail-included li span{font:400 12px/1.7 Georgia,serif;color:#8b969b}
 .detail-included li strong{font-size:15px;font-weight:500;line-height:1.75}
+.comparison-band{background:#edf0f1}
+.comparison-table{border-top:1px solid #aeb8bd}
+.comparison-head,.comparison-row{display:grid;grid-template-columns:minmax(130px,.7fr) minmax(0,1fr) minmax(0,1fr);gap:0;border-bottom:1px solid #c7ced1}
+.comparison-head>*{padding:17px 22px;font-size:13px;font-weight:600}
+.comparison-head>*+*{border-left:1px solid #c7ced1}
+.comparison-row>*{padding:22px;font-size:14px;line-height:1.75}
+.comparison-row>*+*{border-left:1px solid #c7ced1}
+.comparison-row>strong{font-weight:600;color:#303b40}
+.comparison-row>span{color:#657177}
+.comparison-row>span:last-child{color:#263237;font-weight:500;background:#fffffff0}
+.comparison-row small{display:none}
+.comparison-note{margin-top:18px;font-size:11px;line-height:1.75;color:#77848a}
 @media(max-width:800px){
  body[data-page=event] .booking-static-bar{box-sizing:border-box;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;overflow:hidden}
  body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max-width:120px;padding:8px 0 8px 10px;gap:7px;white-space:normal;line-height:1.35}
@@ -1085,4 +1097,10 @@ html.phone-preview-shell body{
  .detail-included ul{grid-template-columns:1fr}
  .detail-included li{padding:17px 0}
  .detail-included li strong{font-size:14px}
+ .comparison-head{display:none}
+ .comparison-row{grid-template-columns:1fr 1fr}
+ .comparison-row>strong{grid-column:1/-1;padding:18px 16px 10px;border-bottom:0}
+ .comparison-row>span{padding:12px 16px 18px;font-size:12px;border-left:0}
+ .comparison-row>span+span{border-left:1px solid #c7ced1}
+ .comparison-row small{display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:.04em;color:#899399}
 }
