@@ -1428,3 +1428,109 @@ body[data-page=event] .booking-static-bar .button{width:auto;min-width:108px;max
 @media(prefers-reduced-motion:reduce){
  .ar-hook-video-source,.ar-hook-copy .eyebrow,.hero-line1,.hero-line2,.ar-hook-copy>p{opacity:1;transform:none}
 }
+
+/* ============ WISTIA 최종 UI 업데이트 (v159) ============ */
+
+/* 1) 상단 고정 가격 CTA — 헤더 바로 아래 sticky */
+.solo-top-cta-sentinel{display:block;height:0}
+.solo-top-cta{position:sticky;top:var(--header);z-index:30;background:#1c2022;transition:box-shadow .2s ease-out}
+.solo-top-cta.is-stuck{box-shadow:0 1px 0 #00000014,0 6px 14px -10px #00000024}
+.solo-top-cta a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:8px 16px;color:#fff;font-size:13.5px;font-weight:500;letter-spacing:-.01em;text-align:center}
+.solo-top-cta a b{font-weight:500;line-height:1}
+.solo-top-cta a:focus-visible{outline:2px solid #fff;outline-offset:-3px}
+@media(max-width:360px){.solo-top-cta a{font-size:12.5px;gap:6px}}
+
+/* 2) 1인·2인 선택 UI — 상품명 + 설명 위계, 탭 인디케이터 */
+.solo-person-picker{padding:0}
+.solo-person-tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.solo-person-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;padding:14px 8px;color:var(--muted);text-decoration:none;transition:background-color .15s ease-out}
+.solo-person-tab+.solo-person-tab{border-left:1px solid var(--line)}
+.solo-person-tab strong{font-size:15px;font-weight:500;color:inherit;letter-spacing:-.01em}
+.solo-person-tab span{font-size:11.5px;color:inherit;opacity:.82}
+.solo-person-tab.is-active{background:#f4f5f5;color:var(--ink)}
+.solo-person-tab.is-active strong{font-weight:700}
+@media(hover:hover){.solo-person-tab:not(.is-active):hover{background:#f8f9f9}}
+.solo-person-tab:focus-visible{outline:2px solid #526b7a;outline-offset:-2px}
+.solo-person-indicator{position:absolute;bottom:-1px;left:0;width:50%;height:2px;background:var(--ink);transform:translateX(0);transition:transform .22s ease-out}
+.solo-person-tabs[data-active="1"] .solo-person-indicator{transform:translateX(100%)}
+@media(prefers-reduced-motion:reduce){.solo-person-indicator{transition:none}}
+
+/* 3) 전문가 스토리 — 2분할 확장 패널 */
+.solo-detail-scope .ar-expert-split{position:relative;display:grid;grid-template-columns:35fr 65fr;gap:0;border-radius:17px;overflow:hidden;aspect-ratio:4/5;transition:grid-template-columns .4s cubic-bezier(.4,0,.2,1)}
+.solo-detail-scope .ar-expert-split[data-active="0"]{grid-template-columns:65fr 35fr}
+.ar-expert-panel{position:relative;display:block;min-width:0;border:0;padding:0;margin:0;background:none;cursor:pointer;text-align:left;overflow:hidden}
+.ar-expert-panel-media{position:absolute;inset:0}
+.ar-expert-panel-media img{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:saturate(.94) brightness(.98);transition:filter .4s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-media img{filter:saturate(1.04) brightness(1.02)}
+.ar-expert-panel-overlay{position:absolute;inset:0;background:linear-gradient(180deg,#1c202299 0%,#1c202266 45%,#1c202299 100%);opacity:1;transition:opacity .4s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-overlay{opacity:0;background:linear-gradient(0deg,#14171866 0%,transparent 45%)}
+.ar-expert-panel-toggle{position:absolute;top:14px;right:14px;z-index:2;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#ffffffe6;color:#1c2022;font-size:15px;line-height:1}
+.ar-expert-panel-content{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;gap:3px;padding:16px 16px 18px;color:#fff}
+.ar-expert-panel-index{font-size:10px;letter-spacing:.06em;color:#e7e9ea;opacity:.85}
+.ar-expert-panel-keyword{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.ar-expert-panel-sub{font-size:11.5px;color:#e7e9ea;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
+.ar-expert-panel-detail{display:block;font-size:12px;line-height:1.7;color:#f1f2f2;margin-top:4px;opacity:0;max-height:0;overflow:hidden;transition:opacity .22s ease-out}
+.ar-expert-panel.is-active .ar-expert-panel-sub,.ar-expert-panel.is-active .ar-expert-panel-detail{opacity:1;max-height:200px;transition-delay:.18s}
+.ar-expert-panel:focus-visible{outline:2px solid #fff;outline-offset:-3px}
+.ar-expert-hint{margin:14px 0 0;font-size:12px;color:var(--silver);text-align:center}
+@media(min-width:461px){.solo-detail-scope .ar-expert-split{aspect-ratio:16/11}}
+@media(prefers-reduced-motion:reduce){
+ .solo-detail-scope .ar-expert-split,.ar-expert-panel-media img,.ar-expert-panel-overlay,.ar-expert-panel-sub,.ar-expert-panel-detail{transition:none}
+}
+
+/* 4) AR 비율 체험 UI 전면 개선 (solo 전용, 기존 arRatio()·switchRatioAudio 로직 재사용) */
+.solo-ratio{transition:background .7s ease;background:linear-gradient(180deg,#ffffff,#f7f8f8)}
+.solo-ratio[data-ratio="50"]{background:linear-gradient(180deg,#ffffff,#eef0f0)}
+.solo-ratio[data-ratio="70"]{background:radial-gradient(120% 100% at 50% 0%,#ffffff,#eceeee 60%,#e6e8e9)}
+.solo-ratio[data-ratio="100"]{background:linear-gradient(180deg,#eef0f0,#dfe2e3)}
+.solo-ratio-panel{max-width:420px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:8px}
+.solo-ratio-center{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 0 8px;transition:opacity .16s ease-out}
+.solo-ratio-center.is-fading{opacity:0}
+.solo-ratio-glow{position:absolute;top:-10px;left:50%;width:220px;height:220px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,#ffffff 0%,#eceeee 55%,transparent 76%);z-index:0}
+.solo-ratio-value{position:relative;z-index:1;display:flex;align-items:baseline;font-weight:400;letter-spacing:-.05em;color:var(--ink);line-height:1}
+.solo-ratio-value .solo-ratio-num{font-size:clamp(56px,16vw,76px)}
+.solo-ratio-value small{font-size:22px;margin-left:4px;font-weight:400}
+.solo-ratio-label{position:relative;z-index:1;font-size:15px;font-weight:600;color:var(--ink);margin-top:2px}
+.solo-ratio-desc{position:relative;z-index:1;font-size:12.5px;color:var(--muted);margin-top:2px}
+.solo-ratio-player{width:100%;display:flex;align-items:center;gap:10px;margin-top:22px;padding:10px 14px;background:#ffffffb3;border:1px solid var(--line);border-radius:12px}
+.solo-ratio-play{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;min-height:36px;border-radius:50%;background:#1c2022;color:#fff}
+.solo-ratio-play:disabled{opacity:.4}
+.solo-ratio-play .icon-pause[hidden]{display:none}
+.solo-ratio-progress{flex:1 1 auto;display:flex;align-items:center;gap:8px;min-width:0}
+.solo-ratio-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.solo-ratio-bar{position:relative;flex:1 1 auto;height:4px;border-radius:2px;background:#dfe2e3;cursor:pointer}
+.solo-ratio-bar-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,#8b9296,#1c2022)}
+.solo-ratio-mute{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:32px;height:32px;min-width:32px;min-height:32px;color:var(--muted)}
+.solo-ratio-mute.is-muted{color:var(--ink)}
+.solo-ratio-mute .mute-wave{transition:opacity .15s}
+.solo-ratio-mute.is-muted .mute-wave{opacity:.25}
+.solo-ratio-slider-wrap{position:relative;width:100%;margin-top:30px;padding-top:26px}
+.solo-ratio-bubble{position:absolute;top:0;left:66.666%;transform:translateX(-50%);font-size:10.5px;font-weight:600;letter-spacing:.02em;padding:4px 10px;border-radius:999px;background:#eceeee;color:#7a8286;border:1px solid #d8dbdc;white-space:nowrap;transition:background-color .2s,color .2s,border-color .2s}
+.solo-ratio-bubble:after{content:"";position:absolute;left:50%;bottom:-4px;width:7px;height:7px;transform:translateX(-50%) rotate(45deg);background:inherit;border-right:1px solid #d8dbdc;border-bottom:1px solid #d8dbdc}
+.solo-ratio-bubble.is-active{background:#1c2022;color:#fff;border-color:#1c2022}
+.solo-ratio-bubble.is-active:after{border-color:#1c2022}
+.solo-ratio-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:linear-gradient(to right,#8b9296 calc(var(--solo-ratio-fill,0%)),#dfe2e3 calc(var(--solo-ratio-fill,0%)));outline:none;margin:0}
+.solo-ratio-slider:disabled{opacity:.5}
+.solo-ratio-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#c7cbcd 55%,#9aa0a3 100%);border:1px solid #b9bec0;box-shadow:0 2px 5px #1c232833;cursor:pointer;transition:transform .18s ease-out}
+.solo-ratio-slider::-webkit-slider-thumb:active{transform:scale(1.08)}
+.solo-ratio-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#c7cbcd 55%,#9aa0a3 100%);border:1px solid #b9bec0;box-shadow:0 2px 5px #1c232833;cursor:pointer}
+.solo-ratio-slider:focus-visible{outline:2px solid #526b7a;outline-offset:3px}
+.solo-ratio-ticks{display:flex;justify-content:space-between;margin-top:12px}
+.solo-ratio-ticks span{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;color:var(--silver);flex:1 1 0}
+.solo-ratio-ticks span:first-child{align-items:flex-start}
+.solo-ratio-ticks span:last-child{align-items:flex-end}
+.solo-ratio-ticks b{font-size:12px;font-weight:600;color:var(--muted)}
+.solo-ratio-ticks span.is-active b,.solo-ratio-ticks span.is-active small{color:var(--ink)}
+.solo-ratio-ticks span.is-active b{font-weight:700}
+.solo-ratio-compare{margin-top:22px;min-height:46px;width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:13.5px;font-weight:500;transition:background-color .15s}
+.solo-ratio-compare:disabled{opacity:.5}
+.solo-ratio-compare.is-running{background:#1c2022;color:#fff;border-color:#1c2022}
+@media(hover:hover){.solo-ratio-compare:not(:disabled):not(.is-running):hover{background:var(--wash)}}
+.solo-ratio-status{margin:14px 0 0;font-size:11.5px;color:var(--silver)}
+.solo-ratio-guide{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--line);text-align:left}
+.solo-ratio-guide strong{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.solo-ratio-guide span{display:block;margin-top:6px;font-size:12.5px;line-height:1.8;color:var(--muted)}
+.solo-ratio.solo-ratio .fine{margin-top:14px;font-size:11px;color:var(--silver);text-align:left}
+@media(prefers-reduced-motion:reduce){
+ .solo-ratio,.solo-ratio-center,.solo-ratio-bubble,.solo-ratio-slider,.solo-ratio-compare{transition:none}
+}

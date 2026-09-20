@@ -502,10 +502,12 @@ function startArIndexAuto(wheel){stopArIndexAuto();if(matchMedia("(prefers-reduc
 function setArIndexActive(wheel,index){const items=[...wheel.querySelectorAll(".ar-index-item")];items.forEach((b,i)=>{const active=i===index;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))})}
 function initArIndexWheel(){const wheel=document.querySelector(".ar-index-wheel");stopArIndexAuto();if(!wheel)return;const items=[...wheel.querySelectorAll(".ar-index-item")];if(!items.length)return;setArIndexActive(wheel,0);let resumeTimer=null;const pauseAuto=()=>{stopArIndexAuto();clearTimeout(resumeTimer)};const resumeAuto=()=>{clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>startArIndexAuto(wheel),3200)};items.forEach((b,i)=>{b.addEventListener("mouseenter",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("focus",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("click",()=>{pauseAuto();setArIndexActive(wheel,i);resumeAuto()});b.addEventListener("blur",()=>{if(!wheel.matches(":hover"))resumeAuto()})});wheel.addEventListener("mouseleave",()=>{if(!wheel.matches(":focus-within"))resumeAuto()});startArIndexAuto(wheel)}
 const EXPERT_CARDS=[
- {index:"01 · VISUAL DIRECTION",keyword:"장면 설계",sub:"7년 경력 영상 디자이너",detail:"노래의 흐름과 두 사람의 이야기를 읽고,<br>촬영부터 편집까지 한 편의 장면으로 완성합니다.",image:"assets/img/song/solo.webp",alt:"실제 녹음 세션에서 사용된 마이크"},
- {index:"02 · AUDIO ENGINEERING",keyword:"사운드 완성",sub:"방송 음악 작업 엔지니어",detail:"방송 음원 작업 경험을 바탕으로 목소리의 음정과 밸런스를 다듬어,<br>본식에서도 자연스럽게 들리는 AR을 완성합니다.",image:"assets/img/ar-process/02-mixing.webp",alt:"모니터 앞에서 음원을 조율하는 엔지니어"}
+ {index:"01 · VISUAL DIRECTION",keyword:"영상 연출",sub:"7년 경력 영상 편집 디자이너",detail:"한 곡의 감정이 본식의 장면까지<br>자연스럽게 이어지도록 흐름을 설계합니다.",image:"assets/img/song/solo.webp",alt:"실제 녹음 세션에서 사용된 마이크"},
+ {index:"02 · AUDIO ENGINEERING",keyword:"사운드 완성",sub:"방송 음악 작업 엔지니어",detail:"목소리의 음정과 밸런스를 다듬어,<br>본식에서도 자연스럽게 들리는 AR을 완성합니다.",image:"assets/img/ar-process/02-mixing.webp",alt:"모니터 앞에서 음원을 조율하는 엔지니어"}
 ]
-function arExpertStory(){return '<section class="ar-expert-story section" aria-labelledby="arExpertStoryTitle"><div class="shell"><div class="ar-expert-head"><span class="ar-expert-kicker">WISTIA · 제작 이야기</span><h2 id="arExpertStoryTitle"><span class="ar-expert-line1">같은 노래도,</span><br><span class="ar-expert-line2-wrap"><strong class="ar-expert-line2">전문가가 완성하면 다릅니다.</strong><svg class="ar-expert-underline" viewBox="0 0 340 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 64 4, 138 12, 210 7 S 318 4, 338 8"/></svg></span></h2><p class="ar-expert-desc">목소리를 다듬고, 장면을 설계해<br>한 곡의 마음을 본식까지 잇습니다.</p></div><div class="ar-expert-stage"><div class="ar-expert-connection-line" aria-hidden="true"></div><div class="ar-expert-viewport" tabindex="0" role="group" aria-roledescription="carousel" aria-label="전문가 소개 슬라이드, 좌우 방향키로 이동"><div class="ar-expert-track" data-expert-track>'+EXPERT_CARDS.map((c,i)=>'<article class="ar-expert-card" data-expert-card role="group" aria-roledescription="slide" aria-label="'+(i+1)+' / '+EXPERT_CARDS.length+'"><div class="ar-expert-card-text"><span class="ar-expert-index">'+c.index+'</span><strong class="ar-expert-keyword">'+c.keyword+'</strong><span class="ar-expert-sub">'+c.sub+'</span><p class="ar-expert-detail">'+c.detail+'</p></div><div class="ar-expert-card-media">'+img(c.image,c.alt)+'</div></article>').join("")+'</div></div></div><div class="ar-expert-controls"><button type="button" class="ar-expert-nav" data-expert-prev aria-label="이전 강점 보기"><span aria-hidden="true">‹</span></button><div class="ar-expert-dots" role="tablist" aria-label="슬라이드 선택">'+EXPERT_CARDS.map((c,i)=>'<button type="button" role="tab" aria-selected="'+(i===0)+'" data-expert-goto="'+i+'">'+String(i+1).padStart(2,"0")+'</button>').join("")+'</div><button type="button" class="ar-expert-nav" data-expert-next aria-label="다음 강점 보기"><span aria-hidden="true">›</span></button></div><p class="ar-expert-status" role="status" aria-live="polite" data-expert-status></p></div></section>'}
+function arExpertStory(){const activeDefault=1;return '<section class="ar-expert-story section" aria-labelledby="arExpertStoryTitle"><div class="shell"><div class="ar-expert-head"><span class="ar-expert-kicker">WISTIA · 제작 이야기</span><h2 id="arExpertStoryTitle"><span class="ar-expert-line1">같은 노래도,</span><br><strong class="ar-expert-line2">전문가가 완성하면 다릅니다.</strong></h2><p class="ar-expert-desc">목소리를 다듬고, 장면을 설계해<br>한 곡의 마음을 본식까지 잇습니다.</p></div><div class="ar-expert-split" data-expert-split data-active="'+activeDefault+'" role="group" aria-label="전문가 소개">'+EXPERT_CARDS.map((c,i)=>{const active=i===activeDefault;return '<button type="button" class="ar-expert-panel'+(active?' is-active':'')+'" data-expert-panel="'+i+'" aria-expanded="'+active+'" aria-label="'+c.keyword+' 이야기 '+(active?'접기':'펼치기')+'"><span class="ar-expert-panel-media">'+img(c.image,c.alt)+'</span><span class="ar-expert-panel-overlay" aria-hidden="true"></span><span class="ar-expert-panel-toggle" aria-hidden="true">'+(active?'−':'+')+'</span><span class="ar-expert-panel-content"><span class="ar-expert-panel-index">'+c.index+'</span><strong class="ar-expert-panel-keyword">'+c.keyword+'</strong><span class="ar-expert-panel-sub">'+c.sub+'</span><span class="ar-expert-panel-detail">'+c.detail+'</span></button>'}).join("")+'</div><p class="ar-expert-hint">패널을 눌러 이야기를 확인하세요</p></div></section>'}
+function setExpertPanel(split,index){split.dataset.active=index;const panels=[...split.querySelectorAll("[data-expert-panel]")];panels.forEach((panel,i)=>{const active=i===index;panel.classList.toggle("is-active",active);panel.setAttribute("aria-expanded",String(active));const toggle=panel.querySelector(".ar-expert-panel-toggle");if(toggle)toggle.textContent=active?"−":"+";const keyword=panel.querySelector(".ar-expert-panel-keyword")?.textContent||"";panel.setAttribute("aria-label",keyword+" 이야기 "+(active?"접기":"펼치기"))})}
+function initExpertSplitPanel(){const split=document.querySelector("[data-expert-split]");if(!split)return;const panels=[...split.querySelectorAll("[data-expert-panel]")];panels.forEach((panel,i)=>{panel.addEventListener("click",()=>{if(Number(split.dataset.active)===i)return;setExpertPanel(split,i)})})}
 let expertAutoTimer=null,expertResumeTimer=null
 function stopExpertAuto(){clearInterval(expertAutoTimer);expertAutoTimer=null}
 function startExpertAuto(root,count){stopExpertAuto();if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;expertAutoTimer=setInterval(()=>{const track=root.querySelector("[data-expert-track]");if(!track)return;const current=Number(track.dataset.index||0);setExpertIndex(root,(current+1)%count)},5000)}
@@ -646,13 +648,18 @@ function detailPersonTabs(key){
  const showPrice=!['solo','duo'].includes(key)
  return '<section class="shell detail-person-picker" aria-label="'+(showPrice?'참여 인원과 가격':'참여 인원')+'"><span>인원 선택</span><div class="detail-person-tabs'+(showPrice?'':' is-label-only')+'">'+items.map(item=>{const active=item.key===key,href="#/detail/"+item.key+(item.format?"/"+item.format:"");return '<a class="'+(active?'is-active':'')+'" href="'+href+'"'+(active?' aria-current="page"':'')+'><small>'+item.label+'</small>'+(showPrice?'<strong>'+shortWon(detailPersonPrice(item))+'</strong>':'')+'</a>'}).join("")+'</div></section>'
 }
+function soloTopCta(){return '<div class="solo-top-cta"><a href="#/event/solo" aria-label="1인·2인 축가 이벤트 가격 확인하기로 이동">1인·2인 축가, 이벤트가 확인하기 <b aria-hidden="true">→</b></a></div>'}
+function initSoloTopCta(){const bar=document.querySelector(".solo-top-cta");if(!bar)return;let sentinel=bar.previousElementSibling;if(!sentinel||!sentinel.classList.contains("solo-top-cta-sentinel")){sentinel=document.createElement("span");sentinel.className="solo-top-cta-sentinel";sentinel.setAttribute("aria-hidden","true");bar.parentNode.insertBefore(sentinel,bar)}const observer=new IntersectionObserver(entries=>entries.forEach(entry=>bar.classList.toggle("is-stuck",!entry.isIntersecting)),{threshold:0});observer.observe(sentinel)}
+const SOLO_PERSON_ITEMS=[{key:"solo",title:"1인 축가",desc:"혼자 부르는 무대"},{key:"duo",title:"2인 축가",desc:"함께 부르는 무대"}]
+function soloPersonTabs(key){const activeIndex=SOLO_PERSON_ITEMS.findIndex(item=>item.key===key);return '<section class="shell solo-person-picker" aria-label="인원 선택"><div class="solo-person-tabs" role="tablist" aria-label="1인·2인 축가 선택" data-active="'+Math.max(activeIndex,0)+'">'+SOLO_PERSON_ITEMS.map((item,i)=>{const active=item.key===key;return '<a class="solo-person-tab'+(active?' is-active':'')+'" role="tab" aria-selected="'+active+'" tabindex="'+(active?"0":"-1")+'" href="#/detail/'+item.key+'" data-solo-person-tab="'+i+'"><strong>'+item.title+'</strong><span>'+item.desc+'</span></a>'}).join("")+'<span class="solo-person-indicator" aria-hidden="true"></span></div></section>'}
+function initSoloPersonTabs(){const tabs=document.querySelector(".solo-person-tabs");if(!tabs)return;const links=[...tabs.querySelectorAll("[data-solo-person-tab]")];links.forEach((link,i)=>{link.addEventListener("keydown",e=>{if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();const next=links[(i+(e.key==="ArrowRight"?1:-1)+links.length)%links.length];links.forEach(l=>l.tabIndex=-1);next.tabIndex=0;next.focus()})})}
 function compactFilmHeroMedia(productKey){return '<div class="detail-result-card compact-film-hero-media"><div class="detail-result-media">'+img(FILM_FORMAT_IMAGES[productKey].making,PRODUCTS[productKey].title+' 실제 촬영 사진',true)+'</div></div>'}
 function renderDetail(key,purpose=""){
   if(FILM_FORMAT_PRODUCTS.has(key))selectedFilmFormat=BASE_FILM_FORMAT[key]
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=detailPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arExpertStory()+arComparisonSection()+process+arRatio()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)+'</div>'
+  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+reviews(key)+arExpertStory()+arComparisonSection()+process+soloArRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<div class="detail-faq-price">'+cta("이벤트 적용 가격 확인하기","#/event/solo")+'</div></section>'+footer()+priceBar(key)+'</div>'
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
@@ -668,6 +675,82 @@ function waitForRatioAudio(audio){return new Promise((resolve,reject)=>{if(audio
 async function prepareRatioAudioSources(){const section=document.querySelector(".ratio-section"),audio=document.querySelector("#ratioAudio");if(!section||!audio)return;try{await Promise.all(Object.keys(RATIO_SOURCES).map(ratio=>ratioBlobSource(ratio)));if(!section.isConnected)return;audio.src=ratioAudioUrls.get(voiceRatio);audio.dataset.ratioAudio=voiceRatio;audio.load();await waitForRatioAudio(audio);section.classList.remove("is-loading");section.removeAttribute("aria-busy");section.querySelectorAll("[data-ratio]").forEach(button=>button.disabled=false);section.querySelector("#ratioHelp").textContent="각 비율은 서로 다른 원본 음원이며 재생 위치를 유지해 전환됩니다"}catch{if(section.isConnected)section.querySelector("#ratioHelp").textContent="음원을 불러오지 못했습니다 잠시 후 새로고침해 주세요"}}
 function fadeRatioAudio(audio,from,to,duration,token){return new Promise(resolve=>{if(!audio)return resolve(false);const started=performance.now();audio.dataset.ratioFading="true";const tick=now=>{if(token!==ratioSwitchToken){delete audio.dataset.ratioFading;resolve(false);return}const progress=Math.min(1,(now-started)/duration);audio.volume=Math.max(0,Math.min(1,from+(to-from)*progress));if(progress<1)requestAnimationFrame(tick);else{delete audio.dataset.ratioFading;resolve(true)}};requestAnimationFrame(tick)})}
 async function switchRatioAudio(ratio){const audio=document.querySelector("#ratioAudio");if(!audio||audio.dataset.ratioAudio===ratio)return;const token=++ratioSwitchToken,position=audio.currentTime||0,wasPlaying=!audio.paused,volume=audio.volume,muted=audio.muted,rate=audio.playbackRate;if(wasPlaying){const faded=await fadeRatioAudio(audio,volume,0,70,token);if(!faded)return}audio.pause();let source;try{source=await ratioBlobSource(ratio)}catch{return}if(token!==ratioSwitchToken)return;audio.src=source;audio.dataset.ratioAudio=ratio;audio.muted=muted;audio.playbackRate=rate;audio.load();try{await waitForRatioAudio(audio)}catch{return}if(token!==ratioSwitchToken)return;const limit=Number.isFinite(audio.duration)?Math.max(0,audio.duration-.05):position;try{audio.currentTime=Math.min(position,limit)}catch{}audio.volume=0;try{await audio.play()}catch{audio.volume=volume;return}if(token!==ratioSwitchToken){audio.pause();return}await fadeRatioAudio(audio,0,volume,100,token)}
+const SOLO_RATIO_STEPS=["30","50","70","100"]
+const SOLO_RATIO_META={"30":{label:"안정감 중심",desc:"AR의 도움을 충분히 받는 편안한 비율"},"50":{label:"균형 있게",desc:"내 목소리와 AR이 고르게 들리는 비율"},"70":{label:"자연스럽게",desc:"라이브의 생동감과 안정감이 잘 맞는 추천 비율"},"100":{label:"목소리 중심",desc:"녹음한 내 목소리를 가장 선명하게 듣는 비율"}}
+function soloRatioIndex(ratio){return Math.max(0,SOLO_RATIO_STEPS.indexOf(ratio))}
+function soloArRatioSection(){
+ if(!SOLO_RATIO_STEPS.includes(voiceRatio))voiceRatio="70"
+ const meta=SOLO_RATIO_META[voiceRatio]
+ return '<section class="shell section ratio-section solo-ratio is-loading" aria-busy="true" data-ratio="'+voiceRatio+'">'
+  +heading("","본식에서 가장 편안한 비율을,<br>직접 들어보세요","30%부터 100%까지 같은 곡으로 비교할 수 있습니다")
+  +'<div class="solo-ratio-panel">'
+  +'<div class="solo-ratio-center"><span class="solo-ratio-glow" aria-hidden="true"></span><strong class="solo-ratio-value"><span class="solo-ratio-num">'+voiceRatio+'</span><small>%</small></strong><span id="soloRatioLabel" class="solo-ratio-label">'+meta.label+'</span><span id="soloRatioDesc" class="solo-ratio-desc">'+meta.desc+'</span></div>'
+  +'<div class="solo-ratio-player"><audio id="ratioAudio" class="ratio-audio is-active" data-ratio-audio="'+voiceRatio+'" preload="auto">오디오를 재생할 수 없는 브라우저입니다</audio><button type="button" class="solo-ratio-play" id="soloRatioPlay" aria-label="재생" disabled><svg class="icon-play" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg><svg class="icon-pause" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" hidden><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></button><div class="solo-ratio-progress"><span class="solo-ratio-time" id="soloRatioCurrent">0:00</span><div class="solo-ratio-bar" id="soloRatioBar"><span class="solo-ratio-bar-fill" id="soloRatioBarFill"></span></div><span class="solo-ratio-time" id="soloRatioDuration">0:00</span></div><button type="button" class="solo-ratio-mute" id="soloRatioMute" aria-label="음소거"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6v4h2.5l3.5 3V3l-3.5 3H2Z" fill="currentColor"/><path class="mute-wave" d="M10.5 5.5a3 3 0 0 1 0 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></button></div>'
+  +'<div class="solo-ratio-slider-wrap"><span class="solo-ratio-bubble'+(voiceRatio==="70"?" is-active":"")+'" id="soloRatioBubble" aria-hidden="true">추천</span><input type="range" id="soloRatioSlider" class="solo-ratio-slider" style="--solo-ratio-fill:'+(soloRatioIndex(voiceRatio)/3*100)+'%" min="0" max="3" step="1" value="'+soloRatioIndex(voiceRatio)+'" aria-label="AR 목소리 비율" aria-valuemin="30" aria-valuemax="100" aria-valuenow="'+voiceRatio+'" aria-valuetext="'+voiceRatio+'%, '+meta.label+'" disabled/><div class="solo-ratio-ticks" aria-hidden="true">'+SOLO_RATIO_STEPS.map(n=>'<span class="'+(n===voiceRatio?'is-active':'')+'"><b>'+n+'%</b><small>'+SOLO_RATIO_META[n].label+'</small></span>').join("")+'</div></div>'
+  +'<button type="button" class="solo-ratio-compare" id="soloRatioCompare" disabled>4가지 비율 자동 비교</button>'
+  +'<p id="ratioHelp" class="solo-ratio-status" role="status" aria-live="polite">비율별 원본 음원을 준비하고 있습니다</p>'
+  +'<p class="solo-ratio-guide"><strong>본식에 맞는 비율은 함께 결정합니다</strong><span>스튜디오 리허설과 AR 연습을 통해<br>실제 노래 방식에 맞는 비율을 안내해드립니다.</span></p>'
+  +'<p class="fine">샘플곡 · 그중에 그대를 만나</p>'
+  +'</div></section>'
+}
+function formatRatioTime(sec){if(!Number.isFinite(sec))return "0:00";const m=Math.floor(sec/60),s=Math.floor(sec%60);return m+":"+String(s).padStart(2,"0")}
+function animateSoloRatioValue(section,ratio){
+ const center=section.querySelector(".solo-ratio-center")
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches){applySoloRatioText(section,ratio);return}
+ center.classList.add("is-fading")
+ setTimeout(()=>{applySoloRatioText(section,ratio);center.classList.remove("is-fading")},160)
+}
+function applySoloRatioText(section,ratio){
+ const meta=SOLO_RATIO_META[ratio]
+ section.dataset.ratio=ratio
+ section.querySelector(".solo-ratio-num").textContent=ratio
+ section.querySelector("#soloRatioLabel").textContent=meta.label
+ section.querySelector("#soloRatioDesc").textContent=meta.desc
+ const slider=section.querySelector("#soloRatioSlider")
+ slider.value=soloRatioIndex(ratio)
+ slider.style.setProperty("--solo-ratio-fill",(soloRatioIndex(ratio)/3*100)+"%")
+ slider.setAttribute("aria-valuenow",ratio)
+ slider.setAttribute("aria-valuetext",ratio+"%, "+meta.label)
+ section.querySelectorAll(".solo-ratio-ticks span").forEach((el,i)=>el.classList.toggle("is-active",SOLO_RATIO_STEPS[i]===ratio))
+ section.querySelector("#soloRatioBubble").classList.toggle("is-active",ratio==="70")
+}
+function togglseSoloPlayIcon(btn,playing){btn.querySelector(".icon-play").hidden=playing;btn.querySelector(".icon-pause").hidden=!playing;btn.setAttribute("aria-label",playing?"일시정지":"재생")}
+let soloAutoCompareToken=0
+function soloSleep(ms,token){return new Promise(resolve=>{setTimeout(()=>resolve(token===soloAutoCompareToken),ms)})}
+function stopSoloAutoCompare(){soloAutoCompareToken++;const compareBtn=document.querySelector("#soloRatioCompare");if(compareBtn&&compareBtn.classList.contains("is-running")){compareBtn.classList.remove("is-running");compareBtn.textContent="4가지 비율 자동 비교"}}
+async function startSoloAutoCompare(section,compareBtn,audio){
+ const token=++soloAutoCompareToken
+ compareBtn.classList.add("is-running");compareBtn.textContent="자동 비교 중지"
+ if(audio.paused){try{await audio.play()}catch{}}
+ for(const ratio of SOLO_RATIO_STEPS){
+  if(token!==soloAutoCompareToken)return
+  if(ratio!==voiceRatio){voiceRatio=ratio;animateSoloRatioValue(section,ratio);await switchRatioAudio(ratio)}
+  if(token!==soloAutoCompareToken)return
+  const ok=await soloSleep(4500,token)
+  if(!ok)return
+ }
+ if(token!==soloAutoCompareToken)return
+ voiceRatio="70";animateSoloRatioValue(section,"70");await switchRatioAudio("70")
+ if(token!==soloAutoCompareToken)return
+ audio.pause()
+ compareBtn.classList.remove("is-running");compareBtn.textContent="4가지 비율 자동 비교"
+}
+function initSoloArRatio(){
+ const section=document.querySelector(".solo-ratio");if(!section)return
+ const slider=section.querySelector("#soloRatioSlider"),playBtn=section.querySelector("#soloRatioPlay"),muteBtn=section.querySelector("#soloRatioMute"),bar=section.querySelector("#soloRatioBar"),barFill=section.querySelector("#soloRatioBarFill"),curEl=section.querySelector("#soloRatioCurrent"),durEl=section.querySelector("#soloRatioDuration"),compareBtn=section.querySelector("#soloRatioCompare"),audio=section.querySelector("#ratioAudio")
+ if(!slider||!audio)return
+ slider.addEventListener("input",()=>{stopSoloAutoCompare();const ratio=SOLO_RATIO_STEPS[Number(slider.value)];if(ratio===voiceRatio)return;voiceRatio=ratio;animateSoloRatioValue(section,ratio);switchRatioAudio(ratio)})
+ playBtn.addEventListener("click",()=>{if(audio.paused)audio.play().catch(()=>{});else audio.pause()})
+ audio.addEventListener("play",()=>togglseSoloPlayIcon(playBtn,true))
+ audio.addEventListener("pause",()=>togglseSoloPlayIcon(playBtn,false))
+ audio.addEventListener("timeupdate",()=>{if(!Number.isFinite(audio.duration))return;curEl.textContent=formatRatioTime(audio.currentTime);barFill.style.width=Math.min(100,audio.currentTime/audio.duration*100)+"%"})
+ audio.addEventListener("loadedmetadata",()=>{durEl.textContent=formatRatioTime(audio.duration)})
+ bar.addEventListener("click",e=>{if(!Number.isFinite(audio.duration))return;const rect=bar.getBoundingClientRect(),pos=Math.min(1,Math.max(0,(e.clientX-rect.left)/rect.width));audio.currentTime=pos*audio.duration})
+ muteBtn.addEventListener("click",()=>{audio.muted=!audio.muted;muteBtn.classList.toggle("is-muted",audio.muted);muteBtn.setAttribute("aria-label",audio.muted?"음소거 해제":"음소거")})
+ compareBtn.addEventListener("click",()=>{if(compareBtn.classList.contains("is-running")){stopSoloAutoCompare();return}startSoloAutoCompare(section,compareBtn,audio)})
+ const enableWhenReady=()=>{if(!section.classList.contains("is-loading")){slider.disabled=false;playBtn.disabled=false;compareBtn.disabled=false;return}requestAnimationFrame(enableWhenReady)}
+ enableWhenReady()
+}
 function friendLyricsSelection(){
  const selected=finderChoice.role==="singer"?finderChoice.lyrics:""
  if(selected==="no")return '<section class="shell selected-song-result"><div>'+label("선택한 구성")+'<h2>사전 녹음 음원</h2><p>가사 영상 없이 예식에서 사용할 사전 녹음 음원만 준비합니다</p></div></section>'
@@ -762,8 +845,11 @@ function route(){
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArIndexWheel();
- initExpertSlider();
+ initExpertSplitPanel();
  initArCompare();
+ initSoloTopCta();
+ initSoloPersonTabs();
+ initSoloArRatio();
  startReviewCarousel();
  enhanceMotion();
  window.initHeroEditor?.(validDetail ? key : "");
