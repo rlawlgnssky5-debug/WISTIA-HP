@@ -509,7 +509,7 @@ const EXPERT_CARDS=[
  {index:"01 · VISUAL DIRECTION",keyword:"영상 연출",sub:"7년 경력 영상 편집 디자이너",detail:"한 곡의 감정이 본식의 장면까지<br>자연스럽게 이어지도록 흐름을 설계합니다.",image:"assets/img/song/solo.webp",alt:"실제 녹음 세션에서 사용된 마이크"},
  {index:"02 · AUDIO ENGINEERING",keyword:"사운드 완성",sub:"방송 음악 작업 엔지니어",detail:"목소리의 음정과 밸런스를 다듬어,<br>본식에서도 자연스럽게 들리는 AR을 완성합니다.",image:"assets/img/ar-process/02-mixing.webp",alt:"모니터 앞에서 음원을 조율하는 엔지니어"}
 ]
-function arExpertStory(){const total=EXPERT_CARDS.length;return '<section class="ar-expert-story section" data-story-carousel aria-labelledby="arExpertStoryTitle"><div class="shell"><div class="ar-story-viewport ar-expert-viewport" tabindex="0"><div class="ar-story-track ar-expert-track" data-expert-track data-index="0">'+EXPERT_CARDS.map((c,i)=>'<article class="ar-story-slide ar-expert-card'+(i===0?' is-active':'')+'" data-story-slide="'+i+'" data-expert-card><header class="ar-story-meta"><b>'+String(i+1).padStart(2,'0')+'</b><span>WISTIA · BRAND STORY</span></header><div class="ar-story-copy"><h2 id="'+(i===0?'arExpertStoryTitle':'arExpertStoryTitle'+i)+'">'+c.keyword+'로<br>한 곡의 마음을 완성합니다.</h2><p><strong>'+c.sub+'</strong><span>'+c.detail+'</span></p></div><figure class="ar-story-image">'+img(c.image,c.alt)+'</figure></article>').join('')+'</div></div><div class="ar-story-controls"><span class="ar-story-status" data-story-status data-expert-status>01 / '+String(total).padStart(2,'0')+'</span><span class="ar-story-progress" aria-hidden="true"><i></i></span><button type="button" data-expert-prev aria-label="이전 제작 이야기">←</button><button type="button" data-story-next data-expert-next aria-label="다음 제작 이야기">→</button></div></div></section>'}
+function arExpertStory(){const total=EXPERT_CARDS.length;return '<section class="ar-expert-story section" data-story-carousel aria-labelledby="arExpertStoryTitle"><div class="shell"><div class="ar-story-viewport ar-expert-viewport" tabindex="0"><div class="ar-story-track ar-expert-track" data-expert-track data-index="0">'+EXPERT_CARDS.map((c,i)=>'<article class="ar-story-slide ar-expert-card'+(i===0?' is-active':'')+'" data-story-slide="'+i+'" data-expert-card><header class="ar-story-meta"><b>'+String(i+1).padStart(2,'0')+'</b><span>WISTIA · BRAND STORY</span></header><div class="ar-story-copy"><h2 id="'+(i===0?'arExpertStoryTitle':'arExpertStoryTitle'+i)+'">'+c.keyword+'로<br>한 곡의 마음을 <span>완성합니다.</span></h2><p><strong>'+c.sub+'</strong><span>'+c.detail+'</span></p></div><figure class="ar-story-image">'+img(c.image,c.alt)+'</figure></article>').join('')+'</div></div><div class="ar-story-controls"><span class="ar-story-status" data-story-status data-expert-status>01 / '+String(total).padStart(2,'0')+'</span><span class="ar-story-progress" aria-hidden="true"><i></i></span><button type="button" data-expert-prev aria-label="이전 제작 이야기">←</button><button type="button" data-story-next data-expert-next aria-label="다음 제작 이야기">→</button></div></div></section>'}
 function setExpertPanel(split,index){split.dataset.active=index;const panels=[...split.querySelectorAll("[data-expert-panel]")];panels.forEach((panel,i)=>{const active=i===index;panel.classList.toggle("is-active",active);panel.setAttribute("aria-expanded",String(active));const toggle=panel.querySelector(".ar-expert-panel-toggle");if(toggle)toggle.textContent=active?"−":"+";const keyword=panel.querySelector(".ar-expert-panel-keyword")?.textContent||"";panel.setAttribute("aria-label",keyword+" 이야기 "+(active?"접기":"펼치기"))})}
 function initExpertSplitPanel(){const split=document.querySelector("[data-expert-split]");if(!split)return;const panels=[...split.querySelectorAll("[data-expert-panel]")];panels.forEach((panel,i)=>{panel.addEventListener("click",()=>{if(Number(split.dataset.active)===i)return;setExpertPanel(split,i)})})}
 let expertAutoTimer=null,expertResumeTimer=null
@@ -722,11 +722,11 @@ async function switchRatioAudio(ratio,options={}){
  audio.pause()
  try{
   const source=await ratioBlobSource(ratio);if(token!==ratioSwitchToken)return
-  audio.src=source;audio.dataset.ratioAudio=ratio;audio.muted=muted;audio.playbackRate=rate;audio.load();await waitForRatioAudio(audio);if(token!==ratioSwitchToken)return
+  audio.src=source;audio.dataset.ratioAudio=ratio;audio.muted=muted;audio.playbackRate=rate;audio.load();let queuedPlay=null;if(shouldPlay){audio.volume=0;queuedPlay=audio.play()}await waitForRatioAudio(audio);if(queuedPlay)await queuedPlay;if(token!==ratioSwitchToken)return
   const limit=Number.isFinite(audio.duration)?Math.max(0,audio.duration-.75):nextPosition
   try{audio.currentTime=Math.min(nextPosition,limit)}catch{}
   audio.volume=volume
-  if(shouldPlay){audio.volume=0;await audio.play();if(token!==ratioSwitchToken){audio.pause();return}await fadeRatioAudio(audio,0,volume,100,token)}
+  if(shouldPlay){if(token!==ratioSwitchToken){audio.pause();return}await fadeRatioAudio(audio,0,volume,100,token)}
   setRatioStatus(ratio+"% · 재생 준비 완료")
  }catch{
   if(token!==ratioSwitchToken)return
@@ -797,7 +797,7 @@ function initSoloArRatio(){
  const section=document.querySelector(".solo-ratio");if(!section)return
  const dial=section.querySelector("[data-ratio-dial]"),marks=[...section.querySelectorAll(".solo-ratio-mark")],playBtn=section.querySelector("#soloRatioPlay"),muteBtn=section.querySelector("#soloRatioMute"),bar=section.querySelector("#soloRatioBar"),barFill=section.querySelector("#soloRatioBarFill"),curEl=section.querySelector("#soloRatioCurrent"),durEl=section.querySelector("#soloRatioDuration"),audio=section.querySelector("#ratioAudio")
  if(!dial||!audio)return
- const choose=ratio=>{stopSoloAutoCompare();if(ratio===voiceRatio){audio.play().catch(()=>{});return}voiceRatio=ratio;animateSoloRatioValue(section,ratio);switchRatioAudio(ratio,{play:true})}
+ const choose=ratio=>{stopSoloAutoCompare();audio.play().catch(()=>{});if(ratio===voiceRatio)return;voiceRatio=ratio;animateSoloRatioValue(section,ratio);switchRatioAudio(ratio,{play:true})}
  marks.forEach(button=>button.addEventListener("click",()=>choose(button.dataset.ratio)))
  playBtn.addEventListener("click",()=>{if(audio.paused)audio.play().catch(()=>{});else audio.pause()})
  audio.addEventListener("play",()=>togglseSoloPlayIcon(playBtn,true))

@@ -349,6 +349,107 @@ async function testFinalPolish(browser) {
   await page.close()
 }
 
+async function testReferenceSpacing(browser) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' })
+  await page.goto(`${BASE}?reference-spacing=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
+  await page.locator('.solo-ratio:not(.is-loading)').waitFor({ timeout: 15000 })
+
+  const storyMetrics = await page.locator('[data-story-slide].is-active').evaluate(slide => {
+    const meta = slide.querySelector('.ar-story-meta')
+    const copy = slide.querySelector('.ar-story-copy')
+    const title = copy.querySelector('h2').getBoundingClientRect()
+    const body = copy.querySelector('p').getBoundingClientRect()
+    const image = slide.querySelector('.ar-story-image').getBoundingClientRect()
+    const slideStyle = getComputedStyle(slide)
+    const copyStyle = getComputedStyle(copy)
+    return {
+      paddingTop: parseFloat(slideStyle.paddingTop),
+      paddingInline: parseFloat(slideStyle.paddingLeft),
+      metaGap: parseFloat(getComputedStyle(meta).marginBottom),
+      copyToImage: parseFloat(copyStyle.marginBottom),
+      titleToBodyRatio: title.width / body.width,
+      imageRatio: image.width / image.height,
+      titleSize: parseFloat(getComputedStyle(copy.querySelector('h2')).fontSize),
+      transitionMs: parseFloat(getComputedStyle(slide.closest('[data-expert-track]')).transitionDuration) * 1000
+    }
+  })
+  assert.ok(Math.abs(storyMetrics.paddingTop - 70) <= 2)
+  assert.ok(Math.abs(storyMetrics.paddingInline - 42) <= 2)
+  assert.ok(Math.abs(storyMetrics.metaGap - 52) <= 2)
+  assert.ok(storyMetrics.titleToBodyRatio >= 0.6 && storyMetrics.titleToBodyRatio <= 0.74, 'story title/body columns should follow the reference 40:60 rhythm')
+  assert.ok(storyMetrics.copyToImage >= 84 && storyMetrics.copyToImage <= 96, 'story copy should keep the reference editorial breathing room before the image')
+  assert.ok(storyMetrics.imageRatio >= 2.75 && storyMetrics.imageRatio <= 2.95, 'story photograph should use the reference panoramic crop')
+  assert.ok(Math.abs(storyMetrics.titleSize - 29) <= 1)
+  assert.ok(storyMetrics.transitionMs >= 650 && storyMetrics.transitionMs <= 720)
+  const storyPunctuationTogether = await page.locator('.ar-story-slide.is-active .ar-story-copy h2').evaluate(title => {
+    const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT)
+    let text
+    while (walker.nextNode()) if (walker.currentNode.textContent.trim().endsWith('.')) text = walker.currentNode
+    const value = text?.textContent || ''
+    if (value.length < 2) return false
+    const before = document.createRange()
+    const punctuation = document.createRange()
+    before.setStart(text, value.length - 2); before.setEnd(text, value.length - 1)
+    punctuation.setStart(text, value.length - 1); punctuation.setEnd(text, value.length)
+    return Math.abs(before.getBoundingClientRect().top - punctuation.getBoundingClientRect().top) < 2
+  })
+  assert.equal(storyPunctuationTogether, true, 'story punctuation should not be orphaned on its own line')
+
+  const story = page.locator('[data-story-carousel]')
+  await story.locator('.ar-story-viewport').press('ArrowRight')
+  await page.waitForTimeout(720)
+  assert.match(await story.locator('[data-story-status]').innerText(), /02\s*\/\s*02/, 'keyboard navigation should move the story left-to-right')
+
+  const ratioMetrics = await page.locator('.solo-ratio').evaluate(section => {
+    const experience = section.querySelector('.solo-ratio-experience')
+    const columns = getComputedStyle(experience).gridTemplateColumns.split(' ').map(parseFloat)
+    const heading = section.querySelector('.solo-ratio-control header').getBoundingClientRect()
+    const innerWidth = section.clientWidth - parseFloat(getComputedStyle(section).paddingLeft) - parseFloat(getComputedStyle(section).paddingRight)
+    const style = getComputedStyle(section)
+    return {
+      paddingTop: parseFloat(style.paddingTop),
+      paddingInline: parseFloat(style.paddingLeft),
+      headingCoverage: heading.width / innerWidth,
+      columnRatio: columns[0] / columns[1],
+      headingSize: parseFloat(getComputedStyle(section.querySelector('.solo-ratio-control h2')).fontSize),
+      markerTransitionMs: parseFloat(getComputedStyle(section.querySelector('.solo-ratio-orbit-glow')).transitionDuration) * 1000
+    }
+  })
+  assert.ok(Math.abs(ratioMetrics.paddingTop - 76) <= 2)
+  assert.ok(Math.abs(ratioMetrics.paddingInline - 36) <= 2)
+  assert.ok(ratioMetrics.headingCoverage > 0.95, 'AR heading should span the full composition instead of being squeezed into the control column')
+  assert.ok(ratioMetrics.columnRatio >= 1.0 && ratioMetrics.columnRatio <= 1.15)
+  assert.ok(Math.abs(ratioMetrics.headingSize - 27) <= 1)
+  assert.ok(ratioMetrics.markerTransitionMs >= 700)
+
+  const marker = page.locator('.solo-ratio-orbit-glow')
+  const beforeMarker = await marker.evaluate(node => getComputedStyle(node).transform)
+  await page.locator('[data-ratio-choice="50"]').click()
+  await page.waitForFunction(() => document.querySelector('.solo-ratio-num')?.textContent === '50')
+  await page.waitForTimeout(760)
+  const afterMarker = await marker.evaluate(node => getComputedStyle(node).transform)
+  assert.notEqual(afterMarker, beforeMarker, 'glowing marker should move with the selected percentage')
+  assert.equal(await page.locator('#ratioAudio').evaluate(audio => audio.paused), false, 'choosing a ratio should immediately play its audio')
+
+  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
+  await mobile.goto(`${BASE}?reference-spacing-mobile=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
+  await mobile.locator('.solo-ratio:not(.is-loading)').waitFor({ timeout: 15000 })
+  const mobileOrder = await mobile.locator('.solo-ratio').evaluate(section => {
+    const top = selector => section.querySelector(selector).getBoundingClientRect().top
+    return [top('.solo-ratio-control header'), top('.solo-ratio-visual'), top('.solo-ratio-choices'), top('.solo-ratio-player'), top('.solo-ratio-guide')]
+  })
+  assert.deepEqual([...mobileOrder].sort((a, b) => a - b), mobileOrder, 'mobile AR ratio content should flow heading, dial, choices, player, guide')
+  const mobileDialContained = await mobile.locator('.solo-ratio').evaluate(section => {
+    const sectionRect = section.getBoundingClientRect()
+    const dialRect = section.querySelector('.solo-ratio-orbit').getBoundingClientRect()
+    return dialRect.left >= sectionRect.left && dialRect.right <= sectionRect.right
+  })
+  assert.equal(mobileDialContained, true, 'mobile AR dial should stay inside the section instead of occupying an implicit second column')
+  assert.equal(await mobile.locator('.ar-story-slide.is-active .ar-story-copy').evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length), 1, 'mobile story copy should stack title and body')
+  await mobile.close()
+  await page.close()
+}
+
 async function captureVisuals(browser) {
   const output = path.join(__dirname, 'qa')
   fs.mkdirSync(output, { recursive: true })
@@ -376,6 +477,7 @@ async function captureVisuals(browser) {
     if (runs('reviews')) await testReviewShowcase(browser)
     if (runs('process-ref')) await testReferenceProcess(browser)
     if (runs('final-polish')) await testFinalPolish(browser)
+    if (runs('reference-spacing')) await testReferenceSpacing(browser)
     if (groups.size === 0) await captureVisuals(browser)
     console.log('solo detail redesign checks passed')
   } finally {

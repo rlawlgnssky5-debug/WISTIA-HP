@@ -1837,12 +1837,13 @@ body.is-solo-detail .footer{width:100%;padding:72px 24px 110px;background:#fff;b
 .ar-story-track{display:flex;transition:transform .68s cubic-bezier(.22,.72,.2,1)}
 .ar-story-slide{flex:0 0 100%;display:block!important;min-width:0;padding:70px 42px 46px;box-sizing:border-box;background:#f8f8f6;border-radius:0}
 .ar-story-meta{display:grid;grid-template-columns:56px 1fr;gap:22px;margin-bottom:52px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#1c2224}
-.ar-story-copy{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:42px;align-items:start;margin-bottom:48px}
-.ar-story-copy h2{margin:0;font-size:29px;line-height:1.38;letter-spacing:-.045em;font-weight:600;color:#15191a}
+.ar-story-copy{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:42px;align-items:start;margin-bottom:90px}
+.ar-story-copy h2{margin:0;font-size:29px;line-height:1.38;letter-spacing:-.045em;font-weight:600;color:#15191a;word-break:keep-all}
+.ar-story-copy h2 span{white-space:nowrap}
 .ar-story-copy p{margin:2px 0 0;font-size:12px;line-height:1.85;color:#667176}
 .ar-story-copy p strong,.ar-story-copy p span{display:block}
 .ar-story-copy p strong{margin-bottom:12px;color:#252b2d;font-size:13px}
-.ar-story-image{margin:0;width:100%;aspect-ratio:2.15/1;overflow:hidden;background:#e7e8e6}
+.ar-story-image{margin:0;width:100%;aspect-ratio:2.85/1;overflow:hidden;background:#e7e8e6}
 .ar-story-image img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.02);transform:scale(1.025);transition:transform 1.1s cubic-bezier(.2,.72,.2,1),filter .7s ease}
 .ar-story-slide.is-active .ar-story-image img{transform:scale(1);filter:saturate(.9) contrast(1.02)}
 .ar-story-controls{display:grid;grid-template-columns:auto minmax(70px,1fr) 42px 42px;gap:10px;align-items:center;padding:0 42px 44px}
@@ -1874,7 +1875,7 @@ body.is-solo-detail .footer{width:100%;padding:72px 24px 110px;background:#fff;b
 
 /* AR ratio: editorial controls on the left, luminous orbit feedback on the right. */
 .solo-detail-scope .solo-ratio{width:calc(100% - 24px);margin:78px 12px 0;padding:76px 36px 62px;background:#fff;overflow:hidden}
-.solo-ratio-experience{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(190px,.92fr);gap:26px;align-items:center}
+.solo-ratio-experience{display:grid;grid-template-columns:minmax(0,1.0833fr) minmax(0,1fr);gap:26px;align-items:center}
 .solo-ratio-control{display:contents}
 .solo-ratio-control header{grid-column:1/-1;grid-row:1}
 .solo-ratio-control header h2{margin:0;font-size:27px;line-height:1.38;letter-spacing:-.045em;font-weight:500;color:#15191a}
@@ -1907,7 +1908,7 @@ body.is-solo-detail .footer{width:100%;padding:72px 24px 110px;background:#fff;b
  .solo-detail-scope .solo-ratio{width:calc(100% - 16px);margin-inline:8px;padding:64px 22px 56px}
  .solo-ratio-experience{grid-template-columns:1fr;gap:0}
  .solo-ratio-control header{grid-row:1}
- .solo-ratio-visual{grid-row:2;margin-top:42px}
+ .solo-ratio-visual{grid-column:1;grid-row:2;margin-top:42px}
  .solo-ratio-choices{grid-row:3;margin-top:46px}
  .solo-ratio-player{grid-row:4}
  .solo-ratio-guide{grid-row:5}
