@@ -7,7 +7,7 @@
     if (new URLSearchParams(location.search).get('preview') === 'phone') {
       document.documentElement.classList.add('phone-preview-shell')
       addEventListener('DOMContentLoaded', () => {
-        const frameUrl = `${location.pathname}?v=158&frame=1${location.hash || '#/'}`
+        const frameUrl = `${location.pathname}?v=160&frame=1${location.hash || '#/'}`
         document.body.innerHTML = `<iframe class="phone-preview-frame" src="${frameUrl}" title="휴대폰 디자인 미리보기"></iframe>`
       })
     }
@@ -24,13 +24,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="css/design.css?v=158">
+  <link rel="stylesheet" href="css/design.css?v=160">
   <link rel="stylesheet" href="css/hero-editor.css?v=115">
   <link rel="stylesheet" href="css/process-editor.css?v=116">
   <link rel="stylesheet" href="css/home-finder.css?v=135">
   <script src="js/hero-editor.js?v=115" defer></script>
   <script src="js/process-editor.js?v=116" defer></script>
-  <script src="js/app.js?v=158" defer></script>
+  <script src="js/app.js?v=160" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#app">본문으로 바로가기</a>
