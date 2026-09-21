@@ -3,8 +3,9 @@
     const opts=options||{}
     const root=document.querySelector(opts.root||'#wistiaBeforeAfter')
     if(!root)return null
-    const beforeSrc=opts.beforeSrc||root.dataset.beforeSrc||'assets/audio/before-after/before.mp3'
-    const afterSrc=opts.afterSrc||root.dataset.afterSrc||'assets/audio/before-after/after.mp3'
+    const assetUrl=source=>{const url=new URL(source,document.baseURI);url.searchParams.set('v','174');return url.href}
+    const beforeSrc=assetUrl(opts.beforeSrc||root.dataset.beforeSrc||'assets/audio/before-after/before.mp3')
+    const afterSrc=assetUrl(opts.afterSrc||root.dataset.afterSrc||'assets/audio/before-after/after.mp3')
     const tabs=[...root.querySelectorAll('.bap-tab')]
     const switchBtn=root.querySelector('.bap-switch')
     const badge=root.querySelector('.bap-badge')

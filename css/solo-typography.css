@@ -1,0 +1,276 @@
+.solo-detail-scope {
+  --solo-type-ink: #202426;
+  --solo-type-muted: #737b7f;
+  --solo-type-kicker: #8c9497;
+  --solo-type-title-size: 24px;
+  --solo-type-sub-size: 11.5px;
+}
+
+.solo-detail-scope [data-solo-kicker],
+.solo-detail-scope [data-solo-title],
+.solo-detail-scope [data-solo-sub] {
+  font-family: var(--sans);
+  font-style: normal;
+}
+
+.solo-detail-scope [data-solo-kicker] {
+  margin: 0 0 16px;
+  color: var(--solo-type-kicker);
+  font-size: 9px !important;
+  font-weight: 750 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .17em !important;
+  text-transform: uppercase;
+}
+
+.solo-detail-scope [data-solo-title] {
+  margin: 0;
+  color: var(--solo-type-ink);
+  font-size: var(--solo-type-title-size) !important;
+  font-weight: 500 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -.05em !important;
+  word-break: keep-all;
+}
+
+.solo-detail-scope [data-solo-title] strong,
+.solo-detail-scope [data-solo-title] b,
+.solo-detail-scope [data-solo-title] .ar-copy-emphasis-text {
+  font-weight: inherit;
+}
+
+.solo-detail-scope [data-solo-sub] {
+  margin: 20px 0 0;
+  color: var(--solo-type-muted);
+  font-size: var(--solo-type-sub-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+  letter-spacing: -.015em !important;
+  word-break: keep-all;
+}
+
+.solo-detail-scope .solo-type-line {
+  display: block;
+}
+
+.solo-detail-scope .ar-benefit-copy [data-solo-kicker] {
+  display: block;
+  justify-content: initial;
+}
+
+.solo-detail-scope .ar-benefit-copy [data-solo-title],
+.solo-detail-scope .ar-benefit-copy [data-solo-sub] {
+  text-align: center;
+}
+
+.solo-detail-scope .ar-benefit-copy [data-solo-kicker] {
+  text-align: center;
+}
+
+.solo-detail-scope .solo-review-copy [data-solo-kicker],
+.solo-detail-scope .solo-review-copy [data-solo-title] {
+  color: #fff;
+}
+
+.solo-detail-scope .solo-review-copy [data-solo-sub] {
+  color: #cfd1d1;
+}
+
+.solo-detail-scope .solo-review-copy [data-solo-title] {
+  white-space: normal;
+}
+
+.solo-detail-scope .solo-review-rule {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.solo-detail-scope .solo-review-copy [data-solo-sub] {
+  margin-top: 18px;
+}
+
+.solo-detail-scope .ar-story-meta [data-solo-kicker] {
+  margin: 0;
+}
+
+.solo-detail-scope .ar-story-copy [data-solo-title],
+.solo-detail-scope .ar-story-copy [data-solo-sub] {
+  font-size: var(--solo-type-title-size) !important;
+  font-weight: 500 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -.05em !important;
+}
+
+.solo-detail-scope .ar-story-copy [data-solo-sub] {
+  margin-top: 0;
+  color: var(--solo-type-muted);
+  font-size: var(--solo-type-sub-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+  letter-spacing: -.015em !important;
+}
+
+.solo-detail-scope .ar-compare-intro {
+  margin-bottom: 34px;
+}
+
+.solo-detail-scope .ar-compare-title {
+  margin-bottom: 0;
+}
+
+.solo-detail-scope .ar-compare-sub {
+  max-width: 360px;
+}
+
+.solo-detail-scope .wps-head {
+  align-items: flex-start;
+}
+
+.solo-detail-scope .wps-head [data-solo-title] {
+  max-width: 330px;
+}
+
+.solo-detail-scope .wps-sub {
+  max-width: 360px;
+}
+
+.solo-detail-scope .ar-cd-title {
+  color: #fff;
+}
+
+/* The ratio experience intentionally stays side-by-side at narrow widths. */
+.solo-detail-scope .ar-cd-copy [data-solo-title] {
+  font-size: clamp(14px, 3.6cqw, var(--solo-type-title-size)) !important;
+}
+
+.solo-detail-scope .ar-cd-copy [data-solo-sub] {
+  font-size: clamp(8.5px, 2.4cqw, var(--solo-type-sub-size)) !important;
+}
+
+.solo-detail-scope .ar-cd-kicker {
+  color: #747a7d;
+}
+
+.solo-detail-scope .ar-cd-sub {
+  color: #999ea1;
+}
+
+.solo-detail-scope .solo-faq-intro {
+  margin-bottom: 34px;
+}
+
+.solo-detail-scope .solo-review-carousel {
+  width: 100%;
+  margin-top: 0;
+  padding: 64px 0 72px;
+  overflow: hidden;
+  background: #080909;
+  color: #fff;
+}
+
+.solo-detail-scope .solo-review-carousel .shell {
+  width: calc(100% - 48px);
+}
+
+.solo-detail-scope .solo-review-carousel [data-solo-title],
+.solo-detail-scope .solo-review-carousel [data-solo-kicker] {
+  color: #fff;
+}
+
+.solo-detail-scope .solo-review-carousel [data-solo-sub] {
+  margin-top: 14px;
+  color: #cfd1d1;
+}
+
+.solo-detail-scope .solo-review-carousel .review-carousel-head {
+  align-items: end;
+  margin-bottom: 30px;
+}
+
+.solo-detail-scope .solo-review-carousel .review-carousel-controls button {
+  border-color: #4b4e4f;
+  background: transparent;
+  color: #fff;
+}
+
+.solo-detail-scope .solo-review-carousel .review-capture,
+.solo-detail-scope .solo-review-carousel .review-capture-image {
+  background: #202121;
+}
+
+.solo-detail-scope .ar-story-intro {
+  margin-bottom: 34px;
+  padding-inline: 42px;
+}
+
+.solo-detail-scope .ar-story-copy {
+  margin-bottom: 42px;
+}
+
+.solo-detail-scope .ar-story-role {
+  margin: 0;
+  color: var(--solo-type-ink);
+  font: 600 19px/1.35 var(--sans);
+  letter-spacing: -.035em;
+  word-break: keep-all;
+}
+
+.solo-detail-scope .ar-story-slide .ar-story-copy {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .46s ease .12s, transform .58s cubic-bezier(.22,.72,.2,1) .12s;
+}
+
+.solo-detail-scope .ar-story-slide.is-active .ar-story-copy {
+  opacity: 1;
+  transform: none;
+}
+
+@container solo-detail (max-width: 599px) {
+  .solo-detail-scope .wistia-ba-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@container solo-detail (max-width: 429px) {
+  .solo-detail-scope {
+    --solo-type-title-size: 24px;
+    --solo-type-sub-size: 11.5px;
+  }
+
+  .solo-detail-scope .ar-story-copy {
+    gap: 20px;
+  }
+
+  .solo-detail-scope .ar-story-intro {
+    padding-inline: 24px;
+  }
+
+  .solo-detail-scope .solo-review-carousel {
+    padding: 54px 0 62px;
+  }
+
+  .solo-detail-scope .solo-review-carousel .shell {
+    width: calc(100% - 40px);
+  }
+
+  .solo-detail-scope .solo-review-copy [data-solo-title] {
+    font-size: var(--solo-type-title-size);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solo-detail-scope .ar-story-slide .ar-story-copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@container solo-detail (max-width: 370px) {
+  .solo-detail-scope {
+    --solo-type-title-size: 23px;
+    --solo-type-sub-size: 10.5px;
+  }
+}

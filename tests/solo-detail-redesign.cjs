@@ -70,7 +70,7 @@ async function testLayout(browser) {
   for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1096, height: 875 }, { width: 1280, height: 720 }]) {
     const page = await openSolo(browser, viewport)
     assert.equal(await page.locator('.solo-editorial-sheet .ar-expert-story').count(), 1, 'expert story should remain on its light editorial sheet')
-    assert.equal(await page.locator('.solo-editorial-sheet [data-review-showcase]').count(), 0, 'black review stage should remain visually separate from the expert sheet')
+    assert.equal(await page.locator('.solo-editorial-sheet .solo-review-carousel').count(), 0, 'black review stage should remain visually separate from the expert sheet')
     const layout = await page.evaluate(() => {
       const scope = document.querySelector('.solo-detail-scope')
       const benefit = document.querySelector('.ar-primary-benefit')
@@ -152,47 +152,30 @@ async function testControls(browser) {
 
 async function testReviewShowcase(browser) {
   const page = await openSolo(browser, { width: 1024, height: 900 })
-  const showcase = page.locator('[data-review-showcase]')
+  const showcase = page.locator('.solo-review-carousel')
   await showcase.scrollIntoViewIfNeeded()
   assert.match(await showcase.innerText(), /실제 고객 후기/)
-  assert.equal(await showcase.locator('[data-review-slide]').count(), 11, 'phone showcase should contain all eleven customer captures')
-  assert.equal(await showcase.locator('[data-review-slide].is-active').count(), 1, 'only one review should be emphasized inside the phone')
-  assert.equal((await showcase.locator('[data-review-status]').innerText()).trim(), '01')
-  assert.match(await showcase.locator('.solo-review-index').innerText(), /11/)
+  assert.equal(await showcase.locator('.review-capture').count(), 22, 'carousel should contain eleven customer captures and their seamless clones')
+  assert.equal(await showcase.locator('.solo-review-phone').count(), 0, 'phone mockup should be removed')
 
   const geometry = await showcase.evaluate(section => {
-    const phone = section.querySelector('.solo-review-phone').getBoundingClientRect()
-    const screen = section.querySelector('.solo-review-phone-screen').getBoundingClientRect()
     const styles = getComputedStyle(section)
     return {
       background: styles.backgroundColor,
       overflow: styles.overflow,
-      phoneRatio: phone.height / phone.width,
-      phoneBottom: phone.bottom,
-      sectionBottom: section.getBoundingClientRect().bottom,
-      screenWidth: screen.width
+      pageOverflow: document.documentElement.scrollWidth - innerWidth
     }
   })
-  assert.equal(geometry.background, 'rgb(7, 7, 7)', 'review section should use the approved HTML black stage')
+  assert.equal(geometry.background, 'rgb(8, 9, 9)', 'review section should retain its black background')
   assert.equal(geometry.overflow, 'hidden')
-  assert.ok(Math.abs(geometry.phoneRatio - 795 / 500) < 0.03, 'phone mockup should keep the approved HTML device proportion')
-  assert.ok(geometry.phoneBottom > geometry.sectionBottom, 'oversized phone should crop below the section')
-  assert.ok(geometry.screenWidth > 180, 'review capture should remain readable inside the enlarged phone')
+  assert.ok(geometry.pageOverflow <= 1)
 
-  await showcase.locator('[data-solo-review-next]').click()
-  await page.waitForTimeout(500)
-  assert.equal((await showcase.locator('[data-review-status]').innerText()).trim(), '02')
-  assert.equal(await showcase.locator('[data-review-slide="1"].is-active').count(), 1, 'next control should advance the active capture')
+  const before = await showcase.locator('.review-loop').evaluate(node => getComputedStyle(node).transform)
+  await showcase.locator('[data-review-next]').click()
+  await page.waitForTimeout(700)
+  const after = await showcase.locator('.review-loop').evaluate(node => getComputedStyle(node).transform)
+  assert.notEqual(after, before, 'next control should move the review carousel')
   await page.close()
-
-  const autoPage = await browser.newPage({ viewport: { width: 768, height: 1024 }, reducedMotion: 'no-preference' })
-  await autoPage.goto(`${BASE}?solo-review-auto-test=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
-  const autoStatus = autoPage.locator('[data-review-status]')
-  await autoStatus.waitFor()
-  assert.equal((await autoStatus.innerText()).trim(), '01')
-  await autoPage.waitForTimeout(5900)
-  assert.equal((await autoStatus.innerText()).trim(), '02', 'review showcase should advance automatically when motion is allowed')
-  await autoPage.close()
 }
 
 async function testReferenceProcess(browser) {
@@ -268,15 +251,15 @@ async function testFinalPolish(browser) {
   await page.waitForTimeout(650)
   assert.match(await story.locator('[data-story-status]').innerText(), /02\s*\/\s*02/)
 
-  const review = page.locator('[data-review-showcase]')
-  assert.match(await review.innerText(), /실제 고객 후기/)
+  const review = page.locator('.solo-review-carousel')
+  assert.match(await review.innerText(), /실제 고객\s*후기/)
   const reviewGeometry = await review.evaluate(section => {
-    const phone = section.querySelector('.solo-review-phone').getBoundingClientRect()
-    const copy = section.querySelector('.solo-review-copy').getBoundingClientRect()
-    return { height: section.getBoundingClientRect().height, phoneWidth: phone.width, copyWidth: copy.width }
+    const card = section.querySelector('.review-capture').getBoundingClientRect()
+    return { height: section.getBoundingClientRect().height, cardWidth: card.width, overflow: document.documentElement.scrollWidth-innerWidth }
   })
-  assert.ok(Math.abs(reviewGeometry.height / 500 - 7 / 12) < 0.02, 'review stage should keep the approved HTML 1200:700 proportion')
-  assert.ok(reviewGeometry.phoneWidth > reviewGeometry.copyWidth, 'phone should be the dominant visual')
+  assert.ok(reviewGeometry.height > 300, 'review stage should keep readable card height')
+  assert.ok(reviewGeometry.cardWidth > 200, 'review captures should remain readable')
+  assert.ok(reviewGeometry.overflow <= 1, 'review carousel must not widen the page')
 
   const process = page.locator('.solo-process-section')
   await process.locator('[data-process-next]').click()
@@ -286,14 +269,14 @@ async function testFinalPolish(browser) {
     const active = section.querySelector('[data-process-chapter].is-active')
     const inactive = section.querySelector('[data-process-chapter]:not(.is-active)')
     return {
-      accent: getComputedStyle(section.querySelector('.wps-head strong')).color,
+      accent: getComputedStyle(section.querySelector('.wps-head [data-solo-title]')).color,
       shadow: getComputedStyle(feature).boxShadow,
       transition: getComputedStyle(section.querySelector('[data-process-image]')).animationDuration,
       activeBackground: getComputedStyle(active).backgroundColor,
       inactiveBackground: getComputedStyle(inactive).backgroundColor
     }
   })
-  assert.equal(processStyle.accent, 'rgb(24, 24, 23)', 'process heading should use the neutral black reference color')
+  assert.equal(processStyle.accent, 'rgb(32, 36, 38)', 'process heading should use the shared charcoal type color')
   assert.notEqual(processStyle.shadow, 'none', 'main process panel should have a soft elevated shadow')
   assert.ok(processStyle.transition.split(',').some(value => parseFloat(value) >= 0.43), 'process image motion should be deliberate and smooth')
   assert.equal(processStyle.activeBackground, 'rgb(24, 24, 23)', 'active chapter should use the black selection state')
@@ -331,7 +314,7 @@ async function testReferenceSpacing(browser) {
   const storyMetrics = await page.locator('[data-story-slide].is-active').evaluate(slide => {
     const meta = slide.querySelector('.ar-story-meta')
     const copy = slide.querySelector('.ar-story-copy')
-    const title = copy.querySelector('h2').getBoundingClientRect()
+    const title = copy.querySelector('.ar-story-role').getBoundingClientRect()
     const body = copy.querySelector('p').getBoundingClientRect()
     const image = slide.querySelector('.ar-story-image').getBoundingClientRect()
     const slideStyle = getComputedStyle(slide)
@@ -343,7 +326,7 @@ async function testReferenceSpacing(browser) {
       copyToImage: parseFloat(copyStyle.marginBottom),
       titleToBodyRatio: title.width / body.width,
       imageRatio: image.width / image.height,
-      titleSize: parseFloat(getComputedStyle(copy.querySelector('h2')).fontSize),
+      titleSize: parseFloat(getComputedStyle(copy.querySelector('.ar-story-role')).fontSize),
       transitionMs: parseFloat(getComputedStyle(slide.closest('[data-expert-track]')).transitionDuration) * 1000
     }
   })
@@ -351,11 +334,11 @@ async function testReferenceSpacing(browser) {
   assert.ok(Math.abs(storyMetrics.paddingInline - 42) <= 2)
   assert.ok(Math.abs(storyMetrics.metaGap - 52) <= 2)
   assert.ok(storyMetrics.titleToBodyRatio >= 0.6 && storyMetrics.titleToBodyRatio <= 0.74, 'story title/body columns should follow the reference 40:60 rhythm')
-  assert.ok(storyMetrics.copyToImage >= 84 && storyMetrics.copyToImage <= 96, 'story copy should keep the reference editorial breathing room before the image')
+  assert.ok(storyMetrics.copyToImage >= 38 && storyMetrics.copyToImage <= 46, 'story copy should keep clear breathing room before the image')
   assert.ok(storyMetrics.imageRatio >= 2.75 && storyMetrics.imageRatio <= 2.95, 'story photograph should use the reference panoramic crop')
-  assert.ok(Math.abs(storyMetrics.titleSize - 29) <= 1)
+  assert.ok(Math.abs(storyMetrics.titleSize - 19) <= 1)
   assert.ok(storyMetrics.transitionMs >= 650 && storyMetrics.transitionMs <= 720)
-  const storyPunctuationTogether = await page.locator('.ar-story-slide.is-active .ar-story-copy h2').evaluate(title => {
+  const storyPunctuationTogether = await page.locator('.ar-story-slide.is-active .ar-story-copy p').evaluate(title => {
     const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT)
     let text
     while (walker.nextNode()) if (walker.currentNode.textContent.trim().endsWith('.')) text = walker.currentNode
@@ -391,7 +374,7 @@ async function testReferenceSpacing(browser) {
   })
   assert.ok(ratioMetrics.paddingTop >= 52 && ratioMetrics.paddingTop <= 56)
   assert.ok(ratioMetrics.paddingInline >= 20 && ratioMetrics.paddingInline <= 24)
-  assert.ok(ratioMetrics.headingSize >= 23 && ratioMetrics.headingSize <= 26)
+  assert.ok(ratioMetrics.headingSize >= 17 && ratioMetrics.headingSize <= 19)
   assert.equal(ratioMetrics.columns.split(' ').length, 2, 'CD experience should retain the approved left/right composition')
   assert.ok(ratioMetrics.markerTransitionMs >= 500 && ratioMetrics.markerTransitionMs <= 600)
   assert.match(ratioMetrics.background, /radial-gradient/, 'CD experience should retain the ZIP black radial stage')

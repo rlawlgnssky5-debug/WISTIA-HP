@@ -139,7 +139,7 @@ async function testAudio(browser) {
 
 async function testErrorAndReducedMotion(browser) {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
-  await page.route('**/assets/audio/before-after/after.mp3', route => route.abort())
+  await page.route('**/assets/audio/before-after/after.mp3*', route => route.abort())
   await page.goto(`${BASE}?solo-ba-error=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
   const root = page.locator('#wistiaBeforeAfter')
   await root.waitFor()
