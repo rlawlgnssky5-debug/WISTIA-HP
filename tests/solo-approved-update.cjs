@@ -65,9 +65,21 @@ async function testStructureAndReferenceGeometry(browser) {
     const sum = columns.reduce((total, value) => total + value, 0)
     return columns.map(value => value / sum)
   })
-  assert.ok(Math.abs(compareColumns[0] - .34) < .025)
-  assert.ok(Math.abs(compareColumns[1] - .18) < .025)
-  assert.ok(Math.abs(compareColumns[2] - .48) < .025)
+  assert.ok(Math.abs(compareColumns[0] - .30) < .025)
+  assert.ok(Math.abs(compareColumns[1] - .15) < .025)
+  assert.ok(Math.abs(compareColumns[2] - .55) < .025)
+  const compareGeometry = await page.locator('.ar-compare-table').evaluate(table => {
+    const tableRect = table.getBoundingClientRect()
+    const shellRect = table.closest('.shell').getBoundingClientRect()
+    const headRect = table.querySelector('.ar-compare-head > strong').getBoundingClientRect()
+    const firstCellRect = table.querySelector('.ar-compare-row .ar-compare-wistia').getBoundingClientRect()
+    return {
+      rightAlignment: Math.abs(tableRect.right - shellRect.right),
+      headerGap: firstCellRect.top - headRect.bottom
+    }
+  })
+  assert.ok(compareGeometry.rightAlignment <= 1, 'comparison table should align to the shared right edge')
+  assert.ok(Math.abs(compareGeometry.headerGap) <= 1, 'WISTIA header should connect directly to its first row')
 
   const process = await page.locator('[data-process-studio]').evaluate(section => {
     const feature = section.querySelector('[data-process-feature]').getBoundingClientRect()
