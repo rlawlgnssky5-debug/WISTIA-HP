@@ -13,7 +13,7 @@
 .finder-back{display:table;margin:0 auto 28px;color:#5c6a71;font-size:14px;text-decoration:underline;text-underline-offset:5px}
 .finder-intro{max-width:1000px;margin:0 auto 68px}
 .finder-intro .eyebrow{font-size:12px;letter-spacing:.22em;color:#68787e}
-.finder-intro h1{max-width:100%;margin:19px auto 22px;font-size:clamp(34px,5.2vw,54px);line-height:1.18;font-weight:500;letter-spacing:-.055em;color:#273034;text-wrap:balance;word-break:keep-all}
+.finder-intro h1{max-width:100%;margin:19px auto 22px;font-size:clamp(34px,5.2vw,54px);line-height:1.18;font-weight:500;letter-spacing:-.055em;color:#273034;text-wrap:balance;word-break:keep-all}.finder-stage-role .finder-intro h1{margin-top:0;font-size:clamp(32px,4vw,44px)}
 .finder-intro p{font-size:clamp(16px,1.55vw,21px);line-height:1.7;color:#617077}
 .finder-steps{display:grid;gap:64px}
 .finder-step{min-width:0;margin:0;padding:0;border:0}
@@ -28,10 +28,10 @@
 .finder-choice:has(input:focus-visible){outline:2px solid #345d77;outline-offset:3px}
 .finder-choice-mark{flex:none;width:21px;height:21px;border:1px solid #809098;border-radius:50%}
 .finder-choice:has(input:checked) .finder-choice-mark{border:6px solid #34464d}
-.finder-choice>span:last-child{display:grid;justify-items:center;gap:9px}
+.finder-choice-content{display:flex;align-items:center;justify-content:center;gap:10px}
 .finder-choice strong{font-size:20px;line-height:1.4;font-weight:500;color:#273034}
 .finder-choice small{font-size:14px;line-height:1.55;color:#637078}
-.finder-service-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#202628;color:#fff}
+.finder-service-badge{display:inline-flex;flex:none;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#202628;color:#fff}
 .finder-service-badge svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .finder-service-badge em{font-size:11px;font-style:normal;font-weight:650;letter-spacing:.04em}
 .finder-result{padding:36px 0;border-top:1px solid #bfcbd0}
@@ -45,5 +45,5 @@
 .finder-summary-line dd{max-width:65%;text-align:right;line-height:1.45}
 @media(min-width:701px){.finder-intro h1{font-size:clamp(36px,4.2vw,52px)}}
 @media(max-width:700px){.finder-home{padding-top:42px;padding-bottom:80px}.finder-intro{margin-bottom:48px}.finder-intro h1{font-size:39px}.finder-steps{gap:45px}.finder-options{gap:10px}.finder-choice{min-height:112px;padding:20px}.finder-choice:has(input:checked){padding:19px}.finder-choice strong{font-size:18px}.finder-choice small{font-size:13px}.finder-result h2{font-size:26px}.finder-result h3{font-size:21px}.finder-result .finder-picked{font-size:15px}.finder-next{font-size:16px}}
-@media(max-width:700px){.finder-stage-role .finder-intro h1{font-size:clamp(27px,7.4vw,34px);letter-spacing:-.06em}.finder-stage-role:before{width:190%;bottom:-18%}}
+@media(max-width:700px){.finder-stage-role .finder-intro h1{font-size:clamp(27px,7vw,32px);letter-spacing:-.06em}.finder-stage-role:before{width:190%;bottom:-18%}}
 @media(prefers-reduced-motion:reduce){.finder-intro-splash{display:none}.finder-home.has-intro-animation:before,.finder-home.has-intro-animation .finder-content{animation:none}.finder-home.has-intro-animation .finder-content{opacity:1;transform:none}}

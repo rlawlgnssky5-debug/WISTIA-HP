@@ -11,13 +11,15 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
     await page.goto(`${BASE}?faq-ratio-refresh=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
 
     const ratioTrack = page.locator('.wistia-ar__ratio-line')
+    assert.equal(await page.locator('.wistia-ar__voice-art').count(), 1, 'AR section should use the supplied waveform image as its center visual')
     const trackStyle = await ratioTrack.evaluate(node => {
       const style = getComputedStyle(node)
-      return { width: parseFloat(style.width), radius: style.borderRadius, background: style.backgroundColor }
+      return { width: parseFloat(style.width), height: parseFloat(style.height), radius: style.borderRadius, background: style.backgroundColor, backgroundImage: style.backgroundImage }
     })
-    assert.ok(trackStyle.width >= 10, 'vertical ratio control must read as a thick draggable track')
+    assert.ok(trackStyle.width >= 500, 'ratio control should span the new horizontal sound scale')
+    assert.ok(trackStyle.width > trackStyle.height, 'ratio control should be horizontal')
     assert.notEqual(trackStyle.radius, '0px')
-    assert.notEqual(trackStyle.background, 'rgba(0, 0, 0, 0)')
+    assert.match(trackStyle.backgroundImage, /linear-gradient/, 'ratio scale should visibly grade from dark to silver')
 
     const faq = page.locator('.worry-section')
     const layout = await faq.evaluate(root => {
@@ -28,8 +30,9 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
       return {
         listRatio: list.width / rootBox.width,
         listOffset: list.left - rootBox.left,
-        ctaRatio: cta.width / rootBox.width,
-        ctaOffset: cta.left - rootBox.left,
+      ctaRatio: cta.width / rootBox.width,
+      ctaOffset: cta.left - rootBox.left,
+      sectionHeight: rootBox.height,
         ctaBackground: ctaStyle.backgroundColor,
         ctaRadius: parseFloat(ctaStyle.borderRadius)
       }
@@ -37,6 +40,7 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
     assert.ok(layout.listRatio <= .68, 'FAQ list should be roughly half-width')
     assert.ok(layout.listOffset > 40, 'FAQ list should sit to the right')
     assert.ok(layout.ctaRatio <= .68 && layout.ctaOffset > 40, 'consultation CTA should align with the FAQ list')
+    assert.ok(layout.sectionHeight <= 560, 'FAQ section should stay compact')
     assert.equal(layout.ctaBackground, 'rgb(31, 34, 35)')
     assert.ok(layout.ctaRadius >= 14)
     assert.match(await faq.locator('.solo-inline-contact').innerText(), /더 궁금한 점이 있나요\?\s*상담하기/)

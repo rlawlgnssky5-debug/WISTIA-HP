@@ -689,8 +689,8 @@ html,body{overflow-x:clip}
 
 
 /* v89 — restrained scroll motion, continuous reviews and stable AR switching */
-#siteHeader{transition:background-color .35s ease,box-shadow .35s ease,backdrop-filter .35s ease}
-#siteHeader.is-scrolled{background:#ffffffed;box-shadow:0 8px 24px #1a20260a;backdrop-filter:blur(14px)}
+#siteHeader{background:#fff;backdrop-filter:none;transition:background-color .35s ease,box-shadow .35s ease}
+#siteHeader.is-scrolled{background:#fff;box-shadow:none;backdrop-filter:none}
 .motion-reveal{opacity:0;transform:translateY(28px);transition:opacity .85s ease var(--motion-delay,0ms),transform .85s cubic-bezier(.22,.61,.36,1) var(--motion-delay,0ms)}
 .motion-reveal.is-visible{opacity:1;transform:none}
 .motion-reveal .scene-image img,.motion-reveal .process-image img,.motion-reveal.detail-result-card img{transform:scale(1.035);transition:transform 1.2s cubic-bezier(.22,.61,.36,1)}
@@ -2133,7 +2133,7 @@ body.is-solo-detail .solo-person-tab span{font-size:9.5px}
 
 /* Solo detail visual system refresh: one gutter and three surface colors. */
 .solo-detail-scope{--solo-bg-black:#080909;--solo-bg-white:#fff;--solo-bg-silver:#f3f4f4;--solo-page-gutter:24px;background:var(--solo-bg-white)}
-body.is-solo-detail #siteHeader{position:sticky;top:0;z-index:80;background:var(--solo-bg-white)}
+body.is-solo-detail #siteHeader{position:sticky;top:0;z-index:80;background:#fff;backdrop-filter:none;box-shadow:none}
 body.is-solo-detail .solo-top-cta{position:sticky;top:48px;z-index:75;background:#1c2022;box-shadow:0 8px 20px -18px #0008}
 .solo-detail-scope>.ar-primary-benefit,.solo-detail-scope>.solo-editorial-sheet,.solo-detail-scope>.ar-compare,.solo-detail-scope>.worry-section,.solo-detail-scope>.footer{background:var(--solo-bg-white)}
 .solo-detail-scope>.wistia-ba-section,.solo-detail-scope>.solo-process-section{background:var(--solo-bg-silver)}
@@ -2289,6 +2289,13 @@ body .footer.shell{
 .solo-detail-scope .ar-primary-benefit{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
 .solo-detail-scope .ar-compare{padding:var(--solo-section-top) 0 var(--solo-section-bottom)}
 .solo-detail-scope .solo-process-section,.solo-detail-scope .worry-section{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
+.solo-detail-scope .worry-section{padding:34px var(--solo-page-gutter)}
+
+/* AR benefit and review mockup: copy is left-aligned, the index rests at the lower right. */
+.solo-detail-scope .ar-primary-benefit{display:grid;grid-template-columns:minmax(0,1fr) 180px;align-items:end;gap:18px;margin:0;width:100%;padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom);text-align:left}
+.solo-detail-scope .ar-benefit-copy{width:100%;margin:0;text-align:left}.solo-detail-scope .ar-tags{justify-content:flex-start}.solo-detail-scope .ar-copy-emphasis{margin-left:0;margin-right:0}.solo-detail-scope .ar-index-wheel{grid-column:2;grid-row:1;width:176px;margin:74px 0 0 auto;align-self:end}
+.solo-detail-scope .solo-review-showcase{margin:0;width:100%;height:470px;padding:48px 0 0 24px;background:#080909}.solo-detail-scope .solo-review-copy{padding-top:14px}.solo-detail-scope .solo-review-kicker{margin-bottom:16px;font-size:9px}.solo-detail-scope .solo-review-copy h2{font-size:24px;white-space:normal}.solo-detail-scope .solo-review-copy p{margin-top:18px;font-size:9px;line-height:1.7}.solo-detail-scope .solo-review-visual{height:100%}.solo-detail-scope .solo-review-phone{left:-14px;top:0;width:230px;height:478px;border-radius:38px}.solo-detail-scope .solo-review-phone-screen{border-radius:31px}.solo-detail-scope .solo-review-slide{padding:40px 10px 14px}.solo-detail-scope .solo-review-navigation{right:8px;top:154px}
+@container solo-detail (max-width:429px){.solo-detail-scope .ar-primary-benefit{grid-template-columns:minmax(0,1fr) 144px;gap:10px;padding-top:var(--solo-section-top)}.solo-detail-scope .ar-primary-benefit h2{font-size:25px!important}.solo-detail-scope .ar-benefit-desc{font-size:11px}.solo-detail-scope .ar-index-wheel{width:144px;margin-top:86px}.solo-detail-scope .solo-review-showcase{height:410px;padding:42px 0 0 20px}.solo-detail-scope .solo-review-copy h2{font-size:22px}.solo-detail-scope .solo-review-phone{width:196px;height:420px;border-radius:34px}.solo-detail-scope .solo-review-phone-screen{border-radius:27px}.solo-detail-scope .solo-review-navigation{top:138px}}
 
 /* Compact story card and process controls. */
 .solo-detail-scope .ar-story-role-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
