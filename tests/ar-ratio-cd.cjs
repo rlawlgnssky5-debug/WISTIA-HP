@@ -87,17 +87,24 @@ async function testResponsiveMotionAndError(browser) {
   const section = mobile.locator('#arRatioExperience')
   const layout = await section.evaluate(node => {
     const root = node.getBoundingClientRect()
+    const copy = node.querySelector('.ar-cd-copy').getBoundingClientRect()
     const visual = node.querySelector('.ar-cd-visual').getBoundingClientRect()
     return {
       columns: getComputedStyle(node.querySelector('.ar-cd-layout')).gridTemplateColumns.split(' ').length,
       contained: visual.left >= root.left && visual.right <= root.right,
+      sideBySide: visual.left >= copy.right - 1,
+      verticallyAligned: Math.min(copy.bottom, visual.bottom) > Math.max(copy.top, visual.top),
+      sectionHeight: root.height,
       overflow: document.documentElement.scrollWidth - innerWidth,
       discAnimation: getComputedStyle(node.querySelector('.ar-cd-disc')).animationName,
       glowTransition: getComputedStyle(node.querySelector('.ar-cd-glow')).transitionDuration
     }
   })
-  assert.equal(layout.columns, 1)
+  assert.equal(layout.columns, 2)
   assert.equal(layout.contained, true)
+  assert.equal(layout.sideBySide, true)
+  assert.equal(layout.verticallyAligned, true)
+  assert.ok(layout.sectionHeight < 760, 'AR ratio section should keep the compact horizontal reference proportion')
   assert.ok(layout.overflow <= 1)
   assert.equal(layout.discAnimation, 'none')
   assert.equal(layout.glowTransition, '0s')

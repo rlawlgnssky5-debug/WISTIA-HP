@@ -392,9 +392,10 @@ async function testReferenceSpacing(browser) {
       visualContained: visual.left >= box.left && visual.right <= box.right
     }
   })
-  assert.ok(ratioMetrics.paddingTop >= 62 && ratioMetrics.paddingTop <= 66)
-  assert.ok(ratioMetrics.paddingInline >= 30 && ratioMetrics.paddingInline <= 34)
-  assert.ok(ratioMetrics.headingSize >= 30 && ratioMetrics.headingSize <= 33)
+  assert.ok(ratioMetrics.paddingTop >= 52 && ratioMetrics.paddingTop <= 56)
+  assert.ok(ratioMetrics.paddingInline >= 20 && ratioMetrics.paddingInline <= 24)
+  assert.ok(ratioMetrics.headingSize >= 23 && ratioMetrics.headingSize <= 26)
+  assert.equal(ratioMetrics.columns.split(' ').length, 2, 'CD experience should retain the approved left/right composition')
   assert.ok(ratioMetrics.markerTransitionMs >= 500 && ratioMetrics.markerTransitionMs <= 600)
   assert.match(ratioMetrics.background, /radial-gradient/, 'CD experience should retain the ZIP black radial stage')
   assert.equal(ratioMetrics.visualContained, true)
@@ -411,11 +412,12 @@ async function testReferenceSpacing(browser) {
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
   await mobile.goto(`${BASE}?reference-spacing-mobile=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
   await mobile.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
-  const mobileOrder = await mobile.locator('#arRatioExperience').evaluate(section => {
-    const top = selector => section.querySelector(selector).getBoundingClientRect().top
-    return [top('.ar-cd-copy'), top('.ar-cd-visual')]
+  const mobileColumnsOverlap = await mobile.locator('#arRatioExperience').evaluate(section => {
+    const copy = section.querySelector('.ar-cd-copy').getBoundingClientRect()
+    const visual = section.querySelector('.ar-cd-visual').getBoundingClientRect()
+    return Math.min(copy.bottom, visual.bottom) > Math.max(copy.top, visual.top)
   })
-  assert.deepEqual([...mobileOrder].sort((a, b) => a - b), mobileOrder, 'mobile AR ratio content should flow copy then CD visual')
+  assert.equal(mobileColumnsOverlap, true, 'mobile AR ratio copy and CD visual should share the same horizontal stage')
   const mobileDialContained = await mobile.locator('#arRatioExperience').evaluate(section => {
     const sectionRect = section.getBoundingClientRect()
     const dialRect = section.querySelector('.ar-cd-visual').getBoundingClientRect()
@@ -427,7 +429,7 @@ async function testReferenceSpacing(browser) {
     }
   })
   assert.equal(mobileDialContained.contained, true, 'mobile CD visual should stay inside the section')
-  assert.equal(mobileDialContained.columns.split(' ').length, 1, 'mobile CD experience should use one column')
+  assert.equal(mobileDialContained.columns.split(' ').length, 2, 'mobile CD experience should preserve the approved two-column composition')
   assert.equal(mobileDialContained.discAnimation, 'none', 'reduced motion should disable CD rotation')
   assert.equal(mobileDialContained.glowTransition, '0s', 'reduced motion should disable orbit motion')
   assert.equal(await mobile.locator('.ar-story-slide.is-active .ar-story-copy').evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length), 1, 'mobile story copy should stack title and body')
