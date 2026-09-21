@@ -354,19 +354,19 @@ let reviewLast=0
 const dialog = document.querySelector("#mediaDialog")
 const MENU = []
 const NAVIGATION_GROUPS = [
- {label:"직접 노래를 부른다면?",items:[
-  {title:"AR 축가",note:"사전녹음",detail:"축가 시간에 직접 노래를 부를 사람들을 위한 것",href:"#/detail/solo"},
-  {title:"옵션 · 가사 영상",detail:"완성한 축가와 함께 예식장에서 재생할 가사 영상을 제작합니다",href:"#/event/solo/lyrics",kind:"option"}
+ {label:"직접 부른다면",items:[
+  {title:"AR 축가",note:"사전녹음",href:"#/detail/solo"},
+  {title:"가사 영상 옵션",href:"#/event/solo/lyrics",kind:"option"}
  ]},
- {label:"축가 시간에 내가 녹음한 노래와 영상을 틀어놓는다면?",items:[
-  {title:"녹음 메이킹 영상",detail:"축가 시간에 직접 녹음한 노래와 영상을 틀어놓는 사람들을 위한 것",href:"#/detail/solo-film"},
-  {title:"스토리형 축가 영상",detail:"하객 메시지 · 인터뷰 · 녹음 메이킹 필름 · 뮤비 클립 · 전하는 편지",subdetail:"축가 시간에 직접 녹음한 노래와 영상을 틀어놓는 사람들을 위한 것",href:"#/detail/duet-film"}
+ {label:"영상으로 상영한다면",items:[
+  {title:"녹음 메이킹 영상",href:"#/detail/solo-film"},
+  {title:"스토리형 축가 영상",href:"#/detail/duet-film"}
  ]},
- {label:"뻔한 식전영상이 싫다면?",items:[
-  {title:"스토리형 식전 영상",detail:"남의 노래가 아닌 우리만의 노래로 시작합니다",subdetail:"하객 메시지 · 인터뷰 · 녹음 메이킹 필름 · 뮤비 클립 · 전하는 편지",href:"#/detail/wedding"}
+ {label:"뻔한 식전영상이 싫다면",items:[
+  {title:"스토리형 식전 영상",href:"#/detail/wedding"}
  ]},
- {label:"프로포즈 / 답프로포즈",items:[
-  {title:"프로포즈 필름",detail:"프로포즈하는 사람들을 위한 한 편의 고백 영상",href:"#/detail/proposal"}
+ {label:"프로포즈",items:[
+  {title:"프로포즈 / 답프로포즈",href:"#/detail/proposal"}
  ]},
  {label:"위스티아",kind:"utility",items:[
   {title:"위스티아는 이런 곳입니다",href:"#/info/about"},
@@ -1034,9 +1034,12 @@ async function copyConsultationAndOpenKakao(){
  consultationToast(ok?"채팅창에 복사되었습니다 · 카카오톡 채팅창에 붙여넣어 주세요":"자동 복사가 제한되었습니다 · 문의 양식을 직접 복사해 주세요",!ok)
  if(!popup)location.href=kakao()
 }
-function navigationMenu(){return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+NAVIGATION_GROUPS.map(group=>'<section class="menu-group'+(group.kind?" is-"+group.kind:"")+'"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(item=>'<a class="menu-item'+(item.kind?" is-"+item.kind:"")+'" href="'+item.href+'"><span><strong>'+item.title+(item.note?'<em>'+item.note+'</em>':"")+'</strong>'+(item.detail?'<small>'+item.detail+'</small>':"")+(item.subdetail?'<small class="menu-subdetail">'+item.subdetail+'</small>':"")+'</span><b aria-hidden="true">↗</b></a>').join("")+'</div></section>').join("")+'</nav>'}
+function navigationMenu(){return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+NAVIGATION_GROUPS.map(group=>'<section class="menu-group'+(group.kind?" is-"+group.kind:"")+'"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(item=>'<a class="menu-item'+(item.kind?" is-"+item.kind:"")+'" href="'+item.href+'"><strong>'+item.title+(item.note?'<em>'+item.note+'</em>':"")+'</strong></a>').join("")+'</div></section>').join("")+'</nav>'}
 function header(){
- document.querySelector("#siteHeader").innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>←</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>VOICE & FILM</small></span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>'+navigationMenu();
+ document.querySelector("#mainMenu")?.remove()
+ const siteHeader=document.querySelector("#siteHeader")
+ siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>←</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>VOICE & FILM</small></span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
+ siteHeader.insertAdjacentHTML("afterend",navigationMenu())
  document.querySelector("#floatingKakao").href=kakao()
  const soloCtaKakao=document.querySelector("#soloDesktopCtaKakao");if(soloCtaKakao)soloCtaKakao.href=kakao()
 }
