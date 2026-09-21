@@ -1789,6 +1789,67 @@ body.is-solo-detail .footer{width:100%;padding:72px 24px 110px;background:#fff;b
  body.is-solo-detail .solo-desktop-cta-kakao{background:#fff;color:#25292b;border:1px solid #d9dcdd;box-shadow:0 16px 34px -18px #20292f66}
 }
 
+/* Solo FAQ: compact right-aligned questions and a clear consultation close. */
+.solo-detail-scope .worry-section{
+ padding:70px var(--solo-page-gutter) 78px;
+ overflow:hidden;
+}
+.solo-detail-scope .worry-section .solo-faq-intro{max-width:360px;margin-bottom:34px}
+.solo-detail-scope .worry-section .faq-list{
+ width:62%;
+ margin-left:auto;
+ border-top:0;
+ gap:8px;
+}
+.solo-detail-scope .worry-section .faq-list details,
+.solo-detail-scope .worry-section .faq-list details:last-child{
+ padding:0 18px;
+ overflow:hidden;
+ border:0;
+ background:#f5f6f6;
+ transition:background-color .22s ease,transform .22s ease;
+}
+.solo-detail-scope .worry-section .faq-list details:hover{background:#eef0f0;transform:translateX(-4px)}
+.solo-detail-scope .worry-section .faq-list summary{min-height:58px;padding:17px 0;font-size:14px;line-height:1.55}
+.solo-detail-scope .worry-section .faq-list summary span{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.solo-detail-scope .worry-section .faq-list details>p{margin:0;padding:0 26px 20px 0;font-size:12px;line-height:1.75}
+.solo-detail-scope .worry-section .faq-list details[open]>p{animation:solo-faq-answer-in .34s cubic-bezier(.2,.8,.2,1) both}
+@keyframes solo-faq-answer-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.solo-detail-scope .solo-inline-contact{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ width:62%;
+ min-height:72px;
+ margin:14px 0 0 auto;
+ padding:0 22px;
+ border-radius:18px;
+ background:#1f2223;
+ color:#fff;
+ box-sizing:border-box;
+ transition:background-color .22s ease,transform .22s ease;
+}
+.solo-detail-scope .solo-inline-contact strong{font-size:13px;font-weight:560}
+.solo-detail-scope .solo-inline-contact span{display:flex;align-items:center;gap:9px;color:#d7d9da;font-size:12px}
+.solo-detail-scope .solo-inline-contact b{font-size:20px;font-weight:350;line-height:1}
+.solo-detail-scope .solo-inline-contact:hover,.solo-detail-scope .solo-inline-contact:focus-visible{background:#080909;transform:translateY(-2px)}
+@media(min-width:1180px){body.is-solo-detail .solo-detail-scope .solo-inline-contact{display:flex}}
+@container solo-detail (max-width:430px){
+ .solo-detail-scope .worry-section .faq-list,
+ .solo-detail-scope .solo-inline-contact{width:68%}
+ .solo-detail-scope .worry-section .faq-list details{padding-inline:14px}
+ .solo-detail-scope .worry-section .faq-list summary{font-size:12px}
+ .solo-detail-scope .solo-inline-contact{min-height:66px;padding-inline:16px;border-radius:16px}
+ .solo-detail-scope .solo-inline-contact strong{font-size:11px}
+ .solo-detail-scope .solo-inline-contact span{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .solo-detail-scope .worry-section .faq-list details,
+ .solo-detail-scope .worry-section .faq-list summary span,
+ .solo-detail-scope .solo-inline-contact{transition:none}
+ .solo-detail-scope .worry-section .faq-list details[open]>p{animation:none}
+}
+
 /* Hero curve sits over the white benefit panel so the lower arc remains visible. */
 .solo-detail-scope>.ar-hook-hero{z-index:2;border-radius:0 0 50% 50%/0 0 76px 76px;box-shadow:0 20px 36px -34px #000}
 .solo-detail-scope .ar-primary-benefit{position:relative;z-index:1;width:calc(100% - 18px);margin:-76px 18px 0 0;padding:178px 28px 94px;gap:62px;text-align:center}
