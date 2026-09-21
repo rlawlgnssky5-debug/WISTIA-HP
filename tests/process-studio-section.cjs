@@ -30,6 +30,8 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
     const section = page.locator('[data-process-studio]')
     assert.equal(await section.locator('[data-process-chapter]').count(), 7)
     assert.equal(await section.locator('[data-process-image]').count(), 1)
+    assert.match(await section.locator('.wps-head [data-solo-title]').innerText(), /처음부터 끝까지,.*맞춤형으로 케어해드립니다/s)
+    assert.match(await section.locator('.wps-counter').getAttribute('aria-label'), /현재 프로세스 01 \/ 07/)
     assert.match(await section.innerText(), /맞춤 제작 상담.*곡과 키 확인/s)
     assert.equal(await section.locator('[data-process-prev]').isDisabled(), true)
     assert.equal(await section.locator('[data-process-next]').isDisabled(), false)
@@ -61,6 +63,21 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
     assert.equal(desktop.contained, true)
     assert.ok(desktop.overflow <= 1)
     assert.equal(desktop.background, 'rgb(243, 244, 244)')
+    const controls = await section.locator('.wps-controls').evaluate(node => {
+      const content = node.closest('.wps-content').getBoundingClientRect()
+      const buttons = [...node.querySelectorAll('button')].map(button => {
+        const style = getComputedStyle(button)
+        const rect = button.getBoundingClientRect()
+        return { radius: parseFloat(style.borderRadius), width: rect.width, height: rect.height }
+      })
+      const contentStyle = getComputedStyle(node.closest('.wps-content'))
+      return { width: node.getBoundingClientRect().width, contentWidth: content.width, contentPadding: parseFloat(contentStyle.paddingLeft) + parseFloat(contentStyle.paddingRight), computedWidth: getComputedStyle(node).width, alignSelf: getComputedStyle(node).alignSelf, buttons }
+    })
+    assert.ok(controls.width >= controls.contentWidth - controls.contentPadding - 20, `process controls should span the content panel with side breathing room (${controls.width}/${controls.contentWidth}, ${controls.computedWidth}, ${controls.alignSelf})`)
+    controls.buttons.forEach(button => {
+      assert.ok(button.width <= 36 && button.height <= 36, 'process controls should stay compact')
+      assert.ok(button.radius <= 6, 'process controls should use a compact square treatment')
+    })
 
     await page.waitForTimeout(3200)
     assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '02', 'process should advance every three seconds')

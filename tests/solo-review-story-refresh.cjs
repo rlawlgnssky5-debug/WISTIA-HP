@@ -25,6 +25,8 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
     const story = page.locator('.ar-expert-story')
     await story.waitFor()
     assert.match(await story.locator('.ar-story-intro').innerText(), /같은 소스여도,\s*전문가들과 함께라면 다릅니다/)
+    assert.equal(await story.locator('.ar-story-icon').count(), 2, 'each brand-story card should use an icon instead of a step number')
+    assert.equal(await story.locator('.ar-story-meta').count(), 0, 'numeric story metadata should be removed')
     assert.equal((await story.locator('[data-expert-card].is-active .ar-story-role').innerText()).trim(), '영상 연출')
     const hierarchy = await story.evaluate(node => ({
       title: parseFloat(getComputedStyle(node.querySelector('.ar-story-intro h2')).fontSize),
@@ -42,6 +44,15 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
 
     await page.waitForFunction(() => document.querySelector('[data-expert-track]')?.dataset.index === '1', null, { timeout: 7000 })
     assert.equal((await story.locator('[data-expert-card].is-active .ar-story-role').innerText()).trim(), '사운드 완성')
+    const cardAlignment = await story.locator('[data-expert-card].is-active').evaluate(card => {
+      const icon = card.querySelector('.ar-story-icon').getBoundingClientRect()
+      const sub = card.querySelector('.ar-story-copy strong').getBoundingClientRect()
+      const image = card.querySelector('.ar-story-image').getBoundingClientRect()
+      const copy = card.querySelector('.ar-story-copy').getBoundingClientRect()
+      return { iconTop: icon.top, subTop: sub.top, imageTop: image.top, copyBottom: copy.bottom }
+    })
+    assert.ok(Math.abs(cardAlignment.iconTop - cardAlignment.subTop) <= 1, `story icon and specialist role should share the top alignment (${cardAlignment.iconTop}/${cardAlignment.subTop})`)
+    assert.ok(cardAlignment.imageTop - cardAlignment.copyBottom <= 18, `story image should follow the compact copy block (${cardAlignment.imageTop - cardAlignment.copyBottom})`)
     await page.waitForFunction(() => document.querySelector('[data-expert-track]')?.dataset.index === '0', null, { timeout: 7000 })
 
     const reduced = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
@@ -53,7 +64,7 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
     const reducedEnd = await reducedReview.locator('.review-loop').evaluate(node => getComputedStyle(node).transform)
     assert.equal(reducedEnd, reducedStart, 'review carousel must remain still for reduced-motion users')
     const introInset = await reduced.locator('.ar-story-intro h2').evaluate(node => node.getBoundingClientRect().left)
-    assert.ok(introInset >= 23, 'brand story heading should align with the mobile slide gutter')
+    assert.ok(introInset >= 21, 'brand story heading should align with the shared mobile gutter')
     await reduced.close()
 
     console.log('solo review and brand story refresh checks passed')

@@ -2289,3 +2289,21 @@ body .footer.shell{
 .solo-detail-scope .ar-primary-benefit{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
 .solo-detail-scope .ar-compare{padding:var(--solo-section-top) 0 var(--solo-section-bottom)}
 .solo-detail-scope .solo-process-section,.solo-detail-scope .worry-section{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
+
+/* Compact story card and process controls. */
+.solo-detail-scope .ar-story-role-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.solo-detail-scope .ar-story-icon{display:grid;width:22px;height:22px;place-items:center;border-radius:50%;background:#080909;color:#fff}
+.solo-detail-scope .ar-story-icon svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.solo-detail-scope .ar-story-copy p{margin-top:0}
+.solo-detail-scope .ar-story-copy{margin-bottom:2px}
+.solo-detail-scope .wistia-process-studio .wps-step{font-size:8px!important;font-weight:650!important}
+.solo-detail-scope .wistia-process-studio .wps-content h3{font-size:15px!important;font-weight:600!important;line-height:1.2!important}
+.solo-detail-scope .wistia-process-studio .wps-controls{align-self:stretch;width:auto;margin-left:10px;margin-right:10px;justify-content:space-between}
+.solo-detail-scope .wistia-process-studio .wps-controls button{width:34px;height:34px;border-radius:4px}
+@container solo-detail (max-width:429px){
+ .solo-detail-scope .ar-story-copy{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:16px;margin-bottom:10px}
+ .solo-detail-scope .ar-story-icon{width:20px;height:20px}
+}
+
+/* One calm content edge throughout the solo page. */
+.solo-detail-scope .shell{width:calc(100% - (var(--solo-page-gutter)*2));margin-left:var(--solo-page-gutter);margin-right:var(--solo-page-gutter)}
