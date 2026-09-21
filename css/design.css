@@ -2077,6 +2077,10 @@ body.is-solo-detail .solo-top-cta{position:sticky;top:48px;z-index:75;background
 .solo-detail-scope>.ar-primary-benefit,.solo-detail-scope>.solo-editorial-sheet,.solo-detail-scope>.ar-compare,.solo-detail-scope>.worry-section,.solo-detail-scope>.footer{background:var(--solo-bg-white)}
 .solo-detail-scope>.wistia-ba-section,.solo-detail-scope>.solo-process-section{background:var(--solo-bg-silver)}
 .solo-detail-scope>.solo-review-showcase,.solo-detail-scope>.wistia-ar{background-color:var(--solo-bg-black)}
+.solo-detail-scope>.solo-editorial-sheet{border-top:32px solid var(--solo-bg-black)}
+.solo-detail-scope .ar-story-slide{padding-top:38px}
+.solo-detail-scope .ar-story-meta{margin-bottom:24px}
+.solo-detail-scope .ar-story-copy{margin-bottom:38px}
 .solo-detail-scope [data-solo-title]{font-size:26px!important}
 .solo-detail-scope .ar-primary-benefit{overflow:hidden;padding-inline:var(--solo-page-gutter)}
 .solo-detail-scope .ar-primary-benefit:before{content:"";position:absolute;z-index:-1;inset:26% -18% auto;height:42%;background:url('../assets/img/ar-detail/wistia-waveform.png') center/contain no-repeat;opacity:.075;pointer-events:none}
