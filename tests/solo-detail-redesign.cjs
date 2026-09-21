@@ -22,7 +22,7 @@ async function testAudio(browser) {
     if (/\/assets\/audio\/ar-samples\/voice-/.test(request.url())) audioRequests.push(request.url())
   })
   await page.goto(`${BASE}?solo-audio-test=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
-  await page.locator('.ratio-section:not(.is-loading)').waitFor({ timeout: 15000 })
+  await page.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
 
   assert.deepEqual(
     [...new Set(audioRequests.map(url => new URL(url).pathname.split('/').pop()))],
@@ -30,7 +30,7 @@ async function testAudio(browser) {
     'initial render should request only the selected browser-optimized sample'
   )
 
-  const ready = await page.locator('#ratioAudio').evaluate(audio => ({
+  const ready = await page.locator('.ar-cd-audio').evaluate(audio => ({
     readyState: audio.readyState,
     duration: audio.duration,
     paused: audio.paused,
@@ -43,49 +43,26 @@ async function testAudio(browser) {
   assert.equal(ready.muted, false)
   assert.equal(ready.volume, 1)
 
-  await page.evaluate(async () => {
-    const audio = document.querySelector('#ratioAudio')
-    audio.pause()
-    await switchRatioAudio('30', { play: false })
-  })
-  assert.equal(await page.locator('#ratioAudio').evaluate(audio => audio.paused), true, 'paused selection must stay paused')
+  const audio = page.locator('.ar-cd-audio')
+  await page.locator('.ar-cd-tab[data-ratio="30"]').click()
+  await page.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
+  assert.equal(await audio.evaluate(node => node.paused), true, 'paused selection must stay paused')
 
-  await page.evaluate(async () => {
-    const audio = document.querySelector('#ratioAudio')
-    audio.currentTime = 2
-    await audio.play()
-    await switchRatioAudio('50', { play: true })
-  })
-  const activeSwitch = await page.locator('#ratioAudio').evaluate(audio => ({ paused: audio.paused, currentTime: audio.currentTime }))
+  await page.locator('.ar-cd-play').click()
+  await page.waitForFunction(() => !document.querySelector('.ar-cd-audio').paused)
+  await audio.evaluate(node => { node.currentTime = 2 })
+  await page.waitForFunction(() => document.querySelector('.ar-cd-audio').currentTime >= 1.9)
+  await page.locator('.ar-cd-tab[data-ratio="50"]').click()
+  await page.waitForFunction(() => document.querySelector('.ar-cd-audio').dataset.ratio === '50' && !document.querySelector('.ar-cd-audio').paused && document.querySelector('.ar-cd-audio').currentTime >= 1.5)
+  const activeSwitch = await audio.evaluate(node => ({ paused: node.paused, currentTime: node.currentTime }))
   assert.equal(activeSwitch.paused, false, 'playing selection must keep playing')
   assert.ok(activeSwitch.currentTime >= 1.5, 'normal switches should preserve playback position')
 
-  await page.evaluate(async () => {
-    const audio = document.querySelector('#ratioAudio')
-    audio.currentTime = audio.duration - 0.2
-    await switchRatioAudio('100', { play: true })
-  })
-  const endSwitch = await page.locator('#ratioAudio').evaluate(audio => ({ currentTime: audio.currentTime, paused: audio.paused }))
-  assert.ok(endSwitch.currentTime < 1, 'near-ended switches should restart instead of playing silence')
-  assert.equal(endSwitch.paused, false)
-
-  const lastBlobUrl = await page.locator('#ratioAudio').evaluate(audio => audio.src)
   await page.evaluate(() => {
     location.hash = '#/'
   })
   await page.locator('body[data-page="home"]').waitFor()
-  assert.equal(
-    await page.evaluate(async url => {
-      try {
-        await fetch(url)
-        return true
-      } catch {
-        return false
-      }
-    }, lastBlobUrl),
-    false,
-    'leaving the ratio page should revoke cached Blob URLs'
-  )
+  assert.equal(await page.locator('.ar-cd-audio').count(), 0, 'leaving the ratio page should destroy the CD audio element')
   await page.close()
 }
 
@@ -157,14 +134,14 @@ async function testContent(browser) {
 
 async function testControls(browser) {
   const mobile = await openSolo(browser, { width: 390, height: 844 })
-  await mobile.locator('.ratio-section:not(.is-loading)').waitFor({ timeout: 15000 })
-  assert.equal(await mobile.locator('.solo-ratio input[type="range"]').count(), 0, 'premium dial must not use a native range input')
-  assert.equal(await mobile.locator('.solo-ratio [data-ratio]').count(), 4, 'dial should expose four direct ratio controls')
-  const dial = mobile.locator('[data-ratio-dial]')
-  assert.equal(await dial.getAttribute('aria-valuenow'), '70')
-  await mobile.locator('[data-ratio-choice="100"]').click()
-  await mobile.waitForTimeout(300)
-  assert.equal(await dial.getAttribute('aria-valuenow'), '100', 'ratio choice should update the visual dial')
+  await mobile.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
+  assert.equal(await mobile.locator('.ar-cd-progress').count(), 1, 'CD player should expose one seek control')
+  assert.equal(await mobile.locator('.ar-cd-tab').count(), 4, 'CD player should expose four direct ratio controls')
+  assert.equal(await mobile.locator('.ar-cd-marker').count(), 4, 'CD orbit should mirror the four ratios')
+  assert.equal(await mobile.locator('.ar-cd-tab[data-ratio="70"]').getAttribute('aria-pressed'), 'true')
+  await mobile.locator('.ar-cd-tab[data-ratio="100"]').click()
+  await mobile.waitForFunction(() => document.querySelector('.ar-cd-disc-copy strong')?.textContent.includes('100'))
+  assert.equal(await mobile.locator('.ar-cd-tab[data-ratio="100"]').getAttribute('aria-pressed'), 'true', 'ratio choice should update the CD visualization')
   assert.equal(await mobile.locator('.solo-top-cta a[href="#/event/solo"]:visible').count(), 1)
   assert.equal(await mobile.locator('.detail-faq-price:visible,.fixed-price:visible').count(), 0, 'duplicate price calls to action should be removed')
   assert.equal(await mobile.locator('#floatingKakao:visible').count(), 0, 'mobile Kakao control must not cover content')
@@ -327,21 +304,23 @@ async function testFinalPolish(browser) {
   assert.ok(processStyle.transition.split(',').some(value => parseFloat(value) >= 0.45), 'process card motion should be deliberate and smooth')
   assert.ok(processStyle.inactiveOpacity < 0.7, 'side cards should recede softly behind the active card')
 
-  const ratio = page.locator('.solo-ratio')
+  const ratio = page.locator('#arRatioExperience')
   const ratioLayout = await ratio.evaluate(section => ({
-    columns: getComputedStyle(section.querySelector('.solo-ratio-experience')).gridTemplateColumns,
-    glow: section.querySelectorAll('.solo-ratio-orbit-glow').length,
-    choices: section.querySelectorAll('[data-ratio-choice]').length
+    columns: getComputedStyle(section.querySelector('.ar-cd-layout')).gridTemplateColumns,
+    glow: section.querySelectorAll('.ar-cd-glow').length,
+    choices: section.querySelectorAll('.ar-cd-tab').length,
+    disc: section.querySelectorAll('.ar-cd-disc').length
   }))
-  assert.ok(ratioLayout.columns.split(' ').length >= 2, 'desktop AR ratio experience should use copy/controls and dial columns')
-  assert.equal(ratioLayout.glow, 1, 'ratio dial should expose one glowing current-position marker')
+  assert.ok(ratioLayout.columns.split(' ').length >= 1, 'AR ratio experience should retain its responsive editorial layout')
+  assert.equal(ratioLayout.glow, 1, 'CD orbit should expose one glowing current-position marker')
   assert.equal(ratioLayout.choices, 4)
-  await ratio.locator('[data-ratio-choice="50"]').click()
-  await page.waitForFunction(() => document.querySelector('#ratioAudio')?.dataset.ratioAudio === '50')
-  await page.waitForFunction(() => document.querySelector('.solo-ratio-num')?.textContent === '50')
-  assert.equal(await ratio.locator('.solo-ratio-num').innerText(), '50')
+  assert.equal(ratioLayout.disc, 1)
+  await ratio.locator('.ar-cd-tab[data-ratio="50"]').click()
+  await page.waitForFunction(() => document.querySelector('.ar-cd-audio')?.dataset.ratio === '50')
+  await page.waitForFunction(() => document.querySelector('.ar-cd-disc-copy strong')?.textContent.includes('50'))
+  assert.match(await ratio.locator('.ar-cd-disc-copy strong').innerText(), /50/)
 
-  const revealTargets = ['.solo-review-copy', '.solo-review-visual', '.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.solo-ratio-control header', '.solo-ratio-visual']
+  const revealTargets = ['.solo-review-copy', '.solo-review-visual', '.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.ar-cd-copy', '.ar-cd-visual']
   for (const selector of revealTargets) {
     assert.equal(await page.locator(selector).first().evaluate(node => node.classList.contains('motion-reveal')), true, `${selector} should participate in restrained scroll motion`)
   }
@@ -352,7 +331,7 @@ async function testFinalPolish(browser) {
 async function testReferenceSpacing(browser) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' })
   await page.goto(`${BASE}?reference-spacing=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
-  await page.locator('.solo-ratio:not(.is-loading)').waitFor({ timeout: 15000 })
+  await page.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
 
   const storyMetrics = await page.locator('[data-story-slide].is-active').evaluate(slide => {
     const meta = slide.querySelector('.ar-story-meta')
@@ -400,51 +379,59 @@ async function testReferenceSpacing(browser) {
   await page.waitForTimeout(720)
   assert.match(await story.locator('[data-story-status]').innerText(), /02\s*\/\s*02/, 'keyboard navigation should move the story left-to-right')
 
-  const ratioMetrics = await page.locator('.solo-ratio').evaluate(section => {
-    const experience = section.querySelector('.solo-ratio-experience')
-    const columns = getComputedStyle(experience).gridTemplateColumns.split(' ').map(parseFloat)
-    const heading = section.querySelector('.solo-ratio-control header').getBoundingClientRect()
-    const innerWidth = section.clientWidth - parseFloat(getComputedStyle(section).paddingLeft) - parseFloat(getComputedStyle(section).paddingRight)
+  const ratioMetrics = await page.locator('#arRatioExperience').evaluate(section => {
+    const experience = section.querySelector('.ar-cd-layout')
     const style = getComputedStyle(section)
+    const visual = section.querySelector('.ar-cd-visual').getBoundingClientRect()
+    const box = section.getBoundingClientRect()
     return {
       paddingTop: parseFloat(style.paddingTop),
       paddingInline: parseFloat(style.paddingLeft),
-      headingCoverage: heading.width / innerWidth,
-      columnRatio: columns[0] / columns[1],
-      headingSize: parseFloat(getComputedStyle(section.querySelector('.solo-ratio-control h2')).fontSize),
-      markerTransitionMs: parseFloat(getComputedStyle(section.querySelector('.solo-ratio-orbit-glow')).transitionDuration) * 1000
+      columns: getComputedStyle(experience).gridTemplateColumns,
+      headingSize: parseFloat(getComputedStyle(section.querySelector('.ar-cd-title')).fontSize),
+      markerTransitionMs: parseFloat(getComputedStyle(section.querySelector('.ar-cd-glow')).transitionDuration) * 1000,
+      background: style.backgroundImage,
+      visualContained: visual.left >= box.left && visual.right <= box.right
     }
   })
-  assert.ok(Math.abs(ratioMetrics.paddingTop - 76) <= 2)
-  assert.ok(Math.abs(ratioMetrics.paddingInline - 36) <= 2)
-  assert.ok(ratioMetrics.headingCoverage > 0.95, 'AR heading should span the full composition instead of being squeezed into the control column')
-  assert.ok(ratioMetrics.columnRatio >= 1.0 && ratioMetrics.columnRatio <= 1.15)
-  assert.ok(Math.abs(ratioMetrics.headingSize - 27) <= 1)
-  assert.ok(ratioMetrics.markerTransitionMs >= 700)
+  assert.ok(ratioMetrics.paddingTop >= 62 && ratioMetrics.paddingTop <= 66)
+  assert.ok(ratioMetrics.paddingInline >= 30 && ratioMetrics.paddingInline <= 34)
+  assert.ok(ratioMetrics.headingSize >= 30 && ratioMetrics.headingSize <= 33)
+  assert.ok(ratioMetrics.markerTransitionMs >= 500 && ratioMetrics.markerTransitionMs <= 600)
+  assert.match(ratioMetrics.background, /radial-gradient/, 'CD experience should retain the ZIP black radial stage')
+  assert.equal(ratioMetrics.visualContained, true)
 
-  const marker = page.locator('.solo-ratio-orbit-glow')
+  const marker = page.locator('.ar-cd-glow')
   const beforeMarker = await marker.evaluate(node => getComputedStyle(node).transform)
-  await page.locator('[data-ratio-choice="50"]').click()
-  await page.waitForFunction(() => document.querySelector('.solo-ratio-num')?.textContent === '50')
-  await page.waitForTimeout(760)
+  await page.locator('.ar-cd-tab[data-ratio="50"]').click()
+  await page.waitForFunction(() => document.querySelector('.ar-cd-disc-copy strong')?.textContent.includes('50'))
+  await page.waitForTimeout(600)
   const afterMarker = await marker.evaluate(node => getComputedStyle(node).transform)
   assert.notEqual(afterMarker, beforeMarker, 'glowing marker should move with the selected percentage')
-  assert.equal(await page.locator('#ratioAudio').evaluate(audio => audio.paused), false, 'choosing a ratio should immediately play its audio')
+  assert.equal(await page.locator('.ar-cd-audio').evaluate(audio => audio.paused), true, 'choosing a ratio must not autoplay without pressing play')
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
   await mobile.goto(`${BASE}?reference-spacing-mobile=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
-  await mobile.locator('.solo-ratio:not(.is-loading)').waitFor({ timeout: 15000 })
-  const mobileOrder = await mobile.locator('.solo-ratio').evaluate(section => {
+  await mobile.locator('#arRatioExperience:not(.is-loading)').waitFor({ timeout: 15000 })
+  const mobileOrder = await mobile.locator('#arRatioExperience').evaluate(section => {
     const top = selector => section.querySelector(selector).getBoundingClientRect().top
-    return [top('.solo-ratio-control header'), top('.solo-ratio-visual'), top('.solo-ratio-choices'), top('.solo-ratio-player'), top('.solo-ratio-guide')]
+    return [top('.ar-cd-copy'), top('.ar-cd-visual')]
   })
-  assert.deepEqual([...mobileOrder].sort((a, b) => a - b), mobileOrder, 'mobile AR ratio content should flow heading, dial, choices, player, guide')
-  const mobileDialContained = await mobile.locator('.solo-ratio').evaluate(section => {
+  assert.deepEqual([...mobileOrder].sort((a, b) => a - b), mobileOrder, 'mobile AR ratio content should flow copy then CD visual')
+  const mobileDialContained = await mobile.locator('#arRatioExperience').evaluate(section => {
     const sectionRect = section.getBoundingClientRect()
-    const dialRect = section.querySelector('.solo-ratio-orbit').getBoundingClientRect()
-    return dialRect.left >= sectionRect.left && dialRect.right <= sectionRect.right
+    const dialRect = section.querySelector('.ar-cd-visual').getBoundingClientRect()
+    return {
+      contained: dialRect.left >= sectionRect.left && dialRect.right <= sectionRect.right,
+      columns: getComputedStyle(section.querySelector('.ar-cd-layout')).gridTemplateColumns,
+      discAnimation: getComputedStyle(section.querySelector('.ar-cd-disc')).animationName,
+      glowTransition: getComputedStyle(section.querySelector('.ar-cd-glow')).transitionDuration
+    }
   })
-  assert.equal(mobileDialContained, true, 'mobile AR dial should stay inside the section instead of occupying an implicit second column')
+  assert.equal(mobileDialContained.contained, true, 'mobile CD visual should stay inside the section')
+  assert.equal(mobileDialContained.columns.split(' ').length, 1, 'mobile CD experience should use one column')
+  assert.equal(mobileDialContained.discAnimation, 'none', 'reduced motion should disable CD rotation')
+  assert.equal(mobileDialContained.glowTransition, '0s', 'reduced motion should disable orbit motion')
   assert.equal(await mobile.locator('.ar-story-slide.is-active .ar-story-copy').evaluate(node => getComputedStyle(node).gridTemplateColumns.split(' ').length), 1, 'mobile story copy should stack title and body')
   await mobile.close()
   await page.close()

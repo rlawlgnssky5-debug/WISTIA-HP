@@ -683,7 +683,7 @@ function renderDetail(key,purpose=""){
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+soloReviewShowcase()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+arComparisonSection()+soloProcessSlider(p.steps)+soloArRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<a class="solo-inline-contact button light" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기 <span aria-hidden="true">↗</span></a></section>'+footer()+priceBar(key)+'</div>'
+  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+soloReviewShowcase()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+arComparisonSection()+soloProcessSlider(p.steps)+arCdRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<a class="solo-inline-contact button light" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기 <span aria-hidden="true">↗</span></a></section>'+footer()+priceBar(key)+'</div>'
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
@@ -750,6 +750,7 @@ function soloArRatioSection(){
   +'<div class="solo-ratio-visual"><div class="solo-ratio-orbit" style="--dial-index:'+soloRatioIndex(voiceRatio)+'"><span class="solo-ratio-orbit-glow" aria-hidden="true"></span><div class="solo-ratio-dial" data-ratio-dial role="meter" aria-label="현재 AR 목소리 비율" aria-valuemin="30" aria-valuemax="100" aria-valuenow="'+voiceRatio+'" aria-valuetext="'+voiceRatio+'%, '+meta.label+'" style="--dial-index:'+soloRatioIndex(voiceRatio)+'"><span class="solo-ratio-dial-face" aria-hidden="true"></span><span class="solo-ratio-center"><span id="soloRatioLabel" class="solo-ratio-label">'+meta.label+'</span><strong class="solo-ratio-value"><span class="solo-ratio-num">'+voiceRatio+'</span><small>%</small></strong><span id="soloRatioDesc" class="solo-ratio-desc">'+meta.desc+'</span></span></div></div></div>'
   +'</div><p class="fine">샘플곡 · 그중에 그대를 만나</p></section>'
 }
+function arCdRatioSection(){return '<section class="ar-cd-ratio" id="arRatioExperience" data-audio-30="'+ratioSource('30')+'" data-audio-50="'+ratioSource('50')+'" data-audio-70="'+ratioSource('70')+'" data-audio-100="'+ratioSource('100')+'"><div class="ar-cd-layout"><div class="ar-cd-copy"><p class="ar-cd-kicker">AR RATIO EXPERIENCE</p><h2 class="ar-cd-title">실제 AR을 들어보고<br><b>내 목소리 비율을 골라보세요</b></h2><p class="ar-cd-sub">같은 노래를 30%부터 100%까지 비교할 수 있습니다.</p><div class="ar-cd-tabs" role="group" aria-label="내 목소리 비율 선택"><button class="ar-cd-tab" type="button" data-ratio="30" aria-pressed="false"><small>안정감 중심</small><strong>30%</strong></button><button class="ar-cd-tab" type="button" data-ratio="50" aria-pressed="false"><small>균형 있게</small><strong>50%</strong></button><button class="ar-cd-tab" type="button" data-ratio="70" aria-pressed="true"><span class="ar-cd-popular">가장 인기</span><small>자연스럽게</small><strong>70%</strong></button><button class="ar-cd-tab" type="button" data-ratio="100" aria-pressed="false"><small>목소리 중심</small><strong>100%</strong></button></div><div class="ar-cd-player"><button class="ar-cd-play" type="button" aria-label="재생">▶</button><span class="ar-cd-time">0:00 / 0:00</span><input class="ar-cd-progress" type="range" min="0" max="1000" value="0" aria-label="재생 위치"><button class="ar-cd-volume" type="button" aria-label="음소거">◖</button><p class="ar-cd-error" role="status" hidden>음원을 불러오지 못했습니다. 파일 경로를 확인해 주세요.</p></div><div class="ar-cd-engineer"><div class="ar-cd-engineer-title"><small>WISTIA ENGINEERING</small>비율을 몰라도<br>괜찮습니다.</div><p class="ar-cd-engineer-copy">WISTIA 엔지니어가 보컬 톤과 본식 환경을 고려해<br><b>가장 자연스러운 AR 비율로 세팅합니다.</b></p></div></div><div class="ar-cd-visual" aria-label="선택한 AR 비율 70퍼센트"><div class="ar-cd-track"><span class="ar-cd-glow"></span></div><div class="ar-cd-disc"><div class="ar-cd-disc-copy"><small>자연스럽게</small><strong>70<span>%</span></strong></div></div><button class="ar-cd-marker" type="button" data-ratio="30">30</button><button class="ar-cd-marker" type="button" data-ratio="50">50</button><button class="ar-cd-marker" type="button" data-ratio="70" aria-current="true">70</button><button class="ar-cd-marker" type="button" data-ratio="100">100</button><div class="ar-cd-caption"><b>내 목소리와 AR이 만나는 지점</b><p>비율을 선택하면 해당 음원이 같은 위치에서 이어집니다.</p></div></div></div><div class="ar-cd-index" aria-hidden="true"><i></i><i></i><i class="active"></i><i></i></div><audio class="ar-cd-audio" preload="metadata"></audio></section>'}
 function formatRatioTime(sec){if(!Number.isFinite(sec))return "0:00";const m=Math.floor(sec/60),s=Math.floor(sec%60);return m+":"+String(s).padStart(2,"0")}
 function animateSoloRatioValue(section,ratio){
  const center=section.querySelector(".solo-ratio-center")
@@ -932,15 +933,16 @@ function header(){
 }
 function enhanceMotion(){
  routeObserver?.disconnect()
- const nodes=[...document.querySelectorAll(".section-heading,.detail-hero>*:not(.detail-result-card),.detail-result-card,.scene-grid li,.process-list li,.service-row,.situation-group,.picker-grid article,.option-banner,.booking-options>section,.solo-review-copy,.solo-review-visual,.ar-story-meta,.ar-story-copy,.ar-story-image,.solo-process-head,.solo-process-slider,.solo-ratio-control header,.solo-ratio-visual,.solo-ratio-choices,.solo-ratio-player,.solo-ratio-guide")]
+ const nodes=[...document.querySelectorAll(".section-heading,.detail-hero>*:not(.detail-result-card),.detail-result-card,.scene-grid li,.process-list li,.service-row,.situation-group,.picker-grid article,.option-banner,.booking-options>section,.solo-review-copy,.solo-review-visual,.ar-story-meta,.ar-story-copy,.ar-story-image,.solo-process-head,.solo-process-slider,.ar-cd-copy,.ar-cd-visual")]
  nodes.forEach((node,index)=>{node.classList.add("motion-reveal");node.style.setProperty("--motion-delay",Math.min(index%4,3)*70+"ms")})
  if(matchMedia("(prefers-reduced-motion: reduce)").matches){nodes.forEach(node=>node.classList.add("is-visible"));return}
  routeObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");routeObserver.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -5% 0px"})
  nodes.forEach(node=>routeObserver.observe(node))
 }
+let arCdRatioInstance=null
 let firstRender=true
 function route(){
- closeDialog();routeObserver?.disconnect();const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
+ closeDialog();routeObserver?.disconnect();arCdRatioInstance?.destroy();arCdRatioInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  document.body.dataset.page=home?"home":event?"event":validDetail?"detail":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",Boolean(detail&&key==="solo"));
@@ -957,6 +959,7 @@ function route(){
  initSoloPersonTabs();
  initSoloReviewShowcase();
  initSoloArRatio();
+ arCdRatioInstance=window.initArCdRatio?.()||null
  initSoloProcessSlider();
  startReviewCarousel();
  enhanceMotion();
