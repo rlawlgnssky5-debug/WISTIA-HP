@@ -2350,7 +2350,12 @@ body.menu-open #soloDesktopCta{opacity:0;pointer-events:none}
  background:#f5f6f6;
  color:var(--ink);
 }
-body.menu-open #mainMenu{display:block}
+body.menu-open #mainMenu{display:block!important}
+body.menu-open #mainMenu,
+#mainMenu .menu-group,
+#mainMenu .menu-group-items{grid-template-columns:1fr!important}
+#mainMenu .menu-group{display:block!important;width:100%}
+#mainMenu .menu-group-items{display:grid!important;width:100%}
 body.is-solo-detail #mainMenu{top:48px}
 .menu-title{margin:0 0 22px;color:#8293a2;font-size:13px;letter-spacing:.04em}
 .menu-group{padding:0 0 22px}
