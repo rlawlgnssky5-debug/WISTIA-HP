@@ -2,7 +2,7 @@
   --wps-ink: #181817;
   --wps-muted: #77736d;
   --wps-line: #d8d3cb;
-  --wps-paper: #f3f0ea;
+  --wps-paper: #f3f4f4;
   --wps-white: #fff;
   box-sizing: border-box;
   width: 100%;
@@ -227,6 +227,16 @@
   color: #fff;
   border-color: var(--wps-ink);
   background: var(--wps-ink);
+}
+
+.wistia-process-studio .wps-controls button.is-toggle {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: -.08em;
+}
+
+.wistia-process-studio .wps-chapters[hidden] {
+  display: none !important;
 }
 
 .wistia-process-studio .wps-controls button:disabled {

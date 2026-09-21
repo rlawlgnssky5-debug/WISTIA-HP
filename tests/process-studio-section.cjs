@@ -33,6 +33,9 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
     assert.match(await section.innerText(), /맞춤 제작 상담.*곡과 키 확인/s)
     assert.equal(await section.locator('[data-process-prev]').isDisabled(), true)
     assert.equal(await section.locator('[data-process-next]').isDisabled(), false)
+    assert.equal(await section.locator('.wps-chapters').isHidden(), true, 'the old chapter strip must not take up space')
+    assert.equal(await section.locator('[data-process-toggle]').count(), 1)
+    assert.equal(await section.locator('[data-process-toggle]').getAttribute('aria-pressed'), 'false')
     assert.equal(await section.locator('[data-process-chapter][aria-current="step"]').count(), 1)
     assert.equal(await section.locator('[data-process-feature]').getAttribute('role'), 'group')
     assert.match(await section.locator('[data-process-feature]').getAttribute('aria-label'), /좌우 방향키/)
@@ -49,33 +52,45 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
         ratio: photo.width / feature.width,
         sideBySide: content.left >= photo.right - 1,
         contained: feature.left >= rootBox.left && feature.right <= rootBox.right,
-        overflow: document.documentElement.scrollWidth - innerWidth
+        overflow: document.documentElement.scrollWidth - innerWidth,
+        background: getComputedStyle(root).backgroundColor
       }
     })
     assert.ok(Math.abs(desktop.ratio - 0.59) < 0.03)
     assert.equal(desktop.sideBySide, true)
     assert.equal(desktop.contained, true)
     assert.ok(desktop.overflow <= 1)
+    assert.equal(desktop.background, 'rgb(243, 244, 244)')
+
+    await page.waitForTimeout(3200)
+    assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '02', 'process should advance every three seconds')
+    await section.locator('[data-process-toggle]').click()
+    assert.equal(await section.locator('[data-process-toggle]').getAttribute('aria-pressed'), 'true')
+    await page.waitForTimeout(3200)
+    assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '02', 'pause must stop automatic advancement')
 
     await section.locator('[data-process-next]').click()
-    assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '02')
-    assert.match(await section.locator('[data-process-title]').innerText(), /스튜디오 방문/)
-    assert.match(await section.locator('[data-process-image]').getAttribute('src'), /02-recording/)
-    await section.locator('[data-process-feature]').press('ArrowRight')
     assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '03')
-    await section.locator('[data-process-chapter="6"]').click()
+    assert.match(await section.locator('[data-process-title]').innerText(), /보컬 디렉팅/)
+    assert.match(await section.locator('[data-process-image]').getAttribute('src'), /03-vocal-directing/)
+    await section.locator('[data-process-feature]').press('ArrowRight')
+    assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '04')
+    await section.locator('[data-process-next]').click()
+    await section.locator('[data-process-next]').click()
+    await section.locator('[data-process-next]').click()
     assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '07')
     assert.equal(await section.locator('[data-process-next]').isDisabled(), true)
     await section.locator('[data-process-feature]').press('ArrowLeft')
     assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '06')
 
+    while (!(await section.locator('[data-process-prev]').isDisabled())) await section.locator('[data-process-prev]').click()
     for (let index = 0; index < 7; index += 1) {
-      await section.locator(`[data-process-chapter="${index}"]`).click()
       await page.waitForFunction(() => {
         const image = document.querySelector('[data-process-image]')
         return image?.complete && image.naturalWidth > 0
       })
       assert.ok((await section.locator('[data-process-title]').innerText()).trim().length > 0, `step ${index + 1} copy must render`)
+      if (index < 6) await section.locator('[data-process-next]').click()
     }
 
     const assets = await page.evaluate(async () => {
@@ -86,7 +101,8 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
     assert.deepEqual(assets, [200, 200, 200, 200, 200, 200, 200])
     assert.deepEqual(page.processErrors, [], 'desktop process section must not emit console errors')
     if (process.env.WISTIA_PROCESS_SCREENSHOTS) {
-      await section.locator('[data-process-chapter="1"]').click()
+      while (!(await section.locator('[data-process-prev]').isDisabled())) await section.locator('[data-process-prev]').click()
+      await section.locator('[data-process-next]').click()
       await page.waitForTimeout(800)
       await section.screenshot({ path: path.join(process.env.WISTIA_PROCESS_SCREENSHOTS, 'process-studio-desktop.png') })
     }
@@ -103,7 +119,7 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
           sideBySide: content.left >= photo.right - 1,
           sectionHeight: root.getBoundingClientRect().height,
           pageOverflow: document.documentElement.scrollWidth - innerWidth,
-          chapterScrollable: chapters.scrollWidth >= chapters.clientWidth,
+          chapterHidden: getComputedStyle(chapters).display === 'none',
           imageAnimation: getComputedStyle(root.querySelector('[data-process-image]')).animationName,
           contentAnimation: getComputedStyle(root.querySelector('.wps-content')).animationName
         }
@@ -111,7 +127,7 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
       assert.equal(metrics.sideBySide, true)
       assert.ok(metrics.sectionHeight < 580, 'mobile process section should stay compact')
       assert.ok(metrics.pageOverflow <= 1, `${width}px viewport must not overflow horizontally`)
-      assert.equal(metrics.chapterScrollable, true)
+      assert.equal(metrics.chapterHidden, true)
       assert.equal(metrics.imageAnimation, 'none')
       assert.equal(metrics.contentAnimation, 'none')
 
