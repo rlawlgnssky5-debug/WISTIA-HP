@@ -27,6 +27,21 @@ async function testStructureAndAssets(browser) {
   assert.equal(await section.locator('.wistia-ar__ratio-tick').count(), 4)
   assert.equal(await section.locator('.wistia-ar__ratio-input').count(), 1)
   assert.match(await section.locator('.wistia-ar__title').innerText(), /라이브 같은 AR.*내 목소리에 맞게.*비율을 골라보세요/s)
+  const visualScale = await section.evaluate(node => {
+    const box = node.getBoundingClientRect()
+    const title = getComputedStyle(node.querySelector('.wistia-ar__title'))
+    const eyebrow = getComputedStyle(node.querySelector('.wistia-ar__eyebrow'))
+    return {
+      aspect: box.height / box.width,
+      titleSize: parseFloat(title.fontSize) * parseFloat(getComputedStyle(node).getPropertyValue('--wistia-ar-scale')),
+      titleWeight: Number(title.fontWeight),
+      eyebrowSize: parseFloat(eyebrow.fontSize) * parseFloat(getComputedStyle(node).getPropertyValue('--wistia-ar-scale'))
+    }
+  })
+  assert.ok(visualScale.aspect >= .6, 'AR background should extend above and below the controls')
+  assert.ok(visualScale.titleSize >= 25, 'AR heading should match the other section headings')
+  assert.ok(visualScale.titleWeight >= 580, 'AR heading weight should match the site typography')
+  assert.ok(visualScale.eyebrowSize >= 8, 'AR eyebrow must not look undersized')
   assert.equal(await section.locator('.wistia-ar__audio').evaluate(audio => audio.paused), true, 'the CD player must never autoplay')
   assert.deepEqual(
     [...new Set(requests.map(url => new URL(url).pathname.split('/').pop()))],
