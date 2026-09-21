@@ -2109,3 +2109,35 @@ body .footer.shell{
  .footer-bottom{display:grid;gap:6px;margin-top:30px}
 }
 @media(prefers-reduced-motion:reduce){.footer-consult,.footer .footer-social i{transition:none}}
+
+/* Desktop solo CTA: keep long Korean labels fully visible at every desktop breakpoint. */
+@media(min-width:901px){
+ body.is-solo-detail #soloDesktopCta{display:flex;flex-direction:column;gap:12px;right:28px;bottom:28px;width:auto}
+ body.is-solo-detail .solo-desktop-cta a{
+  position:relative;
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr) 16px;
+  align-items:center;
+  gap:12px;
+  width:190px;
+  height:56px;
+  padding:0 18px;
+  overflow:hidden;
+  border-radius:18px;
+  white-space:nowrap;
+  box-sizing:border-box;
+ }
+ body.is-solo-detail .solo-desktop-cta:hover a,
+ body.is-solo-detail .solo-desktop-cta:focus-within a{width:320px}
+ body.is-solo-detail .solo-desktop-cta .cta-icon{display:grid;place-items:center;width:24px;height:24px;line-height:0}
+ body.is-solo-detail .solo-desktop-cta .cta-icon svg{display:block;width:20px;height:20px}
+ body.is-solo-detail .solo-desktop-cta .cta-label{position:relative;display:block;min-width:0;width:auto;height:22px;overflow:hidden}
+ body.is-solo-detail .solo-desktop-cta .cta-label b{left:0;top:0;font-size:14px;line-height:22px;white-space:nowrap}
+ body.is-solo-detail .solo-desktop-cta .cta-short{position:static;opacity:1}
+ body.is-solo-detail .solo-desktop-cta .cta-full{position:absolute;opacity:0}
+ body.is-solo-detail .solo-desktop-cta:hover .cta-short,
+ body.is-solo-detail .solo-desktop-cta:focus-within .cta-short{position:absolute;opacity:0}
+ body.is-solo-detail .solo-desktop-cta:hover .cta-full,
+ body.is-solo-detail .solo-desktop-cta:focus-within .cta-full{position:static;opacity:1}
+ body.is-solo-detail .solo-desktop-cta .cta-arrow{display:flex;align-items:center;justify-content:flex-end;width:16px;font-size:18px;line-height:1}
+}
