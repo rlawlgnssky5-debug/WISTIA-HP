@@ -152,13 +152,14 @@ async function testControls(browser) {
 }
 
 async function testReviewShowcase(browser) {
-  const page = await openSolo(browser, { width: 768, height: 1024 })
+  const page = await openSolo(browser, { width: 1024, height: 900 })
   const showcase = page.locator('[data-review-showcase]')
   await showcase.scrollIntoViewIfNeeded()
   assert.match(await showcase.innerText(), /실제 고객 후기/)
   assert.equal(await showcase.locator('[data-review-slide]').count(), 11, 'phone showcase should contain all eleven customer captures')
   assert.equal(await showcase.locator('[data-review-slide].is-active').count(), 1, 'only one review should be emphasized inside the phone')
-  assert.match(await showcase.locator('[data-review-status]').innerText(), /01\s*\/\s*11/)
+  assert.equal((await showcase.locator('[data-review-status]').innerText()).trim(), '01')
+  assert.match(await showcase.locator('.solo-review-index').innerText(), /11/)
 
   const geometry = await showcase.evaluate(section => {
     const phone = section.querySelector('.solo-review-phone').getBoundingClientRect()
@@ -173,15 +174,15 @@ async function testReviewShowcase(browser) {
       screenWidth: screen.width
     }
   })
-  assert.equal(geometry.background, 'rgb(8, 9, 9)', 'review section should be visibly separated with a black stage')
+  assert.equal(geometry.background, 'rgb(7, 7, 7)', 'review section should use the approved HTML black stage')
   assert.equal(geometry.overflow, 'hidden')
-  assert.ok(geometry.phoneRatio > 1.7, 'phone mockup should use a tall device proportion')
+  assert.ok(Math.abs(geometry.phoneRatio - 795 / 500) < 0.03, 'phone mockup should keep the approved HTML device proportion')
   assert.ok(geometry.phoneBottom > geometry.sectionBottom, 'oversized phone should crop below the section')
   assert.ok(geometry.screenWidth > 180, 'review capture should remain readable inside the enlarged phone')
 
   await showcase.locator('[data-solo-review-next]').click()
   await page.waitForTimeout(500)
-  assert.match(await showcase.locator('[data-review-status]').innerText(), /02\s*\/\s*11/)
+  assert.equal((await showcase.locator('[data-review-status]').innerText()).trim(), '02')
   assert.equal(await showcase.locator('[data-review-slide="1"].is-active').count(), 1, 'next control should advance the active capture')
   await page.close()
 
@@ -189,9 +190,9 @@ async function testReviewShowcase(browser) {
   await autoPage.goto(`${BASE}?solo-review-auto-test=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
   const autoStatus = autoPage.locator('[data-review-status]')
   await autoStatus.waitFor()
-  assert.match(await autoStatus.innerText(), /01\s*\/\s*11/)
-  await autoPage.waitForTimeout(4000)
-  assert.match(await autoStatus.innerText(), /02\s*\/\s*11/, 'review showcase should advance automatically when motion is allowed')
+  assert.equal((await autoStatus.innerText()).trim(), '01')
+  await autoPage.waitForTimeout(5900)
+  assert.equal((await autoStatus.innerText()).trim(), '02', 'review showcase should advance automatically when motion is allowed')
   await autoPage.close()
 }
 
@@ -282,7 +283,7 @@ async function testFinalPolish(browser) {
     const copy = section.querySelector('.solo-review-copy').getBoundingClientRect()
     return { height: section.getBoundingClientRect().height, phoneWidth: phone.width, copyWidth: copy.width }
   })
-  assert.ok(reviewGeometry.height >= 580 && reviewGeometry.height <= 680, 'review stage should keep the reference landscape proportion')
+  assert.ok(Math.abs(reviewGeometry.height / 500 - 7 / 12) < 0.02, 'review stage should keep the approved HTML 1200:700 proportion')
   assert.ok(reviewGeometry.phoneWidth > reviewGeometry.copyWidth, 'phone should be the dominant visual')
 
   const process = page.locator('.solo-process-section')
@@ -317,7 +318,7 @@ async function testFinalPolish(browser) {
   await page.waitForFunction(() => document.querySelector('.ar-cd-disc-copy strong')?.textContent.includes('50'))
   assert.match(await ratio.locator('.ar-cd-disc-copy strong').innerText(), /50/)
 
-  const revealTargets = ['.solo-review-copy', '.solo-review-visual', '.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.ar-cd-copy', '.ar-cd-visual']
+  const revealTargets = ['.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.ar-cd-copy', '.ar-cd-visual']
   for (const selector of revealTargets) {
     assert.equal(await page.locator(selector).first().evaluate(node => node.classList.contains('motion-reveal')), true, `${selector} should participate in restrained scroll motion`)
   }
