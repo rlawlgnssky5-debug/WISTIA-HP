@@ -2256,3 +2256,26 @@ body .footer.shell{
  body.is-solo-detail .solo-desktop-cta:focus-within .cta-full{position:static;opacity:1}
  body.is-solo-detail .solo-desktop-cta .cta-arrow{display:flex;align-items:center;justify-content:flex-end;width:16px;font-size:18px;line-height:1}
 }
+
+/* Compact brand story: white handoff from reviews, no oversized vertical gaps. */
+.solo-detail-scope>.solo-editorial-sheet{
+ border-top:28px solid var(--solo-bg-white);
+ background:var(--solo-bg-white);
+}
+.solo-detail-scope .ar-expert-story{background:var(--solo-bg-white)}
+.solo-detail-scope .ar-story-intro{margin-bottom:18px}
+.solo-detail-scope .ar-story-slide{padding:12px 42px 18px}
+.solo-detail-scope .ar-story-meta{margin-bottom:6px}
+.solo-detail-scope .ar-story-copy{gap:30px;margin-bottom:10px}
+.solo-detail-scope .ar-story-copy p strong{margin-bottom:6px}
+.solo-detail-scope .ar-story-image{aspect-ratio:3.2/1}
+.solo-detail-scope .ar-story-controls{padding:0 42px 22px}
+@container solo-detail (max-width:429px){
+ .solo-detail-scope>.solo-editorial-sheet{border-top-width:24px}
+ .solo-detail-scope .ar-story-intro{margin-bottom:14px}
+ .solo-detail-scope .ar-story-slide{padding:12px 24px 16px}
+ .solo-detail-scope .ar-story-meta{margin-bottom:6px}
+ .solo-detail-scope .ar-story-copy{gap:10px;margin-bottom:10px}
+ .solo-detail-scope .ar-story-image{aspect-ratio:2.1/1}
+ .solo-detail-scope .ar-story-controls{padding:0 24px 20px}
+}

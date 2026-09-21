@@ -30,11 +30,15 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
       title: parseFloat(getComputedStyle(node.querySelector('.ar-story-intro h2')).fontSize),
       role: parseFloat(getComputedStyle(node.querySelector('.ar-story-role')).fontSize),
       topBreathingRoom: parseFloat(getComputedStyle(node.closest('.solo-editorial-sheet')).borderTopWidth),
-      copyAreaHeight: node.querySelector('.ar-story-image').getBoundingClientRect().top - node.querySelector('.ar-story-slide').getBoundingClientRect().top
+      topBreathingColor: getComputedStyle(node.closest('.solo-editorial-sheet')).borderTopColor,
+      copyAreaHeight: node.querySelector('.ar-story-image').getBoundingClientRect().top - node.querySelector('.ar-story-slide').getBoundingClientRect().top,
+      sectionHeight: node.getBoundingClientRect().height
     }))
     assert.ok(hierarchy.title > hierarchy.role, 'section message must be larger than the slide role')
-    assert.ok(hierarchy.topBreathingRoom >= 28, 'brand story should keep a calm black gap below reviews')
-    assert.ok(hierarchy.copyAreaHeight <= 245, 'brand story copy area should be roughly half the previous height')
+    assert.ok(hierarchy.topBreathingRoom >= 24, 'brand story should retain a small separator below reviews')
+    assert.equal(hierarchy.topBreathingColor, 'rgb(255, 255, 255)', 'the separator must continue the white brand-story surface')
+    assert.ok(hierarchy.copyAreaHeight <= 150, 'brand story copy area should be compact')
+    assert.ok(hierarchy.sectionHeight <= 650, 'brand story vertical space should be roughly half the oversized layout')
 
     await page.waitForFunction(() => document.querySelector('[data-expert-track]')?.dataset.index === '1', null, { timeout: 7000 })
     assert.equal((await story.locator('[data-expert-card].is-active .ar-story-role').innerText()).trim(), '사운드 완성')
