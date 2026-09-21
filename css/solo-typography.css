@@ -49,6 +49,22 @@
   word-break: keep-all;
 }
 
+/* Keep every section intro on the same vertical rhythm as the FAQ intro. */
+.solo-detail-scope [data-solo-section-intro] [data-solo-kicker] {
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.solo-detail-scope [data-solo-section-intro] [data-solo-title] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.solo-detail-scope [data-solo-section-intro] [data-solo-sub] {
+  margin-top: 20px !important;
+  margin-bottom: 0 !important;
+}
+
 .solo-detail-scope .solo-type-line {
   display: block;
 }

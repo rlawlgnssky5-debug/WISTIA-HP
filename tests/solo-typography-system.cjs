@@ -50,6 +50,19 @@ function normalizedFamily(value) {
         }))
       })
 
+      const spacing = await page.locator('[data-solo-section-intro]').evaluateAll(groups => groups.map(group => {
+        const kicker = group.querySelector('[data-solo-kicker]')
+        const sub = group.querySelector('[data-solo-sub]')
+        return {
+          kickerToTitle: kicker ? parseFloat(getComputedStyle(kicker).marginBottom) : null,
+          titleToSub: sub ? parseFloat(getComputedStyle(sub).marginTop) : null
+        }
+      }))
+      spacing.forEach((item, index) => {
+        if (item.kickerToTitle !== null) assert.ok(Math.abs(item.kickerToTitle - 16) < 1, `section ${index + 1} kicker spacing should match FAQ (received ${item.kickerToTitle})`)
+        if (item.titleToSub !== null) assert.ok(Math.abs(item.titleToSub - 20) < 1, `section ${index + 1} supporting-copy spacing should match FAQ (received ${item.titleToSub})`)
+      })
+
       assert.ok(hierarchy.length >= 7, 'all major solo detail sections should use the shared type hierarchy')
       const reference = hierarchy[0]
       for (const [index, item] of hierarchy.entries()) {
