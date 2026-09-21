@@ -108,11 +108,8 @@ async function testContent(browser) {
   await page.locator('.ar-compare').scrollIntoViewIfNeeded()
   await page.waitForTimeout(100)
   assert.equal(await page.locator('[data-ar-compare-row]').count(), 4)
-  assert.deepEqual(
-    await page.locator('.ar-compare-arrow').evaluateAll(nodes => nodes.map(node => getComputedStyle(node).opacity)),
-    ['1', '1', '1', '1'],
-    'comparison arrows should remain visible without hover or focus'
-  )
+  assert.equal(await page.locator('.ar-compare-criteria').count(), 4, 'comparison criteria should remain centered between both providers')
+  assert.match(await page.locator('.ar-compare-title').innerText(), /위스티아는\s*다릅니다/)
 
   const expert = page.locator('[data-story-carousel]')
   assert.equal(await expert.locator('[data-story-slide]').count(), 2)
