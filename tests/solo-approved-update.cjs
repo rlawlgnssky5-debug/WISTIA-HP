@@ -81,6 +81,35 @@ async function testStructureAndReferenceGeometry(browser) {
   assert.ok(compareGeometry.rightAlignment <= 1, 'comparison table should align to the shared right edge')
   assert.ok(Math.abs(compareGeometry.headerGap) <= 1, 'WISTIA header should connect directly to its first row')
 
+  const sectionRhythm = await page.evaluate(() => {
+    const read = selector => {
+      const element = document.querySelector(selector)
+      const style = getComputedStyle(element)
+      return {
+        top: parseFloat(style.paddingTop),
+        right: parseFloat(style.paddingRight),
+        bottom: parseFloat(style.paddingBottom),
+        left: parseFloat(style.paddingLeft)
+      }
+    }
+    const compareShell = document.querySelector('.ar-compare .shell').getBoundingClientRect()
+    const compare = document.querySelector('.ar-compare').getBoundingClientRect()
+    return {
+      beforeAfter: read('#wistiaBeforeAfter'),
+      process: read('.solo-process-section'),
+      faq: read('.worry-section'),
+      compareGutter: compareShell.left - compare.left
+    }
+  })
+  for (const [name, spacing] of Object.entries(sectionRhythm)) {
+    if (name === 'compareGutter') continue
+    assert.equal(spacing.top, 58, `${name} should use the Before/After top spacing`)
+    assert.equal(spacing.bottom, 62, `${name} should use the Before/After bottom spacing`)
+    assert.equal(spacing.left, 22, `${name} should use the shared left gutter`)
+    assert.equal(spacing.right, 22, `${name} should use the shared right gutter`)
+  }
+  assert.equal(sectionRhythm.compareGutter, 22, 'comparison content should use the shared gutter')
+
   const process = await page.locator('[data-process-studio]').evaluate(section => {
     const feature = section.querySelector('[data-process-feature]').getBoundingClientRect()
     const photo = section.querySelector('.wps-photo').getBoundingClientRect()

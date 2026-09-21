@@ -2279,3 +2279,13 @@ body .footer.shell{
  .solo-detail-scope .ar-story-image{aspect-ratio:2.1/1}
  .solo-detail-scope .ar-story-controls{padding:0 24px 20px}
 }
+
+/* Shared mobile section rhythm, matched to the Before/After reference. */
+.solo-detail-scope{
+ --solo-page-gutter:22px;
+ --solo-section-top:58px;
+ --solo-section-bottom:62px;
+}
+.solo-detail-scope .ar-primary-benefit{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
+.solo-detail-scope .ar-compare{padding:var(--solo-section-top) 0 var(--solo-section-bottom)}
+.solo-detail-scope .solo-process-section,.solo-detail-scope .worry-section{padding:var(--solo-section-top) var(--solo-page-gutter) var(--solo-section-bottom)}
