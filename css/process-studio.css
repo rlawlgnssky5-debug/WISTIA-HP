@@ -1,0 +1,422 @@
+.wistia-process-studio {
+  --wps-ink: #181817;
+  --wps-muted: #77736d;
+  --wps-line: #d8d3cb;
+  --wps-paper: #f3f0ea;
+  --wps-white: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding: 56px 22px 34px;
+  color: var(--wps-ink);
+  background: var(--wps-paper);
+  background-image: none;
+}
+
+.solo-detail-scope .wistia-process-studio {
+  background-color: var(--wps-paper);
+  background-image: none;
+}
+
+.wistia-process-studio *,
+.wistia-process-studio *::before,
+.wistia-process-studio *::after {
+  box-sizing: border-box;
+}
+
+.wistia-process-studio .wps-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 28px;
+}
+
+.wistia-process-studio .wps-kicker,
+.wistia-process-studio .wps-step {
+  margin: 0;
+  color: var(--wps-muted);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: .17em;
+}
+
+.wistia-process-studio .wps-head h2 {
+  margin: 10px 0 0;
+  max-width: 330px;
+  font-size: clamp(25px, 6.2vw, 31px);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -.045em;
+}
+
+.wistia-process-studio .wps-head h2 strong {
+  font-weight: 760;
+}
+
+.wistia-process-studio .wps-counter {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 3px;
+  color: #9c978f;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+
+.wistia-process-studio .wps-counter [data-process-current] {
+  color: var(--wps-ink);
+  font-weight: 750;
+}
+
+.wistia-process-studio .wps-counter i {
+  width: 28px;
+  height: 1px;
+  background: var(--wps-line);
+}
+
+.wistia-process-studio .wps-feature {
+  display: grid;
+  grid-template-columns: 59% 41%;
+  width: 100%;
+  height: 356px;
+  min-width: 0;
+  overflow: hidden;
+  outline: none;
+  background: var(--wps-white);
+  border: 1px solid #ded9d2;
+  box-shadow: 0 18px 38px rgb(36 31 24 / 10%);
+}
+
+.wistia-process-studio .wps-feature:focus-visible {
+  outline: 2px solid var(--wps-ink);
+  outline-offset: 3px;
+}
+
+.wistia-process-studio .wps-photo {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #ddd8d0;
+}
+
+.wistia-process-studio .wps-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.wistia-process-studio .wps-badge {
+  position: absolute;
+  z-index: 1;
+  top: 17px;
+  left: 17px;
+  padding: 6px 8px;
+  border-radius: 18px;
+  color: #fff;
+  background: rgb(18 18 17 / 88%);
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .12em;
+}
+
+.wistia-process-studio .wps-content {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 30px 22px 20px;
+  background: #fff;
+}
+
+.wistia-process-studio .wps-ghost {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: #f0ede8;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.08em;
+  pointer-events: none;
+}
+
+.wistia-process-studio .wps-step {
+  position: relative;
+  z-index: 1;
+  margin-top: 34px;
+}
+
+.wistia-process-studio .wps-content h3 {
+  position: relative;
+  z-index: 1;
+  margin: 10px 0 12px;
+  font-size: clamp(19px, 4.6vw, 23px);
+  font-weight: 730;
+  line-height: 1.18;
+  letter-spacing: -.045em;
+}
+
+.wistia-process-studio .wps-description {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #6e6a65;
+  font-size: 10px;
+  line-height: 1.72;
+  word-break: keep-all;
+}
+
+.wistia-process-studio .wps-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: auto 0 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e1db;
+}
+
+.wistia-process-studio .wps-detail span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--wps-ink);
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.wistia-process-studio .wps-detail strong {
+  color: #9c978f;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.wistia-process-studio .wps-controls {
+  display: flex;
+  gap: 7px;
+}
+
+.wistia-process-studio .wps-controls button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid #cec9c1;
+  border-radius: 50%;
+  color: var(--wps-ink);
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+
+.wistia-process-studio .wps-controls button.is-next {
+  color: #fff;
+  border-color: var(--wps-ink);
+  background: var(--wps-ink);
+}
+
+.wistia-process-studio .wps-controls button:disabled {
+  opacity: .28;
+  cursor: default;
+}
+
+.wistia-process-studio .wps-chapters {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  min-width: 0;
+  margin: 12px 0 0;
+  overflow: hidden;
+  border: 1px solid #d7d2cb;
+  background: #ebe7e1;
+}
+
+.wistia-process-studio .wps-chapter {
+  display: flex;
+  min-width: 0;
+  height: 68px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 10px 7px 9px;
+  border: 0;
+  border-right: 1px solid #d7d2cb;
+  color: #918c85;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: color 220ms ease, background-color 220ms ease;
+}
+
+.wistia-process-studio .wps-chapter:last-child {
+  border-right: 0;
+}
+
+.wistia-process-studio .wps-chapter b {
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.wistia-process-studio .wps-chapter span {
+  display: block;
+  overflow: hidden;
+  font-size: 7px;
+  font-weight: 620;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+  text-overflow: ellipsis;
+}
+
+.wistia-process-studio .wps-chapter.is-active {
+  color: #fff;
+  background: var(--wps-ink);
+}
+
+.wistia-process-studio .wps-feature.is-entering .wps-photo img {
+  animation: wps-photo-in 720ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.wistia-process-studio .wps-feature.is-entering .wps-content > :not(.wps-ghost) {
+  animation: wps-copy-in 620ms 80ms cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes wps-photo-in {
+  from { opacity: .42; transform: scale(1.025); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wps-copy-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (hover: hover) {
+  .wistia-process-studio .wps-controls button:not(:disabled):hover {
+    color: #fff;
+    border-color: var(--wps-ink);
+    background: var(--wps-ink);
+  }
+
+  .wistia-process-studio .wps-chapter:not(.is-active):hover {
+    color: var(--wps-ink);
+    background: #f6f3ee;
+  }
+}
+
+@media (max-width: 430px) {
+  .wistia-process-studio {
+    padding: 48px 18px 28px;
+  }
+
+  .wistia-process-studio .wps-head {
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+
+  .wistia-process-studio .wps-head h2 {
+    max-width: 280px;
+    font-size: 27px;
+  }
+
+  .wistia-process-studio .wps-counter {
+    padding-top: 3px;
+  }
+
+  .wistia-process-studio .wps-counter i {
+    width: 16px;
+  }
+
+  .wistia-process-studio .wps-feature {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .wistia-process-studio .wps-photo {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 236px;
+  }
+
+  .wistia-process-studio .wps-content {
+    width: 100%;
+    min-height: 294px;
+    padding: 25px 22px 20px;
+  }
+
+  .wistia-process-studio .wps-step {
+    margin-top: 28px;
+  }
+
+  .wistia-process-studio .wps-content h3 {
+    font-size: 23px;
+  }
+
+  .wistia-process-studio .wps-description {
+    max-width: 300px;
+    font-size: 11px;
+  }
+
+  .wistia-process-studio .wps-chapters {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .wistia-process-studio .wps-chapters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wistia-process-studio .wps-chapter {
+    min-width: 112px;
+    height: 70px;
+    flex: 0 0 112px;
+    scroll-snap-align: center;
+    padding-inline: 11px;
+  }
+
+  .wistia-process-studio .wps-chapter span {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 370px) {
+  .wistia-process-studio {
+    padding-inline: 15px;
+  }
+
+  .wistia-process-studio .wps-head h2 {
+    font-size: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wistia-process-studio .wps-feature.is-entering .wps-photo img,
+  .wistia-process-studio .wps-feature.is-entering .wps-content > :not(.wps-ghost) {
+    animation: none;
+  }
+
+  .wistia-process-studio .wps-controls button,
+  .wistia-process-studio .wps-chapter {
+    transition: none;
+  }
+}

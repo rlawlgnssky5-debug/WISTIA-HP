@@ -69,21 +69,22 @@ async function testStructureAndReferenceGeometry(browser) {
   assert.ok(Math.abs(compareColumns[1] - .18) < .025)
   assert.ok(Math.abs(compareColumns[2] - .48) < .025)
 
-  const process = await page.locator('.solo-process-section').evaluate(section => {
-    const active = section.querySelector('.solo-process-card.is-active')
-    const inactive = section.querySelector('.solo-process-card:not(.is-active)')
+  const process = await page.locator('[data-process-studio]').evaluate(section => {
+    const feature = section.querySelector('[data-process-feature]').getBoundingClientRect()
+    const photo = section.querySelector('.wps-photo').getBoundingClientRect()
+    const content = section.querySelector('.wps-content').getBoundingClientRect()
+    const chapters = section.querySelector('.wps-chapters')
     return {
-      activeHeight: active.getBoundingClientRect().height,
-      inactiveHeight: inactive.getBoundingClientRect().height,
-      inactiveMedia: getComputedStyle(inactive.querySelector('.solo-process-media')).display,
-      inactiveCopy: getComputedStyle(inactive.querySelector('.solo-process-body p')).display,
-      transition: parseFloat(getComputedStyle(active).transitionDuration) * 1000
+      stacked: photo.bottom <= content.top + 1,
+      contained: feature.left >= section.getBoundingClientRect().left && feature.right <= section.getBoundingClientRect().right,
+      chapterScrollable: chapters.scrollWidth >= chapters.clientWidth,
+      chapterCount: section.querySelectorAll('[data-process-chapter]').length
     }
   })
-  assert.ok(process.activeHeight > process.inactiveHeight * 1.45)
-  assert.equal(process.inactiveMedia, 'none')
-  assert.equal(process.inactiveCopy, 'none')
-  assert.ok(process.transition >= 680 && process.transition <= 750)
+  assert.equal(process.stacked, true)
+  assert.equal(process.contained, true)
+  assert.equal(process.chapterScrollable, true)
+  assert.equal(process.chapterCount, 7)
 
   const baLayout = await ba.evaluate(section => ({
     columns: getComputedStyle(section.querySelector('.wistia-ba-layout')).gridTemplateColumns,

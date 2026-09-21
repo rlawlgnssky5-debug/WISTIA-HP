@@ -117,15 +117,14 @@ async function testContent(browser) {
   await page.waitForTimeout(650)
   assert.equal(await expert.locator('[data-story-slide="1"].is-active').count(), 1, 'brand story next control should slide to the second editorial story')
 
-  assert.equal(await page.locator('[data-solo-process-card]').count(), 7)
-  assert.equal(await page.locator('[data-solo-process-card] img').count(), 6)
-  assert.match(await page.locator('.solo-process-head').innerText(), /노래가 익숙하지 않아도.*완성까지 함께합니다/s)
-  assert.match(await page.locator('[data-solo-process-card]').last().textContent(), /약 7일/)
-  const rail = page.locator('[data-solo-process-rail]')
-  const start = await rail.evaluate(node => node.scrollLeft)
-  await rail.press('ArrowRight')
+  const process = page.locator('[data-process-studio]')
+  assert.equal(await process.locator('[data-process-chapter]').count(), 7)
+  assert.equal(await process.locator('[data-process-image]').count(), 1)
+  assert.match(await process.locator('.wps-head').innerText(), /노래가 익숙하지 않아도 괜찮습니다.*완성까지, 함께 만듭니다/s)
+  assert.match(await process.locator('[data-process-chapter]').last().getAttribute('aria-label'), /최종 검수 · 전달/)
+  await process.locator('[data-process-feature]').press('ArrowRight')
   await page.waitForTimeout(500)
-  assert.ok(await rail.evaluate((node, initial) => node.scrollLeft > initial, start), 'ArrowRight should advance the process rail')
+  assert.equal((await process.locator('[data-process-current]').innerText()).trim(), '02', 'ArrowRight should advance the process panel')
   await page.close()
 }
 
@@ -200,35 +199,28 @@ async function testReferenceProcess(browser) {
   const page = await openSolo(browser, { width: 768, height: 1024 })
   const section = page.locator('.solo-process-section')
   await section.scrollIntoViewIfNeeded()
-  assert.equal(await section.locator('[data-solo-process-card]').count(), 7)
-  assert.equal(await section.locator('[data-solo-process-card].is-active').count(), 1)
-  assert.match(await section.locator('[data-process-status]').innerText(), /01\s*\/\s*07/)
+  assert.equal(await section.locator('[data-process-chapter]').count(), 7)
+  assert.equal(await section.locator('[data-process-chapter][aria-current="step"]').count(), 1)
+  assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '01')
 
   const geometry = await section.evaluate(root => {
-    const cards = [...root.querySelectorAll('[data-solo-process-card]')]
-    const active = root.querySelector('[data-solo-process-card].is-active')
-    const inactive = cards.find(card => card !== active)
-    const media = active.querySelector('.solo-process-media').getBoundingClientRect()
-    const activeBox = active.getBoundingClientRect()
-    const inactiveBox = inactive.getBoundingClientRect()
+    const feature = root.querySelector('[data-process-feature]').getBoundingClientRect()
+    const media = root.querySelector('.wps-photo').getBoundingClientRect()
+    const content = root.querySelector('.wps-content').getBoundingClientRect()
     return {
-      activeWidth: activeBox.width,
-      activeHeight: activeBox.height,
-      inactiveWidth: inactiveBox.width,
-      inactiveHeight: inactiveBox.height,
-      mediaRatio: media.width / media.height,
-      activeIndex: Number(active.dataset.soloProcessCard)
+      mediaShare: media.width / feature.width,
+      sideBySide: content.left >= media.right - 1,
+      contained: feature.left >= root.getBoundingClientRect().left && feature.right <= root.getBoundingClientRect().right
     }
   })
-  assert.equal(geometry.activeIndex, 0)
-  assert.ok(geometry.activeWidth > geometry.inactiveWidth * 1.55, 'focused step should be substantially wider than side cards')
-  assert.ok(geometry.activeHeight > geometry.inactiveHeight * 1.3, 'focused step should visibly scale above side cards')
-  assert.ok(Math.abs(geometry.mediaRatio - 16 / 9) < 0.12, 'focused process image should follow the reference 16:9 crop')
+  assert.ok(Math.abs(geometry.mediaShare - .59) < .03, 'desktop process image should occupy 59 percent of the fixed panel')
+  assert.equal(geometry.sideBySide, true)
+  assert.equal(geometry.contained, true)
 
   await section.locator('[data-process-next]').click()
   await page.waitForTimeout(500)
-  assert.equal(await section.locator('[data-solo-process-card="1"].is-active').count(), 1)
-  assert.match(await section.locator('[data-process-status]').innerText(), /02\s*\/\s*07/)
+  assert.equal(await section.locator('[data-process-chapter="1"][aria-current="step"]').count(), 1)
+  assert.equal((await section.locator('[data-process-current]').innerText()).trim(), '02')
   await page.close()
 }
 
@@ -287,20 +279,25 @@ async function testFinalPolish(browser) {
   assert.ok(reviewGeometry.phoneWidth > reviewGeometry.copyWidth, 'phone should be the dominant visual')
 
   const process = page.locator('.solo-process-section')
+  await process.locator('[data-process-next]').click()
+  await page.waitForTimeout(260)
   const processStyle = await process.evaluate(section => {
-    const active = section.querySelector('.solo-process-card.is-active')
-    const inactive = section.querySelector('.solo-process-card:not(.is-active)')
+    const feature = section.querySelector('[data-process-feature]')
+    const active = section.querySelector('[data-process-chapter].is-active')
+    const inactive = section.querySelector('[data-process-chapter]:not(.is-active)')
     return {
-      accent: getComputedStyle(section.querySelector('.solo-process-head strong')).color,
-      shadow: getComputedStyle(active.querySelector('.solo-process-card-inner')).boxShadow,
-      transition: getComputedStyle(active).transitionDuration,
-      inactiveOpacity: Number(getComputedStyle(inactive).opacity)
+      accent: getComputedStyle(section.querySelector('.wps-head strong')).color,
+      shadow: getComputedStyle(feature).boxShadow,
+      transition: getComputedStyle(section.querySelector('[data-process-image]')).animationDuration,
+      activeBackground: getComputedStyle(active).backgroundColor,
+      inactiveBackground: getComputedStyle(inactive).backgroundColor
     }
   })
-  assert.equal(processStyle.accent, 'rgb(21, 25, 26)', 'process heading should use the neutral black reference color')
-  assert.notEqual(processStyle.shadow, 'none', 'active process card should have a soft elevated shadow')
-  assert.ok(processStyle.transition.split(',').some(value => parseFloat(value) >= 0.45), 'process card motion should be deliberate and smooth')
-  assert.ok(processStyle.inactiveOpacity < 0.7, 'side cards should recede softly behind the active card')
+  assert.equal(processStyle.accent, 'rgb(24, 24, 23)', 'process heading should use the neutral black reference color')
+  assert.notEqual(processStyle.shadow, 'none', 'main process panel should have a soft elevated shadow')
+  assert.ok(processStyle.transition.split(',').some(value => parseFloat(value) >= 0.43), 'process image motion should be deliberate and smooth')
+  assert.equal(processStyle.activeBackground, 'rgb(24, 24, 23)', 'active chapter should use the black selection state')
+  assert.equal(processStyle.inactiveBackground, 'rgba(0, 0, 0, 0)', 'inactive chapters should retain the warm gray navigation background')
 
   const ratio = page.locator('#arRatioExperience')
   const ratioLayout = await ratio.evaluate(section => ({
@@ -318,7 +315,7 @@ async function testFinalPolish(browser) {
   await page.waitForFunction(() => document.querySelector('.ar-cd-disc-copy strong')?.textContent.includes('50'))
   assert.match(await ratio.locator('.ar-cd-disc-copy strong').innerText(), /50/)
 
-  const revealTargets = ['.ar-story-meta', '.ar-story-copy', '.solo-process-head', '.solo-process-slider', '.ar-cd-copy', '.ar-cd-visual']
+  const revealTargets = ['.ar-story-meta', '.ar-story-copy', '.wps-head', '.wps-feature', '.ar-cd-copy', '.ar-cd-visual']
   for (const selector of revealTargets) {
     assert.equal(await page.locator(selector).first().evaluate(node => node.classList.contains('motion-reveal')), true, `${selector} should participate in restrained scroll motion`)
   }

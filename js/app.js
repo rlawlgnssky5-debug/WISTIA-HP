@@ -541,22 +541,20 @@ function processList(steps){const hasImages=steps.some(step=>step[2]);return '<o
 function processAccordionMedia(step){const media=step[2];if(typeof media==="object"&&media?.duration)return '<div class="process-duration-line"><span>제작 기간</span><strong>'+escapeHtml(media.duration)+'</strong><small>촬영과 자료 전달 완료 후 정확한 일정을 안내합니다</small></div>';return processMedia(step)}
 function processAccordionList(steps){return '<div class="process-accordion">'+steps.map((s,i)=>'<details><summary data-process-step><span>'+String(i+1).padStart(2,"0")+'</span><h3>'+s[0]+'</h3><b aria-hidden="true">+</b></summary><div class="process-accordion-body">'+processAccordionMedia(s)+'<p>'+s[1]+'</p></div></details>').join("")+'</div>'}
 function songProcessSection(steps){return '<section class="shell section song-process-section" id="process">'+heading("","진행 과정","항목을 누르면 사진과 자세한 설명을 볼 수 있습니다")+processAccordionList(steps)+'</section>'}
-const SOLO_PROCESS_IMAGES=["assets/img/song-process/01-consultation.webp","assets/img/song-process/02-recording.webp","assets/img/song-process/03-vocal-directing.webp","assets/img/song-process/04-ratio.webp","assets/img/song-process/05-melodyne.webp","assets/img/song-process/06-mixing.webp"]
-function soloProcessInfoIcon(){return '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 17.5l4.2 4.2L23.5 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
-function soloProcessCard(step,i,total){
- const hasImage=i<SOLO_PROCESS_IMAGES.length,num=String(i+1).padStart(2,"0"),duration=typeof step[2]==="object"?step[2].duration:""
- const media=hasImage?'<div class="solo-process-media">'+img(SOLO_PROCESS_IMAGES[i],step[0]+' 과정 사진')+'</div>':'<div class="solo-process-media solo-process-media-info"><span class="solo-process-info-icon">'+soloProcessInfoIcon()+'</span><small>PRODUCTION TIME</small><strong>'+escapeHtml(duration)+'</strong></div>'
- return '<li class="solo-process-card'+(i===0?' is-active':'')+(hasImage?"":" is-info")+'" data-solo-process-card="'+i+'" aria-current="'+(i===0?'step':'false')+'"><button type="button" class="solo-process-card-inner" data-process-goto="'+i+'" aria-label="'+num+' '+escapeHtml(step[0])+' 단계 보기">'+media+'<span class="solo-process-card-mark" aria-hidden="true">'+soloProcessInfoIcon()+'</span><div class="solo-process-body"><span class="solo-process-num">'+num+'<i>/'+String(total).padStart(2,"0")+'</i></span><h3>'+step[0]+'</h3><p>'+step[1]+'</p></div></button></li>'
-}
-function soloProcessSlider(steps){
- const total=steps.length
- return '<section class="shell section song-process-section solo-process-section" id="process">'
-  +'<header class="solo-process-head"><div><span class="solo-process-kicker">PROCESS</span><h2>노래가 익숙하지 않아도<br><strong>완성까지 함께합니다.</strong></h2></div><p>상담부터 녹음과 보정, 본식용 AR 전달까지<br>일곱 단계를 순서대로 확인해 보세요.</p></header>'
-  +'<div class="solo-process-slider" data-solo-process>'
-  +'<ul class="solo-process-rail" data-solo-process-rail role="list" tabindex="0" aria-label="진행 과정 '+total+'단계, 좌우로 스크롤하여 확인하세요">'+steps.map((s,i)=>soloProcessCard(s,i,total)).join("")+'</ul>'
-  +'<div class="solo-process-controls"><span class="solo-process-status" data-process-status>01 / '+String(total).padStart(2,"0")+'</span><span class="solo-process-indicator-track" aria-hidden="true"><span class="solo-process-indicator-fill" data-solo-process-fill></span></span><div class="solo-process-arrows"><button type="button" data-process-prev aria-label="이전 단계">‹</button><button type="button" data-process-next aria-label="다음 단계">›</button></div></div>'
-  +'</div></section>'
-}
+const SOLO_STUDIO_PROCESS=[
+ {id:1,eyebrow:"CONSULTATION",title:"맞춤 제작 상담<br>곡과 키 확인",short:"맞춤 제작 상담",description:"예식 분위기와 음역을 확인해 곡과 키를 정하고, 본식에서 사용할 AR의 방향을 함께 설계합니다.",meta:[["방식","1:1 상담"],["준비","원하는 곡"]],image:"assets/img/process-studio/01-consultation.png"},
+ {id:2,eyebrow:"RECORDING",title:"스튜디오 방문<br>녹음 준비",short:"녹음 준비",description:"마이크와 헤드폰을 편안하게 맞춘 뒤, 컨디션과 호흡을 확인하며 녹음을 준비합니다.",meta:[["장소","위스티아 스튜디오"],["안내","장비 세팅"]],image:"assets/img/process-studio/02-recording.png"},
+ {id:3,eyebrow:"VOCAL DIRECTING",title:"1:1 보컬 디렉팅<br>구간별 녹음",short:"1:1 보컬 디렉팅",description:"엔지니어가 호흡·발음·감정 표현을 안내하고, 부담 없는 길이로 나누어 한 구간씩 녹음합니다.",meta:[["방식","구간별 녹음"],["진행","1:1 디렉팅"]],image:"assets/img/process-studio/03-vocal-directing.png"},
+ {id:4,eyebrow:"AR BALANCE",title:"AR 속 내 목소리<br>비율 선택",short:"AR 비율 선택",description:"같은 노래를 여러 비율로 직접 들어보고, 실제 본식에서 가장 편안한 목소리 비율을 결정합니다.",meta:[["비교","30–100%"],["결정","맞춤 비율"]],image:"assets/img/process-studio/04-ratio.png"},
+ {id:5,eyebrow:"VOCAL EDITING",title:"멜로다인 수작업<br>보컬 보정",short:"수작업 보정",description:"원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다.",meta:[["보정","수작업"],["기준","음색 유지"]],image:"assets/img/process-studio/05-melodyne.png"},
+ {id:6,eyebrow:"MIXING & MASTERING",title:"전문 엔지니어 믹싱<br>AR 제작",short:"믹싱 · AR 제작",description:"보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다.",meta:[["작업","믹싱"],["출력","본식용 AR"]],image:"assets/img/process-studio/06-mixing.png"},
+ {id:7,eyebrow:"FINAL DELIVERY",title:"최종 검수<br>완성본 전달",short:"최종 검수 · 전달",description:"본식에서 바로 사용할 수 있도록 전체 음원을 최종 검수한 뒤 완성 파일을 전달합니다.",meta:[["제작","약 7일"],["전달","완성 음원"]],image:"assets/img/process-studio/07-delivery.svg"}
+]
+function processStudioMeta(step){return step.meta.map(([label,value])=>'<span><strong>'+escapeHtml(label)+'</strong>'+escapeHtml(value)+'</span>').join("")}
+function soloProcessSlider(){const first=SOLO_STUDIO_PROCESS[0];return '<section class="wistia-process-studio solo-process-section" id="process" data-process-studio aria-labelledby="processStudioTitle">'
+ +'<header class="wps-head"><div><p class="wps-kicker">WISTIA · PRODUCTION PROCESS</p><h2 id="processStudioTitle">노래가 익숙하지 않아도 괜찮습니다.<br><strong>완성까지, 함께 만듭니다.</strong></h2></div><div class="wps-counter"><span data-process-current>01</span><i></i><span>07</span></div></header>'
+ +'<div class="wps-feature" data-process-feature tabindex="0" role="group" aria-label="작업과정 단계 슬라이더. 좌우 방향키로 단계를 이동할 수 있습니다."><div class="wps-photo"><span class="wps-badge">CURRENT STEP</span>'+img(first.image,first.short).replace('<img ','<img data-process-image ')+'</div><article class="wps-content" aria-live="polite" aria-atomic="true"><span class="wps-ghost" data-process-ghost>01</span><p class="wps-step" data-process-eyebrow>'+first.eyebrow+'</p><h3 data-process-title>'+first.title+'</h3><p class="wps-description" data-process-description>'+first.description+'</p><div class="wps-detail" data-process-meta>'+processStudioMeta(first)+'</div><div class="wps-controls"><button type="button" data-process-prev aria-label="이전 단계" disabled>←</button><button type="button" class="is-next" data-process-next aria-label="다음 단계">→</button></div></article></div>'
+ +'<nav class="wps-chapters" aria-label="제작 단계 선택">'+SOLO_STUDIO_PROCESS.map((step,index)=>'<button type="button" class="wps-chapter'+(index===0?' is-active':'')+'" data-process-chapter="'+index+'" data-image="'+step.image+'" aria-current="'+(index===0?'step':'false')+'" aria-label="'+String(step.id).padStart(2,"0")+' '+escapeHtml(step.short)+' 단계 보기"><b>'+String(step.id).padStart(2,"0")+'</b><span>'+escapeHtml(step.short)+'</span></button>').join("")+'</nav></section>'}
 function processTypeButton(productKey,formatKey,icon){const format=FILM_FORMATS[formatKey],expanded=selectedFilmFormat===formatKey;return '<button type="button" aria-expanded="'+expanded+'" aria-controls="processType'+(formatKey==="live"?'Live':'Making')+'" data-process-format="'+formatKey+'"><span class="process-type-preview">'+img(FILM_FORMAT_IMAGES[productKey][formatKey],format.title+' 예시 사진')+'</span><span class="process-type-label"><span class="process-type-marker" aria-hidden="true"></span><strong><span aria-hidden="true">'+icon+'</span> '+format.title+'</strong></span></button>'}
 function filmProcessSection(productKey,steps){const live=filmProcessSteps(productKey,steps,"live"),making=filmProcessSteps(productKey,steps,"making");if(productKey==="proposal")return '<section class="shell section film-process-section proposal-process-section" id="process">'+heading("","진행 과정","녹음부터 영상 완성까지의 과정을 확인해 주세요")+'<div id="processTypeLive" class="process-type-panel proposal-single-process" role="region" aria-label="뮤직 비디오 필름 진행 과정" data-process-panel="live">'+processAccordionList(live)+'</div></section>';return '<section class="shell section film-process-section" id="process">'+heading("","녹음 메이킹 필름 진행 과정","항목을 누르면 사진과 자세한 설명을 볼 수 있습니다")+'<div id="processTypeMaking" class="process-type-panel" role="region" aria-label="녹음 메이킹 필름 진행 과정" data-process-panel="making">'+processAccordionList(making)+'</div></section>'}
 function filmUpgradeDetail(productKey){if(productKey==="proposal")return "";const difference=filmFormatPrice(productKey,"live")-filmFormatPrice(productKey,"making"),price="+"+shortWon(difference);return '<section class="shell section film-upgrade-detail"><div class="film-upgrade-detail-media">'+img(FILM_FORMAT_IMAGES[productKey].live,"뮤직 비디오 필름 실제 예시 사진",true)+'</div><div class="film-upgrade-detail-copy">'+label("선택 업그레이드")+'<h2>뮤직 비디오 필름으로 업그레이드</h2><p>기본 녹음 메이킹 필름에 아래 구성이 추가됩니다</p><ul>'+filmUpgradeFeatures(productKey).map(item=>'<li>'+item+'</li>').join("")+'</ul><div><strong>'+price+'</strong></div></div></section>'}
@@ -685,7 +683,7 @@ function renderDetail(key,purpose=""){
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(key==="solo"){
-  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+soloReviewShowcase()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+wistiaBeforeAfterSection()+arComparisonSection()+soloProcessSlider(p.steps)+arCdRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<a class="solo-inline-contact button light" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기 <span aria-hidden="true">↗</span></a></section>'+footer()+priceBar(key)+'</div>'
+  app.innerHTML=soloTopCta()+soloPersonTabs(key)+'<div class="solo-detail-scope">'+arHookHero(p)+arPrimaryBenefit()+soloReviewShowcase()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+wistiaBeforeAfterSection()+arComparisonSection()+soloProcessSlider()+arCdRatioSection()+'<section class="shell section worry-section">'+heading("","자주 묻는 질문")+faq(p.faq)+'<a class="solo-inline-contact button light" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기 <span aria-hidden="true">↗</span></a></section>'+footer()+priceBar(key)+'</div>'
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
@@ -812,52 +810,27 @@ function initSoloArRatio(){
  const enableWhenReady=()=>{if(!section.classList.contains("is-loading")){marks.forEach(button=>button.disabled=false);playBtn.disabled=false;return}requestAnimationFrame(enableWhenReady)}
  enableWhenReady()
 }
-let soloProcessHintDone=false,soloProcessHlObserver=null
-function initSoloProcessHighlight(){
- soloProcessHlObserver?.disconnect()
- const target=document.querySelector("[data-solo-process-hl]");if(!target)return
- if(matchMedia("(prefers-reduced-motion: reduce)").matches){target.classList.add("is-visible");return}
- soloProcessHlObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){target.classList.add("is-visible");soloProcessHlObserver.disconnect()}}),{threshold:.6})
- soloProcessHlObserver.observe(target)
-}
-function setSoloProcessActive(rail,cards,index){
- const total=cards.length,status=document.querySelector("[data-process-status]"),fill=document.querySelector("[data-solo-process-fill]")
- cards.forEach((card,i)=>{const active=i===index;card.classList.toggle("is-active",active);card.setAttribute("aria-current",active?"step":"false")})
- if(status)status.textContent=String(index+1).padStart(2,"0")+" / "+String(total).padStart(2,"0")
- if(fill)fill.style.width=(total>1?index/(total-1)*100:0)+"%"
-}
-function closestSoloProcessCard(rail,cards){
- const railRect=rail.getBoundingClientRect(),center=railRect.left+railRect.width/2
- let best=0,bestDist=Infinity
- cards.forEach((card,i)=>{const r=card.getBoundingClientRect(),cardCenter=r.left+r.width/2,dist=Math.abs(cardCenter-center);if(dist<bestDist){bestDist=dist;best=i}})
- return best
-}
 function initSoloProcessSlider(){
- const rail=document.querySelector("[data-solo-process-rail]");if(!rail)return
- const cards=[...rail.querySelectorAll("[data-solo-process-card]")]
- setSoloProcessActive(rail,cards,0)
- const go=(index,behavior="smooth")=>{const next=Math.min(cards.length-1,Math.max(0,index));setSoloProcessActive(rail,cards,next);requestAnimationFrame(()=>cards[next].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":behavior,inline:"center",block:"nearest"}))}
- rail.querySelectorAll("[data-process-goto]").forEach(button=>button.addEventListener("click",()=>go(Number(button.dataset.processGoto))))
- document.querySelector("[data-process-prev]")?.addEventListener("click",()=>go(closestSoloProcessCard(rail,cards)-1))
- document.querySelector("[data-process-next]")?.addEventListener("click",()=>go(closestSoloProcessCard(rail,cards)+1))
- let ticking=false
- const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{setSoloProcessActive(rail,cards,closestSoloProcessCard(rail,cards));ticking=false})}
- rail.addEventListener("scroll",onScroll,{passive:true})
- rail.addEventListener("keydown",e=>{
-  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return
-  e.preventDefault()
-  const current=closestSoloProcessCard(rail,cards);go(current+(e.key==="ArrowRight"?1:-1))
- })
- let dragging=false,startX=0,startScroll=0
- rail.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;dragging=true;startX=e.clientX;startScroll=rail.scrollLeft;rail.classList.add("is-dragging");rail.setPointerCapture(e.pointerId)})
- rail.addEventListener("pointermove",e=>{if(!dragging)return;const delta=e.clientX-startX;if(Math.abs(delta)>6)e.preventDefault();rail.scrollLeft=startScroll-delta})
- const endDrag=()=>{if(!dragging)return;dragging=false;rail.classList.remove("is-dragging");go(closestSoloProcessCard(rail,cards))}
- rail.addEventListener("pointerup",endDrag);rail.addEventListener("pointercancel",endDrag)
- initSoloProcessHighlight()
- if(soloProcessHintDone||matchMedia("(prefers-reduced-motion: reduce)").matches||cards.length<2)return
- const cancelHint=()=>{soloProcessHintDone=true;rail.classList.remove("is-hinting");["pointerdown","wheel","touchstart","keydown"].forEach(evt=>rail.removeEventListener(evt,cancelHint))}
- ;["pointerdown","wheel","touchstart","keydown"].forEach(evt=>rail.addEventListener(evt,cancelHint,{once:true,passive:true}))
- setTimeout(()=>{if(soloProcessHintDone||!rail.isConnected)return;rail.classList.add("is-hinting");setTimeout(()=>{rail.classList.remove("is-hinting");soloProcessHintDone=true},700)},900)
+ const root=document.querySelector("[data-process-studio]");if(!root)return
+ const feature=root.querySelector("[data-process-feature]"),image=root.querySelector("[data-process-image]"),eyebrow=root.querySelector("[data-process-eyebrow]"),title=root.querySelector("[data-process-title]"),description=root.querySelector("[data-process-description]"),meta=root.querySelector("[data-process-meta]"),ghost=root.querySelector("[data-process-ghost]"),current=root.querySelector("[data-process-current]"),chapters=root.querySelector(".wps-chapters"),chapterButtons=[...root.querySelectorAll("[data-process-chapter]")],prev=root.querySelector("[data-process-prev]"),next=root.querySelector("[data-process-next]")
+ let activeIndex=0,touchStart=null
+ const render=(requestedIndex,animate=true)=>{
+  activeIndex=Math.min(Math.max(Number(requestedIndex)||0,0),SOLO_STUDIO_PROCESS.length-1)
+  const step=SOLO_STUDIO_PROCESS[activeIndex],number=String(step.id).padStart(2,"0")
+  if(animate){feature.classList.remove("is-entering");void feature.offsetWidth;feature.classList.add("is-entering")}
+  image.src=step.image;image.alt=step.short;eyebrow.textContent=step.eyebrow;title.innerHTML=step.title;description.textContent=step.description;meta.innerHTML=processStudioMeta(step);ghost.textContent=number;current.textContent=number
+  chapterButtons.forEach((button,index)=>{const active=index===activeIndex;button.classList.toggle("is-active",active);button.setAttribute("aria-current",active?"step":"false")})
+  prev.disabled=activeIndex===0;next.disabled=activeIndex===SOLO_STUDIO_PROCESS.length-1
+  const activeButton=chapterButtons[activeIndex],reduced=matchMedia("(prefers-reduced-motion: reduce)").matches
+  chapters.scrollTo({left:activeButton.offsetLeft-(chapters.clientWidth-activeButton.offsetWidth)/2,behavior:reduced?"auto":"smooth"})
+ }
+ prev.addEventListener("click",()=>render(activeIndex-1));next.addEventListener("click",()=>render(activeIndex+1))
+ chapterButtons.forEach(button=>button.addEventListener("click",()=>render(Number(button.dataset.processChapter))))
+ feature.addEventListener("keydown",event=>{if(event.key!=="ArrowLeft"&&event.key!=="ArrowRight")return;event.preventDefault();render(activeIndex+(event.key==="ArrowRight"?1:-1))})
+ feature.addEventListener("touchstart",event=>{const touch=event.changedTouches[0];touchStart={x:touch.clientX,y:touch.clientY}},{passive:true})
+ feature.addEventListener("touchend",event=>{if(!touchStart)return;const touch=event.changedTouches[0],deltaX=touch.clientX-touchStart.x,deltaY=touch.clientY-touchStart.y;touchStart=null;if(Math.abs(deltaX)<45||Math.abs(deltaX)<=Math.abs(deltaY))return;render(activeIndex+(deltaX<0?1:-1))},{passive:true})
+ feature.addEventListener("touchcancel",()=>{touchStart=null},{passive:true})
+ render(0,false)
 }
 function friendLyricsSelection(){
  const selected=finderChoice.role==="singer"?finderChoice.lyrics:""
@@ -935,7 +908,7 @@ function header(){
 }
 function enhanceMotion(){
  routeObserver?.disconnect()
- const nodes=[...document.querySelectorAll(".section-heading,.detail-hero>*:not(.detail-result-card),.detail-result-card,.scene-grid li,.process-list li,.service-row,.situation-group,.picker-grid article,.option-banner,.booking-options>section,.ar-story-meta,.ar-story-copy,.ar-story-image,.wistia-ba-copy,.bap-player,.solo-process-head,.solo-process-slider,.ar-cd-copy,.ar-cd-visual")]
+ const nodes=[...document.querySelectorAll(".section-heading,.detail-hero>*:not(.detail-result-card),.detail-result-card,.scene-grid li,.process-list li,.service-row,.situation-group,.picker-grid article,.option-banner,.booking-options>section,.ar-story-meta,.ar-story-copy,.ar-story-image,.wistia-ba-copy,.bap-player,.wps-head,.wps-feature,.ar-cd-copy,.ar-cd-visual")]
  nodes.forEach((node,index)=>{node.classList.add("motion-reveal");node.style.setProperty("--motion-delay",Math.min(index%4,3)*70+"ms")})
  if(matchMedia("(prefers-reduced-motion: reduce)").matches){nodes.forEach(node=>node.classList.add("is-visible"));return}
  routeObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");routeObserver.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -5% 0px"})
