@@ -54,7 +54,7 @@
     function activate(next){
       if(!['before','after'].includes(next)||next===mode)return
       const current=position(),resume=isPlaying
-      stopSource();isPlaying=false;mode=next;pausedAt=Math.min(current,duration()||current)
+      stopSource();isPlaying=false;mode=next;root.dataset.mode=mode;pausedAt=Math.min(current,duration()||current)
       tabs.forEach(tab=>{const active=tab.dataset.mode===mode;tab.classList.toggle('active',active);tab.setAttribute('aria-pressed',String(active))})
       badge.className='bap-badge mode-'+mode;badgeText.textContent=status[mode]
       playBtn.className='bap-play mode-'+mode;errorEl.hidden=!failures[mode]

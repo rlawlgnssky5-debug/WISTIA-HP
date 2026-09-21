@@ -2314,3 +2314,43 @@ body .footer.shell{
 
 /* One calm content edge throughout the solo page. */
 .solo-detail-scope .shell{width:calc(100% - (var(--solo-page-gutter)*2));margin-left:var(--solo-page-gutter);margin-right:var(--solo-page-gutter)}
+
+/* Calm, rounded handoffs between the solo-detail sections. */
+.solo-detail-scope>.ar-primary-benefit,
+.solo-detail-scope>.solo-review-showcase,
+.solo-detail-scope>.solo-editorial-sheet,
+.solo-detail-scope>.wistia-ba-section,
+.solo-detail-scope>.ar-compare,
+.solo-detail-scope>.solo-process-section,
+.solo-detail-scope>.wistia-ar,
+.solo-detail-scope>.worry-section{position:relative;overflow:hidden;border-radius:0 0 30px 30px}
+
+/* Give the compact brand-story card a more generous frame above and below. */
+.solo-detail-scope>.solo-editorial-sheet{padding:42px 0 36px}
+
+/* WISTIA comparison: the criteria charcoal becomes the section ground, while the WISTIA column stays luminous. */
+.solo-detail-scope .ar-compare{background:#595959}
+.solo-detail-scope .ar-compare-intro [data-solo-kicker]{color:#d5dcdb}
+.solo-detail-scope .ar-compare-title{color:#fff}
+.solo-detail-scope .ar-compare-sub{color:#e0e5e4}
+.solo-detail-scope .ar-compare-head>span:first-child{background:#747a79;color:#f1f4f3}
+.solo-detail-scope .ar-compare-head>strong{background:#f5f8f7;color:#11191a;box-shadow:0 16px 30px -22px #000a}
+.solo-detail-scope .ar-compare-row .ar-compare-general{background:#707675!important;color:#eef2f1!important}
+.solo-detail-scope .ar-compare-row .ar-compare-criteria{background:#4b4f4f!important;color:#fff!important}
+.solo-detail-scope .ar-compare-row .ar-compare-wistia{background:#fafdfc!important;color:#101718!important;box-shadow:8px 0 24px -16px #171a1a,-8px 0 24px -16px #171a1a!important}
+.solo-detail-scope .ar-compare-note{color:#dce2e1}
+@container solo-detail (max-width:429px){
+ .solo-detail-scope>.solo-editorial-sheet{padding-top:34px;padding-bottom:28px}
+ .solo-detail-scope>.ar-primary-benefit,
+ .solo-detail-scope>.solo-review-showcase,
+ .solo-detail-scope>.solo-editorial-sheet,
+ .solo-detail-scope>.wistia-ba-section,
+ .solo-detail-scope>.ar-compare,
+ .solo-detail-scope>.solo-process-section,
+ .solo-detail-scope>.wistia-ar,
+ .solo-detail-scope>.worry-section{border-bottom-left-radius:24px;border-bottom-right-radius:24px}
+}
+
+/* Every solo-detail introduction begins on the same shared content edge. */
+.solo-detail-scope>.wistia-ba-section{width:100%;margin:0;padding-left:var(--solo-page-gutter);padding-right:var(--solo-page-gutter)}
+.solo-detail-scope [data-solo-section-intro]{margin-left:0;margin-right:0;text-align:left}
