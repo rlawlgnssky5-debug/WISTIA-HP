@@ -53,6 +53,17 @@
   display: block;
 }
 
+.solo-detail-scope .wistia-ba-copy [data-solo-title] > .solo-type-line,
+.solo-detail-scope .wistia-ba-copy [data-solo-sub] > .solo-type-line {
+  display: block;
+}
+
+.solo-detail-scope .ar-copy-emphasis.solo-type-line {
+  display: inline-grid;
+  width: auto;
+  padding-inline: 14px;
+}
+
 .solo-detail-scope .ar-benefit-copy [data-solo-kicker] {
   display: block;
   justify-content: initial;
@@ -132,6 +143,31 @@
 
 .solo-detail-scope .wps-sub {
   max-width: 360px;
+}
+
+.solo-detail-scope .wistia-process-studio .wps-head [data-solo-title] {
+  font-size: var(--solo-type-title-size) !important;
+  font-weight: 500 !important;
+  line-height: 1.28 !important;
+}
+
+.solo-detail-scope .wistia-process-studio .wps-head [data-solo-sub] {
+  font-size: var(--solo-type-sub-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+}
+
+.solo-detail-scope .footer-message strong {
+  font-size: var(--solo-type-title-size);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -.05em;
+}
+
+.solo-detail-scope .footer-message p {
+  font-size: var(--solo-type-sub-size);
+  font-weight: 400;
+  line-height: 1.85;
 }
 
 .solo-detail-scope .ar-cd-title {
@@ -227,6 +263,13 @@
 }
 
 @container solo-detail (max-width: 599px) {
+  .solo-detail-scope .wistia-ba-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 599px) {
   .solo-detail-scope .wistia-ba-layout {
     grid-template-columns: 1fr;
     gap: 30px;

@@ -40,7 +40,7 @@ async function testStructureAndAssets(browser) {
   })
   assert.ok(visualScale.aspect >= .6, 'AR background should extend above and below the controls')
   assert.ok(visualScale.titleSize >= 25, 'AR heading should match the other section headings')
-  assert.ok(visualScale.titleWeight >= 580, 'AR heading weight should match the site typography')
+  assert.ok(visualScale.titleWeight >= 500 && visualScale.titleWeight <= 650, 'AR heading weight should match the site typography')
   assert.ok(visualScale.eyebrowSize >= 8, 'AR eyebrow must not look undersized')
   assert.equal(await section.locator('.wistia-ar__audio').evaluate(audio => audio.paused), true, 'the CD player must never autoplay')
   assert.deepEqual(

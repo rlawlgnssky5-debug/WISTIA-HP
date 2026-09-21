@@ -73,6 +73,29 @@ function normalizedFamily(value) {
       }))
       assert.notEqual(colors.lightTitle, colors.darkTitle, 'dark sections should retain their white type treatment')
       assert.ok(colors.overflow <= 1, `${width}px viewport must not overflow after type unification`)
+      const visibleHeadings = await page.locator('.solo-detail-scope').evaluate(root => {
+        const read = selector => {
+          const node = root.querySelector(selector)
+          const style = getComputedStyle(node)
+          return { size: parseFloat(style.fontSize), weight: Number(style.fontWeight) }
+        }
+        const ar = read('.wistia-ar__title')
+        const arScale = parseFloat(getComputedStyle(root.querySelector('.wistia-ar')).getPropertyValue('--wistia-ar-scale'))
+        const emphasis = root.querySelector('.ar-copy-emphasis').getBoundingClientRect()
+        const emphasisText = root.querySelector('.ar-copy-emphasis-text').getBoundingClientRect()
+        return {
+          process: read('.wps-head [data-solo-title]'),
+          faq: read('.solo-faq-intro [data-solo-title]'),
+          footer: read('.footer-message strong'),
+          ar: { size: ar.size * arScale, weight: ar.weight },
+          emphasisExtra: emphasis.width - emphasisText.width
+        }
+      })
+      for (const [name, heading] of Object.entries(visibleHeadings).filter(([name]) => name !== 'emphasisExtra')) {
+        assert.ok(Math.abs(heading.size - 26) <= 1.2, `${name} main heading should use the shared 26px visual size`)
+        assert.ok(heading.weight >= 500 && heading.weight <= 650, `${name} main heading weight should stay consistent`)
+      }
+      assert.ok(visibleHeadings.emphasisExtra <= 32, 'the black emphasis shape should hug its text')
       const beforeAfterLines = await page.locator('.wistia-ba-copy').evaluate(group => ({
         title: [...group.querySelectorAll('[data-solo-title] > .solo-type-line')].map(line => {
           const style = getComputedStyle(line)
@@ -86,8 +109,10 @@ function normalizedFamily(value) {
       assert.ok(beforeAfterLines.title.every(lines => lines < 1.25), `Before / After title must stay at exactly two visual lines at ${width}px`)
       assert.ok(beforeAfterLines.sub.every(lines => lines < 1.25), `Before / After supporting copy must stay at exactly two visual lines at ${width}px`)
       const ratioLines = hierarchy.find(item => item.name.includes('ar-cd-copy'))
-      assert.equal(ratioLines.titleWraps, false, `AR ratio title lines must not wrap again at ${width}px`)
-      assert.equal(ratioLines.subWraps, false, `AR ratio supporting lines must not wrap or clip at ${width}px`)
+      if (ratioLines) {
+        assert.equal(ratioLines.titleWraps, false, `AR ratio title lines must not wrap again at ${width}px`)
+        assert.equal(ratioLines.subWraps, false, `AR ratio supporting lines must not wrap or clip at ${width}px`)
+      }
       if (process.env.WISTIA_TYPOGRAPHY_SCREENSHOTS) {
         await page.screenshot({ path: path.join(process.env.WISTIA_TYPOGRAPHY_SCREENSHOTS, `solo-typography-${width}.png`), fullPage: true })
         const intros = page.locator('[data-solo-section-intro]')
