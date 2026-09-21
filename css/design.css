@@ -2069,3 +2069,43 @@ body.is-solo-detail .solo-person-tab span{font-size:9.5px}
 .solo-detail-scope>.solo-process-section{background-color:#fafbf9}
 .solo-detail-scope>.ar-cd-ratio{background:radial-gradient(circle at 76% 50%,#17191a 0,#090a0a 28%,#050606 59%)}
 .solo-detail-scope>.worry-section,.solo-detail-scope>.footer{background:#fff}
+
+/* WISTIA charcoal footer */
+body .footer.shell{
+ display:block;
+ width:100%;
+ margin:0;
+ padding:64px 36px 34px;
+ background:#1f2223;
+ color:#f4f5f5;
+ box-sizing:border-box;
+}
+.footer-main{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:start}
+.footer .footer-brand{display:flex;align-items:center;gap:12px;color:#f4f5f5}
+.footer .footer-brand>img{width:42px;height:42px;filter:grayscale(1) brightness(0) invert(1);opacity:.92}
+.footer .footer-brand b{font:400 25px/1 Georgia,serif;letter-spacing:.13em;color:#fff}
+.footer .footer-brand small{display:block;margin-top:5px;font-size:8px;line-height:1.4;letter-spacing:.18em;color:#aeb3b5}
+.footer-message{grid-column:1/-1}
+.footer-message strong{display:block;font-size:27px;line-height:1.42;letter-spacing:-.045em;font-weight:560;color:#fff}
+.footer-message p{margin-top:14px;font-size:12px;line-height:1.75;color:#aeb3b5}
+.footer-consult{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:0 18px;border:1px solid #555b5e;color:#f4f5f5;font-size:13px;transition:background .2s,color .2s,border-color .2s}
+.footer-consult b{font-size:18px;font-weight:400}
+.footer-consult:hover,.footer-consult:focus-visible{background:#f4f5f5;border-color:#f4f5f5;color:#1f2223}
+.footer-divider{height:1px;margin:38px 0 30px;background:#454a4c}
+.footer .footer-social{display:flex;justify-content:center;gap:24px}
+.footer .footer-social a{display:grid;justify-items:center;gap:9px;color:#aeb3b5;font-size:10px;line-height:1.3}
+.footer .footer-social i{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:#f4f5f5;color:#242829;transition:transform .2s,background .2s}
+.footer .footer-social svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.footer .footer-social a:hover i,.footer .footer-social a:focus-visible i{transform:translateY(-3px);background:#fff}
+.footer-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:34px;padding-top:22px;border-top:1px solid #343839;color:#858c8f;font-size:9px;line-height:1.6;letter-spacing:.04em}
+.footer-bottom small{font:inherit;color:inherit}
+@media(max-width:540px){
+ body .footer.shell{padding:52px 24px 30px}
+ .footer-main{grid-template-columns:1fr}
+ .footer-message strong{font-size:25px}
+ .footer-divider{margin:34px 0 28px}
+ .footer .footer-social{gap:20px}
+ .footer .footer-social i{width:48px;height:48px}
+ .footer-bottom{display:grid;gap:6px;margin-top:30px}
+}
+@media(prefers-reduced-motion:reduce){.footer-consult,.footer .footer-social i{transition:none}}
