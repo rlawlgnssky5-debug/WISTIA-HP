@@ -81,7 +81,7 @@ async function testStructureAndReferenceGeometry(browser) {
       chapterCount: section.querySelectorAll('[data-process-chapter]').length
     }
   })
-  assert.equal(process.stacked, true)
+  assert.equal(process.stacked, false)
   assert.equal(process.contained, true)
   assert.equal(process.chapterScrollable, true)
   assert.equal(process.chapterCount, 7)
@@ -92,7 +92,7 @@ async function testStructureAndReferenceGeometry(browser) {
     overflow: section.scrollWidth - section.clientWidth
   }))
   assert.equal(baLayout.columns.split(' ').length, 1, 'Before/After should stack on mobile')
-  assert.equal(baLayout.background, 'rgb(246, 247, 248)')
+  assert.equal(baLayout.background, 'rgb(243, 244, 244)')
   assert.ok(baLayout.overflow <= 1)
   await page.close()
 }

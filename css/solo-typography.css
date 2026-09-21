@@ -2,7 +2,7 @@
   --solo-type-ink: #202426;
   --solo-type-muted: #737b7f;
   --solo-type-kicker: #8c9497;
-  --solo-type-title-size: 24px;
+  --solo-type-title-size: 26px;
   --solo-type-sub-size: 11.5px;
 }
 
@@ -235,7 +235,7 @@
 
 @container solo-detail (max-width: 429px) {
   .solo-detail-scope {
-    --solo-type-title-size: 24px;
+    --solo-type-title-size: 26px;
     --solo-type-sub-size: 11.5px;
   }
 
@@ -270,7 +270,7 @@
 
 @container solo-detail (max-width: 370px) {
   .solo-detail-scope {
-    --solo-type-title-size: 23px;
+    --solo-type-title-size: 25px;
     --solo-type-sub-size: 10.5px;
   }
 }

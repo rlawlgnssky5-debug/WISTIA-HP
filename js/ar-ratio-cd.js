@@ -1,103 +1,28 @@
 (function(global){
- const labels={30:'안정감 중심',50:'균형 있게',70:'자연스럽게',100:'목소리 중심'}
- const pad=value=>String(value).padStart(2,'0')
- const formatTime=value=>{const time=Number.isFinite(value)?value:0;return Math.floor(time/60)+':'+pad(Math.floor(time%60))}
-
+ const RATIOS=[30,50,70,100],ANGLES=[60,20,-20,-60],SVG_NS='http://www.w3.org/2000/svg'
+ const format=value=>{const n=Math.max(0,Math.floor(Number(value)||0));return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')}
  function initArCdRatio(selector='#arRatioExperience'){
-  const model=global.WistiaRatioModel
-  const root=document.querySelector(selector)
-  if(!root||!model)return null
-  const audio=root.querySelector('.ar-cd-audio'),play=root.querySelector('.ar-cd-play'),volume=root.querySelector('.ar-cd-volume'),progress=root.querySelector('.ar-cd-progress'),time=root.querySelector('.ar-cd-time'),error=root.querySelector('.ar-cd-error'),discCopy=root.querySelector('.ar-cd-disc-copy'),visual=root.querySelector('.ar-cd-visual')
-  const controls=[...root.querySelectorAll('[data-ratio]')]
-  const listeners=[],sourceUrls=new Map(),sourcePromises=new Map()
-  let state=model.createRatioState(70),pendingPosition=0,pendingPlay=false,pendingSwitch=false,switchToken=0,destroyed=false
-  const on=(target,event,handler,options)=>{target.addEventListener(event,handler,options);listeners.push(()=>target.removeEventListener(event,handler,options))}
-  const srcFor=ratio=>root.getAttribute('data-audio-'+ratio)
-  async function blobSource(ratio){
-   if(sourceUrls.has(ratio))return sourceUrls.get(ratio)
-   if(sourcePromises.has(ratio))return sourcePromises.get(ratio)
-   const pending=fetch(srcFor(ratio)).then(response=>{if(!response.ok)throw new Error('audio load failed: '+response.status);return response.blob()}).then(blob=>{const url=URL.createObjectURL(blob);sourceUrls.set(ratio,url);sourcePromises.delete(ratio);return url}).catch(error=>{sourcePromises.delete(ratio);throw error})
-   sourcePromises.set(ratio,pending)
-   return pending
-  }
-  function render(){
-   root.style.setProperty('--ar-angle',model.ratioToAngle(state.selected)+'deg')
-   root.classList.toggle('is-playing',state.playing)
-   controls.forEach(control=>{const active=Number(control.dataset.ratio)===state.selected;if(control.classList.contains('ar-cd-tab'))control.setAttribute('aria-pressed',String(active));else control.setAttribute('aria-current',String(active))})
-   discCopy.innerHTML='<small>'+labels[state.selected]+'</small><strong>'+state.selected+'<span>%</span></strong>'
-   visual.setAttribute('aria-label','선택한 AR 비율 '+state.selected+'퍼센트')
-   play.textContent=state.playing?'Ⅱ':'▶'
-   play.setAttribute('aria-label',state.playing?'일시정지':'재생')
-  }
-  function updateTime(){const duration=Number.isFinite(audio.duration)?audio.duration:0;time.textContent=formatTime(audio.currentTime)+' / '+formatTime(duration);progress.value=duration?Math.round(audio.currentTime/duration*1000):0}
-  function setLoading(loading){root.classList.toggle('is-loading',loading);play.disabled=loading;play.setAttribute('aria-busy',String(loading))}
-  async function setRatio(value){
-   const next=Number(value)
-   if(next===state.selected||!model.RATIOS.includes(next))return
-   const token=++switchToken
-   pendingPosition=audio.currentTime||0
-   pendingPlay=!audio.paused
-   pendingSwitch=true
-   audio.pause()
-   state=model.selectRatio(state,next)
-   setLoading(true)
-   error.hidden=true
-   render()
-   try{
-    const sourceUrl=await blobSource(next)
-    if(destroyed||token!==switchToken)return
-    audio.dataset.ratio=String(next)
-    audio.src=sourceUrl
-    audio.load()
-   }catch{
-    if(destroyed||token!==switchToken)return
-    pendingPlay=false;pendingSwitch=false;error.hidden=false;setLoading(false);setPlaying(false)
-   }
-  }
-  async function togglePlay(){
-   try{if(audio.paused)await audio.play();else audio.pause()}catch{error.hidden=false;setLoading(false)}
-  }
-  function toggleMute(){audio.muted=!audio.muted;volume.textContent=audio.muted?'×':'◖';volume.setAttribute('aria-label',audio.muted?'음소거 해제':'음소거')}
-  function seek(){if(Number.isFinite(audio.duration))audio.currentTime=Number(progress.value)/1000*audio.duration}
-  function loaded(){
-   if(destroyed)return
-   updateTime()
-  }
-  function ready(){
-   if(destroyed)return
-   error.hidden=true
-   setLoading(false)
-   if(!pendingSwitch)return
-   const target=Math.min(pendingPosition,Math.max(0,audio.duration-.05)),resume=pendingPlay
-   pendingSwitch=false
-   pendingPlay=false
-   let resumed=false
-   const resumeAtTarget=()=>{if(resumed||destroyed)return;resumed=true;updateTime();if(resume)audio.play().catch(()=>{error.hidden=false})}
-   if(target>.05){audio.addEventListener('seeked',resumeAtTarget,{once:true});listeners.push(()=>audio.removeEventListener('seeked',resumeAtTarget));audio.currentTime=target}else resumeAtTarget()
-  }
-  function setPlaying(playing){state={...state,playing};render()}
-  controls.forEach(control=>on(control,'click',()=>setRatio(control.dataset.ratio)))
-  on(play,'click',togglePlay)
-  on(volume,'click',toggleMute)
-  on(progress,'input',seek)
-  on(audio,'loadedmetadata',loaded)
-  on(audio,'play',()=>setPlaying(true))
-  on(audio,'pause',()=>setPlaying(false))
-  on(audio,'ended',()=>setPlaying(false))
-  on(audio,'timeupdate',updateTime)
-  on(audio,'error',()=>{if(destroyed)return;error.hidden=false;setLoading(false);setPlaying(false)})
-  on(audio,'canplay',ready)
-  audio.dataset.ratio=String(state.selected)
-  audio.src=srcFor(state.selected)
-  setLoading(true)
-  audio.load()
-  render()
-  updateTime()
-  return{
-   select:setRatio,
-   getSelected:()=>state.selected,
-   destroy(){destroyed=true;switchToken++;pendingPlay=false;pendingSwitch=false;listeners.splice(0).forEach(remove=>remove());audio.pause();audio.removeAttribute('src');audio.load();sourceUrls.forEach(url=>URL.revokeObjectURL(url));sourceUrls.clear();sourcePromises.clear();root.classList.remove('is-playing','is-loading')}
-  }
+  const root=document.querySelector(selector);if(!root)return null
+  const artboard=root.querySelector('.wistia-ar__artboard'),input=root.querySelector('.wistia-ar__ratio-input'),current=root.querySelector('.wistia-ar__ratio-current'),stage=root.querySelector('.wistia-ar__disc-stage'),knob=root.querySelector('[data-arc-knob]'),arcValue=root.querySelector('[data-arc-value]'),ticks=root.querySelector('[data-arc-ticks]'),play=root.querySelector('.wistia-ar__play'),seek=root.querySelector('.wistia-ar__seek'),timeNow=root.querySelector('[data-current-time]'),timeTotal=root.querySelector('[data-duration]'),volume=root.querySelector('.wistia-ar__volume'),error=root.querySelector('.wistia-ar__error'),audio=root.querySelector('.wistia-ar__audio')
+  const listeners=[],urls=new Map(),pending=new Map();let index=2,switchToken=0,resume=false,position=0,destroyed=false,observer=null
+  const on=(node,event,handler,opts)=>{node.addEventListener(event,handler,opts);listeners.push(()=>node.removeEventListener(event,handler,opts))}
+  const point=(angle,radius=41)=>{const rad=angle*Math.PI/180;return{x:50+radius*Math.cos(rad),y:50+radius*Math.sin(rad)}}
+  const sourceFor=ratio=>root.getAttribute('data-audio-'+ratio)||''
+  async function sourceUrl(ratio){if(urls.has(ratio))return urls.get(ratio);if(pending.has(ratio))return pending.get(ratio);const job=fetch(sourceFor(ratio)).then(r=>{if(!r.ok)throw new Error(String(r.status));return r.blob()}).then(blob=>{const url=URL.createObjectURL(blob);urls.set(ratio,url);pending.delete(ratio);return url}).catch(e=>{pending.delete(ratio);throw e});pending.set(ratio,job);return job}
+  function fit(){const width=root.getBoundingClientRect().width;if(!width)return;const scale=width/1228;root.style.setProperty('--wistia-ar-scale',scale);root.style.height=(639*scale)+'px'}
+  function progress(){const duration=Number.isFinite(audio.duration)?audio.duration:0;timeNow.textContent=format(audio.currentTime);timeTotal.textContent=format(duration);seek.max=String(duration||1);seek.value=String(audio.currentTime||0);seek.style.setProperty('--wistia-progress',duration?(audio.currentTime/duration*100)+'%':'0%')}
+  function playing(value){root.classList.toggle('is-playing',value);stage.classList.toggle('is-playing',value);play.setAttribute('aria-pressed',String(value));play.setAttribute('aria-label',value?'일시정지':'재생')}
+  function render(){const ratio=RATIOS[index],p=point(ANGLES[index]),label=point(ANGLES[index],46.8);root.style.setProperty('--wistia-ratio-index',index);root.dataset.ratio=String(ratio);input.value=String(index);input.setAttribute('aria-valuetext',ratio+'%');current.textContent=ratio+'%';stage.setAttribute('aria-label','현재 AR 비율 '+ratio+'%');knob.setAttribute('cx',p.x);knob.setAttribute('cy',p.y);arcValue.setAttribute('x',label.x+1.7);arcValue.setAttribute('y',label.y);arcValue.textContent=ratio+'%';root.querySelectorAll('.wistia-ar__ratio-tick').forEach(node=>node.classList.toggle('is-active',Number(node.dataset.index)===index));ticks.querySelectorAll('.wistia-ar__arc-label').forEach(node=>node.style.opacity=Number(node.dataset.index)===index?'0':'1')}
+  async function select(next){next=Math.max(0,Math.min(3,Number(next)));if(next===index)return;const token=++switchToken;position=audio.currentTime||0;resume=!audio.paused;audio.pause();index=next;render();error.hidden=true;root.classList.add('is-loading');try{const url=await sourceUrl(RATIOS[index]);if(destroyed||token!==switchToken)return;audio.dataset.ratio=String(RATIOS[index]);audio.src=url;audio.load()}catch{if(token!==switchToken)return;root.classList.remove('is-loading');error.hidden=false;playing(false)}}
+  RATIOS.forEach((ratio,i)=>{const a=point(ANGLES[i],39.8),b=point(ANGLES[i],43.4),l=point(ANGLES[i],47.1),line=document.createElementNS(SVG_NS,'line'),label=document.createElementNS(SVG_NS,'text');line.setAttribute('class','wistia-ar__arc-tick');line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);label.setAttribute('class','wistia-ar__arc-label');label.dataset.index=String(i);label.setAttribute('x',l.x+1.2);label.setAttribute('y',l.y+1.4);label.textContent=String(ratio);ticks.append(line,label)})
+  on(input,'input',event=>select(event.target.value));on(input,'keydown',event=>{if(['ArrowUp','ArrowRight'].includes(event.key)){event.preventDefault();select(index+1)}if(['ArrowDown','ArrowLeft'].includes(event.key)){event.preventDefault();select(index-1)}})
+  on(play,'click',async()=>{error.hidden=true;try{if(audio.paused)await audio.play();else audio.pause()}catch{error.hidden=false;playing(false)}})
+  on(volume,'click',()=>{audio.muted=!audio.muted;volume.textContent=audio.muted?'×':'◖';volume.setAttribute('aria-label',audio.muted?'음소거 해제':'음소거')})
+  on(seek,'input',()=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(seek.value)})
+  on(audio,'timeupdate',progress);on(audio,'play',()=>playing(true));on(audio,'pause',()=>playing(false));on(audio,'ended',()=>playing(false));on(audio,'error',()=>{root.classList.remove('is-loading');error.hidden=false;playing(false)})
+  on(audio,'canplay',()=>{root.classList.remove('is-loading');error.hidden=true;if(position)audio.currentTime=Math.min(position,Math.max(0,audio.duration-.05));position=0;if(resume){resume=false;audio.play().catch(()=>{error.hidden=false})}progress()})
+  audio.dataset.ratio='70';audio.src=sourceFor(70);audio.load();root.classList.add('is-loading');render();progress();if('ResizeObserver'in window){observer=new ResizeObserver(fit);observer.observe(root)}else on(window,'resize',fit,{passive:true});fit()
+  return{select:ratio=>select(RATIOS.indexOf(Number(ratio))),getSelected:()=>RATIOS[index],destroy(){destroyed=true;switchToken++;observer?.disconnect();listeners.splice(0).forEach(fn=>fn());audio.pause();audio.removeAttribute('src');audio.load();urls.forEach(URL.revokeObjectURL);urls.clear();pending.clear()}}
  }
  global.initArCdRatio=initArCdRatio
 })(window)

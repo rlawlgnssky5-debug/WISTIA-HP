@@ -1,0 +1,20 @@
+const fs = require('node:fs')
+const assert = require('node:assert/strict')
+
+const app = fs.readFileSync('js/app.js', 'utf8')
+const design = fs.readFileSync('css/design.css', 'utf8')
+const ratio = fs.readFileSync('css/ar-ratio-cd.css', 'utf8')
+
+assert.match(app, /class="wistia-ar[^\"]*"/)
+assert.match(ratio, /wistia-turntable-bg\.png/)
+assert.match(app, /wistia-disc\.png/)
+assert.match(app, /class="[^"]*solo-section-reveal/)
+assert.match(design, /--solo-bg-silver:\s*#f3f4f4/)
+assert.match(design, /\.solo-top-cta\{[^}]*position:sticky/)
+assert.match(design, /\.ar-compare-table\{[^}]*width:min\(78%/)
+assert.match(design, /\.ar-copy-emphasis-bg\{[^}]*inset-inline:/)
+assert.match(design, /wistia-waveform\.png/)
+assert.match(ratio, /grid-template-columns:\s*500px 450px 82px/)
+assert.match(ratio, /transform:\s*scale\(var\(--wistia-ar-scale\)/)
+
+console.log('solo layout refresh checks passed')

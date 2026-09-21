@@ -100,14 +100,16 @@ async function openSolo(browser, viewport, reducedMotion = 'no-preference') {
         const content = root.querySelector('.wps-content').getBoundingClientRect()
         const chapters = root.querySelector('.wps-chapters')
         return {
-          photoAbove: photo.bottom <= content.top + 1,
+          sideBySide: content.left >= photo.right - 1,
+          sectionHeight: root.getBoundingClientRect().height,
           pageOverflow: document.documentElement.scrollWidth - innerWidth,
           chapterScrollable: chapters.scrollWidth >= chapters.clientWidth,
           imageAnimation: getComputedStyle(root.querySelector('[data-process-image]')).animationName,
           contentAnimation: getComputedStyle(root.querySelector('.wps-content')).animationName
         }
       })
-      assert.equal(metrics.photoAbove, true)
+      assert.equal(metrics.sideBySide, true)
+      assert.ok(metrics.sectionHeight < 580, 'mobile process section should stay compact')
       assert.ok(metrics.pageOverflow <= 1, `${width}px viewport must not overflow horizontally`)
       assert.equal(metrics.chapterScrollable, true)
       assert.equal(metrics.imageAnimation, 'none')
