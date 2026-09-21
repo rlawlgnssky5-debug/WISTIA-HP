@@ -2044,3 +2044,28 @@ body.is-solo-detail .solo-person-tab span{font-size:9.5px}
  .solo-review-navigation{display:none}
 }
 @media(prefers-reduced-motion:reduce){.solo-review-visual{animation:none}.solo-review-slide,.solo-review-phone-screen,.solo-review-navigation button{transition:none}}
+
+/* Solo detail section continuity */
+.solo-detail-scope{background:#fff}
+.solo-detail-scope>.ar-primary-benefit,
+.solo-detail-scope>.solo-review-showcase,
+.solo-detail-scope>.solo-editorial-sheet,
+.solo-detail-scope>.wistia-ba-section,
+.solo-detail-scope>.ar-compare,
+.solo-detail-scope>.solo-process-section,
+.solo-detail-scope>.ar-cd-ratio,
+.solo-detail-scope>.worry-section,
+.solo-detail-scope>.footer{
+ width:100%;
+ margin-top:0;
+ margin-right:0;
+ margin-left:0;
+ box-sizing:border-box;
+}
+.solo-detail-scope>.ar-primary-benefit{background:#fff}
+.solo-detail-scope>.solo-editorial-sheet{background:#f8f8f6}
+.solo-detail-scope>.wistia-ba-section{background:#f6f7f8}
+.solo-detail-scope>.ar-compare{background:#eceeee}
+.solo-detail-scope>.solo-process-section{background-color:#fafbf9}
+.solo-detail-scope>.ar-cd-ratio{background:radial-gradient(circle at 76% 50%,#17191a 0,#090a0a 28%,#050606 59%)}
+.solo-detail-scope>.worry-section,.solo-detail-scope>.footer{background:#fff}
