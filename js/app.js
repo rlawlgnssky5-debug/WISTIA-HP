@@ -353,6 +353,38 @@ let reviewDisplay=0
 let reviewLast=0
 const dialog = document.querySelector("#mediaDialog")
 const MENU = []
+const NAVIGATION_GROUPS = [
+ {label:"직접 노래를 부른다면?",items:[
+  {title:"AR 축가",note:"사전녹음",detail:"축가 시간에 직접 노래를 부를 사람들을 위한 것",href:"#/detail/solo"},
+  {title:"옵션 · 가사 영상",detail:"완성한 축가와 함께 예식장에서 재생할 가사 영상을 제작합니다",href:"#/event/solo/lyrics",kind:"option"}
+ ]},
+ {label:"축가 시간에 내가 녹음한 노래와 영상을 틀어놓는다면?",items:[
+  {title:"녹음 메이킹 영상",detail:"축가 시간에 직접 녹음한 노래와 영상을 틀어놓는 사람들을 위한 것",href:"#/detail/solo-film"},
+  {title:"스토리형 축가 영상",detail:"하객 메시지 · 인터뷰 · 녹음 메이킹 필름 · 뮤비 클립 · 전하는 편지",subdetail:"축가 시간에 직접 녹음한 노래와 영상을 틀어놓는 사람들을 위한 것",href:"#/detail/duet-film"}
+ ]},
+ {label:"뻔한 식전영상이 싫다면?",items:[
+  {title:"스토리형 식전 영상",detail:"남의 노래가 아닌 우리만의 노래로 시작합니다",subdetail:"하객 메시지 · 인터뷰 · 녹음 메이킹 필름 · 뮤비 클립 · 전하는 편지",href:"#/detail/wedding"}
+ ]},
+ {label:"프로포즈 / 답프로포즈",items:[
+  {title:"프로포즈 필름",detail:"프로포즈하는 사람들을 위한 한 편의 고백 영상",href:"#/detail/proposal"}
+ ]},
+ {label:"위스티아",kind:"utility",items:[
+  {title:"위스티아는 이런 곳입니다",href:"#/info/about"},
+  {title:"위스티아가 드리는 약속",href:"#/info/promise"},
+  {title:"이벤트",href:"#/event/solo"},
+  {title:"QnA",href:"#/info/faq"}
+ ]}
+]
+const INFO_PAGES = {
+ about:{eyebrow:"ABOUT WISTIA",title:"노래와 장면으로\n마음을 오래 남기는 곳",description:"직접 부른 목소리와 그날의 이야기가 가장 자연스럽게 이어지도록, 녹음부터 영상 완성까지 함께합니다",points:["목소리를 먼저 듣는 1:1 제작","예식의 순간에 맞춘 음원과 영상","본식 뒤에도 꺼내 볼 수 있는 완성본"]},
+ promise:{eyebrow:"WISTIA PROMISE",title:"위스티아가\n드리는 약속",description:"누구에게나 같은 방식보다, 부르는 사람과 전하고 싶은 마음에 맞는 과정을 함께 찾겠습니다",points:["필요한 과정과 결과물을 분명하게 안내합니다","목소리의 원래 느낌을 살려 세심하게 완성합니다","예식에서 바로 사용할 수 있는 완성본으로 전달합니다"]},
+ faq:{eyebrow:"QnA",title:"자주 묻는\n질문",description:"상품을 고르기 전 가장 많이 궁금해하시는 내용을 모았습니다",faq:[
+  ["AR 축가는 어떤 서비스인가요","본식 축가 시간에 직접 노래를 부르되, 미리 녹음하고 보정한 내 목소리를 함께 재생해 보다 편안하게 노래할 수 있도록 돕는 사전녹음 서비스입니다"],
+  ["녹음 메이킹 영상과 스토리형 축가 영상은 무엇이 다른가요","녹음 메이킹 영상은 녹음 과정과 노래를 중심으로 완성하며, 스토리형 축가 영상은 하객 메시지와 인터뷰, 뮤비 클립 등을 더해 이야기의 흐름까지 담습니다"],
+  ["스토리형 식전 영상은 무엇이 다른가요","사진과 익숙한 배경음악 대신, 두 분이 직접 부른 노래와 이야기를 담아 예식의 첫 장면을 시작하는 영상입니다"],
+  ["프로포즈 필름도 직접 노래해야 하나요","직접 부른 노래를 중심으로 준비할 수 있으며, 전하고 싶은 이야기와 장면에 맞춰 상담에서 함께 방향을 정합니다"]
+ ]}
+}
 const SERVICE_ORDER = ["wedding","duet-film","solo-film","solo","duo","proposal"]
 const SERVICE_META = {
   wedding:{type:"OUR STORY",label:"식전 영상",use:"예식 시작 전",who:"신랑신부 두 사람",result:"이야기가 있는 영상 + 완성 음원",short:"우리의 이야기를 들려주는 식전 영상",image:"assets/img/wedding/02-interview.webp"},
@@ -657,6 +689,11 @@ function renderHome(requested="role"){
  app.innerHTML='<section class="finder-home shell finder-stage-'+stage+(showIntro?' has-intro-animation':'')+'" aria-labelledby="finderTitle">'+splash+'<div class="finder-content">'+(stage==="role"?"":'<a class="finder-back" href="'+back+'">← 이전 질문</a>')+'<header class="finder-intro"><span class="eyebrow">'+config.number+'</span><h1 id="finderTitle">'+config.title+'</h1><p>'+config.description+'</p></header><div class="finder-steps"><fieldset class="finder-step"><legend class="sr-only">'+config.title+'</legend><div class="finder-options">'+choices(config.name,config.items)+'</div></fieldset></div></div></section>'
  updateHomeFinder()
  app.querySelectorAll(".finder-choice").forEach(choice=>choice.addEventListener("click",event=>{event.preventDefault();const input=choice.querySelector("input");if(input)handleFinderChoice(input)}))
+}
+function renderInfoPage(key){
+ const page=INFO_PAGES[key]||INFO_PAGES.about
+ const content=page.faq?'<div class="info-faq">'+faq(page.faq)+'</div>':'<ol class="info-points">'+page.points.map((point,index)=>'<li><span>'+String(index+1).padStart(2,"0")+'</span><strong>'+point+'</strong></li>').join("")+'</ol>'
+ app.innerHTML='<section class="shell section info-page" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+label(page.eyebrow)+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1><p>'+page.description+'</p></header>'+content+'</section>'+footer()
 }
 const FINDER_LABELS={role:{couple:"식전, 축가 영상",singer:"사전 녹음 AR 축가",proposal:"프로포즈 / 답프로포즈"},people:{one:"1인",two:"2인"},moment:{pre:"예식 전 식전 영상",ceremony:"축가 순서에 상영할 영상",live:"예식에서 직접 부를 축가"},lyrics:{yes:"가사 영상 필요",no:"사전 녹음 음원만 필요"}}
 const FINDER_PRODUCTS={"pre/one":"solo-film","pre/two":"wedding","ceremony/one":"solo-film","ceremony/two":"duet-film","live/one":"solo","live/two":"duo"}
@@ -997,8 +1034,9 @@ async function copyConsultationAndOpenKakao(){
  consultationToast(ok?"채팅창에 복사되었습니다 · 카카오톡 채팅창에 붙여넣어 주세요":"자동 복사가 제한되었습니다 · 문의 양식을 직접 복사해 주세요",!ok)
  if(!popup)location.href=kakao()
 }
+function navigationMenu(){return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+NAVIGATION_GROUPS.map(group=>'<section class="menu-group'+(group.kind?" is-"+group.kind:"")+'"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(item=>'<a class="menu-item'+(item.kind?" is-"+item.kind:"")+'" href="'+item.href+'"><span><strong>'+item.title+(item.note?'<em>'+item.note+'</em>':"")+'</strong>'+(item.detail?'<small>'+item.detail+'</small>':"")+(item.subdetail?'<small class="menu-subdetail">'+item.subdetail+'</small>':"")+'</span><b aria-hidden="true">↗</b></a>').join("")+'</div></section>').join("")+'</nav>'}
 function header(){
- document.querySelector("#siteHeader").innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>←</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>VOICE & FILM</small></span></a></div>'+(MENU.length?'<nav id="mainMenu" aria-label="주요 메뉴">'+MENU.map(x=>'<a href="#/section/'+x[0]+'">'+x[1]+'</a>').join("")+'</nav>':'')+external("예약 상담",kakao(),"header-consult")+(MENU.length?'<button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span></button>':'')+'</div>';
+ document.querySelector("#siteHeader").innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>←</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>VOICE & FILM</small></span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>'+navigationMenu();
  document.querySelector("#floatingKakao").href=kakao()
  const soloCtaKakao=document.querySelector("#soloDesktopCtaKakao");if(soloCtaKakao)soloCtaKakao.href=kakao()
 }
@@ -1014,13 +1052,13 @@ let arCdRatioInstance=null,beforeAfterInstance=null
 let firstRender=true
 function route(){
  closeDialog();routeObserver?.disconnect();arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
- const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const purpose=parts[2]||"";const validDetail=detail||choice;
+ const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
- const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":validDetail?"detail":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
+ const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!unifiedDetail;
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
- if(home)renderHome(type==="find"?key:"role");else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ if(home)renderHome(type==="find"?key:"role");else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArIndexWheel();
