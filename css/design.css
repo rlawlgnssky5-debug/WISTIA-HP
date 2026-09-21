@@ -2092,16 +2092,17 @@ body.is-solo-detail .solo-top-cta{position:sticky;top:48px;z-index:75;background
 .solo-detail-scope .ar-compare-intro{text-align:left}
 .solo-detail-scope .ar-compare-title .solo-type-line,.solo-detail-scope .ar-compare-sub .solo-type-line{display:inline}
 .solo-detail-scope .ar-compare-title .solo-type-line+.solo-type-line:before,.solo-detail-scope .ar-compare-sub .solo-type-line+.solo-type-line:before{content:" "}
-.solo-detail-scope .ar-compare-table{width:min(78%,760px);margin-inline:auto;grid-template-columns:36fr 18fr 46fr;border:0;background:transparent}
+.solo-detail-scope .ar-compare-table{width:min(78%,760px);margin-inline:auto;grid-template-columns:33fr 17fr 50fr;border:0;background:transparent}
 .solo-detail-scope .ar-compare-head>span:first-child{border-radius:18px 0 0;background:#d7d9d9}
-.solo-detail-scope .ar-compare-head>span:nth-child(2){background:#595959}
-.solo-detail-scope .ar-compare-head>strong{border-radius:18px 18px 0 0;background:#080909}
-.solo-detail-scope .ar-compare-row .ar-compare-general{background:#e1e2e2!important}
+.solo-detail-scope .ar-compare-head>strong{grid-column:3;border-radius:20px 20px 0 0;background:#080909;min-height:58px;position:relative;top:-8px;z-index:2;box-shadow:0 16px 30px -22px #000a}
+.solo-detail-scope .ar-compare-row .ar-compare-general{background:#eef0f0!important;color:#818789!important}
 .solo-detail-scope .ar-compare-row .ar-compare-criteria{background:#595959!important}
-.solo-detail-scope .ar-compare-row .ar-compare-wistia{background:#fff!important}
+.solo-detail-scope .ar-compare-row .ar-compare-wistia{position:relative;z-index:2;background:#fff!important;font-size:12.5px!important;box-shadow:7px 0 18px -20px #0008,-7px 0 18px -20px #0008!important}
 .solo-detail-scope .ar-compare-row:last-child .ar-compare-general{border-radius:0 0 0 18px!important}
-.solo-detail-scope .ar-compare-row:last-child .ar-compare-criteria{border-radius:0 0 18px 18px!important}
+.solo-detail-scope .ar-compare-row:last-child .ar-compare-criteria{border-radius:0!important}
 .solo-detail-scope .ar-compare-row:last-child .ar-compare-wistia{border-radius:0 0 18px!important;box-shadow:0 15px 28px -22px #0008!important}
+.solo-detail-scope .ar-compare.is-visible .ar-compare-head>strong,.solo-detail-scope .ar-compare.is-visible .ar-compare-wistia{animation:solo-wistia-emphasis .72s cubic-bezier(.18,.8,.2,1) both;animation-delay:calc(.08s + var(--row-i,0)*.06s)}
+@keyframes solo-wistia-emphasis{0%{opacity:.55;filter:brightness(.96);transform:translateY(-2px) scale(.985)}60%{opacity:1;filter:brightness(1.035);transform:translateY(-1px) scale(1.012)}100%{opacity:1;filter:none;transform:none}}
 .solo-detail-scope .ar-compare-note{width:min(78%,760px);margin-inline:auto}
 .solo-detail-scope .solo-process-section{width:100%;margin:0;padding:54px var(--solo-page-gutter) 46px;background:var(--solo-bg-silver)}
 .solo-detail-scope .wistia-process-studio .wps-head{margin-bottom:22px}
@@ -2121,7 +2122,7 @@ body.is-solo-detail .solo-top-cta{position:sticky;top:48px;z-index:75;background
 .solo-section-reveal{opacity:0;transform:translateY(14px);transition:opacity .58s ease,transform .7s cubic-bezier(.22,.72,.2,1)}
 .solo-section-reveal.is-visible{opacity:1;transform:none}
 @container solo-detail (max-width:430px){.solo-detail-scope{--solo-page-gutter:20px}.solo-detail-scope .ar-compare-table,.solo-detail-scope .ar-compare-note{width:100%}.solo-detail-scope .wistia-process-studio .wps-feature{display:grid;grid-template-columns:52% 48%;height:220px;flex-direction:initial}.solo-detail-scope .wistia-process-studio .wps-photo{width:auto;height:100%}.solo-detail-scope .wistia-process-studio .wps-content{width:auto;min-height:0}.solo-detail-scope .wistia-process-studio .wps-head h2{font-size:21px!important}.solo-detail-scope .wistia-process-studio .wps-description{font-size:8px}.solo-detail-scope .wistia-process-studio .wps-chapter{min-width:92px;flex-basis:92px;height:52px}.solo-detail-scope .ar-primary-benefit:before{inset-inline:-45%;opacity:.065}}
-@media(prefers-reduced-motion:reduce){.solo-section-reveal{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){.solo-section-reveal{opacity:1;transform:none;transition:none}.solo-detail-scope .ar-compare.is-visible .ar-compare-head>strong,.solo-detail-scope .ar-compare.is-visible .ar-compare-wistia{animation:none}.solo-detail-scope .ar-compare-head>strong{transform:none}}
 
 /* WISTIA charcoal footer */
 body .footer.shell{
