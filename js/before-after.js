@@ -11,7 +11,8 @@
     const badge=root.querySelector('.bap-badge')
     const badgeText=badge.querySelector('b')
     const playBtn=root.querySelector('.bap-play')
-    const playGlyph=playBtn.querySelector('span')
+    const playGlyph=playBtn.querySelector('.bap-play-icon')
+    const playLabel=playBtn.querySelector('.bap-play-label')
     const timeNow=root.querySelector('.bap-time b')
     const timeAll=root.querySelector('.bap-time span')
     const canvas=root.querySelector('.bap-wave')
@@ -33,7 +34,7 @@
       root.dataset.position=String(current)
       root.classList.toggle('is-playing',isPlaying)
       timeNow.textContent=fmt(current);timeAll.textContent=fmt(duration())
-      playGlyph.textContent=isPlaying?'Ⅱ':'▶';playBtn.setAttribute('aria-label',isPlaying?'일시정지':'재생')
+      playGlyph.textContent=isPlaying?'Ⅱ':'▶';playLabel.textContent=isPlaying?'일시정지':'재생';playBtn.setAttribute('aria-label',isPlaying?'일시정지':'재생')
       draw()
     }
     function start(offset){
