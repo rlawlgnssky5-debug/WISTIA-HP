@@ -10,11 +10,11 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
     const page = await browser.newPage({ viewport: { width: 500, height: 1000 } })
     await page.goto(`${BASE}?review-story-refresh=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
 
-    const review = page.locator('.solo-review-showcase')
+    const review = page.locator('.solo-review-carousel')
     await review.waitFor()
-    assert.equal(await review.locator('.solo-review-phone').count(), 1, 'review section should restore the phone mockup')
-    assert.equal(await review.locator('.review-capture').count(), 0, 'flat review cards should not render in the restored mockup')
-    assert.match(await review.innerText(), /실제 고객\s*후기/)
+    assert.equal(await review.locator('.solo-review-phone').count(), 0, 'phone mockup must be removed')
+    assert.equal(await review.locator('.review-capture').count(), 22, 'review cards and seamless clones must render')
+    assert.match(await review.innerText(), /실제 고객 후기/)
     const reviewStyle = await review.evaluate(node => ({
       background: getComputedStyle(node).backgroundColor,
       overflow: document.documentElement.scrollWidth - innerWidth
@@ -52,16 +52,16 @@ const BASE = process.env.WISTIA_BASE || 'http://127.0.0.1:4173/'
       return { iconTop: icon.top, subTop: sub.top, imageTop: image.top, copyBottom: copy.bottom }
     })
     assert.ok(Math.abs(cardAlignment.iconTop - cardAlignment.subTop) <= 1, `story icon and specialist role should share the top alignment (${cardAlignment.iconTop}/${cardAlignment.subTop})`)
-    assert.ok(cardAlignment.imageTop - cardAlignment.copyBottom <= 30, `story image should follow the compact copy block (${cardAlignment.imageTop - cardAlignment.copyBottom})`)
+    assert.ok(cardAlignment.imageTop - cardAlignment.copyBottom <= 18, `story image should follow the compact copy block (${cardAlignment.imageTop - cardAlignment.copyBottom})`)
     await page.waitForFunction(() => document.querySelector('[data-expert-track]')?.dataset.index === '0', null, { timeout: 7000 })
 
     const reduced = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
     await reduced.goto(`${BASE}?review-reduced-motion=1#/detail/solo`, { waitUntil: 'domcontentloaded' })
-    const reducedReview = reduced.locator('.solo-review-showcase')
+    const reducedReview = reduced.locator('.solo-review-carousel')
     await reducedReview.waitFor()
-    const reducedStart = await reducedReview.locator('.solo-review-slide.is-active').getAttribute('data-review-slide')
+    const reducedStart = await reducedReview.locator('.review-loop').evaluate(node => getComputedStyle(node).transform)
     await reduced.waitForTimeout(500)
-    const reducedEnd = await reducedReview.locator('.solo-review-slide.is-active').getAttribute('data-review-slide')
+    const reducedEnd = await reducedReview.locator('.review-loop').evaluate(node => getComputedStyle(node).transform)
     assert.equal(reducedEnd, reducedStart, 'review carousel must remain still for reduced-motion users')
     const introInset = await reduced.locator('.ar-story-intro h2').evaluate(node => node.getBoundingClientRect().left)
     assert.ok(introInset >= 21, 'brand story heading should align with the shared mobile gutter')

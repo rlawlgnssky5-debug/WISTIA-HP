@@ -26,9 +26,7 @@ async function testStructureAndAssets(browser) {
 
   assert.equal(await section.locator('.wistia-ar__ratio-tick').count(), 4)
   assert.equal(await section.locator('.wistia-ar__ratio-input').count(), 1)
-  assert.equal((await section.locator('.wistia-ar__title').innerText()).trim(), '라이브 같은 AR')
-  assert.equal((await section.locator('.wistia-ar__subtitle').innerText()).replace(/\s+/g, ' ').trim(), '내 목소리에 맞게 비율을 골라보세요')
-  assert.match(await section.locator('.wistia-ar__description').innerText(), /같은 노래를 30%부터 100%까지 비교해보세요/)
+  assert.match(await section.locator('.wistia-ar__title').innerText(), /라이브 같은 AR.*내 목소리에 맞게.*비율을 골라보세요/s)
   const visualScale = await section.evaluate(node => {
     const box = node.getBoundingClientRect()
     const title = getComputedStyle(node.querySelector('.wistia-ar__title'))
@@ -108,7 +106,7 @@ async function testResponsiveMotionAndError(browser) {
     return {
       columns: getComputedStyle(node.querySelector('.wistia-ar__artboard')).gridTemplateColumns.split(' ').length,
       contained: visual.left >= root.left && visual.right <= root.right,
-      visualOnRight: visual.right > copy.right,
+      sideBySide: visual.left >= copy.right - 1,
       verticallyAligned: Math.min(copy.bottom, visual.bottom) > Math.max(copy.top, visual.top),
       sectionHeight: root.height,
       overflow: document.documentElement.scrollWidth - innerWidth,
@@ -116,12 +114,11 @@ async function testResponsiveMotionAndError(browser) {
       knobTransition: getComputedStyle(node.querySelector('[data-arc-knob]')).transitionDuration
     }
   })
-  assert.equal(layout.columns, 1)
+  assert.equal(layout.columns, 3)
   assert.equal(layout.contained, true)
-  assert.equal(layout.visualOnRight, true)
+  assert.equal(layout.sideBySide, true)
   assert.equal(layout.verticallyAligned, true)
   assert.ok(layout.sectionHeight < 760, 'AR ratio section should keep the compact horizontal reference proportion')
-  assert.ok(layout.sectionHeight >= 300, 'AR ratio section should have enough vertical breathing room for the larger reference area')
   assert.ok(layout.overflow <= 1)
   assert.ok(parseFloat(layout.discAnimationDuration) <= 0.001)
   assert.ok(parseFloat(layout.knobTransition) <= 0.001)

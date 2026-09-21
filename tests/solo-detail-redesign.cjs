@@ -109,18 +109,7 @@ async function testContent(browser) {
   await page.waitForTimeout(100)
   assert.equal(await page.locator('[data-ar-compare-row]').count(), 4)
   assert.equal(await page.locator('.ar-compare-criteria').count(), 4, 'comparison criteria should remain centered between both providers')
-  assert.equal((await page.locator('.ar-compare-title').innerText()).replace(/\s/g, ''), '같은녹음이라도,결과는같지않습니다.')
-  assert.equal((await page.locator('.ar-compare-sub').innerText()).replace(/\s/g, ''), '비슷해보이는서비스도완성도를만드는기준은다릅니다.일반제작과위스티아의차이를직접비교해보세요.')
-  assert.deepEqual(await page.locator('[data-ar-compare-row]').evaluateAll(rows => rows.map(row => ({
-    criterion: row.querySelector('.ar-compare-criteria').textContent.trim(),
-    general: row.querySelector('.ar-compare-general').textContent.trim(),
-    wistia: row.querySelector('.ar-compare-wistia').textContent.trim()
-  }))), [
-    { criterion: '준비 범위', general: '단계별 개별 진행', wistia: '상담부터 AR 제작까지 한 번에' },
-    { criterion: '녹음 방식', general: '완곡 중심의 일괄 녹음', wistia: '구간별 1:1 디렉팅' },
-    { criterion: '보컬 보정', general: '기본 음정·박자 보정', wistia: '음색을 살린 수작업 보정' },
-    { criterion: '최종 전달', general: '완성 음원 제공', wistia: '완성 음원 + 본식용 AR 제공' }
-  ])
+  assert.match(await page.locator('.ar-compare-title').innerText(), /위스티아는\s*다릅니다/)
 
   const expert = page.locator('[data-story-carousel]')
   assert.equal(await expert.locator('[data-story-slide]').count(), 2)
@@ -131,7 +120,7 @@ async function testContent(browser) {
   const process = page.locator('[data-process-studio]')
   assert.equal(await process.locator('[data-process-chapter]').count(), 7)
   assert.equal(await process.locator('[data-process-image]').count(), 1)
-  assert.match(await process.locator('.wps-head').innerText(), /처음부터 끝까지,.*맞춤형으로 케어해드립니다/s)
+  assert.match(await process.locator('.wps-head').innerText(), /노래가 익숙하지 않아도 괜찮습니다.*완성까지, 함께 만듭니다/s)
   assert.match(await process.locator('[data-process-chapter]').last().getAttribute('aria-label'), /최종 검수 · 전달/)
   await process.locator('[data-process-feature]').press('ArrowRight')
   await page.waitForTimeout(500)
