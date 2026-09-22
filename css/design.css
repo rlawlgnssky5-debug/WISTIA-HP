@@ -2470,3 +2470,8 @@ body.is-solo-detail .fixed-price .solo-fixed-consult>span{display:flex}
  body[data-page=event] .booking-static-bar #mobilePrice{gap:3px}
  body[data-page=event] .booking-static-bar .button{max-width:96px;font-size:11px;padding-left:7px}
 }
+
+/* Number each consultation input and let the total strip fill the page canvas. */
+body[data-page=event] .consultation-step .checkout-field>span{display:flex;align-items:baseline;gap:9px}
+body[data-page=event] .checkout-field-number{flex:none;color:#7a858a;font-size:10px;font-weight:600;font-variant-numeric:tabular-nums}
+body[data-page=event] .booking-static-bar{width:calc(100% + 48px);max-width:none;margin-left:-24px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
