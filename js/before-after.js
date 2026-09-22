@@ -17,7 +17,7 @@
     const timeAll=root.querySelector('.bap-time span')
     const canvas=root.querySelector('.bap-wave')
     const errorEl=root.querySelector('.bap-error')
-    const status={before:'VOCAL 원본',after:'VOCAL 노이즈 제거 · 보컬튜닝 · 보컬믹싱 · 마스터링'}
+    const status={before:'보정 전 · VOCAL 원본',after:'보정 후 · 노이즈 제거 · 보컬튜닝 · 보컬믹싱 · 마스터링'}
     const buffers={before:null,after:null},peakSets={before:null,after:null},failures={before:false,after:false}
     const controller=new AbortController()
     const signal=controller.signal

@@ -2426,3 +2426,35 @@ body.is-solo-detail #mainMenu{top:48px}
  .info-points strong{font-size:16px}
  .wistia-about-story{grid-template-columns:1fr;gap:34px;padding:48px 0}.wistia-about-story figure{order:-1}.wistia-specialists{padding:58px 0}.wistia-specialists>header{display:block}.wistia-specialist-grid{grid-template-columns:1fr}.wistia-specialist-grid article,.wistia-specialist-grid article:first-child,.wistia-specialist-grid article:last-child{display:grid;grid-template-columns:54px 118px 1fr;padding:22px 0;border-right:0;border-bottom:1px solid var(--line)}.wistia-specialist-grid article:last-child{border-bottom:0}.wistia-specialist-grid article>span{grid-row:1/5;margin:4px 0 0;font-size:26px}.wistia-specialist-grid img{grid-row:1/5;width:102px;aspect-ratio:4/5}.wistia-specialist-grid article>p{margin:3px 0 7px}.wistia-specialist-grid h3{font-size:17px}.wistia-specialist-grid small{margin-top:8px;font-size:13px}.wistia-about-closing{padding:58px 20px}.promise-lead{padding:17px 20px;font-size:16px}.promise-list{padding:0 20px}.promise-list li{grid-template-columns:60px 1fr;gap:16px;min-height:190px}.promise-number{font-size:42px}.promise-list h2{font-size:23px}.promise-list p{font-size:13px}.promise-notes{padding:48px 0}.promise-notes>div{grid-template-columns:1fr}.promise-notes article{padding:23px}.promise-cta{display:block;padding:28px}.promise-cta .button{margin-top:20px;width:100%}
 }
+
+/* v195 — AR 상세 피드백 반영 */
+.solo-detail-scope .ar-expert-split{grid-template-columns:65fr 35fr}
+.solo-detail-scope .ar-expert-split[data-active="1"]{grid-template-columns:35fr 65fr}
+.solo-detail-scope .ar-expert-panel-content{pointer-events:none}
+.solo-detail-scope .ar-expert-hint{margin-top:12px;font-size:10px;line-height:1.6}
+
+.solo-detail-scope .wistia-process-studio .wps-badge{min-width:56px;text-align:center;font-size:9px;letter-spacing:.1em}
+.solo-detail-scope .wistia-process-studio .wps-controls{justify-content:space-between}
+.solo-detail-scope .wistia-process-studio .wps-controls button{width:42px;height:42px}
+
+.solo-detail-scope .worry-section .faq-list,
+.solo-detail-scope .solo-inline-contact{width:100%;margin-left:0}
+.solo-detail-scope .worry-section .faq-list details,
+.solo-detail-scope .worry-section .faq-list details:last-child{padding-inline:20px}
+
+.solo-fixed-consult{display:grid;grid-template-columns:minmax(0,1fr) minmax(148px,.92fr);min-height:72px;background:#303638;color:#fff}
+.solo-fixed-consult>span{display:flex;flex-direction:column;justify-content:center;padding:11px 24px;border-right:1px solid #778083}
+.solo-fixed-consult>span small{color:#aeb7ba;font-size:10px;line-height:1.3}
+.solo-fixed-consult>span strong{margin-top:3px;font-size:22px;line-height:1.15}
+.solo-fixed-consult>a{display:flex;align-items:center;justify-content:center;gap:22px;padding:10px 18px;color:#fff;font-size:16px;font-weight:650;line-height:1.35}
+.solo-fixed-consult>a b{font-size:25px;font-weight:400}
+@media(max-width:900px){
+ body.is-solo-detail .fixed-price.solo-fixed-price{display:block!important;padding:0;background:transparent;border-top:0}
+ body.is-solo-detail .footer{padding-bottom:145px}
+}
+@media(max-width:380px){
+ .solo-fixed-consult{grid-template-columns:minmax(0,1fr) minmax(132px,.9fr)}
+ .solo-fixed-consult>span{padding-inline:18px}
+ .solo-fixed-consult>span strong{font-size:20px}
+ .solo-fixed-consult>a{gap:14px;font-size:14px}
+}
