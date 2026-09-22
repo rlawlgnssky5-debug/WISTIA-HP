@@ -17,7 +17,7 @@
     const timeAll=root.querySelector('.bap-time span')
     const canvas=root.querySelector('.bap-wave')
     const errorEl=root.querySelector('.bap-error')
-    const status={before:'보정 전 · VOCAL 원본',after:'보정 후 · 노이즈 제거 · 보컬튜닝 · 보컬믹싱 · 마스터링'}
+    const status='보정 전과 후의 보컬 소스는 같은 녹음본입니다'
     const buffers={before:null,after:null},peakSets={before:null,after:null},failures={before:false,after:false}
     const controller=new AbortController()
     const signal=controller.signal
@@ -57,7 +57,7 @@
       const current=position(),resume=isPlaying
       stopSource();isPlaying=false;mode=next;pausedAt=Math.min(current,duration()||current)
       tabs.forEach(tab=>{const active=tab.dataset.mode===mode;tab.classList.toggle('active',active);tab.setAttribute('aria-pressed',String(active))})
-      badge.className='bap-badge mode-'+mode;badgeText.textContent=status[mode]
+      badge.className='bap-badge mode-'+mode;badgeText.textContent=status
       playBtn.className='bap-play mode-'+mode;errorEl.hidden=!failures[mode]
       if(resume&&activeBuffer())play();else sync()
     }

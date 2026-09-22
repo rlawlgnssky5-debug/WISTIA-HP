@@ -7,3 +7,15 @@
 @media(max-width:760px){.wistia-ar__artboard{grid-template-columns:1fr;grid-template-areas:"copy" "stage" "ratio" "player";min-height:0;padding:54px 24px 58px}.wistia-ar__copy{text-align:center}.wistia-ar__eyebrow{margin-bottom:10px;font-size:11px}.wistia-ar__title{font-size:36px;line-height:1.2}.wistia-ar__disc-stage{width:min(100%,430px);margin-top:18px}.wistia-ar__mood{margin-bottom:42px;font-size:24px}.wistia-ar__ratio-current{font-size:48px}.wistia-ar__gesture{bottom:5%;font-size:11px}.wistia-ar__ratio{margin-top:4px}.wistia-ar__player{margin-top:27px}.wistia-ar__play{width:54px;height:54px}.wistia-ar__time{min-width:68px;font-size:12px}}
 @media(max-width:390px){.wistia-ar__artboard{padding:46px 20px 50px}.wistia-ar__title{font-size:32px}.wistia-ar__gesture{padding:8px 11px}.wistia-ar__player{grid-template-columns:52px auto 1fr 26px;gap:10px}.wistia-ar__play{width:52px;height:52px}}
 @media(prefers-reduced-motion:reduce){.wistia-ar *,.wistia-ar *:before,.wistia-ar *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+/* The site sits in a narrow canvas even when the browser window is wide. */
+@container solo-detail (max-width:760px){
+ .wistia-ar__artboard{grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "stage" "ratio" "player";gap:0;min-height:0;padding:48px clamp(18px,5cqw,30px) 56px}
+ .wistia-ar__copy{text-align:center}
+ .wistia-ar__title{font-size:clamp(30px,7cqw,42px);line-height:1.24}
+ .wistia-ar__disc-stage{width:min(100%,390px);margin:18px auto 0}
+ .wistia-ar__mood{font-size:clamp(21px,5cqw,28px)}
+ .wistia-ar__ratio-current{font-size:clamp(40px,11cqw,58px)}
+ .wistia-ar__ratio{min-width:0;margin-top:8px}
+ .wistia-ar__player{min-width:0;margin-top:25px;grid-template-columns:54px auto minmax(0,1fr) 26px;gap:10px}
+ .wistia-ar__seek{min-width:0}
+}
