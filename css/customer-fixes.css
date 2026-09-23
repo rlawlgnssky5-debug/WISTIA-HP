@@ -312,3 +312,14 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 body.menu-open #menuToggle span:nth-child(1){transform:translateX(2px) rotate(-12deg)}
 body.menu-open #menuToggle span:nth-child(2){opacity:1;transform:rotate(-12deg)}
 body.menu-open #menuToggle span:nth-child(3){transform:translateX(-2px) rotate(-12deg)}
+
+/* The consultation form is copied first; Kakao opens only from this confirmation dialog */
+#mediaDialog.consult-copy-modal{width:min(420px,calc(100% - 32px));border:1px solid #dce2e4;border-radius:18px;box-shadow:0 24px 70px #14212638}
+.consult-copy-dialog{padding:48px 28px 28px;text-align:center}
+.consult-copy-dialog .dialog-close{right:8px;top:7px}
+.consult-copy-mark{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 22px;border:1px solid #cbd7db;border-radius:50%;background:#f3f7f8;color:#42606b;font-size:25px}
+.consult-copy-dialog h2{margin:0;color:#263237;font-size:clamp(20px,5vw,24px);font-weight:650;line-height:1.45;word-break:keep-all}
+.consult-copy-dialog p{margin:12px 0 0;color:#66777d;font-size:15px;line-height:1.6;word-break:keep-all}
+.consult-copy-dialog .consult-copy-action{display:flex;align-items:center;justify-content:center;min-height:54px;margin-top:28px;padding:12px 16px;text-align:center;font-size:14px;line-height:1.45;white-space:normal;word-break:keep-all}
+.consult-copy-fallback{display:block;width:100%;min-height:160px;margin-top:20px;padding:12px;border:1px solid #cbd4d7;border-radius:8px;background:#f7f9f9;color:#263237;font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;text-align:left}
+@media(max-width:360px){.consult-copy-dialog{padding:48px 20px 22px}.consult-copy-dialog .consult-copy-action{font-size:13px}}

@@ -1099,9 +1099,10 @@ function consultationText(){
 }
 function showDialog(html,type){
  lastDialogFocus=document.activeElement;dialog.innerHTML='<div class="dialog-content '+type+'"><button class="dialog-close" data-close aria-label="닫기">×</button>'+html+'</div>';
- dialog.showModal();document.body.classList.add("modal-open");document.querySelector("#siteHeader").inert=true;app.inert=true;document.querySelector("#floatingKakao").inert=true;dialog.querySelector("button").focus()
+ dialog.classList.toggle("consult-copy-modal",type==="consult-copy-dialog");dialog.setAttribute("aria-label",type==="consult-copy-dialog"?"상담 양식 복사 안내":"영상, 고객 후기 및 상담 내용")
+ dialog.showModal();document.body.classList.add("modal-open");document.querySelector("#siteHeader").inert=true;app.inert=true;document.querySelector("#floatingKakao").inert=true;dialog.querySelector(type==="consult-copy-dialog"?".consult-copy-action":"button").focus()
 }
-function closeDialog(){if(!dialog.open)return;dialog.close();dialog.innerHTML="";document.body.classList.remove("modal-open");document.querySelector("#siteHeader").inert=false;app.inert=false;document.querySelector("#floatingKakao").inert=false;if(lastDialogFocus?.isConnected)lastDialogFocus.focus()}
+function closeDialog(){if(!dialog.open)return;dialog.close();dialog.innerHTML="";dialog.classList.remove("consult-copy-modal");document.body.classList.remove("modal-open");document.querySelector("#siteHeader").inert=false;app.inert=false;document.querySelector("#floatingKakao").inert=false;if(lastDialogFocus?.isConnected)lastDialogFocus.focus()}
 function openVideo(id){
  const w=WORKS.find(x=>x.id===id);if(!w)return;
  window.wistiaClaimPlayback?.("video-frame")
@@ -1114,14 +1115,15 @@ function playInlineVideo(button){
  const frame=document.createElement("div");frame.className="detail-result-media detail-inline-video";frame.innerHTML='<iframe src="'+escapeHtml(url.href)+'" title="'+escapeHtml(button.getAttribute("aria-label")||"유튜브 영상")+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
  button.replaceWith(frame)
 }
-function consultationToast(message,failed=false){document.querySelector(".copy-toast")?.remove();const toast=document.createElement("div");toast.className="copy-toast"+(failed?" is-error":"");toast.setAttribute("role","status");toast.textContent=message;document.body.append(toast);requestAnimationFrame(()=>toast.classList.add("show"));setTimeout(()=>{toast.classList.remove("show");setTimeout(()=>toast.remove(),250)},3600)}
-async function copyConsultationAndOpenKakao(){
- const popup=window.open(kakao(),"_blank");if(popup)popup.opener=null;const text=consultationText();let ok=false;
- try {await navigator.clipboard.writeText(text);ok=true}catch{
-  const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select();ok=document.execCommand("copy");area.remove()
+async function copyConsultationAndShowDialog(){
+ const text=consultationText();let copied=false
+ try{await navigator.clipboard.writeText(text);copied=true}catch{
+  const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select()
+  try{copied=document.execCommand("copy")}catch{}finally{area.remove()}
  }
- consultationToast(ok?"채팅창에 복사되었습니다 · 카카오톡 채팅창에 붙여넣어 주세요":"자동 복사가 제한되었습니다 · 문의 양식을 직접 복사해 주세요",!ok)
- if(!popup)location.href=kakao()
+ const kakaoLink='<a class="button dark consult-copy-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인했습니다! 카카오톡으로 이동</a>'
+ if(copied){showDialog('<span class="consult-copy-mark" aria-hidden="true">✓</span><h2>상담양식이 복사되었습니다</h2><p>카카오톡에 붙여넣기 해주세요!</p>'+kakaoLink,"consult-copy-dialog")}
+ else{showDialog('<h2>상담양식을 자동으로 복사하지 못했습니다</h2><p>아래 내용을 직접 복사한 뒤 카카오톡에 붙여넣어 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'+kakaoLink,"consult-copy-dialog")}
 }
 function navigationMenu(){return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+NAVIGATION_GROUPS.map(group=>'<section class="menu-group'+(group.kind?" is-"+group.kind:"")+'"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(item=>'<a class="menu-item'+(item.kind?" is-"+item.kind:"")+'" href="'+item.href+'"><strong>'+item.title+(item.note?'<em>'+item.note+'</em>':"")+'</strong></a>').join("")+'</div></section>').join("")+'</nav>'}
 function header(){
@@ -1221,7 +1223,7 @@ document.addEventListener("change",e=>{
  if(el.dataset.filmFormat){const pageY=scrollY;selectedFilmFormat=el.dataset.filmFormat;const list=document.querySelector('[data-package-list]'),title=document.querySelector('[data-package-title]'),details=document.querySelector('.package-section'),preview=document.querySelector('[data-proposal-format-preview]');if(preview)preview.innerHTML=proposalFormatPreview();if(list)list.innerHTML=bookingPackageList(currentEventProduct,PRODUCTS[currentEventProduct]);if(title)title.textContent=FILM_FORMATS[selectedFilmFormat].title+' 기본 구성';const body=details?.querySelector('.package-section-body');if(body){const oldNotes=body.querySelector('ul:not(.package-list)');if(oldNotes)oldNotes.remove();body.insertAdjacentHTML('beforeend',filmFormatNotes(FILM_FORMATS[selectedFilmFormat]))}if(details?.tagName==='DETAILS')details.open=true;updatePrice();requestAnimationFrame(()=>requestAnimationFrame(()=>scrollTo({top:pageY,behavior:'instant'})))}
  if(el.dataset.songOption){chosenOption=el.checked?el.dataset.songOption:"";updatePrice()}
 })
-document.addEventListener("submit",e=>{if(e.target.id==="consultForm"){e.preventDefault();copyConsultationAndOpenKakao()}})
+document.addEventListener("submit",e=>{if(e.target.id==="consultForm"){e.preventDefault();copyConsultationAndShowDialog()}})
 dialog.addEventListener("cancel",e=>{e.preventDefault();closeDialog()})
 dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.focus()}})
