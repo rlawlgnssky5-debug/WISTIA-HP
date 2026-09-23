@@ -195,3 +195,120 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 .booking-extra .option-choice.has-lyric-image .lyric-option-image{grid-column:1/-1;display:block;width:100%;overflow:hidden;border-radius:8px;background:#202020}
 .lyric-option-image img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain}
 @media(max-width:540px){.detail-variant-picker{padding-block:16px 21px}.detail-variant{display:grid;gap:4px;padding:12px}.detail-variant strong{font-size:13px}}
+
+/* Consistent light/dark rhythm and aligned mobile content on every detail page */
+.solo-detail-scope>.solo-editorial-sheet{border-top:0!important;background:#fff!important}
+.solo-detail-scope .ar-expert-story{background:#fff!important}
+.solo-detail-scope>.wistia-ba-section{width:100%;margin:0;padding:clamp(64px,8vw,104px) var(--solo-page-gutter,24px);background:#202425;color:#fff}
+.solo-detail-scope .wistia-ba-layout{max-width:1120px;margin-inline:auto}
+.solo-detail-scope .wistia-ba-copy h2{color:#fff}
+.solo-detail-scope .wistia-ba-copy>p:last-child{color:#c2cacc}
+.solo-detail-scope .wistia-ba-eyebrow{color:#a5b6bc}
+.solo-detail-scope>.ar-compare{background:#fff!important}
+.solo-detail-scope>.wps-vertical{width:100%;margin:0;padding:clamp(64px,8vw,104px) 0;background:#202425;color:#fff}
+.solo-detail-scope .wps-vertical>.shell{width:min(100% - 2*var(--solo-page-gutter,24px),1120px);margin-inline:auto;padding:0}
+.solo-detail-scope .wps-vertical .wps-head{width:100%;max-width:none;margin:0 0 28px;padding:0;color:#fff}
+.solo-detail-scope .wps-vertical .wps-head h2{color:#fff}
+.solo-detail-scope .wps-vertical .wps-sub{color:#c2cacc}
+.solo-detail-scope .wps-vertical .wps-kicker{color:#a5b6bc}
+.wps-accordion{display:grid;gap:8px;width:100%}
+.wps-accordion details{min-width:0;border:1px solid #495153;background:#292e30}
+.wps-accordion summary{display:grid;grid-template-columns:46px minmax(0,1fr) 28px;align-items:center;gap:10px;min-height:68px;padding:12px 20px;cursor:pointer;list-style:none}
+.wps-accordion summary::-webkit-details-marker{display:none}
+.wps-accordion summary strong{font-size:clamp(15px,2vw,19px);font-weight:600;word-break:keep-all}
+.wps-accordion-num{color:#acc0c7;font-family:Georgia,serif;font-size:15px}
+.wps-accordion-plus{font-size:25px;font-weight:300;text-align:right}
+.wps-accordion details[open] .wps-accordion-plus{transform:rotate(45deg)}
+.wps-accordion-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:0 20px 24px}
+.wps-accordion-photo img{display:block;width:100%;height:auto;max-height:370px;object-fit:contain;background:#1a1e1f}
+.wps-accordion-copy{align-self:center;min-width:0}
+.wps-accordion-copy>p:first-child{color:#a5b6bc;font-size:11px;letter-spacing:.13em}
+.wps-accordion-copy h3{margin:12px 0;font-size:clamp(18px,3vw,26px);line-height:1.4}
+.wps-accordion-copy>p:last-child{color:#c2cacc;font-size:14px;line-height:1.75;word-break:keep-all}
+.solo-detail-scope .worry-section{background:#fff}
+.solo-detail-scope .solo-inline-contact{display:flex;width:100%;max-width:none;box-sizing:border-box;justify-content:space-between}
+.ar-hook-sound-control{position:absolute;z-index:5;top:24px;right:80px;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 13px;border:1px solid #ffffffa0;border-radius:999px;background:#1e2628bf;color:#fff;font:600 12px var(--sans);cursor:pointer}
+.ar-hook-sound-control:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:600px){.wps-accordion-body{grid-template-columns:1fr;gap:14px}.wps-accordion summary{padding-inline:14px}.wps-accordion-body{padding:0 14px 20px}.ar-hook-sound-control{top:16px;right:65px}}
+
+/* Product composition and booking guidance */
+.solo-detail-scope .package-overview{padding:clamp(58px,7vw,96px) 0;background:#f3f5f5;color:#243035}
+.solo-detail-scope .package-overview>.shell,.solo-detail-scope .booking-guide.shell{width:min(100% - 2*var(--solo-page-gutter,24px),1120px);max-width:1120px;margin-inline:auto;padding-inline:0}
+.package-overview-eyebrow{margin:0 0 12px;color:#7d9299;font-family:Georgia,serif;font-size:12px;letter-spacing:.16em}
+.package-overview h2{margin:0 0 25px;font-size:clamp(25px,4vw,40px);line-height:1.25;letter-spacing:-.05em}
+.package-overview-description{max-width:900px;margin:20px 0 0;color:#607278;font-size:15px;line-height:1.8;word-break:keep-all}
+.solo-detail-scope .booking-guide{padding-block:clamp(54px,7vw,88px);background:#fff}
+.booking-guide h2{margin:0 0 24px;font-size:clamp(24px,3vw,34px)}
+.booking-guide>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.booking-guide article{min-width:0;padding:23px;border:1px solid #dce2e3;border-radius:12px;background:#f7f8f8}
+.booking-guide article span{display:block;margin-bottom:14px;color:#3d535b;font-weight:700}
+.booking-guide article p{margin:0;color:#66777d;font-size:13px;line-height:1.7;word-break:keep-all}
+@media(max-width:600px){.package-overview-description{font-size:13px}.booking-guide>div{grid-template-columns:1fr}.booking-guide article{padding:18px}}
+
+/* Reference composition: compact horizontal feature tiles, not a photo-led package card */
+.package-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.package-feature{display:flex;min-width:0;min-height:150px;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:18px 10px;border:1px solid #e1e6e8;border-radius:20px;background:#eaedf0;text-align:center;color:#26353b}
+.package-feature-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:14px;background:#f7f8f9;color:#566f84;font-size:26px;line-height:1;font-family:Georgia,serif}
+.package-feature strong{font-size:clamp(12px,1.3vw,15px);font-weight:650;line-height:1.45;word-break:keep-all}
+.package-overview-description{margin-top:25px}
+.package-making-option{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:24px;padding:22px 25px;border:1px solid #cbd8dc;border-radius:17px;background:#fff;color:#24353b;text-decoration:none}
+.package-making-option>span{display:grid;gap:7px;min-width:0}
+.package-making-option small{color:#5e7982;font-size:11px;letter-spacing:.08em}
+.package-making-option strong{font-size:18px}
+.package-making-option em{font-style:normal;color:#5c6e74;font-size:13px;line-height:1.65;word-break:keep-all}
+.package-making-option em span,.option-explainer span{display:block;position:relative;padding-left:12px}
+.package-making-option em span+span,.option-explainer span+span{margin-top:5px}
+.package-making-option em span:before,.option-explainer span:before{content:"";position:absolute;left:1px;top:.7em;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.6}
+.booking-extra .option-explainer{display:block;margin-top:10px;color:#52656e;font-size:13px;line-height:1.6;word-break:keep-all}
+@media(max-width:390px){.booking-extra .option-explainer{font-size:12px;line-height:1.55}}
+.package-making-option b{flex:none;color:#314f5c;white-space:nowrap}
+.making-change-option small{line-height:1.6;word-break:keep-all}
+.finder-stage-role .finder-intro .eyebrow{display:none}
+@media(max-width:700px){.package-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.package-feature{min-height:122px;padding:13px 8px;border-radius:15px}.package-feature-icon{width:42px;height:42px;font-size:22px}.package-feature strong{font-size:12px}.package-making-option{align-items:flex-start;flex-direction:column;padding:18px}.package-making-option strong{font-size:16px}}
+
+/* The review reel moves continuously; a lower speed is used for reduced-motion visitors */
+.review-loop{animation:none!important;transition:none!important}
+
+/* Keep dark content on a solid ground; blend only through the empty light-section gutters */
+.solo-detail-scope>.ar-primary-benefit{background:linear-gradient(180deg,#fff 0,#fff calc(100% - 24px),#f0f1f1 calc(100% - 19px),#a9adad calc(100% - 10px),#111313 100%)!important}
+.solo-detail-scope>.solo-review-carousel{background:#111313!important}
+.solo-detail-scope>.solo-editorial-sheet{background:linear-gradient(180deg,#111313 0,#a9adad 10px,#f0f1f1 19px,#fff 24px,#fff calc(100% - 24px),#f0f1f1 calc(100% - 19px),#a9adad calc(100% - 10px),#202425 100%)!important}
+.solo-detail-scope>.solo-editorial-sheet .ar-expert-story{background:transparent!important;padding-top:clamp(88px,9vw,104px)!important;padding-bottom:clamp(72px,9vw,108px)!important}
+.solo-detail-scope>.wistia-ba-section{background:#202425!important}
+.solo-detail-scope>.wistia-advantages{background:linear-gradient(180deg,#202425 0,#acb1b1 10px,#e8ebeb 19px,#f3f5f5 24px,#f3f5f5 calc(100% - 24px),#e8ebeb calc(100% - 19px),#acb1b1 calc(100% - 10px),#202425 100%)!important}
+.solo-detail-scope>.wps-vertical{background:#202425!important}
+
+/* Five clear WISTIA strengths replace the comparison table on every detail page */
+.wistia-advantages{background:#f3f5f5;color:#263237}
+.wistia-advantages>.shell{max-width:1120px;margin-inline:auto}
+.wistia-advantages header{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:36px}
+.wistia-advantages h2{margin:0;font-size:clamp(30px,4vw,46px);font-weight:520;letter-spacing:-.055em}
+.wistia-advantages header p{max-width:360px;margin:0;color:#66777d;font-size:15px;line-height:1.6;word-break:keep-all}
+.wistia-advantages ol{margin:0;padding:0;list-style:none;border-top:1px solid #cbd4d7}
+.wistia-advantages li{display:grid;grid-template-columns:80px minmax(0,1fr);gap:24px;padding:27px 0;border-bottom:1px solid #cbd4d7}
+.wistia-advantage-number{color:#8999a0;font:italic 26px/1 Georgia,serif}
+.wistia-advantages li small{display:block;color:#617b85;font-size:12px;letter-spacing:.06em}
+.wistia-advantages li h3{margin:6px 0 9px;font-size:clamp(20px,2.5vw,27px);font-weight:620;letter-spacing:-.045em;word-break:keep-all}
+.wistia-advantages li p{margin:0;color:#65767d;font-size:15px;line-height:1.7;word-break:keep-all}
+
+/* The about page must stack before either column becomes too narrow */
+.info-page{min-width:0}
+.info-page-intro h1,.wistia-about-story h2,.wistia-specialists h2{word-break:keep-all;overflow-wrap:break-word}
+@media(max-width:900px){.info-page .wistia-about-story{grid-template-columns:minmax(0,1fr);gap:28px}.info-page .wistia-specialist-grid{grid-template-columns:minmax(0,1fr)}.info-page .wistia-specialist-grid article{border-right:0;border-bottom:1px solid var(--line)}.info-page .wistia-specialist-grid article:last-child{border-bottom:0}}
+@media(max-width:700px){.wistia-advantages header{display:block;margin-bottom:25px}.wistia-advantages header p{margin-top:10px;font-size:13px}.wistia-advantages li{grid-template-columns:42px minmax(0,1fr);gap:12px;padding:22px 0}.wistia-advantage-number{font-size:21px}.wistia-advantages li h3{font-size:19px}.wistia-advantages li p{font-size:13px}.info-page .wistia-about-story{padding-top:38px}.info-page .wistia-specialist-grid article,.info-page .wistia-specialist-grid article:first-child,.info-page .wistia-specialist-grid article:last-child{grid-template-columns:82px minmax(0,1fr);column-gap:16px}.info-page .wistia-specialist-grid article>span{grid-column:2;grid-row:1;margin:0;font-size:22px}.info-page .wistia-specialist-grid article img{grid-column:1;grid-row:1/5;width:82px}.info-page .wistia-specialist-grid article>p,.info-page .wistia-specialist-grid article h3,.info-page .wistia-specialist-grid article small{grid-column:2}}
+
+/* FAQ categories are easy to scan without a second English title */
+.info-page-faq .info-page-intro{max-width:none}
+.info-page-faq .info-faq{margin-top:34px}
+.info-faq-group+.info-faq-group{margin-top:40px}
+.info-faq-group h2{margin:0 0 14px;padding:13px 19px;border-radius:7px;background:#292d2e;color:#fff;font-size:17px;font-weight:600}
+.info-faq-group .faq-list{gap:9px}
+.info-faq-group .faq-list details{border:1px solid #dce1e3;border-radius:8px;background:#fff}
+.info-faq-group .faq-list summary{font-size:16px;line-height:1.5;word-break:keep-all}
+.info-faq-group .faq-list details>p{color:#5c6d74;font-size:14px;line-height:1.75;word-break:keep-all}
+@media(max-width:390px){.info-faq-group .faq-list details{padding-inline:14px}.info-faq-group .faq-list summary{font-size:14px}.info-faq-group .faq-list details>p{font-size:13px}}
+
+/* Keep all three menu strokes visible when open, with a modest shared slant */
+body.menu-open #menuToggle span:nth-child(1){transform:translateX(2px) rotate(-12deg)}
+body.menu-open #menuToggle span:nth-child(2){opacity:1;transform:rotate(-12deg)}
+body.menu-open #menuToggle span:nth-child(3){transform:translateX(-2px) rotate(-12deg)}

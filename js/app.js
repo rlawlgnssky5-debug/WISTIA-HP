@@ -2,7 +2,7 @@ const KAKAO_FALLBACK = "http://pf.kakao.com/_GbExjX/chat"
 
 const PRODUCTS = {
   solo: {
-    key: "solo", category: "song", kicker: "SOLO WEDDING SONG", title: "1인 축가 녹음",
+    key: "solo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 사전녹음 · 1시간",
     sub: "미리 완성한 목소리를 AR로 함께 틀어 본식에서는 더 안정적으로, 녹음한 노래는 오래도록 남깁니다",
     normal: 120000,
     resultVideo: "assets/video/groom-wedding-song-ar.mp4",
@@ -37,8 +37,8 @@ const PRODUCTS = {
     ]
   },
   duo: {
-    key: "duo", category: "song", kicker: "DUET WEDDING SONG", title: "2인 축가",
-    sub: "두 사람의 음역과 파트, 화음을 맞춰 자연스럽고 안정적인 듀엣 축가 음원으로 완성합니다",
+    key: "duo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 사전녹음 · 2시간",
+    sub: "인원 제한 없이 2시간 동안 구간별로 녹음하고, 자연스럽고 안정적인 축가 AR로 완성합니다",
     normal: 160000,
     resultVideo: "assets/video/duo-wedding-song-ar.mp4",
     oneLine: "두 사람의 목소리를 미리 맞추고 본식에서는 더 편안하게",
@@ -66,13 +66,13 @@ const PRODUCTS = {
     ],
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
     faq: [
-      ["파트와 화음도 구성해 주나요", "곡과 두 분의 음역에 맞춰 함께 부를 부분과 나눠 부를 부분, 필요한 화음을 구성합니다"],
-      ["두 사람의 목소리 비율은 어떻게 정하나요", "30% · 50% · 70% · 100% 음원을 비교해 두 분이 본식에서 함께 부르기 편한 비율을 선택합니다"],
-      ["어떤 파일을 받나요", "예식장에서 사용할 듀엣 AR과 두 보컬의 믹싱·마스터링을 마친 완성 음원을 전달합니다"]
+      ["2시간 상품은 인원 제한이 있나요", "인원 제한 없이 이용할 수 있습니다 표기된 2시간에는 기본 안내와 연습 등 부가 시간이 포함됩니다"],
+      ["여러 사람이 함께 녹음할 수 있나요", "가능합니다 곡과 참여 인원에 맞춰 파트와 녹음 순서를 안내합니다"],
+      ["어떤 파일을 받나요", "예식장에서 사용할 AR과 보컬 보정·믹싱·마스터링을 마친 완성 음원을 전달합니다"]
     ]
   },
   wedding: {
-    key: "wedding", category: "wedding", kicker: "WEDDING FILM", title: "식전 / 축가 영상",
+    key: "wedding", category: "wedding", kicker: "WEDDING FILM", title: "듀엣 식전 스토리 필름",
     sub: "직접 부른 노래와 이야기를 식전 또는 축가 순서에 상영할 한 편의 웨딩 필름으로 완성합니다",
     normal: 350000,
     videoUrl: "https://www.youtube.com/embed/5ZuTmQWCRJk?rel=0",
@@ -168,7 +168,7 @@ const PRODUCTS = {
     ]
   },
   "solo-film": {
-    key: "solo-film", category: "wedding", kicker: "WEDDING SONG MAKING FILM", title: "녹음 메이킹 필름",
+    key: "solo-film", category: "wedding", kicker: "WEDDING SONG MAKING FILM", title: "축가 녹음 메이킹 필름",
     sub: "한 사람 또는 두 사람이 직접 부른 노래와 녹음 장면을 영상으로 완성해 본식에 상영합니다",
     normal: 220000,
     resultCopy: "한 사람이 직접 부른 완성 음원과 본식 축가 순서에 바로 상영할 수 있는 영상 파일로 전달합니다",
@@ -210,7 +210,7 @@ const PRODUCTS = {
     ]
   },
   proposal: {
-    key: "proposal", category: "proposal", kicker: "PROPOSAL FILM", title: "프로포즈 필름",
+    key: "proposal", category: "proposal", kicker: "PROPOSAL FILM", title: "프로포즈 · 답프로포즈",
     sub: "직접 부른 노래와 전하고 싶은 이야기를 녹음 메이킹 또는 스토리형 영상으로 완성합니다",
     normal: 220000,
     videoUrl: "https://www.youtube.com/embed/pTBfPEWlyZU?rel=0",
@@ -355,56 +355,77 @@ const dialog = document.querySelector("#mediaDialog")
 const MENU = []
 const NAVIGATION_GROUPS = [
  {label:"직접 부른다면",items:[
-  {title:"AR 축가 · 1인 / 2인",href:"#/detail/solo"}
+  {title:"AR 축가 사전녹음",href:"#/detail/solo"}
  ]},
  {label:"영상으로 상영한다면",items:[
-  {title:"식전 / 축가 영상",href:"#/detail/wedding"},
-  {title:"녹음 메이킹 필름",href:"#/detail/solo-film"}
+  {title:"축가 녹음 메이킹 필름",href:"#/detail/solo-film"},
+  {title:"듀엣 식전 스토리 필름",href:"#/detail/wedding"}
  ]},
  {label:"프로포즈",items:[
-  {title:"프로포즈 필름",href:"#/detail/proposal"}
+  {title:"프로포즈 · 답프로포즈",href:"#/detail/proposal"}
+ ]},
+ {label:"목소리의 변화",items:[
+  {title:"보컬 보정 전 후 비교 보기",href:"#/before-after"}
  ]},
  {label:"위스티아",kind:"utility",items:[
   {title:"위스티아는 이런 곳입니다",href:"#/info/about"},
-  {title:"위스티아가 드리는 약속",href:"#/info/promise"},
   {title:"이벤트",href:"#/event/solo"},
-  {title:"QnA",href:"#/info/faq"}
+  {title:"자주 묻는 질문",href:"#/info/faq"}
  ]}
 ]
 const INFO_PAGES = {
  about:{eyebrow:"ABOUT WISTIA",title:"목소리와 장면을\n한 작품으로 만드는 곳",description:"위스티아는 경기도 부천에 위치한 웨딩 보컬 녹음·영상 제작 브랜드입니다"},
- promise:{eyebrow:"WISTIA PROMISE",title:"완성도는 높이고\n불필요한 부담은 덜어냅니다",description:"시작 전에 분명하게 안내하고, 작업이 끝나는 순간까지 처음 약속을 지키겠습니다"},
- faq:{eyebrow:"QnA",title:"자주 묻는\n질문",description:"상품을 고르기 전 가장 많이 궁금해하시는 내용을 모았습니다",faq:[
-  ["AR 축가는 어떤 서비스인가요","본식 축가 시간에 직접 노래를 부르되, 미리 녹음하고 보정한 내 목소리를 함께 재생해 보다 편안하게 노래할 수 있도록 돕는 사전녹음 서비스입니다"],
-  ["녹음 메이킹 영상과 스토리형 축가 영상은 무엇이 다른가요","녹음 메이킹 영상은 녹음 과정과 노래를 중심으로 완성하며, 스토리형 축가 영상은 하객 메시지와 인터뷰, 뮤비 클립 등을 더해 이야기의 흐름까지 담습니다"],
-  ["스토리형 식전 영상은 무엇이 다른가요","사진과 익숙한 배경음악 대신, 두 분이 직접 부른 노래와 이야기를 담아 예식의 첫 장면을 시작하는 영상입니다"],
-  ["프로포즈 필름도 직접 노래해야 하나요","직접 부른 노래를 중심으로 준비할 수 있으며, 전하고 싶은 이야기와 장면에 맞춰 상담에서 함께 방향을 정합니다"]
- ]}
+ faq:{eyebrow:"",title:"자주 묻는 질문",description:"방문부터 녹음·영상 제작과 수정까지, 자주 궁금해하시는 내용을 모았습니다"}
 }
+const INFO_FAQ_GROUPS=[
+ {title:"방문 안내",items:[
+  ["스튜디오는 어디에 있나요?","부천시청역 1번 출구에서 도보 약 300m 거리입니다 주소는 부천시 석천로170번길 19, 2층입니다"],
+  ["주차는 가능한가요?","스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 공영주차장 이용 요금은 별도로 발생하므로 주차비 지원은 어려운 점 참고해 주세요"]
+ ]},
+ {title:"녹음 안내",items:[
+  ["노래를 잘 못해도 괜찮나요?","물론입니다 한 곡을 처음부터 끝까지 부르는 대신 구간별로 나누어 녹음하고, 옆에서 1:1로 디렉팅해 드립니다 녹음 후에는 음정과 박자를 자연스럽게 보정합니다"],
+  ["곡의 키는 어떻게 정하나요?","원키가 어렵다면 목소리에 맞게 편한 키로 조정할 수 있습니다 녹음 전 직접 불러보며 가장 자연스럽게 부를 수 있는 키를 함께 정합니다"],
+  ["녹음 전에 무엇을 준비하면 되나요?","진행할 곡의 MR과 원하는 키를 미리 보내주시면 좋습니다 듀엣이라면 파트 분배도 알려주세요 가사나 원하는 구성, 축가하고 싶은 영상이나 분위기가 있다면 함께 보내주셔도 됩니다"],
+  ["녹음이나 촬영이 길어지면 추가금이 있나요?","아니요 당일 녹음이나 촬영이 예상보다 길어지더라도 별도의 현장 추가금은 받지 않습니다"]
+ ]},
+ {title:"제작 및 수정 안내",items:[
+  ["결과물은 언제 받을 수 있나요?","녹음과 촬영이 끝나고 제작에 필요한 자료를 모두 전달해 주신 날을 기준으로, 음원은 최대 7일 이내, 영상은 최대 14일 이내 전달합니다 정확한 일정은 상담에서 안내드립니다"],
+  ["수정도 가능한가요?","네, 수정은 3회까지 무료로 진행합니다 4회차부터는 회당 10,000원의 추가 비용이 발생합니다"]
+ ]},
+ {title:"영상 상품 안내",items:[
+  ["영상 상품과 AR 축가 사전녹음은 무엇이 다른가요?","영상 상품은 예식에서 상영할 영상과 완성 음원을 함께 받는 구성입니다 AR 축가 사전녹음은 예식 당일 직접 노래할 때 함께 재생할 AR 음원을 미리 준비하는 구성입니다"],
+  ["녹음 메이킹 필름과 스토리형 영상은 무엇이 다른가요?","녹음 메이킹 필름은 노래를 녹음하는 모습과 자연스러운 순간을 중심으로 담습니다 스토리형 영상은 협업 촬영 스튜디오의 뮤직비디오 클립과 상품별 하객 메시지·인터뷰·전하는 편지를 더해 이야기를 풍성하게 완성합니다"],
+  ["녹음 메이킹 필름에 전하는 편지나 하객 메시지도 넣을 수 있나요?","네, 직접 촬영한 영상을 보내주시면 완성 영상에 삽입할 수 있습니다 휴대폰으로 편하게 촬영하셔도 되며, 녹음 당일 스튜디오에서 직접 촬영하셔도 됩니다"],
+  ["영상과 음원을 원하는 방향으로 제작할 수 있나요?","네, 영상의 구성과 순서, 사진·영상 활용뿐 아니라 음원 구성과 원하는 분위기도 상담에서 함께 정합니다 다만 꼭 반영하고 싶은 내용은 제작이 시작되기 전에 말씀해 주세요"]
+ ]},
+ {title:"AR 축가 안내",items:[
+  ["AR 축가에서 내 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어보고 실제로 리허설도 해 본 뒤, 가장 편하고 자연스럽게 부를 수 있는 비율을 함께 결정합니다"],
+  ["AR을 사용하면 티가 나지 않을까요?","미리 녹음한 목소리와 현장에서 직접 부르는 목소리가 자연스럽게 어우러지도록 비율을 조정합니다 녹음 당일 AR과 함께 직접 불러보는 리허설도 진행합니다"]
+ ]}
+]
 const SERVICE_ORDER = ["wedding","duet-film","solo-film","solo","duo","proposal"]
 const SERVICE_META = {
-  wedding:{type:"OUR STORY",label:"식전 / 축가 영상",use:"식전 또는 축가 순서",who:"참여 인원 상담 후 결정",result:"이야기가 있는 영상 + 완성 음원",short:"우리의 노래와 이야기를 담는 웨딩 영상",image:"assets/img/wedding/02-interview.webp"},
+  wedding:{type:"OUR STORY",label:"듀엣 식전 스토리 필름",use:"식전 또는 축가 순서",who:"참여 인원 상담 후 결정",result:"이야기가 있는 영상 + 완성 음원",short:"우리의 노래와 이야기를 담는 웨딩 영상",image:"assets/img/wedding/02-interview.webp"},
   "duet-film":{type:"OUR DUET",label:"듀엣 축가 영상",use:"본식 축가 순서",who:"신랑신부 두 사람",result:"본식에서 바로 상영하는 듀엣 축가 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"우리 둘의 노래로 채우는 축가 시간",image:"assets/img/song-film/duet-video-cover.jpg"},
-  "solo-film":{type:"A SONG FOR YOU",label:"녹음 메이킹 필름",use:"본식 축가 순서",who:"한 사람 또는 두 사람",result:"본식에서 바로 상영하는 녹음 메이킹 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"직접 부른 노래를 녹음 장면과 함께 영상으로",image:"assets/img/solo-film/solo-film-cover-v2.webp"},
-  solo:{type:"YOUR VOICE, LIVE",label:"1인 축가 녹음",use:"현장에서 직접 노래",who:"한 사람",result:"보컬 비율별 AR + 완성 음원",short:"떨리는 순간, 내 목소리를 받쳐주는 AR",image:"assets/img/song/solo.webp"},
-  duo:{type:"TWO VOICES, LIVE",label:"2인 축가",use:"현장에서 직접 노래",who:"두 사람",result:"듀엣 AR + 완성 음원",short:"두 목소리와 화음을 미리 맞추는 축가",image:"assets/img/song/duo.webp"},
-  proposal:{type:"ONLY FOR YOU",label:"프로포즈 필름",use:"둘만의 고백 순간",who:"마음을 전하는 한 사람",result:"프로포즈 상영용 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"말로 다 전하지 못한 마음을 한 편의 영상으로",image:"assets/img/proposal-video-cover.jpg"}
+  "solo-film":{type:"A SONG FOR YOU",label:"축가 녹음 메이킹 필름",use:"본식 축가 순서",who:"한 사람 또는 두 사람",result:"본식에서 바로 상영하는 녹음 메이킹 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"직접 부른 노래를 녹음 장면과 함께 영상으로",image:"assets/img/solo-film/solo-film-cover-v2.webp"},
+  solo:{type:"YOUR VOICE, LIVE",label:"AR 축가 사전녹음 · 1시간",use:"현장에서 직접 노래",who:"인원 제한 없음",result:"본식용 AR + 완성 음원",short:"1시간 동안 목소리를 세심하게 준비하는 AR",image:"assets/img/song/solo.webp"},
+  duo:{type:"YOUR VOICE, LIVE",label:"AR 축가 사전녹음 · 2시간",use:"현장에서 직접 노래",who:"인원 제한 없음",result:"본식용 AR + 완성 음원",short:"2시간 동안 넉넉하게 준비하는 AR",image:"assets/img/song/duo.webp"},
+  proposal:{type:"ONLY FOR YOU",label:"프로포즈 · 답프로포즈",use:"둘만의 고백 순간",who:"마음을 전하는 한 사람",result:"프로포즈 상영용 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"말로 다 전하지 못한 마음을 한 편의 영상으로",image:"assets/img/proposal-video-cover.jpg"}
 }
 const FILM_FORMAT_PRODUCTS = new Set(["wedding","duet-film","solo-film","proposal"])
 const FILM_FORMATS = {
   live:{
     title:"스토리형 영상",
-    summary:"뮤비 클립 · 다양한 인서트 컷 · 하객 메시지 · 인터뷰 · 전하는 편지",
+    summary:"협업 촬영 스튜디오의 뮤직비디오 클립 · 하객 메시지 · 인터뷰 · 전하는 편지",
     notes:[]
   },
   making:{
     title:"녹음 메이킹 필름",
-    summary:"실제 녹음 장면을 중심으로 메이킹 클립과 다양한 인서트 컷 구성",
+    summary:"녹음과 촬영 장면을 중심으로 완성하는 영상 편집",
     notes:[
-      "인터뷰와 전하는 편지 촬영은 기본 구성에서 제외됩니다",
-      "인트로·아웃트로에 들어갈 문구를 작성해서 보내주시면 타이포 형태로 넣어드립니다",
-      "하객 메시지나 서로에게 전하는 편지를 직접 집이나 방에서 촬영해 보내주시면 영상에 함께 넣어드릴 수 있습니다",
-      "인터뷰 촬영은 진행되지 않습니다"
+      "협업 촬영 스튜디오 촬영과 인터뷰는 포함되지 않습니다",
+      "하객 메시지와 전하는 편지는 직접 촬영한 영상을 보내주시면 삽입할 수 있습니다",
+      "녹음 당일 스튜디오에서 휴대폰으로 직접 촬영하셔도 됩니다"
     ]
   }
 }
@@ -434,18 +455,21 @@ const BASE_FILM_FORMAT = {
   wedding:"live",
   "duet-film":"live",
   "solo-film":"making",
-  proposal:"making"
+  proposal:"live"
 }
-const FILM_REVISION_NOTICE = {key:"extra-revision",label:"4회차 이후 추가 수정",detail:"수정 3회까지 무료 · 4회차부터 1회당 10,000원",price:10000,quantity:true,unit:"회",priceUnit:"회당"}
+const FILM_REVISION_NOTICE = {key:"revision-guidance",label:"추가 수정 안내",detail:"수정 3회까지 무료 · 4회차부터 1회당 10,000원",notice:true}
 const FILM_RUSH_OPTION = {key:"rush",label:"3일 이내 빠른 작업",detail:"제작 일정 확인 후 진행합니다",price:30000}
-const FILM_ENTRANCE_OPTION = {key:"entrance-ar",label:"입장곡 추가",detail:"한 사람당 40,000원",price:40000,quantity:true,unit:"명",priceUnit:"인당",max:2}
+const FILM_ENTRANCE_OPTIONS = [
+  {key:"bride-entrance",label:"신부 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000},
+  {key:"groom-entrance",label:"신랑 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000}
+]
 const PRODUCT_OPTIONS = {
-  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000}],
-  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000}],
-  wedding:[FILM_ENTRANCE_OPTION,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  "duet-film":[FILM_ENTRANCE_OPTION,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  "solo-film":[FILM_ENTRANCE_OPTION,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  proposal:[{key:"bride-entrance",label:"신부 입장곡 추가",detail:"신부 입장곡 1곡 추가",price:40000},FILM_RUSH_OPTION,FILM_REVISION_NOTICE]
+  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
+  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
+  wedding:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
+  "duet-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
+  "solo-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
+  proposal:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE]
 }
 const FRIEND_PRODUCT_OPTIONS = [
 ]
@@ -516,7 +540,7 @@ function soloReviewCarousel(){
 }
 const AR_DETAIL_CONTENT={
  solo:{
-  kicker:"1인 AR 축가",poster:"assets/img/ar-detail/solo-live-proof.jpg",videoLabel:"실제 고객의 본식 AR 축가 현장 영상",
+  kicker:"AR 축가 사전녹음 · 1시간",poster:"assets/img/ar-detail/solo-live-proof.jpg",videoLabel:"실제 고객의 본식 AR 축가 현장 영상",
   heroLine1:"떨리는 본식 무대,",heroLine2:"미리 준비한 내 목소리가 함께합니다",
   heroDescription:"미리 녹음하고 자연스럽게 보정한 내 목소리를 AR로 함께 재생해,<br>현장에서는 노래와 마음에만 집중할 수 있습니다.",
   benefitLine1:"라이브의 감동은 그대로,",benefitEmphasis:"AR로 안정감까지 더합니다",
@@ -524,15 +548,15 @@ const AR_DETAIL_CONTENT={
   keywords:[["01","프로 녹음 퀄리티"],["02","1:1 디렉팅"],["03","노래 못해도 OK"],["04","AR 밸런스"],["05","라이브 안정"]]
  },
  duo:{
-  kicker:"2인 AR 축가",poster:"assets/img/song/duo.webp",videoLabel:"실제 고객의 본식 2인 AR 축가 현장 영상",
-  heroLine1:"함께 부르는 본식 무대,",heroLine2:"두 사람의 목소리가 자연스럽게 어우러집니다",
-  heroDescription:"미리 각자의 파트와 화음을 녹음하고 자연스럽게 보정한 두 사람의 목소리를 AR로 함께 재생해,<br>현장에서는 서로의 호흡과 마음에만 집중할 수 있습니다.",
-  benefitLine1:"두 사람의 호흡은 그대로,",benefitEmphasis:"AR로 균형감까지 더합니다",
-  benefitDescription:["각자의 음역과 화음에 맞춘 AR이 두 사람의 목소리를 받쳐주고,","본식에서도 자연스럽게 호흡을 이어갑니다."],
-  keywords:[["01","파트 설계"],["02","화음 균형"],["03","구간별 디렉팅"],["04","듀엣 밸런스"],["05","라이브 안정"]]
+  kicker:"AR 축가 사전녹음 · 2시간",poster:"assets/img/song/duo.webp",videoLabel:"실제 고객의 본식 AR 축가 현장 영상",
+  heroLine1:"넉넉한 두 시간의 녹음,",heroLine2:"우리의 목소리를 세심하게 완성합니다",
+  heroDescription:"인원 제한 없이 한 구간씩 녹음하고 음정과 박자를 수작업으로 다듬어,<br>본식에서 함께 부를 AR 음원으로 완성합니다.",
+  benefitLine1:"녹음 시간은 넉넉하게,",benefitEmphasis:"한 소절씩 더 세심하게",
+  benefitDescription:["2시간 동안 구간별로 녹음하고 목소리를 다듬어,","본식에서 자연스럽게 노래를 이어갈 수 있도록 돕습니다."],
+  keywords:[["01","2시간 녹음"],["02","인원 제한 없음"],["03","구간별 디렉팅"],["04","수작업 보정"],["05","믹싱·마스터링"]]
  },
  wedding:{
-  kicker:"식전 / 축가 영상",poster:"assets/img/wedding/03-lipsync-mv.webp",videoLabel:"위스티아 웨딩 영상 예시",
+  kicker:"듀엣 식전 스토리 필름",poster:"assets/img/wedding/03-lipsync-mv.webp",videoLabel:"위스티아 웨딩 영상 예시",
   heroLine1:"우리의 목소리로,",heroLine2:"예식의 장면을 완성합니다",
   heroDescription:"직접 부른 노래와 이야기를 한 편의 웨딩 필름으로 완성해,<br>식전 또는 축가 순서에 마음을 전합니다.",
   benefitLine1:"익숙한 영상 대신,",benefitEmphasis:"우리의 목소리를 담습니다",
@@ -548,7 +572,7 @@ const AR_DETAIL_CONTENT={
   keywords:[["01","듀엣 녹음"],["02","파트 · 화음"],["03","뮤비 클립"],["04","영상 편집"],["05","상영본 전달"]]
  },
  "solo-film":{
-  kicker:"녹음 메이킹 필름",poster:"assets/img/solo-film/solo-film-cover-v2.webp",videoLabel:"위스티아 녹음 메이킹 필름 예시",
+  kicker:"축가 녹음 메이킹 필름",poster:"assets/img/solo-film/solo-film-cover-v2.webp",videoLabel:"위스티아 녹음 메이킹 필름 예시",
   heroLine1:"직접 부른 목소리로,",heroLine2:"가장 진한 마음을 전합니다",
   heroDescription:"직접 부른 노래와 녹음 장면을 축가 영상으로 완성해,<br>본식에서는 편안하게 상영하고 마음은 오래 남깁니다.",
   benefitLine1:"축가 가수 대신,",benefitEmphasis:"내 목소리로 직접 전합니다",
@@ -556,7 +580,7 @@ const AR_DETAIL_CONTENT={
   keywords:[["01","1:1 디렉팅"],["02","구간별 녹음"],["03","보컬 보정"],["04","메이킹 촬영"],["05","상영본 전달"]]
  },
  proposal:{
-  kicker:"프로포즈 필름",poster:"assets/img/proposal-video-cover.jpg",videoLabel:"위스티아 프로포즈 필름 예시",
+  kicker:"프로포즈 · 답프로포즈",poster:"assets/img/proposal-video-cover.jpg",videoLabel:"위스티아 프로포즈 필름 예시",
   heroLine1:"말로 다 전하지 못한 마음을,",heroLine2:"노래와 장면으로 남깁니다",
   heroDescription:"직접 부른 노래와 두 사람의 이야기를 한 편의 필름으로 완성해,<br>오직 한 사람을 위한 고백의 순간을 만듭니다.",
   benefitLine1:"평범한 선물 대신,",benefitEmphasis:"내 목소리로 마음을 전합니다",
@@ -564,7 +588,7 @@ const AR_DETAIL_CONTENT={
   keywords:[["01","곡 방향 상담"],["02","1:1 녹음"],["03","고백 촬영"],["04","스토리 편집"],["05","완성 필름"]]
  }
 }
-function detailHookHero(p,key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,localVideo=Boolean(p.resultVideo),video=localVideo?'<video autoplay muted loop playsinline preload="auto" poster="'+escapeHtml(content.poster)+'" aria-label="'+escapeHtml(content.videoLabel)+'"><source src="'+escapeHtml(p.resultVideo)+'" type="video/mp4">영상을 재생할 수 없는 브라우저입니다</video>':"",control=localVideo?'<button type="button" class="ar-hook-video-control" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span><span class="ar-icon-pause" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></span></button>':p.videoUrl?'<button type="button" class="ar-hook-video-control ar-hook-video-play" data-inline-youtube="'+escapeHtml(p.videoUrl)+'" aria-label="'+escapeHtml(p.title)+' 실제 영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span></button>':"",note=localVideo?"실제 고객님이 보내주신 현장 영상입니다":p.videoUrl?"※ 실제 제작 영상입니다":"※ 위스티아 제작 장면입니다";return '<section class="ar-hook-hero" aria-labelledby="arHookTitle"><div class="ar-hook-media">'+img(content.poster,content.videoLabel,true).replace('<img ','<img class="ar-hook-fallback" ')+video+'<span class="ar-hook-video-source">'+note+'</span>'+control+'</div><div class="ar-hook-copy shell">'+label(content.kicker)+'<h1 id="arHookTitle"><span class="hero-line hero-line1">'+content.heroLine1+'</span><br><strong class="hero-line hero-line2">'+content.heroLine2+'</strong></h1><p>'+content.heroDescription+'</p></div></section>'}
+function detailHookHero(p,key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,localVideo=Boolean(p.resultVideo),video=localVideo?'<video autoplay muted loop playsinline preload="auto" poster="'+escapeHtml(content.poster)+'" aria-label="'+escapeHtml(content.videoLabel)+'"><source src="'+escapeHtml(p.resultVideo)+'" type="video/mp4">영상을 재생할 수 없는 브라우저입니다</video>':"",control=localVideo?'<button type="button" class="ar-hook-sound-control" data-ar-sound-toggle aria-label="영상 소리 켜기" aria-pressed="false"><span aria-hidden="true">♪</span><span data-ar-sound-label>소리 켜기</span></button><button type="button" class="ar-hook-video-control" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span><span class="ar-icon-pause" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></span></button>':p.videoUrl?'<button type="button" class="ar-hook-video-control ar-hook-video-play" data-inline-youtube="'+escapeHtml(p.videoUrl)+'" aria-label="'+escapeHtml(p.title)+' 실제 영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span></button>':"",note=localVideo?"실제 고객님이 보내주신 현장 영상입니다":p.videoUrl?"※ 실제 제작 영상입니다":"※ 위스티아 제작 장면입니다";return '<section class="ar-hook-hero" aria-labelledby="arHookTitle"><div class="ar-hook-media">'+img(content.poster,content.videoLabel,true).replace('<img ','<img class="ar-hook-fallback" ')+video+'<span class="ar-hook-video-source">'+note+'</span>'+control+'</div><div class="ar-hook-copy shell">'+label(content.kicker)+'<h1 id="arHookTitle"><span class="hero-line hero-line1">'+content.heroLine1+'</span><br><strong class="hero-line hero-line2">'+content.heroLine2+'</strong></h1><p>'+content.heroDescription+'</p></div></section>'}
 const AR_MIC_ICON='<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>'
 function arPrimaryBenefit(key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,ar=["solo","duo"].includes(key),benefitLabel=ar?"AR BENEFIT":"FILM BENEFIT",serviceName=ar?"WISTIA AR 축가":"WISTIA 영상 제작";return '<section class="shell section ar-primary-benefit" aria-labelledby="arPrimaryBenefitTitle"><div class="ar-benefit-copy" data-solo-section-intro><p class="ar-tags" data-solo-kicker>'+benefitLabel+'</p><h2 id="arPrimaryBenefitTitle" data-solo-title><span class="solo-type-line ar-copy-line1">'+content.benefitLine1+'</span><span class="solo-type-line ar-copy-emphasis"><span class="ar-copy-emphasis-bg" aria-hidden="true"></span><span class="ar-copy-emphasis-text">'+content.benefitEmphasis+'</span></span></h2><p class="ar-benefit-desc" data-solo-sub><span class="solo-type-line">'+content.benefitDescription[0]+'</span><span class="solo-type-line">'+content.benefitDescription[1]+'</span></p></div><div class="ar-index-wheel" role="group" aria-label="'+serviceName+'의 다섯 가지 강점"><div class="ar-index-ring ar-index-ring-1" aria-hidden="true"></div><div class="ar-index-ring ar-index-ring-2" aria-hidden="true"></div><div class="ar-index-center" aria-hidden="true">'+AR_MIC_ICON+'</div><ul class="ar-index-items">'+content.keywords.map((k,i)=>'<li><button type="button" class="ar-index-item" data-ar-index="'+i+'" aria-pressed="'+(i===0)+'"><span class="ar-index-dot" aria-hidden="true"></span><span class="ar-index-num">'+k[0]+'</span><span class="ar-index-label">'+k[1]+'</span></button></li>').join("")+'</ul></div></section>'}
 let arIndexTimer=null
@@ -581,7 +605,7 @@ const EXPERT_CARD_ICONS=[
  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-4m4 8V6m4 10V8m4 10V5m4 9v-4"></path></svg>'
 ]
 function arExpertStory(){
- return '<section class="ar-expert-story section" aria-labelledby="arExpertStoryTitle"><div class="shell"><header class="ar-story-intro" data-solo-section-intro><p data-solo-kicker>WISTIA · BRAND STORY</p><h2 id="arExpertStoryTitle" data-solo-title><span class="solo-type-line">같은 소스여도,</span><span class="solo-type-line">전문가들과 함께라면 다릅니다.</span></h2></header><div class="ar-expert-split" data-expert-split data-active="0">'+EXPERT_CARDS.map((c,i)=>'<button type="button" class="ar-expert-panel'+(i===0?' is-active':'')+'" data-expert-panel="'+i+'" aria-expanded="'+(i===0)+'"><span class="ar-expert-panel-media">'+img(c.image,c.alt)+'</span><span class="ar-expert-panel-overlay" aria-hidden="true"></span><span class="ar-expert-panel-toggle" aria-hidden="true">'+(i===0?'−':'+')+'</span><span class="ar-expert-panel-content"><small class="ar-expert-panel-index">'+c.index+'</small><strong class="ar-expert-panel-keyword">'+c.keyword+'</strong><span class="ar-expert-panel-sub">'+c.sub+'</span><span class="ar-expert-panel-detail">'+c.detail+'</span></span></button>').join('')+'</div><p class="ar-expert-hint">두 영역을 눌러 각 전문가의 작업을 확인해 보세요</p></div></section>'
+ return '<section class="ar-expert-story section" aria-labelledby="arExpertStoryTitle"><div class="shell"><header class="ar-story-intro" data-solo-section-intro><h2 id="arExpertStoryTitle" data-solo-title><span class="solo-type-line">같은 소스여도,</span><span class="solo-type-line">전문가들과 함께라면 다릅니다.</span></h2></header><div class="ar-expert-split" data-expert-split data-active="0">'+EXPERT_CARDS.map((c,i)=>'<button type="button" class="ar-expert-panel'+(i===0?' is-active':'')+'" data-expert-panel="'+i+'" aria-expanded="'+(i===0)+'"><span class="ar-expert-panel-media">'+img(c.image,c.alt)+'</span><span class="ar-expert-panel-overlay" aria-hidden="true"></span><span class="ar-expert-panel-toggle" aria-hidden="true">'+(i===0?'−':'+')+'</span><span class="ar-expert-panel-content"><small class="ar-expert-panel-index">'+c.index+'</small><strong class="ar-expert-panel-keyword">'+c.keyword+'</strong><span class="ar-expert-panel-sub">'+c.sub+'</span><span class="ar-expert-panel-detail">'+c.detail+'</span></span></button>').join('')+'</div><p class="ar-expert-hint">두 영역을 눌러 각 전문가의 작업을 확인해 보세요</p></div></section>'
 }
 function wistiaBeforeAfterSection(){return '<section class="wistia-ba-section" id="wistiaBeforeAfter" data-before-src="assets/audio/before-after/before.mp3" data-after-src="assets/audio/before-after/after.mp3" aria-labelledby="wistiaBeforeAfterTitle"><div class="wistia-ba-layout"><header class="wistia-ba-copy" data-solo-section-intro><p class="wistia-ba-eyebrow" data-solo-kicker>BEFORE / AFTER</p><h2 id="wistiaBeforeAfterTitle" data-solo-title><span class="solo-type-line">노래를 잘 못해도</span><span class="solo-type-line">괜찮습니다.</span></h2><p data-solo-sub><span class="solo-type-line">녹음 원본이 완벽하지 않아도 괜찮아요.</span><span class="solo-type-line">튠·믹싱으로 목소리와 마음을 선명하게 완성합니다.</span></p></header><div class="bap-player"><div class="bap-body"><div class="bap-controls"><button class="bap-play mode-before" type="button" aria-label="재생"><span class="bap-play-icon">▶</span><b class="bap-play-label">재생</b></button><div class="bap-time"><b>0:00</b> / <span>0:00</span></div></div><div class="bap-badge mode-before"><span></span><b>보정 전과 후의 보컬 소스는 같은 녹음본입니다</b></div><canvas class="bap-wave" aria-label="오디오 파형. 클릭하여 재생 위치 이동"></canvas><div class="bap-tabs" role="group" aria-label="보정 전후 음원 선택"><button class="bap-tab active" type="button" data-mode="before" aria-pressed="true">보정 전</button><button class="bap-switch" type="button" aria-label="보정 전후 전환">⇄</button><button class="bap-tab" type="button" data-mode="after" aria-pressed="false">보정 후</button></div><p class="bap-error" role="status" hidden>음원을 불러오지 못했습니다. 파일 경로를 확인해 주세요.</p></div></div></div></section>'}
 function setExpertPanel(split,index){split.dataset.active=index;const panels=[...split.querySelectorAll("[data-expert-panel]")];panels.forEach((panel,i)=>{const active=i===index;panel.classList.toggle("is-active",active);panel.setAttribute("aria-expanded",String(active));const toggle=panel.querySelector(".ar-expert-panel-toggle");if(toggle)toggle.textContent=active?"−":"+";const keyword=panel.querySelector(".ar-expert-panel-keyword")?.textContent||"";panel.setAttribute("aria-label",keyword+" 이야기 "+(active?"접기":"펼치기"))})}
@@ -591,37 +615,43 @@ function stopExpertAuto(){clearInterval(expertAutoTimer);expertAutoTimer=null}
 function startExpertAuto(root,count){stopExpertAuto();if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;expertAutoTimer=setInterval(()=>{const track=root.querySelector("[data-expert-track]");if(!track)return;const current=Number(track.dataset.index||0);setExpertIndex(root,(current+1)%count)},5000)}
 function setExpertIndex(root,index){const track=root.querySelector("[data-expert-track]");if(!track)return;const cards=[...root.querySelectorAll("[data-expert-card]")],dots=[...root.querySelectorAll("[data-expert-goto]")],status=root.querySelector("[data-expert-status]"),progress=root.querySelector(".ar-story-progress i");track.dataset.index=index;track.style.transform="translateX(-"+(index*100)+"%)";cards.forEach((c,i)=>{const active=i===index;c.classList.toggle("is-active",active);c.setAttribute("aria-hidden",String(!active))});dots.forEach((d,i)=>d.setAttribute("aria-selected",String(i===index)));if(status)status.textContent=String(index+1).padStart(2,"0")+" / "+String(cards.length).padStart(2,"0");if(progress)progress.style.width=((index+1)/cards.length*100)+"%"}
 function initExpertSlider(){const root=document.querySelector(".ar-expert-story");stopExpertAuto();clearTimeout(expertResumeTimer);if(!root)return;const track=root.querySelector("[data-expert-track]"),cards=[...root.querySelectorAll("[data-expert-card]")];if(!track||!cards.length)return;const count=cards.length;setExpertIndex(root,0);const pause=()=>{stopExpertAuto();clearTimeout(expertResumeTimer)},resume=()=>{clearTimeout(expertResumeTimer);expertResumeTimer=setTimeout(()=>{if(!root.matches(":hover")&&!root.matches(":focus-within"))startExpertAuto(root,count)},4200)},go=delta=>{const i=Number(track.dataset.index||0);setExpertIndex(root,(i+delta+count)%count);pause();resume()};root.addEventListener("mouseenter",pause);root.addEventListener("mouseleave",()=>{if(!root.matches(":focus-within"))resume()});root.addEventListener("focusin",pause);root.addEventListener("focusout",()=>{if(!root.matches(":hover"))resume()});root.querySelector("[data-expert-prev]")?.addEventListener("click",()=>go(-1));root.querySelector("[data-expert-next]")?.addEventListener("click",()=>go(1));root.querySelectorAll("[data-expert-goto]").forEach(btn=>btn.addEventListener("click",()=>{setExpertIndex(root,Number(btn.dataset.expertGoto));pause();resume()}));const viewport=root.querySelector(".ar-expert-viewport");viewport.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(1)}else if(e.key==="ArrowLeft"){e.preventDefault();go(-1)}});let dragging=false,startX=0,deltaX=0;viewport.addEventListener("pointerdown",e=>{dragging=true;startX=e.clientX;deltaX=0;track.style.transition="none";pause();viewport.setPointerCapture(e.pointerId)});viewport.addEventListener("pointermove",e=>{if(!dragging)return;deltaX=e.clientX-startX;if(Math.abs(deltaX)>6)e.preventDefault();const i=Number(track.dataset.index||0);track.style.transform="translateX(calc(-"+(i*100)+"% + "+deltaX+"px))"});const endDrag=()=>{if(!dragging)return;dragging=false;track.style.transition="";const i=Number(track.dataset.index||0);if(Math.abs(deltaX)>60)setExpertIndex(root,Math.min(count-1,Math.max(0,i+(deltaX<0?1:-1))));else setExpertIndex(root,i);resume()};viewport.addEventListener("pointerup",endDrag);viewport.addEventListener("pointercancel",endDrag);startExpertAuto(root,count)}
-const AR_COMPARE_ROWS=[
- ["녹음 시간","기본 60분","기본 90분 +@"],
- ["녹음 방식","원테이크 녹음","마디·구간별로 섬세하게 녹음"],
- ["보컬 보정","AI·간단 음정 보정","음색을 살리는 수작업 튠"],
- ["믹싱·마스터링","추가금 발생","기본 구성에 포함"]
+const WISTIA_ADVANTAGES=[
+ ["녹음 방식","구간별 녹음 + 1:1 디렉팅","한 곡을 처음부터 끝까지 부르지 않고 구간별로 나누어 디렉팅하며 완성합니다"],
+ ["보컬 보정","음정·박자 수작업 보정","자동 보정에만 의존하지 않고 원래 목소리의 느낌을 살려 세밀하게 보정합니다"],
+ ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"],
+ ["상품 구성","정말 필요한 구성만 담은 상품","불필요한 구성을 줄이고 필요한 작업에 집중해 투명한 가격을 제시합니다"],
+ ["가격","부천 기반의 합리적인 가격","불필요한 운영 비용을 줄여 작업 퀄리티는 유지하면서 가격 부담을 낮춥니다"]
 ]
-const AR_DUO_ROWS=[["녹음 방식","두 사람의 파트와 화음을 구간별로 나누어 녹음"],["현장 디렉팅","1:1로 각자의 호흡과 타이밍을 안내"],["보컬 보정","두 사람의 음색을 살리는 수작업 튠"],["음원 완성","믹싱·마스터링까지 포함"],["기본가","16만원 · 위 과정 모두 포함"]]
-const FILM_COMPARE_ROWS=[["준비 범위","항목별로 따로 준비","녹음부터 상영본까지 한 번에"],["노래 제작","완곡 위주로 일괄 진행","구간별 1:1 디렉팅"],["영상 구성","기본 편집만 확인","노래와 이야기의 흐름까지 설계"],["최종 전달","제공 파일만 확인","완성 음원과 상영본 함께 전달"]]
-function arComparisonSection(key="solo"){
- if(key==="solo"){
-  const body=AR_COMPARE_ROWS.map((row,i)=>'<div class="ar-compare-row" data-ar-compare-row role="row" style="--row-i:'+i+'"><span class="ar-compare-general" role="cell">'+row[1]+'</span><strong class="ar-compare-criteria" role="rowheader">'+row[0]+'</strong><span class="ar-compare-wistia" role="cell">'+row[2]+'</span></div>').join("")
-  return '<section class="ar-compare section" aria-labelledby="arCompareTitle" data-ar-compare><div class="shell"><header class="ar-compare-intro" data-solo-section-intro><p data-solo-kicker>WHY WISTIA</p><h2 id="arCompareTitle" class="ar-compare-title" data-solo-title>같은 축가 녹음,<br>구성은 다릅니다</h2><p class="ar-compare-sub" data-solo-sub>녹음 시간부터 음원 완성까지 비교해 보세요</p></header><div class="ar-compare-table is-package-comparison" role="table" aria-label="다른 축가 녹음 상품과 WISTIA 비교"><div class="ar-compare-head" role="row"><span role="columnheader">타사</span><span role="columnheader">비교 항목</span><strong role="columnheader">WISTIA</strong></div>'+body+'</div><p class="ar-compare-note">상품별 구성은 다를 수 있으니 실제 포함 범위는 예약 전에 확인해 주세요</p></div></section>'
- }
- if(key==="duo"){
-  const body=AR_DUO_ROWS.map((row,i)=>'<div class="ar-compare-row" data-ar-compare-row role="row" style="--row-i:'+i+'"><strong class="ar-compare-criteria" role="rowheader">'+row[0]+'</strong><span class="ar-compare-wistia" role="cell">'+row[1]+'</span></div>').join("")
-  return '<section class="ar-compare section" aria-labelledby="arCompareTitle" data-ar-compare><div class="shell"><header class="ar-compare-intro" data-solo-section-intro><p data-solo-kicker>WHY WISTIA</p><h2 id="arCompareTitle" class="ar-compare-title" data-solo-title>두 사람의 목소리를<br>끝까지 함께 완성합니다</h2><p class="ar-compare-sub" data-solo-sub>파트별 녹음과 1:1 디렉팅, 수작업 튠부터 믹싱·마스터링까지 기본가 16만원에 담았습니다</p></header><div class="ar-compare-table is-wistia-only" role="table" aria-label="WISTIA 2인 축가 녹음 구성"><div class="ar-compare-head" role="row"><span role="columnheader">제작 기준</span><strong role="columnheader">WISTIA</strong></div>'+body+'</div><p class="ar-compare-note">2인 AR 축가 기본가 기준 · 이벤트 혜택과 추가 옵션은 별도</p></div></section>'
- }
- const rows=FILM_COMPARE_ROWS,title=["일반 제작 방식과","비교해 보세요."],description=["준비 범위부터 완성본 전달까지,","위스티아의 제작 방식을 비교해 보세요."]
- const body=rows.map((row,i)=>'<div class="ar-compare-row" data-ar-compare-row role="row" style="--row-i:'+i+'"><span class="ar-compare-general" role="cell">'+row[1]+'</span><strong class="ar-compare-criteria" role="rowheader">'+row[0]+'</strong><span class="ar-compare-wistia" role="cell">'+row[2]+'</span></div>').join("")
- return '<section class="ar-compare section" aria-labelledby="arCompareTitle" data-ar-compare><div class="shell"><header class="ar-compare-intro" data-solo-section-intro><p data-solo-kicker>WHY WISTIA</p><h2 id="arCompareTitle" class="ar-compare-title" data-solo-title><span class="solo-type-line">'+title[0]+'</span><span class="solo-type-line">'+title[1]+'</span></h2><p class="ar-compare-sub" data-solo-sub><span class="solo-type-line">'+description[0]+'</span><span class="solo-type-line">'+description[1]+'</span></p></header><div class="ar-compare-table" role="table" aria-label="일반 제작과 WISTIA 비교"><div class="ar-compare-head" role="row"><span role="columnheader">일반 제작</span><strong role="columnheader">WISTIA</strong></div>'+body+'</div><p class="ar-compare-note">제공 범위는 업체와 상품에 따라 달라질 수 있습니다.</p></div></section>'
-}
-let arCompareObserver=null
-function initArCompare(){arCompareObserver?.disconnect();const section=document.querySelector("[data-ar-compare]");if(!section)return;if(matchMedia("(prefers-reduced-motion: reduce)").matches){section.classList.add("is-visible");return}arCompareObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){section.classList.add("is-visible");arCompareObserver.disconnect()}}),{threshold:.2,rootMargin:"0px 0px -8% 0px"});arCompareObserver.observe(section)}
-function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media video"),button=document.querySelector("[data-ar-video-toggle]");if(!video||!button)return;const update=()=>{const playing=!video.paused&&!video.ended&&video.readyState>=2;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",()=>video.classList.remove("is-playing"));video.play().catch(update);update()}
+function wistiaAdvantagesSection(){return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><ol>'+WISTIA_ADVANTAGES.map(([category,title,description],index)=>'<li><span class="wistia-advantage-number">'+String(index+1).padStart(2,"0")+'</span><div><small>'+category+'</small><h3>'+title+'</h3><p>'+description+'</p></div></li>').join("")+'</ol></div></section>'}
+function productComparisonSection(){return wistiaAdvantagesSection()}
+function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media video"),button=document.querySelector("[data-ar-video-toggle]"),sound=document.querySelector("[data-ar-sound-toggle]");if(!video||!button)return;const update=()=>{const playing=!video.paused&&!video.ended&&video.readyState>=2;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생");if(sound){sound.setAttribute("aria-pressed",String(!video.muted));sound.setAttribute("aria-label",video.muted?"영상 소리 켜기":"영상 소리 끄기");sound.querySelector("[data-ar-sound-label]").textContent=video.muted?"소리 켜기":"소리 끄기"}};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("volumechange",update);video.addEventListener("waiting",()=>video.classList.remove("is-playing"));video.play().catch(update);update()}
 function detailBenefit(p){const highlights=p.highlights||[],main=highlights[0]||[p.oneLine,p.sub],support=highlights.slice(1,3);return '<section class="shell section detail-benefit" aria-labelledby="detailBenefitTitle"><div class="detail-benefit-intro">'+label("핵심 장점")+'<h2 id="detailBenefitTitle">'+main[0]+'</h2><p>'+main[1]+'</p></div><div class="detail-benefit-points">'+support.map((item,i)=>'<article><span>'+String(i+2).padStart(2,"0")+'</span><h3>'+item[0]+'</h3><p>'+item[1]+'</p></article>').join("")+'</div></section>'}
-function detailComparison(p){const film=p.category!=="song",rows=film?[["준비 방식","녹음·촬영·편집을 각각 확인","한 곳에서 녹음부터 상영본까지"],["녹음 진행","연습 후 전체 곡 녹음","구간별 1:1 보컬 디렉팅"],["보컬 보정","보정 범위와 비용을 별도 확인","음정·박자·호흡까지 수작업 보정"],["최종 전달","제공 파일을 항목별로 확인","완성 음원과 상영용 영상 함께 전달"]]:[["준비 방식","반주·녹음·보정을 각각 확인","녹음부터 본식용 AR까지 한 번에"],["녹음 진행","연습 후 전체 곡 녹음","구간별 1:1 보컬 디렉팅"],["보컬 보정","보정 범위와 비용을 별도 확인","원래 목소리를 살린 수작업 보정"],["최종 전달","최종 음원 종류를 별도 확인","완성 음원과 본식용 AR 함께 전달"]];return '<section class="comparison-band section" aria-labelledby="comparisonTitle"><div class="shell">'+heading("","타사 비교","예약 전에 반드시 확인해야 할 제작 범위를 기준으로 정리했습니다")+'<div class="comparison-table" role="table" aria-label="일반 제작 방식과 위스티아 비교"><div class="comparison-head" role="row"><span></span><strong>일반 제작 방식</strong><strong>WISTIA</strong></div>'+rows.map(row=>'<div class="comparison-row" role="row"><strong>'+row[0]+'</strong><span><small>일반 제작 방식</small>'+row[1]+'</span><span><small>WISTIA</small>'+row[2]+'</span></div>').join("")+'</div><p class="comparison-note">업체별 상품 구성은 다를 수 있으므로 실제 포함 범위와 추가 비용은 예약 전에 확인해 주세요</p></div></section>'}
+function detailComparison(){return wistiaAdvantagesSection()}
 function detailIncluded(p){const items=p.included||[];if(!items.length)return "";return '<section class="shell section detail-included" aria-labelledby="detailIncludedTitle">'+heading("","최종 완성본에 포함됩니다","상담부터 제작과 전달까지 기본 구성에 포함되는 항목입니다")+'<ul>'+items.map((item,i)=>'<li><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+item+'</strong></li>').join("")+'</ul></section>'}
 function reviewMetrics(){const loop=document.querySelector(".review-loop"),set=loop?.querySelector(".review-set"),card=set?.querySelector(".review-capture");if(!loop||!set||!card)return null;const gap=parseFloat(getComputedStyle(set).gap)||0;return{loop,setWidth:set.scrollWidth,step:card.getBoundingClientRect().width+gap}}
 function paintReviews(){const metrics=reviewMetrics();if(metrics)metrics.loop.style.transform='translate3d('+(-reviewDisplay)+'px,0,0)'}
 function moveReviews(direction=1){const metrics=reviewMetrics();if(!metrics)return;reviewTarget+=direction*metrics.step}
-function startReviewCarousel(reset=true){cancelAnimationFrame(reviewFrame);const initial=reviewMetrics();if(!initial)return;if(reset){reviewTarget=0;reviewDisplay=0;reviewLast=0}if(matchMedia("(prefers-reduced-motion: reduce)").matches){reviewDisplay=reviewTarget;paintReviews();return}paintReviews();const tick=now=>{const track=document.querySelector("#reviewTrack");if(!track)return;const region=track.closest(".reviews-section")||track,metrics=reviewMetrics();if(!metrics)return;const elapsed=reviewLast?Math.min(now-reviewLast,50):0;reviewLast=now;const paused=region.matches(":hover")||region.contains(document.activeElement);if(!paused)reviewTarget+=elapsed*.04;const ease=1-Math.exp(-elapsed/180);reviewDisplay+=(reviewTarget-reviewDisplay)*(ease||1);if(reviewTarget>=metrics.setWidth){reviewTarget-=metrics.setWidth;reviewDisplay-=metrics.setWidth}if(reviewTarget<0){reviewTarget+=metrics.setWidth;reviewDisplay+=metrics.setWidth}paintReviews();reviewFrame=requestAnimationFrame(tick)};reviewFrame=requestAnimationFrame(tick)}
+function startReviewCarousel(reset=true){
+ cancelAnimationFrame(reviewFrame)
+ const initial=reviewMetrics();if(!initial)return
+ if(reset){reviewTarget=0;reviewDisplay=0}
+ reviewLast=0
+ paintReviews()
+ const speed=matchMedia("(prefers-reduced-motion: reduce)").matches?.026:.04
+ const tick=now=>{
+  if(!document.querySelector("#reviewTrack"))return
+  const metrics=reviewMetrics();if(!metrics)return
+  const elapsed=reviewLast?Math.min(now-reviewLast,50):0;reviewLast=now
+  reviewTarget+=elapsed*speed
+  const ease=1-Math.exp(-elapsed/320)
+  reviewDisplay+=(reviewTarget-reviewDisplay)*ease
+  if(reviewTarget>=metrics.setWidth){reviewTarget-=metrics.setWidth;reviewDisplay-=metrics.setWidth}
+  if(reviewTarget<0){reviewTarget+=metrics.setWidth;reviewDisplay+=metrics.setWidth}
+  paintReviews()
+  reviewFrame=requestAnimationFrame(tick)
+ }
+ reviewFrame=requestAnimationFrame(tick)
+}
 function processMedia(step){const media=step[2];if(!media)return "";if(Array.isArray(media))return '<div class="process-image is-pair">'+media.map((source,index)=>img(source,step[0]+' 예시 사진 '+(index+1))).join("")+'</div>';if(typeof media==="object"&&media.duration)return '<div class="process-duration-card"><span>PRODUCTION PERIOD</span><strong>'+escapeHtml(media.duration)+'</strong><small>'+escapeHtml(media.note||"")+'</small></div>';return '<div class="process-image">'+img(media,step[0]+' 과정 이미지')+'</div>'}
 function processSection(steps=PROCESS){const hasImages=steps.some(step=>step[2]);return '<section class="shell section" id="process">'+heading("","진행 과정","상담부터 최종본 전달까지 순서대로 진행합니다")+'<ol class="process-list'+(hasImages?' has-images':'')+'">'+steps.map((s,i)=>'<li>'+processMedia(s)+'<span>'+String(i+1).padStart(2,"0")+'</span><div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div></li>').join("")+'</ol></section>'}
 function processList(steps){const hasImages=steps.some(step=>step[2]);return '<ol class="process-list'+(hasImages?' has-images':'')+'">'+steps.map((s,i)=>'<li>'+processMedia(s)+'<span>'+String(i+1).padStart(2,"0")+'</span><div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div></li>').join("")+'</ol>'}
@@ -654,7 +684,7 @@ const DETAIL_PROCESS_IMAGES={
 }
 function detailStudioSteps(key="solo"){
  if(key==="solo")return SOLO_STUDIO_PROCESS
- if(key==="duo")return DUO_STUDIO_PROCESS
+ if(key==="duo")return SOLO_STUDIO_PROCESS.map(step=>({...step,description:step.id===3?"인원 제한 없이 각자의 파트와 호흡을 안내하며, 2시간 안에서 한 구간씩 세심하게 녹음합니다":step.description}))
  const product=PRODUCTS[key],images=DETAIL_PROCESS_IMAGES[key]||[],steps=product?.steps||[]
  return steps.map(([title,description],index)=>{
   const number=index+1,last=index===steps.length-1,short=String(title).replace(/\s*·.*$/,"").replace(/\s*&.*$/,"").replace(/\s*\(.*/,"")
@@ -666,6 +696,10 @@ function soloProcessSlider(key="solo"){const steps=detailStudioSteps(key),ar=["s
  +'<header class="wps-head" data-solo-section-intro><div><p class="wps-kicker" data-solo-kicker>WISTIA · PRODUCTION PROCESS</p><h2 id="processStudioTitle" data-solo-title><span class="solo-type-line">처음부터 끝까지,</span><span class="solo-type-line">맞춤형으로 케어해드립니다.</span></h2><p class="wps-sub" data-solo-sub><span class="solo-type-line">'+description[0]+'</span><span class="solo-type-line">'+description[1]+'</span></p></div><div class="wps-counter" aria-label="현재 프로세스 01 / '+total+'"><span data-process-current>01</span><i></i><span>'+total+'</span></div></header>'
  +'<div class="wps-feature" data-process-feature tabindex="0" role="group" aria-label="작업과정 단계 슬라이더. 좌우 방향키로 단계를 이동할 수 있습니다."><div class="wps-photo"><span class="wps-badge" data-process-badge>01 / '+total+'</span>'+img(first.image,first.short,true).replace('<img ','<img data-process-image ')+'</div><article class="wps-content" aria-live="polite" aria-atomic="true"><span class="wps-ghost" data-process-ghost>01</span><p class="wps-step" data-process-eyebrow>'+first.eyebrow+'</p><h3 data-process-title>'+first.title+'</h3><p class="wps-description" data-process-description>'+first.description+'</p><div class="wps-detail" data-process-meta>'+processStudioMeta(first)+'</div><div class="wps-controls"><button type="button" data-process-prev aria-label="이전 단계" disabled>←</button><button type="button" class="is-next" data-process-next aria-label="다음 단계">→</button></div></article></div>'
  +'<nav class="wps-chapters" aria-label="제작 단계 선택" hidden>'+steps.map((step,index)=>'<button type="button" class="wps-chapter'+(index===0?' is-active':'')+'" data-process-chapter="'+index+'" data-image="'+step.image+'" aria-current="'+(index===0?'step':'false')+'" aria-label="'+String(step.id).padStart(2,"0")+' '+escapeHtml(step.short)+' 단계 보기"><b>'+String(step.id).padStart(2,"0")+'</b><span>'+escapeHtml(step.short)+'</span></button>').join("")+'</nav></section>'}
+function verticalProcessSection(key="solo"){
+ const steps=detailStudioSteps(key)
+ return '<section class="wistia-process-studio solo-process-section wps-vertical" id="process" aria-labelledby="processStudioTitle"><div class="shell"><header class="wps-head" data-solo-section-intro><div><p class="wps-kicker" data-solo-kicker>WISTIA · PRODUCTION PROCESS</p><h2 id="processStudioTitle" data-solo-title>처음부터 끝까지,<br>맞춤형으로 케어해드립니다</h2><p class="wps-sub" data-solo-sub>단계를 누르면 각 과정의 사진과 설명을 볼 수 있습니다</p></div></header><div class="wps-accordion">'+steps.map((step,index)=>'<details'+(index===0?' open':'')+'><summary data-process-step><span class="wps-accordion-num">'+String(step.id).padStart(2,"0")+'</span><strong>'+escapeHtml(step.short)+'</strong><span class="wps-accordion-plus" aria-hidden="true">+</span></summary><div class="wps-accordion-body"><div class="wps-accordion-photo">'+img(step.image,step.short+' 제작 과정',true)+'</div><div class="wps-accordion-copy"><p>'+escapeHtml(step.eyebrow)+'</p><h3>'+step.title+'</h3><p>'+escapeHtml(step.description)+'</p></div></div></details>').join("")+'</div></div></section>'
+}
 function processTypeButton(productKey,formatKey,icon){const format=FILM_FORMATS[formatKey],expanded=selectedFilmFormat===formatKey;return '<button type="button" aria-expanded="'+expanded+'" aria-controls="processType'+(formatKey==="live"?'Live':'Making')+'" data-process-format="'+formatKey+'"><span class="process-type-preview">'+img(FILM_FORMAT_IMAGES[productKey][formatKey],format.title+' 예시 사진')+'</span><span class="process-type-label"><span class="process-type-marker" aria-hidden="true"></span><strong><span aria-hidden="true">'+icon+'</span> '+format.title+'</strong></span></button>'}
 function filmProcessSection(productKey,steps){const live=filmProcessSteps(productKey,steps,"live"),making=filmProcessSteps(productKey,steps,"making");if(productKey==="proposal")return '<section class="shell section film-process-section proposal-process-section" id="process">'+heading("","진행 과정","녹음부터 영상 완성까지의 과정을 확인해 주세요")+'<div id="processTypeLive" class="process-type-panel proposal-single-process" role="region" aria-label="뮤직 비디오 필름 진행 과정" data-process-panel="live">'+processAccordionList(live)+'</div></section>';return '<section class="shell section film-process-section" id="process">'+heading("","녹음 메이킹 필름 진행 과정","항목을 누르면 사진과 자세한 설명을 볼 수 있습니다")+'<div id="processTypeMaking" class="process-type-panel" role="region" aria-label="녹음 메이킹 필름 진행 과정" data-process-panel="making">'+processAccordionList(making)+'</div></section>'}
 function filmUpgradeDetail(productKey){if(productKey==="proposal")return "";const difference=filmFormatPrice(productKey,"live")-filmFormatPrice(productKey,"making"),price="+"+shortWon(difference);return '<section class="shell section film-upgrade-detail"><div class="film-upgrade-detail-media">'+img(FILM_FORMAT_IMAGES[productKey].live,"뮤직 비디오 필름 실제 예시 사진",true)+'</div><div class="film-upgrade-detail-copy">'+label("선택 업그레이드")+'<h2>뮤직 비디오 필름으로 업그레이드</h2><p>기본 녹음 메이킹 필름에 아래 구성이 추가됩니다</p><ul>'+filmUpgradeFeatures(productKey).map(item=>'<li>'+item+'</li>').join("")+'</ul><div><strong>'+price+'</strong></div></div></section>'}
@@ -674,10 +708,11 @@ function resultSection(p,m,w,song){return '<section class="result-band"><div cla
 function detailNext(key,purpose=""){const eventHref="#/event/"+key+(purpose?"/"+purpose:"");return '<section class="detail-next section"><div class="shell"><h2>상품 구성과 가격을<br>확인해 보세요</h2><p>포함 작업과 이벤트 혜택을 확인한 뒤 예약 상담으로 이어집니다</p>'+cta("상품 구성·가격 확인하기",eventHref)+'</div></section>'}
 function renderHome(requested="role"){
  const stage=requested==="people"&&finderChoice.moment?"people":requested==="service"&&finderChoice.role==="couple"?"service":"role"
- const visuals={role:{singer:["assets/img/finder-ai/character-ar-vocal.jpg","01","AR VOCAL","내 목소리로 전하는 축가"],couple:["assets/img/finder-ai/character-wedding-film.jpg","02","WEDDING FILM","노래와 장면을 함께"],proposal:["assets/img/finder-ai/character-proposal-film.jpg","03","PROPOSAL FILM","마음을 담은 한 편의 영상"],making:["assets/img/finder-ai/character-making-film.jpg","04","RECORDING FILM","녹음하는 순간을 영상으로"]},service:{pre:["assets/img/wedding/01-guest-message.webp","01","BEFORE CEREMONY",""],ceremony:["assets/img/solo-film/solo-film-cover-v2.webp","02","AT THE CEREMONY",""]},people:{one:["assets/img/ar-detail/solo-live-proof.jpg","01","SOLO",""],two:["assets/img/song-film/duet-video-cover.jpg","02","TOGETHER",""]}}
+ const visuals={role:{singer:["assets/img/finder-ai/character-ar-vocal-v3.jpg","01","AR VOCAL","내 목소리로 전하는 축가"],couple:["assets/img/finder-ai/character-wedding-film.jpg","02","WEDDING FILM","노래와 장면을 함께"],proposal:["assets/img/finder-ai/character-proposal-film.jpg","03","PROPOSAL FILM","마음을 담은 한 편의 영상"],making:["assets/img/finder-ai/character-making-film.jpg","04","RECORDING FILM","녹음하는 순간을 영상으로"]},service:{pre:["assets/img/wedding/01-guest-message.webp","01","BEFORE CEREMONY",""],ceremony:["assets/img/solo-film/solo-film-cover-v2.webp","02","AT THE CEREMONY",""]},people:{one:["assets/img/ar-detail/solo-live-proof.jpg","01","SOLO",""],two:["assets/img/song-film/duet-video-cover.jpg","02","TOGETHER",""]}}
  const choices=(name,items)=>items.map(([value,title,example])=>{const [photo,number,eyebrow,caption]=visuals[stage][value];const role=stage==="role";return '<label class="finder-choice"><input type="radio" name="'+name+'" value="'+value+'"><span class="finder-choice-photo" aria-hidden="true"><img src="'+photo+'" alt="" loading="lazy"></span><span class="finder-choice-body"><span class="finder-choice-overline">'+number+' <i></i> '+eyebrow+'</span><strong>'+title+'</strong>'+(example||caption?'<small>'+(example||caption)+'</small>':'')+(role?'<span class="finder-choice-action">자세히 보기 <b>→</b></span>':'')+'</span>'+(role?'':'<span class="finder-choice-arrow" aria-hidden="true">↗</span>')+'</label>'}).join("")
+ Object.values(visuals.role).forEach(visual=>visual[1]="")
  const configs={
-  role:{number:"01",title:"어떤 서비스를 원하시나요?",description:"준비하시는 서비스를 선택해 주세요",name:"finderRole",items:[["singer","AR 축가 사전 녹음",""],["couple","식전 / 축가 영상",""],["proposal","프로포즈 필름",""],["making","녹음 메이킹 필름",""]]},
+  role:{number:"",title:"어떤 서비스를 원하시나요?",description:"준비하시는 서비스를 선택해 주세요",name:"finderRole",items:[["singer","AR 축가 사전녹음",""],["making","축가 녹음 메이킹 필름",""],["couple","듀엣 식전 스토리 필름",""],["proposal","프로포즈 · 답프로포즈",""]]},
   service:{number:"02",title:"무엇을 준비하시나요?",description:"예식에서 상영할 영상을 선택해 주세요",name:"finderMoment",items:[["pre","예식 전 식전 영상","하객이 입장하는 시간, 우리의 목소리로 예식의 시작을 열어요"],["ceremony","축가 순서에 상영할 영상","축가를 따로 섭외하지 않고, 우리가 직접 부른 영상을 축가 시간에 상영해요"]]},
   people:{number:"03",title:"혼자 준비하시나요, 두 분이 함께 준비하시나요?",description:"노래를 녹음하고 영상에 참여하는 인원을 선택해 주세요",name:"finderPeople",items:[["one","1인 · 혼자 준비해요","신랑 또는 신부 한 분이 노래하고 준비하는 경우"],["two","2인 · 두 분이 함께 준비해요","신랑신부 두 분이 함께 노래하고 준비하는 경우"]]}
  }
@@ -691,12 +726,11 @@ function renderHome(requested="role"){
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><p class="info-section-kicker">WEDDING VOCAL · FILM STUDIO</p><h2>말로 다 전하지 못한 마음을<br>직접 부른 노래와 영상에 담습니다</h2><p>한 곡의 노래가 한 편의 영상이 되기까지, 목소리에 담긴 마음이 장면까지 자연스럽게 이어지도록 녹음부터 음원 작업, 촬영과 편집을 함께합니다</p></div><figure>'+img("assets/img/wedding/04-recording-making.webp","위스티아 웨딩 보컬 녹음 현장",true)+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><p class="info-section-kicker">ONE TEAM, THREE SPECIALISTS</p><h2 id="specialistTitle">각 분야의 전문가가<br>하나의 결과물을 완성합니다</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-studio/03-vocal-directing.png","1대1 보컬 디렉팅",true)+'<p>현장</p><h3>편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-studio/06-mixing.png","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3>내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉와 〈불후의 명곡〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article><article><span>03</span>'+img("assets/img/wedding/03-lipsync-mv.webp","웨딩 영상 촬영과 편집",true)+'<p>영상</p><h3>노래의 감정이 장면까지 이어지도록</h3><small>7년 경력 영상 편집 디자이너가 이야기와 예식 분위기에 맞춰 촬영본을 한 편의 작품으로 엮습니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
- const promises=[{number:"01",tag:"확정 금액",title:"상담 시 안내드린 금액을\n최종 금액으로 확정합니다",description:"당일 별도의 추가 금액을 요청드리지 않습니다"},{number:"02",tag:"추가 비용 없음",title:"예상보다 시간이 길어져도\n추가 비용을 받지 않습니다",description:"녹음과 촬영에 필요한 시간을 충분히 들여 완성도를 지킵니다"},{number:"03",tag:"기한 준수",title:"음원은 최대 7일,\n영상은 최대 14일 이내 전달합니다",description:"녹음·촬영과 제작에 필요한 자료가 모두 전달된 날을 기준으로 안내드립니다"}]
- const promiseContent='<div class="wistia-promise"><p class="promise-lead">위스티아가 드리는 약속</p><ol class="promise-list">'+promises.map(item=>'<li><span class="promise-number">'+item.number+'</span><div><small>'+item.tag+'</small><h2>'+item.title.replace("\n","<br>")+'</h2><p>'+item.description+'</p></div></li>').join("")+'</ol><section class="promise-notes" aria-labelledby="promiseNotesTitle"><h2 id="promiseNotesTitle">추가 안내사항</h2><div><article><span>수정 안내</span><strong>기본 수정 3회 포함</strong><p>4회차부터는 회당 10,000원의 수정 비용이 발생합니다</p></article><article><span>급행 제작</span><strong>3일 이내 완성 옵션</strong><p>일정 확인 후 30,000원의 급행 작업 옵션을 이용할 수 있습니다</p></article></div></section><div class="promise-cta"><p>궁금한 내용은 예약 전 충분히 안내드립니다</p>'+cta("자주 묻는 질문 확인하기","#/info/faq")+'</div></div>'
- const content=page.faq?'<div class="info-faq">'+faq(page.faq)+'</div>':key==="about"?aboutContent:promiseContent
- app.innerHTML='<section class="shell section info-page" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+label(page.eyebrow)+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1><p>'+page.description+'</p></header>'+content+'</section>'+footer()
+ const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
+ const content=key==="faq"?faqContent:aboutContent
+ app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1><p>'+page.description+'</p></header>'+content+'</section>'+footer()
 }
-const FINDER_LABELS={role:{couple:"식전 / 축가 영상",singer:"사전 녹음 AR 축가",proposal:"프로포즈 필름",making:"녹음 메이킹 필름"},people:{one:"1인",two:"2인"},moment:{pre:"예식 전 식전 영상",ceremony:"축가 순서에 상영할 영상",live:"예식에서 직접 부를 축가"},lyrics:{yes:"가사 영상 필요",no:"사전 녹음 음원만 필요"}}
+const FINDER_LABELS={role:{couple:"듀엣 식전 스토리 필름",singer:"AR 축가 사전녹음",proposal:"프로포즈 · 답프로포즈",making:"축가 녹음 메이킹 필름"},people:{one:"1인",two:"2인"},moment:{pre:"예식 전 식전 영상",ceremony:"축가 순서에 상영할 영상",live:"예식에서 직접 부를 축가"},lyrics:{yes:"가사 영상 필요",no:"사전 녹음 음원만 필요"}}
 const FINDER_PRODUCTS={"pre/one":"solo-film","pre/two":"wedding","ceremony/one":"solo-film","ceremony/two":"duet-film","live/one":"solo","live/two":"duo"}
 let finderChoice=(()=>{try{const value=JSON.parse(sessionStorage.getItem("wistia:finder-selection"));return {role:value.role||"",people:value.people||"",moment:value.moment||"",lyrics:value.lyrics||""}}catch{return {role:"",people:"",moment:"",lyrics:""}}})()
 function finderProduct(){return FINDER_PRODUCTS[[finderChoice.moment,finderChoice.people].join("/")]}
@@ -746,8 +780,7 @@ function proposalFormatPreview(formatKey=selectedFilmFormat){const format=FILM_F
 function filmFormatSummary(productKey,formatKey){if(formatKey==="making"){if(productKey==="wedding"||productKey==="duet-film")return "녹음 메이킹 클립 6컷(인당 3컷) · 다양한 인서트 컷";if(productKey==="solo-film")return "녹음 메이킹 클립 2컷 · 다양한 인서트 컷"}if(formatKey==="live"&&(productKey==="wedding"||productKey==="duet-film"))return "뮤비 클립 4컷 · 다양한 인서트 컷 · 하객 메시지 · 인터뷰 · 전하는 편지";return FILM_FORMATS[formatKey].summary}
 function bookingFilmFormatSection(productKey,step="02"){
  if(productKey==="solo-film")return '<div class="booking-base-choice"><p>녹음 인원</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="filmPeople" value="1" data-film-people="1" '+(selectedFilmPeople===1?'checked':'')+'><span><strong>1인</strong></span><b>22만원</b></label><label class="option-choice"><input type="radio" name="filmPeople" value="2" data-film-people="2" '+(selectedFilmPeople===2?'checked':'')+'><span><strong>2인</strong></span><b>28만원</b></label></div></div>'
- if(productKey==="proposal")return '<div class="booking-base-choice"><p>영상 구성</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="filmFormat" value="making" data-film-format="making" '+(selectedFilmFormat==="making"?'checked':'')+'><span><strong>녹음 메이킹 필름</strong></span><b>22만원</b></label><label class="option-choice"><input type="radio" name="filmFormat" value="live" data-film-format="live" '+(selectedFilmFormat==="live"?'checked':'')+'><span><strong>스토리형 영상</strong></span><b>29만원</b></label></div></div>'
- if(productKey==="wedding"||productKey==="duet-film")return '<div class="booking-base-choice"><p>영상 구성</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="filmFormat" value="live" data-film-format="live" '+(selectedFilmFormat==="live"?'checked':'')+'><span><strong>스토리형 영상</strong></span><b>35만원</b></label><label class="option-choice"><input type="radio" name="filmFormat" value="making" data-film-format="making" '+(selectedFilmFormat==="making"?'checked':'')+'><span><strong>녹음 메이킹 필름</strong></span><b>28만원</b></label></div></div>'
+ if(productKey==="proposal"||productKey==="wedding"||productKey==="duet-film")return '<p class="booking-base-note">스토리형 영상이 기본 구성입니다 녹음 메이킹 필름으로 변경하려면 아래 추가 옵션을 선택해 주세요</p>'
  return ""
 }
 function filmUpgradeFeatures(){return ["뮤비 클립 4컷","다양한 인서트 컷","하객 메시지","인터뷰","전하는 편지"]}
@@ -792,10 +825,10 @@ function detailPersonTabs(key){
  const showPrice=!['solo','duo'].includes(key)
  return '<section class="shell detail-person-picker" aria-label="'+(showPrice?'참여 인원과 가격':'참여 인원')+'"><span>인원 선택</span><div class="detail-person-tabs'+(showPrice?'':' is-label-only')+'">'+items.map(item=>{const active=item.key===key,href="#/detail/"+item.key+(item.format?"/"+item.format:"");return '<a class="'+(active?'is-active':'')+'" href="'+href+'"'+(active?' aria-current="page"':'')+'><small>'+item.label+'</small>'+(showPrice?'<strong>'+shortWon(detailPersonPrice(item))+'</strong>':'')+'</a>'}).join("")+'</div></section>'
 }
-function soloTopCta(key="solo"){const song=["solo","duo"].includes(key),copy=song?"1인·2인 축가, 이벤트 가격 확인하기":"식전·축가 영상, 이벤트 가격 확인하기";return '<div class="solo-top-cta"><a href="#/event/'+key+'" aria-label="'+copy+'로 이동">'+copy+' <b aria-hidden="true">→</b></a></div>'}
+function soloTopCta(key="solo"){const song=["solo","duo"].includes(key),copy=song?"1시간·2시간 AR 축가, 이벤트 가격 확인하기":"식전·축가 영상, 이벤트 가격 확인하기";return '<div class="solo-top-cta"><a href="#/event/'+key+'" aria-label="'+copy+'로 이동">'+copy+' <b aria-hidden="true">→</b></a></div>'}
 function initSoloTopCta(){const bar=document.querySelector(".solo-top-cta");if(!bar)return;bar.classList.remove("is-stuck");bar.previousElementSibling?.classList.contains("solo-top-cta-sentinel")&&bar.previousElementSibling.remove()}
-const SOLO_PERSON_ITEMS=[{key:"solo",title:"1인 축가",desc:"혼자 부르는 무대"},{key:"duo",title:"2인 축가",desc:"함께 부르는 무대"}]
-function soloPersonTabs(key){const activeIndex=SOLO_PERSON_ITEMS.findIndex(item=>item.key===key);return '<section class="shell solo-person-picker" aria-label="인원 선택"><div class="solo-person-tabs" role="tablist" aria-label="1인·2인 축가 선택" data-active="'+Math.max(activeIndex,0)+'">'+SOLO_PERSON_ITEMS.map((item,i)=>{const active=item.key===key;return '<a class="solo-person-tab'+(active?' is-active':'')+'" role="tab" aria-selected="'+active+'" tabindex="'+(active?"0":"-1")+'" href="#/detail/'+item.key+'" data-solo-person-tab="'+i+'"><strong>'+item.title+'</strong><span>'+item.desc+'</span></a>'}).join("")+'<span class="solo-person-indicator" aria-hidden="true"></span></div></section>'}
+const SOLO_PERSON_ITEMS=[{key:"solo",title:"1시간",desc:"인원 제한 없음"},{key:"duo",title:"2시간",desc:"인원 제한 없음"}]
+function soloPersonTabs(key){const activeIndex=SOLO_PERSON_ITEMS.findIndex(item=>item.key===key);return '<section class="shell solo-person-picker" aria-label="녹음 시간 선택"><div class="solo-person-tabs" role="tablist" aria-label="AR 축가 1시간·2시간 선택" data-active="'+Math.max(activeIndex,0)+'">'+SOLO_PERSON_ITEMS.map((item,i)=>{const active=item.key===key;return '<a class="solo-person-tab'+(active?' is-active':'')+'" role="tab" aria-selected="'+active+'" tabindex="'+(active?"0":"-1")+'" href="#/detail/'+item.key+'" data-solo-person-tab="'+i+'"><strong>'+item.title+'</strong><span>'+item.desc+'</span></a>'}).join("")+'<span class="solo-person-indicator" aria-hidden="true"></span></div></section>'}
 function initSoloPersonTabs(){const tabs=document.querySelector(".solo-person-tabs");if(!tabs)return;const links=[...tabs.querySelectorAll("[data-solo-person-tab]")];links.forEach((link,i)=>{link.addEventListener("keydown",e=>{if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();const next=links[(i+(e.key==="ArrowRight"?1:-1)+links.length)%links.length];links.forEach(l=>l.tabIndex=-1);next.tabIndex=0;next.focus()})})}
 const DETAIL_PRODUCT_FAMILIES={
  wedding:[{key:"wedding",title:"식전 영상",desc:"예식의 첫 장면"},{key:"duet-film",title:"듀엣 축가 영상",desc:"축가 순서 상영"}],
@@ -807,20 +840,47 @@ function detailProductTabs(key){const items=DETAIL_PRODUCT_FAMILIES[key]||[];if(
 function compactFilmHeroMedia(productKey){return '<div class="detail-result-card compact-film-hero-media"><div class="detail-result-media">'+img(FILM_FORMAT_IMAGES[productKey].making,PRODUCTS[productKey].title+' 실제 촬영 사진',true)+'</div></div>'}
 function weddingFilmUseSection(){return '<section class="shell section wedding-film-use" aria-labelledby="weddingFilmUseTitle"><header><p class="eyebrow">WEDDING FILM</p><h2 id="weddingFilmUseTitle">한 페이지에서 보는 두 가지 상영 순간</h2><p>어느 순서에 상영할지에 따라 이야기의 흐름을 함께 정합니다</p></header><div class="wedding-film-use-grid"><article><span>01 · BEFORE CEREMONY</span><h3>식전 영상</h3><p>예식이 시작되기 전, 두 분의 노래와 이야기로 하객을 맞이합니다</p></article><article><span>02 · WEDDING SONG</span><h3>축가 영상</h3><p>축가 순서에 직접 부른 노래와 장면을 상영합니다</p></article></div></section>'}
 function detailVariantPicker(key,purpose=""){
- const variants=key==="solo-film"?[["solo","1인"],["duo","2인"]]:key==="proposal"?[["making","녹음 메이킹"],["live","스토리형"]]:["wedding","duet-film"].includes(key)?[["live","스토리형"],["making","녹음 메이킹"]]:null
+ const variants=key==="solo-film"?[["solo","1인"],["duo","2인"]]:null
  if(!variants)return ""
  const active=key==="solo-film"?(purpose==="duo"?"duo":"solo"):(FILM_FORMATS[purpose]?purpose:BASE_FILM_FORMAT[key])
  const title=key==="proposal"?"프로포즈 영상 구성":key==="solo-film"?"녹음 메이킹 인원":"식전 / 축가 영상 구성"
  return '<section class="shell detail-variant-picker" aria-label="'+title+'"><p>'+title+'</p><div class="detail-variant-grid">'+variants.map(([value,label])=>'<a href="#/detail/'+key+'/'+value+'" class="detail-variant'+(active===value?' is-active':'')+'"'+(active===value?' aria-current="page"':'')+'><strong>'+label+'</strong></a>').join("")+'</div><a class="detail-variant-price" href="#/event/'+key+'/'+active+'">선택한 구성 가격 보기 <span aria-hidden="true">→</span></a></section>'
 }
+const PACKAGE_ICONS={
+ microphone:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4m-4 0h8"/>',
+ camera:'<rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/>',
+ tune:'<path d="M3 7h18M3 17h18M8 3v8m8 2v8"/><circle cx="8" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="17" r="2" fill="currentColor" stroke="none"/>',
+ mix:'<path d="M5 4v16M12 4v16M19 4v16"/><path d="M2 9h6m1 6h6m1-5h6"/>',
+ master:'<path d="m12 2 2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/>',
+ edit:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16m10-16v16M3 9h4m-4 6h4m10-6h4m-4 6h4"/>',
+ mv:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3V9Z"/>',
+ message:'<path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8m-8 3h6"/>',
+ interview:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4m-4 0h8"/>',
+ letter:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>'
+}
+function packageIcon(name){return '<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+PACKAGE_ICONS[name]+'</svg>'}
+function filmMakingNotes(key){const message=key==="proposal"?"메시지":"하객 메시지";return ["협업 촬영 스튜디오의 뮤직비디오 클립과 인터뷰 촬영은 제외됩니다","전하는 편지와 "+message+"는 직접 촬영해 보내주시면 영상에 삽입할 수 있습니다","녹음 당일 스튜디오에서 휴대폰으로 직접 촬영하셔도 됩니다"]}
+function filmStoryUpgradeNotes(){return ["협업 촬영 스튜디오에서 뮤직비디오 클립을 추가 촬영합니다","노래 시작 전 하객 메시지와 인터뷰를 담습니다","노래가 끝난 뒤 전하는 편지로 마무리합니다"]}
+function productPackageOverview(key,purpose=""){
+ const ar=["solo","duo"].includes(key),twoMaking=key==="solo-film"&&purpose==="duo",proposal=key==="proposal",story=["wedding","duet-film","proposal"].includes(key)
+ const duration=ar?(key==="solo"?"녹음 60분":"녹음 120분"):proposal||key==="solo-film"&&!twoMaking?"녹음·촬영 총 90분":"녹음·촬영 총 180분"
+ const title=ar?"AR 축가 사전녹음 구성":key==="solo-film"?(twoMaking?"2인":"1인")+" 축가 녹음 메이킹 필름 구성":proposal?"프로포즈 · 답프로포즈 스토리형 구성":"듀엣 식전 스토리 필름 구성"
+ const storyItems=story?proposal?[["mv","뮤직비디오 클립"],["interview","인터뷰"],["letter","전하는 편지"]]:[["mv","뮤직비디오 클립"],["message","하객 메시지"],["interview","인터뷰"],["letter","전하는 편지"]]:[]
+ const items=[[ar?"microphone":"camera",duration],["tune","수작업 음정·박자 보정"],["mix","믹싱"],["master","마스터링"],...storyItems]
+ const description=ar?"인원 제한 없이 마디·구간별로 녹음하고 음정과 박자를 수작업으로 다듬습니다 가사 영상은 4만원, 신부·신랑 입장곡 하이라이트 부분 녹음은 인당 4만원에 추가할 수 있습니다":key==="solo-film"?"녹음 메이킹은 노래를 완성하는 실제 과정을 담습니다 스토리형으로 업그레이드하면 협업 촬영 스튜디오의 뮤직비디오 클립, 노래 전 하객 메시지, 인터뷰와 노래 후 전하는 편지가 추가됩니다":proposal?"협업 촬영 스튜디오의 뮤직비디오 클립과 인터뷰, 전하는 편지를 더해 고백의 이야기를 완성합니다":"협업 촬영 스튜디오의 뮤직비디오 클립과 하객 메시지, 인터뷰, 전하는 편지를 노래와 함께 엮습니다"
+ const makingNote=filmMakingNotes(key).map(note=>'<span>'+note+'</span>').join("")
+ return '<section class="package-overview" aria-labelledby="packageOverviewTitle"><div class="shell"><p class="package-overview-eyebrow">PACKAGE COMPOSITION</p><h2 id="packageOverviewTitle">'+title+'</h2><div class="package-feature-grid">'+items.map(([icon,text])=>'<div class="package-feature"><span class="package-feature-icon" aria-hidden="true">'+packageIcon(icon)+'</span><strong>'+text+'</strong></div>').join("")+'</div><p class="package-overview-description">'+description+'</p>'+(story?'<div class="package-making-option" role="note"><span><small>변경 안내</small><strong>녹음 메이킹 필름으로 변경</strong><em>'+makingNote+'</em></span><b>−7만원</b></div>':'')+'</div></section>'
+}
+function bookingGuideSection(){return '<section class="booking-guide shell" aria-labelledby="bookingGuideTitle"><h2 id="bookingGuideTitle">이용 전 기본 안내</h2><div><article><span>01 이용 시간</span><p>표기된 시간에는 기본 안내, 연습 및 기타 부가 시간이 포함됩니다</p></article><article><span>02 추가 수정</span><p>3회까지 무료이며, 4회차부터 회당 10,000원입니다</p></article><article><span>03 빠른 작업</span><p>3일 이내 작업이 가능한 일정일 경우 30,000원이 추가됩니다</p></article></div></section>'}
 function renderDetail(key,purpose=""){
+  if(["wedding","duet-film","proposal"].includes(key))purpose=""
   if(FILM_FORMAT_PRODUCTS.has(key))selectedFilmFormat=FILM_FORMATS[purpose]?purpose:BASE_FILM_FORMAT[key]
   if(key==="solo-film")selectedFilmPeople=purpose==="duo"?2:1
  const p=PRODUCTS[key],m=SERVICE_META[key],w=WORKS.find(w=>w.product===key),song=p.category==="song",filmProduct=FILM_FORMAT_PRODUCTS.has(key);
  const compactFilm=["wedding","duet-film","solo-film"].includes(key),result=compactFilm?compactFilmHeroMedia(key):detailResult(p,m,w,song),process=filmProduct?filmProcessSection(key,p.steps):song?songProcessSection(p.steps):processSection(p.steps);
  if(AR_DETAIL_CONTENT[key]){
   const productTabs=["solo","duo"].includes(key)?soloPersonTabs(key):""
-  app.innerHTML=productTabs+detailVariantPicker(key,purpose)+'<div class="solo-detail-scope ar-detail-scope" data-ar-product="'+key+'">'+detailHookHero(p,key)+(key==="wedding"?weddingFilmUseSection():"")+arPrimaryBenefit(key)+soloReviewCarousel()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+wistiaBeforeAfterSection()+arComparisonSection(key)+soloProcessSlider(key)+(key==="solo"?arCdRatioSection():"")+'<section class="shell section worry-section"><header class="solo-faq-intro" data-solo-section-intro><p data-solo-kicker>FAQ</p><h2 data-solo-title><span class="solo-type-line">자주 묻는 질문을</span><span class="solo-type-line">확인해 보세요.</span></h2><p data-solo-sub><span class="solo-type-line">예약 전 궁금한 내용을 모았습니다.</span><span class="solo-type-line">더 필요한 내용은 편하게 문의해 주세요.</span></p></header>'+faq(p.faq)+'<a class="solo-inline-contact" href="#/event/'+key+(purpose?'/'+purpose:'')+'"><strong>가격 보기</strong><span aria-hidden="true">›</span></a></section>'+footer()+'</div>'+priceBar(key)
+  app.innerHTML=productTabs+detailVariantPicker(key,purpose)+'<div class="solo-detail-scope ar-detail-scope" data-ar-product="'+key+'">'+detailHookHero(p,key)+productPackageOverview(key,purpose)+(key==="wedding"?weddingFilmUseSection():"")+arPrimaryBenefit(key)+soloReviewCarousel()+'<div class="solo-editorial-sheet">'+arExpertStory()+'</div>'+wistiaBeforeAfterSection()+productComparisonSection(key)+verticalProcessSection(key)+(key==="solo"?arCdRatioSection():"")+bookingGuideSection()+'<section class="shell section worry-section"><header class="solo-faq-intro" data-solo-section-intro><p data-solo-kicker>FAQ</p><h2 data-solo-title><span class="solo-type-line">자주 묻는 질문을</span><span class="solo-type-line">확인해 보세요.</span></h2><p data-solo-sub><span class="solo-type-line">예약 전 궁금한 내용을 모았습니다.</span><span class="solo-type-line">더 필요한 내용은 편하게 문의해 주세요.</span></p></header>'+faq(p.faq)+'<a class="solo-inline-contact" href="#/event/'+key+(purpose?'/'+purpose:'')+'"><strong>이벤트 할인 가격 보기</strong><span aria-hidden="true">›</span></a></section>'+footer()+'</div>'+priceBar(key)
   return
  }
  app.innerHTML=detailPersonTabs(key)+'<section class="shell detail-hero'+(compactFilm?' film-summary-hero':'')+'"><div><h1>'+p.title+'</h1><p class="lead">'+p.sub+'</p><div class="detail-facts"><span><b>사용 시점</b>'+m.use+'</span><span><b>참여 인원</b>'+m.who+'</span></div></div>'+result+'</section>'+detailBenefit(p)+reviews(key)+
@@ -979,9 +1039,11 @@ function renderArPurpose(key){
 }
 function eventProductOptions(key,purpose=""){return [...(PRODUCT_OPTIONS[key]||[]),...(key==="solo"&&purpose==="friend"?FRIEND_PRODUCT_OPTIONS:[])]}
 function calculate(){
- const baseProduct=PRODUCTS[currentEventProduct],baseFormat=BASE_FILM_FORMAT[currentEventProduct],basePrice=currentEventProduct==="solo-film"&&selectedFilmPeople===2?280000:baseFormat?filmFormatPrice(currentEventProduct,selectedFilmFormat):baseProduct.normal,product={...baseProduct,normal:basePrice};const chosen=EVENTS.filter(e=>selectedEvents.has(e.key));
+ const baseProduct=PRODUCTS[currentEventProduct],baseFormat=BASE_FILM_FORMAT[currentEventProduct],storyBase=["wedding","duet-film","proposal"].includes(currentEventProduct),basePrice=currentEventProduct==="solo-film"?(selectedFilmPeople===2?280000:220000):storyBase?filmFormatPrice(currentEventProduct,"live"):baseFormat?filmFormatPrice(currentEventProduct,selectedFilmFormat):baseProduct.normal,product={...baseProduct,normal:basePrice};const chosen=EVENTS.filter(e=>selectedEvents.has(e.key));
  const discount=Math.min(60000,chosen.reduce((sum,e)=>sum+e.discount,0));
  const optionEntries=eventProductOptions(currentEventProduct,currentEventPurpose).flatMap(o=>{const quantity=o.quantity?(optionQuantities[o.key]||0):(selectedOptions.has(o.key)?1:0);return quantity?[{...o,quantity,total:(o.price||0)*quantity}]:[]});
+ if(currentEventProduct==="solo-film"&&selectedFilmFormat==="live")optionEntries.unshift({key:"story-upgrade",label:"스토리형 업그레이드",quantity:1,total:70000});
+ if(storyBase&&selectedFilmFormat==="making")optionEntries.unshift({key:"making-change",label:"녹음 메이킹 필름으로 변경",quantity:1,total:-70000});
  const songOption=null;
   const formatUpgrade=0;
   const optionPrice=(songOption?.price||0)+optionEntries.reduce((sum,o)=>sum+o.total,0);
@@ -995,13 +1057,20 @@ function renderProductOption(o){
 }
 function bookingBaseSection(key){
  const service=["solo","duo"].includes(key)?"solo":"duet-film"===key||key==="wedding"?"wedding":key
- const services=[["solo","AR 축가"],["solo-film","녹음 메이킹 필름"],["wedding","식전 / 축가 영상"],["proposal","프로포즈 필름"]]
+ const services=[["solo","AR 축가 사전녹음"],["solo-film","축가 녹음 메이킹 필름"],["wedding","듀엣 식전 스토리 필름"],["proposal","프로포즈 · 답프로포즈"]]
  const serviceSelect='<label class="booking-base-service" for="bookingService"><span>서비스</span><select id="bookingService" data-product-select>'+services.map(([value,label])=>'<option value="'+value+'"'+(service===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
- const people=["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>녹음 인원</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arPeople" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1인</strong></span><b>12만원</b></label><label class="option-choice"><input type="radio" name="arPeople" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>2인</strong></span><b>16만원</b></label></div></div>':bookingFilmFormatSection(key)
- const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준 · 영상 구성에 따라 가격이 달라집니다</p>':''
+ const people=["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>녹음 시간 · 인원 제한 없음</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1시간</strong></span><b>12만원</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>2시간</strong></span><b>16만원</b></label></div></div>':bookingFilmFormatSection(key)
+ const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준</p>':''
  return '<section class="booking-base calculator-step"><span class="booking-step">01</span><h2>기본 가격</h2><p>들어오신 상품이 먼저 선택되어 있으며, 여기서 변경할 수 있습니다</p>'+serviceSelect+people+note+'<div class="booking-base-amount"><span>선택한 기본 가격</span><strong id="basePrice"></strong></div></section>'
 }
-function bookingExtraSection(p,purpose,options,step){const content=options.map(renderProductOption).join("");return '<section class="booking-extra calculator-step"><span class="booking-step">'+step+'</span><h2>추가 옵션</h2><p>필요한 항목만 선택할 수 있습니다</p><div class="calculator-option-list">'+content+'</div></section>'}
+function bookingExtraSection(p,purpose,options,step){
+ const storyBase=["wedding","duet-film","proposal"].includes(p.key)
+ const explainer=notes=>'<small class="option-explainer">'+notes.map(note=>'<span>'+note+'</span>').join("")+'</small>'
+ const storyUpgrade=p.key==="solo-film"?'<label class="option-choice"><input type="checkbox" data-film-upgrade="live" '+(selectedFilmFormat==="live"?'checked':'')+'><span><strong>스토리형 업그레이드</strong>'+explainer(filmStoryUpgradeNotes())+'</span><b>+7만원</b></label>':''
+ const makingChange=storyBase?'<label class="option-choice making-change-option"><input type="checkbox" data-film-making="making" '+(selectedFilmFormat==="making"?'checked':'')+'><span><strong>녹음 메이킹 필름으로 변경</strong>'+explainer(filmMakingNotes(p.key))+'</span><b>−7만원</b></label>':''
+ const content=storyUpgrade+makingChange+options.map(renderProductOption).join("")
+ return '<section class="booking-extra calculator-step"><span class="booking-step">'+step+'</span><h2>추가 옵션</h2><p>필요한 항목만 선택할 수 있습니다</p><div class="calculator-option-list">'+content+'</div></section>'
+}
 function eventBenefitsSection(step){return '<details class="event-benefits calculator-step" open><summary><span><small>'+step+'</small><strong>이벤트 혜택 선택</strong><em>해당되는 혜택을 선택해 보세요</em></span><b aria-hidden="true">+</b></summary><div class="event-benefits-body"><div class="event-list">'+EVENTS.map(e=>'<label class="event-choice"><input type="checkbox" data-event="'+e.key+'" '+(selectedEvents.has(e.key)?"checked":"")+'><span><strong>'+e.label+'</strong><small>'+e.detail+'</small></span><b>−'+shortWon(e.discount)+'</b></label>').join("")+'</div><p class="fine">이벤트 참여 조건과 혜택 적용 시점은 예약 상담에서 최종 확인합니다</p></div></details>'}
 function renderEvent(key,purpose=""){
  if(currentEventProduct!==key||currentEventPurpose!==purpose){selectedEvents.clear();selectedOptions.clear();optionQuantities={};chosenOption=""}
@@ -1015,18 +1084,18 @@ function updatePrice(){
  const c=calculate(),finder=finderPriceContext(currentEventProduct)
  const formatName=currentEventProduct==="proposal"?(selectedFilmFormat==="live"?"스토리형 영상":"녹음 메이킹 필름"):FILM_FORMATS[selectedFilmFormat]?.title
  const formatRow=FILM_FORMAT_PRODUCTS.has(currentEventProduct)?'<div><dt>영상 구성</dt><dd>'+formatName+'</dd></div>':''
- const peopleRow=currentEventProduct==="solo-film"?'<div><dt>녹음 인원</dt><dd>'+selectedFilmPeople+'인</dd></div>':''
+ const peopleRow=currentEventProduct==="solo-film"?'<div><dt>녹음 인원</dt><dd>'+selectedFilmPeople+'인</dd></div>':["solo","duo"].includes(currentEventProduct)?'<div><dt>녹음 시간</dt><dd>'+(currentEventProduct==="solo"?"1시간":"2시간")+'</dd></div>':''
  const finderRow=finder?'<div class="finder-summary-line"><dt>선택한 조건</dt><dd>'+FINDER_LABELS.role[finder.role]+' · '+FINDER_LABELS.moment[finder.moment]+' · '+FINDER_LABELS.people[finder.people]+'</dd></div>':''
- const optionRows=c.optionEntries.map(o=>'<div><dt>'+o.label+(o.quantity>1?' '+o.quantity+(o.unit||'회'):'')+'</dt><dd class="plus">+'+won(o.total)+'</dd></div>').join("")
+ const optionRows=c.optionEntries.map(o=>'<div><dt>'+o.label+(o.quantity>1?' '+o.quantity+(o.unit||'회'):'')+'</dt><dd class="'+(o.total<0?'minus':'plus')+'">'+(o.total<0?'−':'+')+won(Math.abs(o.total))+'</dd></div>').join("")
  const eventRows=c.chosen.map(e=>'<div><dt>'+e.label+'</dt><dd class="minus">−'+won(e.discount)+'</dd></div>').join("")
- document.querySelector("#bookingSummary").innerHTML='<p class="eyebrow"><span class="desktop-summary-label">가격 계산</span><span class="mobile-summary-label">선택한 구성</span></p><h2>'+c.product.title+'</h2><dl class="price-lines">'+finderRow+formatRow+peopleRow+'<div class="normal-line"><dt>기본가</dt><dd>'+won(c.product.normal)+'</dd></div>'+optionRows+eventRows+'</dl><div class="price-formula"><span><small>기본가</small>'+won(c.product.normal)+'</span><i>+</i><span><small>추가 옵션</small>'+won(c.optionPrice)+'</span><i>−</i><span><small>이벤트 혜택</small>'+won(c.discount)+'</span><i>=</i><strong><small>예상 금액</small>'+won(c.finalPrice)+'</strong></div><p class="fine">선택한 조건을 기준으로 계산한 예상 금액이며 최종 적용 여부는 상담에서 확인합니다</p>'
+ document.querySelector("#bookingSummary").innerHTML='<p class="eyebrow"><span class="desktop-summary-label">가격 계산</span><span class="mobile-summary-label">선택한 구성</span></p><h2>'+c.product.title+'</h2><dl class="price-lines">'+finderRow+formatRow+peopleRow+'<div class="normal-line"><dt>기본가</dt><dd>'+won(c.product.normal)+'</dd></div>'+optionRows+eventRows+'</dl><div class="price-formula"><span><small>기본가</small>'+won(c.product.normal)+'</span><i>'+(c.optionPrice<0?'−':'+')+'</i><span><small>추가 옵션</small>'+won(Math.abs(c.optionPrice))+'</span><i>−</i><span><small>이벤트 혜택</small>'+won(c.discount)+'</span><i>=</i><strong><small>예상 금액</small>'+won(c.finalPrice)+'</strong></div><p class="fine">선택한 조건을 기준으로 계산한 예상 금액이며 최종 적용 여부는 상담에서 확인합니다</p>'
  document.querySelector("#mobilePrice").textContent=shortWon(c.finalPrice)
  document.querySelector("#basePrice").textContent=shortWon(c.product.normal)
 }
 function consultationText(){
- const c=calculate(),picked=c.optionEntries.map(o=>o.label+(o.quantity>1?' '+o.quantity+(o.unit||'회'):'')+' +'+won(o.total))
+ const c=calculate(),picked=c.optionEntries.map(o=>o.label+(o.quantity>1?' '+o.quantity+(o.unit||'회'):'')+' '+(o.total<0?'−':'+')+won(Math.abs(o.total)))
  const formatName=currentEventProduct==="proposal"?(selectedFilmFormat==="live"?"스토리형 영상":"녹음 메이킹 필름"):FILM_FORMATS[selectedFilmFormat]?.title
- return ["🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪  🤍","","선택하신 구성으로 상담 부탁드립니다","━━━━━","","• 희망 서비스 : "+c.product.title,FILM_FORMAT_PRODUCTS.has(currentEventProduct)?"• 영상 구성 : "+formatName:null,["solo","duo"].includes(currentEventProduct)?"• 녹음 인원 : "+(currentEventProduct==="duo"?2:1)+"인":null,currentEventProduct==="solo-film"?"• 녹음 인원 : "+selectedFilmPeople+"인":null,"• 기본 가격 : "+won(c.product.normal),"• 추가 옵션 : "+(picked.length?picked.join(" / "):"선택 없음"),"• 이벤트 혜택 : "+(c.chosen.length?c.chosen.map(e=>e.label+" −"+won(e.discount)).join(" / "):"선택 없음"),"• 최종 예상 가격 : "+won(c.finalPrice)].filter(x=>x!==null).join("\n")
+ return ["🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪  🤍","","선택하신 구성으로 상담 부탁드립니다","━━━━━","","• 희망 서비스 : "+c.product.title,FILM_FORMAT_PRODUCTS.has(currentEventProduct)?"• 영상 구성 : "+formatName:null,["solo","duo"].includes(currentEventProduct)?"• 녹음 시간 : "+(currentEventProduct==="duo"?2:1)+"시간 · 인원 제한 없음":null,currentEventProduct==="solo-film"?"• 녹음 인원 : "+selectedFilmPeople+"인":null,"• 기본 가격 : "+won(c.product.normal),"• 추가 옵션 : "+(picked.length?picked.join(" / "):"선택 없음"),"• 이벤트 혜택 : "+(c.chosen.length?c.chosen.map(e=>e.label+" −"+won(e.discount)).join(" / "):"선택 없음"),"• 최종 예상 가격 : "+won(c.finalPrice)].filter(x=>x!==null).join("\n")
 }
 function showDialog(html,type){
  lastDialogFocus=document.activeElement;dialog.innerHTML='<div class="dialog-content '+type+'"><button class="dialog-close" data-close aria-label="닫기">×</button>'+html+'</div>';
@@ -1100,12 +1169,11 @@ function route(){
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!unifiedDetail;
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
- if(home)renderHome(type==="find"?key:"role");else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ if(home)renderHome(type==="find"?key:"role");else if(type==="before-after")app.innerHTML='<div class="solo-detail-scope ar-detail-scope before-after-page">'+wistiaBeforeAfterSection()+footer()+'</div>';else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArIndexWheel();
  initExpertSplitPanel();
- initArCompare();
  initSoloTopCta();
  initSoloPersonTabs();
  initSoloArRatio();
@@ -1133,9 +1201,10 @@ document.addEventListener("click",e=>{
  if(el.dataset.video)openVideo(el.dataset.video);
  if(el.hasAttribute("data-review-prev")){moveReviews(-1);startReviewCarousel(false)}
  if(el.hasAttribute("data-review-next")){moveReviews(1);startReviewCarousel(false)}
- if(el.dataset.optionPlus||el.dataset.optionMinus){const key=el.dataset.optionPlus||el.dataset.optionMinus,option=eventProductOptions(currentEventProduct,currentEventPurpose).find(item=>item.key===key),delta=el.dataset.optionPlus?1:-1,max=currentEventProduct==="solo-film"&&key==="entrance-ar"?selectedFilmPeople:option?.max??Infinity;optionQuantities[key]=Math.min(max,Math.max(0,(optionQuantities[key]||0)+delta));const output=document.querySelector('[data-option-count="'+key+'"]');if(output)output.textContent=optionQuantities[key]+(option?.unit||'회');updatePrice()}
+ if(el.dataset.optionPlus||el.dataset.optionMinus){const key=el.dataset.optionPlus||el.dataset.optionMinus,option=eventProductOptions(currentEventProduct,currentEventPurpose).find(item=>item.key===key),delta=el.dataset.optionPlus?1:-1,max=option?.max??Infinity;optionQuantities[key]=Math.min(max,Math.max(0,(optionQuantities[key]||0)+delta));const output=document.querySelector('[data-option-count="'+key+'"]');if(output)output.textContent=optionQuantities[key]+(option?.unit||'회');updatePrice()}
  if(el.dataset.ratio&&!el.closest(".solo-ratio")){voiceRatio=el.dataset.ratio;const value=document.querySelector("#ratioValue");if(value)value.innerHTML=voiceRatio+"<small>%</small>";document.querySelectorAll("[data-ratio]").forEach(b=>b.setAttribute("aria-pressed",String(b===el)));switchRatioAudio(voiceRatio)}
  if(el.hasAttribute("data-ar-video-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){if(video.paused)video.play().catch(()=>{});else video.pause()}}
+ if(el.hasAttribute("data-ar-sound-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){video.muted=!video.muted;if(!video.muted){window.wistiaClaimPlayback?.(video);video.play().catch(()=>{})}}}
  if(el.dataset.processFormat){const section=el.closest(".film-process-section"),format=el.dataset.processFormat,expand=el.getAttribute("aria-expanded")!=="true";section?.querySelectorAll("[data-process-format]").forEach(button=>button.setAttribute("aria-expanded",String(expand&&button===el)));section?.querySelectorAll("[data-process-panel]").forEach(panel=>panel.hidden=!expand||panel.dataset.processPanel!==format)}
  if(el.matches("summary[data-process-step]")){const current=el.closest("details");current?.parentElement.querySelectorAll(":scope > details[open]").forEach(item=>{if(item!==current)item.open=false})}
  if(el.hasAttribute("data-reservation")){document.querySelector("#reservation")?.scrollIntoView({behavior:"smooth"});document.querySelector("#eventDate")?.focus({preventScroll:true})}
@@ -1146,8 +1215,9 @@ document.addEventListener("change",e=>{
  if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","#/event/"+next);route()}return}
  if(el.dataset.event){el.checked?selectedEvents.add(el.dataset.event):selectedEvents.delete(el.dataset.event);updatePrice()}
  if(el.dataset.option){el.checked?selectedOptions.add(el.dataset.option):selectedOptions.delete(el.dataset.option);updatePrice()}
- if(el.dataset.filmPeople){selectedFilmPeople=Number(el.dataset.filmPeople);optionQuantities["entrance-ar"]=Math.min(optionQuantities["entrance-ar"]||0,selectedFilmPeople);const count=document.querySelector('[data-option-count="entrance-ar"]');if(count)count.textContent=optionQuantities["entrance-ar"]+"명";updatePrice()}
+ if(el.dataset.filmPeople){selectedFilmPeople=Number(el.dataset.filmPeople);updatePrice()}
  if(el.dataset.filmUpgrade){selectedFilmFormat=el.checked?"live":BASE_FILM_FORMAT[currentEventProduct];updatePrice()}
+ if(el.dataset.filmMaking){selectedFilmFormat=el.checked?"making":"live";currentEventPurpose=el.checked?"making":"";history.replaceState(history.state,"","#/event/"+currentEventProduct+(el.checked?"/making":""));updatePrice()}
  if(el.dataset.filmFormat){const pageY=scrollY;selectedFilmFormat=el.dataset.filmFormat;const list=document.querySelector('[data-package-list]'),title=document.querySelector('[data-package-title]'),details=document.querySelector('.package-section'),preview=document.querySelector('[data-proposal-format-preview]');if(preview)preview.innerHTML=proposalFormatPreview();if(list)list.innerHTML=bookingPackageList(currentEventProduct,PRODUCTS[currentEventProduct]);if(title)title.textContent=FILM_FORMATS[selectedFilmFormat].title+' 기본 구성';const body=details?.querySelector('.package-section-body');if(body){const oldNotes=body.querySelector('ul:not(.package-list)');if(oldNotes)oldNotes.remove();body.insertAdjacentHTML('beforeend',filmFormatNotes(FILM_FORMATS[selectedFilmFormat]))}if(details?.tagName==='DETAILS')details.open=true;updatePrice();requestAnimationFrame(()=>requestAnimationFrame(()=>scrollTo({top:pageY,behavior:'instant'})))}
  if(el.dataset.songOption){chosenOption=el.checked?el.dataset.songOption:"";updatePrice()}
 })

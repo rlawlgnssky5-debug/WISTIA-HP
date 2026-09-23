@@ -16,12 +16,12 @@
   function playing(state){root.classList.toggle('is-playing',state);stage.classList.toggle('is-playing',state);play.setAttribute('aria-pressed',String(state));play.setAttribute('aria-label',state?'일시정지':'재생')}
   function render(){const tone=nearest(value),moodText=moodFor(value),percent=(value-30)/70*100;root.style.setProperty('--wistia-ratio-progress',percent);root.dataset.ratio=String(value);root.dataset.tone=String(tone);input.value=String(value);input.setAttribute('aria-valuetext',value+'% '+moodText);current.textContent=value+'%';mood.textContent=moodText;stage.setAttribute('aria-label','현재 AR 비율 '+value+'%, '+moodText+', 손가락으로 밀거나 마우스 휠로 변경');root.querySelectorAll('.wistia-ar__ratio-marks span').forEach(node=>node.classList.toggle('is-active',Number(node.dataset.value)===tone))}
   async function switchSource(next,shouldPlay=false){if(next===sourceRatio){if(shouldPlay&&audio.paused)audio.play().catch(()=>{});return}const token=++switchToken;position=audio.currentTime||0;resume=shouldPlay||!audio.paused;audio.pause();sourceRatio=next;error.hidden=true;root.classList.add('is-loading');try{const url=await sourceUrl(sourceRatio);if(destroyed||token!==switchToken)return;audio.dataset.ratio=String(sourceRatio);audio.src=url;audio.load()}catch{if(token!==switchToken)return;root.classList.remove('is-loading');error.hidden=false;playing(false)}}
-  function setValue(next,shouldPlay=true){value=clamp(next);render();switchSource(nearest(value),shouldPlay)}
-  on(input,'input',event=>setValue(event.target.value,true))
-  on(stage,'keydown',event=>{if(['ArrowUp','ArrowRight'].includes(event.key)){event.preventDefault();setValue(value+1,true)}if(['ArrowDown','ArrowLeft'].includes(event.key)){event.preventDefault();setValue(value-1,true)}})
-  on(stage,'wheel',event=>{const direction=Math.sign(Math.abs(event.deltaY)>=Math.abs(event.deltaX)?event.deltaY:event.deltaX);if(!direction)return;const next=value+(direction>0?1:-1);if(next<30||next>100)return;event.preventDefault();setValue(next,true)},{passive:false})
+  function setValue(next){const selected=clamp(next);if(selected===value)return;value=selected;audio.pause();resume=false;render();switchSource(nearest(value),false)}
+  on(input,'input',event=>setValue(event.target.value))
+  on(stage,'keydown',event=>{if(['ArrowUp','ArrowRight'].includes(event.key)){event.preventDefault();setValue(value+1)}if(['ArrowDown','ArrowLeft'].includes(event.key)){event.preventDefault();setValue(value-1)}})
+  on(stage,'wheel',event=>{const direction=Math.sign(Math.abs(event.deltaY)>=Math.abs(event.deltaX)?event.deltaY:event.deltaX);if(!direction)return;const next=value+(direction>0?1:-1);if(next<30||next>100)return;event.preventDefault();setValue(next)},{passive:false})
   on(stage,'pointerdown',event=>{dragging=true;dragStart=event.clientX;dragValue=value;stage.setPointerCapture?.(event.pointerId);stage.classList.add('is-dragging')})
-  on(stage,'pointermove',event=>{if(!dragging)return;const width=Math.max(220,stage.getBoundingClientRect().width),distance=event.clientX-dragStart;setValue(dragValue+distance/width*70,true)})
+  on(stage,'pointermove',event=>{if(!dragging)return;const width=Math.max(220,stage.getBoundingClientRect().width),distance=event.clientX-dragStart;setValue(dragValue+distance/width*70)})
   const endDrag=()=>{dragging=false;stage.classList.remove('is-dragging')}
   on(stage,'pointerup',endDrag);on(stage,'pointercancel',endDrag)
   on(play,'click',async()=>{error.hidden=true;try{if(audio.paused)await audio.play();else audio.pause()}catch{error.hidden=false;playing(false)}})
@@ -30,7 +30,7 @@
   on(audio,'timeupdate',progress);on(audio,'play',()=>playing(true));on(audio,'pause',()=>playing(false));on(audio,'ended',()=>playing(false));on(audio,'error',()=>{root.classList.remove('is-loading');error.hidden=false;playing(false)})
   on(audio,'canplay',()=>{root.classList.remove('is-loading');error.hidden=true;if(position)audio.currentTime=Math.min(position,Math.max(0,audio.duration-.05));position=0;if(resume){resume=false;audio.play().catch(()=>{})}progress()})
   audio.dataset.ratio='70';audio.src=sourceFor(70);audio.load();root.classList.add('is-loading');render();progress()
-  return{select:ratio=>setValue(ratio,false),getSelected:()=>value,destroy(){destroyed=true;switchToken++;listeners.splice(0).forEach(fn=>fn());audio.pause();audio.removeAttribute('src');audio.load();urls.forEach(URL.revokeObjectURL);urls.clear();pending.clear()}}
+  return{select:ratio=>setValue(ratio),getSelected:()=>value,destroy(){destroyed=true;switchToken++;listeners.splice(0).forEach(fn=>fn());audio.pause();audio.removeAttribute('src');audio.load();urls.forEach(URL.revokeObjectURL);urls.clear();pending.clear()}}
  }
  global.initArCdRatio=initArCdRatio
 })(window)
