@@ -1,21 +1,109 @@
-.wistia-ar,.wistia-ar *{box-sizing:border-box}.wistia-ar{--wistia-ratio-progress:57.14;--tone:#4b9f8f;--tone-rgb:75,159,143;--wash:#dceee9;position:relative;isolation:isolate;width:100%;overflow:hidden;color:#273532;background:linear-gradient(145deg,#f9fbfa 0%,var(--wash) 100%);font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;transition:background .55s ease,color .55s ease}.wistia-ar[data-tone="30"]{--tone:#5879dc;--tone-rgb:88,121,220;--wash:#dfe5fb}.wistia-ar[data-tone="50"]{--tone:#53a99a;--tone-rgb:83,169,154;--wash:#dceee9}.wistia-ar[data-tone="70"]{--tone:#d59b18;--tone-rgb:213,155,24;--wash:#f5e9c5}.wistia-ar[data-tone="100"]{--tone:#d17762;--tone-rgb:209,119,98;--wash:#f3ded8}.wistia-ar:before{content:"";position:absolute;inset:auto -12% -36% 28%;z-index:-1;height:76%;border-radius:50%;background:radial-gradient(circle,rgba(var(--tone-rgb),.2),transparent 68%);filter:blur(30px);transition:background .55s ease}
-.wistia-ar__artboard{display:grid;grid-template-columns:minmax(260px,360px) minmax(350px,1fr);grid-template-areas:"copy stage" "player stage" "ratio stage";column-gap:clamp(28px,6vw,92px);align-items:center;max-width:1180px;min-height:720px;margin:auto;padding:72px clamp(28px,5vw,76px)}.wistia-ar__copy{grid-area:copy;align-self:end}.wistia-ar__eyebrow{margin:0 0 16px;color:rgba(var(--tone-rgb),.82);font-size:13px;font-weight:800;letter-spacing:.2em}.wistia-ar__title{margin:0;color:#293532;font-size:clamp(38px,4.3vw,60px);font-weight:650;line-height:1.23;letter-spacing:-.055em}
-.wistia-ar__disc-stage{grid-area:stage;position:relative;display:grid;place-items:center;width:min(100%,560px);aspect-ratio:1;margin:auto;border-radius:48%;outline:0;cursor:ew-resize;touch-action:pan-y;user-select:none}.wistia-ar__disc-stage:focus-visible{outline:2px solid var(--tone);outline-offset:8px}.wistia-ar__orb{position:absolute;inset:8%;display:grid;place-items:center;filter:drop-shadow(0 24px 40px rgba(var(--tone-rgb),.28));transition:filter .45s ease}.wistia-ar__orb span{position:absolute;width:100%;aspect-ratio:1;border:1.5px solid rgba(var(--tone-rgb),.3);border-radius:47% 53% 54% 46%/45% 48% 52% 55%;background:rgba(255,255,255,.08);transform:rotate(calc(var(--layer,0)*22deg)) scale(calc(1 - var(--layer,0)*.14));animation:wistia-orb-breathe 6s ease-in-out infinite alternate;animation-delay:calc(var(--layer,0)*-.6s);transition:border-color .55s ease,background .55s ease}.wistia-ar__orb span:nth-child(1){--layer:0}.wistia-ar__orb span:nth-child(2){--layer:1;background:rgba(var(--tone-rgb),.05)}.wistia-ar__orb span:nth-child(3){--layer:2;background:rgba(var(--tone-rgb),.12)}.wistia-ar__orb span:nth-child(4){--layer:3;background:rgba(var(--tone-rgb),.2);box-shadow:0 0 54px rgba(var(--tone-rgb),.2) inset}.wistia-ar__orb i{width:13%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 42% 38%,#fff 0 14%,rgba(var(--tone-rgb),.75) 37%,rgba(var(--tone-rgb),.25) 66%,transparent 70%);box-shadow:0 0 38px rgba(var(--tone-rgb),.8);animation:wistia-orb-core 2.8s ease-in-out infinite}.wistia-ar.is-playing .wistia-ar__orb{filter:drop-shadow(0 28px 48px rgba(var(--tone-rgb),.48))}.wistia-ar.is-playing .wistia-ar__orb span{animation-duration:3.2s}.wistia-ar__mood{position:relative;z-index:2;margin:0 0 50px;color:#34403d;font-size:clamp(24px,2.9vw,36px);font-weight:750;letter-spacing:-.04em}.wistia-ar__ratio-current{position:absolute;z-index:2;top:54%;color:var(--tone);font-size:clamp(42px,5.5vw,70px);font-weight:760;font-variant-numeric:tabular-nums;letter-spacing:-.05em;transition:color .5s ease}.wistia-ar__gesture{position:absolute;z-index:2;bottom:9%;margin:0;padding:9px 15px;border:1px solid rgba(var(--tone-rgb),.18);border-radius:999px;background:#ffffff70;color:#52615d;font-size:13px;backdrop-filter:blur(8px)}.wistia-ar__disc-stage.is-dragging .wistia-ar__gesture{color:var(--tone)}
-.wistia-ar__ratio{grid-area:ratio;align-self:start;width:100%;margin-top:26px}.wistia-ar__ratio-input{width:100%;height:28px;margin:0;appearance:none;background:transparent;cursor:pointer}.wistia-ar__ratio-input::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:linear-gradient(90deg,rgba(var(--tone-rgb),.78) calc(var(--wistia-ratio-progress)*1%),#ffffff8c calc(var(--wistia-ratio-progress)*1%));box-shadow:inset 0 0 0 1px rgba(var(--tone-rgb),.12);transition:background .18s ease}.wistia-ar__ratio-input::-webkit-slider-thumb{width:28px;height:28px;margin-top:-9px;appearance:none;border:5px solid #fff;border-radius:50%;background:var(--tone);box-shadow:0 4px 18px rgba(var(--tone-rgb),.35);transition:background .35s ease,box-shadow .35s ease}.wistia-ar__ratio-marks{display:flex;justify-content:space-between;margin-top:4px;color:#6a7774;font-size:12px;font-variant-numeric:tabular-nums}.wistia-ar__ratio-marks span{transition:color .3s ease,font-weight .3s ease}.wistia-ar__ratio-marks span.is-active{color:var(--tone);font-weight:800}
-.wistia-ar__player{grid-area:player;position:relative;display:grid;grid-template-columns:58px auto 1fr 30px;align-items:center;gap:14px;width:100%;margin-top:34px}.wistia-ar__play{display:grid;place-items:center;width:58px;height:58px;padding:0;border:0;border-radius:50%;background:var(--tone);color:#fff;box-shadow:0 10px 28px rgba(var(--tone-rgb),.26);cursor:pointer;transition:background .45s ease,transform .2s ease}.wistia-ar__play:active{transform:scale(.95)}.wistia-ar__play-icon{width:0;height:0;margin-left:4px;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid currentColor}.wistia-ar__play[aria-pressed=true] .wistia-ar__play-icon{width:15px;height:18px;margin:0;border:0;background:linear-gradient(90deg,currentColor 0 34%,transparent 34% 66%,currentColor 66%)}.wistia-ar__time{min-width:74px;color:#394642;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}.wistia-ar__seek{width:100%;height:24px;margin:0;appearance:none;background:transparent;cursor:pointer}.wistia-ar__seek::-webkit-slider-runnable-track{height:4px;border-radius:9px;background:linear-gradient(90deg,var(--tone) var(--wistia-progress,0%),#ffffffb8 var(--wistia-progress,0%))}.wistia-ar__seek::-webkit-slider-thumb{width:16px;height:16px;margin-top:-6px;appearance:none;border:3px solid #fff;border-radius:50%;background:var(--tone)}.wistia-ar__volume{padding:0;border:0;background:transparent;color:#40504b;font-size:24px;cursor:pointer}.wistia-ar__error{position:absolute;top:67px;left:72px;margin:0;color:#a33f3f;font-size:12px}.wistia-ar__error[hidden],.wistia-ar__audio{display:none}.wistia-ar button:focus-visible,.wistia-ar input:focus-visible{outline:2px solid var(--tone);outline-offset:4px}
-@keyframes wistia-orb-breathe{0%{transform:rotate(calc(var(--layer,0)*22deg - 3deg)) scale(calc(1 - var(--layer,0)*.14))}100%{transform:rotate(calc(var(--layer,0)*22deg + 7deg)) scale(calc(1.025 - var(--layer,0)*.14))}}@keyframes wistia-orb-core{50%{transform:scale(1.12);box-shadow:0 0 54px rgba(var(--tone-rgb),.95)}}
-@media(max-width:760px){.wistia-ar__artboard{grid-template-columns:1fr;grid-template-areas:"copy" "stage" "ratio" "player";min-height:0;padding:54px 24px 58px}.wistia-ar__copy{text-align:center}.wistia-ar__eyebrow{margin-bottom:10px;font-size:11px}.wistia-ar__title{font-size:36px;line-height:1.2}.wistia-ar__disc-stage{width:min(100%,430px);margin-top:18px}.wistia-ar__mood{margin-bottom:42px;font-size:24px}.wistia-ar__ratio-current{font-size:48px}.wistia-ar__gesture{bottom:5%;font-size:11px}.wistia-ar__ratio{margin-top:4px}.wistia-ar__player{margin-top:27px}.wistia-ar__play{width:54px;height:54px}.wistia-ar__time{min-width:68px;font-size:12px}}
-@media(max-width:390px){.wistia-ar__artboard{padding:46px 20px 50px}.wistia-ar__title{font-size:32px}.wistia-ar__gesture{padding:8px 11px}.wistia-ar__player{grid-template-columns:52px auto 1fr 26px;gap:10px}.wistia-ar__play{width:52px;height:52px}}
-@media(prefers-reduced-motion:reduce){.wistia-ar *,.wistia-ar *:before,.wistia-ar *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
-/* The site sits in a narrow canvas even when the browser window is wide. */
-@container solo-detail (max-width:760px){
- .wistia-ar__artboard{grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "stage" "ratio" "player";gap:0;min-height:0;padding:48px clamp(18px,5cqw,30px) 56px}
- .wistia-ar__copy{text-align:center}
- .wistia-ar__title{font-size:clamp(30px,7cqw,42px);line-height:1.24}
- .wistia-ar__disc-stage{width:min(100%,390px);margin:18px auto 0}
- .wistia-ar__mood{font-size:clamp(21px,5cqw,28px)}
- .wistia-ar__ratio-current{font-size:clamp(40px,11cqw,58px)}
- .wistia-ar__ratio{min-width:0;margin-top:8px}
- .wistia-ar__player{min-width:0;margin-top:25px;grid-template-columns:54px auto minmax(0,1fr) 26px;gap:10px}
- .wistia-ar__seek{min-width:0}
+/* AR RATIO EXPERIENCE — 레트로 턴테이블 버전 (2026-09-24)
+   색은 상세페이지 무채색 토큰만 사용한다. 배경은 좌→우 흰색→옅은 회색. */
+.wistia-ar,.wistia-ar *{box-sizing:border-box}
+.solo-detail-scope>.wistia-ar,.wistia-ar{--ar-ink:#202426;--ar-muted:#737b7f;--ar-soft:#8c9497;--ar-line:#d5d9db;--wistia-ratio-progress:57.14;position:relative;isolation:isolate;width:100%;overflow:hidden;color:var(--ar-ink);background:linear-gradient(90deg,#ffffff 0%,#f7f8f8 42%,#e7e9ea 100%);font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif}
+.wistia-ar__artboard{width:100%;max-width:460px;margin:0 auto;padding:64px var(--solo-page-gutter,24px) 60px}
+
+/* 타이틀 — AR BENEFIT 인트로와 같은 타이포 토큰(solo-typography.css)을 그대로 쓰고 가운데 정렬만 지정 */
+.wistia-ar__copy{text-align:center}
+.solo-detail-scope .wistia-ar__copy [data-solo-kicker],.solo-detail-scope .wistia-ar__copy [data-solo-title],.solo-detail-scope .wistia-ar__copy [data-solo-sub]{text-align:center}
+.solo-detail-scope .wistia-ar__emphasis{margin-top:0}
+.solo-detail-scope .wistia-ar__title-line{margin-top:10px}
+
+/* 턴테이블 본체 */
+.wistia-ar__disc-stage{position:relative;width:min(100%,340px);margin:38px auto 0;outline:0;cursor:pointer;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.wistia-ar__disc-stage:focus-visible{outline:2px solid var(--ar-ink);outline-offset:6px;border-radius:24px}
+.wistia-ar__disc-stage.is-dragging{cursor:ew-resize}
+.wistia-ar__deck{position:relative;width:100%;aspect-ratio:100/96;border-radius:7%/7.3%;background:repeating-linear-gradient(90deg,#ffffff00 0 2px,#ffffff14 2px 3px,#0000000a 3px 4px),linear-gradient(140deg,#dfe2e4 0%,#caced1 42%,#bec2c5 72%,#c9cdd0 100%);box-shadow:0 26px 38px -24px #1a1e2066,0 2px 4px #1a1e201f,inset 0 1px 0 #ffffffcc,inset 0 -2px 3px #0000001c}
+.wistia-ar__brand{position:absolute;top:5.4%;left:6.2%;color:#9ba0a3;font-size:9px;font-weight:700;letter-spacing:.32em;text-shadow:0 1px 0 #ffffffb3}
+.wistia-ar__speed{position:absolute;right:6.4%;bottom:27%;color:#9ba0a3;font-size:8px;font-weight:700;letter-spacing:.08em;text-shadow:0 1px 0 #ffffffb3}
+.wistia-ar__speed i{margin:0 2px;font-style:normal}
+
+.wistia-ar__platter{position:absolute;left:6%;top:9.4%;width:78%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle closest-side,#18191a 0 90%,#3d4144 91%,#8f9497 93.5%,#d3d7d9 97%,#8a8f92 100%);box-shadow:0 12px 20px -12px #0000008c,0 1px 0 #ffffff99,inset 0 0 0 1px #00000040}
+.wistia-ar__record{position:absolute;inset:4.5%;border-radius:50%;animation:wistia-ar-spin 1.8s linear infinite;animation-play-state:paused;will-change:transform}
+.wistia-ar.is-playing .wistia-ar__record{animation-play-state:running}
+.wistia-ar__vinyl{display:block;width:100%;height:100%;object-fit:contain;transform:scale(1.06);pointer-events:none}
+.wistia-ar__label{position:absolute;inset:34%;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,#f6f5f1 0 58%,#e8e6e0 100%);box-shadow:inset 0 0 0 1px #00000014,0 0 0 1px #00000059}
+.wistia-ar__label img{width:64%;height:auto;opacity:.92;pointer-events:none}
+/* AR 비율만큼 넓어지는 은은한 링 — 비율이 커질수록 LP 위의 AR 영역이 커진다 */
+.wistia-ar__ar-ring{position:absolute;top:50%;left:50%;width:calc(38% + var(--wistia-ratio-progress)*.54%);aspect-ratio:1;border:1px solid #ffffff5c;border-radius:50%;background:radial-gradient(circle closest-side,#ffffff00 70%,#ffffff14 100%);transform:translate(-50%,-50%);pointer-events:none;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.wistia-ar__spindle{position:absolute;top:50%;left:50%;width:3.4%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#9ea3a6 60%,#5d6265);transform:translate(-50%,-50%)}
+@keyframes wistia-ar-spin{to{transform:rotate(360deg)}}
+
+.wistia-ar__tonearm{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;filter:drop-shadow(0 3px 2px #0000003d)}
+.wistia-ar__arm{transform-box:view-box;transform-origin:86px 13px;transform:rotate(-4deg);transition:transform .75s cubic-bezier(.3,.7,.2,1)}
+.wistia-ar.is-playing .wistia-ar__arm{transform:rotate(10deg)}
+
+.wistia-ar__lever{position:absolute;left:6.4%;bottom:7%;width:8px;height:12%;border-radius:4px;background:#2a2d2f;box-shadow:inset 0 1px 2px #000000a6,0 1px 0 #ffffffa6}
+.wistia-ar__lever i{position:absolute;left:50%;bottom:5%;width:12px;height:42%;border-radius:3px;background:linear-gradient(90deg,#2b2e30,#565a5d 45%,#1e2022);box-shadow:0 2px 3px #00000059;transform:translateX(-50%);transition:bottom .35s ease}
+.wistia-ar.is-playing .wistia-ar__lever i{bottom:53%}
+.wistia-ar__lever-label{position:absolute;left:10.4%;bottom:6.2%;display:grid;gap:10px;color:#9ba0a3;font-size:7px;font-weight:700;letter-spacing:.08em;text-shadow:0 1px 0 #ffffffb3}
+.wistia-ar__lever-label b{font-weight:inherit}
+.wistia-ar__lever-label b:first-child{order:2}
+.wistia-ar__switch{position:absolute;right:6.8%;bottom:7%;width:10px;height:14%;border-radius:3px;background:#9ea3a6;box-shadow:inset 0 1px 3px #0000005c,0 1px 0 #ffffffa6}
+.wistia-ar__switch i{position:absolute;left:50%;top:calc(6% + (100 - var(--wistia-ratio-progress))*.52%);width:12px;height:38%;border-radius:2px;background:linear-gradient(180deg,#3a3e40,#1d1f21);transform:translateX(-50%);box-shadow:0 1px 2px #00000066;transition:top .35s ease}
+
+/* 스와이프 코치마크 — 손가락이 점선 위를 좌우로 오가며 안내, 첫 조작 후 사라짐 */
+.wistia-ar__coach{position:absolute;left:45%;top:70%;width:52%;height:34px;transform:translate(-50%,-50%);pointer-events:none;transition:opacity .35s ease}
+.wistia-ar__coach-path{position:absolute;left:0;right:0;top:9px;border-top:1.5px dashed #ffffffb3}
+.wistia-ar__coach-path:before,.wistia-ar__coach-path:after{content:"";position:absolute;top:-5px;width:8px;height:8px;border-top:1.5px solid #ffffffb3;border-left:1.5px solid #ffffffb3}
+.wistia-ar__coach-path:before{left:0;transform:rotate(-45deg)}
+.wistia-ar__coach-path:after{right:0;transform:rotate(135deg)}
+.wistia-ar__coach-hand{position:absolute;left:50%;top:4px;width:28px;height:28px;margin-left:-11px;fill:#fff;stroke:#202426;stroke-width:1.2;stroke-linejoin:round;filter:drop-shadow(0 2px 3px #00000059);animation:wistia-ar-swipe 2.6s ease-in-out infinite}
+.wistia-ar.is-touched .wistia-ar__coach{opacity:0}
+@keyframes wistia-ar-swipe{0%,100%{transform:translateX(0)}25%{transform:translateX(-38px)}75%{transform:translateX(38px)}}
+.wistia-ar__gesture{margin:14px 0 0;color:var(--ar-soft);font-size:11.5px;line-height:1.6;letter-spacing:-.015em;text-align:center}
+
+/* 얇은 플레이바 */
+.wistia-ar__player{position:relative;display:grid;grid-template-columns:30px auto minmax(0,1fr) auto 22px;align-items:center;gap:10px;width:min(100%,340px);margin:26px auto 0}
+.wistia-ar__play{display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--ar-ink);border-radius:50%;background:transparent;color:var(--ar-ink);cursor:pointer;transition:background .2s ease,color .2s ease}
+.wistia-ar__play:hover{background:var(--ar-ink);color:#fff}
+.wistia-ar__play-icon{width:0;height:0;margin-left:2px;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid currentColor}
+.wistia-ar__play[aria-pressed=true] .wistia-ar__play-icon{width:8px;height:10px;margin:0;border:0;background:linear-gradient(90deg,currentColor 0 34%,transparent 34% 66%,currentColor 66%)}
+.wistia-ar__time{color:var(--ar-muted);font-size:11px;font-variant-numeric:tabular-nums;letter-spacing:0;white-space:nowrap}
+.wistia-ar__seek{width:100%;min-width:0;height:18px;margin:0;appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer}
+.wistia-ar__seek::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--ar-ink) var(--wistia-progress,0%),var(--ar-line) var(--wistia-progress,0%))}
+.wistia-ar__seek::-webkit-slider-thumb{width:10px;height:10px;margin-top:-4px;appearance:none;-webkit-appearance:none;border:0;border-radius:50%;background:var(--ar-ink)}
+.wistia-ar__seek::-moz-range-track{height:2px;border-radius:2px;background:var(--ar-line)}
+.wistia-ar__seek::-moz-range-progress{height:2px;border-radius:2px;background:var(--ar-ink)}
+.wistia-ar__seek::-moz-range-thumb{width:10px;height:10px;border:0;border-radius:50%;background:var(--ar-ink)}
+.wistia-ar__volume{display:grid;place-items:center;width:22px;height:22px;padding:0;border:0;background:transparent;color:var(--ar-muted);cursor:pointer}
+.wistia-ar__volume svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.wistia-ar__vol-body{fill:currentColor}
+.wistia-ar__vol-mute,.wistia-ar__volume.is-muted .wistia-ar__vol-wave{display:none}
+.wistia-ar__volume.is-muted .wistia-ar__vol-mute{display:inline}
+.wistia-ar__error{position:absolute;top:calc(100% + 4px);left:40px;margin:0;color:#a33f3f;font-size:11px}
+.wistia-ar__error[hidden],.wistia-ar__audio{display:none}
+
+/* LIVE/AR 비율 바 — 두툼한 무광 트랙 + 흰 원형 손잡이 */
+.wistia-ar__ratio{width:min(100%,340px);margin:34px auto 0}
+.wistia-ar__ratio-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.wistia-ar__mood{color:var(--ar-muted);font-size:12px;font-weight:500;letter-spacing:-.015em}
+.wistia-ar__ratio-current{color:var(--ar-ink);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1}
+.wistia-ar__ratio-current:before{content:"AR ";color:var(--ar-soft);font-size:10px;font-weight:700;letter-spacing:.16em;vertical-align:3px}
+.wistia-ar__ratio-field{position:relative;height:46px;border-radius:999px;background:linear-gradient(90deg,#d6dadc 0,#d6dadc calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),#eceeef calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),#eceeef 100%);box-shadow:inset 0 1px 3px #1a1e2017,inset 0 0 0 1px #1a1e200a}
+.wistia-ar__ratio-end{position:absolute;top:50%;z-index:1;color:#8c9497;font-size:9.5px;font-weight:700;letter-spacing:.16em;transform:translateY(-50%);pointer-events:none}
+.wistia-ar__ratio-end--live{left:17px}
+.wistia-ar__ratio-end--ar{right:17px}
+.wistia-ar__ratio-input{position:absolute;inset:0;z-index:2;width:100%;height:46px;margin:0;appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer}
+.wistia-ar__ratio-input::-webkit-slider-runnable-track{height:46px;border-radius:999px;background:transparent}
+.wistia-ar__ratio-input::-webkit-slider-thumb{width:38px;height:38px;margin-top:4px;appearance:none;-webkit-appearance:none;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 6px #1a1e2029,0 0 0 1px #1a1e200d}
+.wistia-ar__ratio-input::-moz-range-track{height:46px;background:transparent}
+.wistia-ar__ratio-input::-moz-range-thumb{width:38px;height:38px;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 6px #1a1e2029,0 0 0 1px #1a1e200d}
+.wistia-ar__ratio-marks{position:relative;height:16px;margin-top:9px;color:var(--ar-soft);font-size:11px;font-variant-numeric:tabular-nums}
+.wistia-ar__ratio-marks span{position:absolute;top:0;transform:translateX(-50%);transition:color .25s ease}
+.wistia-ar__ratio-marks span[data-value="30"]{left:19px}
+.wistia-ar__ratio-marks span[data-value="50"]{left:calc(19px + (100% - 38px)*.2857)}
+.wistia-ar__ratio-marks span[data-value="70"]{left:calc(19px + (100% - 38px)*.5714)}
+.wistia-ar__ratio-marks span[data-value="100"]{left:calc(100% - 19px)}
+.wistia-ar__ratio-marks span.is-active{color:var(--ar-ink);font-weight:600}
+
+.wistia-ar button:focus-visible,.wistia-ar input:focus-visible{outline:2px solid var(--ar-ink);outline-offset:4px}
+.wistia-ar__ratio-input:focus-visible{outline-offset:2px;border-radius:999px}
+
+@container solo-detail (max-width:360px){
+ .wistia-ar__artboard{padding:54px 20px 52px}
+ .wistia-ar__disc-stage{margin-top:32px}
+ .wistia-ar__player{gap:8px}
 }
+@media(prefers-reduced-motion:reduce){.wistia-ar *,.wistia-ar *:before,.wistia-ar *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
