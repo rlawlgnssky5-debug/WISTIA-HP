@@ -2,16 +2,19 @@
    색은 상세페이지 무채색 토큰만 사용한다. 배경은 좌→우 흰색→옅은 회색. */
 .wistia-ar,.wistia-ar *{box-sizing:border-box}
 .solo-detail-scope>.wistia-ar,.wistia-ar{--ar-ink:#202426;--ar-muted:#737b7f;--ar-soft:#8c9497;--ar-line:#d5d9db;--wistia-ratio-progress:57.14;position:relative;isolation:isolate;width:100%;overflow:hidden;color:var(--ar-ink);background:linear-gradient(90deg,#ffffff 0%,#f7f8f8 42%,#e7e9ea 100%);font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif}
-.wistia-ar__artboard{width:100%;max-width:460px;margin:0 auto;padding:64px var(--solo-page-gutter,24px) 60px}
+.wistia-ar__artboard{width:100%;max-width:460px;margin:0 auto;padding:44px var(--solo-page-gutter,24px) 40px}
 
 /* 타이틀 — AR BENEFIT 인트로와 같은 타이포 토큰(solo-typography.css)을 그대로 쓰고 가운데 정렬만 지정 */
 .wistia-ar__copy{text-align:center}
 .solo-detail-scope .wistia-ar__copy [data-solo-kicker],.solo-detail-scope .wistia-ar__copy [data-solo-title],.solo-detail-scope .wistia-ar__copy [data-solo-sub]{text-align:center}
 .solo-detail-scope .wistia-ar__emphasis{margin-top:0}
-.solo-detail-scope .wistia-ar__title-line{margin-top:10px}
+.solo-detail-scope .wistia-ar__title-line{margin-top:3px}
+.solo-detail-scope .wistia-ar__copy[data-solo-section-intro] [data-solo-kicker]{margin-bottom:11px!important}
+.solo-detail-scope .wistia-ar__copy[data-solo-section-intro] [data-solo-sub]{margin-top:13px!important}
+.solo-detail-scope .wistia-ar__lead-line{white-space:nowrap;font-size:min(11.5px,3.3cqw);letter-spacing:-.025em!important}
 
 /* 턴테이블 본체 */
-.wistia-ar__disc-stage{position:relative;width:min(100%,340px);margin:38px auto 0;outline:0;cursor:pointer;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.wistia-ar__disc-stage{position:relative;width:min(100%,340px);margin:26px auto 0;outline:0;cursor:pointer;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 .wistia-ar__disc-stage:focus-visible{outline:2px solid var(--ar-ink);outline-offset:6px;border-radius:24px}
 .wistia-ar__disc-stage.is-dragging{cursor:ew-resize}
 .wistia-ar__deck{position:relative;width:100%;aspect-ratio:100/96;border-radius:7%/7.3%;background:repeating-linear-gradient(90deg,#ffffff00 0 2px,#ffffff14 2px 3px,#0000000a 3px 4px),linear-gradient(140deg,#dfe2e4 0%,#caced1 42%,#bec2c5 72%,#c9cdd0 100%);box-shadow:0 26px 38px -24px #1a1e2066,0 2px 4px #1a1e201f,inset 0 1px 0 #ffffffcc,inset 0 -2px 3px #0000001c}
@@ -52,10 +55,9 @@
 .wistia-ar__coach-hand{position:absolute;left:50%;top:4px;width:28px;height:28px;margin-left:-11px;fill:#fff;stroke:#202426;stroke-width:1.2;stroke-linejoin:round;filter:drop-shadow(0 2px 3px #00000059);animation:wistia-ar-swipe 2.6s ease-in-out infinite}
 .wistia-ar.is-touched .wistia-ar__coach{opacity:0}
 @keyframes wistia-ar-swipe{0%,100%{transform:translateX(0)}25%{transform:translateX(-38px)}75%{transform:translateX(38px)}}
-.wistia-ar__gesture{margin:14px 0 0;color:var(--ar-soft);font-size:11.5px;line-height:1.6;letter-spacing:-.015em;text-align:center}
 
 /* 얇은 플레이바 */
-.wistia-ar__player{position:relative;display:grid;grid-template-columns:30px auto minmax(0,1fr) auto 22px;align-items:center;gap:10px;width:min(100%,340px);margin:26px auto 0}
+.wistia-ar__player{position:relative;display:grid;grid-template-columns:30px auto minmax(0,1fr) auto 22px;align-items:center;gap:10px;width:min(100%,340px);margin:22px auto 0}
 .wistia-ar__play{display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--ar-ink);border-radius:50%;background:transparent;color:var(--ar-ink);cursor:pointer;transition:background .2s ease,color .2s ease}
 .wistia-ar__play:hover{background:var(--ar-ink);color:#fff}
 .wistia-ar__play-icon{width:0;height:0;margin-left:2px;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid currentColor}
@@ -76,8 +78,15 @@
 .wistia-ar__error[hidden],.wistia-ar__audio{display:none}
 
 /* LIVE/AR 비율 바 — 두툼한 무광 트랙 + 흰 원형 손잡이 */
-.wistia-ar__ratio{width:min(100%,340px);margin:34px auto 0}
-.wistia-ar__ratio-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.wistia-ar__ratio{width:min(100%,340px);margin:22px auto 0}
+.wistia-ar__ratio-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.wistia-ar__mood-wrap{display:inline-flex;align-items:center;gap:8px}
+/* 마우스 휠 힌트 — 휠이 아래로 굴러가는 작은 마우스 아이콘 */
+.wistia-ar__scroll-hint{position:relative;display:none;width:12px;height:18px;border:1.3px solid var(--ar-soft);border-radius:7px}
+.wistia-ar__scroll-hint i{position:absolute;top:3px;left:50%;width:2px;height:4px;margin-left:-1px;border-radius:1px;background:var(--ar-ink);animation:wistia-ar-wheel 1.5s ease-in-out infinite}
+@keyframes wistia-ar-wheel{0%{transform:translateY(0);opacity:0}25%{opacity:1}70%{transform:translateY(6px);opacity:0}100%{opacity:0}}
+@media(hover:hover) and (pointer:fine){.wistia-ar__scroll-hint{display:inline-block}.wistia-ar__ratio{cursor:ns-resize}.wistia-ar__ratio-input{cursor:pointer}}
+.wistia-ar__play[aria-busy=true]{opacity:.55}
 .wistia-ar__mood{color:var(--ar-muted);font-size:12px;font-weight:500;letter-spacing:-.015em}
 .wistia-ar__ratio-current{color:var(--ar-ink);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1}
 .wistia-ar__ratio-current:before{content:"AR ";color:var(--ar-soft);font-size:10px;font-weight:700;letter-spacing:.16em;vertical-align:3px}
@@ -102,8 +111,8 @@
 .wistia-ar__ratio-input:focus-visible{outline-offset:2px;border-radius:999px}
 
 @container solo-detail (max-width:360px){
- .wistia-ar__artboard{padding:54px 20px 52px}
- .wistia-ar__disc-stage{margin-top:32px}
+ .wistia-ar__artboard{padding:38px 20px 36px}
+ .wistia-ar__disc-stage{margin-top:22px}
  .wistia-ar__player{gap:8px}
 }
 @media(prefers-reduced-motion:reduce){.wistia-ar *,.wistia-ar *:before,.wistia-ar *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
