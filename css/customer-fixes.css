@@ -1,0 +1,184 @@
+/* Shared product-page corrections requested after the mobile review */
+#floatingKakao,
+body.is-solo-detail #floatingKakao{
+  position:fixed!important;
+  z-index:90!important;
+  display:grid!important;
+  place-items:center!important;
+  right:max(12px,calc((100vw - var(--app-canvas-width))/2 + 12px))!important;
+  bottom:calc(16px + env(safe-area-inset-bottom))!important;
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:15px!important;
+  background:transparent!important;
+  box-shadow:0 8px 22px #20292f30!important;
+  overflow:hidden!important;
+}
+#floatingKakao img{
+  position:static!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+  transform:none!important;
+}
+body[data-page="event"] #floatingKakao,
+#soloDesktopCta{display:none!important}
+
+/* The source process photos are 16:9, so show their full frame on a narrow canvas */
+@container solo-detail (max-width:520px){
+  .solo-detail-scope .wistia-process-studio .wps-feature{
+    display:flex;
+    flex-direction:column;
+    height:auto;
+  }
+  .solo-detail-scope .wistia-process-studio .wps-photo{
+    flex:none;
+    width:100%;
+    height:auto;
+    aspect-ratio:16 / 9;
+  }
+  .solo-detail-scope .wistia-process-studio .wps-photo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+  .solo-detail-scope .wistia-process-studio .wps-content{
+    width:100%;
+    min-height:200px;
+  }
+}
+
+/* One live price and one clear inquiry action for every product calculator */
+body[data-page="event"] .booking-static-bar{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:12px;
+  padding:18px;
+  overflow:visible;
+}
+body[data-page="event"] .booking-live-total{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  color:#fff;
+}
+body[data-page="event"] .booking-live-total span{
+  font-size:14px;
+  font-weight:600;
+}
+body[data-page="event"] .booking-live-total #mobilePrice{
+  display:block;
+  width:auto;
+  min-width:0;
+  font-size:26px;
+  font-weight:700;
+  line-height:1.2;
+  white-space:nowrap;
+}
+body[data-page="event"] .booking-static-bar .button{
+  display:flex;
+  justify-content:center;
+  width:100%;
+  max-width:none;
+  min-height:50px;
+  padding:10px 14px;
+  border:0;
+  border-radius:4px;
+  background:#fee500;
+  color:#302614;
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+}
+@media(max-width:380px){
+  body[data-page="event"] .booking-static-bar{padding:14px}
+  body[data-page="event"] .booking-live-total #mobilePrice{font-size:23px}
+}
+
+/* AR pages describe the actual WISTIA package, without generalising competitors */
+.solo-detail-scope .ar-compare-table.is-wistia-only{
+  width:100%;
+  grid-template-columns:minmax(105px,31%) minmax(0,1fr);
+}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-head>strong,
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row .ar-compare-wistia{grid-column:2}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row .ar-compare-criteria{grid-column:1}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row>*{
+  min-height:84px;
+  padding:12px 10px!important;
+  overflow-wrap:anywhere;
+}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row .ar-compare-criteria{
+  background:#dde2e3!important;
+  color:#304047!important;
+  font-size:12px;
+}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row .ar-compare-wistia{
+  font-size:13px!important;
+  line-height:1.6;
+}
+.solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row:last-child .ar-compare-criteria{border-radius:0 0 0 18px!important}
+.solo-detail-scope .ar-compare-table.is-wistia-only + .ar-compare-note{width:100%}
+@media(max-width:360px){
+  .solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row>*{padding:10px 7px!important}
+  .solo-detail-scope .ar-compare-table.is-wistia-only .ar-compare-row .ar-compare-wistia{font-size:11.5px!important}
+}
+
+/* Keep the original three-column table and avoid displaying competitor names */
+.solo-detail-scope .ar-compare-table.is-package-comparison{width:100%;grid-template-columns:minmax(0,35fr) minmax(0,18fr) minmax(0,47fr)}
+.solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-head>span:nth-child(2){grid-column:2;background:#596064;color:#fff}
+.solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row>*{min-height:96px;padding:12px 8px!important;overflow-wrap:anywhere}
+.solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-general{font-size:10.5px!important;line-height:1.65;color:#59676d!important}
+.solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-criteria{font-size:10.5px!important;line-height:1.4}
+.solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-wistia{font-size:12px!important;line-height:1.5}
+.solo-detail-scope .ar-compare-table.is-package-comparison + .ar-compare-note{width:100%;line-height:1.6}
+@media(max-width:360px){
+ .solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row>*{padding:10px 5px!important}
+ .solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-general{font-size:9.5px!important}
+ .solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-criteria{font-size:9px!important}
+ .solo-detail-scope .ar-compare-table.is-package-comparison .ar-compare-row .ar-compare-wistia{font-size:10.5px!important}
+}
+.wedding-film-use{padding-top:46px;padding-bottom:46px}
+.wedding-film-use header{margin-bottom:22px}
+.wedding-film-use .eyebrow{font-size:11px;letter-spacing:.15em;color:#79898d}
+.wedding-film-use h2{margin:12px 0;font-size:clamp(23px,4vw,34px);line-height:1.3;letter-spacing:-.05em}
+.wedding-film-use header>p:last-child{margin:0;color:#68777a;line-height:1.65}
+.wedding-film-use-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.wedding-film-use-grid article{min-width:0;padding:24px;border:1px solid #d7dfe0;border-radius:16px;background:#f5f7f7}
+.wedding-film-use-grid span{font-family:Georgia,serif;font-size:11px;letter-spacing:.1em;color:#738487}
+.wedding-film-use-grid h3{margin:18px 0 9px;font-size:21px}
+.wedding-film-use-grid p{margin:0;color:#627177;font-size:13px;line-height:1.65;word-break:keep-all}
+@media(max-width:540px){.wedding-film-use-grid{grid-template-columns:1fr}.wedding-film-use-grid article{padding:20px}}
+
+/* Price flow: base, options, benefits, then one floating final quote */
+body[data-page="event"] .booking-calculator{padding-bottom:210px}
+body[data-page="event"] .booking-base{padding:28px 24px 26px;margin-inline:-24px;background:#f4f6f6}
+body[data-page="event"] .booking-base>p{margin:9px 0 22px}
+body[data-page="event"] .booking-base-service{display:grid;gap:9px;font-size:14px;font-weight:600}
+body[data-page="event"] .booking-base-service select{width:100%;min-width:0;height:54px;padding:0 16px;border:1px solid #cbd4d7;border-radius:8px;background:#fff;color:#293438}
+body[data-page="event"] .booking-base-choice{margin-top:24px}
+body[data-page="event"] .booking-base-choice>p{margin-bottom:10px;font-size:14px;font-weight:600;color:#293438}
+body[data-page="event"] .booking-base-choice .calculator-option-list{gap:8px}
+body[data-page="event"] .booking-base-choice .option-choice{background:#fff;border:1px solid #d5dcde;border-radius:8px}
+body[data-page="event"] .booking-base-choice .option-choice:has(input:checked){border-color:#35454b;box-shadow:inset 0 0 0 1px #35454b}
+body[data-page="event"] .booking-base-note{margin:20px 0 0;font-size:13px}
+body[data-page="event"] .booking-base-amount{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:24px;padding-top:18px;border-top:1px solid #cbd4d7}
+body[data-page="event"] .booking-base-amount span{font-size:13px;color:#59696f}
+body[data-page="event"] .booking-base-amount strong{font-size:28px;line-height:1.2;white-space:nowrap}
+body[data-page="event"] .booking-static-bar.booking-follow-total{position:fixed;left:auto;right:max(16px,calc((100vw - var(--app-canvas-width))/2 + 16px));bottom:calc(16px + env(safe-area-inset-bottom));z-index:70;transform:none;width:min(320px,calc(100vw - 32px));max-width:none;margin:0;padding:16px;border:1px solid #263237;border-radius:20px;background:#303638;box-shadow:0 12px 35px #19222738;display:flex;flex-direction:column;gap:12px;font-family:var(--sans)}
+body[data-page="event"] .booking-static-bar.booking-follow-total::after{content:"";position:absolute;right:30px;bottom:-8px;width:14px;height:14px;background:#303638;transform:rotate(45deg);border-right:1px solid #263237;border-bottom:1px solid #263237}
+body[data-page="event"] .booking-follow-total .booking-live-total{align-items:end}
+body[data-page="event"] .booking-follow-total .booking-live-total span{display:grid;gap:4px;font-size:12px;line-height:1.3}
+body[data-page="event"] .booking-follow-total .booking-live-total small{color:#bdc8cb;font-size:10px;letter-spacing:.12em}
+body[data-page="event"] .booking-follow-total .button{position:relative;z-index:1;max-width:none;font-size:14px;border-radius:10px}
+@media(max-width:380px){
+ body[data-page="event"] .booking-static-bar.booking-follow-total{padding:13px}
+ body[data-page="event"] .booking-base{padding-inline:18px;margin-inline:-18px}
+}

@@ -49,7 +49,6 @@
       if(destroyed)return
       if(!activeBuffer()){pendingPlay=true;playBtn.setAttribute('aria-busy','true');return}
       pendingPlay=false
-      global.wistiaClaimPlayback?.('before-after')
       if(start(pausedAt>=duration()?0:pausedAt)){isPlaying=true;sync()}
     }
     function pause(){pendingPlay=false;pausedAt=position();stopSource();isPlaying=false;sync()}
@@ -82,7 +81,7 @@
     async function load(kind,src){
       try{const response=await fetch(src,{signal});if(!response.ok)throw new Error('HTTP '+response.status);const buffer=await decode(await response.arrayBuffer());if(destroyed)return;buffers[kind]=buffer;peakSets[kind]=makePeaks(buffer);failures[kind]=false}
       catch(error){if(error.name==='AbortError')return;failures[kind]=true;console.error('[WISTIA Before/After]',error)}
-      if(kind===mode){playBtn.removeAttribute('aria-busy');errorEl.hidden=!failures[kind];if(pendingPlay&&audioCtx&&audioCtx.state==='running'){global.wistiaClaimPlayback?.('before-after');if(start(pausedAt)){pendingPlay=false;isPlaying=true}}sync()}
+      if(kind===mode){playBtn.removeAttribute('aria-busy');errorEl.hidden=!failures[kind];if(pendingPlay&&audioCtx&&audioCtx.state==='running'&&start(pausedAt)){pendingPlay=false;isPlaying=true}sync()}
       if(buffers.before||buffers.after)root.classList.remove('is-loading')
     }
     root.classList.add('is-loading');playBtn.setAttribute('aria-busy','true')
