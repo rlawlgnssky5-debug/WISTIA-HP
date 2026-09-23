@@ -182,3 +182,16 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
  body[data-page="event"] .booking-static-bar.booking-follow-total{padding:13px}
  body[data-page="event"] .booking-base{padding-inline:18px;margin-inline:-18px}
 }
+
+/* Service variants stay on one product page, with a direct price route per choice */
+.detail-variant-picker{padding-block:22px 26px}
+.detail-variant-picker>p{margin:0 0 10px;color:#607178;font-size:13px;font-weight:600}
+.detail-variant-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-variant{display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0;padding:15px 17px;border:1px solid #d7dfe1;border-radius:12px;color:#263238;background:#fff}
+.detail-variant.is-active{border-color:#576d75;background:#eef3f4;box-shadow:inset 0 0 0 1px #576d75}
+.detail-variant strong{font-size:15px;line-height:1.35;word-break:keep-all}
+.detail-variant-price{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding-bottom:3px;border-bottom:1px solid #52686f;color:#364c54;font-size:14px;font-weight:650}
+.detail-variant-price span{font-size:19px}
+.booking-extra .option-choice.has-lyric-image .lyric-option-image{grid-column:1/-1;display:block;width:100%;overflow:hidden;border-radius:8px;background:#202020}
+.lyric-option-image img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain}
+@media(max-width:540px){.detail-variant-picker{padding-block:16px 21px}.detail-variant{display:grid;gap:4px;padding:12px}.detail-variant strong{font-size:13px}}
