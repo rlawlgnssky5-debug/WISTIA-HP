@@ -17,7 +17,7 @@
   const q=s=>root.querySelector(s)
   const input=q('.wistia-ar__ratio-input'),current=q('.wistia-ar__ratio-current'),mood=q('[data-ratio-mood]'),stage=q('.wistia-ar__disc-stage'),ratioBox=q('.wistia-ar__ratio'),play=q('.wistia-ar__play'),seek=q('.wistia-ar__seek'),timeNow=q('[data-current-time]'),timeTotal=q('[data-duration]'),volume=q('.wistia-ar__volume'),error=q('.wistia-ar__error')
   const listeners=[],buffers={},loading={},failures={},sources={},gains={},aborter=new AbortController()
-  let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,dragging=false,dragStart=0,dragValue=value,dragMoved=0,observer=null
+  let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,observer=null
   const on=(node,event,handler,opts)=>{if(!node)return;node.addEventListener(event,handler,opts);listeners.push(()=>node.removeEventListener(event,handler,opts))}
   const sourceFor=ratio=>root.getAttribute('data-audio-'+ratio)||''
   const duration=()=>Math.max(0,...ANCHORS.map(r=>buffers[r]?.duration||0))
@@ -58,7 +58,7 @@
   const stopAll=()=>ANCHORS.forEach(stopSource)
   function startAll(at){startedAt=ctx.currentTime-at;ANCHORS.forEach(r=>startSource(r,at))}
 
-  function setPlaying(state){root.classList.toggle('is-playing',state);stage.classList.toggle('is-playing',state);play.setAttribute('aria-pressed',String(state));play.setAttribute('aria-label',state?'일시정지':'재생')}
+  function setPlaying(state){root.classList.toggle('is-playing',state);stage.classList.toggle('is-playing',state);play.setAttribute('aria-pressed',String(state));play.setAttribute('aria-label',state?'일시정지':'재생');stage.setAttribute('aria-label',state?'턴테이블 일시정지':'턴테이블 재생');stage.setAttribute('aria-pressed',String(state))}
   function progress(){const d=duration(),pos=position();timeNow.textContent=format(pos);timeTotal.textContent=format(d);seek.max=String(d||1);seek.value=String(pos);seek.style.setProperty('--wistia-progress',d?(pos/d*100)+'%':'0%')}
   function tick(){progress();if(!isPlaying)return;if(position()>=duration()-.02){stopAll();isPlaying=false;offset=0;setPlaying(false);progress();return}raf=requestAnimationFrame(tick)}
   function begin(){
@@ -86,19 +86,17 @@
   }
   const togglePlay=()=>{if(isPlaying||pendingPlay)pause();else start()}
 
-  function render(){const moodText=moodFor(value),percent=(value-30)/70*100,tone=nearest(value);root.style.setProperty('--wistia-ratio-progress',percent);root.dataset.ratio=String(value);root.dataset.tone=String(tone);input.value=String(value);input.setAttribute('aria-valuetext',value+'% '+moodText);current.textContent=value+'%';mood.textContent=moodText;stage.setAttribute('aria-label','현재 AR 비율 '+value+'%, '+moodText+', 좌우로 밀어 변경, 누르면 재생');root.querySelectorAll('.wistia-ar__ratio-marks span').forEach(node=>node.classList.toggle('is-active',Number(node.dataset.value)===tone))}
+  function render(){const moodText=moodFor(value),percent=(value-30)/70*100,tone=nearest(value);root.style.setProperty('--wistia-ratio-progress',percent);root.dataset.ratio=String(value);root.dataset.tone=String(tone);input.value=String(value);input.setAttribute('aria-valuetext',value+'% '+moodText);current.textContent=value+'%';mood.textContent=moodText;root.querySelectorAll('.wistia-ar__ratio-marks span').forEach(node=>node.classList.toggle('is-active',Number(node.dataset.value)===tone))}
   // 비율이 바뀌어도 재생은 멈추지 않는다 — 음원 간 볼륨만 부드럽게 넘어간다
   function setValue(next){touched();const selected=clamp(next);if(selected===value)return;value=selected;render();applyMix(false);if(ctx)loadAll();else load(nearest(value))}
   function onWheel(event){const delta=Math.abs(event.deltaY)>=Math.abs(event.deltaX)?event.deltaY:event.deltaX,direction=Math.sign(delta);if(!direction)return;const next=value+(direction>0?1:-1);if(next<30||next>100)return;event.preventDefault();setValue(next)}
 
   on(input,'input',event=>setValue(event.target.value))
-  on(stage,'keydown',event=>{if(['ArrowUp','ArrowRight'].includes(event.key)){event.preventDefault();setValue(value+1)}if(['ArrowDown','ArrowLeft'].includes(event.key)){event.preventDefault();setValue(value-1)}if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePlay()}})
-  on(stage,'wheel',onWheel,{passive:false})
+  // 턴테이블은 재생 버튼 역할만 한다, 소리 비율은 비율 바(드래그·클릭·휠·키보드)에서만 바뀐다
+  on(stage,'click',togglePlay)
+  on(stage,'keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePlay()}})
   on(ratioBox,'wheel',onWheel,{passive:false})
-  on(stage,'pointerdown',event=>{if(event.button>0)return;dragging=true;dragMoved=0;dragStart=event.clientX;dragValue=value;stage.setPointerCapture?.(event.pointerId);stage.classList.add('is-dragging')})
-  on(stage,'pointermove',event=>{if(!dragging)return;const width=Math.max(220,stage.getBoundingClientRect().width),distance=event.clientX-dragStart;dragMoved=Math.max(dragMoved,Math.abs(distance));if(dragMoved<6)return;setValue(dragValue+distance/width*70)})
-  const endDrag=()=>{dragging=false;stage.classList.remove('is-dragging')}
-  on(stage,'pointerup',()=>{const tap=dragging&&dragMoved<6;endDrag();if(tap)togglePlay()});on(stage,'pointercancel',endDrag)
+  on(input,'pointerdown',touched);on(input,'focus',touched)
   on(play,'click',togglePlay)
   on(volume,'click',()=>{muted=!muted;if(master&&ctx)master.gain.setTargetAtTime(muted?0:1,ctx.currentTime,.03);volume.classList.toggle('is-muted',muted);volume.setAttribute('aria-pressed',String(muted));volume.setAttribute('aria-label',muted?'음소거 해제':'음소거')})
   on(seek,'input',()=>{const d=duration();if(!d)return;offset=Math.max(0,Math.min(d,Number(seek.value)));if(isPlaying){stopAll();startAll(offset);applyMix(true)}progress()})

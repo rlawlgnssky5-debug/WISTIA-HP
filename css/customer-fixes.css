@@ -269,13 +269,14 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 /* The review reel moves continuously; a lower speed is used for reduced-motion visitors */
 .review-loop{animation:none!important;transition:none!important}
 
-/* Keep dark content on a solid ground; blend only through the empty light-section gutters */
-.solo-detail-scope>.ar-primary-benefit{background:linear-gradient(180deg,#fff 0,#fff calc(100% - 24px),#f0f1f1 calc(100% - 19px),#a9adad calc(100% - 10px),#111313 100%)!important}
+/* Keep dark content on a solid ground; blend only through the empty light-section gutters.
+   2026-09-24: 24px 띠가 그림자처럼 끊겨 보여 64px 완만한 곡선형 블렌드로 바꾸고, AR 장점 섹션을 전체 폭으로 펼쳐 좌우 흰 틈을 없앴다 */
+.solo-detail-scope>.ar-primary-benefit{width:100%!important;max-width:none!important;margin-inline:0!important;padding-bottom:84px!important;padding-bottom:84px!important;background:linear-gradient(180deg,#fff 0,#fff calc(100% - 64px),color-mix(in srgb,#fff 94%,#111313) calc(100% - 51px),color-mix(in srgb,#fff 78%,#111313) calc(100% - 38px),color-mix(in srgb,#fff 50%,#111313) calc(100% - 26px),color-mix(in srgb,#fff 22%,#111313) calc(100% - 13px),#111313 100%)!important}
 .solo-detail-scope>.solo-review-carousel{background:#111313!important}
-.solo-detail-scope>.solo-editorial-sheet{background:linear-gradient(180deg,#111313 0,#a9adad 10px,#f0f1f1 19px,#fff 24px,#fff calc(100% - 24px),#f0f1f1 calc(100% - 19px),#a9adad calc(100% - 10px),#202425 100%)!important}
+.solo-detail-scope>.solo-editorial-sheet{background:linear-gradient(180deg,#111313 0,color-mix(in srgb,#fff 22%,#111313) 13px,color-mix(in srgb,#fff 50%,#111313) 26px,color-mix(in srgb,#fff 78%,#111313) 38px,color-mix(in srgb,#fff 94%,#111313) 51px,#fff 64px,#fff calc(100% - 64px),color-mix(in srgb,#fff 94%,#202425) calc(100% - 51px),color-mix(in srgb,#fff 78%,#202425) calc(100% - 38px),color-mix(in srgb,#fff 50%,#202425) calc(100% - 26px),color-mix(in srgb,#fff 22%,#202425) calc(100% - 13px),#202425 100%)!important}
 .solo-detail-scope>.solo-editorial-sheet .ar-expert-story{background:transparent!important;padding-top:clamp(88px,9vw,104px)!important;padding-bottom:clamp(72px,9vw,108px)!important}
 .solo-detail-scope>.wistia-ba-section{background:#202425!important}
-.solo-detail-scope>.wistia-advantages{background:linear-gradient(180deg,#202425 0,#acb1b1 10px,#e8ebeb 19px,#f3f5f5 24px,#f3f5f5 calc(100% - 24px),#e8ebeb calc(100% - 19px),#acb1b1 calc(100% - 10px),#202425 100%)!important}
+.solo-detail-scope>.wistia-advantages{background:linear-gradient(180deg,#202425 0,color-mix(in srgb,#f3f5f5 22%,#202425) 13px,color-mix(in srgb,#f3f5f5 50%,#202425) 26px,color-mix(in srgb,#f3f5f5 78%,#202425) 38px,color-mix(in srgb,#f3f5f5 94%,#202425) 51px,#f3f5f5 64px,#f3f5f5 calc(100% - 64px),color-mix(in srgb,#f3f5f5 94%,#202425) calc(100% - 51px),color-mix(in srgb,#f3f5f5 78%,#202425) calc(100% - 38px),color-mix(in srgb,#f3f5f5 50%,#202425) calc(100% - 26px),color-mix(in srgb,#f3f5f5 22%,#202425) calc(100% - 13px),#202425 100%)!important}
 .solo-detail-scope>.wps-vertical{background:#202425!important}
 
 /* Five clear WISTIA strengths replace the comparison table on every detail page */

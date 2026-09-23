@@ -14,9 +14,8 @@
 .solo-detail-scope .wistia-ar__lead-line{white-space:nowrap;font-size:min(11.5px,3.3cqw);letter-spacing:-.025em!important}
 
 /* 턴테이블 본체 */
-.wistia-ar__disc-stage{position:relative;width:min(100%,340px);margin:26px auto 0;outline:0;cursor:pointer;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.wistia-ar__disc-stage{position:relative;width:min(100%,340px);margin:30px auto 0;outline:0;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 .wistia-ar__disc-stage:focus-visible{outline:2px solid var(--ar-ink);outline-offset:6px;border-radius:24px}
-.wistia-ar__disc-stage.is-dragging{cursor:ew-resize}
 .wistia-ar__deck{position:relative;width:100%;aspect-ratio:100/96;border-radius:7%/7.3%;background:repeating-linear-gradient(90deg,#ffffff00 0 2px,#ffffff14 2px 3px,#0000000a 3px 4px),linear-gradient(140deg,#dfe2e4 0%,#caced1 42%,#bec2c5 72%,#c9cdd0 100%);box-shadow:0 26px 38px -24px #1a1e2066,0 2px 4px #1a1e201f,inset 0 1px 0 #ffffffcc,inset 0 -2px 3px #0000001c}
 .wistia-ar__brand{position:absolute;top:5.4%;left:6.2%;color:#9ba0a3;font-size:9px;font-weight:700;letter-spacing:.32em;text-shadow:0 1px 0 #ffffffb3}
 .wistia-ar__speed{position:absolute;right:6.4%;bottom:27%;color:#9ba0a3;font-size:8px;font-weight:700;letter-spacing:.08em;text-shadow:0 1px 0 #ffffffb3}
@@ -46,15 +45,15 @@
 .wistia-ar__switch{position:absolute;right:6.8%;bottom:7%;width:10px;height:14%;border-radius:3px;background:#9ea3a6;box-shadow:inset 0 1px 3px #0000005c,0 1px 0 #ffffffa6}
 .wistia-ar__switch i{position:absolute;left:50%;top:calc(6% + (100 - var(--wistia-ratio-progress))*.52%);width:12px;height:38%;border-radius:2px;background:linear-gradient(180deg,#3a3e40,#1d1f21);transform:translateX(-50%);box-shadow:0 1px 2px #00000066;transition:top .35s ease}
 
-/* 스와이프 코치마크 — 손가락이 점선 위를 좌우로 오가며 안내, 첫 조작 후 사라짐 */
-.wistia-ar__coach{position:absolute;left:45%;top:70%;width:52%;height:34px;transform:translate(-50%,-50%);pointer-events:none;transition:opacity .35s ease}
-.wistia-ar__coach-path{position:absolute;left:0;right:0;top:9px;border-top:1.5px dashed #ffffffb3}
-.wistia-ar__coach-path:before,.wistia-ar__coach-path:after{content:"";position:absolute;top:-5px;width:8px;height:8px;border-top:1.5px solid #ffffffb3;border-left:1.5px solid #ffffffb3}
+/* 스와이프 코치마크 — 비율 바 위에서 손가락이 점선을 따라 좌우로 오가며 "여기를 움직이세요"를 알려준다, 첫 조작 후 사라짐 */
+.wistia-ar__coach{position:absolute;left:24%;right:24%;top:50%;z-index:3;height:0;pointer-events:none;transition:opacity .35s ease}
+.wistia-ar__coach-path{position:absolute;left:0;right:0;top:0;border-top:1.5px dashed #20242680}
+.wistia-ar__coach-path:before,.wistia-ar__coach-path:after{content:"";position:absolute;top:-4.5px;width:7px;height:7px;border-top:1.5px solid #20242699;border-left:1.5px solid #20242699}
 .wistia-ar__coach-path:before{left:0;transform:rotate(-45deg)}
 .wistia-ar__coach-path:after{right:0;transform:rotate(135deg)}
-.wistia-ar__coach-hand{position:absolute;left:50%;top:4px;width:28px;height:28px;margin-left:-11px;fill:#fff;stroke:#202426;stroke-width:1.2;stroke-linejoin:round;filter:drop-shadow(0 2px 3px #00000059);animation:wistia-ar-swipe 2.6s ease-in-out infinite}
+.wistia-ar__coach-hand{position:absolute;left:50%;top:-3px;width:30px;height:30px;margin-left:-12px;fill:#fff;stroke:#202426;stroke-width:1.3;stroke-linejoin:round;filter:drop-shadow(0 2px 3px #0000004d);animation:wistia-ar-swipe 2.6s ease-in-out infinite}
 .wistia-ar.is-touched .wistia-ar__coach{opacity:0}
-@keyframes wistia-ar-swipe{0%,100%{transform:translateX(0)}25%{transform:translateX(-38px)}75%{transform:translateX(38px)}}
+@keyframes wistia-ar-swipe{0%,100%{transform:translateX(0)}25%{transform:translateX(-46px)}75%{transform:translateX(46px)}}
 
 /* 얇은 플레이바 */
 .wistia-ar__player{position:relative;display:grid;grid-template-columns:30px auto minmax(0,1fr) auto 22px;align-items:center;gap:10px;width:min(100%,340px);margin:22px auto 0}
@@ -78,7 +77,7 @@
 .wistia-ar__error[hidden],.wistia-ar__audio{display:none}
 
 /* LIVE/AR 비율 바 — 두툼한 무광 트랙 + 흰 원형 손잡이 */
-.wistia-ar__ratio{width:min(100%,340px);margin:22px auto 0}
+.wistia-ar__ratio{width:min(100%,340px);margin:26px auto 0}
 .wistia-ar__ratio-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .wistia-ar__mood-wrap{display:inline-flex;align-items:center;gap:8px}
 /* 마우스 휠 힌트 — 휠이 아래로 굴러가는 작은 마우스 아이콘 */
@@ -99,7 +98,7 @@
 .wistia-ar__ratio-input::-webkit-slider-thumb{width:38px;height:38px;margin-top:4px;appearance:none;-webkit-appearance:none;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 6px #1a1e2029,0 0 0 1px #1a1e200d}
 .wistia-ar__ratio-input::-moz-range-track{height:46px;background:transparent}
 .wistia-ar__ratio-input::-moz-range-thumb{width:38px;height:38px;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 6px #1a1e2029,0 0 0 1px #1a1e200d}
-.wistia-ar__ratio-marks{position:relative;height:16px;margin-top:9px;color:var(--ar-soft);font-size:11px;font-variant-numeric:tabular-nums}
+.wistia-ar__ratio-marks{position:relative;height:16px;margin-top:12px;color:var(--ar-soft);font-size:11px;font-variant-numeric:tabular-nums}
 .wistia-ar__ratio-marks span{position:absolute;top:0;transform:translateX(-50%);transition:color .25s ease}
 .wistia-ar__ratio-marks span[data-value="30"]{left:19px}
 .wistia-ar__ratio-marks span[data-value="50"]{left:calc(19px + (100% - 38px)*.2857)}
@@ -112,7 +111,7 @@
 
 @container solo-detail (max-width:360px){
  .wistia-ar__artboard{padding:38px 20px 36px}
- .wistia-ar__disc-stage{margin-top:22px}
+ .wistia-ar__disc-stage{margin-top:24px}
  .wistia-ar__player{gap:8px}
 }
 @media(prefers-reduced-motion:reduce){.wistia-ar *,.wistia-ar *:before,.wistia-ar *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
