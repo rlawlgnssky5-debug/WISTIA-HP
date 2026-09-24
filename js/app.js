@@ -530,7 +530,7 @@ function packageItem(item){return ({
 function footerIcon(type){const icons={instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg>',youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 7.1a2.8 2.8 0 0 0-2-2C16.6 4.6 12 4.6 12 4.6s-4.6 0-6.3.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 3.2 12a29 29 0 0 0 .5 4.9 2.8 2.8 0 0 0 2 2c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-4.9 29 29 0 0 0-.5-4.9Z"></path><path d="m10 15.3 5.2-3.3L10 8.7v6.6Z" fill="currentColor" stroke="none"></path></svg>',kakao:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C6.9 4 2.8 7.2 2.8 11.2c0 2.6 1.7 4.8 4.4 6.1L6.3 21l4.2-2.6 1.5.1c5.1 0 9.2-3.2 9.2-7.3S17.1 4 12 4Z"></path></svg>'};return icons[type]||''}
 function footer(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>VOICE & FILM STUDIO</small></span></a><div class="footer-message"><strong>목소리와 장면을<br>오래 남을 작품으로.</strong><p>한 번뿐인 순간을 세심하게 듣고 기록합니다.</p></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small><span>VOICE · FILM · AUDIO</span></div></footer>'}
 function serviceRows(keys){return keys.map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="#/detail/'+key+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
-function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image">'+img(src,"실제 고객 카카오톡 후기 "+(i+1))+'</span></figure>'}
+function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image"><img src="'+escapeHtml(src)+'" alt="실제 고객 카카오톡 후기 '+(i+1)+'" loading="eager" decoding="async"></span></figure>'}
 function reviews(productKey=""){const cards=ACTUAL_REVIEW_IMAGES.map((src,i)=>reviewCard(src,i)).join("");const clones=ACTUAL_REVIEW_IMAGES.map((src,i)=>reviewCard(src,i,true)).join("");return '<section class="section reviews-section'+(productKey==="proposal"?' proposal-reviews':'')+'" id="reviews"><div class="shell"><div class="review-carousel-head">'+heading("","실제 고객 후기","직접 보내주신 카카오톡 후기 원문입니다")+'<div class="review-carousel-controls"><button type="button" data-review-prev aria-label="이전 후기">←</button><button type="button" data-review-next aria-label="다음 후기">→</button></div></div><div class="review-captures" id="reviewTrack" aria-label="실제 고객 후기가 자동으로 순환합니다"><div class="review-loop"><div class="review-set">'+cards+'</div><div class="review-set" aria-hidden="true">'+clones+'</div></div></div></div></section>'}
 function soloReviewShowcase(){const total=SOLO_REVIEW_IMAGES.length;return '<section class="solo-review-showcase" id="reviews" data-review-showcase aria-labelledby="soloReviewTitle"><div class="solo-review-copy" data-solo-section-intro><span class="solo-review-kicker" data-solo-kicker>REVIEW</span><h2 id="soloReviewTitle" data-solo-title><span class="solo-type-line">실제 고객</span><span class="solo-type-line">후기</span></h2><span class="solo-review-rule" aria-hidden="true"></span><p data-solo-sub><span class="solo-type-line">위스티아와 함께한 고객님들이</span><span class="solo-type-line">직접 보내주신 카카오톡 후기입니다.</span></p><div class="solo-review-index" aria-label="후기 위치"><span class="solo-review-status" data-review-status>01</span><span class="solo-review-index-line" aria-hidden="true"></span><span>'+String(total).padStart(2,"0")+'</span></div></div><div class="solo-review-visual" aria-label="고객 후기 화면"><span class="solo-review-phone-shadow" aria-hidden="true"></span><div class="solo-review-phone"><div class="solo-review-phone-bezel"><div class="solo-review-phone-screen" aria-live="polite"><div class="solo-review-statusbar" aria-hidden="true"><span>9:41</span><span class="solo-review-status-icons"><span class="solo-review-signal"><i></i><i></i><i></i><i></i></span><span>⌁</span><span class="solo-review-battery"></span></span></div>'+SOLO_REVIEW_IMAGES.map((src,i)=>'<figure class="solo-review-slide'+(i===0?' is-active':'')+'" data-review-slide="'+i+'" data-screen-fill="'+(i<8?'#050505':'#f1f1f1')+'" aria-hidden="'+(i!==0)+'">'+img(src,'실제 고객 카카오톡 후기 '+(i+1))+'</figure>').join('')+'<span class="solo-review-screen-shade" aria-hidden="true"></span></div></div></div></div><nav class="solo-review-navigation" aria-label="후기 넘기기"><span class="solo-review-rail-label">NEXT REVIEW</span><span class="solo-review-rail-dot" aria-hidden="true"></span><span class="solo-review-rail-line" aria-hidden="true"></span><button type="button" data-solo-review-next aria-label="다음 후기">›</button></nav></section>'}
 function soloReviewCarousel(){
@@ -630,15 +630,15 @@ function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media
 function detailBenefit(p){const highlights=p.highlights||[],main=highlights[0]||[p.oneLine,p.sub],support=highlights.slice(1,3);return '<section class="shell section detail-benefit" aria-labelledby="detailBenefitTitle"><div class="detail-benefit-intro">'+label("핵심 장점")+'<h2 id="detailBenefitTitle">'+main[0]+'</h2><p>'+main[1]+'</p></div><div class="detail-benefit-points">'+support.map((item,i)=>'<article><span>'+String(i+2).padStart(2,"0")+'</span><h3>'+item[0]+'</h3><p>'+item[1]+'</p></article>').join("")+'</div></section>'}
 function detailComparison(){return wistiaAdvantagesSection()}
 function detailIncluded(p){const items=p.included||[];if(!items.length)return "";return '<section class="shell section detail-included" aria-labelledby="detailIncludedTitle">'+heading("","최종 완성본에 포함됩니다","상담부터 제작과 전달까지 기본 구성에 포함되는 항목입니다")+'<ul>'+items.map((item,i)=>'<li><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+item+'</strong></li>').join("")+'</ul></section>'}
-function reviewMetrics(){const loop=document.querySelector(".review-loop"),set=loop?.querySelector(".review-set"),card=set?.querySelector(".review-capture");if(!loop||!set||!card)return null;const gap=parseFloat(getComputedStyle(set).gap)||0;return{loop,setWidth:set.scrollWidth,step:card.getBoundingClientRect().width+gap}}
-function paintReviews(){const metrics=reviewMetrics();if(metrics)metrics.loop.style.transform='translate3d('+(-reviewDisplay)+'px,0,0)'}
+function reviewMetrics(){const loop=document.querySelector(".review-loop"),set=loop?.querySelector(".review-set"),card=set?.querySelector(".review-capture");if(!loop||!set||!card)return null;const gap=parseFloat(getComputedStyle(set).gap)||0;return{loop,setWidth:set.getBoundingClientRect().width,step:card.getBoundingClientRect().width+gap}}
+function paintReviews(metrics=reviewMetrics()){if(!metrics||!metrics.setWidth)return;const offset=((reviewDisplay%metrics.setWidth)+metrics.setWidth)%metrics.setWidth;metrics.loop.style.transform='translate3d('+(-offset)+'px,0,0)'}
 function moveReviews(direction=1){const metrics=reviewMetrics();if(!metrics)return;reviewTarget+=direction*metrics.step}
 function startReviewCarousel(reset=true){
  cancelAnimationFrame(reviewFrame)
  const initial=reviewMetrics();if(!initial)return
  if(reset){reviewTarget=0;reviewDisplay=0}
  reviewLast=0
- paintReviews()
+ paintReviews(initial)
  const speed=matchMedia("(prefers-reduced-motion: reduce)").matches?.026:.04
  const tick=now=>{
   if(!document.querySelector("#reviewTrack"))return
@@ -647,9 +647,7 @@ function startReviewCarousel(reset=true){
   reviewTarget+=elapsed*speed
   const ease=1-Math.exp(-elapsed/320)
   reviewDisplay+=(reviewTarget-reviewDisplay)*ease
-  if(reviewTarget>=metrics.setWidth){reviewTarget-=metrics.setWidth;reviewDisplay-=metrics.setWidth}
-  if(reviewTarget<0){reviewTarget+=metrics.setWidth;reviewDisplay+=metrics.setWidth}
-  paintReviews()
+  paintReviews(metrics)
   reviewFrame=requestAnimationFrame(tick)
  }
  reviewFrame=requestAnimationFrame(tick)
@@ -1133,7 +1131,7 @@ function header(){
  const siteHeader=document.querySelector("#siteHeader")
  siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>←</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>VOICE & FILM</small></span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
  siteHeader.insertAdjacentHTML("afterend",navigationMenu())
- document.querySelector("#floatingKakao").href=kakao()
+ document.querySelector("#floatingKakaoChat").href=kakao()
  const soloCtaKakao=document.querySelector("#soloDesktopCtaKakao");if(soloCtaKakao)soloCtaKakao.href=kakao()
 }
 function enhanceMotion(){
@@ -1171,6 +1169,7 @@ function route(){
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
+ const floatingPrice=document.querySelector("#floatingPrice");if(floatingPrice)floatingPrice.href="#/event/"+(validDetail||event?key:"solo")+(purpose&&validDetail?"/"+purpose:"")
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!unifiedDetail;
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
