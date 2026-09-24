@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <script>
+    if (!['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '2825959717777272');
+    }
+  </script>
+  <script>
     if (new URLSearchParams(location.search).get('preview') === 'phone') {
       document.documentElement.classList.add('phone-preview-shell')
       addEventListener('DOMContentLoaded', () => {
@@ -38,9 +44,11 @@
   <script src="js/ratio-model.js?v=170" defer></script>
   <script src="js/ar-ratio-cd.js?v=192" defer></script>
   <script src="js/before-after.js?v=179" defer></script>
-  <script src="js/app.js?v=231" defer></script>
+  <script src="js/meta-pixel.js?v=20260925" defer></script>
+  <script src="js/app.js?v=meta-20260925" defer></script>
 </head>
 <body>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2825959717777272&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
   <a class="skip-link" href="#app">본문으로 바로가기</a>
   <header id="siteHeader"></header>
   <div class="floating-kakao" id="floatingKakao" aria-label="빠른 가격 확인 및 카카오톡 문의">

@@ -1189,6 +1189,7 @@ function route(){
  window.initHeroEditor?.(validDetail ? key : "");
  window.initProcessEditor?.(validDetail ? key : "");
  document.title=home?"WISTIA — 우리의 목소리로 남기는 특별한 순간":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
+ window.wistiaMeta?.trackPageView();
  const target=type==="section"?document.getElementById(key):null;
  requestAnimationFrame(()=>{if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  app.focus({preventScroll:true});
