@@ -1,5 +1,5 @@
 .guide-layer{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:visible}
 .guide-layer[hidden]{display:none!important}
-.guide-bird{position:absolute;left:0;top:0;transition:transform .38s cubic-bezier(.22,1,.36,1),width .28s ease-out,height .28s ease-out;will-change:transform}
+.guide-bird{position:absolute;left:0;top:0;width:64px;height:64px;transition:transform .16s ease-out;will-change:transform}
 .guide-bird-art{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 5px 8px rgba(42,39,39,.12))}
 @media(prefers-reduced-motion:reduce){.guide-bird{transition:none}}
