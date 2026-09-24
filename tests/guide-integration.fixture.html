@@ -27,11 +27,17 @@
       const input = doc.querySelector(changeTarget)
       if (input) { input.checked = !input.checked; input.dispatchEvent(new frame.contentWindow.Event('change', {bubbles:true})) }
     }
-    if (params.has('px') && params.has('py')) doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
-      bubbles:true,pointerType:'mouse',clientX:Number(params.get('px')),clientY:Number(params.get('py'))
+    const pointerTarget = params.get('pointerTarget') && doc.querySelector(params.get('pointerTarget'))
+    const pointerBox = pointerTarget?.getBoundingClientRect()
+    const pointerX = pointerBox ? pointerBox.left + pointerBox.width / 2 : Number(params.get('px'))
+    const pointerY = pointerBox ? pointerBox.top + pointerBox.height / 2 : Number(params.get('py'))
+    const pointerStart = frame.contentWindow.performance.now()
+    if (pointerTarget || params.has('px') && params.has('py')) doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
+      bubbles:true,pointerType:'mouse',clientX:pointerX,clientY:pointerY
     }))
-    if (params.has('px') && params.has('py')) setTimeout(() => doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
-      bubbles:true,pointerType:'mouse',clientX:Number(params.get('px')),clientY:Number(params.get('py'))
+    const pointerCostMs = frame.contentWindow.performance.now() - pointerStart
+    if (pointerTarget || params.has('px') && params.has('py')) setTimeout(() => doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
+      bubbles:true,pointerType:'mouse',clientX:pointerX,clientY:pointerY
     })), 300)
     frame.contentWindow.WistiaGuide?.notify('section-changed')
     setTimeout(() => {
@@ -63,11 +69,12 @@
     const coveredControls = [...doc.querySelectorAll('#app button,#app a,#app summary,#app input,#app canvas,#app video,#app iframe')].filter(element => intersectsBird(element.getBoundingClientRect())).slice(0,5).map(element => element.className || element.tagName)
     let textOverlapCount = 0
     const coveredText = []
+    const coveredTextRects = []
     const walker = doc.createTreeWalker(doc.querySelector('#app'), NodeFilter.SHOW_TEXT)
     while (walker.nextNode()) {
       if (!walker.currentNode.textContent.trim()) continue
       const range = doc.createRange(); range.selectNodeContents(walker.currentNode)
-      if ([...range.getClientRects()].some(intersectsBird)) { textOverlapCount++; coveredText.push(walker.currentNode.textContent.trim().slice(0,24)) }
+      if ([...range.getClientRects()].some(intersectsBird)) { textOverlapCount++; coveredText.push(walker.currentNode.textContent.trim().slice(0,24)); coveredTextRects.push([...range.getClientRects()].map(compactRect)) }
     }
     document.querySelector('#result').textContent = JSON.stringify({
       route, hash:frame.contentWindow.location.hash, page:doc.body.dataset.page, content:doc.querySelector('#app')?.textContent?.length || 0,
@@ -83,10 +90,10 @@
       birdOpacity:birds[0] ? getComputedStyle(birds[0]).opacity : '', birdVisibility:birds[0] ? getComputedStyle(birds[0]).visibility : '',
       artOpacity:birds[0] ? getComputedStyle(birds[0].querySelector('.guide-bird-art')).opacity : '',
       canvasLeft:Math.round(canvas?.left || 0), canvasRight:Math.round(canvas?.right || 0), birdLeft:Math.round(first?.left || 0), birdRight:Math.round(first?.right || 0),
-      visualAnchor:compactRect(visualAnchor), homeHeading:compactRect(homeHeading), protectedRect:compactRect(protectedBox), birdRect:compactRect(first), birdRects:birdBoxes.map(compactRect), layerStack, coveredControls, textOverlapCount, coveredText:coveredText.slice(0,5),
-      tapFound, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
+      visualAnchor:compactRect(visualAnchor), homeHeading:compactRect(homeHeading), protectedRect:compactRect(protectedBox), birdRect:compactRect(first), birdRects:birdBoxes.map(compactRect), layerStack, coveredControls, textOverlapCount, coveredText:coveredText.slice(0,5), coveredTextRects:coveredTextRects.slice(0,5),
+      tapFound, pointerX, pointerY, pointerCostMs, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
     })
-    }, target ? 1600 : tapTarget || changeTarget ? 1200 : params.has('px') ? 1400 : 0)
+    }, target ? 1600 : tapTarget || changeTarget ? 1200 : pointerTarget || params.has('px') ? 1400 : 0)
   }, 2700))
 </script>
 </body></html>

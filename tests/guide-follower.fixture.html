@@ -4,6 +4,11 @@
 </main><pre id="result"></pre><script src="../js/guide-bird.js"></script><script>
 const params=new URLSearchParams(location.search);
 const x=Number(params.get('x')||0),y=Number(params.get('y')||0);
+if(params.has('dense')){
+  const control=document.createElement('div');control.id='denseControl';control.setAttribute('role','button');
+  control.style.cssText='position:absolute;top:100px;left:calc(50% - 220px);width:420px;height:550px;background:#eef0f1';
+  document.querySelector('#app').append(control);
+}
 let clicks=0;document.querySelector('#cta').addEventListener('click',()=>clicks++);
 window.WistiaGuide.mount({home:true});
 if(params.get('remount'))window.WistiaGuide.mount({detail:true,key:'duo'});
@@ -14,9 +19,9 @@ if(params.has('thenTouch')){
 }
 setTimeout(()=>{
 const layer=document.querySelector('#guideLayer'),birds=[...layer.querySelectorAll('.guide-bird:not([hidden])')];
-const bird=birds[0],rect=bird?.getBoundingClientRect(),canvas=document.querySelector('#app').getBoundingClientRect(),button=document.querySelector('#cta').getBoundingClientRect();
+const bird=birds[0],rect=bird?.getBoundingClientRect(),canvas=document.querySelector('#app').getBoundingClientRect(),button=document.querySelector('#cta').getBoundingClientRect(),dense=document.querySelector('#denseControl')?.getBoundingClientRect();
 const visible=bird&&getComputedStyle(layer).opacity!=='0'&&getComputedStyle(layer).visibility!=='hidden'&&!layer.hidden;
 document.querySelector('#cta').click();
-document.querySelector('#result').textContent=JSON.stringify({birds:birds.length,visible:!!visible,x:rect?.x,y:rect?.y,width:rect?.width,canvasLeft:canvas.left,canvasRight:canvas.right,buttonOverlap:!!(visible&&rect.left<button.right&&rect.right>button.left&&rect.top<button.bottom&&rect.bottom>button.top),clicks,scene:layer.dataset.scene||''});
+document.querySelector('#result').textContent=JSON.stringify({birds:birds.length,visible:!!visible,x:rect?.x,y:rect?.y,width:rect?.width,canvasLeft:canvas.left,canvasRight:canvas.right,buttonOverlap:!!(visible&&rect.left<button.right&&rect.right>button.left&&rect.top<button.bottom&&rect.bottom>button.top),denseOverlap:!!(visible&&dense&&rect.left<dense.right&&rect.right>dense.left&&rect.top<dense.bottom&&rect.bottom>dense.top),clicks,scene:layer.dataset.scene||''});
 },800);
 </script></body></html>

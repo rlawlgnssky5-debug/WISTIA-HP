@@ -43,6 +43,14 @@ class FollowerTest(unittest.TestCase):
         self.assertFalse(result["buttonOverlap"])
         self.assertEqual(result["clicks"], 1)
 
+    def test_bird_uses_narrow_margin_beside_dense_controls(self):
+        result = self.render(x=470, y=325, dense=1)
+        self.assertTrue(result["visible"], result)
+        self.assertFalse(result["denseOverlap"], result)
+        self.assertLessEqual(result["width"], 48)
+        self.assertGreaterEqual(result["x"], result["canvasLeft"])
+        self.assertLessEqual(result["x"] + result["width"], result["canvasRight"])
+
     def test_touch_pointer_does_not_show_follower(self):
         self.assertFalse(self.render(x=450, y=500, pointerType="touch")["visible"])
 
@@ -59,6 +67,17 @@ class FollowerTest(unittest.TestCase):
                 self.assertEqual(result["textOverlapCount"], 0)
                 if not result["layerHidden"]:
                     self.assertTrue(result["canvasContained"])
+
+    def test_real_ar_slider_keeps_bird_visible_without_covering_controls(self):
+        result = self.render_site(
+            route="detail/solo", width=390, target="#arRatioExperience",
+            pointerTarget=".wistia-ar__ratio-input",
+        )
+        self.assertEqual(result["birds"], 1)
+        self.assertFalse(result["layerHidden"], result)
+        self.assertTrue(result["canvasContained"], result)
+        self.assertEqual(result["coveredControls"], [], result)
+        self.assertEqual(result["textOverlapCount"], 0, result)
 
     def render_site(self, **params):
         with tempfile.TemporaryDirectory(prefix="wistia-follower-site-") as profile:
