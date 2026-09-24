@@ -98,6 +98,42 @@ class GuideBirdBrowserTest(unittest.TestCase):
         self.assertFalse(result["totalOverlap"])
         self.assertFalse(result["fabOverlap"])
 
+    def test_home_bird_stays_inside_narrow_site_canvas_on_wide_window(self):
+        result = self.render_site(route="", width=960)
+        self.assertTrue(result["canvasContained"], result)
+        self.assertEqual(result["textOverlapCount"], 0, result)
+
+    def test_process_birds_do_not_cover_open_step_card(self):
+        result = self.render_site(route="detail/duo", width=960, target="#process")
+        self.assertEqual(result["scene"], "13")
+        self.assertTrue(result["canvasContained"], result)
+        self.assertFalse(result["protectedOverlap"], result)
+        self.assertEqual(result["textOverlapCount"], 0, result)
+        self.assertEqual(result["coveredControls"], [], result)
+
+    def test_before_after_bird_grows_but_stays_inside_canvas_and_off_player(self):
+        home = self.render_site(route="", width=960)
+        result = self.render_site(route="detail/solo", width=960, target="#wistiaBeforeAfter")
+        self.assertEqual(result["scene"], "11")
+        self.assertGreater(result["guideSize"], home["guideSize"])
+        self.assertTrue(result["canvasContained"], result)
+        self.assertFalse(result["protectedOverlap"], result)
+        self.assertEqual(result["textOverlapCount"], 0, result)
+        self.assertEqual(result["coveredControls"], [], result)
+
+    def test_narrow_process_and_before_after_avoid_text(self):
+        for route, target in [("detail/duo", "#process"), ("detail/solo", "#wistiaBeforeAfter")]:
+            with self.subTest(route=route, target=target):
+                result = self.render_site(route=route, width=390, target=target)
+                self.assertTrue(result["canvasContained"], result)
+                self.assertFalse(result["protectedOverlap"], result)
+                self.assertEqual(result["textOverlapCount"], 0, result)
+
+    def test_process_birds_hide_when_only_open_card_is_visible(self):
+        result = self.render_site(route="detail/duo", width=390, target="#process .wps-accordion details[open]")
+        self.assertEqual(result["scene"], "13")
+        self.assertTrue(result["isNoSpace"], result)
+
 
 if __name__ == "__main__":
     unittest.main()

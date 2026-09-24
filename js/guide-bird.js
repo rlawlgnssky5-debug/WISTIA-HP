@@ -50,6 +50,8 @@
   let harmony
   let routeAbort
   let motionTimer
+  let enterTimer
+  let arriveTimer
   let frame = 0
   let currentScene = null
   let activeCard = null
@@ -65,6 +67,8 @@
   let priceConfirmed = false
 
   const mobile = () => innerWidth <= 767
+  const canvasBounds = () => document.querySelector('#app')?.getBoundingClientRect() || {left: 0, right: innerWidth, width: innerWidth}
+  const compactCanvas = () => canvasBounds().width <= 767
   const asset = (color, pose) => `${IMAGE_ROOT}bird-${color}-${pose}.png`
   const clip = (color, name) => `${MOTION_ROOT}bird-${color}-${name}.webp`
 
@@ -176,7 +180,7 @@
     const overlap = x < box.right + 24 && x + width > box.left - 24 && y < box.bottom + 24 && y + height > box.top - 24
     if (!overlap) return {x, y}
     const left = box.left - width - 24
-    return left >= 12 ? {x: left, y} : {x, y: Math.max(12, box.top - height - 24)}
+    return left >= canvasBounds().left + 12 ? {x: left, y} : {x, y: Math.max(12, box.top - height - 24)}
   }
 
   function avoidFixedControls(x, y, width, height) {
@@ -192,18 +196,25 @@
   }
 
   function place(scene, point = null) {
-    const size = (mobile() ? MOBILE_SIZE : SIZE)[scene.size] || 56
+    const canvas = canvasBounds()
+    const compact = compactCanvas()
+    const size = (compact ? MOBILE_SIZE : SIZE)[scene.size] || 56
     const width = size * (birdCount === 2 ? 2.12 : 1)
     let x, y
+    let noSpace = false
     if (point) {
       x = point.x - size * .48
       y = point.y - size * .55
-    } else if (mobile()) {
-      const heading = scene.element.querySelector('h1,h2,h3') || scene.element
+    } else if (compact) {
+      const heading = scene.id === '13' ? (scene.section?.querySelector('.wps-head') || scene.element) : scene.element.querySelector('h1,h2,h3') || scene.element
       const rect = heading.getBoundingClientRect()
       if (scene.id === '16c') {
         x = rect.right - width - 12
         y = rect.top - size - 12
+      } else if (scene.id === '11' || scene.id === '13') {
+        x = canvas.right - width - 16
+        y = scene.id === '13' ? Math.max(scene.section?.getBoundingClientRect().top + 12 || 0, rect.top - size - 12) : rect.top + 12
+        if (scene.id === '13' && rect.top < 64) noSpace = true
       } else {
         x = scene.side === 'left' ? rect.left + 4 : rect.right - width - 4
         y = rect.top >= size + 76 ? rect.top - size - 8 : rect.bottom + 8
@@ -216,10 +227,14 @@
       y = rect.top + Math.min(24, Math.max(0, rect.height * .12))
       if (scene.id === '11') y = innerHeight * .3
     }
-    x = clamp(x, 12, Math.max(12, innerWidth - width - 12))
+    x = clamp(x, canvas.left + 12, Math.max(canvas.left + 12, canvas.right - width - 12))
     y = clamp(y, 64, Math.max(64, innerHeight - size - 28))
     const fixedSafe = avoidFixedControls(x, y, width, size)
     const safe = avoidFab(fixedSafe.x, fixedSafe.y, width, size)
+    const protectedElement = scene.id === '13' ? scene.section?.querySelector('.wps-accordion details[open]') : scene.id === '11' ? scene.section?.querySelector('.bap-player') : null
+    const protectedRect = protectedElement?.getBoundingClientRect()
+    if (protectedRect && safe.x < protectedRect.right && safe.x + width > protectedRect.left && safe.y < protectedRect.bottom && safe.y + size > protectedRect.top) noSpace = true
+    layer.classList.toggle('is-no-space', noSpace)
     if (scene.pose === 'side' && lastX !== null && Math.abs(safe.x - lastX) > 4 && !mobile()) {
       pose(safe.x > lastX ? 'side' : 'side-right')
     }
@@ -227,7 +242,7 @@
     layer.style.setProperty('--guide-y', `${Math.round(safe.y)}px`)
     layer.style.setProperty('--guide-size', `${size}px`)
     lastX = safe.x
-    if (scene.id === '05' && !mobile() && !REDUCED.matches) {
+    if (scene.id === '05' && !compact && !REDUCED.matches) {
       const rect = scene.element.getBoundingClientRect()
       const progress = clamp((innerHeight * .7 - rect.top) / Math.max(1, innerHeight * .45), 0, 1)
       layer.style.setProperty('--guide-size', `${Math.round(96 + progress * 72)}px`)
@@ -245,6 +260,17 @@
     if (accessory) layer.querySelectorAll('.guide-accessory').forEach(image => { image.src = `assets/guide/acc/acc-${accessory}.svg` })
     if (scene.id !== '18') layer.classList.remove('is-footer')
     if (changed) {
+      if (previous && !REDUCED.matches) {
+        clearTimeout(enterTimer)
+        clearTimeout(arriveTimer)
+        layer.classList.remove('is-arriving')
+        layer.classList.add('is-entering')
+        enterTimer = setTimeout(() => {
+          layer?.classList.remove('is-entering')
+          layer?.classList.add('is-arriving')
+          arriveTimer = setTimeout(() => layer?.classList.remove('is-arriving'), 420)
+        }, 70)
+      }
       let nextPose = scene.pose
       if (nextPose === 'side' && scrollDirection < 0) nextPose = 'side-right'
       pose(nextPose)
@@ -382,7 +408,7 @@
     const kind = route.home ? 'home' : route.type === 'before-after' ? 'beforeAfter' : route.event ? 'event' : route.detail || route.type === 'ar' ? 'detail' : route.info && route.key === 'faq' ? 'faq' : 'info'
     birdCount = TWO_BIRD_KEYS.has(route.key) || (route.key === 'solo-film' && route.purpose === 'duo') ? 2 : 1
     harmony.hidden = birdCount === 1
-    layer.hidden = false
+    layer.hidden = true
     layer.classList.toggle('is-reduced', REDUCED.matches)
     layer.classList.remove('is-footer', 'is-obscured')
     currentScene = null
@@ -419,7 +445,8 @@
       stateObservers.push(observer)
     }
     pose('front', true)
-    schedule()
+    update()
+    layer.hidden = false
   }
 
   function destroy() {
@@ -430,6 +457,9 @@
     cancelAnimationFrame(frame)
     frame = 0
     clearMotion()
+    clearTimeout(enterTimer)
+    clearTimeout(arriveTimer)
+    layer?.classList.remove('is-entering', 'is-arriving')
     routeTimers.forEach(clearTimeout)
     routeTimers = []
     clearHighlight()

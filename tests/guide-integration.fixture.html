@@ -38,14 +38,47 @@
     const totalOverlap = Boolean(first && total && first.left < total.right && first.right > total.left && first.top < total.bottom && first.bottom > total.top)
     const activeCard = doc.querySelector('.finder-choice.guide-card-active')?.getBoundingClientRect()
     const cardContained = Boolean(first && activeCard && first.left >= activeCard.left && first.right <= activeCard.right && first.top >= activeCard.top && first.bottom <= activeCard.bottom)
+    const canvas = doc.querySelector('#app')?.getBoundingClientRect()
+    const canvasContained = Boolean(canvas && birds.every(bird => { const box = bird.getBoundingClientRect(); return box.left >= canvas.left && box.right <= canvas.right }))
+    const protectedSelector = target?.startsWith('#process') ? '#process .wps-accordion details[open]' : target === '#wistiaBeforeAfter' ? '#wistiaBeforeAfter .bap-player' : null
+    const protectedBox = protectedSelector ? doc.querySelector(protectedSelector)?.getBoundingClientRect() : null
+    const protectedOverlap = Boolean(protectedBox && birds.some(bird => { const box = bird.getBoundingClientRect(); return box.left < protectedBox.right && box.right > protectedBox.left && box.top < protectedBox.bottom && box.bottom > protectedBox.top }))
+    const visualAnchor = doc.querySelector(target?.startsWith('#process') ? '#process .wps-head' : target === '#wistiaBeforeAfter' ? '#wistiaBeforeAfter .wistia-ba-copy' : '.finder-intro')?.getBoundingClientRect()
+    const homeHeading = doc.querySelector('.finder-intro h1')?.getBoundingClientRect()
+    const compactRect = box => box ? [Math.round(box.left),Math.round(box.top),Math.round(box.right),Math.round(box.bottom)] : null
+    let layerStack = []
+    if (layer && first) {
+      layer.style.pointerEvents = 'auto'
+      layerStack = doc.elementsFromPoint(first.left + first.width/2, first.top + first.height/2).slice(0,5).map(element => element.id || element.className || element.tagName)
+      layer.style.pointerEvents = ''
+    }
+    const birdBoxes = birds.map(bird => bird.getBoundingClientRect())
+    const intersectsBird = box => box.width > 0 && box.height > 0 && box.bottom > 0 && box.top < frame.contentWindow.innerHeight && birdBoxes.some(bird => bird.left < box.right && bird.right > box.left && bird.top < box.bottom && bird.bottom > box.top)
+    const coveredControls = [...doc.querySelectorAll('#app button,#app a,#app summary,#app input,#app canvas,#app video,#app iframe')].filter(element => intersectsBird(element.getBoundingClientRect())).slice(0,5).map(element => element.className || element.tagName)
+    let textOverlapCount = 0
+    const coveredText = []
+    const walker = doc.createTreeWalker(doc.querySelector('#app'), NodeFilter.SHOW_TEXT)
+    while (walker.nextNode()) {
+      if (!walker.currentNode.textContent.trim()) continue
+      const range = doc.createRange(); range.selectNodeContents(walker.currentNode)
+      if ([...range.getClientRects()].some(intersectsBird)) { textOverlapCount++; coveredText.push(walker.currentNode.textContent.trim().slice(0,24)) }
+    }
     document.querySelector('#result').textContent = JSON.stringify({
       route, hash:frame.contentWindow.location.hash, page:doc.body.dataset.page, content:doc.querySelector('#app')?.textContent?.length || 0,
-      scene:layer?.dataset.scene || '', birds:birds.length, audioActive:layer?.classList.contains('is-audio-active') || false, noOverflow:doc.documentElement.scrollWidth <= frame.contentWindow.innerWidth,
+      scene:layer?.dataset.scene || '', birds:birds.length, layerClass:layer?.className || '', layerOpacity:layer ? getComputedStyle(layer).opacity : '', isNoSpace:layer?.classList.contains('is-no-space') || false,
+      audioActive:layer?.classList.contains('is-audio-active') || false, noOverflow:doc.documentElement.scrollWidth <= frame.contentWindow.innerWidth,
       clickThrough:layer && getComputedStyle(layer).pointerEvents === 'none',
       scrollY:frame.contentWindow.scrollY,
       targetTop:target ? Math.round(doc.querySelector(target)?.getBoundingClientRect().top || 0) : null,
       leadLoaded:birds[0]?.querySelector('img')?.complete && birds[0].querySelector('img').naturalWidth > 0,
-      fabOverlap, totalOverlap, cardContained, tapFound, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
+      fabOverlap, totalOverlap, cardContained, canvasContained, protectedOverlap, guideSize:parseFloat(layer?.style.getPropertyValue('--guide-size')) || 0,
+      guideX:parseFloat(layer?.style.getPropertyValue('--guide-x')) || 0, guideY:parseFloat(layer?.style.getPropertyValue('--guide-y')) || 0,
+      computedBirdTop:birds[0] ? getComputedStyle(birds[0]).top : '', computedBirdTransform:birds[0] ? getComputedStyle(birds[0]).transform : '', layerRect:compactRect(layer?.getBoundingClientRect()),
+      birdOpacity:birds[0] ? getComputedStyle(birds[0]).opacity : '', birdVisibility:birds[0] ? getComputedStyle(birds[0]).visibility : '',
+      artOpacity:birds[0] ? getComputedStyle(birds[0].querySelector('.guide-bird-art')).opacity : '',
+      canvasLeft:Math.round(canvas?.left || 0), canvasRight:Math.round(canvas?.right || 0), birdLeft:Math.round(first?.left || 0), birdRight:Math.round(first?.right || 0),
+      visualAnchor:compactRect(visualAnchor), homeHeading:compactRect(homeHeading), protectedRect:compactRect(protectedBox), birdRect:compactRect(first), birdRects:birdBoxes.map(compactRect), layerStack, coveredControls, textOverlapCount, coveredText:coveredText.slice(0,5),
+      tapFound, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
     })
     }, target ? 1600 : tapTarget || changeTarget ? 1200 : 0)
   }, 2700))
