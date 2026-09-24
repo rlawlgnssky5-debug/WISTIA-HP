@@ -27,6 +27,12 @@
       const input = doc.querySelector(changeTarget)
       if (input) { input.checked = !input.checked; input.dispatchEvent(new frame.contentWindow.Event('change', {bubbles:true})) }
     }
+    if (params.has('px') && params.has('py')) doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
+      bubbles:true,pointerType:'mouse',clientX:Number(params.get('px')),clientY:Number(params.get('py'))
+    }))
+    if (params.has('px') && params.has('py')) setTimeout(() => doc.dispatchEvent(new frame.contentWindow.PointerEvent('pointermove', {
+      bubbles:true,pointerType:'mouse',clientX:Number(params.get('px')),clientY:Number(params.get('py'))
+    })), 300)
     frame.contentWindow.WistiaGuide?.notify('section-changed')
     setTimeout(() => {
     const layer = doc.querySelector('#guideLayer')
@@ -65,7 +71,7 @@
     }
     document.querySelector('#result').textContent = JSON.stringify({
       route, hash:frame.contentWindow.location.hash, page:doc.body.dataset.page, content:doc.querySelector('#app')?.textContent?.length || 0,
-      scene:layer?.dataset.scene || '', birds:birds.length, layerClass:layer?.className || '', layerOpacity:layer ? getComputedStyle(layer).opacity : '', isNoSpace:layer?.classList.contains('is-no-space') || false,
+      scene:layer?.dataset.scene || '', birds:birds.length, layerHidden:layer?.hidden || false, layerClass:layer?.className || '', layerOpacity:layer ? getComputedStyle(layer).opacity : '', isNoSpace:layer?.classList.contains('is-no-space') || false,
       audioActive:layer?.classList.contains('is-audio-active') || false, noOverflow:doc.documentElement.scrollWidth <= frame.contentWindow.innerWidth,
       clickThrough:layer && getComputedStyle(layer).pointerEvents === 'none',
       scrollY:frame.contentWindow.scrollY,
@@ -80,7 +86,7 @@
       visualAnchor:compactRect(visualAnchor), homeHeading:compactRect(homeHeading), protectedRect:compactRect(protectedBox), birdRect:compactRect(first), birdRects:birdBoxes.map(compactRect), layerStack, coveredControls, textOverlapCount, coveredText:coveredText.slice(0,5),
       tapFound, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
     })
-    }, target ? 1600 : tapTarget || changeTarget ? 1200 : 0)
+    }, target ? 1600 : tapTarget || changeTarget ? 1200 : params.has('px') ? 1400 : 0)
   }, 2700))
 </script>
 </body></html>

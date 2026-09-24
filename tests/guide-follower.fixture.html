@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../css/guide-bird.css"></head>
+<body style="margin:0;background:#eee"><main id="app" style="box-sizing:border-box;width:500px;min-height:1400px;margin:auto;padding:32px;background:white">
+<h1 style="margin:0 0 24px">WISTIA</h1><button id="cta" style="position:absolute;top:300px;left:calc(50% - 80px);width:160px;height:60px">상담하기</button>
+</main><pre id="result"></pre><script src="../js/guide-bird.js"></script><script>
+const params=new URLSearchParams(location.search);
+const x=Number(params.get('x')||0),y=Number(params.get('y')||0);
+let clicks=0;document.querySelector('#cta').addEventListener('click',()=>clicks++);
+window.WistiaGuide.mount({home:true});
+if(params.get('remount'))window.WistiaGuide.mount({detail:true,key:'duo'});
+document.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:params.get('pointerType')||'mouse',clientX:x,clientY:y}));
+if(params.has('thenTouch')){
+  document.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:'touch',clientX:x,clientY:y}));
+  window.WistiaGuide.notify('section-changed');
+}
+setTimeout(()=>{
+const layer=document.querySelector('#guideLayer'),birds=[...layer.querySelectorAll('.guide-bird:not([hidden])')];
+const bird=birds[0],rect=bird?.getBoundingClientRect(),canvas=document.querySelector('#app').getBoundingClientRect(),button=document.querySelector('#cta').getBoundingClientRect();
+const visible=bird&&getComputedStyle(layer).opacity!=='0'&&getComputedStyle(layer).visibility!=='hidden'&&!layer.hidden;
+document.querySelector('#cta').click();
+document.querySelector('#result').textContent=JSON.stringify({birds:birds.length,visible:!!visible,x:rect?.x,y:rect?.y,width:rect?.width,canvasLeft:canvas.left,canvasRight:canvas.right,buttonOverlap:!!(visible&&rect.left<button.right&&rect.right>button.left&&rect.top<button.bottom&&rect.bottom>button.top),clicks,scene:layer.dataset.scene||''});
+},800);
+</script></body></html>
