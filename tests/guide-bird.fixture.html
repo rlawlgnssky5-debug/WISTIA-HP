@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><link rel="stylesheet" href="../css/guide-bird.css"></head>
+<body>
+  <main id="app">
+    <section class="finder-home" style="height:500px"><h1>어떤 서비스를 원하시나요?</h1></section>
+    <section class="finder-choice" style="height:400px"><button class="finder-choice-action">자세히 보기</button></section>
+    <section class="ar-hook-hero" style="height:500px"><button class="ar-hook-sound-control">소리 켜기</button></section>
+    <section class="package-overview" style="height:400px"></section>
+    <section id="reviews" style="height:400px"></section>
+    <section id="wistiaBeforeAfter" style="height:500px"></section>
+    <section id="process" style="height:400px"></section>
+    <section id="arRatioExperience" style="height:400px"></section>
+    <footer style="height:200px"></footer>
+  </main>
+  <div id="floatingKakao" style="position:fixed;right:0;bottom:0;width:140px;height:60px"></div>
+  <pre id="result"></pre>
+  <script src="../js/guide-bird.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search)
+    const key = params.get('key') || 'solo'
+    window.WistiaGuide?.mount({type:'detail',key,home:false,detail:true,event:false,info:false})
+    setTimeout(() => {
+      const birds = [...document.querySelectorAll('#guideLayer .guide-bird:not([hidden])')]
+      const result = {
+        controller: Boolean(window.WistiaGuide),
+        visibleBirds: birds.length,
+        leadSource: birds[0]?.querySelector('img')?.getAttribute('src') || '',
+        clickThrough: getComputedStyle(document.querySelector('#guideLayer') || document.body).pointerEvents === 'none',
+        reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
+        noAnimation: document.querySelector('#guideLayer')?.classList.contains('is-reduced') || false
+      }
+      document.querySelector('#result').textContent = JSON.stringify(result)
+    }, 500)
+  </script>
+</body>
+</html>

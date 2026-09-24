@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<iframe id="site" title="WISTIA test" style="width:390px;height:844px;border:0"></iframe>
+<pre id="result"></pre>
+<script>
+  const params = new URLSearchParams(location.search)
+  const route = params.get('route') ?? 'detail/solo'
+  const target = params.get('target')
+  const clickTarget = params.get('click')
+  const tapTarget = params.get('tap')
+  const changeTarget = params.get('change')
+  const frame = document.querySelector('#site')
+  frame.style.width = `${Number(params.get('width') || 390)}px`
+  frame.src = '../index.html#/' + route
+  frame.addEventListener('load', () => setTimeout(() => {
+    const doc = frame.contentDocument
+    let tapFound = false
+    if (target) doc.querySelector(target)?.scrollIntoView()
+    if (clickTarget) doc.querySelector(clickTarget)?.click()
+    if (tapTarget) {
+      const card = doc.querySelector(tapTarget)
+      tapFound = Boolean(card)
+      card?.scrollIntoView()
+      const box = card?.getBoundingClientRect()
+      if (box) card.dispatchEvent(new frame.contentWindow.PointerEvent('pointerdown', {bubbles:true, clientX:box.left + box.width/2, clientY:box.top + box.height/2}))
+    }
+    if (changeTarget) {
+      const input = doc.querySelector(changeTarget)
+      if (input) { input.checked = !input.checked; input.dispatchEvent(new frame.contentWindow.Event('change', {bubbles:true})) }
+    }
+    frame.contentWindow.WistiaGuide?.notify('section-changed')
+    setTimeout(() => {
+    const layer = doc.querySelector('#guideLayer')
+    const birds = [...doc.querySelectorAll('#guideLayer .guide-bird:not([hidden])')]
+    const first = birds[0]?.getBoundingClientRect()
+    const fab = doc.querySelector('#floatingKakao')?.getBoundingClientRect()
+    const fabOverlap = Boolean(first && fab && first.left < fab.right && first.right > fab.left && first.top < fab.bottom && first.bottom > fab.top)
+    const total = doc.querySelector('.booking-follow-total')?.getBoundingClientRect()
+    const totalOverlap = Boolean(first && total && first.left < total.right && first.right > total.left && first.top < total.bottom && first.bottom > total.top)
+    const activeCard = doc.querySelector('.finder-choice.guide-card-active')?.getBoundingClientRect()
+    const cardContained = Boolean(first && activeCard && first.left >= activeCard.left && first.right <= activeCard.right && first.top >= activeCard.top && first.bottom <= activeCard.bottom)
+    document.querySelector('#result').textContent = JSON.stringify({
+      route, hash:frame.contentWindow.location.hash, page:doc.body.dataset.page, content:doc.querySelector('#app')?.textContent?.length || 0,
+      scene:layer?.dataset.scene || '', birds:birds.length, audioActive:layer?.classList.contains('is-audio-active') || false, noOverflow:doc.documentElement.scrollWidth <= frame.contentWindow.innerWidth,
+      clickThrough:layer && getComputedStyle(layer).pointerEvents === 'none',
+      scrollY:frame.contentWindow.scrollY,
+      targetTop:target ? Math.round(doc.querySelector(target)?.getBoundingClientRect().top || 0) : null,
+      leadLoaded:birds[0]?.querySelector('img')?.complete && birds[0].querySelector('img').naturalWidth > 0,
+      fabOverlap, totalOverlap, cardContained, tapFound, viewport:frame.contentWindow.innerWidth, leadSource:birds[0]?.querySelector('img')?.getAttribute('src') || ''
+    })
+    }, target ? 1600 : tapTarget || changeTarget ? 1200 : 0)
+  }, 2700))
+</script>
+</body></html>

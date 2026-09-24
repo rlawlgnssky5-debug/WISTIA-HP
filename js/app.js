@@ -1174,6 +1174,7 @@ function route(){
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
  if(home)renderHome(type==="find"?key:"role");else if(type==="before-after")app.innerHTML='<div class="solo-detail-scope ar-detail-scope before-after-page">'+wistiaBeforeAfterSection()+footer()+'</div>';else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ window.WistiaGuide?.mount({type,key,purpose,home,detail:Boolean(validDetail),event:Boolean(event),info:Boolean(info)})
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArIndexWheel();

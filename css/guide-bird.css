@@ -1,0 +1,47 @@
+.guide-layer{
+  --guide-x:12px;
+  --guide-y:70px;
+  --guide-size:96px;
+  position:fixed;
+  inset:0;
+  z-index:40;
+  pointer-events:none;
+  overflow:visible;
+  contain:layout;
+}
+.guide-layer[hidden],.guide-bird[hidden]{display:none!important}
+.guide-bird{
+  position:absolute;
+  left:var(--guide-x);
+  top:var(--guide-y);
+  width:var(--guide-size);
+  height:var(--guide-size);
+  transform:translateZ(0);
+  transition:left .48s cubic-bezier(.2,.8,.2,1),top .48s cubic-bezier(.2,.8,.2,1),width .28s,height .28s,opacity .4s;
+  will-change:left,top;
+  animation:guide-bob 2.2s ease-in-out infinite;
+}
+.guide-bird .guide-bird-art{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 7px 11px rgba(42,39,39,.13))}
+.guide-accessory{position:absolute;right:2px;top:8px;width:22px;height:22px;opacity:0;transition:opacity .2s}
+.guide-layer[data-accessory="note"] .guide-accessory,.guide-layer[data-accessory="sparkle"] .guide-accessory{opacity:.8}
+.guide-bird--harmony{left:calc(var(--guide-x) + var(--guide-size) * 1.03);width:calc(var(--guide-size) * .9);height:calc(var(--guide-size) * .9);animation-delay:.11s;transition-delay:.1s}
+.guide-bird--harmony .guide-bird-art{transform:scaleX(-1)}
+.guide-layer.is-obscured,.guide-layer.is-footer{opacity:0}
+.guide-layer.is-audio-active .guide-bird,.guide-layer.is-dragging .guide-bird{animation-play-state:paused}
+.guide-emphasis{position:relative;z-index:1;scale:1.05;transition:scale .28s ease-in-out}
+body[data-page="home"] .guide-emphasis{scale:1.02}
+.finder-choice.guide-card-active{scale:1.06}
+.finder-choice.guide-card-muted{scale:.97}
+.finder-choice.guide-card-active .finder-choice-action{scale:1.05}
+.finder-choice.guide-card-active,.finder-choice.guide-card-muted,.finder-choice-action{transition:scale .28s ease-in-out}
+.finder-choice.guide-choice-active{box-shadow:inset 0 0 0 2px rgba(155,159,161,.38)}
+@keyframes guide-bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@media(max-width:767px){
+  .guide-bird{transition-duration:.28s;animation-duration:2.8s}
+  .guide-bird--harmony{left:calc(var(--guide-x) + var(--guide-size) * .95)}
+  .guide-emphasis{scale:1.02}
+}
+@media(prefers-reduced-motion:reduce){
+  .guide-bird,.guide-layer.is-reduced .guide-bird{animation:none!important;transition:none!important}
+  .guide-emphasis{scale:1!important}
+}
