@@ -12,10 +12,16 @@
   }
 
   function trackContact() {
-    if (localPreview || typeof window.fbq !== "function") return false;
+    if (localPreview) return false;
     const eventId = crypto.randomUUID();
-    window.fbq("track", "Contact", {}, { eventID: eventId });
-    window.fbq("trackCustom", "KakaoTalkClick", {}, { eventID: eventId });
+    if (typeof window.fbq === "function") {
+      try {
+        window.fbq("track", "Contact", {}, { eventID: eventId });
+        window.fbq("trackCustom", "KakaoTalkClick", {}, { eventID: eventId });
+      } catch {
+        // A blocked browser pixel must not prevent the server event.
+      }
+    }
     fetch("/api/meta-contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
