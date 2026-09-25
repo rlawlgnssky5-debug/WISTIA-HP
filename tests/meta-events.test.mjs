@@ -67,6 +67,8 @@ try {
     assert.equal(event.user_data.fbp, "fb.1.123.456");
     assert.equal(event.user_data.fbc, "fb.1.123.test");
   }
+  await handler({ ...request, body: { ...request.body, event_source_url: "https://wistiahp.vercel.app/?meta_test_code=TEST50039#/detail/solo" } }, createResponse());
+  assert.equal(JSON.parse(outgoing[1].body).test_event_code, "TEST50039");
   assert.equal((await handler({ ...request, headers: { ...request.headers, origin: "https://other.example" } }, createResponse())).statusCode, 403);
 } finally {
   globalThis.fetch = originalFetch;

@@ -47,7 +47,9 @@ export default async function handler(request, response) {
       user_data: userData
     }))
   };
-  if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
+  const testCode = source.searchParams.get("meta_test_code");
+  if (testCode && /^TEST\d{5}$/.test(testCode)) payload.test_event_code = testCode;
+  else if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
   const version = /^v\d+\.\d+$/.test(process.env.META_GRAPH_VERSION || "") ? process.env.META_GRAPH_VERSION : "v26.0";
 
   try {
