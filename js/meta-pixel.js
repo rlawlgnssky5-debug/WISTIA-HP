@@ -15,6 +15,7 @@
     if (localPreview || typeof window.fbq !== "function") return false;
     const eventId = crypto.randomUUID();
     window.fbq("track", "Contact", {}, { eventID: eventId });
+    window.fbq("trackCustom", "KakaoTalkClick", {}, { eventID: eventId });
     fetch("/api/meta-contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

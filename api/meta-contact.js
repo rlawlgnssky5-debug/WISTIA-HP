@@ -38,14 +38,14 @@ export default async function handler(request, response) {
     if (value) userData[name.slice(1)] = value;
   }
   const payload = {
-    data: [{
-      event_name: "Contact",
+    data: ["Contact", "KakaoTalkClick"].map(eventName => ({
+      event_name: eventName,
       event_time: Math.floor(Date.now() / 1000),
       event_id: eventId,
       action_source: "website",
       event_source_url: source.href,
       user_data: userData
-    }]
+    }))
   };
   if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
   const version = /^v\d+\.\d+$/.test(process.env.META_GRAPH_VERSION || "") ? process.env.META_GRAPH_VERSION : "v26.0";
@@ -58,7 +58,7 @@ export default async function handler(request, response) {
       signal: AbortSignal.timeout(5000)
     });
     const result = await metaResponse.json();
-    if (!metaResponse.ok || result.events_received !== 1) return response.status(502).json({ ok: false });
+    if (!metaResponse.ok || result.events_received !== payload.data.length) return response.status(502).json({ ok: false });
     return response.status(200).json({ ok: true });
   } catch {
     return response.status(502).json({ ok: false });

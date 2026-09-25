@@ -24,7 +24,8 @@ assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackPageView(), false);
 assert.deepEqual(browser.calls.map(call => call[1]), ["PageView", "PageView"]);
 browser.click({ href: "https://pf.kakao.com/_GbExjX/chat" });
-assert.equal(browser.calls.at(-1)[1], "Contact");
+assert.deepEqual(browser.calls.slice(-2).map(call => [call[0], call[1]]), [["track", "Contact"], ["trackCustom", "KakaoTalkClick"]]);
+assert.equal(browser.calls.at(-2)[3].eventID, JSON.parse(browser.requests[0][1].body).event_id);
 assert.equal(browser.calls.at(-1)[3].eventID, JSON.parse(browser.requests[0][1].body).event_id);
 assert.equal(browser.requests[0][1].keepalive, true);
 browser.click({ href: "https://example.com/" });
@@ -55,19 +56,21 @@ try {
   assert.equal((await handler(request, createResponse())).statusCode, 503);
   process.env.META_CONVERSIONS_ACCESS_TOKEN = "test-token";
   let outgoing;
-  globalThis.fetch = async (...args) => { outgoing = args; return { ok: true, json: async () => ({ events_received: 1 }) }; };
+  globalThis.fetch = async (...args) => { outgoing = args; return { ok: true, json: async () => ({ events_received: 2 }) }; };
   const result = await handler(request, createResponse());
   assert.equal(result.statusCode, 200);
   assert.equal(outgoing[1].headers.Authorization, "Bearer test-token");
-  const event = JSON.parse(outgoing[1].body).data[0];
-  assert.equal(event.event_name, "Contact");
-  assert.equal(event.event_id, request.body.event_id);
-  assert.equal(event.user_data.fbp, "fb.1.123.456");
-  assert.equal(event.user_data.fbc, "fb.1.123.test");
+  const events = JSON.parse(outgoing[1].body).data;
+  assert.deepEqual(events.map(event => event.event_name), ["Contact", "KakaoTalkClick"]);
+  for (const event of events) {
+    assert.equal(event.event_id, request.body.event_id);
+    assert.equal(event.user_data.fbp, "fb.1.123.456");
+    assert.equal(event.user_data.fbc, "fb.1.123.test");
+  }
   assert.equal((await handler({ ...request, headers: { ...request.headers, origin: "https://other.example" } }, createResponse())).statusCode, 403);
 } finally {
   globalThis.fetch = originalFetch;
   if (originalToken === undefined) delete process.env.META_CONVERSIONS_ACCESS_TOKEN;
   else process.env.META_CONVERSIONS_ACCESS_TOKEN = originalToken;
 }
-console.log("Meta PageView, Contact, and server deduplication checks passed");
+console.log("Meta PageView, Contact, KakaoTalkClick, and server deduplication checks passed");
