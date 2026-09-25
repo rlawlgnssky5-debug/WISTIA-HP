@@ -17,7 +17,7 @@
   const q=s=>root.querySelector(s)
   const input=q('.wistia-ar__ratio-input'),current=q('.wistia-ar__ratio-current'),mood=q('[data-ratio-mood]'),stage=q('.wistia-ar__disc-stage'),ratioBox=q('.wistia-ar__ratio'),play=q('.wistia-ar__play'),seek=q('.wistia-ar__seek'),timeNow=q('[data-current-time]'),timeTotal=q('[data-duration]'),volume=q('.wistia-ar__volume'),error=q('.wistia-ar__error')
   const listeners=[],buffers={},loading={},failures={},sources={},gains={},aborter=new AbortController()
-  let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,observer=null
+  let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,observer=null,playRequest=0
   const on=(node,event,handler,opts)=>{if(!node)return;node.addEventListener(event,handler,opts);listeners.push(()=>node.removeEventListener(event,handler,opts))}
   const sourceFor=ratio=>root.getAttribute('data-audio-'+ratio)||''
   const duration=()=>Math.max(0,...ANCHORS.map(r=>buffers[r]?.duration||0))
@@ -69,16 +69,18 @@
    startAll(at);applyMix(true);isPlaying=true;setPlaying(true);cancelAnimationFrame(raf);tick()
   }
   async function start(){
+   const request=++playRequest
    error.hidden=true;touched()
    const c=ensureContext()
    try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch{}
    if(c.state==='suspended'){try{await c.resume()}catch{}}
-   if(destroyed)return
+   if(destroyed||request!==playRequest)return
    loadAll()
    if(!ANCHORS.some(r=>buffers[r])){pendingPlay=true;play.setAttribute('aria-busy','true');setPlaying(true);return}
    begin()
   }
   function pause(){
+   playRequest++
    const wasPending=pendingPlay;pendingPlay=false;play.removeAttribute('aria-busy')
    if(isPlaying){offset=position();stopAll();isPlaying=false}
    if(isPlaying||wasPending||root.classList.contains('is-playing'))setPlaying(false)
@@ -106,7 +108,7 @@
 
   render();progress()
   return{
-   select:ratio=>setValue(ratio),getSelected:()=>value,pause,
+   select:ratio=>setValue(ratio),getSelected:()=>value,play:start,pause,
    destroy(){destroyed=true;observer?.disconnect();aborter.abort();cancelAnimationFrame(raf);stopAll();isPlaying=false;listeners.splice(0).forEach(fn=>fn());if(ctx&&ctx.state!=='closed')ctx.close().catch(()=>{})}
   }
  }

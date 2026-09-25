@@ -296,9 +296,7 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 .wps-accordion-copy>p:last-child{color:#c2cacc;font-size:14px;line-height:1.75;word-break:keep-all}
 .solo-detail-scope .worry-section{background:#fff}
 .solo-detail-scope .solo-inline-contact{display:flex;width:100%;max-width:none;box-sizing:border-box;justify-content:space-between}
-.ar-hook-sound-control{position:absolute;z-index:5;top:24px;right:80px;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 13px;border:1px solid #ffffffa0;border-radius:999px;background:#1e2628bf;color:#fff;font:600 12px var(--sans);cursor:pointer}
-.ar-hook-sound-control:focus-visible{outline:2px solid #fff;outline-offset:3px}
-@media(max-width:600px){.wps-accordion-body{grid-template-columns:1fr;gap:14px}.wps-accordion summary{padding-inline:14px}.wps-accordion-body{padding:0 14px 20px}.ar-hook-sound-control{top:16px;right:65px}}
+@media(max-width:600px){.wps-accordion-body{grid-template-columns:1fr;gap:14px}.wps-accordion summary{padding-inline:14px}.wps-accordion-body{padding:0 14px 20px}}
 
 /* Product composition and booking guidance */
 .solo-detail-scope .package-overview{padding:clamp(58px,7vw,96px) 0;background:#f3f5f5;color:#243035}

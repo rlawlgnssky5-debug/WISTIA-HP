@@ -21,7 +21,7 @@
     const buffers={before:null,after:null},peakSets={before:null,after:null},failures={before:false,after:false}
     const controller=new AbortController()
     const signal=controller.signal
-    let mode='before',audioCtx=null,source=null,isPlaying=false,pendingPlay=false,startedAt=0,pausedAt=0,raf=0,destroyed=false
+    let mode='before',audioCtx=null,source=null,isPlaying=false,pendingPlay=false,startedAt=0,pausedAt=0,raf=0,destroyed=false,playRequest=0
     const fmt=value=>{const time=Number.isFinite(value)?value:0;return Math.floor(time/60)+':'+String(Math.floor(time%60)).padStart(2,'0')}
     const activeBuffer=()=>buffers[mode]
     const activePeaks=()=>peakSets[mode]
@@ -44,15 +44,16 @@
       source.start(0,pausedAt);source.onended=()=>{source=null;isPlaying=false;pausedAt=0;sync()};return true
     }
     async function play(){
+      const request=++playRequest
       if(failures[mode]){errorEl.hidden=false;return}
       const context=ensureContext();if(context.state==='suspended')await context.resume()
-      if(destroyed)return
+      if(destroyed||request!==playRequest)return
       if(!activeBuffer()){pendingPlay=true;playBtn.setAttribute('aria-busy','true');return}
       pendingPlay=false
       global.wistiaClaimPlayback?.('before-after')
       if(start(pausedAt>=duration()?0:pausedAt)){isPlaying=true;sync()}
     }
-    function pause(){pendingPlay=false;pausedAt=position();stopSource();isPlaying=false;sync()}
+    function pause(){playRequest++;pendingPlay=false;pausedAt=position();stopSource();isPlaying=false;sync()}
     function activate(next){
       if(!['before','after'].includes(next)||next===mode)return
       const current=position(),resume=isPlaying

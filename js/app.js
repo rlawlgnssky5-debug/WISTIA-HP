@@ -346,7 +346,7 @@ let selectedFilmPeople = 1
 let voiceRatio = "70"
 let ratioSwitchToken = 0
 let lastDialogFocus = null
-let routeObserver
+let scrollMediaCleanup=null
 let reviewFrame
 let reviewTarget=0
 let reviewDisplay=0
@@ -588,7 +588,7 @@ const AR_DETAIL_CONTENT={
   keywords:[["01","곡 방향 상담"],["02","1:1 녹음"],["03","고백 촬영"],["04","스토리 편집"],["05","완성 필름"]]
  }
 }
-function detailHookHero(p,key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,localVideo=Boolean(p.resultVideo),video=localVideo?'<video autoplay muted loop playsinline preload="auto" poster="'+escapeHtml(content.poster)+'" aria-label="'+escapeHtml(content.videoLabel)+'"><source src="'+escapeHtml(p.resultVideo)+'" type="video/mp4">영상을 재생할 수 없는 브라우저입니다</video>':"",control=localVideo?'<button type="button" class="ar-hook-sound-control" data-ar-sound-toggle aria-label="영상 소리 켜기" aria-pressed="false"><span aria-hidden="true">♪</span><span data-ar-sound-label>소리 켜기</span></button><button type="button" class="ar-hook-video-control" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span><span class="ar-icon-pause" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></span></button>':p.videoUrl?'<button type="button" class="ar-hook-video-control ar-hook-video-play" data-inline-youtube="'+escapeHtml(p.videoUrl)+'" aria-label="'+escapeHtml(p.title)+' 실제 영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span></button>':"",note=localVideo?"실제 고객님이 보내주신 현장 영상입니다":p.videoUrl?"※ 실제 제작 영상입니다":"※ 위스티아 제작 장면입니다";return '<section class="ar-hook-hero" aria-labelledby="arHookTitle"><div class="ar-hook-media">'+img(content.poster,content.videoLabel,true).replace('<img ','<img class="ar-hook-fallback" ')+video+'<span class="ar-hook-video-source">'+note+'</span>'+control+'</div><div class="ar-hook-copy shell">'+label(content.kicker)+'<h1 id="arHookTitle"><span class="hero-line hero-line1">'+content.heroLine1+'</span><br><strong class="hero-line hero-line2">'+content.heroLine2+'</strong></h1><p>'+content.heroDescription+'</p></div></section>'}
+function detailHookHero(p,key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,localVideo=Boolean(p.resultVideo),video=localVideo?'<video loop playsinline preload="metadata" poster="'+escapeHtml(content.poster)+'" aria-label="'+escapeHtml(content.videoLabel)+'"><source src="'+escapeHtml(p.resultVideo)+'" type="video/mp4">영상을 재생할 수 없는 브라우저입니다</video>':"",control=localVideo?'<button type="button" class="ar-hook-video-control" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span><span class="ar-icon-pause" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3" height="12" rx="1" fill="currentColor"/><rect x="10" y="2" width="3" height="12" rx="1" fill="currentColor"/></svg></span></button>':p.videoUrl?'<button type="button" class="ar-hook-video-control ar-hook-video-play" data-inline-youtube="'+escapeHtml(p.videoUrl)+'" aria-label="'+escapeHtml(p.title)+' 실제 영상 재생"><span class="ar-icon-play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5-9-5.5Z" fill="currentColor"/></svg></span></button>':"",note=localVideo?"실제 고객님이 보내주신 현장 영상입니다":p.videoUrl?"※ 실제 제작 영상입니다":"※ 위스티아 제작 장면입니다";return '<section class="ar-hook-hero" aria-labelledby="arHookTitle"><div class="ar-hook-media">'+img(content.poster,content.videoLabel,true).replace('<img ','<img class="ar-hook-fallback" ')+video+'<span class="ar-hook-video-source">'+note+'</span>'+control+'</div><div class="ar-hook-copy shell">'+label(content.kicker)+'<h1 id="arHookTitle"><span class="hero-line hero-line1">'+content.heroLine1+'</span><br><strong class="hero-line hero-line2">'+content.heroLine2+'</strong></h1><p>'+content.heroDescription+'</p></div></section>'}
 const AR_MIC_ICON='<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>'
 function arPrimaryBenefit(key="solo"){const content=AR_DETAIL_CONTENT[key]||AR_DETAIL_CONTENT.solo,ar=["solo","duo"].includes(key),benefitLabel=ar?"AR BENEFIT":"FILM BENEFIT",serviceName=ar?"WISTIA AR 축가":"WISTIA 영상 제작";return '<section class="shell section ar-primary-benefit" aria-labelledby="arPrimaryBenefitTitle"><div class="ar-benefit-copy" data-solo-section-intro><p class="ar-tags" data-solo-kicker>'+benefitLabel+'</p><h2 id="arPrimaryBenefitTitle" data-solo-title><span class="solo-type-line ar-copy-line1">'+content.benefitLine1+'</span><span class="solo-type-line ar-copy-emphasis"><span class="ar-copy-emphasis-bg" aria-hidden="true"></span><span class="ar-copy-emphasis-text">'+content.benefitEmphasis+'</span></span></h2><p class="ar-benefit-desc" data-solo-sub><span class="solo-type-line">'+content.benefitDescription[0]+'</span><span class="solo-type-line">'+content.benefitDescription[1]+'</span></p></div><div class="ar-index-wheel" role="group" aria-label="'+serviceName+'의 다섯 가지 강점"><div class="ar-index-ring ar-index-ring-1" aria-hidden="true"></div><div class="ar-index-ring ar-index-ring-2" aria-hidden="true"></div><div class="ar-index-center" aria-hidden="true">'+AR_MIC_ICON+'</div><ul class="ar-index-items">'+content.keywords.map((k,i)=>'<li><button type="button" class="ar-index-item" data-ar-index="'+i+'" aria-pressed="'+(i===0)+'"><span class="ar-index-dot" aria-hidden="true"></span><span class="ar-index-num">'+k[0]+'</span><span class="ar-index-label">'+k[1]+'</span></button></li>').join("")+'</ul></div></section>'}
 let arIndexTimer=null
@@ -626,7 +626,7 @@ const WISTIA_ADVANTAGES=[
 ]
 function wistiaAdvantagesSection(){return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><ol>'+WISTIA_ADVANTAGES.map(([category,title,description],index)=>'<li><span class="wistia-advantage-number">'+String(index+1).padStart(2,"0")+'</span><div><small>'+category+'</small><h3>'+title+'</h3><p>'+description+'</p></div></li>').join("")+'</ol></div></section>'}
 function productComparisonSection(){return wistiaAdvantagesSection()}
-function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media video"),button=document.querySelector("[data-ar-video-toggle]"),sound=document.querySelector("[data-ar-sound-toggle]");if(!video||!button)return;const update=()=>{const playing=!video.paused&&!video.ended&&video.readyState>=2;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생");if(sound){sound.setAttribute("aria-pressed",String(!video.muted));sound.setAttribute("aria-label",video.muted?"영상 소리 켜기":"영상 소리 끄기");sound.querySelector("[data-ar-sound-label]").textContent=video.muted?"소리 켜기":"소리 끄기"}};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("volumechange",update);video.addEventListener("waiting",()=>video.classList.remove("is-playing"));video.play().catch(update);update()}
+function prepareArHookVideo(){const video=document.querySelector(".ar-hook-media video"),button=document.querySelector("[data-ar-video-toggle]");if(!video||!button)return;const update=()=>{const playing=!video.paused&&!video.ended;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",update);update()}
 function detailBenefit(p){const highlights=p.highlights||[],main=highlights[0]||[p.oneLine,p.sub],support=highlights.slice(1,3);return '<section class="shell section detail-benefit" aria-labelledby="detailBenefitTitle"><div class="detail-benefit-intro">'+label("핵심 장점")+'<h2 id="detailBenefitTitle">'+main[0]+'</h2><p>'+main[1]+'</p></div><div class="detail-benefit-points">'+support.map((item,i)=>'<article><span>'+String(i+2).padStart(2,"0")+'</span><h3>'+item[0]+'</h3><p>'+item[1]+'</p></article>').join("")+'</div></section>'}
 function detailComparison(){return wistiaAdvantagesSection()}
 function detailIncluded(p){const items=p.included||[];if(!items.length)return "";return '<section class="shell section detail-included" aria-labelledby="detailIncludedTitle">'+heading("","최종 완성본에 포함됩니다","상담부터 제작과 전달까지 기본 구성에 포함되는 항목입니다")+'<ul>'+items.map((item,i)=>'<li><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+item+'</strong></li>').join("")+'</ul></section>'}
@@ -717,9 +717,7 @@ function renderHome(requested="role"){
   people:{number:"03",title:"혼자 준비하시나요, 두 분이 함께 준비하시나요?",description:"노래를 녹음하고 영상에 참여하는 인원을 선택해 주세요",name:"finderPeople",items:[["one","1인 · 혼자 준비해요","신랑 또는 신부 한 분이 노래하고 준비하는 경우"],["two","2인 · 두 분이 함께 준비해요","신랑신부 두 분이 함께 노래하고 준비하는 경우"]]}
  }
  const config=configs[stage],back=stage==="service"?"#/":"#/find/service"
- let showIntro=false;try{showIntro=stage==="role"&&!sessionStorage.getItem("wistia:intro-seen");if(showIntro)sessionStorage.setItem("wistia:intro-seen","1")}catch{}
- const splash=showIntro?'<div class="finder-intro-splash" aria-hidden="true"><div><img src="assets/img/wistia-logo-transparent.webp" alt=""></div></div>':''
- app.innerHTML='<section class="finder-home shell finder-stage-'+stage+(showIntro?' has-intro-animation':'')+'" aria-labelledby="finderTitle">'+splash+'<div class="finder-content">'+(stage==="role"?"":'<a class="finder-back" href="'+back+'">← 이전 질문</a>')+'<header class="finder-intro"><span class="eyebrow">'+config.number+'</span><h1 id="finderTitle">'+config.title+'</h1><p>'+config.description+'</p></header><div class="finder-steps"><fieldset class="finder-step"><legend class="sr-only">'+config.title+'</legend><div class="finder-options">'+choices(config.name,config.items)+'</div></fieldset></div></div></section>'
+ app.innerHTML='<section class="finder-home shell finder-stage-'+stage+'" aria-labelledby="finderTitle"><div class="finder-content">'+(stage==="role"?"":'<a class="finder-back" href="'+back+'">← 이전 질문</a>')+'<header class="finder-intro"><span class="eyebrow">'+config.number+'</span><h1 id="finderTitle">'+config.title+'</h1><p>'+config.description+'</p></header><div class="finder-steps"><fieldset class="finder-step"><legend class="sr-only">'+config.title+'</legend><div class="finder-options">'+choices(config.name,config.items)+'</div></fieldset></div></div></section>'
  updateHomeFinder()
  app.querySelectorAll(".finder-choice").forEach(choice=>choice.addEventListener("click",event=>{event.preventDefault();const input=choice.querySelector("input");if(input)handleFinderChoice(input)}))
 }
@@ -1134,15 +1132,37 @@ function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  const soloCtaKakao=document.querySelector("#soloDesktopCtaKakao");if(soloCtaKakao)soloCtaKakao.href=kakao()
 }
-function enhanceMotion(){
- routeObserver?.disconnect()
- const nodes=[...document.querySelectorAll(".section-heading,.detail-hero>*:not(.detail-result-card),.detail-result-card,.scene-grid li,.process-list li,.service-row,.situation-group,.picker-grid article,.option-banner,.booking-options>section,.ar-story-meta,.ar-story-copy,.ar-story-image,.wistia-ba-copy,.bap-player,.wps-head,.wps-feature,.wistia-ar__copy,.wistia-ar__disc-stage,.solo-detail-scope>section:not(.ar-hook-hero),.solo-detail-scope>.solo-editorial-sheet")]
- nodes.forEach((node,index)=>{node.classList.add("motion-reveal");node.style.setProperty("--motion-delay",Math.min(index%4,3)*70+"ms")})
- if(matchMedia("(prefers-reduced-motion: reduce)").matches){nodes.forEach(node=>node.classList.add("is-visible"));return}
- routeObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");routeObserver.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -5% 0px"})
- nodes.forEach(node=>routeObserver.observe(node))
-}
 let arCdRatioInstance=null,beforeAfterInstance=null
+function initScrollMediaPlayback(){
+ const sections=[
+  {element:document.querySelector(".ar-hook-hero:has(video)"),play(){const video=this.element.querySelector("video");video.muted=false;return video.play()},pause(){this.element.querySelector("video").pause()}},
+  {element:document.querySelector("#wistiaBeforeAfter"),play(){return beforeAfterInstance?.play()},pause(){beforeAfterInstance?.pause()}},
+  {element:document.querySelector("#arRatioExperience"),play(){return arCdRatioInstance?.play()},pause(){arCdRatioInstance?.pause()}}
+ ].filter(section=>section.element)
+ if(!sections.length)return null
+ let active=null,attempted=false,frame=0
+ const check=()=>{
+  frame=0
+  if(document.hidden){active?.pause();active=null;attempted=false;return}
+  const height=window.innerHeight
+  let next=null,best=0
+  sections.forEach(section=>{const rect=section.element.getBoundingClientRect(),visible=Math.max(0,Math.min(rect.bottom,height)-Math.max(rect.top,0)),share=visible/Math.min(rect.height,height);if(share>=.45&&share>best){best=share;next=section}})
+  if(next!==active){active?.pause();active=next;attempted=false}
+  if(active&&!attempted&&(navigator.userActivation?.hasBeenActive??true)){
+   attempted=true
+   Promise.resolve(active.play()).catch(()=>{})
+  }
+ }
+ const schedule=()=>{if(!frame)frame=requestAnimationFrame(check)}
+ const onActivation=event=>{if(event.target.closest?.(".bap-play,.wistia-ar__play,.wistia-ar__disc-stage,[data-ar-video-toggle]"))attempted=true;else schedule()}
+ window.addEventListener("scroll",schedule,{passive:true})
+ window.addEventListener("resize",schedule)
+ document.addEventListener("visibilitychange",schedule)
+ document.addEventListener("pointerdown",onActivation)
+ document.addEventListener("keydown",onActivation)
+ schedule()
+ return()=>{window.removeEventListener("scroll",schedule);window.removeEventListener("resize",schedule);document.removeEventListener("visibilitychange",schedule);document.removeEventListener("pointerdown",onActivation);document.removeEventListener("keydown",onActivation);cancelAnimationFrame(frame);active?.pause()}
+}
 window.wistiaClaimPlayback=owner=>{
  if(owner!=="before-after")beforeAfterInstance?.pause()
  if(owner!=="ar-ratio")arCdRatioInstance?.pause?.()
@@ -1165,7 +1185,7 @@ document.addEventListener("volumechange",event=>{
 },true)
 let firstRender=true
 function route(){
- closeDialog();routeObserver?.disconnect();arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
+ closeDialog();scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
@@ -1186,7 +1206,7 @@ function route(){
  beforeAfterInstance=window.initWistiaBeforeAfter?.()||null
  initSoloProcessSlider();
  startReviewCarousel();
- enhanceMotion();
+ scrollMediaCleanup=initScrollMediaPlayback();
  window.initHeroEditor?.(validDetail ? key : "");
  window.initProcessEditor?.(validDetail ? key : "");
  document.title=home?"WISTIA — 우리의 목소리로 남기는 특별한 순간":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
@@ -1209,8 +1229,7 @@ document.addEventListener("click",e=>{
  if(el.hasAttribute("data-review-next")){moveReviews(1);startReviewCarousel(false)}
  if(el.dataset.optionPlus||el.dataset.optionMinus){const key=el.dataset.optionPlus||el.dataset.optionMinus,option=eventProductOptions(currentEventProduct,currentEventPurpose).find(item=>item.key===key),delta=el.dataset.optionPlus?1:-1,max=option?.max??Infinity;optionQuantities[key]=Math.min(max,Math.max(0,(optionQuantities[key]||0)+delta));const output=document.querySelector('[data-option-count="'+key+'"]');if(output)output.textContent=optionQuantities[key]+(option?.unit||'회');updatePrice()}
  if(el.dataset.ratio&&!el.closest(".solo-ratio")){voiceRatio=el.dataset.ratio;const value=document.querySelector("#ratioValue");if(value)value.innerHTML=voiceRatio+"<small>%</small>";document.querySelectorAll("[data-ratio]").forEach(b=>b.setAttribute("aria-pressed",String(b===el)));switchRatioAudio(voiceRatio)}
- if(el.hasAttribute("data-ar-video-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){if(video.paused)video.play().catch(()=>{});else video.pause()}}
- if(el.hasAttribute("data-ar-sound-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){video.muted=!video.muted;if(!video.muted){window.wistiaClaimPlayback?.(video);video.play().catch(()=>{})}}}
+ if(el.hasAttribute("data-ar-video-toggle")){const video=el.closest(".ar-hook-media")?.querySelector("video");if(video){if(video.paused){video.muted=false;video.play().catch(()=>{})}else video.pause()}}
  if(el.dataset.processFormat){const section=el.closest(".film-process-section"),format=el.dataset.processFormat,expand=el.getAttribute("aria-expanded")!=="true";section?.querySelectorAll("[data-process-format]").forEach(button=>button.setAttribute("aria-expanded",String(expand&&button===el)));section?.querySelectorAll("[data-process-panel]").forEach(panel=>panel.hidden=!expand||panel.dataset.processPanel!==format)}
  if(el.matches("summary[data-process-step]")){const current=el.closest("details");current?.parentElement.querySelectorAll(":scope > details[open]").forEach(item=>{if(item!==current)item.open=false})}
  if(el.hasAttribute("data-reservation")){document.querySelector("#reservation")?.scrollIntoView({behavior:"smooth"});document.querySelector("#eventDate")?.focus({preventScroll:true})}
