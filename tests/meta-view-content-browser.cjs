@@ -50,7 +50,7 @@ const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
         await page.waitForTimeout(100)
       }
       const detailEventCount = await page.evaluate(() => window.__viewContentEvents.length)
-      for (const hash of ['#/', '#/event/solo', '#/info/about', '#/info/faq', '#/before-after']) {
+      for (const hash of ['#/', '#/events', '#/event/solo', '#/info/about', '#/info/faq', '#/before-after']) {
         await page.evaluate(next => { location.hash = next }, hash)
         await page.waitForTimeout(100)
         assert.equal(await page.evaluate(() => window.__viewContentEvents.length), detailEventCount)

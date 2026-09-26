@@ -1,0 +1,29 @@
+.wistia-events.shell{width:100%;padding-bottom:86px;background:#fff}
+.wistia-events-intro{position:relative;overflow:hidden;padding:72px 32px 58px;background:linear-gradient(145deg,#f8fafb 0%,#edf1f2 100%);border-bottom:1px solid #dce2e4}
+.wistia-events-intro:after{content:"";position:absolute;right:-80px;bottom:-116px;width:235px;height:235px;border:1px solid #cbd5d9;border-radius:50%;box-shadow:0 0 0 37px #e8edef80,0 0 0 74px #e8edef60;pointer-events:none}
+.wistia-events-kicker{display:flex;align-items:center;gap:11px;margin:0 0 28px;color:#687e88;font-size:11px;font-weight:650;letter-spacing:.22em}
+.wistia-events-kicker:before{content:"";width:7px;height:7px;border:1px solid currentColor;transform:rotate(45deg)}
+.wistia-events-intro h1{position:relative;z-index:1;margin:0;color:#283237;font-size:clamp(31px,7vw,39px);font-weight:550;line-height:1.32;letter-spacing:-.065em;word-break:keep-all}
+.wistia-events-intro>p:last-child{position:relative;z-index:1;margin:18px 0 0;color:#66757c;font-size:15px;line-height:1.7}
+.wistia-events-heading{margin:48px 32px 22px}
+.wistia-events-heading span{color:#7b8c94;font:italic 12px/1.5 Georgia,serif;letter-spacing:.12em}
+.wistia-events-heading h2{margin:8px 0 0;color:#283237;font-size:25px;font-weight:600;letter-spacing:-.05em}
+.wistia-events-list{display:grid;gap:13px;margin:0 32px}
+.wistia-event-card{position:relative;overflow:hidden;padding:23px 22px 25px;border:1px solid #d7dfe2;border-radius:12px;background:#fff;box-shadow:0 11px 25px -24px #1b2e37}
+.wistia-event-card:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:#8fa4ad}
+.wistia-event-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.wistia-event-card-top span{color:#82939b;font:italic 15px/1 Georgia,serif;letter-spacing:.08em}
+.wistia-event-card-top strong{flex:none;padding:7px 10px;border-radius:999px;background:#303d42;color:#fff;font-size:12px;font-weight:600;line-height:1.2}
+.wistia-event-card h3{margin:20px 0 15px;color:#2b353a;font-size:23px;font-weight:600;letter-spacing:-.05em}
+.wistia-event-card p{display:grid;grid-template-columns:57px minmax(0,1fr);gap:10px;margin:0;padding-top:14px;border-top:1px solid #e4e9eb;color:#64747b;font-size:13px;line-height:1.65;word-break:keep-all}
+.wistia-event-card p span{color:#4d6068;font-size:11px;font-weight:700;white-space:nowrap}
+.wistia-events-note{margin:26px 32px 0;padding:15px 17px;border-left:2px solid #a4b4bb;background:#f4f6f6;color:#67767d;font-size:12px;line-height:1.7;word-break:keep-all}
+@media(max-width:360px){
+  .wistia-events-intro{padding:56px 23px 48px}
+  .wistia-events-intro h1{font-size:30px}
+  .wistia-events-heading{margin:42px 23px 20px}
+  .wistia-events-list{margin-inline:23px}
+  .wistia-event-card{padding:20px 18px 22px}
+  .wistia-event-card h3{font-size:21px}
+  .wistia-events-note{margin-inline:23px}
+}

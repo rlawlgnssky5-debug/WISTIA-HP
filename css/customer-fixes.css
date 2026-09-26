@@ -86,6 +86,8 @@ body.is-solo-detail #floatingKakao{
   box-shadow:0 3px 7px #58470036;
 }
 body[data-page="event"] #floatingKakao,
+body[data-page="events"] #floatingKakao,
+body:has(.info-page-about) #floatingKakao,
 body.menu-open #floatingKakao,
 #soloDesktopCta{display:none!important}
 @media(max-width:360px){
@@ -475,3 +477,41 @@ body.menu-open #menuToggle span:nth-child(3){transform:translateX(-2px) rotate(-
   .solo-detail-scope .solo-inline-contact span{transition:none}
   .solo-detail-scope .solo-inline-contact::after{animation:none;opacity:.65;transform:translateY(-50%) scale(.8)}
 }
+
+/* The site canvas is at most 500px, even on a wide desktop viewport */
+.info-page-about .info-page-intro{max-width:none}
+.info-page-about .info-page-intro h1{font-size:clamp(30px,7vw,38px)}
+.info-page-about .wistia-about-story{grid-template-columns:minmax(0,1fr);gap:28px;padding:52px 0}
+.info-page-about .wistia-about-story>div{min-width:0}
+.info-page-about .wistia-about-story h2,
+.info-page-about .wistia-specialists h2{font-size:clamp(26px,6vw,34px)}
+.info-page-about .wistia-about-story figure{order:0;aspect-ratio:4/3}
+.info-page-about .wistia-specialists{padding:58px 0}
+.info-page-about .wistia-specialists>header{display:block;margin-bottom:28px}
+.info-page-about .wistia-specialist-grid{grid-template-columns:minmax(0,1fr)}
+.info-page-about .wistia-specialist-grid article,
+.info-page-about .wistia-specialist-grid article:first-child,
+.info-page-about .wistia-specialist-grid article:last-child{display:grid;grid-template-columns:106px minmax(0,1fr);column-gap:18px;align-items:start;padding:24px 0;border-right:0;border-bottom:1px solid var(--line)}
+.info-page-about .wistia-specialist-grid article:last-child{border-bottom:0}
+.info-page-about .wistia-specialist-grid article>span{grid-column:2;grid-row:1;margin:0 0 7px;font-size:22px}
+.info-page-about .wistia-specialist-grid article img{grid-column:1;grid-row:1/5;width:106px;aspect-ratio:4/5}
+.info-page-about .wistia-specialist-grid article>p,
+.info-page-about .wistia-specialist-grid article h3,
+.info-page-about .wistia-specialist-grid article small{grid-column:2;min-width:0}
+.info-page-about .wistia-specialist-grid article>p{grid-row:2;margin:0 0 6px}
+.info-page-about .wistia-specialist-grid article h3{grid-row:3;font-size:18px}
+.info-page-about .wistia-specialist-grid article small{grid-row:4;margin-top:8px;font-size:13px}
+@media(max-width:360px){
+  .info-page-about .wistia-specialist-grid article,
+  .info-page-about .wistia-specialist-grid article:first-child,
+  .info-page-about .wistia-specialist-grid article:last-child{grid-template-columns:78px minmax(0,1fr);column-gap:14px}
+  .info-page-about .wistia-specialist-grid article img{width:78px}
+  .info-page-about .wistia-specialist-grid article h3{font-size:16px}
+}
+
+/* Keep the before/after headline readable within the narrow site canvas */
+.solo-detail-scope .wistia-ba-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+.solo-detail-scope .wistia-ba-copy [data-solo-title]{font-size:clamp(16px,5cqw,24px)!important;white-space:nowrap}
+.solo-detail-scope .wistia-ba-copy [data-solo-sub]{font-size:clamp(12px,2.7cqw,13px)!important;line-height:1.8!important}
+.solo-detail-scope .wistia-ba-copy .ba-paragraph{display:block}
+.solo-detail-scope .wistia-ba-copy .ba-paragraph+.ba-paragraph{margin-top:15px}
