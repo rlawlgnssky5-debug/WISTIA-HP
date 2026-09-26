@@ -6,7 +6,9 @@ const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
   try {
     for (const width of [320, 390]) {
       const page = await browser.newPage({ viewport: { width, height: 800 }, reducedMotion: 'reduce' })
+      const warnings = []
       page.on('pageerror', error => console.error('page error:', error.message))
+      page.on('console', message => { if (message.type() === 'warning' && message.text().includes('[wistiaMeta]')) warnings.push(message.text()) })
       await page.addInitScript(() => {
         window.__viewContentEvents = []
         let tracker
@@ -55,6 +57,14 @@ const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
         await page.waitForTimeout(100)
         assert.equal(await page.evaluate(() => window.__viewContentEvents.length), detailEventCount)
       }
+      await page.evaluate(() => {
+        delete window.wistiaMeta.trackViewContent
+        location.hash = '#/detail/solo'
+      })
+      await page.waitForFunction(() => location.hash === '#/detail/solo' && document.body.dataset.page === 'detail')
+      await page.waitForTimeout(100)
+      assert.ok(warnings.some(message => message.includes('trackViewContent missing')))
+      assert.equal(await page.evaluate(() => window.__viewContentEvents.length), detailEventCount)
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await page.close()
     }

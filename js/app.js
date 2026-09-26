@@ -1227,7 +1227,14 @@ function route(){
  window.initProcessEditor?.(validDetail ? key : "");
  document.title=home?"WISTIA — 우리의 목소리로 남기는 특별한 순간":eventsPage?"이벤트 | WISTIA":info?(key==="about"?"위스티아는 어떤 곳인가요?":"자주 묻는 질문")+" | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
  window.wistiaMeta?.trackPageView();
- if(detail)window.wistiaMeta?.trackViewContent(detailViewContent(key,purpose));
+ if(detail){
+  const payload=detailViewContent(key,purpose);
+  if(typeof window.wistiaMeta?.trackViewContent==="function"){
+   window.wistiaMeta.trackViewContent(payload);
+  }else{
+   console.warn("[wistiaMeta] trackViewContent missing",window.wistiaMeta);
+  }
+ }
  const target=type==="section"?document.getElementById(key):null;
  requestAnimationFrame(()=>{if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  app.focus({preventScroll:true});

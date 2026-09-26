@@ -55,5 +55,5 @@
     if (url.hostname === "pf.kakao.com" && url.pathname.endsWith("/chat")) trackContact();
   }, true);
 
-  window.wistiaMeta = { trackPageView, trackViewContent, trackContact };
+  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackPageView, trackViewContent, trackContact });
 })();

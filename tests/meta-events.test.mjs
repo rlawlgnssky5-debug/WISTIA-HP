@@ -5,18 +5,22 @@ import handler from "../api/meta-contact.js";
 
 const clientCode = readFileSync(new URL("../js/meta-pixel.js", import.meta.url), "utf8");
 
-function createClient(hostname = "wistiahp.vercel.app", withPixel = true) {
+function createClient(hostname = "wistiahp.vercel.app", withPixel = true, existingTracker = undefined) {
   const calls = [];
   const requests = [];
   let click;
   const location = { protocol: "https:", hostname, pathname: "/", search: "", hash: "#/", href: `https://${hostname}/#/` };
   const window = withPixel ? { fbq: (...args) => calls.push(args) } : {};
+  if (existingTracker) window.wistiaMeta = existingTracker;
   const document = { addEventListener: (type, listener) => { if (type === "click") click = listener; } };
   runInNewContext(clientCode, { window, document, location, crypto: { randomUUID: () => "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee" }, fetch: (...args) => { requests.push(args); return Promise.resolve({ ok: true }); }, URL });
   return { window, location, calls, requests, click: link => click({ target: { closest: () => link } }) };
 }
 
 const browser = createClient();
+const preservedTracker = createClient("wistiahp.vercel.app", true, { customProperty: "preserved" });
+assert.equal(preservedTracker.window.wistiaMeta.customProperty, "preserved");
+assert.equal(typeof preservedTracker.window.wistiaMeta.trackViewContent, "function");
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackPageView(), false);
 browser.location.hash = "#/detail/solo";
