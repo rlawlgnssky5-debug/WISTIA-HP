@@ -2465,11 +2465,20 @@ body[data-page=event] .checkout-field-number{flex:none;color:#7a858a;font-size:1
 body[data-page=event] .booking-static-bar{width:calc(100% + 48px);max-width:none;margin-left:-24px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
 
 /* A solid, quiet header surface that never changes tone while scrolling. */
+body{padding-top:var(--header)}
+body.is-solo-detail{padding-top:48px}
 #siteHeader,
 body.is-solo-detail #siteHeader,
 body.menu-open #siteHeader{
+ position:fixed;
+ top:0;
+ left:50%;
+ transform:translateX(-50%);
+ z-index:110;
  background:#fff;
  border-bottom:1px solid #d8dddf;
  box-shadow:0 3px 10px #1a20260d;
  backdrop-filter:none;
 }
+body.menu-open #app,
+body.is-solo-detail.menu-open #app{margin-top:0}
