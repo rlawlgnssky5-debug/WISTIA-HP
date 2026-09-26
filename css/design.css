@@ -2344,6 +2344,15 @@ body.is-solo-detail.menu-open::before{top:48px}
  color:var(--ink);
 }
 body.menu-open #mainMenu{display:block!important}
+body.menu-open #siteHeader{
+ position:fixed;
+ top:0;
+ left:50%;
+ transform:translateX(-50%);
+ z-index:100;
+}
+body.menu-open #app{margin-top:var(--header)}
+body.is-solo-detail.menu-open #app{margin-top:48px}
 body.menu-open #mainMenu,
 #mainMenu .menu-group,
 #mainMenu .menu-group-items{grid-template-columns:1fr!important}

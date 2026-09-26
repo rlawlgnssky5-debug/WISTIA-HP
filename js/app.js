@@ -457,19 +457,18 @@ const BASE_FILM_FORMAT = {
   "solo-film":"making",
   proposal:"live"
 }
-const FILM_REVISION_NOTICE = {key:"revision-guidance",label:"추가 수정 안내",detail:"수정 3회까지 무료 · 4회차부터 1회당 10,000원",notice:true}
 const FILM_RUSH_OPTION = {key:"rush",label:"3일 이내 빠른 작업",detail:"제작 일정 확인 후 진행합니다",price:30000}
 const FILM_ENTRANCE_OPTIONS = [
   {key:"bride-entrance",label:"신부 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000},
   {key:"groom-entrance",label:"신랑 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000}
 ]
 const PRODUCT_OPTIONS = {
-  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  wedding:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  "duet-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  "solo-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE],
-  proposal:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION,FILM_REVISION_NOTICE]
+  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION],
+  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION],
+  wedding:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION],
+  "duet-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION],
+  "solo-film":[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION],
+  proposal:[...FILM_ENTRANCE_OPTIONS,FILM_RUSH_OPTION]
 }
 const FRIEND_PRODUCT_OPTIONS = [
 ]
@@ -1052,7 +1051,6 @@ function calculate(){
   return {product,chosen,discount,optionEntries,songOption,formatUpgrade,optionPrice,finalPrice:product.normal+optionPrice-discount}
 }
 function renderProductOption(o){
- if(o.notice)return '<div class="option-notice"><span aria-hidden="true">※</span><div><strong>'+o.label+'</strong><small>'+o.detail+'</small></div></div>'
   if(o.quantity){const quantity=optionQuantities[o.key]||0,unit=o.unit||"회",priceUnit=o.priceUnit||"회당";return '<div class="option-choice quantity-option"><span class="option-symbol" aria-hidden="true">+</span><span><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><div class="quantity-control" aria-label="'+o.label+' 선택 수"><button type="button" data-option-minus="'+o.key+'" aria-label="'+o.label+' 줄이기">−</button><output data-option-count="'+o.key+'">'+quantity+unit+'</output><button type="button" data-option-plus="'+o.key+'" aria-label="'+o.label+' 늘리기">+</button><b>'+priceUnit+' +'+shortWon(o.price)+'</b></div></div>'}
   const image=o.key==="lyrics-video"?'<span class="lyric-option-image">'+img("assets/img/song-options/lyric-video-v2.webp","가사 영상에 사용되는 웨딩 장면 예시")+'</span>':''
   return '<label class="option-choice'+(image?' has-lyric-image':'')+'">'+image+'<input type="checkbox" data-option="'+o.key+'" '+(selectedOptions.has(o.key)?"checked":"")+'><span><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><b>'+(o.price?'+'+shortWon(o.price):'상담 후 안내')+'</b></label>'
