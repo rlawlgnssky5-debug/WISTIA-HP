@@ -1274,7 +1274,6 @@ dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.focus()}})
 window.addEventListener("popstate",route)
 window.addEventListener("hashchange",route)
-window.addEventListener("scroll",()=>document.querySelector("#siteHeader")?.classList.toggle("is-scrolled",scrollY>12),{passive:true})
 async function init(){
  try{const r=await fetch("wistia-config.json",{cache:"no-store",signal:AbortSignal.timeout(2500)});if(r.ok)config={...config,...await r.json()}}catch{}
  if(!document.querySelector("#siteHeader")||!document.querySelector("#app"))return

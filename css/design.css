@@ -689,8 +689,7 @@ html,body{overflow-x:clip}
 
 
 /* v89 — restrained scroll motion, continuous reviews and stable AR switching */
-#siteHeader{transition:background-color .35s ease,box-shadow .35s ease,backdrop-filter .35s ease}
-#siteHeader.is-scrolled{background:#ffffffed;box-shadow:0 8px 24px #1a20260a;backdrop-filter:blur(14px)}
+#siteHeader{transition:none}
 .button span:last-child,.text-link span:last-child,.service-row>span:last-child,.situation-pill>span:last-child{transition:transform .35s cubic-bezier(.22,.61,.36,1)}
 .button:hover span:last-child,.text-link:hover span:last-child,.service-row:hover>span:last-child,.situation-pill:hover>span:last-child{transform:translate(4px,-4px)}
 .review-loop{animation:none!important;transition:none!important}
@@ -2349,7 +2348,7 @@ body.menu-open #siteHeader{
  top:0;
  left:50%;
  transform:translateX(-50%);
- z-index:100;
+ z-index:110;
 }
 body.menu-open #app{margin-top:var(--header)}
 body.is-solo-detail.menu-open #app{margin-top:48px}
@@ -2464,3 +2463,13 @@ body.is-solo-detail .fixed-price .solo-fixed-consult>span{display:flex}
 body[data-page=event] .consultation-step .checkout-field>span{display:flex;align-items:baseline;gap:9px}
 body[data-page=event] .checkout-field-number{flex:none;color:#7a858a;font-size:10px;font-weight:600;font-variant-numeric:tabular-nums}
 body[data-page=event] .booking-static-bar{width:calc(100% + 48px);max-width:none;margin-left:-24px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+
+/* A solid, quiet header surface that never changes tone while scrolling. */
+#siteHeader,
+body.is-solo-detail #siteHeader,
+body.menu-open #siteHeader{
+ background:#fff;
+ border-bottom:1px solid #d8dddf;
+ box-shadow:0 3px 10px #1a20260d;
+ backdrop-filter:none;
+}
