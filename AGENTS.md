@@ -247,3 +247,4 @@
 
 - Meta 픽셀의 카카오톡 링크 전역 전환 추적을 분리했다. `a.consult-copy-action` 모달 버튼에서만 기존 `Contact`·`KakaoTalkClick` 및 `/api/meta-contact` 전송을 실행하고, `#floatingKakaoChat`은 브라우저 전용 `FloatingKakaoClick`으로만 집계한다. 푸터·솔로 CTA 등 다른 카카오톡 채팅 링크는 Meta 클릭 이벤트를 보내지 않는다.
 - `meta-pixel.js` 캐시 버전을 `20260927-kakao-split-1`로 올렸다. 기존 `PageView`·`ViewContent`·CAPI 구조와 GA4 추적은 유지했다. 단위 시험에서 세 클릭 경로, 로컬 미리보기 차단, 픽셀 차단 시 모달 CAPI 유지가 통과했다. 로컬 Edge 320px·390px에서 기존 상세·가격 추적 화면 검사가 통과했고 JavaScript 구문·Git 차이 검사도 통과했다. 원격 푸시·배포는 하지 않았다.
+- GA4 카카오톡 클릭 집계도 Meta의 버튼 분리 기준에 맞췄다. 상담 팝업의 `.consult-copy-action`만 `kakao_chat_click`, 플로팅 `#floatingKakaoChat`만 `floating_kakao_click`으로 보내고 푸터·솔로 CTA는 GA4 카카오톡 클릭 이벤트를 보내지 않는다. Meta 픽셀·CAPI 코드는 변경하지 않고 GA4 스크립트 캐시 버전을 `20260927-ga4-kakao-split-1`로 갱신했다. 로컬 단위 시험과 Edge 320px·390px의 모달·플로팅·푸터 요소 및 기존 Meta 경로 검사를 통과했다. 원격 푸시·배포는 하지 않았다.

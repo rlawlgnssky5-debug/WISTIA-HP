@@ -38,6 +38,10 @@
     return send("kakao_chat_click", { page_path: location.hash || "#/" });
   }
 
+  function trackFloatingKakaoClick() {
+    return send("floating_kakao_click", { page_path: location.hash || "#/" });
+  }
+
   function trackSiteClick(action, targetPath = "") {
     if (!/^(navigation|price_link|service_link|menu|media_play|faq_open|review_next|review_previous)$/.test(action)) return false;
     const pagePath = location.hash || "#/";
@@ -54,7 +58,9 @@
     if (control.matches("a[href]")) {
       const url = new URL(control.href, location.href);
       if (url.hostname === "pf.kakao.com" && url.pathname.endsWith("/chat")) {
-        trackKakaoClick();
+        // Ad conversion and GA4 kakao_chat_click both belong to the consultation modal only.
+        if (control.matches(".consult-copy-action")) trackKakaoClick();
+        else if (control.id === "floatingKakaoChat") trackFloatingKakaoClick();
         return;
       }
       if (url.origin !== location.origin || !url.hash.startsWith("#/")) return;
@@ -131,5 +137,5 @@
   }
 
   window.addEventListener("pagehide", () => routeCleanup?.());
-  window.wistiaAnalytics = { trackPageView, trackKakaoClick, trackSiteClick, startPageTracking };
+  window.wistiaAnalytics = { trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();

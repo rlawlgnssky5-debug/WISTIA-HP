@@ -59,8 +59,19 @@ assert.equal(calls.some(call => call[1] === "view_price"), false);
 visible([{ isIntersecting: true, intersectionRatio: 0.6 }]);
 assert.equal(calls.find(call => call[1] === "view_price")[2].value, 120000);
 
-click({ target: { closest: () => ({ href: "https://pf.kakao.com/_GbExjX/chat", matches: selector => selector === "a[href]" }) } });
+function clickLink({ href, id = "", modal = false }) {
+  click({ target: { closest: () => ({ href, id, matches: selector => selector === "a[href]" || (selector === ".consult-copy-action" && modal) }) } });
+}
+const kakaoHref = "https://pf.kakao.com/_GbExjX/chat";
+clickLink({ href: kakaoHref });
+clickLink({ href: kakaoHref, id: "soloDesktopCtaKakao" });
+assert.equal(calls.filter(call => call[1] === "kakao_chat_click" || call[1] === "floating_kakao_click").length, 0);
+clickLink({ href: kakaoHref, id: "floatingKakaoChat" });
+assert.equal(calls.filter(call => call[1] === "floating_kakao_click").length, 1);
+assert.equal(calls.filter(call => call[1] === "kakao_chat_click").length, 0);
+clickLink({ href: kakaoHref, modal: true });
 assert.equal(calls.filter(call => call[1] === "kakao_chat_click").length, 1);
+assert.equal(calls.filter(call => call[1] === "floating_kakao_click").length, 1);
 change({ target: { dataset: { option: "lyrics-video" }, checked: true } });
 assert.equal(calls.find(call => call[1] === "option_select")[2].option_key, "lyrics-video");
 assert.equal(calls.filter(call => call[1] === "page_view").length, 2);
