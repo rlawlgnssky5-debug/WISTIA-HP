@@ -78,12 +78,24 @@
     return true;
   }
 
+  function trackFloatingKakaoClick() {
+    if (localPreview || typeof window.fbq !== "function") return false;
+    try {
+      window.fbq("trackCustom", "FloatingKakaoClick", { page_path: location.hash || "#/" });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   document.addEventListener("click", event => {
     const link = event.target.closest?.("a[href]");
     if (!link) return;
     const url = new URL(link.href, location.href);
-    if (url.hostname === "pf.kakao.com" && url.pathname.endsWith("/chat")) trackContact();
+    if (url.hostname !== "pf.kakao.com" || !url.pathname.endsWith("/chat")) return;
+    if (link.matches(".consult-copy-action")) trackContact();
+    else if (link.id === "floatingKakaoChat") trackFloatingKakaoClick();
   }, true);
 
-  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackPageView, trackViewContent, trackContact, trackScrollDepth, trackTimeOnPage, trackViewPrice });
+  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackPageView, trackViewContent, trackContact, trackFloatingKakaoClick, trackScrollDepth, trackTimeOnPage, trackViewPrice });
 })();

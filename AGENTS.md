@@ -242,3 +242,8 @@
 - 기존 `PageView`·`ViewContent`·`Contact`·`KakaoTalkClick` 및 카카오톡 서버 연동 경로는 변경하지 않았고 광고 설정에도 손대지 않았다. 추적기·앱 스크립트 버전을 `20260926-engagement-1`로 올렸다. 기존·신규 Meta 자동 시험과 로컬 Edge 320px·390px에서 상세 스크롤, 가격 가시성, 30초 타이머 및 이전 라우트 타이머 정리를 확인했다. JavaScript 구문·Git 차이 검사도 통과했으며 원격 푸시·배포는 하지 않았다.
 - 사용자가 제공한 GA4 측정 ID `G-5E0XX7SE8T`를 사이트 직접 태그로 연결했다. 해시 라우트별 `page_view`와 이전 경로, 카카오톡 실제 링크 클릭 `kakao_chat_click`, 주요 내부 링크·메뉴·영상·FAQ·후기 클릭 `site_click`, 가격 선택 `option_select`, 스크롤·체류 단계·가격 노출 및 이탈 시 체류 시간 `page_dwell`을 기록한다. 개발용 로컬에서는 Google 요청을 보내지 않는다.
 - GA4 연결은 별도 `js/analytics.js`로 분리하고 기존 Meta Pixel·서버 전송 경로를 변경하지 않았다. GA4 자동 브라우저 방문기록 기반 페이지 조회가 켜져 있으면 수동 SPA `page_view`와 중복될 수 있으므로 운영 스트림 설정에서 이 옵션 확인이 필요하다. GA4 단위 시험과 기존 Meta 시험, 로컬 Edge 320px·390px의 라우트·가격 화면 확인, 구문·차이 검사를 통과했다. 원격 푸시·배포는 하지 않았다.
+
+### 2026-09-27
+
+- Meta 픽셀의 카카오톡 링크 전역 전환 추적을 분리했다. `a.consult-copy-action` 모달 버튼에서만 기존 `Contact`·`KakaoTalkClick` 및 `/api/meta-contact` 전송을 실행하고, `#floatingKakaoChat`은 브라우저 전용 `FloatingKakaoClick`으로만 집계한다. 푸터·솔로 CTA 등 다른 카카오톡 채팅 링크는 Meta 클릭 이벤트를 보내지 않는다.
+- `meta-pixel.js` 캐시 버전을 `20260927-kakao-split-1`로 올렸다. 기존 `PageView`·`ViewContent`·CAPI 구조와 GA4 추적은 유지했다. 단위 시험에서 세 클릭 경로, 로컬 미리보기 차단, 픽셀 차단 시 모달 CAPI 유지가 통과했다. 로컬 Edge 320px·390px에서 기존 상세·가격 추적 화면 검사가 통과했고 JavaScript 구문·Git 차이 검사도 통과했다. 원격 푸시·배포는 하지 않았다.

@@ -14,7 +14,7 @@ function createClient(hostname = "wistiahp.vercel.app", withPixel = true, existi
   if (existingTracker) window.wistiaMeta = existingTracker;
   const document = { addEventListener: (type, listener) => { if (type === "click") click = listener; } };
   runInNewContext(clientCode, { window, document, location, crypto: { randomUUID: () => "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee" }, fetch: (...args) => { requests.push(args); return Promise.resolve({ ok: true }); }, URL });
-  return { window, location, calls, requests, click: link => click({ target: { closest: () => link } }) };
+  return { window, location, calls, requests, click: link => click({ target: { closest: () => ({ id: "", matches: () => false, ...link }) } }) };
 }
 
 const browser = createClient();
@@ -57,8 +57,19 @@ browser.location.hash = "#/";
 assert.equal(browser.window.wistiaMeta.trackScrollDepth(25), true);
 assert.equal(browser.window.wistiaMeta.trackTimeOnPage(30), true);
 assert.equal(browser.window.wistiaMeta.trackViewPrice(soloView), true);
-browser.click({ href: "https://pf.kakao.com/_GbExjX/chat" });
+const kakaoHref = "https://pf.kakao.com/_GbExjX/chat";
+const beforeKakaoClicks = browser.calls.length;
+browser.click({ href: kakaoHref });
+browser.click({ href: kakaoHref, id: "soloDesktopCtaKakao" });
+assert.equal(browser.calls.length, beforeKakaoClicks);
+assert.equal(browser.requests.length, 0);
+browser.click({ href: kakaoHref, id: "floatingKakaoChat" });
+assert.deepEqual(browser.calls.at(-1).slice(0, 2), ["trackCustom", "FloatingKakaoClick"]);
+assert.equal(browser.calls.at(-1)[2].page_path, "#/");
+assert.equal(browser.requests.length, 0);
+browser.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.deepEqual(browser.calls.slice(-2).map(call => [call[0], call[1]]), [["track", "Contact"], ["trackCustom", "KakaoTalkClick"]]);
+assert.equal(browser.calls.filter(call => call[1] === "FloatingKakaoClick").length, 1);
 assert.equal(browser.calls.at(-2)[3].eventID, JSON.parse(browser.requests[0][1].body).event_id);
 assert.equal(browser.calls.at(-1)[3].eventID, JSON.parse(browser.requests[0][1].body).event_id);
 assert.equal(browser.requests[0][1].keepalive, true);
@@ -70,17 +81,23 @@ assert.equal(preview.window.wistiaMeta.trackViewContent(soloView), false);
 assert.equal(preview.window.wistiaMeta.trackScrollDepth(25), false);
 assert.equal(preview.window.wistiaMeta.trackTimeOnPage(30), false);
 assert.equal(preview.window.wistiaMeta.trackViewPrice(soloView), false);
-preview.click({ href: "https://pf.kakao.com/_GbExjX/chat" });
+preview.click({ href: kakaoHref, id: "floatingKakaoChat" });
+preview.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.equal(preview.calls.length, 0);
+assert.equal(preview.requests.length, 0);
 const blockedPixel = createClient("wistiahp.vercel.app", false);
 assert.equal(blockedPixel.window.wistiaMeta.trackViewContent(soloView), false);
-blockedPixel.click({ href: "https://pf.kakao.com/_GbExjX/chat" });
+blockedPixel.click({ href: kakaoHref, id: "floatingKakaoChat" });
+assert.equal(blockedPixel.requests.length, 0);
+blockedPixel.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.equal(blockedPixel.calls.length, 0);
 assert.equal(blockedPixel.requests.length, 1);
 const throwingPixel = createClient();
 throwingPixel.window.fbq = () => { throw new Error("browser pixel blocked"); };
 assert.equal(throwingPixel.window.wistiaMeta.trackViewContent(soloView), false);
-throwingPixel.click({ href: "https://pf.kakao.com/_GbExjX/chat" });
+throwingPixel.click({ href: kakaoHref, id: "floatingKakaoChat" });
+assert.equal(throwingPixel.requests.length, 0);
+throwingPixel.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.equal(throwingPixel.requests.length, 1);
 
 function createResponse() {
