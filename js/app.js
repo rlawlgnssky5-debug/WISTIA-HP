@@ -1186,6 +1186,7 @@ document.addEventListener("volumechange",event=>{
  if(media instanceof HTMLVideoElement&&!media.muted&&!media.paused)window.wistiaClaimPlayback(media)
 },true)
 let firstRender=true
+let metaEngagementCleanup=null
 function detailViewContent(key,purpose=""){
  const product=PRODUCTS[key]
  if(!product)return null
@@ -1198,8 +1199,31 @@ function detailViewContent(key,purpose=""){
  }else if(FILM_FORMAT_PRICES[key])value=FILM_FORMAT_PRICES[key][BASE_FILM_FORMAT[key]]
  return {content_name:contentName,content_ids:[contentId],content_type:"product",value,currency:"KRW"}
 }
+function initMetaEngagementTracking(pagePath,pricePage){
+ const onScroll=()=>{
+  const height=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)
+  const percent=height?Math.min(100,Math.floor((window.scrollY+window.innerHeight)/height*100)):0
+  for(const threshold of [25,50,75,100])if(percent>=threshold)window.wistiaMeta?.trackScrollDepth?.(threshold,pagePath)
+ }
+ window.addEventListener("scroll",onScroll,{passive:true})
+ const timers=[30,60,120].map(seconds=>window.setTimeout(()=>window.wistiaMeta?.trackTimeOnPage?.(seconds,pagePath),seconds*1000))
+ let observer=null
+ const priceBlock=pricePage?document.querySelector(".booking-base-amount"):null
+ if(priceBlock&&typeof IntersectionObserver==="function"){
+  observer=new IntersectionObserver(entries=>{
+   if(!entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=0.5))return
+   const purpose=currentEventProduct==="solo-film"?(selectedFilmPeople===2?"duo":"solo"):currentEventPurpose
+   const payload=detailViewContent(currentEventProduct,purpose)
+   if(!payload)return
+   payload.value=calculate().product.normal
+   if(window.wistiaMeta?.trackViewPrice?.(payload,pagePath))observer.disconnect()
+  },{threshold:0.5})
+  observer.observe(priceBlock)
+ }
+ return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
+}
 function route(){
- closeDialog();scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
+ closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
@@ -1233,6 +1257,13 @@ function route(){
    console.warn("[wistiaMeta] trackViewContent missing",window.wistiaMeta);
   }
  }
+ metaEngagementCleanup=initMetaEngagementTracking(location.hash||"#/",Boolean(event))
+ window.wistiaAnalytics?.startPageTracking(location.hash||"#/",event?()=>{
+  const selectedPurpose=currentEventProduct==="solo-film"?(selectedFilmPeople===2?"duo":"solo"):currentEventPurpose
+  const payload=detailViewContent(currentEventProduct,selectedPurpose)
+  if(payload)payload.value=calculate().product.normal
+  return payload
+ }:null)
  const target=type==="section"?document.getElementById(key):null;
  requestAnimationFrame(()=>{if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  app.focus({preventScroll:true});

@@ -2,6 +2,36 @@
   const localPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   let lastPageViewUrl = "";
   let lastViewContentKey = "";
+  const scrollDepthSent = new Set();
+  const timeOnPageSent = new Set();
+  const viewPriceSent = new Set();
+
+  function trackCustomOnce(name, key, payload, sent) {
+    if (localPreview || typeof window.fbq !== "function" || sent.has(key)) return false;
+    try {
+      window.fbq("trackCustom", name, payload);
+      sent.add(key);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function trackScrollDepth(percent, pagePath = location.hash || "#/") {
+    if (![25, 50, 75, 100].includes(percent) || typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
+    return trackCustomOnce("ScrollDepth", `${pagePath}:${percent}`, { percent, page_path: pagePath }, scrollDepthSent);
+  }
+
+  function trackTimeOnPage(seconds, pagePath = location.hash || "#/") {
+    if (![30, 60, 120].includes(seconds) || typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
+    return trackCustomOnce("TimeOnPage", `${pagePath}:${seconds}`, { seconds, page_path: pagePath }, timeOnPageSent);
+  }
+
+  function trackViewPrice(payload, pagePath = location.hash || "#/") {
+    if (!payload || !Array.isArray(payload.content_ids) || !payload.content_ids.length || !Number.isFinite(payload.value) || payload.currency !== "KRW") return false;
+    if (typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
+    return trackCustomOnce("ViewPrice", pagePath, payload, viewPriceSent);
+  }
 
   function trackPageView() {
     if (localPreview || typeof window.fbq !== "function") return false;
@@ -55,5 +85,5 @@
     if (url.hostname === "pf.kakao.com" && url.pathname.endsWith("/chat")) trackContact();
   }, true);
 
-  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackPageView, trackViewContent, trackContact });
+  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackPageView, trackViewContent, trackContact, trackScrollDepth, trackTimeOnPage, trackViewPrice });
 })();
