@@ -1184,6 +1184,18 @@ document.addEventListener("volumechange",event=>{
  if(media instanceof HTMLVideoElement&&!media.muted&&!media.paused)window.wistiaClaimPlayback(media)
 },true)
 let firstRender=true
+function detailViewContent(key,purpose=""){
+ const product=PRODUCTS[key]
+ if(!product)return null
+ let contentId=key,contentName=product.title,value=product.normal
+ if(key==="solo-film"){
+  const twoPeople=purpose==="duo"
+  contentId=twoPeople?"solo-film-2p":"solo-film-1p"
+  contentName=product.title+" · "+(twoPeople?"2인":"1인")
+  value=twoPeople?FILM_FORMAT_PRICES["duet-film"].making:FILM_FORMAT_PRICES["solo-film"].making
+ }else if(FILM_FORMAT_PRICES[key])value=FILM_FORMAT_PRICES[key][BASE_FILM_FORMAT[key]]
+ return {content_name:contentName,content_ids:[contentId],content_type:"product",value,currency:"KRW"}
+}
 function route(){
  closeDialog();scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
@@ -1211,6 +1223,7 @@ function route(){
  window.initProcessEditor?.(validDetail ? key : "");
  document.title=home?"WISTIA — 우리의 목소리로 남기는 특별한 순간":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
  window.wistiaMeta?.trackPageView();
+ if(detail)window.wistiaMeta?.trackViewContent(detailViewContent(key,purpose));
  const target=type==="section"?document.getElementById(key):null;
  requestAnimationFrame(()=>{if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  app.focus({preventScroll:true});
