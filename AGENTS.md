@@ -258,3 +258,4 @@
 - Hash 경로는 크롤러가 별도 문서로 수집하지 않을 수 있으므로 후속으로 path 라우트 또는 사전 렌더링을 권장한다. Production 배포·원격 푸시는 하지 않았다.
 - 기존 해시 상세·가격 주소를 History API 경로로 치환하고, 동일 SEO 카피에서 상세 6개·가격 6개의 경로별 초기 HTML을 생성했다. 메타·OG·canonical·JSON-LD 상품 URL과 sitemap을 clean path로 맞추고 Vercel rewrite를 추가했다. 로컬 Edge 320·390px에서 예전 해시 주소 치환과 홈→상세→가격→상담 팝업 흐름을 확인했다.
 - Meta Pixel·GA4·카카오 소스와 버튼은 수정하지 않았다. 기존 추적 라이브러리가 일부 세부 이벤트 경로를 해시 형식으로 검증하거나 기본값으로 사용하므로 이 조건 아래서는 모든 부가 이벤트의 `page_path`를 clean path로 통일할 수 없다. PageView와 앱에서 명시적으로 GA4에 전달하는 페이지 경로는 clean path를 사용한다.
+- 작업은 `codex/path-prerender-preview` 브랜치에만 커밋·푸시했고 Vercel 배포 상태가 성공인 것을 확인했다. Preview 주소는 `https://wistia-git-codex-path-prerender-preview-wistia1.vercel.app`이다. Vercel Preview 접근 보호가 로그인 화면을 반환하여 외부 비인증 HTTP로 실제 서버 HTML의 본문을 확인할 수는 없었다. 운영 `main`과 `www.wistiastudio.com`으로는 승격하지 않았다.
