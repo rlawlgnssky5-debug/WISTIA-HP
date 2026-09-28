@@ -741,18 +741,18 @@ function handleFinderChoice(el){
   finderChoice={role:el.value,moment:"",people:"",lyrics:""}
   sessionStorage.setItem("wistia:finder-selection",JSON.stringify(finderChoice))
   const next=el.value==="singer"?"#/detail/solo":el.value==="proposal"?"#/detail/proposal":el.value==="making"?"#/detail/solo-film/solo":"#/detail/wedding"
-  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next);route();return
+  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next.slice(1)+location.search);route();return
  }
  if(el.name==="finderMoment"){
   finderChoice.moment=el.value;finderChoice.people=""
   sessionStorage.setItem("wistia:finder-selection",JSON.stringify(finderChoice))
-  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","#/find/people");route();return
+  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","/find/people"+location.search);route();return
  }
  if(el.name==="finderPeople"){
   finderChoice.people=el.value
   sessionStorage.setItem("wistia:finder-selection",JSON.stringify(finderChoice))
   const product=finderProduct()
-  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",product?"#/detail/"+product:"#/");route()
+  history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",(product?"/detail/"+product:"/")+location.search);route()
  }
 }
 function updateHomeFinder(){
@@ -1222,26 +1222,30 @@ function initMetaEngagementTracking(pagePath,pricePage){
  }
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
 }
-const SEO_HOME={title:"위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상",description:"위스티아(WISTIA) 부천 웨딩 보컬 스튜디오. 사전 녹음·식전필름·축가 메이킹·프로포즈 영상까지, 내 목소리로 남기는 특별한 순간."};
-const SEO_DETAIL={
- solo:{title:"사전 녹음 1시간 | 본식 축가 AR · 위스티아",description:"떨리는 본식 축가를 미리 녹음하고 보컬 보정·믹싱까지. 위스티아 1시간 사전 녹음으로 안정적인 본식용 AR과 완성 음원을 준비하세요."},
- duo:{title:"사전 녹음 2시간 | 듀엣 축가 AR · 위스티아",description:"신랑신부·친구 듀엣 축가를 2시간 넉넉히 녹음. 파트·화음 디렉팅과 본식용 AR·완성 음원까지 위스티아에서 준비하세요."},
- "solo-film":{title:"축가 메이킹필름 | 내 목소리 본식 상영 · 위스티아",description:"라이브 부담 없이 내 목소리로 전하는 축가. 녹음 메이킹필름과 완성 음원을 본식 축가 순서에 바로 상영하세요. 위스티아."},
- wedding:{title:"식전 스토리 필름 | 우리 목소리 웨딩영상 · 위스티아",description:"사진·가사만의 식전이 아쉽다면. 인터뷰·편지·우리 노래가 흐르는 듀엣 식전 스토리 필름을 위스티아에서 완성하세요."},
- proposal:{title:"프로포즈 영상 | 노래로 전하는 고백 · 위스티아",description:"직접 부른 노래와 추억·편지로 완성하는 프로포즈·답프로포즈 영상. 위스티아에서 세상에 하나뿐인 고백을 준비하세요."}
-};
-const SEO_EVENT={title:"얼마일까 | 위스티아 사전녹음·영상 가격 계산",description:"상품별 예상 가격을 바로 확인하세요. 사전 녹음·메이킹필름·식전·프로포즈까지 위스티아 이벤트 가격 계산과 카카오 상담."};
+const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 function setPageMeta({title,description,image}){
  document.title=title;
- const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":"https://www.wistiastudio.com/"+(location.hash||""),"meta[property='og:image']":image||"https://www.wistiastudio.com/assets/img/wedding/03-lipsync-mv.webp"};
+ const url="https://www.wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
+ const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":url,"meta[property='og:image']":image||"https://www.wistiastudio.com/assets/img/wedding/03-lipsync-mv.webp"};
  Object.entries(values).forEach(([selector,value])=>{const tag=document.querySelector(selector);if(tag)tag.content=value});
+ const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=url;
+}
+function routePath(){return location.pathname.replace(/\/$/,"")||"/"}
+function cleanHashRoute(){
+ if(!location.hash.startsWith("#/"))return false;
+ const path=location.hash.slice(1);
+ history.replaceState(history.state,"",path+location.search);
+ return true;
+}
+function normalizeInternalLinks(){
+ document.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute("href",link.getAttribute("href").slice(1)));
 }
 function route(){
- closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
+ closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
- const floatingPrice=document.querySelector("#floatingPrice");if(floatingPrice)floatingPrice.href="#/event/"+(validDetail||event?key:"solo")+(purpose&&validDetail?"/"+purpose:"")
+ const floatingPrice=document.querySelector("#floatingPrice");if(floatingPrice)floatingPrice.href="/event/"+(validDetail||event?key:"solo")+(purpose&&validDetail?"/"+purpose:"")
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!unifiedDetail;
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
@@ -1273,8 +1277,8 @@ function route(){
    console.warn("[wistiaMeta] trackViewContent missing",window.wistiaMeta);
   }
  }
- metaEngagementCleanup=initMetaEngagementTracking(location.hash||"#/",Boolean(event))
- window.wistiaAnalytics?.startPageTracking(location.hash||"#/",event?()=>{
+ metaEngagementCleanup=initMetaEngagementTracking("#"+routePath(),Boolean(event))
+ window.wistiaAnalytics?.startPageTracking(routePath(),event?()=>{
   const selectedPurpose=currentEventProduct==="solo-film"?(selectedFilmPeople===2?"duo":"solo"):currentEventPurpose
   const payload=detailViewContent(currentEventProduct,selectedPurpose)
   if(payload)payload.value=calculate().product.normal
@@ -1283,12 +1287,15 @@ function route(){
  const target=type==="section"?document.getElementById(key):null;
  requestAnimationFrame(()=>{if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  app.focus({preventScroll:true});
- document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.hash===location.hash)a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
+ normalizeInternalLinks();
+ document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.pathname===routePath())a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
 }
-function goBack(){if((history.state?.wistiaDepth||0)>0)history.back();else location.hash="#/"}
+function goBack(){if((history.state?.wistiaDepth||0)>0)history.back();else{history.replaceState(history.state,"","/"+location.search);route()}}
 history.replaceState({...history.state,wistiaDepth:history.state?.wistiaDepth||0},"");
+cleanHashRoute();
 document.addEventListener("click",e=>{
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
+ if(el.matches(".skip-link")){e.preventDefault();app.focus();return}
  if(el.matches("[data-close]")){closeDialog();if(el.tagName==="BUTTON")return}
  if(el.id==="headerBack")goBack();
  if(el.id==="menuToggle"){const open=!document.body.classList.contains("menu-open");document.body.classList.toggle("menu-open",open);el.setAttribute("aria-expanded",String(open));el.setAttribute("aria-label",open?"메뉴 닫기":"메뉴 열기")}
@@ -1302,16 +1309,16 @@ document.addEventListener("click",e=>{
  if(el.dataset.processFormat){const section=el.closest(".film-process-section"),format=el.dataset.processFormat,expand=el.getAttribute("aria-expanded")!=="true";section?.querySelectorAll("[data-process-format]").forEach(button=>button.setAttribute("aria-expanded",String(expand&&button===el)));section?.querySelectorAll("[data-process-panel]").forEach(panel=>panel.hidden=!expand||panel.dataset.processPanel!==format)}
  if(el.matches("summary[data-process-step]")){const current=el.closest("details");current?.parentElement.querySelectorAll(":scope > details[open]").forEach(item=>{if(item!==current)item.open=false})}
  if(el.hasAttribute("data-reservation")){document.querySelector("#reservation")?.scrollIntoView({behavior:"smooth"});document.querySelector("#eventDate")?.focus({preventScroll:true})}
- if(el.tagName==="A"&&el.getAttribute("href")?.startsWith("#/")){e.preventDefault();const hash=el.getAttribute("href");if(hash!==location.hash){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",hash)}route()}
+ if(el.tagName==="A"&&(el.getAttribute("href")?.startsWith("/")||el.getAttribute("href")?.startsWith("#/"))){e.preventDefault();const path=el.getAttribute("href").replace(/^#/,"");if(path!==routePath()){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",path+location.search)}route()}
 })
 document.addEventListener("change",e=>{
  const el=e.target;
- if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","#/event/"+next);route()}return}
+ if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","/event/"+next+location.search);route()}return}
  if(el.dataset.event){el.checked?selectedEvents.add(el.dataset.event):selectedEvents.delete(el.dataset.event);updatePrice()}
  if(el.dataset.option){el.checked?selectedOptions.add(el.dataset.option):selectedOptions.delete(el.dataset.option);updatePrice()}
  if(el.dataset.filmPeople){selectedFilmPeople=Number(el.dataset.filmPeople);updatePrice()}
  if(el.dataset.filmUpgrade){selectedFilmFormat=el.checked?"live":BASE_FILM_FORMAT[currentEventProduct];updatePrice()}
- if(el.dataset.filmMaking){selectedFilmFormat=el.checked?"making":"live";currentEventPurpose=el.checked?"making":"";history.replaceState(history.state,"","#/event/"+currentEventProduct+(el.checked?"/making":""));updatePrice()}
+ if(el.dataset.filmMaking){selectedFilmFormat=el.checked?"making":"live";currentEventPurpose=el.checked?"making":"";history.replaceState(history.state,"","/event/"+currentEventProduct+(el.checked?"/making":"")+location.search);updatePrice()}
  if(el.dataset.filmFormat){const pageY=scrollY;selectedFilmFormat=el.dataset.filmFormat;const list=document.querySelector('[data-package-list]'),title=document.querySelector('[data-package-title]'),details=document.querySelector('.package-section'),preview=document.querySelector('[data-proposal-format-preview]');if(preview)preview.innerHTML=proposalFormatPreview();if(list)list.innerHTML=bookingPackageList(currentEventProduct,PRODUCTS[currentEventProduct]);if(title)title.textContent=FILM_FORMATS[selectedFilmFormat].title+' 기본 구성';const body=details?.querySelector('.package-section-body');if(body){const oldNotes=body.querySelector('ul:not(.package-list)');if(oldNotes)oldNotes.remove();body.insertAdjacentHTML('beforeend',filmFormatNotes(FILM_FORMATS[selectedFilmFormat]))}if(details?.tagName==='DETAILS')details.open=true;updatePrice();requestAnimationFrame(()=>requestAnimationFrame(()=>scrollTo({top:pageY,behavior:'instant'})))}
  if(el.dataset.songOption){chosenOption=el.checked?el.dataset.songOption:"";updatePrice()}
 })
@@ -1320,7 +1327,7 @@ dialog.addEventListener("cancel",e=>{e.preventDefault();closeDialog()})
 dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.focus()}})
 window.addEventListener("popstate",route)
-window.addEventListener("hashchange",route)
+window.addEventListener("hashchange",()=>{cleanHashRoute();route()})
 async function init(){
  try{const r=await fetch("wistia-config.json",{cache:"no-store",signal:AbortSignal.timeout(2500)});if(r.ok)config={...config,...await r.json()}}catch{}
  if(!document.querySelector("#siteHeader")||!document.querySelector("#app"))return
