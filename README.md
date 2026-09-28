@@ -14,6 +14,10 @@
 npx serve .
 ```
 
+SEO 경로별 정적 HTML은 `node scripts/prerender.mjs`로 생성합니다
+제목·설명은 `js/seo-meta.js`에서 공통 관리하며, 변경 후 생성 스크립트를 다시 실행해야 합니다
+기존 `#/detail/...` 주소는 브라우저에서 `/detail/...` 경로로 치환합니다
+
 ## Vercel 배포
 
 GitHub 저장소를 Vercel에서 Import한 뒤 배포합니다
