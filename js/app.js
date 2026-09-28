@@ -1222,6 +1222,20 @@ function initMetaEngagementTracking(pagePath,pricePage){
  }
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
 }
+const SEO_HOME={title:"위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상",description:"위스티아(WISTIA) 부천 웨딩 보컬 스튜디오. 사전 녹음·식전필름·축가 메이킹·프로포즈 영상까지, 내 목소리로 남기는 특별한 순간."};
+const SEO_DETAIL={
+ solo:{title:"사전 녹음 1시간 | 본식 축가 AR · 위스티아",description:"떨리는 본식 축가를 미리 녹음하고 보컬 보정·믹싱까지. 위스티아 1시간 사전 녹음으로 안정적인 본식용 AR과 완성 음원을 준비하세요."},
+ duo:{title:"사전 녹음 2시간 | 듀엣 축가 AR · 위스티아",description:"신랑신부·친구 듀엣 축가를 2시간 넉넉히 녹음. 파트·화음 디렉팅과 본식용 AR·완성 음원까지 위스티아에서 준비하세요."},
+ "solo-film":{title:"축가 메이킹필름 | 내 목소리 본식 상영 · 위스티아",description:"라이브 부담 없이 내 목소리로 전하는 축가. 녹음 메이킹필름과 완성 음원을 본식 축가 순서에 바로 상영하세요. 위스티아."},
+ wedding:{title:"식전 스토리 필름 | 우리 목소리 웨딩영상 · 위스티아",description:"사진·가사만의 식전이 아쉽다면. 인터뷰·편지·우리 노래가 흐르는 듀엣 식전 스토리 필름을 위스티아에서 완성하세요."},
+ proposal:{title:"프로포즈 영상 | 노래로 전하는 고백 · 위스티아",description:"직접 부른 노래와 추억·편지로 완성하는 프로포즈·답프로포즈 영상. 위스티아에서 세상에 하나뿐인 고백을 준비하세요."}
+};
+const SEO_EVENT={title:"얼마일까 | 위스티아 사전녹음·영상 가격 계산",description:"상품별 예상 가격을 바로 확인하세요. 사전 녹음·메이킹필름·식전·프로포즈까지 위스티아 이벤트 가격 계산과 카카오 상담."};
+function setPageMeta({title,description,image}){
+ document.title=title;
+ const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":"https://www.wistiastudio.com/"+(location.hash||""),"meta[property='og:image']":image||"https://www.wistiastudio.com/assets/img/wedding/03-lipsync-mv.webp"};
+ Object.entries(values).forEach(([selector,value])=>{const tag=document.querySelector(selector);if(tag)tag.content=value});
+}
 function route(){
  closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=(location.hash.replace(/^#/,"")||"/").split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
@@ -1247,7 +1261,9 @@ function route(){
  scrollMediaCleanup=initScrollMediaPlayback();
  window.initHeroEditor?.(validDetail ? key : "");
  window.initProcessEditor?.(validDetail ? key : "");
- document.title=home?"WISTIA — 우리의 목소리로 남기는 특별한 순간":eventsPage?"이벤트 | WISTIA":info?(key==="about"?"위스티아는 어떤 곳인가요?":"자주 묻는 질문")+" | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
+ const fallbackTitle=eventsPage?"이벤트 | WISTIA":info?(key==="about"?"위스티아는 어떤 곳인가요?":"자주 묻는 질문")+" | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
+ const pageMeta=home?SEO_HOME:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:{title:fallbackTitle,description:SEO_HOME.description};
+ setPageMeta(pageMeta);
  window.wistiaMeta?.trackPageView();
  if(detail){
   const payload=detailViewContent(key,purpose);

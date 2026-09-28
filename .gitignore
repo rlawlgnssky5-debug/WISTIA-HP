@@ -7,3 +7,5 @@ dist
 *.log
 _source
 wistia-final.zip
+
+.vercel

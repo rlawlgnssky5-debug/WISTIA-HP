@@ -249,3 +249,10 @@
 - `meta-pixel.js` 캐시 버전을 `20260927-kakao-split-1`로 올렸다. 기존 `PageView`·`ViewContent`·CAPI 구조와 GA4 추적은 유지했다. 단위 시험에서 세 클릭 경로, 로컬 미리보기 차단, 픽셀 차단 시 모달 CAPI 유지가 통과했다. 로컬 Edge 320px·390px에서 기존 상세·가격 추적 화면 검사가 통과했고 JavaScript 구문·Git 차이 검사도 통과했다. 원격 푸시·배포는 하지 않았다.
 - GA4 카카오톡 클릭 집계도 Meta의 버튼 분리 기준에 맞췄다. 상담 팝업의 `.consult-copy-action`만 `kakao_chat_click`, 플로팅 `#floatingKakaoChat`만 `floating_kakao_click`으로 보내고 푸터·솔로 CTA는 GA4 카카오톡 클릭 이벤트를 보내지 않는다. Meta 픽셀·CAPI 코드는 변경하지 않고 GA4 스크립트 캐시 버전을 `20260927-ga4-kakao-split-1`로 갱신했다. 로컬 단위 시험과 Edge 320px·390px의 모달·플로팅·푸터 요소 및 기존 Meta 경로 검사를 통과했다. 원격 푸시·배포는 하지 않았다.
 - `FloatingKakaoClick` 운영 미표시 원인을 읽기 전용으로 점검했다. 운영 HTML의 픽셀 캐시 버전은 `20260927-kakao-split-1`이고 운영 픽셀 소스는 로컬과 일치했다. 격리된 Edge에서 운영 상세 화면의 플로팅 버튼을 1회 눌렀을 때 `fbq("trackCustom", "FloatingKakaoClick", {page_path:"#/detail/solo"})` 호출이 정확히 한 번 발생했고, `localhost/file` 제외 조건도 운영 도메인에는 적용되지 않았다. Meta 라이브러리는 로드되었지만 격리 브라우저에서 `facebook.com/tr` 요청은 관찰되지 않아 브라우저·네트워크 차단 또는 Meta 측 수신 상태의 추가 확인이 필요하다. 수정할 코드 버그는 발견하지 못해 픽셀·CAPI·GA4·캐시 버전은 변경하지 않았다.
+
+### 2026-09-29
+
+- `www.wistiastudio.com` 기준 SEO 기초를 구현했다. 정적 루트 `robots.txt`·`sitemap.xml`, 홈 메타·OG·검증코드 플레이스홀더·JSON-LD, 상세 5개·가격 경로의 클라이언트 메타 동기화를 추가했다. 미확인 전화번호·영업시간·좌표·가격 범위는 넣지 않았다.
+- 기존 `js/meta-pixel.js`·`js/analytics.js`·카카오 링크 및 광고 설정은 변경하지 않았다. `app.js` 캐시 버전만 `20260929-seo-1`로 올렸다. JSON-LD·XML 파싱, JavaScript 구문, Meta 이벤트 단위 시험, 로컬 Edge 320·390px 회귀·메타정보 검사가 통과했다.
+- Vercel CLI 로그인 정보가 없어 연결 프로젝트 Preview는 만들지 못했다. 대신 59분 후 만료되는 익명 임시 URL `https://temporary-racing-khaki-xi063p9.vercel.app`을 만들었고 HTML·robots·sitemap 200, 모바일 경로별 메타정보를 확인했다. 이 임시 배포의 API 응답은 `target: production`이라 표기하지만 기존 `www.wistiastudio.com` 도메인이나 연결 프로젝트에는 배포·승격하지 않았다. 정식 Preview가 필요하면 Vercel 로그인/프로젝트 연결 후 별도 진행해야 한다.
+- Hash 경로는 크롤러가 별도 문서로 수집하지 않을 수 있으므로 후속으로 path 라우트 또는 사전 렌더링을 권장한다. Production 배포·원격 푸시는 하지 않았다.

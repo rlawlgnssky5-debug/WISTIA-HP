@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.wistiastudio.com/</loc></url>
+  <!-- Hash URLs may be ignored by crawlers; replace with clean /detail/solo-style URLs after prerendering. -->
+  <url><loc>https://www.wistiastudio.com/#/detail/solo</loc></url>
+  <url><loc>https://www.wistiastudio.com/#/detail/duo</loc></url>
+  <url><loc>https://www.wistiastudio.com/#/detail/solo-film</loc></url>
+  <url><loc>https://www.wistiastudio.com/#/detail/wedding</loc></url>
+  <url><loc>https://www.wistiastudio.com/#/detail/proposal</loc></url>
+  <url><loc>https://www.wistiastudio.com/#/event/solo</loc></url>
+</urlset>

@@ -1,0 +1,9 @@
+# WISTIA — www.wistiastudio.com
+User-agent: *
+Allow: /
+
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+
+Sitemap: https://www.wistiastudio.com/sitemap.xml
