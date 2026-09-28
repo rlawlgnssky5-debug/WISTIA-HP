@@ -1,10 +1,20 @@
-(() => {
+﻿(() => {
   const localPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   let lastPageViewUrl = "";
   let lastViewContentKey = "";
   const scrollDepthSent = new Set();
   const timeOnPageSent = new Set();
   const viewPriceSent = new Set();
+
+  function currentPagePath() {
+    return (location.pathname.replace(/\/$/, "") || "/");
+  }
+
+  function normalizePagePath(pagePath) {
+    if (typeof pagePath !== "string" || !pagePath) return currentPagePath();
+    if (pagePath.startsWith("#/")) return pagePath.slice(1).replace(/\/$/, "") || "/";
+    return pagePath.replace(/\/$/, "") || "/";
+  }
 
   function trackCustomOnce(name, key, payload, sent) {
     if (localPreview || typeof window.fbq !== "function" || sent.has(key)) return false;
@@ -17,25 +27,28 @@
     }
   }
 
-  function trackScrollDepth(percent, pagePath = location.hash || "#/") {
-    if (![25, 50, 75, 100].includes(percent) || typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
-    return trackCustomOnce("ScrollDepth", `${pagePath}:${percent}`, { percent, page_path: pagePath }, scrollDepthSent);
+  function trackScrollDepth(percent, pagePath) {
+    const path = normalizePagePath(pagePath);
+    if (![25, 50, 75, 100].includes(percent) || !path.startsWith("/")) return false;
+    return trackCustomOnce("ScrollDepth", `${path}:${percent}`, { percent, page_path: path }, scrollDepthSent);
   }
 
-  function trackTimeOnPage(seconds, pagePath = location.hash || "#/") {
-    if (![30, 60, 120].includes(seconds) || typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
-    return trackCustomOnce("TimeOnPage", `${pagePath}:${seconds}`, { seconds, page_path: pagePath }, timeOnPageSent);
+  function trackTimeOnPage(seconds, pagePath) {
+    const path = normalizePagePath(pagePath);
+    if (![30, 60, 120].includes(seconds) || !path.startsWith("/")) return false;
+    return trackCustomOnce("TimeOnPage", `${path}:${seconds}`, { seconds, page_path: path }, timeOnPageSent);
   }
 
-  function trackViewPrice(payload, pagePath = location.hash || "#/") {
+  function trackViewPrice(payload, pagePath) {
+    const path = normalizePagePath(pagePath);
     if (!payload || !Array.isArray(payload.content_ids) || !payload.content_ids.length || !Number.isFinite(payload.value) || payload.currency !== "KRW") return false;
-    if (typeof pagePath !== "string" || !pagePath.startsWith("#/")) return false;
-    return trackCustomOnce("ViewPrice", pagePath, payload, viewPriceSent);
+    if (!path.startsWith("/")) return false;
+    return trackCustomOnce("ViewPrice", path, payload, viewPriceSent);
   }
 
   function trackPageView() {
     if (localPreview || typeof window.fbq !== "function") return false;
-    const url = location.pathname + location.search + (location.hash || "#/");
+    const url = location.pathname + location.search + (location.hash || "");
     if (url === lastPageViewUrl) return false;
     lastPageViewUrl = url;
     lastViewContentKey = "";
@@ -46,7 +59,7 @@
   function trackViewContent(payload) {
     if (localPreview || typeof window.fbq !== "function") return false;
     if (!payload || !Array.isArray(payload.content_ids) || !payload.content_ids.length || !Number.isFinite(payload.value)) return false;
-    const key = (location.hash || "#/") + ":" + payload.content_ids.join(",");
+    const key = currentPagePath() + ":" + payload.content_ids.join(",");
     if (key === lastViewContentKey) return false;
     try {
       window.fbq("track", "ViewContent", payload);
@@ -81,7 +94,7 @@
   function trackFloatingKakaoClick() {
     if (localPreview || typeof window.fbq !== "function") return false;
     try {
-      window.fbq("trackCustom", "FloatingKakaoClick", { page_path: location.hash || "#/" });
+      window.fbq("trackCustom", "FloatingKakaoClick", { page_path: currentPagePath() });
       return true;
     } catch {
       return false;

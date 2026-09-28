@@ -1,4 +1,4 @@
-const KAKAO_FALLBACK = "http://pf.kakao.com/_GbExjX/chat"
+﻿const KAKAO_FALLBACK = "http://pf.kakao.com/_GbExjX/chat"
 
 const PRODUCTS = {
   solo: {
@@ -1277,7 +1277,7 @@ function route(){
    console.warn("[wistiaMeta] trackViewContent missing",window.wistiaMeta);
   }
  }
- metaEngagementCleanup=initMetaEngagementTracking("#"+routePath(),Boolean(event))
+ metaEngagementCleanup=initMetaEngagementTracking(routePath(),Boolean(event))
  window.wistiaAnalytics?.startPageTracking(routePath(),event?()=>{
   const selectedPurpose=currentEventProduct==="solo-film"?(selectedFilmPeople===2?"duo":"solo"):currentEventPurpose
   const payload=detailViewContent(currentEventProduct,selectedPurpose)
