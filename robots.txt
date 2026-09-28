@@ -1,4 +1,4 @@
-# WISTIA — www.wistiastudio.com
+﻿# WISTIA — www.wistiastudio.com
 User-agent: *
 Allow: /
 
@@ -7,3 +7,5 @@ Allow: /css/
 Allow: /js/
 
 Sitemap: https://www.wistiastudio.com/sitemap.xml
+
+#DaumWebMasterTool:ad4dde4a28d379bfe186130a9bee63a40047bac5eff61b6a64023cbb87e6973d:XDr1VT379Dqot/oNh7sGGw==
