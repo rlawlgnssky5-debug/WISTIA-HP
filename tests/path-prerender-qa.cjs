@@ -10,7 +10,8 @@ const expected = [
   ['/', '위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상'],
   ['/detail/solo', '사전 녹음 1시간 | 본식 축가 AR · 위스티아'],
   ['/event/solo', '얼마일까 | 위스티아 사전녹음·영상 가격 계산'],
-  ['/info/location', '오시는 길 | 경기도 부천 위스티아']
+  ['/info/location', '오시는 길 | 경기도 부천 위스티아'],
+  ['/detail/duet-film', '듀엣 축가 영상 | 우리 목소리 본식 상영 · 위스티아']
 ]
 
 ;(async () => {
@@ -36,6 +37,14 @@ const expected = [
     const sitemap = await (await fetch('http://127.0.0.1:4173/sitemap.xml')).text()
     assert.ok(!sitemap.includes('#'))
     assert.ok(sitemap.includes('/info/location'))
+    assert.ok(sitemap.includes('/detail/duet-film'))
+    for (const blocked of ['/song', '/film', '/ar/self', '/ar/friend']) assert.equal(sitemap.includes(blocked), false)
+    const song = await (await fetch('http://127.0.0.1:4173/song')).text()
+    assert.ok(song.includes('name="robots" content="noindex, follow"'))
+    assert.ok(song.includes('<title>노래 녹음 선택 | 위스티아</title>'))
+    const duetHtml = await (await fetch('http://127.0.0.1:4173/detail/duet-film')).text()
+    assert.equal(/<title>[^<]*식전/.test(duetHtml), false)
+    assert.equal(/name="description" content="[^"]*식전/.test(duetHtml), false)
     browser = await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'})
     for (const width of [320, 390, 579]) {
       const page = await browser.newPage({viewport:{width,height:width===579?729:850},reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']})

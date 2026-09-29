@@ -275,3 +275,9 @@
 - 메뉴의 위스티아 그룹에 `오시는 길`을 추가하고 `/info/location` 경로에 경기도 부천 주소, 부천시청역 안내, 공영주차장 안내, 네이버 지도·카카오맵 검색 링크를 표시했다. 주소·역·주차 정보는 기존 FAQ에 적혀 있던 내용만 사용했고 확인되지 않은 연락처·영업시간은 추가하지 않았다.
 - 공통 장점의 가격 항목을 `경기도 부천에서 만나는 합리적인 가격`으로 바꾸고 지역명과 상품별 가격 사전 확인 안내를 넣었다. 새 경로의 SEO 메타·사전 렌더 HTML·sitemap과 앱·CSS 캐시 버전을 갱신했다.
 - 로컬 Edge 320px·390px·579px에서 메뉴 클릭으로 새 경로 이동, 주소·지도 링크 2개, 가격 문구, 가로 넘침과 콘솔 오류 없음이 확인됐다. Meta·GA4 단위 시험과 JavaScript 구문·Git 차이 검사도 통과했다. 원격 푸시·운영 배포는 하지 않았다.
+- 속도·검색 정리: `favicon.ico`를 16/32/48 다중 ICO(약 2.8KB)로 바꾸고 32·48·192 아이콘을 추가했다. 941KB `wistia-logo.png`는 제공된 512px PNG(약 163KB)로 교체하고, 파비콘 링크에서는 더 이상 불러오지 않는다.
+- Pretendard 전체 정적 CSS 대신 jsDelivr 가변 폰트 동적 서브셋을 쓴다. 사이트 문자 기준 필요한 서브셋은 약 630KB로, 이전 약 3.8MB 전체 웨이트 다운로드보다 작다. `js/meta-pixel.js`·`js/analytics.js`와 카카오 상담 버튼·이벤트 이름은 바꾸지 않았다.
+- 상세에서 실제로 불러오던 제작 과정 PNG 6장, 후기 PNG, 파형 PNG를 긴 변 1600 이하 WebP로 바꿨다. 필름 원본 PNG 경로는 이미 있는 `music-video-film.webp`·`recording-making-film.webp`를 가리킨다. 닫힌 제작 과정 사진은 `loading="lazy"`다.
+- `/song`·`/film`·`/ar/self`·`/ar/friend` 초기 HTML에 `noindex, follow`를 넣고 Vercel `X-Robots-Tag`도 같은 경로와 `/before-after`·`/choose`·`/find`에 적용했다. 이 주소는 sitemap에 없으며 `/detail/duet-film`만 sitemap에 추가했다. 화면의 선택 UI는 유지한다.
+- `/detail/duet-film` 제목·설명을 축가 영상 문구로 분리했다. 구성 제목은 wedding만 `듀엣 식전 스토리 필름 구성`, duet-film은 `듀엣 축가 영상 구성`이다. 식전 상품명과 식전 페이지 문구는 유지했다.
+- `node --check js/app.js`, `node scripts/prerender.mjs`, `git diff --check`를 통과했다. 브라우저 확인과 Preview 배포 결과는 이어서 기록한다. Production 병합은 하지 않는다.
