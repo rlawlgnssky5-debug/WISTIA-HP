@@ -9,7 +9,8 @@ const mime = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset
 const expected = [
   ['/', '위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상'],
   ['/detail/solo', '사전 녹음 1시간 | 본식 축가 AR · 위스티아'],
-  ['/event/solo', '얼마일까 | 위스티아 사전녹음·영상 가격 계산']
+  ['/event/solo', '얼마일까 | 위스티아 사전녹음·영상 가격 계산'],
+  ['/info/location', '오시는 길 | 경기도 부천 위스티아']
 ]
 
 ;(async () => {
@@ -34,6 +35,7 @@ const expected = [
     }
     const sitemap = await (await fetch('http://127.0.0.1:4173/sitemap.xml')).text()
     assert.ok(!sitemap.includes('#'))
+    assert.ok(sitemap.includes('/info/location'))
     browser = await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'})
     for (const width of [320, 390, 579]) {
       const page = await browser.newPage({viewport:{width,height:width===579?729:850},reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']})
@@ -65,6 +67,13 @@ const expected = [
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false)
       await page.goto('http://127.0.0.1:4173/detail/duo')
       assert.equal(await page.locator('.ar-expert-panel-keyword').allTextContents().then(items => items.includes('영상 연출')), false)
+      assert.ok((await page.locator('.wistia-advantages').textContent()).includes('경기도 부천에서 만나는 합리적인 가격'))
+      await page.locator('#menuToggle').click()
+      await page.locator('#mainMenu a[href="/info/location"]').click()
+      await page.waitForURL('**/info/location')
+      assert.ok((await page.locator('.wistia-location-address').textContent()).includes('경기도 부천시 석천로170번길 19, 2층'))
+      assert.equal(await page.locator('.wistia-location-links a').count(), 2)
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await page.goto('http://127.0.0.1:4173/')
       await page.locator('.finder-choice').first().click()
       await page.waitForURL('**/detail/solo')

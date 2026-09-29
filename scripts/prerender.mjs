@@ -29,3 +29,4 @@ for (const product of products) {
   page(`/detail/${product}`, seo.detail[product] || seo.detail.wedding)
   page(`/event/${product}`, seo.event)
 }
+page('/info/location', seo.location)

@@ -8,7 +8,8 @@ const WISTIA_SEO = {
   wedding:{title:"식전 스토리 필름 | 우리 목소리 웨딩영상 · 위스티아",description:"사진·가사만의 식전이 아쉽다면. 인터뷰·편지·우리 노래가 흐르는 듀엣 식전 스토리 필름을 위스티아에서 완성하세요."},
   proposal:{title:"프로포즈 영상 | 노래로 전하는 고백 · 위스티아",description:"직접 부른 노래와 추억·편지로 완성하는 프로포즈·답프로포즈 영상. 위스티아에서 세상에 하나뿐인 고백을 준비하세요."}
  },
- event:{title:"얼마일까 | 위스티아 사전녹음·영상 가격 계산",description:"상품별 예상 가격을 바로 확인하세요. 사전 녹음·메이킹필름·식전·프로포즈까지 위스티아 이벤트 가격 계산과 카카오 상담."}
+ event:{title:"얼마일까 | 위스티아 사전녹음·영상 가격 계산",description:"상품별 예상 가격을 바로 확인하세요. 사전 녹음·메이킹필름·식전·프로포즈까지 위스티아 이벤트 가격 계산과 카카오 상담."},
+ location:{title:"오시는 길 | 경기도 부천 위스티아",description:"위스티아는 경기도 부천시 석천로170번길 19, 2층에 있습니다. 부천시청역 1번 출구에서 도보 약 300m입니다."}
 };
 if(typeof window!=="undefined")window.WISTIA_SEO=WISTIA_SEO;
 if(typeof module!=="undefined")module.exports=WISTIA_SEO;
