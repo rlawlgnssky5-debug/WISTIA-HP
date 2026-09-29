@@ -39,6 +39,19 @@ const expected = [
       const page = await browser.newPage({viewport:{width,height:850},reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']})
       const errors=[]
       page.on('pageerror', error => errors.push(error.message))
+      await page.addInitScript(() => {
+        window.__trackingRoutes = []
+        let tracker
+        Object.defineProperty(window, 'wistiaMeta', {
+          configurable: true,
+          get: () => tracker,
+          set: value => {
+            tracker = value
+            value.trackPageView = () => {window.__trackingRoutes.push(['PageView', location.pathname]);return true}
+            value.trackViewContent = payload => {window.__trackingRoutes.push(['ViewContent', location.pathname, payload.content_ids[0]]);return true}
+          }
+        })
+      })
       await page.goto('http://127.0.0.1:4173/#/detail/solo', {waitUntil:'domcontentloaded'})
       await page.waitForURL('**/detail/solo')
       await page.locator('#arHookTitle').waitFor()
@@ -84,6 +97,33 @@ const expected = [
       await page.locator('#consultForm button[type="submit"]').click()
       await page.locator('.consult-copy-action').waitFor()
       assert.ok((await page.locator('.consult-copy-action').getAttribute('href')).includes('pf.kakao.com'))
+      await page.goto('http://127.0.0.1:4173/detail/solo')
+      await page.waitForFunction(() => window.__trackingRoutes.some(event => event[0] === 'ViewContent' && event[1] === '/detail/solo'))
+      const beforeLegacyHash = await page.evaluate(() => window.__trackingRoutes.length)
+      await page.evaluate(() => {location.hash = '#/detail/duo'})
+      await page.waitForURL('**/detail/duo')
+      await page.locator('#arHookTitle').waitFor()
+      await page.waitForTimeout(100)
+      assert.deepEqual(await page.evaluate(start => window.__trackingRoutes.slice(start), beforeLegacyHash), [
+        ['PageView', '/detail/duo'],
+        ['ViewContent', '/detail/duo', 'duo']
+      ])
+      const beforeLegacyHome = await page.evaluate(() => window.__trackingRoutes.length)
+      await page.evaluate(() => {location.hash = '#/'})
+      await page.waitForURL('http://127.0.0.1:4173/')
+      await page.waitForTimeout(100)
+      assert.deepEqual(await page.evaluate(start => window.__trackingRoutes.slice(start), beforeLegacyHome), [
+        ['PageView', '/']
+      ])
+      const beforeBrowserBack = await page.evaluate(() => window.__trackingRoutes.length)
+      await page.goBack()
+      await page.waitForURL('**/detail/duo')
+      await page.locator('#arHookTitle').waitFor()
+      await page.waitForTimeout(100)
+      assert.deepEqual(await page.evaluate(start => window.__trackingRoutes.slice(start), beforeBrowserBack), [
+        ['PageView', '/detail/duo'],
+        ['ViewContent', '/detail/duo', 'duo']
+      ])
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false)
       assert.deepEqual(errors,[])
       await page.close()

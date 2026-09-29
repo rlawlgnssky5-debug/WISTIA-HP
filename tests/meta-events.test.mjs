@@ -5,11 +5,11 @@ import handler from "../api/meta-contact.js";
 
 const clientCode = readFileSync(new URL("../js/meta-pixel.js", import.meta.url), "utf8");
 
-function createClient(hostname = "wistiahp.vercel.app", withPixel = true, existingTracker = undefined) {
+function createClient(hostname = "www.wistiastudio.com", withPixel = true, existingTracker = undefined) {
   const calls = [];
   const requests = [];
   let click;
-  const location = { protocol: "https:", hostname, pathname: "/", search: "", hash: "#/", href: `https://${hostname}/#/` };
+  const location = { protocol: "https:", hostname, pathname: "/", search: "", hash: "", href: `https://${hostname}/` };
   const window = withPixel ? { fbq: (...args) => calls.push(args) } : {};
   if (existingTracker) window.wistiaMeta = existingTracker;
   const document = { addEventListener: (type, listener) => { if (type === "click") click = listener; } };
@@ -18,12 +18,12 @@ function createClient(hostname = "wistiahp.vercel.app", withPixel = true, existi
 }
 
 const browser = createClient();
-const preservedTracker = createClient("wistiahp.vercel.app", true, { customProperty: "preserved" });
+const preservedTracker = createClient("www.wistiastudio.com", true, { customProperty: "preserved" });
 assert.equal(preservedTracker.window.wistiaMeta.customProperty, "preserved");
 assert.equal(typeof preservedTracker.window.wistiaMeta.trackViewContent, "function");
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackPageView(), false);
-browser.location.hash = "#/detail/solo";
+browser.location.pathname = "/detail/solo";
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackPageView(), false);
 assert.deepEqual(browser.calls.map(call => call[1]), ["PageView", "PageView"]);
@@ -31,12 +31,12 @@ const soloView = { content_name: "AR 축가 사전녹음 · 1시간", content_id
 assert.equal(browser.window.wistiaMeta.trackViewContent(soloView), true);
 assert.equal(browser.window.wistiaMeta.trackViewContent(soloView), false);
 assert.deepEqual(browser.calls.at(-1), ["track", "ViewContent", soloView]);
-browser.location.hash = "#/";
+browser.location.pathname = "/";
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
-browser.location.hash = "#/detail/solo";
+browser.location.pathname = "/detail/solo";
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackViewContent(soloView), true);
-browser.location.hash = "#/detail/duo";
+browser.location.pathname = "/detail/duo";
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 assert.equal(browser.window.wistiaMeta.trackViewContent({ ...soloView, content_name: "AR 축가 사전녹음 · 2시간", content_ids: ["duo"], value: 160000 }), true);
 assert.equal(browser.window.wistiaMeta.trackScrollDepth(25), true);
@@ -50,10 +50,10 @@ assert.equal(browser.window.wistiaMeta.trackTimeOnPage(10), false);
 assert.equal(browser.window.wistiaMeta.trackViewPrice(soloView), true);
 assert.equal(browser.window.wistiaMeta.trackViewPrice(soloView), false);
 assert.deepEqual(browser.calls.slice(-5).map(call => [call[0], call[1]]), [["trackCustom", "ScrollDepth"], ["trackCustom", "ScrollDepth"], ["trackCustom", "TimeOnPage"], ["trackCustom", "TimeOnPage"], ["trackCustom", "ViewPrice"]]);
-assert.equal(browser.calls.at(-5)[2].page_path, "#/detail/duo");
+assert.equal(browser.calls.at(-5)[2].page_path, "/detail/duo");
 assert.equal(browser.calls.at(-3)[2].seconds, 30);
 assert.equal(browser.calls.at(-1)[2].value, 120000);
-browser.location.hash = "#/";
+browser.location.pathname = "/";
 assert.equal(browser.window.wistiaMeta.trackScrollDepth(25), true);
 assert.equal(browser.window.wistiaMeta.trackTimeOnPage(30), true);
 assert.equal(browser.window.wistiaMeta.trackViewPrice(soloView), true);
@@ -65,7 +65,7 @@ assert.equal(browser.calls.length, beforeKakaoClicks);
 assert.equal(browser.requests.length, 0);
 browser.click({ href: kakaoHref, id: "floatingKakaoChat" });
 assert.deepEqual(browser.calls.at(-1).slice(0, 2), ["trackCustom", "FloatingKakaoClick"]);
-assert.equal(browser.calls.at(-1)[2].page_path, "#/");
+assert.equal(browser.calls.at(-1)[2].page_path, "/");
 assert.equal(browser.requests.length, 0);
 browser.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.deepEqual(browser.calls.slice(-2).map(call => [call[0], call[1]]), [["track", "Contact"], ["trackCustom", "KakaoTalkClick"]]);
@@ -85,7 +85,7 @@ preview.click({ href: kakaoHref, id: "floatingKakaoChat" });
 preview.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.equal(preview.calls.length, 0);
 assert.equal(preview.requests.length, 0);
-const blockedPixel = createClient("wistiahp.vercel.app", false);
+const blockedPixel = createClient("www.wistiastudio.com", false);
 assert.equal(blockedPixel.window.wistiaMeta.trackViewContent(soloView), false);
 blockedPixel.click({ href: kakaoHref, id: "floatingKakaoChat" });
 assert.equal(blockedPixel.requests.length, 0);
@@ -106,13 +106,13 @@ function createResponse() {
 const request = {
   method: "POST",
   headers: {
-    origin: "https://wistiahp.vercel.app",
-    host: "wistiahp.vercel.app",
+    origin: "https://www.wistiastudio.com",
+    host: "www.wistiastudio.com",
     "user-agent": "WISTIA test",
     "x-forwarded-for": "203.0.113.10",
     cookie: "_fbp=fb.1.123.456; _fbc=fb.1.123.test"
   },
-  body: { event_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee", event_source_url: "https://wistiahp.vercel.app/#/detail/solo" }
+  body: { event_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee", event_source_url: "https://www.wistiastudio.com/detail/solo" }
 };
 const originalFetch = globalThis.fetch;
 const originalToken = process.env.META_CONVERSIONS_ACCESS_TOKEN;
@@ -138,13 +138,13 @@ try {
   }
   const testRequest = {
     ...request,
-    body: { ...request.body, event_source_url: "https://wistiahp.vercel.app/?meta_test_code=TEST50039#/event/solo" }
+    body: { ...request.body, event_source_url: "https://www.wistiastudio.com/event/solo?meta_test_code=TEST50039" }
   };
   assert.equal((await handler(testRequest, createResponse())).statusCode, 200);
   assert.equal(JSON.parse(outgoing[1].body).test_event_code, "TEST50039");
   const invalidTestRequest = {
     ...request,
-    body: { ...request.body, event_source_url: "https://wistiahp.vercel.app/?meta_test_code=wrong#/event/solo" }
+    body: { ...request.body, event_source_url: "https://www.wistiastudio.com/event/solo?meta_test_code=wrong" }
   };
   assert.equal((await handler(invalidTestRequest, createResponse())).statusCode, 200);
   assert.equal(JSON.parse(outgoing[1].body).test_event_code, undefined);

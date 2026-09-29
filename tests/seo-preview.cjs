@@ -1,7 +1,10 @@
 const assert = require('node:assert/strict')
+const { createServer } = require('node:http')
+const { readFile } = require('node:fs/promises')
+const { resolve, extname } = require('node:path')
 const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
 
-const base = process.env.WISTIA_PREVIEW_URL || 'http://127.0.0.1:4173'
+const root = resolve(__dirname, '..')
 const routes = [
   ['/', '위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상'],
   ['/detail/solo', '사전 녹음 1시간 | 본식 축가 AR · 위스티아'],
@@ -13,8 +16,27 @@ const routes = [
 ]
 
 ;(async () => {
-  const browser = await chromium.launch({ headless: true, executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' })
+  let server
+  let base = process.env.WISTIA_PREVIEW_URL
+  if (!base) {
+    server = createServer(async (request, response) => {
+      let pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1').pathname)
+      if (pathname === '/') pathname = '/index.html'
+      else if (!extname(pathname)) pathname += '.html'
+      const file = resolve(root, '.' + pathname)
+      if (!file.startsWith(root + require('node:path').sep)) {response.writeHead(403).end();return}
+      try {
+        const body = await readFile(file)
+        response.setHeader('Content-Type', {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json'}[extname(file)] || 'application/octet-stream')
+        response.end(body)
+      } catch {response.writeHead(404).end()}
+    })
+    await new Promise(done => server.listen(0, '127.0.0.1', done))
+    base = `http://127.0.0.1:${server.address().port}`
+  }
+  let browser
   try {
+    browser = await chromium.launch({ headless: true, executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' })
     for (const width of [320, 390]) {
       const page = await browser.newPage({ viewport: { width, height: 850 }, reducedMotion: 'reduce' })
       const errors = []
@@ -33,7 +55,8 @@ const routes = [
       await page.close()
     }
   } finally {
-    await browser.close()
+    await browser?.close()
+    if (server) await new Promise(done => server.close(done))
   }
   console.log('SEO route metadata and mobile checks passed at 320px and 390px')
 })().catch(error => { console.error(error); process.exitCode = 1 })

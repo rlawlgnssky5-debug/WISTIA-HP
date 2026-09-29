@@ -24,24 +24,24 @@ const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
           }
         })
       })
-      await page.goto('http://127.0.0.1:4173/#/', { waitUntil: 'domcontentloaded' })
+      await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded' })
       await page.waitForFunction(() => window.wistiaMeta?.trackViewContent)
       assert.equal(await page.evaluate(() => window.__viewContentEvents.length), 0)
 
       const expected = [
-        ['#/detail/solo', 'solo', 120000],
-        ['#/detail/duo', 'duo', 160000],
-        ['#/detail/solo-film/solo', 'solo-film-1p', 220000],
-        ['#/detail/solo-film/duo', 'solo-film-2p', 280000],
-        ['#/detail/wedding', 'wedding', 350000],
-        ['#/detail/proposal', 'proposal', 290000],
-        ['#/detail/duet-film', 'duet-film', 350000]
+        ['/detail/solo', 'solo', 120000],
+        ['/detail/duo', 'duo', 160000],
+        ['/detail/solo-film/solo', 'solo-film-1p', 220000],
+        ['/detail/solo-film/duo', 'solo-film-2p', 280000],
+        ['/detail/wedding', 'wedding', 350000],
+        ['/detail/proposal', 'proposal', 290000],
+        ['/detail/duet-film', 'duet-film', 350000]
       ]
-      for (const [hash, id, price] of expected) {
+      for (const [path, id, price] of expected) {
         const previousCount = await page.evaluate(() => window.__viewContentEvents.length)
-        await page.evaluate(next => { location.hash = next }, hash)
+        await page.evaluate(next => { history.pushState({}, '', next); dispatchEvent(new PopStateEvent('popstate')) }, path)
         await page.waitForFunction(count => window.__viewContentEvents.length > count, previousCount, { timeout: 5000 }).catch(async error => {
-          console.error('route state:', await page.evaluate(() => ({ hash: location.hash, events: window.__viewContentEvents, route: typeof route, tracker: Object.keys(window.wistiaMeta || {}) })))
+          console.error('route state:', await page.evaluate(() => ({ path: location.pathname, events: window.__viewContentEvents, route: typeof route, tracker: Object.keys(window.wistiaMeta || {}) })))
           throw error
         })
         const payload = await page.evaluate(() => window.__viewContentEvents.at(-1))
@@ -52,16 +52,17 @@ const { chromium } = require(process.env.WISTIA_NODE_MODULES + '/playwright')
         await page.waitForTimeout(100)
       }
       const detailEventCount = await page.evaluate(() => window.__viewContentEvents.length)
-      for (const hash of ['#/', '#/events', '#/event/solo', '#/info/about', '#/info/faq', '#/before-after']) {
-        await page.evaluate(next => { location.hash = next }, hash)
+      for (const path of ['/', '/events', '/event/solo', '/info/about', '/info/faq', '/before-after']) {
+        await page.evaluate(next => { history.pushState({}, '', next); dispatchEvent(new PopStateEvent('popstate')) }, path)
         await page.waitForTimeout(100)
         assert.equal(await page.evaluate(() => window.__viewContentEvents.length), detailEventCount)
       }
       await page.evaluate(() => {
         delete window.wistiaMeta.trackViewContent
-        location.hash = '#/detail/solo'
+        history.pushState({}, '', '/detail/solo')
+        dispatchEvent(new PopStateEvent('popstate'))
       })
-      await page.waitForFunction(() => location.hash === '#/detail/solo' && document.body.dataset.page === 'detail')
+      await page.waitForFunction(() => location.pathname === '/detail/solo' && document.body.dataset.page === 'detail')
       await page.waitForTimeout(100)
       assert.ok(warnings.some(message => message.includes('trackViewContent missing')))
       assert.equal(await page.evaluate(() => window.__viewContentEvents.length), detailEventCount)

@@ -1331,7 +1331,11 @@ document.addEventListener("submit",e=>{if(e.target.id==="consultForm"){e.prevent
 dialog.addEventListener("cancel",e=>{e.preventDefault();closeDialog()})
 dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.focus()}})
-window.addEventListener("popstate",route)
+window.addEventListener("popstate",()=>{
+ // 옛 #/ 주소 변경은 hashchange에서 경로 정규화 후 한 번만 렌더링한다
+ if(location.hash.startsWith("#/"))return
+ route()
+})
 window.addEventListener("hashchange",()=>{cleanHashRoute();route()})
 async function init(){
  try{const r=await fetch("wistia-config.json",{cache:"no-store",signal:AbortSignal.timeout(2500)});if(r.ok)config={...config,...await r.json()}}catch{}

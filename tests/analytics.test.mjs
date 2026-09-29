@@ -10,7 +10,7 @@ let nextTimer = 1;
 let click;
 let change;
 let visible;
-const location = { protocol: "https:", hostname: "wistiahp.vercel.app", origin: "https://wistiahp.vercel.app", href: "https://wistiahp.vercel.app/#/detail/solo", hash: "#/detail/solo" };
+const location = { protocol: "https:", hostname: "www.wistiastudio.com", origin: "https://www.wistiastudio.com", pathname: "/detail/solo", href: "https://www.wistiastudio.com/detail/solo", hash: "" };
 const window = {
   gtag: (...args) => calls.push(args),
   innerHeight: 800,
@@ -42,17 +42,17 @@ assert.equal(analytics.trackPageView(), true);
 assert.equal(analytics.trackPageView(), false);
 assert.equal(calls.find(call => call[1] === "page_view")[2].page_location, location.href);
 
-analytics.startPageTracking("#/detail/solo", null);
+analytics.startPageTracking("/detail/solo", null);
 window.scrollY = 1600;
 listeners.get("scroll")();
 assert.deepEqual(calls.filter(call => call[1] === "scroll_depth").map(call => call[2].percent), [25, 50, 75, 100]);
 const oldTimer = [...timers.values()].find(timer => timer.delay === 30000);
 oldTimer.fn();
-assert.equal(calls.find(call => call[1] === "time_on_page")[2].page_path, "#/detail/solo");
+assert.equal(calls.find(call => call[1] === "time_on_page")[2].page_path, "/detail/solo");
 
-location.hash = "#/event/solo";
-location.href = "https://wistiahp.vercel.app/#/event/solo";
-analytics.startPageTracking("#/event/solo", () => ({ content_ids: ["solo"], content_name: "AR 축가", value: 120000, currency: "KRW" }));
+location.pathname = "/event/solo";
+location.href = "https://www.wistiastudio.com/event/solo";
+analytics.startPageTracking("/event/solo", () => ({ content_ids: ["solo"], content_name: "AR 축가", value: 120000, currency: "KRW" }));
 assert.equal(timers.size, 3);
 visible([{ isIntersecting: true, intersectionRatio: 0.4 }]);
 assert.equal(calls.some(call => call[1] === "view_price"), false);
@@ -75,5 +75,5 @@ assert.equal(calls.filter(call => call[1] === "floating_kakao_click").length, 1)
 change({ target: { dataset: { option: "lyrics-video" }, checked: true } });
 assert.equal(calls.find(call => call[1] === "option_select")[2].option_key, "lyrics-video");
 assert.equal(calls.filter(call => call[1] === "page_view").length, 2);
-assert.equal(calls.findLast(call => call[1] === "page_view")[2].page_referrer, "https://wistiahp.vercel.app/#/detail/solo");
+assert.equal(calls.findLast(call => call[1] === "page_view")[2].page_referrer, "https://www.wistiastudio.com/detail/solo");
 console.log("GA4 route, scroll, time, price and Kakao click checks passed");
