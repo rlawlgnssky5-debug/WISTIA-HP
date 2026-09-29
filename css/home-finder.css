@@ -151,3 +151,6 @@ body:has(.finder-home) .floating-kakao .kakao-channel-icon{flex:none;width:30px;
 .finder-choice:hover .finder-choice-action b{transform:translateX(4px)}
 @media(max-width:700px){.finder-stage-role .finder-choice{grid-template-columns:minmax(105px,37%) minmax(0,1fr)}.finder-stage-role .finder-choice-body{gap:5px;padding:10px 9px 10px 15px}.finder-choice-action{margin-top:2px;font-size:11px}.finder-choice-action b{font-size:15px}}
 @media(max-width:355px){.finder-stage-role .finder-choice{grid-template-columns:34% minmax(0,1fr)}.finder-stage-role .finder-choice-body{padding-left:12px}}
+.home-legal{display:flex;justify-content:center;gap:22px;padding:28px 16px 42px;font-size:12px;color:#777d85}
+.home-legal a{color:inherit;text-decoration:none}
+.home-legal a:hover,.home-legal a:focus-visible{text-decoration:underline;text-underline-offset:3px}
