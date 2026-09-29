@@ -10,6 +10,7 @@ const WISTIA_SEO = {
   proposal:{title:"프로포즈 영상 | 노래로 전하는 고백 · 위스티아",description:"직접 부른 노래와 추억·편지로 완성하는 프로포즈·답프로포즈 영상. 위스티아에서 세상에 하나뿐인 고백을 준비하세요."}
  },
  noindex:{
+  "/before-after":{title:"보컬 보정 전후 비교 | 위스티아",description:"위스티아의 같은 녹음본으로 보정 전과 후의 목소리를 비교해 들을 수 있습니다."},
   "/song":{title:"노래 녹음 선택 | 위스티아",description:"위스티아 사전 녹음 상품을 고르는 보조 화면입니다."},
   "/film":{title:"영상 선택 | 위스티아",description:"위스티아 축가 영상 상품을 고르는 보조 화면입니다."},
   "/ar/self":{title:"AR 녹음 안내 | 위스티아",description:"위스티아 AR 축가 사전 녹음 안내 화면입니다."},
