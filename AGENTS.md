@@ -259,3 +259,10 @@
 - 기존 해시 상세·가격 주소를 History API 경로로 치환하고, 동일 SEO 카피에서 상세 6개·가격 6개의 경로별 초기 HTML을 생성했다. 메타·OG·canonical·JSON-LD 상품 URL과 sitemap을 clean path로 맞추고 Vercel rewrite를 추가했다. 로컬 Edge 320·390px에서 예전 해시 주소 치환과 홈→상세→가격→상담 팝업 흐름을 확인했다.
 - Meta Pixel·GA4·카카오 소스와 버튼은 수정하지 않았다. 기존 추적 라이브러리가 일부 세부 이벤트 경로를 해시 형식으로 검증하거나 기본값으로 사용하므로 이 조건 아래서는 모든 부가 이벤트의 `page_path`를 clean path로 통일할 수 없다. PageView와 앱에서 명시적으로 GA4에 전달하는 페이지 경로는 clean path를 사용한다.
 - 작업은 `codex/path-prerender-preview` 브랜치에만 커밋·푸시했고 Vercel 배포 상태가 성공인 것을 확인했다. Preview 주소는 `https://wistia-git-codex-path-prerender-preview-wistia1.vercel.app`이다. Vercel Preview 접근 보호가 로그인 화면을 반환하여 외부 비인증 HTTP로 실제 서버 HTML의 본문을 확인할 수는 없었다. 운영 `main`과 `www.wistiastudio.com`으로는 승격하지 않았다.
+- 가격 계산기의 AR 1시간·2시간처럼 경로를 다시 그리는 선택에서도 현재 스크롤 위치를 보존하게 했다. 같은 화면에서 바뀌는 녹음 메이킹 1인·2인, 추가 옵션 및 영상 구성도 선택 뒤 같은 위치를 유지하게 했다.
+- AR 1시간·2시간 상세의 전문가 영역에서 영상 연출 카드를 제외하고 사운드 완성 카드만 전체 폭으로 표시했다. 영상 상품의 두 전문가 카드는 유지했다.
+- `app.js`·`design.css`의 캐시 버전을 올리고 정적 상세·가격 HTML 12개를 갱신했다. 320px·390px Edge 시험에서 AR 시간 선택, 메이킹 1인·2인 및 옵션 선택의 스크롤 유지, AR·영상 상품의 전문가 카드 구성, 상담 팝업과 가로 넘침 없음을 확인했다. Pixel·GA4·카카오 소스, 원격 저장소 및 배포는 변경하지 않았다.
+- `node --check js/app.js`, `node --check tests/path-prerender-qa.cjs`, `git diff --check`를 통과했다. 기존 `tests/meta-events.test.mjs`는 이번 수정과 무관하게 과거 해시 경로 `#/detail/duo`를 기대하여 현재 path 경로 `/`와 비교하는 53행에서 실패하므로 최신 경로 기준으로 시험을 갱신할 필요가 있다.
+- 추가 진단: Edge에서 홈·상세·가격·소개 등 17개 경로를 320·390·768·1440px으로 모두 열어 본 결과 런타임 오류·가로 넘침·빈 화면은 없었다. 메뉴 고정·가격 안내 검사는 통과했고 JavaScript 53개 파일의 문법 오류도 없었다. 일반 경로형 홈→AR 상세→가격 이동은 `PageView`·`ViewContent`가 기대 횟수만큼 기록됐다.
+- 별도 실제 문제: 페이지를 연 상태에서 과거 `#/detail/...` 해시 주소로 이동하면 `popstate`와 `hashchange`가 모두 `route()`를 호출하여 기존 경로의 `PageView`·`ViewContent`가 새 경로 이벤트 직전에 추가 전송된다. 로컬 파일을 가상 운영 도메인에 연결하고 `fbq`를 가로채 외부 전송 없이 재현했다. 일반 경로형 링크에서는 재현되지 않았다. 이번 요청은 진단이므로 추적 코드를 수정하지 않았다.
+- `tests/analytics.test.mjs`는 새 path 기반 코드를 반영하지 않은 위치 모의 객체 때문에, `tests/meta-engagement-browser.cjs`는 옛 해시 경로 기대값 때문에 실패했다. `tests/meta-view-content-browser.cjs`는 위 해시 중복 동작을 감지했다. `tests/seo-preview.cjs`의 실패는 단순 정적 서버가 확장자 없는 path URL을 제공하지 못했기 때문이며, 프리렌더 파일을 제공하는 별도 경로 시험은 앞서 통과했다.
