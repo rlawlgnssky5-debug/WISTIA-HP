@@ -292,3 +292,6 @@
 
 - 사용자가 제공한 `RECORDING FILM`, `WEDDING FILM`, `PROPOSAL FILM` 문구를 첫 화면 프로포즈 카드 아래의 AR 가격 안내 다음에 순서대로 추가했다. 기존 기본 구성에 맞춰 녹음 메이킹 1인 22만원, 듀엣 식전 스토리형 35만원, 프로포즈 스토리형 29만원을 각각 가격 계산기로 연결했다.
 - 로컬 390px 화면에서 세 문구와 가격의 순서를 확인했고, 320px 화면에서 네 가격과 가로 넘침 없음을 확인했다. 프로포즈 가격 링크는 `/event/proposal`의 29만원 기본 구성으로 이동했다. `node --check js/app.js`와 `node scripts/prerender.mjs`를 통과했다.
+
+- 후속 사용자 정정에 따라 메인 소개의 WEDDING FILM과 PROPOSAL FILM 가격 표기에서 `스토리형`을 빼고 각각 `기본가 28만원`, `기본가 22만원`으로 바꿨다. 각 링크는 `/event/wedding/making`, `/event/proposal/making`을 열어 표시한 가격과 계산 합계가 일치하게 했다. 다른 상품 가격과 상세·가격 계산기의 구성은 유지했다.
+- 로컬 320px 화면에서 네 가격과 가로 넘침 없음을 확인했고, 두 가격 링크에서 메이킹 변경이 선택된 상태와 합계 28만원·22만원을 확인했다. `node --check js/app.js`와 `node scripts/prerender.mjs`를 통과했다.
