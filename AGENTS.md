@@ -280,4 +280,5 @@
 - 상세에서 실제로 불러오던 제작 과정 PNG 6장, 후기 PNG, 파형 PNG를 긴 변 1600 이하 WebP로 바꿨다. 필름 원본 PNG 경로는 이미 있는 `music-video-film.webp`·`recording-making-film.webp`를 가리킨다. 닫힌 제작 과정 사진은 `loading="lazy"`다.
 - `/song`·`/film`·`/ar/self`·`/ar/friend` 초기 HTML에 `noindex, follow`를 넣고 Vercel `X-Robots-Tag`도 같은 경로와 `/before-after`·`/choose`·`/find`에 적용했다. 이 주소는 sitemap에 없으며 `/detail/duet-film`만 sitemap에 추가했다. 화면의 선택 UI는 유지한다.
 - `/detail/duet-film` 제목·설명을 축가 영상 문구로 분리했다. 구성 제목은 wedding만 `듀엣 식전 스토리 필름 구성`, duet-film은 `듀엣 축가 영상 구성`이다. 식전 상품명과 식전 페이지 문구는 유지했다.
-- `node --check js/app.js`, `node scripts/prerender.mjs`, `git diff --check`를 통과했다. 브라우저 확인과 Preview 배포 결과는 이어서 기록한다. Production 병합은 하지 않는다.
+- `node --check js/app.js`, `node scripts/prerender.mjs`, `git diff --check`를 통과했다. 로컬 Chrome 320·390·768·1440px에서 듀엣 축가 제목·구성명, 식전 페이지 유지, 가로 넘침 없음, `/song`·`/film`·`/ar/self`·`/ar/friend`의 `noindex, follow`와 화면 유지, `/song`에서 홈으로 돌아오면 robots 제거, `/detail/solo`→`/event/solo` 상담 버튼은 팝업만 열고 확인 뒤에만 카카오톡 탭이 열리는 것을 확인했다. 솔로 상세의 Pretendard 가변 서브셋은 16개 woff2 약 398KB였고 한글 글리프가 적용됐다. 파비콘은 2,824바이트다.
+- Vercel Preview 배포는 성공했다. 주소는 `https://wistia-git-cursor-perf-noindex-duet-c5f5-wistia1.vercel.app` 와 `https://wistia-qcozxfdt6-wistia1.vercel.app` 이다. 프로젝트 Preview 보호가 로그인 화면을 반환해서 비인증 HTTP로는 본문을 열지 못했다. Production 병합은 하지 않았다.
