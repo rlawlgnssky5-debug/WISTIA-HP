@@ -282,3 +282,6 @@
 - `/detail/duet-film` 제목·설명을 축가 영상 문구로 분리했다. 구성 제목은 wedding만 `듀엣 식전 스토리 필름 구성`, duet-film은 `듀엣 축가 영상 구성`이다. 식전 상품명과 식전 페이지 문구는 유지했다.
 - `node --check js/app.js`, `node scripts/prerender.mjs`, `git diff --check`를 통과했다. 로컬 Chrome 320·390·768·1440px에서 듀엣 축가 제목·구성명, 식전 페이지 유지, 가로 넘침 없음, `/song`·`/film`·`/ar/self`·`/ar/friend`의 `noindex, follow`와 화면 유지, `/song`에서 홈으로 돌아오면 robots 제거, `/detail/solo`→`/event/solo` 상담 버튼은 팝업만 열고 확인 뒤에만 카카오톡 탭이 열리는 것을 확인했다. 솔로 상세의 Pretendard 가변 서브셋은 16개 woff2 약 398KB였고 한글 글리프가 적용됐다. 파비콘은 2,824바이트다.
 - Vercel Preview 배포는 성공했다. 주소는 `https://wistia-git-cursor-perf-noindex-duet-c5f5-wistia1.vercel.app` 와 `https://wistia-qcozxfdt6-wistia1.vercel.app` 이다. 프로젝트 Preview 보호가 로그인 화면을 반환해서 비인증 HTTP로는 본문을 열지 못했다. Production 병합은 하지 않았다.
+
+- 첫 화면 서비스 카드 위에 사용자가 지정한 `AQ9Z1flOUPo` 영상을 자동 재생 배경으로 추가했다. `youtube-nocookie.com` 임베드에 음소거·인라인·반복 재생, `controls=0`, `modestbranding=1`을 적용하고 iframe 클릭을 막았다. `modestbranding`은 YouTube에서 폐기된 옵션이라 로고 숨김은 보장되지 않는다.
+- 로컬 브라우저에서 영상의 `paused=false`, `muted=true`를 확인했다. 영상을 클릭해도 재생이 유지되고 서비스 카드는 상세로 이동했다. 320px·390px·1440px에서 가로 넘침이 없으며, 320px 임베드의 최소 플레이어 크기를 유지하도록 화면 안에서 좌우를 잘랐다. 원격 푸시·배포는 하지 않았다.
