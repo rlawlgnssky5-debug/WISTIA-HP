@@ -285,3 +285,4 @@
 
 - 첫 화면 서비스 카드 위에 사용자가 지정한 `AQ9Z1flOUPo` 영상을 자동 재생 배경으로 추가했다. `youtube-nocookie.com` 임베드에 음소거·인라인·반복 재생, `controls=0`, `modestbranding=1`을 적용하고 iframe 클릭을 막았다. `modestbranding`은 YouTube에서 폐기된 옵션이라 로고 숨김은 보장되지 않는다.
 - 로컬 브라우저에서 영상의 `paused=false`, `muted=true`를 확인했다. 영상을 클릭해도 재생이 유지되고 서비스 카드는 상세로 이동했다. 320px·390px·1440px에서 가로 넘침이 없으며, 320px 임베드의 최소 플레이어 크기를 유지하도록 화면 안에서 좌우를 잘랐다. 원격 푸시·배포는 하지 않았다.
+- 후속 사용자 요청에 따라 `ec64b8e`를 GitHub `main`에 푸시했다. Vercel 배포 성공과 운영 `www.wistiastudio.com`의 새 CSS·앱 스크립트 버전을 확인했으며, 운영 브라우저에서 유튜브 영상의 `paused=false`, `muted=true`와 실제 재생 화면을 확인했다.
