@@ -50,7 +50,7 @@
 .finder-intro p{margin:0;font-size:clamp(14px,2vw,17px);line-height:1.65;color:#68777a}
 .finder-feature-video{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;margin:0 0 32px;overflow:hidden;border-radius:14px;background:#202628}
 .finder-feature-video iframe{position:absolute;top:50%;left:50%;display:block;width:max(100%,356px);height:max(100%,200px);border:0;transform:translate(-50%,-50%);pointer-events:none}
-.finder-feature-offer{max-width:650px;margin:0 0 32px;padding:0 0 29px;border-bottom:1px solid #d8dfdd}
+.finder-feature-offer{max-width:650px;margin:34px 0 0;padding:29px 0 0;border-top:1px solid #d8dfdd}
 .finder-feature-offer-kicker{display:block;margin-bottom:11px;color:#62777a;font-size:11px;font-weight:650;letter-spacing:.08em}
 .finder-feature-offer h2{margin:0;color:#263236;font-size:clamp(23px,3.8vw,32px);font-weight:550;line-height:1.38;letter-spacing:-.055em;word-break:keep-all}
 .finder-feature-offer p{margin:10px 0 18px;color:#617077;font-size:clamp(13px,1.7vw,16px);line-height:1.65;word-break:keep-all}
