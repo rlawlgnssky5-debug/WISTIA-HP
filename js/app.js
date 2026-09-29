@@ -369,12 +369,14 @@ const NAVIGATION_GROUPS = [
  ]},
  {label:"위스티아",kind:"utility",items:[
   {title:"위스티아는 어떤 곳인가요?",href:"#/info/about"},
+  {title:"오시는 길",href:"#/info/location"},
   {title:"이벤트",href:"#/events"},
   {title:"자주 묻는 질문",href:"#/info/faq"}
  ]}
 ]
 const INFO_PAGES = {
  about:{eyebrow:"ABOUT WISTIA",title:"목소리와 장면을\n한 작품으로 만드는 곳",description:"위스티아는 경기도 부천에 위치한 웨딩 보컬 녹음·영상 제작 브랜드입니다"},
+ location:{eyebrow:"VISIT WISTIA",title:"오시는 길",description:"위스티아는 경기도 부천에 있습니다 녹음과 촬영을 위해 방문하실 때 아래 주소를 확인해 주세요"},
  faq:{eyebrow:"",title:"자주 묻는 질문",description:"방문부터 녹음·영상 제작과 수정까지, 자주 궁금해하시는 내용을 모았습니다"}
 }
 const INFO_FAQ_GROUPS=[
@@ -623,7 +625,7 @@ const WISTIA_ADVANTAGES=[
  ["보컬 보정","음정·박자 수작업 보정","자동 보정에만 의존하지 않고 원래 목소리의 느낌을 살려 세밀하게 보정합니다"],
  ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"],
  ["상품 구성","정말 필요한 구성만 담은 상품","불필요한 구성을 줄이고 필요한 작업에 집중해 투명한 가격을 제시합니다"],
- ["가격","부천 기반의 합리적인 가격","불필요한 운영 비용을 줄여 작업 퀄리티는 유지하면서 가격 부담을 낮춥니다"]
+ ["가격","경기도 부천에서 만나는 합리적인 가격","경기도 부천에 자리한 스튜디오에서 녹음과 제작을 진행합니다 상품별 구성과 가격은 상담 전에도 확인할 수 있습니다"]
 ]
 function wistiaAdvantagesSection(){return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><ol>'+WISTIA_ADVANTAGES.map(([category,title,description],index)=>'<li><span class="wistia-advantage-number">'+String(index+1).padStart(2,"0")+'</span><div><small>'+category+'</small><h3>'+title+'</h3><p>'+description+'</p></div></li>').join("")+'</ol></div></section>'}
 function productComparisonSection(){return wistiaAdvantagesSection()}
@@ -725,8 +727,10 @@ function renderHome(requested="role"){
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><p class="info-section-kicker">WEDDING VOCAL · FILM STUDIO</p><h2>말로 다 전하지 못한 마음을<br>직접 부른 노래와 영상에 담습니다</h2><p>한 곡의 노래가 한 편의 영상이 되기까지, 목소리에 담긴 마음이 장면까지 자연스럽게 이어지도록 녹음부터 음원 작업, 촬영과 편집을 함께합니다</p></div><figure>'+img("assets/img/wedding/04-recording-making.webp","위스티아 웨딩 보컬 녹음 현장",true)+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><p class="info-section-kicker">ONE TEAM, THREE SPECIALISTS</p><h2 id="specialistTitle">각 분야의 전문가가<br>하나의 결과물을 완성합니다</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-studio/03-vocal-directing.png","1대1 보컬 디렉팅",true)+'<p>현장</p><h3>편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-studio/06-mixing.png","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3>내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉와 〈불후의 명곡〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article><article><span>03</span>'+img("assets/img/wedding/03-lipsync-mv.webp","웨딩 영상 촬영과 편집",true)+'<p>영상</p><h3>노래의 감정이 장면까지 이어지도록</h3><small>7년 경력 영상 편집 디자이너가 이야기와 예식 분위기에 맞춰 촬영본을 한 편의 작품으로 엮습니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
+ const address="경기도 부천시 석천로170번길 19, 2층"
+ const locationContent='<div class="wistia-location"><div class="wistia-location-address"><span>WISTIA STUDIO · BUCHEON</span><h2>'+address+'</h2><p>부천시청역 1번 출구에서 도보 약 300m 거리입니다</p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 <span aria-hidden="true">↗</span></a></div></div><div class="wistia-location-details"><article><span>01 / SUBWAY</span><h3>지하철로 오실 때</h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><span>02 / PARKING</span><h3>차량으로 오실 때</h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
  const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
- const content=key==="faq"?faqContent:aboutContent
+ const content=key==="faq"?faqContent:key==="location"?locationContent:aboutContent
  app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1><p>'+page.description+'</p></header>'+content+'</section>'+footer()
 }
 function renderEventsPage(){
@@ -1269,8 +1273,8 @@ function route({preserveScroll=false,reuseEventForm=false}={}){
  scrollMediaCleanup=initScrollMediaPlayback();
  window.initHeroEditor?.(validDetail ? key : "");
  window.initProcessEditor?.(validDetail ? key : "");
- const fallbackTitle=eventsPage?"이벤트 | WISTIA":info?(key==="about"?"위스티아는 어떤 곳인가요?":"자주 묻는 질문")+" | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
- const pageMeta=home?SEO_HOME:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:{title:fallbackTitle,description:SEO_HOME.description};
+ const fallbackTitle=eventsPage?"이벤트 | WISTIA":info?(key==="about"?"위스티아는 어떤 곳인가요?":key==="location"?"오시는 길":"자주 묻는 질문")+" | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
+ const pageMeta=home?SEO_HOME:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:info&&key==="location"?window.WISTIA_SEO?.location||{title:fallbackTitle,description:INFO_PAGES.location.description}:{title:fallbackTitle,description:SEO_HOME.description};
  setPageMeta(pageMeta);
  window.wistiaMeta?.trackPageView();
  if(detail){
