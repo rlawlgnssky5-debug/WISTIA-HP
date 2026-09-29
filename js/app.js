@@ -597,7 +597,7 @@ function setArIndexActive(wheel,index){const items=[...wheel.querySelectorAll(".
 function initArIndexWheel(){const wheel=document.querySelector(".ar-index-wheel");stopArIndexAuto();if(!wheel)return;const items=[...wheel.querySelectorAll(".ar-index-item")];if(!items.length)return;setArIndexActive(wheel,0);let resumeTimer=null;const pauseAuto=()=>{stopArIndexAuto();clearTimeout(resumeTimer)};const resumeAuto=()=>{clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>startArIndexAuto(wheel),3200)};items.forEach((b,i)=>{b.addEventListener("mouseenter",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("focus",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("click",()=>{pauseAuto();setArIndexActive(wheel,i);resumeAuto()});b.addEventListener("blur",()=>{if(!wheel.matches(":hover"))resumeAuto()})});wheel.addEventListener("mouseleave",()=>{if(!wheel.matches(":focus-within"))resumeAuto()});startArIndexAuto(wheel)}
 const EXPERT_CARDS=[
  {index:"01 · VISUAL DIRECTION",keyword:"영상 연출",sub:"7년 경력 영상 편집 디자이너",detail:"한 곡의 감정이 본식 장면까지<br>자연스럽게 이어지도록 설계합니다.",image:"assets/img/song/solo.webp",alt:"실제 녹음 세션에서 사용된 마이크"},
- {index:"02 · AUDIO ENGINEERING",keyword:"사운드 완성",sub:"방송 음악 작업 엔지니어",detail:"목소리의 음정과 밸런스를 다듬어,<br>자연스럽게 들리는 AR을 완성합니다.",image:"assets/img/ar-process/02-mixing.webp",alt:"모니터 앞에서 음원을 조율하는 엔지니어"}
+ {index:"02 · AUDIO ENGINEERING",keyword:"사운드 완성",sub:"〈싱어게인2〉·〈불후의 명곡〉 방송 음악 작업 참여",detail:"목소리의 음정과 밸런스를 다듬어,<br>자연스럽게 들리는 AR을 완성합니다.",image:"assets/img/ar-process/02-mixing.webp",alt:"모니터 앞에서 음원을 조율하는 엔지니어"}
 ]
 const EXPERT_CARD_ICONS=[
  '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"></path></svg>',
@@ -1242,17 +1242,18 @@ function cleanHashRoute(){
 function normalizeInternalLinks(){
  document.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute("href",link.getAttribute("href").slice(1)));
 }
-function route({preserveScroll=false}={}){
+function route({preserveScroll=false,reuseEventForm=false}={}){
  const previousScrollY=preserveScroll?window.scrollY:0
  closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
+ const reuseArPriceForm=reuseEventForm&&event&&["solo","duo"].includes(key)&&["solo","duo"].includes(currentEventProduct)&&Boolean(app.querySelector("#consultForm"));
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("has-price-bar",Boolean(validDetail||ar));document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);
  const floatingPrice=document.querySelector("#floatingPrice");if(floatingPrice)floatingPrice.href="/event/"+(validDetail||event?key:"solo")+(purpose&&validDetail?"/"+purpose:"")
  const soloCta=document.querySelector("#soloDesktopCta");if(soloCta)soloCta.hidden=!unifiedDetail;
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
- if(home)renderHome(type==="find"?key:"role");else if(type==="before-after")app.innerHTML='<div class="solo-detail-scope ar-detail-scope before-after-page">'+wistiaBeforeAfterSection()+footer()+'</div>';else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event)renderEvent(key,purpose);else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ if(home)renderHome(type==="find"?key:"role");else if(type==="before-after")app.innerHTML='<div class="solo-detail-scope ar-detail-scope before-after-page">'+wistiaBeforeAfterSection()+footer()+'</div>';else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  window.WistiaGuide?.mount({type,key,purpose,home,detail:Boolean(validDetail),event:Boolean(event),info:Boolean(info)})
  prepareRatioAudioSources();
  prepareArHookVideo();
@@ -1288,8 +1289,8 @@ function route({preserveScroll=false}={}){
   return payload
  }:null)
  const target=type==="section"?document.getElementById(key):null;
- requestAnimationFrame(()=>{if(preserveScroll)window.scrollTo({top:previousScrollY,behavior:"instant"});else if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
- app.focus({preventScroll:true});
+ if(reuseArPriceForm)firstRender=false;else requestAnimationFrame(()=>{if(preserveScroll)window.scrollTo({top:previousScrollY,behavior:"instant"});else if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
+ if(!reuseArPriceForm)app.focus({preventScroll:true});
  normalizeInternalLinks();
  document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.pathname===routePath())a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
 }
@@ -1317,7 +1318,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("change",e=>{
  const el=e.target;
  const priceScrollY=document.body.dataset.page==="event"?window.scrollY:null;
- if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","/event/"+next+location.search);route({preserveScroll:true})}return}
+ if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","/event/"+next+location.search);route({preserveScroll:true,reuseEventForm:!!el.dataset.baseProduct})}return}
  if(el.dataset.event){el.checked?selectedEvents.add(el.dataset.event):selectedEvents.delete(el.dataset.event);updatePrice()}
  if(el.dataset.option){el.checked?selectedOptions.add(el.dataset.option):selectedOptions.delete(el.dataset.option);updatePrice()}
  if(el.dataset.filmPeople){selectedFilmPeople=Number(el.dataset.filmPeople);updatePrice()}
