@@ -239,6 +239,10 @@ body[data-page="event"] .booking-static-bar.booking-follow-total::after{content:
 body[data-page="event"] .booking-follow-total .booking-live-total{align-items:end}
 body[data-page="event"] .booking-follow-total .booking-live-total span{display:grid;gap:4px;font-size:12px;line-height:1.3}
 body[data-page="event"] .booking-follow-total .booking-live-total small{color:#bdc8cb;font-size:10px;letter-spacing:.12em}
+body[data-page="event"] .booking-total-values{display:grid;justify-items:end;gap:2px;min-width:0;text-align:right}
+body[data-page="event"] .booking-reference-price{display:flex;align-items:baseline;gap:6px;margin:0;color:#cbd4d6;font-size:11px;white-space:nowrap}
+body[data-page="event"] .booking-follow-total .booking-live-total .booking-reference-price span{display:inline;color:inherit;font-size:11px;font-weight:500}
+body[data-page="event"] .booking-reference-price del{font-size:16px;text-decoration-color:#ff6b68;text-decoration-thickness:2px;text-decoration-skip-ink:none}
 body[data-page="event"] .booking-follow-total .button{position:relative;z-index:1;max-width:none;font-size:14px;border-radius:10px}
 @media(max-width:380px){
  body[data-page="event"] .booking-static-bar.booking-follow-total{padding:13px}
@@ -534,23 +538,27 @@ body[data-page="event"] .kakao-discount-offer{margin:24px 0 0;padding:34px 24px 
 @media(max-width:390px){body[data-page="event"] .kakao-discount-offer{padding:30px 18px 160px}}
 
 /* Benefit reminder and next step on every product detail page */
-body[data-page="detail"] .detail-benefit-teaser{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-block:0 54px;padding:22px 28px;border-left:3px solid #e5c900;background:#f5f8f8}
+body[data-page="detail"] .detail-benefit-teaser{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-block:0 54px;padding:24px 28px;border:1px solid #dce3e4;border-left:4px solid #e5c900;background:#fff}
 .detail-benefit-teaser div{min-width:0}
-.detail-benefit-teaser small{display:block;margin-bottom:6px;color:#708287;font-size:10px;font-weight:700;letter-spacing:.13em}
-.detail-benefit-teaser strong{display:block;color:#253236;font-size:clamp(18px,2.5vw,24px);font-weight:600;letter-spacing:-.04em}
-.detail-benefit-teaser p{margin:5px 0 0;color:#65767a;font-size:13px;line-height:1.6}
+.detail-benefit-teaser small{display:block;margin-bottom:13px;color:#708287;font-size:10px;font-weight:700;letter-spacing:.13em}
+.detail-benefit-teaser>div>p{margin:14px 0 0;color:#52676d;font-size:13px;font-weight:600;line-height:1.6}
 .detail-benefit-teaser a{display:inline-flex;flex:none;align-items:center;gap:18px;min-height:46px;padding:10px 15px;border:1px solid #aebdc0;color:#263236;font-size:13px;font-weight:700}
 .detail-benefit-teaser a:hover{background:#fff}
+.detail-price-display{display:grid;gap:5px;min-width:0}
+.detail-price-display p{display:flex;align-items:baseline;gap:11px;margin:0}
+.detail-price-display p>span{flex:none;color:#6d7d81;font-size:12px;font-weight:600}
+.detail-price-regular del{color:#69787c;font-size:18px;font-weight:600;text-decoration-color:#c7393c;text-decoration-thickness:2px;text-decoration-skip-ink:none}
+.detail-price-current strong{color:#253236;font-size:clamp(30px,3.2vw,40px);font-weight:750;line-height:1.15;letter-spacing:-.06em}
 body[data-page="detail"] .detail-decision{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,330px);align-items:center;gap:clamp(26px,5vw,72px);margin-block:48px 96px;padding:clamp(28px,5vw,58px);border:1px solid #dce3e4;background:#f6f8f8}
 .detail-decision-kicker{margin:0 0 18px;color:#637b80;font-size:11px;font-weight:700;letter-spacing:.13em}
 .detail-decision h2{max-width:650px;margin:0;color:#253236;font-size:clamp(24px,3.2vw,39px);font-weight:600;line-height:1.4;letter-spacing:-.05em}
 .detail-decision-copy>p:last-child{max-width:620px;margin:18px 0 0;color:#58696d;font-size:15px;line-height:1.8}
 .detail-decision-action{min-width:0}
-.detail-decision-benefit{display:grid;gap:3px;padding:18px 20px;background:#fff;border:1px solid #dce3e4}
-.detail-decision-benefit span{color:#697b7f;font-size:11px;letter-spacing:.04em}
-.detail-decision-benefit strong{color:#253236;font-size:22px;font-weight:700;letter-spacing:-.04em}
+.detail-decision-benefit{padding:22px 20px;background:#fff;border:1px solid #dce3e4;border-top:3px solid #e5c900}
+.detail-decision-benefit>p{margin:17px 0 4px;padding-top:13px;border-top:1px solid #e2e8e9;color:#52676d;font-size:13px;line-height:1.5}
+.detail-decision-benefit>p strong{color:#253236;font-size:15px}
 .detail-decision-benefit small{color:#738185;font-size:11px;line-height:1.5}
 .detail-decision-cta{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:55px;margin-top:10px;padding:13px 18px;background:#fee500;color:#263236;font-size:15px;font-weight:700}
 .detail-decision-cta:hover{background:#f4dc00}
 .detail-decision-action>p{margin:10px 0 0;color:#6c7b7f;font-size:11px;line-height:1.6}
-@media(max-width:760px){body[data-page="detail"] .detail-benefit-teaser{display:block;margin-bottom:38px;padding:20px 19px}.detail-benefit-teaser a{justify-content:space-between;width:100%;margin-top:15px}body[data-page="detail"] .detail-decision{grid-template-columns:1fr;gap:26px;margin-block:36px 72px;padding:26px 22px}.detail-decision h2{font-size:clamp(22px,6vw,30px)}.detail-decision-copy>p:last-child{font-size:13px}.detail-decision-benefit strong{font-size:20px}}
+@media(max-width:760px){body[data-page="detail"] .detail-benefit-teaser{display:block;margin-bottom:38px;padding:20px 19px}.detail-benefit-teaser a{justify-content:space-between;width:100%;margin-top:18px}body[data-page="detail"] .detail-decision{grid-template-columns:1fr;gap:26px;margin-block:36px 72px;padding:26px 22px}.detail-decision h2{font-size:clamp(22px,6vw,30px)}.detail-decision-copy>p:last-child{font-size:13px}}

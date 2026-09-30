@@ -333,6 +333,7 @@ const AR_PURPOSES = {
 const app = document.querySelector("#app")
 const won = value => value.toLocaleString("ko-KR") + "원"
 const shortWon = value => value === 0 ? "0원" : Number.isInteger(value / 10000) ? (value / 10000).toLocaleString("ko-KR") + "만원" : won(value)
+const regularPriceForSale = value => value + (value < 50000 ? 30000 : value < 100000 ? 50000 : 100000)
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" })[c])
 let config = {accounts:{kakao:KAKAO_FALLBACK}}
 let selectedEvents = new Set()
@@ -719,14 +720,23 @@ function filmUpgradeDetail(productKey){if(productKey==="proposal")return "";cons
 function productionGuide(p){const film=p.category!=="song";return '<section class="shell production-guide" aria-labelledby="productionGuideTitle"><h2 id="productionGuideTitle">제작 안내</h2><div><article><span>작업 기간</span><strong>'+(film?"촬영·자료 전달 후 일정 확정":"녹음 완료 후 일정 확정")+'</strong><p>사용 예정일과 제작 구성을 확인한 뒤 정확한 전달 일정을 안내합니다</p></article><article><span>수정 안내</span><strong>상품별 기본 범위 적용</strong><p>수정 가능 범위와 횟수는 예약 전 상담에서 명확히 안내합니다</p></article><article><span>최종 전달</span><strong>'+(film?"상영용 영상 + 완성 음원":"본식용 AR + 완성 음원")+'</strong><p>사용 환경을 확인해 현장에서 바로 쓸 수 있는 파일로 전달합니다</p></article></div></section>'}
 function resultSection(p,m,w,song){return '<section class="result-band"><div class="shell"><div>'+label("THE RESULT")+'<h2>이렇게 완성됩니다</h2></div><div><p>'+m.result+'</p><span>'+escapeHtml(p.resultCopy|| (song?"보정과 믹싱·마스터링을 거친 최종 음원으로 전달합니다":"직접 부른 노래와 촬영 장면을 하나의 영상으로 완성합니다"))+'</span></div></div>'+(w?'<div class="shell result-film"><button class="film-poster" data-video="'+w.id+'" aria-label="'+w.title+' 실제 결과물 재생">'+img(w.image,w.title,true)+'<span class="play" aria-hidden="true">▶</span><span class="poster-note">실제 결과물 재생하기</span></button></div>':'')+'</section>'}
 function detailNext(key,purpose=""){const eventHref="#/event/"+key+(purpose?"/"+purpose:"");return '<section class="detail-next section"><div class="shell"><h2>상품 구성과 가격을<br>확인해 보세요</h2><p>포함 작업과 이벤트 혜택을 확인한 뒤 예약 상담으로 이어집니다</p>'+cta("상품 구성·가격 확인하기",eventHref)+'</div></section>'}
+function detailPriceData(key,purpose=""){
+ const variant=key==="solo-film"?(purpose==="duo"?"duo":"solo"):FILM_FORMAT_PRICES[key]?"live":"base"
+ const current=key==="solo-film"?(variant==="duo"?280000:FILM_FORMAT_PRICES[key].making):FILM_FORMAT_PRICES[key]?FILM_FORMAT_PRICES[key].live:PRODUCTS[key].normal
+ return {current,regular:regularPriceForSale(current)}
+}
+function detailPriceDisplay(key,purpose=""){
+ const {current,regular}=detailPriceData(key,purpose)
+ return '<div class="detail-price-display"><p class="detail-price-regular"><span>정가</span><del>'+shortWon(regular)+'</del></p><p class="detail-price-current"><span>현재 판매가</span><strong>'+shortWon(current)+'</strong></p></div>'
+}
 function detailBenefitTeaser(key,purpose=""){
  const eventHref="#/event/"+key+(purpose?"/"+purpose:"")
- return '<section class="detail-benefit-teaser shell" aria-label="카카오톡 상담 혜택"><div><small>WISTIA BENEFIT</small><strong>카카오톡 상담 시 1만원 더 할인.</strong><p>마음에 드는 구성을 찾았다면 가격과 제작 일정을 먼저 확인해 보세요.</p></div><a href="'+eventHref+'">구성·가격 확인하기 <span aria-hidden="true">↗</span></a></section>'
+ return '<section class="detail-benefit-teaser shell" aria-label="상품 정가와 현재 판매가"><div><small>WISTIA PRICE</small>'+detailPriceDisplay(key,purpose)+'<p>기본 구성 기준 · 추가 옵션 별도</p></div><a href="'+eventHref+'">구성·가격 확인하기 <span aria-hidden="true">↗</span></a></section>'
 }
 function detailDecisionSection(key,purpose=""){
  const eventHref="#/event/"+key+(purpose?"/"+purpose:"")
  const dayLabel=key==="proposal"?"프로포즈 날짜가":"예식일이"
- return '<section class="detail-decision shell" aria-labelledby="detailDecisionTitle"><div class="detail-decision-copy"><p class="detail-decision-kicker">예약을 생각하고 있다면</p><h2 id="detailDecisionTitle">'+dayLabel+' 가까워지고,<br>준비할 시간은 짧아집니다.</h2><p>녹음과 제작, 수정과 최종 전달까지 여유롭게 준비할 수 있도록 지금 구성과 가격을 확인해 보세요.</p></div><div class="detail-decision-action"><div class="detail-decision-benefit"><span>지금 확인할 수 있는 혜택</span><strong>카카오톡 상담 시 1만원 추가 할인</strong><small>가격 계산 금액에는 아직 반영되지 않습니다.</small></div><a class="detail-decision-cta" href="'+eventHref+'">가격 확인하고 예약 상담하기 <span aria-hidden="true">↗</span></a><p>제작 가능 일정과 최종 금액은 상담에서 확인합니다.</p></div></section>'
+ return '<section class="detail-decision shell" aria-labelledby="detailDecisionTitle"><div class="detail-decision-copy"><p class="detail-decision-kicker">예약을 생각하고 있다면</p><h2 id="detailDecisionTitle">'+dayLabel+' 가까워지고,<br>준비할 시간은 짧아집니다.</h2><p>녹음과 제작, 수정과 최종 전달까지 여유롭게 준비할 수 있도록 지금 구성과 가격을 확인해 보세요.</p></div><div class="detail-decision-action"><div class="detail-decision-benefit">'+detailPriceDisplay(key,purpose)+'<p>카카오톡 상담 시 <strong>1만원 추가 할인</strong></p><small>추가 옵션·이벤트 혜택은 가격 계산기에서 확인해 주세요.</small></div><a class="detail-decision-cta" href="'+eventHref+'">가격 확인하고 예약 상담하기 <span aria-hidden="true">↗</span></a><p>제작 가능 일정과 최종 금액은 상담에서 확인합니다.</p></div></section>'
 }
 function renderHome(requested="role"){
  const stage=requested==="people"&&finderChoice.moment?"people":requested==="service"&&finderChoice.role==="couple"?"service":"role"
@@ -1109,7 +1119,7 @@ function renderEvent(key,purpose=""){
   currentEventProduct=key;currentEventPurpose=purpose;if(FILM_FORMAT_PRODUCTS.has(key))selectedFilmFormat=FILM_FORMATS[purpose]?purpose:BASE_FILM_FORMAT[key];if(key==="solo-film")selectedFilmPeople=purpose==="duo"?2:1;const p=PRODUCTS[key];
  const options=eventProductOptions(key,purpose);
  const choices=bookingExtraSection(p,purpose,options,"02")+eventBenefitsSection("03");
- app.innerHTML='<section class="shell section booking-calculator-wrap"><form id="consultForm" class="booking-calculator"><header class="calculator-intro"><p class="eyebrow">PRICE CALCULATOR</p><h1>얼마일까?</h1></header>'+bookingBaseSection(key)+choices+'<aside class="booking-mobile-bar booking-static-bar booking-follow-total" aria-live="polite"><div class="booking-live-total"><span><small>04 최종 가격</small>지금 내 가격은?</span><strong id="mobilePrice"></strong></div><button class="button dark" type="submit">이 가격으로 상담 받기!</button></aside><div id="bookingSummary" hidden aria-live="polite"></div></form><section class="kakao-discount-offer" aria-labelledby="kakaoDiscountTitle"><p class="kakao-discount-kicker">KAKAO BENEFIT</p><h2 id="kakaoDiscountTitle">지금 카카오톡 상담 누르시면 1만원 더 할인 혜택을 드립니다.</h2><p class="kakao-discount-note">위 가격 계산에는 카카오톡 상담 할인 1만원이 포함되지 않았습니다.</p><a class="kakao-discount-cta" href="'+escapeHtml(kakao().replace(/^http:/,"https:"))+'" target="_blank" rel="noopener noreferrer">카카오톡 상담하기 <span aria-hidden="true">↗</span></a></section></section>'+footer()
+ app.innerHTML='<section class="shell section booking-calculator-wrap"><form id="consultForm" class="booking-calculator"><header class="calculator-intro"><p class="eyebrow">PRICE CALCULATOR</p><h1>얼마일까?</h1></header>'+bookingBaseSection(key)+choices+'<aside class="booking-mobile-bar booking-static-bar booking-follow-total" aria-live="polite"><div class="booking-live-total"><span><small>04 판매가</small>현재 가격</span><div class="booking-total-values"><p class="booking-reference-price"><span>정가</span><del id="regularPrice"></del></p><strong id="mobilePrice"></strong></div></div><button class="button dark" type="submit">이 가격으로 상담 받기!</button></aside><div id="bookingSummary" hidden aria-live="polite"></div></form><section class="kakao-discount-offer" aria-labelledby="kakaoDiscountTitle"><p class="kakao-discount-kicker">KAKAO BENEFIT</p><h2 id="kakaoDiscountTitle">지금 카카오톡 상담 누르시면 1만원 더 할인 혜택을 드립니다.</h2><p class="kakao-discount-note">카카오톡 상담 할인 1만원은 위 판매가에 포함되지 않았습니다.</p><a class="kakao-discount-cta" href="'+escapeHtml(kakao().replace(/^http:/,"https:"))+'" target="_blank" rel="noopener noreferrer">카카오톡 상담하기 <span aria-hidden="true">↗</span></a></section></section>'+footer()
  updatePrice()
 }
 function updatePrice(){
@@ -1122,6 +1132,7 @@ function updatePrice(){
  const eventRows=c.chosen.map(e=>'<div><dt>'+e.label+'</dt><dd class="minus">−'+won(e.discount)+'</dd></div>').join("")
  document.querySelector("#bookingSummary").innerHTML='<p class="eyebrow"><span class="desktop-summary-label">가격 계산</span><span class="mobile-summary-label">선택한 구성</span></p><h2>'+c.product.title+'</h2><dl class="price-lines">'+finderRow+formatRow+peopleRow+'<div class="normal-line"><dt>기본가</dt><dd>'+won(c.product.normal)+'</dd></div>'+optionRows+eventRows+'</dl><div class="price-formula"><span><small>기본가</small>'+won(c.product.normal)+'</span><i>'+(c.optionPrice<0?'−':'+')+'</i><span><small>추가 옵션</small>'+won(Math.abs(c.optionPrice))+'</span><i>−</i><span><small>이벤트 혜택</small>'+won(c.discount)+'</span><i>=</i><strong><small>예상 금액</small>'+won(c.finalPrice)+'</strong></div><p class="fine">선택한 조건을 기준으로 계산한 예상 금액이며 최종 적용 여부는 상담에서 확인합니다</p>'
  document.querySelector("#mobilePrice").textContent=shortWon(c.finalPrice)
+ document.querySelector("#regularPrice").textContent=shortWon(regularPriceForSale(c.finalPrice))
  document.querySelector("#basePrice").textContent=shortWon(c.product.normal)
 }
 function consultationText(){
