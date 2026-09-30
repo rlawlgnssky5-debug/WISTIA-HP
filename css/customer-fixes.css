@@ -532,3 +532,25 @@ body[data-page="event"] .kakao-discount-offer{margin:24px 0 0;padding:34px 24px 
 .kakao-discount-cta:focus-visible{outline:3px solid #365c66;outline-offset:3px}
 .kakao-discount-cta span{font-size:20px;font-weight:400;line-height:1}
 @media(max-width:390px){body[data-page="event"] .kakao-discount-offer{padding:30px 18px 160px}}
+
+/* Benefit reminder and next step on every product detail page */
+body[data-page="detail"] .detail-benefit-teaser{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-block:0 54px;padding:22px 28px;border-left:3px solid #e5c900;background:#f5f8f8}
+.detail-benefit-teaser div{min-width:0}
+.detail-benefit-teaser small{display:block;margin-bottom:6px;color:#708287;font-size:10px;font-weight:700;letter-spacing:.13em}
+.detail-benefit-teaser strong{display:block;color:#253236;font-size:clamp(18px,2.5vw,24px);font-weight:600;letter-spacing:-.04em}
+.detail-benefit-teaser p{margin:5px 0 0;color:#65767a;font-size:13px;line-height:1.6}
+.detail-benefit-teaser a{display:inline-flex;flex:none;align-items:center;gap:18px;min-height:46px;padding:10px 15px;border:1px solid #aebdc0;color:#263236;font-size:13px;font-weight:700}
+.detail-benefit-teaser a:hover{background:#fff}
+body[data-page="detail"] .detail-decision{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,330px);align-items:center;gap:clamp(26px,5vw,72px);margin-block:48px 96px;padding:clamp(28px,5vw,58px);border:1px solid #dce3e4;background:#f6f8f8}
+.detail-decision-kicker{margin:0 0 18px;color:#637b80;font-size:11px;font-weight:700;letter-spacing:.13em}
+.detail-decision h2{max-width:650px;margin:0;color:#253236;font-size:clamp(24px,3.2vw,39px);font-weight:600;line-height:1.4;letter-spacing:-.05em}
+.detail-decision-copy>p:last-child{max-width:620px;margin:18px 0 0;color:#58696d;font-size:15px;line-height:1.8}
+.detail-decision-action{min-width:0}
+.detail-decision-benefit{display:grid;gap:3px;padding:18px 20px;background:#fff;border:1px solid #dce3e4}
+.detail-decision-benefit span{color:#697b7f;font-size:11px;letter-spacing:.04em}
+.detail-decision-benefit strong{color:#253236;font-size:22px;font-weight:700;letter-spacing:-.04em}
+.detail-decision-benefit small{color:#738185;font-size:11px;line-height:1.5}
+.detail-decision-cta{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:55px;margin-top:10px;padding:13px 18px;background:#fee500;color:#263236;font-size:15px;font-weight:700}
+.detail-decision-cta:hover{background:#f4dc00}
+.detail-decision-action>p{margin:10px 0 0;color:#6c7b7f;font-size:11px;line-height:1.6}
+@media(max-width:760px){body[data-page="detail"] .detail-benefit-teaser{display:block;margin-bottom:38px;padding:20px 19px}.detail-benefit-teaser a{justify-content:space-between;width:100%;margin-top:15px}body[data-page="detail"] .detail-decision{grid-template-columns:1fr;gap:26px;margin-block:36px 72px;padding:26px 22px}.detail-decision h2{font-size:clamp(22px,6vw,30px)}.detail-decision-copy>p:last-child{font-size:13px}.detail-decision-benefit strong{font-size:20px}}
