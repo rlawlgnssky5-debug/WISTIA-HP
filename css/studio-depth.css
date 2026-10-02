@@ -90,8 +90,9 @@ html[data-studio-motion=on] .studio-scene-record.is-in-view .studio-record{anima
 html[data-studio-motion=on] .studio-scene.is-in-view .studio-wave i{animation:studio-wave 2.2s ease-in-out infinite;animation-delay:calc(var(--wave)*-.12s)}
 html[data-studio-motion=on] .studio-scene.is-in-view .studio-orbit-one{animation:studio-orbit 18s linear infinite}
 html[data-studio-motion=on] .studio-scene.is-in-view .studio-orbit-two{animation:studio-orbit 24s linear infinite reverse}
-@keyframes studio-disc-float{0%,100%{transform:translateZ(-15px) rotateY(-28deg) rotateZ(-15deg) translateY(0)}50%{transform:translateZ(0) rotateY(-5deg) rotateZ(-4deg) translateY(-14px)}}
-@keyframes studio-mic-float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.studio-scene *{animation-play-state:var(--studio-animation-state,running)!important}
+@keyframes studio-disc-float{0%,100%{transform:translateZ(-15px) rotateY(-28deg) rotateZ(-15deg) translateY(0)}50%{transform:translateZ(0) rotateY(-5deg) rotateZ(-4deg) translateY(var(--studio-disc-rise,-14px))}}
+@keyframes studio-mic-float{0%,100%{translate:0 0}50%{translate:0 var(--studio-mic-rise,-12px)}}
 @keyframes studio-disc-turn{0%,100%{transform:translateZ(65px) rotateY(-12deg) rotateZ(-20deg)}50%{transform:translateZ(90px) rotateY(25deg) rotateZ(12deg)}}
 @keyframes studio-wave{0%,100%{scale:1 .65}50%{scale:1 1}}
 @keyframes studio-orbit{from{rotate:y 0deg}to{rotate:y 360deg}}
@@ -115,6 +116,7 @@ html[data-studio-motion=on] .studio-scene.is-in-view .studio-orbit-two{animation
  button[data-studio-motion]{font-size:9px;padding:4px 8px}
  .studio-hero-visual{margin-top:6px}.studio-scene{height:330px;border-radius:16px}
  .studio-world{scale:.78}.studio-scene-shadow{bottom:12%}
+ .studio-scene{--studio-disc-rise:-6px;--studio-mic-rise:-5px}
  .studio-hero-visual .we-hero-photo{width:29%;bottom:22px;right:5px;padding:5px}
  .studio-hero-visual .we-hero-photo figcaption{font-size:7px}
  .studio-sound-section{grid-template-columns:1fr;gap:24px}.studio-sound-section .studio-scene{height:330px}

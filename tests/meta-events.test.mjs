@@ -94,11 +94,15 @@ assert.equal(blockedPixel.calls.length, 0);
 assert.equal(blockedPixel.requests.length, 1);
 const throwingPixel = createClient();
 throwingPixel.window.fbq = () => { throw new Error("browser pixel blocked"); };
+assert.equal(throwingPixel.window.wistiaMeta.trackPageView(), false);
 assert.equal(throwingPixel.window.wistiaMeta.trackViewContent(soloView), false);
 throwingPixel.click({ href: kakaoHref, id: "floatingKakaoChat" });
 assert.equal(throwingPixel.requests.length, 0);
 throwingPixel.click({ href: kakaoHref, matches: selector => selector === ".consult-copy-action" });
 assert.equal(throwingPixel.requests.length, 1);
+throwingPixel.window.fbq = (...args) => throwingPixel.calls.push(args);
+assert.equal(throwingPixel.window.wistiaMeta.trackPageView(), true, "failed PageView can be retried without breaking rendering");
+assert.equal(throwingPixel.window.wistiaMeta.trackPageView(), false, "successful retry is still deduplicated");
 
 function createResponse() {
   return { statusCode: 200, setHeader() {}, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
@@ -148,6 +152,11 @@ try {
   };
   assert.equal((await handler(invalidTestRequest, createResponse())).statusCode, 200);
   assert.equal(JSON.parse(outgoing[1].body).test_event_code, undefined);
+  const damagedCookieRequest = { ...request, headers: { ...request.headers, cookie: "_fbp=%E0%A4%A; _fbc=fb.1.123.valid" } };
+  assert.equal((await handler(damagedCookieRequest, createResponse())).statusCode, 200);
+  const cookieEvents = JSON.parse(outgoing[1].body).data;
+  assert.equal(cookieEvents[0].user_data.fbp, undefined, "damaged optional cookie is omitted");
+  assert.equal(cookieEvents[0].user_data.fbc, "fb.1.123.valid", "valid cookie and event still sent");
   assert.equal((await handler({ ...request, headers: { ...request.headers, origin: "https://other.example" } }, createResponse())).statusCode, 403);
 } finally {
   globalThis.fetch = originalFetch;

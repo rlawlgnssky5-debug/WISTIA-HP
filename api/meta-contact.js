@@ -2,7 +2,9 @@ const PIXEL_ID = "2825959717777272";
 
 function cookieValue(header, name) {
   const match = String(header || "").split(";").map(part => part.trim()).find(part => part.startsWith(`${name}=`));
-  return match ? decodeURIComponent(match.slice(name.length + 1)) : undefined;
+  if (!match) return undefined;
+  try { return decodeURIComponent(match.slice(name.length + 1)); }
+  catch { return undefined; }
 }
 
 export default async function handler(request, response) {

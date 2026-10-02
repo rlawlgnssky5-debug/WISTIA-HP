@@ -79,24 +79,28 @@
  function depth(){
   const scenes=[...document.querySelectorAll('.studio-scene')],cards=[...document.querySelectorAll('.we-service figure,.we-case figure,.we-craft-grid>figure,.arc-product-media,.wistia-location-address,.wistia-specialist-grid article')]
   if(!scenes.length&&!cards.length)return
-  let frame=0
+  let frame=0,pointerFrame=0
+  const pointerUpdates=new Map()
+  const queueTilt=(node,values)=>{pointerUpdates.set(node,values);if(!pointerFrame)pointerFrame=requestAnimationFrame(()=>{pointerFrame=0;pointerUpdates.forEach((properties,target)=>Object.entries(properties).forEach(([key,value])=>target.style.setProperty(key,value)));pointerUpdates.clear()})}
   const observer=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-in-view',entry.isIntersecting)),{rootMargin:'40px'}):null
   scenes.forEach(scene=>{if(observer)observer.observe(scene);else scene.classList.add('is-in-view')})
   if(observer)cleanups.push(()=>observer.disconnect())
   cards.forEach(card=>{
    card.classList.add('studio-depth-card')
    if(!desktop.matches)return
-   listen(card,'pointermove',event=>{const rect=card.getBoundingClientRect();card.style.setProperty('--card-x',((.5-(event.clientY-rect.top)/rect.height)*7).toFixed(2)+'deg');card.style.setProperty('--card-y',(((event.clientX-rect.left)/rect.width-.5)*9).toFixed(2)+'deg');card.classList.add('is-pointed')},{passive:true})
-   listen(card,'pointerleave',()=>{card.style.setProperty('--card-x','0deg');card.style.setProperty('--card-y','0deg');card.classList.remove('is-pointed')})
+   listen(card,'pointermove',event=>{if(event.pointerType==='touch')return;const rect=card.getBoundingClientRect();queueTilt(card,{'--card-x':((.5-(event.clientY-rect.top)/rect.height)*5).toFixed(2)+'deg','--card-y':(((event.clientX-rect.left)/rect.width-.5)*7).toFixed(2)+'deg'});card.classList.add('is-pointed')},{passive:true})
+   listen(card,'pointerleave',()=>{pointerUpdates.delete(card);card.style.setProperty('--card-x','0deg');card.style.setProperty('--card-y','0deg');card.classList.remove('is-pointed')})
   })
   scenes.forEach(scene=>{
    if(!desktop.matches)return
-   listen(scene,'pointermove',event=>{const rect=scene.getBoundingClientRect();scene.style.setProperty('--tilt-x',((.5-(event.clientY-rect.top)/rect.height)*16).toFixed(2)+'deg');scene.style.setProperty('--tilt-y',(((event.clientX-rect.left)/rect.width-.5)*22).toFixed(2)+'deg')},{passive:true})
-   listen(scene,'pointerleave',()=>{scene.style.setProperty('--tilt-x','0deg');scene.style.setProperty('--tilt-y','0deg')})
+   listen(scene,'pointermove',event=>{if(event.pointerType==='touch')return;const rect=scene.getBoundingClientRect();queueTilt(scene,{'--tilt-x':((.5-(event.clientY-rect.top)/rect.height)*12).toFixed(2)+'deg','--tilt-y':(((event.clientX-rect.left)/rect.width-.5)*18).toFixed(2)+'deg'})},{passive:true})
+   listen(scene,'pointerleave',()=>{pointerUpdates.delete(scene);scene.style.setProperty('--tilt-x','0deg');scene.style.setProperty('--tilt-y','0deg')})
   })
-  const update=()=>{frame=0;scenes.forEach(scene=>{if(!scene.classList.contains('is-in-view'))return;const rect=scene.getBoundingClientRect(),progress=Math.max(-1,Math.min(1,(innerHeight/2-rect.top-rect.height/2)/innerHeight));scene.style.setProperty('--scroll-turn',(progress*(desktop.matches?24:10)).toFixed(2)+'deg')})}
+  const update=()=>{frame=0;scenes.forEach(scene=>{if(!scene.classList.contains('is-in-view'))return;const rect=scene.getBoundingClientRect(),progress=Math.max(-1,Math.min(1,(innerHeight/2-rect.top-rect.height/2)/innerHeight));scene.style.setProperty('--scroll-turn',(progress*(desktop.matches?18:4)).toFixed(2)+'deg')})}
+  const visibility=()=>scenes.forEach(scene=>scene.style.setProperty('--studio-animation-state',document.hidden?'paused':'running'))
+  listen(document,'visibilitychange',visibility);visibility()
   listen(window,'scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true})
-  cleanups.push(()=>{cancelAnimationFrame(frame);scenes.forEach(scene=>{scene.classList.remove('is-in-view');['--tilt-x','--tilt-y','--scroll-turn'].forEach(name=>scene.style.removeProperty(name))});cards.forEach(card=>{card.classList.remove('studio-depth-card','is-pointed');['--card-x','--card-y'].forEach(name=>card.style.removeProperty(name))})})
+  cleanups.push(()=>{cancelAnimationFrame(frame);cancelAnimationFrame(pointerFrame);pointerUpdates.clear();scenes.forEach(scene=>{scene.classList.remove('is-in-view');['--tilt-x','--tilt-y','--scroll-turn','--studio-animation-state'].forEach(name=>scene.style.removeProperty(name))});cards.forEach(card=>{card.classList.remove('studio-depth-card','is-pointed');['--card-x','--card-y'].forEach(name=>card.style.removeProperty(name))})})
  }
  function cursor(){
   const pill=document.createElement('span');pill.className='wistia-cursor';pill.setAttribute('aria-hidden','true');document.body.append(pill);let frame=0,x=0,y=0

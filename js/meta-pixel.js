@@ -50,10 +50,15 @@
     if (localPreview || typeof window.fbq !== "function") return false;
     const url = location.pathname + location.search + (location.hash || "");
     if (url === lastPageViewUrl) return false;
-    lastPageViewUrl = url;
-    lastViewContentKey = "";
-    window.fbq("track", "PageView");
-    return true;
+    try {
+      window.fbq("track", "PageView");
+      lastPageViewUrl = url;
+      lastViewContentKey = "";
+      return true;
+    } catch {
+      // Tracking failures must not interrupt rendering or consume the retry.
+      return false;
+    }
   }
 
   function trackViewContent(payload) {

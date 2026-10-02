@@ -1536,7 +1536,7 @@ document.addEventListener("click",e=>{
 })
 document.addEventListener("change",e=>{
  const el=e.target;
- if(el.closest('#contactInquiryForm')){if(el.name==='service'&&contactQuote&&el.value!==contactQuote.service){contactQuote=null;document.querySelector('.contact-quote')?.remove()}return}
+ if(el.closest('#contactInquiryForm')){window.WistiaContact.update(el);if(el.name==='service'&&contactQuote&&el.value!==contactQuote.service){contactQuote=null;document.querySelector('.contact-quote')?.remove()}return}
  const priceScrollY=document.body.dataset.page==="event"?window.scrollY:null;
  if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value;if(next!==currentEventProduct){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"","/event/"+next+location.search);route({preserveScroll:true,reuseEventForm:!!el.dataset.baseProduct})}return}
  if(el.dataset.event){el.checked?selectedEvents.add(el.dataset.event):selectedEvents.delete(el.dataset.event);updatePrice()}

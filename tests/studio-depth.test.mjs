@@ -38,6 +38,13 @@ window.WistiaMotion.mount()
 assert.equal(html.attrs['data-studio-motion'],'on')
 assert.equal(button.textContent,'')
 assert.ok(scene.classes.has('is-in-view'))
+assert.equal(scene.styles.get('--studio-animation-state'),'running')
+document.hidden=true
+document.events.get('visibilitychange')()
+assert.equal(scene.styles.get('--studio-animation-state'),'paused')
+document.hidden=false
+document.events.get('visibilitychange')()
+assert.equal(scene.styles.get('--studio-animation-state'),'running')
 assert.ok(card.classes.has('studio-depth-card'))
 window.events.get('scroll')()
 const frame=frames.get(1);frames.delete(1);frame()
@@ -51,4 +58,25 @@ assert.equal(html.textContent,'document content must survive')
 assert.equal(storage.get('wistia-studio-motion'),'on')
 window.WistiaMotion.destroy()
 assert.equal(button.events.size,0)
+// Pointer bursts share a single animation frame and leaving cancels stale tilt.
+{
+ const scene=element(),card=element(),root=element(),pending=new Map(),cleanups=[]
+ let frameId=0
+ const document={...element(),hidden:false,querySelectorAll:selector=>selector==='.studio-scene'?[scene]:[card]}
+ const context={document,window:root,cleanups,desktop:{matches:true},innerHeight:900,requestAnimationFrame:fn=>{const id=++frameId;pending.set(id,fn);return id},cancelAnimationFrame:id=>pending.delete(id),listen:(el,type,fn)=>{el.addEventListener(type,fn);cleanups.push(()=>el.removeEventListener(type,fn))}}
+ const depth=motion.slice(motion.indexOf('function depth()'),motion.indexOf('function cursor()'))
+ runInNewContext(depth+';depth()',context)
+ card.events.get('pointermove')({pointerType:'touch',clientX:240,clientY:100})
+ assert.equal(pending.size,0,'touch scrolling must not tilt cards')
+ for(let i=0;i<20;i++)card.events.get('pointermove')({pointerType:'mouse',clientX:240+i,clientY:100})
+ assert.equal(pending.size,1,'coalesce pointer moves into one frame')
+ card.events.get('pointerleave')()
+ const flush=[...pending.values()][0];pending.clear();flush()
+ assert.equal(card.styles.get('--card-x'),'0deg','late pointer frame cannot reapply tilt after leaving')
+ scene.events.get('pointermove')({pointerType:'mouse',clientX:240,clientY:100})
+ assert.equal(pending.size,1)
+ cleanups.reverse().forEach(fn=>fn())
+ assert.equal(pending.size,0,'navigation cancels pending pointer frames')
+ assert.equal(scene.styles.size,0)
+}
 console.log('CSS 3D structure, address grouping, restored controls, explicit reduced-motion opt-in and complete teardown passed')

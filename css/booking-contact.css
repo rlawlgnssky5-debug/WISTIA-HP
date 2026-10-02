@@ -28,6 +28,22 @@
 .contact-field input::placeholder{color:#98a5b1;font-size:13px}
 .contact-field input:focus,.contact-field select:focus{outline:2px solid #607e95;outline-offset:2px}
 .contact-field em{font-size:12px;color:#768b9b;line-height:1.7;font-style:normal}
+.contact-form fieldset.contact-field{border:0;padding:0;min-width:0}
+.contact-field legend{float:left;width:100%;padding:0;margin-bottom:10px;font-size:15px;font-weight:600;line-height:1.7;color:#2f4656}
+.contact-date-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;clear:both}
+.contact-date-toggle label{position:relative;min-width:0;cursor:pointer}
+.contact-date-toggle input{position:absolute;width:1px;height:1px;min-height:0;padding:0;margin:0;border:0;opacity:0}
+.contact-date-toggle span{display:flex;justify-content:center;align-items:center;min-height:48px;border-radius:10px;background:#ffffffbd;box-shadow:inset 0 0 0 1px #d5dfe7;color:#6c8190;font-size:14px;transition:background .18s,box-shadow .18s,transform .18s}
+.contact-date-toggle input:checked+span{background:linear-gradient(110deg,#dce8f0,#f4f8fb);box-shadow:inset 0 0 0 2px #607e95;color:#314e63;font-weight:600}
+.contact-date-toggle input:focus-visible+span{outline:2px solid #294f69;outline-offset:3px}
+.contact-date-toggle label:active span{transform:scale(.98)}
+.contact-date-picker{display:grid;gap:10px;min-width:0;margin-top:4px}
+.contact-date-picker .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.contact-date-picker[hidden],.contact-input-error[hidden]{display:none!important}
+.contact-time-selects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;clear:both}
+.contact-time-selects label{display:grid;gap:8px;min-width:0}
+.contact-time-selects label>span{font-size:12px;color:#768b9b}
+.contact-input-error{font-size:12px;line-height:1.7;color:#9b3e3e}
 .contact-quote{padding:18px;background:#e0eaf2;border-radius:12px;margin-bottom:24px;color:#3d596d;line-height:1.7}
 .contact-quote strong{font-size:14px}.contact-quote p{font-size:13px;white-space:pre-line;margin:8px 0}.contact-quote small{font-size:11px}
 .contact-privacy-note{font-size:11px;line-height:1.9;color:#82929f;margin:28px 0 20px}
@@ -44,8 +60,11 @@
  .contact-intro h1{font-size:28px}.contact-intro>p:not(.contact-welcome){font-size:14px}
  .contact-form{padding:24px 18px;border-radius:16px}
  .contact-field>span{font-size:14px}
+ .contact-field legend{font-size:14px}
+ .contact-time-selects{gap:10px}
+ .contact-time-selects select{padding:12px 8px}
  .contact-form-link{font-size:13px;padding:16px}
  body[data-page=contact]:not(.menu-open):not(.modal-open) #floatingKakao{display:none!important}
 }
 @media(max-width:360px){#app .contact-page{padding-inline:16px}.contact-form{padding-inline:16px}.booking-product-face strong{font-size:14px}}
-@media(prefers-reduced-motion:reduce){.booking-product-face{transition:none}.booking-product-card input:checked+.booking-product-face{animation:none}.booking-product-card:active .booking-product-face{transform:none}}
+@media(prefers-reduced-motion:reduce){.booking-product-face,.contact-date-toggle span{transition:none}.booking-product-card input:checked+.booking-product-face{animation:none}.booking-product-card:active .booking-product-face,.contact-date-toggle label:active span{transform:none}}

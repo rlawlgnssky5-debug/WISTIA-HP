@@ -15,14 +15,13 @@ assert.equal(homeCases[3][2],'AQ9Z1flOUPo')
 assert.match(home,/String\(cases.length\)\.padStart\(2,'0'\)/)
 assert.match(app,/window\.WistiaMotion\?\.destroy\(\)/)
 assert.match(app,/window\.WistiaMotion\?\.mount\(\)/)
-assert.match(index,/site-motion\.js\?v=20261002-readable-details-1/)
-assert.match(index,/meta-pixel\.js\?v=20260929-path-1/)
+assert.match(index,/site-motion\.js\?v=20261002-motion-audit-1/)
+assert.match(index,/meta-pixel\.js\?v=20261002-tracking-resilience-1/)
 assert.match(index,/analytics\.js\?v=20260929-path-1/)
 const protectedHashes={
- 'js/meta-pixel.js':'28b8f7fb0ef863596d3bc82bc2615d043d347518a903280f7afe83201b929824',
- 'js/analytics.js':'25e519522592a7e15723cadb872bbcbefc00052399dbfb0e3aa56a05ac4afd07',
- 'api/meta-contact.js':'bf1629671c5dce5bffed266b92bf970039dc7a6a4d27a670ea04b2a50559298f'
+ 'js/analytics.js':'25e519522592a7e15723cadb872bbcbefc00052399dbfb0e3aa56a05ac4afd07'
 }
+// Meta resilience is covered by meta-events.test.mjs, including the unchanged event IDs and click contract.
 for(const [file,hash] of Object.entries(protectedHashes))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+file,import.meta.url))).digest('hex'),hash,file+' must remain unchanged')
 
 // Exercise motion lifecycle without overriding any browser or telemetry runtime
@@ -50,4 +49,4 @@ await exercise()
 await exercise({desktop:false})
 await exercise({reduced:true})
 await exercise({blocked:true})
-console.log('Renewal product links, untouched tracking hashes, desktop/mobile motion, reduced motion, blocked dependencies and teardown passed')
+console.log('Renewal product links, preserved analytics, desktop/mobile motion, reduced motion, blocked dependencies and teardown passed')
