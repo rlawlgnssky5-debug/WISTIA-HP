@@ -19,3 +19,18 @@
 - `tests/qa/entrance-home-desktop-20261002.jpg`
 - `tests/qa/entrance-price-desktop-20261002.jpg`
 - `tests/qa/entrance-price-mobile-20261002.jpg`
+
+## 운영 배포 확인
+
+- 요청에 따라 병합 커밋 `bb5ce4b0a21829e7551b7dff2451942cfe9ce34b`를 GitHub `main`에 푸시함
+- Vercel: `success`, `Deployment has completed`
+- 배포 기록: https://vercel.com/wistia1/wistia/59Jhd1Cnk6EeqrTKh2mS229BnzkK
+- https://www.wistiastudio.com/ HTTP 200, 앱 버전 `20261002-entrance-fill-1` 확인
+- 운영 1440px 홈 사진 두 장은 각각 180×225px, cover 채움과 얼굴 구도를 확인함
+- 운영 홈 `가격 보기` 클릭 → `/event/solo`, 기본가 12만원 확인
+- 운영 320·390px 가격 화면 가로 넘침 0, CTA 잘림 없음
+- 운영 신부 옵션 35→39만원, 상담 복사 팝업 확인, 해제 후 35만원 복귀
+- 운영 홈·가격 새 탭 오류 로그 0, 확인 버튼의 외부 카카오톡 이동은 실행하지 않음
+- 검수용 뷰포트 변경은 종료 전에 초기화하고 임시 검수 탭은 닫음
+- 운영 미리보기 탭 두 개를 결과로 유지함
+- 운영 캡처: `tests/qa/entrance-home-production-20261002.jpg`, `tests/qa/entrance-price-production-20261002.jpg`, `tests/qa/entrance-price-production-mobile-20261002.jpg`
