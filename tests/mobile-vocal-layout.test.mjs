@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const css=read('css/vocal-player-responsive.css')
+assert.match(css,/@media\(max-width:900px\)[\s\S]*\.we-home #homeSound #wistiaBeforeAfter \.wistia-ba-layout\{grid-template-columns:minmax\(0,1fr\)/)
+assert.match(css,/bap-time\{white-space:nowrap;flex:0 0 auto/)
+assert.match(css,/bap-tabs\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/)
+assert.match(css,/bap-tab\{min-width:0/)
+assert.match(css,/bap-body\{padding:20px 16px/)
+assert.match(css,/flex-direction:row!important/)
+assert.match(css,/body.is-vocal-comparison-visible[^\n]+display:none!important/)
+assert.match(read('js/before-after.js'),/playerObserver\?\.disconnect\(\);document.body.classList.remove\('is-vocal-comparison-visible'\)/)
+assert.match(read('index.html'),/vocal-player-responsive.css\?v=20261002-mobile-vocal-1/)
+assert.ok(read('index.html').indexOf('vocal-player-responsive.css')>read('index.html').indexOf('price-sidebar.css'))
+console.log('Shared home/mobile vocal player responsive rules: passed')

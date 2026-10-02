@@ -21,7 +21,12 @@
     const buffers={before:null,after:null},peakSets={before:null,after:null},failures={before:false,after:false}
     const controller=new AbortController()
     const signal=controller.signal
+    // The mobile floating contact panel must never cover this player's controls.
+    const playerObserver=global.IntersectionObserver?new global.IntersectionObserver(entries=>{
+      if(!destroyed)document.body.classList.toggle('is-vocal-comparison-visible',entries.some(entry=>entry.isIntersecting))
+    },{threshold:0}):null
     let mode='before',audioCtx=null,source=null,isPlaying=false,pendingPlay=false,startedAt=0,pausedAt=0,raf=0,destroyed=false,playRequest=0
+    playerObserver?.observe(root.querySelector('.bap-player'))
     const fmt=value=>{const time=Number.isFinite(value)?value:0;return Math.floor(time/60)+':'+String(Math.floor(time%60)).padStart(2,'0')}
     const activeBuffer=()=>buffers[mode]
     const activePeaks=()=>peakSets[mode]
@@ -90,7 +95,7 @@
     load('before',beforeSrc);load('after',afterSrc);resize()
     global.addEventListener('resize',resize,{signal})
     const tick=()=>{if(destroyed)return;sync();raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick)
-    return{setMode:activate,play,pause,destroy(){destroyed=true;controller.abort();cancelAnimationFrame(raf);stopSource();isPlaying=false;audioCtx?.close();audioCtx=null}}
+    return{setMode:activate,play,pause,destroy(){destroyed=true;playerObserver?.disconnect();document.body.classList.remove('is-vocal-comparison-visible');controller.abort();cancelAnimationFrame(raf);stopSource();isPlaying=false;audioCtx?.close();audioCtx=null}}
   }
   global.initWistiaBeforeAfter=initWistiaBeforeAfter
 })(window)

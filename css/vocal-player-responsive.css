@@ -1,0 +1,35 @@
+/* Shared player: viewport rules also cover the home, which has no solo-detail container. */
+.we-home #homeSound #wistiaBeforeAfter{width:100%;margin-inline:0!important}
+#wistiaBeforeAfter .wistia-ba-layout>*{min-width:0}
+#wistiaBeforeAfter .bap-controls{min-width:0;flex-wrap:wrap}
+#wistiaBeforeAfter .bap-time{white-space:nowrap;flex:0 0 auto;font-variant-numeric:tabular-nums}
+#wistiaBeforeAfter .bap-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+#wistiaBeforeAfter .bap-tab{min-width:0}
+@media(max-width:900px){
+ .we-home #homeSound #wistiaBeforeAfter .wistia-ba-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+ .we-home #homeSound .wistia-ba-copy>p:last-child{font-size:14px!important;line-height:1.85}
+}
+@media(max-width:600px){
+ #app #wistiaBeforeAfter .wistia-ba-layout{grid-template-columns:minmax(0,1fr);gap:24px}
+ #app #wistiaBeforeAfter .bap-body{padding:20px 16px}
+ #app #wistiaBeforeAfter .bap-badge{padding:12px;font-size:13px;line-height:1.7}
+ #app #wistiaBeforeAfter .bap-controls{gap:10px;margin-bottom:16px;padding-bottom:14px}
+ #app #wistiaBeforeAfter .bap-play{min-width:96px;height:44px;padding:0 12px}
+ #app #wistiaBeforeAfter .bap-time{font-size:12px}
+ #app #wistiaBeforeAfter .bap-wave{height:68px;margin:0 0 18px}
+ #app #wistiaBeforeAfter .bap-tabs{gap:12px;scroll-margin-bottom:90px}
+ #app #wistiaBeforeAfter .bap-tab{min-height:76px;padding:12px 14px;gap:5px}
+ #app #wistiaBeforeAfter .bap-tab small{font-size:10px;white-space:nowrap}
+ #app #wistiaBeforeAfter .bap-tab strong{font-size:18px;white-space:nowrap;line-height:1.35}
+ #app #wistiaBeforeAfter .bap-switch{width:28px;height:28px}
+ .we-home #homeSound .wistia-ba-copy h2{font-size:26px!important;line-height:1.4;margin-bottom:16px}
+ .we-home #homeSound .wistia-ba-eyebrow{font-size:11px;line-height:1.6}
+ /* Keep the two contact actions, but do not stack a tall panel over mobile audio controls. */
+ body:not([data-page=event]):not(.menu-open):not(.modal-open) #floatingKakao{
+  flex-direction:row!important;left:12px!important;right:12px!important;width:auto!important;
+  bottom:calc(12px + env(safe-area-inset-bottom))!important;gap:8px!important
+ }
+ body #floatingKakao a{flex:1;min-width:0;height:44px!important;min-height:44px!important}
+ body.is-vocal-comparison-visible:not([data-page=event]):not(.menu-open):not(.modal-open) #floatingKakao{display:none!important}
+ html{scroll-padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+}

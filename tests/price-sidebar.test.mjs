@@ -34,7 +34,7 @@ assert.match(node('#bookingSummary').innerHTML,/<small>추가 옵션<\/small>−
 set({key:'duet-film',format:'making',options:['bride-entrance'],events:['blog','reaction','cafe','instagram']})
 assert.equal(node('#mobilePrice').textContent,'26만원')
 assert.equal(node('#eventDiscountTotal').textContent,'선택 할인 −6만원')
-assert.match(context.eventBenefitsSection('03'),/최대 6만원 할인/)
+assert.match(context.eventBenefitsSection('03'),/최대 7만원 할인/)
 set({key:'solo',options:['lyrics-video','groom-entrance']})
 assert.equal(node('#mobilePrice').textContent,'20만원')
 assert.equal(node('#quoteRegular').hidden,true,'deselecting benefits clears the strike-through')
