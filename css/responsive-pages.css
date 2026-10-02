@@ -1,0 +1,118 @@
+/* One canvas and spacing system for desktop, tablet and mobile pages. */
+:root{--page-gutter:48px;--page-gap:64px;--page-width:1152px}
+body{--app-canvas-width:1280px}
+#app .info-page,#app .wistia-events{box-sizing:border-box;width:calc(100% - 2 * var(--page-gutter));max-width:var(--page-width);margin-inline:auto;padding:var(--page-gap) 0 88px}
+#app .info-page-intro,#app .wistia-events-intro{display:flow-root;max-width:none;margin:0;padding:0 0 40px;border:0}
+#app .info-page-intro h1,#app .wistia-events-intro h1{margin:14px 0 0;font-size:clamp(32px,4vw,48px);font-weight:500;line-height:1.3;letter-spacing:-.045em}
+#app .info-page-intro>p,#app .wistia-events-intro>p{max-width:58ch;margin:20px 0 0;font-size:15px;line-height:1.85;color:var(--muted)}
+#app .info-page-intro .eyebrow{margin:0;padding:0;border:0;background:none;font-size:11px;letter-spacing:.08em}
+#app .info-page>:not(header){margin-top:0}
+.before-after-page{container-type:inline-size}
+#app .before-after-page .info-page{margin-inline:auto}
+#app .before-after-page .wistia-ba-section{width:100%;max-width:none;margin:0;padding:32px;background:linear-gradient(125deg,#f1f4f6,#fafbfc 65%,#fff)!important;border:0}
+#app .before-after-page .wistia-ba-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px}
+#app .before-after-page .wistia-ba-copy p{font-size:14px!important}
+#app .before-after-page .bap-badge b{font-size:15px}
+#app .before-after-page .wistia-ba-copy h2{font-size:clamp(24px,2.6vw,32px)!important}
+#app .info-page-about .wistia-about-story{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding:24px 0 64px;border:0}
+#app .info-page-about .wistia-about-story figure{aspect-ratio:16/9;order:0}
+#app .info-page-about .wistia-about-story figure img{object-fit:contain;background:#f4f6f8}
+#app .info-page-about .wistia-specialists{padding:48px 0 64px;border:0}
+#app .info-page-about .wistia-specialist-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+#app .info-page-about .wistia-specialist-grid article{display:block;min-width:0;padding:0;border:0}
+#app .info-page-about .wistia-specialist-grid article img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;margin:16px 0}
+#app .info-page-about .wistia-specialist-grid article h3{font-size:20px}
+#app .info-page-about .wistia-specialist-grid article small{display:block;font-size:14px;line-height:1.85}
+#app .info-page-about .wistia-about-closing{margin:0;padding:36px;background:linear-gradient(120deg,#f0f3f5,#fff);border:0}
+#app .info-faq-group{padding:28px 0 40px}
+#app .info-faq-group h2{font-size:25px}
+.info-process .we-process{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:0}
+.info-process .we-process li{padding:28px;background:linear-gradient(135deg,#eff3f6,#fff);border:0;min-width:0}
+.info-process .we-process h2{font-size:24px;margin:16px 0 12px}
+.info-process .we-process p{font-size:14px;line-height:1.85}
+#app .info-process .booking-guide{width:100%;max-width:none;margin:48px 0 0;padding:0}
+.info-process-actions{display:flex;gap:24px;flex-wrap:wrap;margin-top:36px;font-size:14px}
+.info-process-actions a{padding:12px 0}
+#app .wistia-location{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;padding:0}
+.wistia-directions-map{margin:0}
+.wistia-directions-map a{display:block}
+.wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain;border-radius:12px}
+.wistia-directions-map figcaption{font-size:12px;line-height:1.8;color:var(--muted);margin-top:12px}
+#app .wistia-location-address{min-width:0;padding:28px;background:linear-gradient(135deg,#f2f5f7,#fff);border:0}
+#app .wistia-location-links{grid-template-columns:1fr;margin-top:24px}
+#app .wistia-location-links a{border:0;background:linear-gradient(110deg,#e8edf2,#f9fafb);border-radius:8px}
+#app .wistia-location-details{grid-column:1/-1;gap:32px;border:0}
+#app .wistia-location-details article,#app .wistia-location-details article+article{padding:20px 0;border:0}
+.story-process-cards .shell{box-sizing:border-box;width:calc(100% - 2 * var(--page-gutter));max-width:var(--page-width);margin-inline:auto}
+.story-process-folder{border:0!important;padding:0!important;background:none!important;overflow:visible}
+.story-process-folder>summary{display:flex!important;align-items:center;gap:24px;padding:28px 32px!important;position:relative;cursor:pointer;list-style:none;border:0!important;border-radius:20px;background:linear-gradient(125deg,#dce4eb,#f4f7f9 72%,#fff);min-height:138px;box-sizing:border-box}
+.story-process-folder>summary::-webkit-details-marker{display:none}
+.story-process-folder>summary:focus-visible{outline:2px solid #526f85;outline-offset:5px}
+.process-folder-art{position:relative;flex:0 0 96px;height:72px;perspective:320px}
+.process-folder-art:before{content:"";position:absolute;left:0;top:2px;width:42px;height:18px;border-radius:8px 8px 0 0;background:#91a3b3}
+.process-folder-art i,.process-folder-art b{position:absolute;inset:12px 0 0;background:linear-gradient(145deg,#abbac7,#d6e0e8);border-radius:5px 10px 10px 10px;box-shadow:0 8px 18px #45596812;transition:transform .35s ease;transform-origin:50% 100%}
+.process-folder-art b{inset:23px -3px -3px 4px;background:linear-gradient(140deg,#e8eef3,#b9cad8);transform:rotateX(-12deg)}
+.story-process-folder[open] .process-folder-art b{transform:rotateX(-40deg)}
+.process-folder-label{display:block;min-width:0}
+.process-folder-label strong{display:block;font-size:24px;font-weight:600;line-height:1.4}
+.process-folder-label small{display:block;font-size:13px;line-height:1.8;color:#617080;margin-top:10px}
+.process-folder-cue{font-size:13px;color:#456078;white-space:nowrap;margin-left:auto}
+.folder-close-label{display:none}
+.story-process-folder[open] .folder-close-label{display:inline}
+.story-process-folder[open] .folder-open-label{display:none}
+.process-folder-content{padding:28px 0 0}
+.story-process-folder .story-process-grid{gap:28px 32px}
+.story-process-folder .story-process-card{grid-row:var(--process-row);grid-column:var(--process-column);display:grid;grid-template-columns:136px minmax(0,1fr);align-items:center;gap:20px;padding:20px;border:0;min-height:130px;animation:none}
+.story-process-folder .story-process-media{width:136px;height:auto;aspect-ratio:16/9;background:transparent}
+.story-process-folder .story-process-media img{width:100%;height:100%;object-fit:contain}
+.story-process-folder .story-process-card h3{font-size:18px;margin:6px 0}
+.story-process-folder .story-process-card p{font-size:13px;line-height:1.7}
+.story-process-folder .story-process-arrow{right:-16px;top:50%;bottom:auto;transform:translate(50%,-50%);padding:0;background:none;font-size:22px;color:#708798}
+.story-process-folder .story-process-arrow.is-left{left:-16px;right:auto;transform:translate(-50%,-50%)}
+.story-process-folder .story-process-arrow.is-down{top:auto;bottom:-14px;left:50%;right:auto;transform:translate(-50%,50%)}
+.story-process-folder[open] .story-process-card{animation:folder-card-out .5s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--process-index) * 65ms)}
+.process-photo-note{margin:24px 0 0;font-size:12px;color:#6c7b88;line-height:1.8}
+@keyframes folder-card-out{from{opacity:0;transform:translateY(-24px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+ :root{--page-gutter:32px;--page-gap:48px}
+ #app .info-page-about .wistia-about-story{grid-template-columns:1fr;gap:28px}
+ #app .info-page-about .wistia-specialist-grid{grid-template-columns:1fr;gap:32px}
+ #app .info-page-about .wistia-specialist-grid article img{max-width:520px}
+ #app .before-after-page .wistia-ba-layout{grid-template-columns:1fr;gap:24px}
+ #app .wistia-location{grid-template-columns:1fr;gap:28px}
+ .wistia-directions-map{max-width:640px;width:100%;margin-inline:auto}
+ .story-process-folder .story-process-card{grid-template-columns:100px minmax(0,1fr);gap:14px;padding:16px}
+ .story-process-folder .story-process-media{width:100px}
+}
+@media(max-width:600px){
+ :root{--page-gutter:20px;--page-gap:40px}
+ #app .info-page,#app .wistia-events{padding-bottom:64px}
+ #app .info-page-intro,#app .wistia-events-intro{padding-bottom:32px}
+ #app .info-page-intro h1,#app .wistia-events-intro h1{font-size:32px}
+ #app .info-page-intro>p,#app .wistia-events-intro>p{font-size:14px;margin-top:16px}
+ #app .before-after-page .wistia-ba-section{padding:20px 16px}
+ #app .before-after-page .bap-body{padding:20px 16px}
+ #app .before-after-page .bap-badge b{font-size:14px}
+ #app .info-page-about .wistia-about-story{padding:0 0 40px}
+ #app .info-page-about .wistia-specialists{padding:24px 0 40px}
+ #app .info-page-about .wistia-about-closing{padding:24px 20px}
+ .info-process .we-process{grid-template-columns:1fr;gap:16px}
+ .info-process .we-process li{padding:24px}
+ #app .wistia-location-address{padding:24px 20px}
+ #app .wistia-location-details{grid-template-columns:1fr;gap:0}
+ .story-process-folder>summary{display:grid!important;grid-template-columns:66px minmax(0,1fr);gap:8px 16px;padding:24px 20px!important}
+ .process-folder-art{width:66px;height:52px;grid-row:1/3}
+ .process-folder-label{grid-column:2}
+ .process-folder-label strong{font-size:20px}
+ .process-folder-label small{font-size:12px;margin-top:6px}
+ .process-folder-cue{grid-column:2;margin:0;font-size:12px}
+ .story-process-folder .story-process-grid{grid-template-columns:1fr;gap:28px}
+ .story-process-folder .story-process-card{grid-column:1;grid-row:auto;grid-template-columns:96px minmax(0,1fr);min-height:122px;padding:16px 12px;gap:14px}
+ .story-process-folder .story-process-media{width:96px}
+ .story-process-folder .story-process-card h3{font-size:16px}
+ .story-process-folder .story-process-card p{font-size:12px}
+ .story-process-folder .story-process-arrow,.story-process-folder .story-process-arrow.is-left,.story-process-folder .story-process-arrow.is-down{top:auto;bottom:-14px;left:50%;right:auto;transform:translate(-50%,50%);font-size:0}
+ .story-process-folder .story-process-arrow:after{content:"↓";font-size:20px}
+}
+@media(max-width:360px){:root{--page-gutter:16px}#app .info-page-intro h1{font-size:29px}.story-process-folder .story-process-card{grid-template-columns:76px minmax(0,1fr);gap:12px}.story-process-folder .story-process-media{width:76px}.process-folder-label strong{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.story-process-folder[open] .story-process-card{animation:none}.process-folder-art i,.process-folder-art b{transition:none}}

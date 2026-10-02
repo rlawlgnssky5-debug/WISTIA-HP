@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict'
+import {readFileSync,existsSync} from 'node:fs'
+import {runInNewContext} from 'node:vm'
+const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const app=read('js/app.js'),css=read('css/responsive-pages.css')
+const fn=app.slice(app.indexOf('function storyProcessCards('),app.indexOf('function verticalProcessSection('))
+const scope={img:(src,alt)=>`<img src="${src}" alt="${alt}">`,escapeHtml:x=>x}
+runInNewContext(fn,scope)
+const markup=scope.storyProcessCards(Array.from({length:7},()=>({})))
+assert.equal((markup.match(/<img /g)||[]).length,8)
+assert.equal((markup.match(/<li class="story-process-card"/g)||[]).length,8)
+assert.match(markup,/<details class="story-process-folder"><summary>/)
+assert.match(markup,/제작 과정 살펴보기/)
+assert.match(markup,/--process-index:2;--process-row:2;--process-column:1/)
+assert.match(markup,/--process-index:3;--process-row:2;--process-column:2/)
+assert.match(markup,/class="process-flow"/)
+assert.doesNotMatch(markup,/story-process-arrow/)
+for(const [,src] of markup.matchAll(/src="([^"]+)"/g))assert.ok(existsSync(new URL('../'+src,import.meta.url)),src)
+assert.match(css,/body\{--app-canvas-width:1280px\}/)
+assert.match(css,/:root\{--page-gutter:20px;--page-gap:40px\}/)
+assert.match(css,/prefers-reduced-motion:reduce/)
+assert.match(css,/story-process-folder\[open\] .story-process-card\{animation:none/)
+assert.match(app,/\['진행 안내','\/info\/process'\]/)
+assert.match(app,/renderBeforeAfterPage\(\)/)
+assert.match(app,/setAttribute\("aria-expanded","false"\);document.querySelector\("#menuToggle"\)\?\.setAttribute\("aria-label","메뉴 열기"\)/)
+assert.match(app,/wistia-directions\.png/)
+assert.ok(existsSync(new URL('../assets/img/wistia-directions.png',import.meta.url)))
+console.log('Folder process, eight stage images, shared responsive pages and supplied map: passed')

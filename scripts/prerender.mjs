@@ -30,8 +30,9 @@ function page(path, data, options={}) {
 }
 
 for (const product of products) {
-  page(`/detail/${product}`, seo.detail[product])
-  page(`/event/${product}`, seo.event)
+  const retired = ['wedding', 'proposal'].includes(product)
+  page(`/detail/${product}`, retired ? seo.home : seo.detail[product], retired ? {robots:'noindex, follow'} : {})
+  page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
 }
 page('/info/location', seo.location)
 for (const [path, data] of Object.entries(seo.noindex)) page(path, data, {robots:'noindex, follow'})

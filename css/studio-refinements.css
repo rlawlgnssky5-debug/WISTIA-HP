@@ -1,0 +1,114 @@
+/* Review refinements: compact showcase, visible hierarchy, clear recording options */
+.we-home .we-section{padding-top:64px;padding-bottom:64px;border-top:1px solid #d8dde2}
+.we-home #homeServices{background:#f2f4f6}
+.we-home #homeCases{background:#fff}
+.we-home #homeSound{background:#edf0f3}
+.we-home #homeExpert{background:#fff}
+.we-home #homeProcess,.we-home .we-home-faq{background:#f2f4f6}
+.we-home .we-heading{margin-bottom:28px}
+.we-home .we-kicker{font-size:14px;line-height:1.6;letter-spacing:.12em;color:#505b65}
+.we-home .we-heading>.we-kicker{display:inline-flex;width:fit-content;padding:7px 12px;border:1px solid #cbd2d9;background:#fff;margin-bottom:20px}
+.we-home .we-services{gap:28px}
+.we-home .we-service{display:grid;grid-template-columns:180px minmax(0,1fr);gap:0 24px;padding:22px;background:#fff;border:1px solid #d8dde2}
+.we-home .we-service figure{grid-row:1/5;align-self:center;border-radius:8px}
+.we-home .we-service figure img{aspect-ratio:4/5;max-height:260px;object-fit:cover}
+.we-home .we-service h3{font-size:23px;margin:18px 0 12px;line-height:1.4}
+.we-home .we-service .we-meta{font-size:10px;gap:8px;line-height:1.6;padding:8px 0}
+.we-home .we-service .we-meta>span:last-child{display:none}
+.we-home .we-service p{font-size:12px;line-height:1.85}
+.we-home .we-service-link{justify-self:start;font-size:12px;margin-top:16px}
+.we-home .we-case{flex:0 0 min(560px,72vw);background:transparent}
+.we-home .we-case-video{display:block;position:relative;width:100%;aspect-ratio:16/9;margin:0;padding:0;border:0;border-radius:8px;overflow:hidden;background:#e8edf1;cursor:pointer}
+.we-home .we-case-video figure{height:100%;position:relative}
+.we-home .we-case img{height:100%;aspect-ratio:16/9;object-fit:cover}
+.we-home .we-case-video iframe{display:block;width:100%;height:100%;border:0}
+.we-home .we-case-play{position:absolute;inset:auto auto 18px 18px;display:flex;align-items:center;gap:10px;background:#fff;color:#303a43;padding:12px 18px;border-radius:30px;box-shadow:0 4px 20px #20262d25;font-size:14px}
+.we-home .we-case-play b{font-weight:600}
+.we-home .we-case-source{display:inline-block;font-size:11px;color:#596773;margin-top:10px}
+.we-home .we-case-bar{padding:14px 0}
+.we-home .we-craft-grid{display:block}
+.we-home .we-craft-list{display:block;width:100%}
+.we-home .we-craft-list details{padding:0;border:1px solid #d8dde2;margin:12px 0;border-radius:10px;overflow:hidden;background:#f6f8fa}
+.we-home .we-craft-list summary{padding:22px 24px;font-size:19px;transition:background .35s,color .35s}
+.we-home .we-craft-list summary:hover{background:#e8edf1}
+.we-home .we-craft-list summary>span{font-size:19px;color:#637485}
+.we-home .we-craft-list summary em{font-size:12px;font-style:normal;color:#6a7783}
+.we-home .we-craft-list summary b{font-size:25px}
+.we-home .we-craft-list details[open] summary{background:#e8edf1}
+.we-home .we-craft-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;padding:0 24px 24px}
+.we-home .we-craft-content figure{margin:0}
+.we-home .we-craft-content img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.we-home .we-craft-content p{margin:0 0 18px;padding:0;font-size:15px}
+.we-home .we-craft-content figcaption{font-size:11px;color:#65717c;margin-top:8px}
+.we-home .we-review-wrap>.we-shell{padding-top:28px}
+.arc-point>header>.arc-kicker{display:inline-flex;font-size:22px!important;letter-spacing:.08em;line-height:1.4;font-weight:650;color:#34414c;background:#e1e7ed;border:1px solid #c9d2db;padding:10px 18px;margin-bottom:24px}
+.ar-commerce-detail .arc-package{padding-top:40px;padding-bottom:40px;margin-top:0}
+.ar-commerce-detail .arc-package header h2{font-size:clamp(25px,3vw,38px)}
+.ar-commerce-detail .arc-package .package-overview{margin-top:22px}
+.arc-options button{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.arc-options button b{font-size:15px}
+.arc-options button span{font-size:12px}
+.arc-summary h1{font-size:clamp(22px,2.5vw,34px);line-height:1.4}
+.arc-summary .arc-hook br,.arc-summary .arc-included br{display:initial!important}
+.arc-lyrics{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:32px;background:#eef1f4;text-align:left}
+.arc-lyrics figure{margin:0}
+.arc-lyrics img{display:block;width:100%;height:auto;border-radius:10px}
+.arc-lyrics p{font-size:15px;line-height:1.9}
+.arc-lyrics .arc-button{margin-top:18px}
+#app .footer .footer-message strong,#app .footer .footer-message p{color:#303a43!important}
+.we-price-breakdown>h2{font-size:18px;padding:24px 0 8px;line-height:1.5}
+.booking-base-choice .option-choice small{display:block;margin-top:5px;font-size:12px;color:#626f7b}
+/* Audio console: two distinct source pads, a large waveform, clear play control */
+#wistiaBeforeAfter .bap-player{border:1px solid #cbd4dc;background:#fff;border-radius:18px;box-shadow:0 14px 35px #34414c0c}
+#wistiaBeforeAfter .bap-body{display:flex;flex-direction:column;padding:28px;background:linear-gradient(150deg,#fff,#f5f7f9)}
+#wistiaBeforeAfter .bap-controls{margin:0 0 20px;padding-bottom:18px;border-bottom:1px solid #dbe1e7}
+#wistiaBeforeAfter .bap-play{height:50px;min-width:115px;border-radius:8px;background:#34414c;color:#fff;border:1px solid #34414c}
+#wistiaBeforeAfter .bap-play-label{font-size:14px}
+#wistiaBeforeAfter .bap-time{font-size:13px;color:#75818c}
+#wistiaBeforeAfter .bap-wave{height:104px;margin:4px 0 20px;border-block:1px solid #e4e9ed}
+#wistiaBeforeAfter .bap-badge{order:5;margin:18px 0 0;padding:0;background:none;border:0;border-radius:0;color:#687783;align-self:center;text-align:center}
+#wistiaBeforeAfter .bap-badge b{font-size:11px;font-weight:400}
+#wistiaBeforeAfter .bap-badge>span{display:none}
+#wistiaBeforeAfter .bap-tabs{margin:0;padding:0;background:transparent;gap:14px;border-radius:0}
+#wistiaBeforeAfter .bap-tab{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:7px;min-height:90px;padding:17px 22px;border-radius:10px;border:1px solid #cbd4dc;background:#fff;color:#596b7b;transition:background .35s,color .35s,box-shadow .35s}
+#wistiaBeforeAfter .bap-tab small{font-size:10px;letter-spacing:.14em;color:inherit;opacity:.7}
+#wistiaBeforeAfter .bap-tab strong{font-size:20px;line-height:1.3;font-weight:600}
+#wistiaBeforeAfter .bap-tab.active{background:#34414c;color:#fff;border-color:#34414c;box-shadow:inset 0 -4px 0 #1f2b35}
+#wistiaBeforeAfter .bap-tab[data-mode=after].active{background:#dce4eb;color:#263b4e;border-color:#91a3b3;box-shadow:inset 0 -4px 0 #b2c0cd}
+#wistiaBeforeAfter .bap-switch{height:32px;width:32px;left:50%;border-color:#c7d0d8;background:#fff;color:#465b6e;box-shadow:0 2px 8px #263b4e15}
+@media(max-width:1050px){.we-home .we-service{grid-template-columns:130px minmax(0,1fr);gap:0 18px;padding:18px}.we-home .we-service h3{font-size:20px}}
+@media(max-width:700px){
+ .we-home .we-section{padding-top:40px;padding-bottom:40px}
+ .we-home .we-kicker{font-size:12px}
+ .we-home .we-heading>.we-kicker{margin-bottom:16px}
+ .we-home .we-services{gap:18px}
+ .we-home .we-service{grid-template-columns:100px minmax(0,1fr);gap:0 16px;padding:16px}
+ .we-home .we-service figure img{aspect-ratio:4/5;max-height:190px}
+ .we-home .we-service h3{font-size:19px;margin:12px 0 8px}
+ .we-home .we-service p{font-size:12px;line-height:1.75}
+ .we-home .we-service .we-meta{font-size:9px}
+ .we-home .we-service-link{font-size:11px;margin-top:12px}
+ .we-home .we-case{flex-basis:calc(100vw - 64px)}
+ .we-home .we-case-play{padding:9px 12px;left:12px;bottom:12px;font-size:12px}
+ .we-home .we-craft-list summary{padding:18px 14px;gap:12px;font-size:15px}
+ .we-home .we-craft-list summary>span{font-size:16px}
+ .we-home .we-craft-list summary em{display:none}
+ .we-home .we-craft-content{grid-template-columns:1fr;gap:16px;padding:0 14px 20px}
+ .we-home .we-craft-content p{font-size:13px}
+ .arc-point>header>.arc-kicker{font-size:18px!important;padding:9px 14px;margin-bottom:20px}
+ .ar-commerce-detail .arc-package{padding-top:30px;padding-bottom:30px}
+ .arc-lyrics{grid-template-columns:1fr;gap:24px}
+ .arc-lyrics p{font-size:13px}
+ .arc-summary h1{font-size:23px}
+ .arc-options button b{font-size:13px}
+ .arc-options button span{font-size:11px}
+ #wistiaBeforeAfter .bap-body{padding:20px 16px}
+ #wistiaBeforeAfter .bap-play{min-width:98px;height:46px}
+ #wistiaBeforeAfter .bap-time{font-size:12px}
+ #wistiaBeforeAfter .bap-wave{height:80px}
+ #wistiaBeforeAfter .bap-tab{min-height:82px;padding:14px 16px}
+ #wistiaBeforeAfter .bap-tab strong{font-size:18px}
+ #wistiaBeforeAfter .bap-badge b{font-size:10px}
+}
+@media(max-width:360px){.we-home .we-service{grid-template-columns:80px minmax(0,1fr);gap:0 12px;padding:12px}.we-home .we-service h3{font-size:17px}.arc-summary h1{font-size:21px}}
+@media(prefers-reduced-motion:reduce){#wistiaBeforeAfter .bap-tab,.we-home .we-craft-list summary{transition:none}}

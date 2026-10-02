@@ -1,0 +1,45 @@
+/* Spatial hero and quiet typography inspired by Léo Parpeix, no copied assets or 3D dependency */
+body:has(.editorial-home-hero){--ink:#30363b;--muted:#69727a;--line:#dbe0e4;--wash:#f3f5f6;background:#edf0f2}
+body:has(.editorial-home-hero) #app,body:has(.editorial-home-hero) #siteHeader{background:#fff}
+.editorial-home-hero{min-height:590px;height:min(760px,88svh);background:#e3e6e8;padding:30px 48px}
+.editorial-home-hero:after{background:linear-gradient(90deg,rgba(29,36,42,.73),rgba(29,36,42,.24) 50%,rgba(29,36,42,0) 90%)}
+.editorial-hero-top{align-items:center;font-size:10px;font-weight:500}
+.editorial-hero-top a{color:inherit;letter-spacing:inherit;border-bottom:1px solid #ffffff60;padding-bottom:4px}
+.editorial-hero-copy{max-width:660px;padding:70px 0 48px}
+.editorial-hero-copy h1{font-size:clamp(40px,5.5vw,72px);font-weight:500;line-height:1.14;letter-spacing:-.065em;margin:0 0 25px}
+.editorial-hero-copy>p{font-size:13px;line-height:1.7;margin:0 0 17px;color:#f1f3f5}
+.editorial-hero-copy>.editorial-hero-description{font-size:13px;line-height:1.9;margin:0 0 26px;color:#e4e8eb}
+.editorial-hero-actions{display:flex;gap:12px;max-width:450px;flex-wrap:wrap}
+.editorial-hero-actions a{width:205px;min-height:47px;margin:0;padding:12px 16px;border:1px solid #ffffffb3;background:#ffffff0d;font-size:12px;transition:background .18s ease,color .18s ease}
+.editorial-hero-actions a:first-child{background:#fff;color:#30363b;border-color:#fff}
+.editorial-hero-actions a:hover{background:#e8edf1;color:#30363b}
+.editorial-hero-copy .editorial-service-scroll{width:172px;min-height:40px;margin-top:19px;font-size:11px;border:0}
+.editorial-hero-caption{margin:0;color:#e1e6e9;font-size:9px}
+.finder-stage-role .finder-intro p,.finder-stage-role .finder-choice small{color:#69727a}
+.finder-stage-role .finder-choice strong{color:#30363b}
+.finder-stage-role .finder-product-hook{display:inline;font-size:inherit;font-weight:650;color:#30363b}
+.finder-stage-role .finder-choice small{line-height:1.85}
+.finder-home.finder-stage-role .finder-choice-body{border-color:#dbe0e4}
+.editorial-home-story{background:#f3f5f6;color:#30363b}
+.editorial-story-heading h2{color:#30363b}
+.editorial-story-heading .eyebrow,.editorial-story-heading p,.editorial-home-story figcaption{color:#69727a}
+.editorial-story-heading .text-link{border-color:#a9b2ba;color:#30363b}
+.editorial-location-link{border-color:#cbd3da}
+.editorial-location-link:focus-visible,.editorial-home-hero a:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+@media(max-width:700px){
+ .editorial-home-hero{min-height:540px;height:calc(88svh - 48px);max-height:690px;padding:24px}
+ .editorial-home-hero>img{object-position:70% center}
+ .editorial-home-hero:after{background:linear-gradient(180deg,rgba(29,36,42,.18),rgba(29,36,42,.2) 22%,rgba(29,36,42,.7) 70%,rgba(29,36,42,.8))}
+ .editorial-hero-top{font-size:7px;letter-spacing:.09em;gap:10px}
+ .editorial-hero-copy{padding:80px 0 30px}
+ .editorial-hero-copy h1{font-size:clamp(39px,10.5vw,60px);line-height:1.2;margin-bottom:20px}
+ .editorial-hero-copy>p,.editorial-hero-copy>.editorial-hero-description{font-size:11px}
+ .editorial-hero-copy>p{margin-bottom:10px}
+ .editorial-hero-copy>.editorial-hero-description{margin-bottom:21px}
+ .editorial-hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .editorial-hero-actions a{width:100%;font-size:11px;padding:11px 10px;min-height:43px}
+ .editorial-hero-copy .editorial-service-scroll{margin-top:12px;font-size:10px}
+ .editorial-hero-caption{font-size:7px;letter-spacing:.09em;max-width:130px;line-height:1.8}
+ .editorial-location-link{flex-wrap:wrap;font-size:11px;line-height:1.8}
+}
+@media(prefers-reduced-motion:reduce){.editorial-hero-actions a{transition:none}}

@@ -1,0 +1,68 @@
+/* Original WISTIA long-form product story, inspired by the reference's reading rhythm */
+body:has(.ar-sales-detail){--app-canvas-width:780px;background:#eef0f0}
+.ar-sales-detail{--sales-ink:#253438;--sales-accent:#4e727d;--sales-muted:#68787c;background:#fff;color:var(--sales-ink)}
+.ar-sales-detail p,.ar-sales-detail h1,.ar-sales-detail h2{word-break:keep-all;overflow-wrap:break-word}
+.ar-sales-intro{padding:54px 0 0;text-align:center;background:radial-gradient(ellipse at 50% -15%,#b9d2da 0%,#e5eef1 35%,#fff 68%)}
+.sales-brand{margin:0;font-size:23px;letter-spacing:.21em;font-family:Georgia,serif}
+.sales-brand span{display:block;margin-top:7px;font:9px/1.5 var(--sans);letter-spacing:.24em}
+.sales-product{display:inline-block;margin:34px 20px 20px;padding:8px 17px;border:1px solid #9eb5bd;border-radius:100px;font-size:12px;letter-spacing:.03em}
+.ar-sales-intro h1{margin:0;padding:0 20px;font:750 clamp(34px,7vw,64px)/1.2 var(--sans);letter-spacing:-.06em}
+.ar-sales-intro h1 strong{display:inline-block;margin-top:12px;color:var(--sales-accent);font-weight:800}
+.ar-sales-intro .sales-lead{margin:28px 20px 0;font-size:clamp(14px,2.4vw,19px);line-height:1.8;color:#586b71}
+.sales-tags{display:flex;justify-content:center;gap:7px;margin:24px 16px 32px;flex-wrap:wrap}
+.sales-tags span{padding:7px 10px;background:#dfe9ed;color:#4c646c;font-size:11px}
+.sales-intro-photo{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:#d6dfe1}
+.sales-intro-photo img{width:100%;height:100%;object-fit:cover;object-position:center}
+.sales-intro-photo>span{position:absolute;bottom:20px;left:24px;color:#fff;font-size:10px;letter-spacing:.12em;text-shadow:0 1px 8px #000}
+.sales-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:32px 18px 44px;background:#fff}
+.sales-checks>div{display:flex;flex-direction:column;gap:7px;padding:0 8px;border-right:1px solid #d9e2e5}
+.sales-checks>div:last-child{border:0}
+.sales-checks b{display:grid;place-items:center;width:42px;height:42px;margin:0 auto 8px;border:1px solid #a5bbc2;border-radius:50%;font:500 15px/1 var(--sans);color:#4e727d}
+.sales-checks strong{font-size:clamp(11px,2vw,16px);font-weight:700;white-space:nowrap}
+.sales-checks span{font-size:clamp(10px,1.6vw,12px);color:var(--sales-muted)}
+.sales-section-heading{text-align:center;padding:60px 24px 32px}
+.sales-point{margin:0 0 20px;text-align:center;color:var(--sales-accent);font-size:10px;font-weight:700;letter-spacing:.17em}
+.sales-section-heading h2{margin:0;font-size:clamp(26px,4.8vw,42px);font-weight:550;letter-spacing:-.055em;line-height:1.35}
+.sales-section-heading h2 strong{color:var(--sales-accent);font-weight:780}
+.sales-section-heading>p:last-child:not(.sales-point){margin:20px auto 0;max-width:620px;font-size:clamp(12px,2vw,15px);line-height:1.9;color:var(--sales-muted)}
+.sales-proof{background:#edf2f4;padding-bottom:0}
+.ar-sales-detail .sales-proof .ar-hook-hero{min-height:0;height:clamp(440px,85vw,650px);border-radius:0}
+.ar-sales-detail .sales-proof .ar-hook-copy{padding:0 26px 34px;width:100%;color:#fff}
+.ar-sales-detail .sales-proof .ar-hook-copy h2{margin:12px 0 0;max-width:640px;font-size:clamp(26px,4.7vw,40px);line-height:1.3;letter-spacing:-.04em;color:#fff}
+.ar-sales-detail .sales-proof .ar-hook-copy>p{font-size:12px;line-height:1.8;margin-top:16px}
+.ar-sales-detail .sales-proof .ar-hook-copy .eyebrow{font-size:10px}
+.ar-sales-detail .sales-proof .ar-hook-media{border-radius:0}
+.ar-sales-detail .sales-proof .ar-hook-video-source{max-width:calc(100% - 80px);font-size:10px}
+.sales-recording{background:#fff;padding-bottom:56px}
+.sales-recording figure{margin:0 24px}
+.sales-recording figure img{display:block;width:100%;height:auto;border-radius:0}
+.sales-recording figcaption{margin:12px 0 0;font-size:11px;text-align:center;color:var(--sales-muted)}
+.sales-recording-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0;margin:28px 24px 0;list-style:none}
+.sales-recording-steps li{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 4px;border-top:1px solid #adbec3;border-bottom:1px solid #d9e2e5;background:#f3f6f7}
+.sales-recording-steps span{font-size:10px;color:var(--sales-accent)}
+.sales-recording-steps strong{font-size:clamp(11px,2vw,15px);white-space:nowrap;font-weight:650}
+.sales-tuning{background:#f1f4f5;padding-bottom:56px}
+.ar-sales-detail .sales-tuning .wistia-ba-section{margin:0;padding:16px 24px 0;background:transparent;color:var(--sales-ink)}
+.ar-sales-detail .sales-tuning .wistia-ba-copy h2{color:var(--sales-ink);font-size:clamp(20px,3.6vw,30px)}
+.ar-sales-detail .sales-tuning .wistia-ba-copy>p:last-child{color:var(--sales-muted)}
+.ar-sales-detail .sales-tuning .wistia-ba-eyebrow{display:none}
+.ar-sales-detail .sales-engineer{background:#fff}
+.ar-sales-detail .sales-engineer .ar-expert-story{padding-block:60px!important}
+.ar-sales-detail .sales-engineer .ar-expert-story:before,.ar-sales-detail .sales-engineer .ar-expert-story:after{display:none}
+.sales-ratio{padding-top:44px;background:#f4f6f6}
+.ar-sales-detail .sales-ratio .wistia-ar{background:#f4f6f6}
+.ar-sales-detail .sales-ratio .sales-point{margin-bottom:0}
+.ar-sales-detail .wistia-advantages{background:#fff}
+.sales-offer{background:#e9f0f2;padding-bottom:52px}
+.ar-sales-detail .sales-offer .solo-person-picker{width:calc(100% - 48px);margin:0 24px;max-width:none;padding:0;border:1px solid #bacbd0;background:#fff;border-radius:0}
+.sales-price{display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px 20px 16px}
+.sales-price>span{font-size:12px;color:var(--sales-muted)}
+.sales-price>strong{font-size:44px;line-height:1.3;letter-spacing:-.05em;color:var(--sales-ink)}
+.sales-price>small{font-size:11px;line-height:1.7;color:var(--sales-muted);text-align:center}
+.ar-sales-detail .sales-offer .package-overview{padding:28px 0;background:transparent;border:0}
+.ar-sales-detail .sales-offer .package-overview h2{font-size:22px;text-align:center}
+.sales-price-link{display:flex;align-items:center;justify-content:space-between;margin:8px 24px 0;padding:19px 22px;min-height:58px;background:var(--sales-ink);color:#fff;font-size:14px;font-weight:650}
+.sales-price-link>span{font-size:22px}
+.ar-sales-detail .worry-section>.sales-section-heading{padding:0 0 32px}
+.ar-sales-detail .shell{max-width:100%}
+@media(max-width:360px){.sales-section-heading{padding-inline:18px}.sales-recording figure,.sales-recording-steps{margin-inline:18px}.ar-sales-intro{padding-top:40px}.sales-product{margin-top:26px}.sales-checks{padding-inline:8px}.ar-sales-detail .sales-proof .ar-hook-copy{padding-inline:20px}.sales-price-link{font-size:12px;padding-inline:18px}}

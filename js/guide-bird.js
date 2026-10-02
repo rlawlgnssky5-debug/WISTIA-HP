@@ -1,5 +1,10 @@
 /* A single decorative bird follows the cursor without blocking page controls. */
 (() => {
+  // Cursor bird is retired, including when an older HTML still loads this file
+  window.WistiaGuide?.destroy?.()
+  document.querySelector('#guideLayer')?.remove()
+  window.WistiaGuide = {mount() {}, destroy() {}, notify() {}}
+  return
   const SIZE = 64
   const OFFSET = 18
   let layer

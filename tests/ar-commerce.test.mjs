@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+import {runInNewContext} from 'node:vm'
+
+const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
+const commerce=source.slice(source.indexOf('function arRecordingPoster('),source.indexOf('function renderDetail('))
+const handlers=new Map(),root={dataset:{},querySelectorAll:selector=>groups[selector]||[]}
+const control=key=>({dataset:{arTime:key},attrs:{},setAttribute(name,value){this.attrs[name]=value},addEventListener(type,fn){handlers.set(this,fn)}})
+const buttons=[control('solo'),control('duo')],prices=[{},{}],hours=[{},{},{}],minutes=[{}],links=[{},{},{}],formats=[{}]
+const groups={'[data-ar-time]':buttons,'[data-ar-price]':prices,'[data-ar-hours]':hours,'[data-ar-minutes]':minutes,'[data-ar-price-link]':links,'[data-ar-format]':formats}
+const context={PRODUCTS:{solo:{normal:120000},duo:{normal:160000}},AR_DETAIL_CONTENT:{solo:{poster:'proof.jpg'}},document:{querySelector:()=>root},img:(src,alt)=>`<img src="${src}" alt="${alt}">`,soloReviewCarousel:()=>'<section id="reviews">직접 보내주신 카카오톡 후기 원문입니다</section>',wistiaBeforeAfterSection:()=>'<section id="wistiaBeforeAfter"></section>',arCdRatioSection:()=>'<section id="arRatioExperience"></section>',productPackageOverview:()=>'<strong>녹음 60분</strong>',productComparisonSection:()=>'<section>위스티아의 장점</section>',arExpertStory:()=>'<section>사운드 완성</section>',faq:items=>items.map(([question,answer])=>`<details><summary>${question}</summary><p>${answer}</p></details>`).join(''),footer:()=>'<footer></footer>'}
+runInNewContext(commerce,context)
+const markup=context.arCommerceDetail({resultVideo:'proof.mp4'})
+const duoMarkup=context.arCommerceDetail({resultVideo:'duo.mp4',normal:160000},'duo')
+assert.match(duoMarkup,/href="\/event\/duo"/)
+assert.match(duoMarkup,/data-ar-price>160,000</)
+assert.match(duoMarkup,/data-ar-hours>2</)
+assert.match(markup,/위스티아 AR 축가/)
+assert.match(markup,/120,000/)
+assert.match(markup,/SOLO\(1인\)/)
+assert.match(duoMarkup,/DUET\(2인\)/)
+assert.match(markup,/1곡 기준/)
+assert.doesNotMatch(markup,/인원 제한|arc-review-link/)
+assert.ok(markup.indexOf('arc-package')<markup.indexOf('arc-empathy'))
+assert.match(markup,/뒤에 띄울 가사 영상도/)
+assert.match(markup,/arc-recording-poster/)
+assert.match(markup,/process-studio\/06-mixing.webp/)
+assert.match(markup,/03 · 자연스럽게 연결/)
+assert.match(markup,/lyric-video-v2\.webp/)
+assert.equal((markup.match(/<details>/g)||[]).length,6)
+assert.equal((markup.match(/data-ar-consult/g)||[]).length,0)
+assert.equal((markup.match(/<h1 /g)||[]).length,1)
+assert.match(markup,/시간 안에서 어려운 구간은 충분히 다시 녹음하며 맞춰갑니다/)
+assert.doesNotMatch(markup,/무제한 녹음을 약속|만족도|trackContact|pf\.kakao\.com/)
+for(const id of ['arcDetails','reviews','arcFaq','arcProcess','wistiaBeforeAfter','arRatioExperience'])assert.match(markup,new RegExp(`id="${id}"`))
+context.initArCommerceDetail()
+handlers.get(buttons[1])()
+assert.equal(root.dataset.arProduct,'duo')
+assert.equal(buttons[1].attrs['aria-pressed'],'true')
+assert.equal(prices[0].textContent,'160,000')
+assert.equal(hours[2].textContent,'2')
+assert.equal(minutes[0].textContent,'120')
+assert.equal(formats[0].textContent,'DUET(2인)')
+assert.equal(links[0].href,'/event/duo')
+handlers.get(buttons[0])()
+assert.equal(prices[1].textContent,'120,000')
+assert.equal(minutes[0].textContent,'60')
+assert.equal(formats[0].textContent,'SOLO(1인)')
+assert.equal(links[2].href,'/event/solo')
+// New detail CTAs go to options first, modal confirmation remains unchanged
+assert.match(source,/route\(\{scrollAnchor\}\);if\(consult\)copyConsultationAndShowDialog\(\)/)
+assert.match(source,/app.innerHTML=arCommerceDetail\(p,key\)/)
+console.log('AR commerce content, options, section targets and existing consultation delegation passed')
