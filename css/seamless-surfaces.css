@@ -3,8 +3,9 @@
 .we-home .we-service,.we-home .we-craft-list details,.we-home .we-location,.story-process-card{border:0;box-shadow:none;background:var(--surface-fade)}
 .we-home .we-service:focus-visible{outline:none}
 .we-home .we-service:focus-visible .we-service-link{outline:2px solid #5b7890;outline-offset:5px;border-radius:3px}
-.we-home .we-service figure{background:radial-gradient(ellipse,#edf1f4,transparent 75%)}
-.we-home .we-service:nth-child(2) figure img{aspect-ratio:16/9;max-height:none;object-fit:contain;object-position:center;transform:none!important}
+.we-home .we-service figure{aspect-ratio:4/5;overflow:hidden;background:radial-gradient(ellipse,#edf1f4,transparent 75%)}
+.we-home .we-service figure img{display:block;width:100%;height:100%;aspect-ratio:4/5;max-height:none;object-fit:cover;transform:none!important}
+.we-home .we-service:nth-child(2) figure img{object-position:80% center}
 .we-home .we-service .we-meta,.we-home .we-case-bar,.we-home .we-hero-foot{border-color:transparent}
 .we-home .studio-scene{background:radial-gradient(ellipse at center,#e8edf1 0%,#f6f8fa 45%,#ffffff00 74%);border:0;box-shadow:none}
 .ar-commerce-detail .arc-point,.ar-commerce-detail .arc-section{border:0;max-width:none;padding-inline:max(40px,calc((100% - 820px)/2))}
@@ -48,9 +49,6 @@
 .arc-recording-poster figcaption{font-size:11px;line-height:1.8;margin-top:18px;color:#6d7e8b}
 @media(max-width:700px){
  .ar-commerce-detail .arc-point,.ar-commerce-detail .arc-section{padding-inline:20px}
- .we-home .we-service:nth-child(2) figure{grid-column:1/-1;grid-row:auto;width:100%;margin-bottom:16px}
- .we-home .we-service:nth-child(2) figure img{width:100%;height:145px;aspect-ratio:auto}
- .we-home .we-service:nth-child(2)>:not(figure){grid-column:1/-1}
  .ar-commerce-detail .arc-options button[aria-pressed=true]{padding:10px}
  .arc-point .arc-recording-poster{padding:14px 0;max-width:480px}
  .arc-recording-photos{gap:8px}.arc-recording-photos span{font-size:10px;line-height:1.5;margin:7px 0}

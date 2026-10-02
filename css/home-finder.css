@@ -48,6 +48,64 @@
 .finder-intro .eyebrow:after{content:"";display:block;width:38px;height:1px;background:#b8c1c0}
 .finder-intro h1{margin:22px 0 12px;font-size:clamp(31px,5.2vw,47px);line-height:1.19;font-weight:500;letter-spacing:-.065em;color:#263236}
 .finder-intro p{margin:0;font-size:clamp(14px,2vw,17px);line-height:1.65;color:#68777a}
+.finder-feature-video{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;margin:0 0 32px;overflow:hidden;border-radius:14px;background:#202628}
+.finder-feature-video iframe{position:absolute;top:50%;left:50%;display:block;width:max(100%,356px);height:max(100%,200px);border:0;transform:translate(-50%,-50%);pointer-events:none}
+.finder-feature-offer{max-width:650px;margin:34px 0 0;padding:29px 0 0;border-top:1px solid #d8dfdd}
+.finder-feature-offer+.finder-feature-offer{margin-top:24px;padding-top:24px}
+.finder-feature-offer-kicker{display:block;margin-bottom:11px;color:#62777a;font-size:12px;font-weight:650;letter-spacing:0}
+.finder-feature-offer h2{margin:0;color:#263236;font-size:clamp(23px,3.8vw,32px);font-weight:550;line-height:1.38;letter-spacing:-.055em;word-break:keep-all}
+.finder-feature-offer p{margin:10px 0 18px;color:#617077;font-size:clamp(13px,1.7vw,16px);line-height:1.65;word-break:keep-all}
+.finder-feature-offer-price{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;gap:16px;width:min(100%,350px);min-height:86px;padding:12px 16px;border:1px solid #cdd9d9;border-radius:8px;background:#f4f8f8;color:#263c42;text-decoration:none}
+.finder-feature-offer-price:hover{border-color:#7f999e;background:#edf4f4}
+.finder-feature-offer-price:focus-visible{outline:3px solid #365c66;outline-offset:3px}
+.finder-feature-price-copy{display:grid;gap:3px;min-width:0}
+.finder-feature-price-copy small{color:#60777d;font-size:11px;font-weight:650}
+.finder-feature-price-regular{color:#718186;font-size:12px;font-weight:600}
+.finder-feature-price-regular del{text-decoration-color:#c7393c;text-decoration-thickness:2px;text-decoration-skip-ink:none}
+.finder-feature-price-copy strong{display:flex;align-items:baseline;gap:8px;color:#263236;font-size:22px;font-weight:750;line-height:1.2;white-space:nowrap}
+.finder-feature-price-copy strong span{color:#62767b;font-size:11px;font-weight:600}
+.finder-feature-price-arrow{flex:none;color:#263c42;font-size:19px}
+.finder-home-reviews{margin-top:68px;padding-top:38px;border-top:1px solid #d8dfdd}
+.finder-home-reviews-kicker{color:#62777a;font-size:12px;font-weight:650;letter-spacing:0}
+.finder-home-reviews h2{margin:12px 0 8px;color:#263236;font-size:clamp(25px,5vw,34px);font-weight:550;line-height:1.35;letter-spacing:-.055em;word-break:keep-all}
+.finder-home-reviews header>p{margin:0;color:#617077;font-size:14px;line-height:1.65}
+.finder-home-review-list{display:grid;gap:18px;margin-top:28px}
+.finder-home-review{min-width:0;margin:0;padding:20px;border:1px solid #dce2e2;border-radius:15px;background:#f7f9f9}
+.finder-home-review figcaption>span{color:#718386;font-size:11px;font-weight:650;letter-spacing:.1em}
+.finder-home-review figcaption p{margin:10px 0 18px;color:#273337;font-size:18px;font-weight:550;line-height:1.55;letter-spacing:-.04em;word-break:keep-all}
+.finder-home-review>a{display:block;color:#52676d;text-decoration:none}
+.finder-home-review>a:focus-visible{outline:3px solid #365c66;outline-offset:4px}
+.finder-home-review img{display:block;width:100%;height:auto;border-radius:8px}
+.finder-home-review>a>span{display:block;margin-top:10px;font-size:12px;text-align:right}
+@media(max-width:700px){.finder-home-reviews{margin-top:56px;padding-top:30px}.finder-home-review{padding:14px}.finder-home-review figcaption p{font-size:16px}}
+.finder-home-closing{margin-top:56px;padding:48px 32px;border:1px solid #d9e0e2;border-radius:16px;background:linear-gradient(145deg,#f6f8f8,#e9edef);text-align:center}
+.finder-home-closing h2{margin:0;color:#263236;font-size:clamp(26px,6vw,36px);font-weight:600;line-height:1.45;letter-spacing:-.055em;word-break:keep-all}
+.finder-home-closing p{margin:16px 0 26px;color:#596970;font-size:15px;line-height:1.75;word-break:keep-all}
+.finder-home-closing-contact{display:flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:13px 20px;border-radius:9px;background:#263236;color:#fff;font-size:15px;font-weight:650;text-decoration:none}
+.finder-home-closing-contact:hover{background:#3b4b51}
+.finder-home-closing-contact:focus-visible{outline:3px solid #365c66;outline-offset:4px}
+.finder-home-closing-contact span{font-size:20px;font-weight:400;line-height:1}
+@media(max-width:700px){.finder-home-closing{margin-top:48px;padding:39px 20px}.finder-home-closing p{font-size:14px}}
+.finder-home-highlight{box-sizing:border-box;width:min(100%,650px);margin:42px 0 12px;padding:30px;border:1px solid #d7dfe0;border-radius:16px;background:linear-gradient(145deg,#f8faf9,#edf2f1);color:#263236}
+.finder-home-highlight-kicker{color:#55716e;font-size:12px;font-weight:700}
+.finder-home-highlight h2{margin:9px 0 8px;font-size:clamp(24px,4vw,30px);font-weight:600;line-height:1.38;letter-spacing:-.05em;word-break:keep-all}
+.finder-home-highlight>p{margin:0;color:#617077;font-size:14px;line-height:1.7;word-break:keep-all}
+.finder-home-highlight-player{margin-top:24px;padding:19px;border:1px solid #dbe2e1;border-radius:12px;background:#fff}
+.finder-home-highlight-controls{display:flex;align-items:center;gap:15px}
+.finder-home-highlight-play{display:inline-flex;flex:none;align-items:center;justify-content:center;gap:8px;min-width:115px;min-height:44px;padding:10px 15px;border:0;border-radius:999px;background:#263a3a;color:#fff;font-size:13px;cursor:pointer}
+.finder-home-highlight-play:disabled{cursor:wait;opacity:.7}
+.finder-home-highlight-play:focus-visible{outline:3px solid #365c66;outline-offset:3px}
+.finder-home-highlight-play span{font-size:12px}
+.finder-home-highlight-now{color:#4e6262;font-size:13px;font-weight:600;line-height:1.45}
+.finder-home-highlight-progress{height:6px;margin-top:19px;border-radius:999px;background:#e4e9e8;overflow:hidden}
+.finder-home-highlight-progress span{display:block;width:0;height:100%;border-radius:inherit;background:#4f7771}
+.finder-home-highlight-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;color:#697979;font-size:11px;font-variant-numeric:tabular-nums}
+.finder-home-highlight-modes{display:flex;gap:5px}
+.finder-home-highlight-modes span{padding:5px 8px;border-radius:5px;background:#f0f2f2;color:#677777;font-size:11px;font-weight:650}
+.finder-home-highlight-modes span.is-active[data-kind=before]{background:#747d80;color:#fff}
+.finder-home-highlight-modes span.is-active[data-kind=after]{background:#315f57;color:#fff}
+.finder-home-highlight-error{margin:12px 0 0;color:#a34545;font-size:12px}
+@media(max-width:700px){.finder-home-highlight{margin-top:32px;padding:23px 18px}.finder-home-highlight>p{font-size:13px}.finder-home-highlight-player{padding:15px}.finder-home-highlight-controls{gap:11px}.finder-home-highlight-play{min-width:100px;padding:9px 12px}.finder-home-highlight-now{font-size:12px}}
 .finder-options{width:100%;gap:14px}
 .finder-home .finder-choice{position:relative;display:grid;grid-template-columns:minmax(112px,39%) minmax(0,1fr) 28px;align-items:center;justify-content:stretch;gap:0;min-height:154px;padding:0;border:1px solid #e0e4e2;border-radius:14px;background:#fff;text-align:left;overflow:hidden;box-shadow:0 12px 35px rgba(28,42,42,.055);transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s,border-color .3s}
 .finder-home .finder-choice:hover{transform:translateY(-3px);border-color:#b2bfbd;box-shadow:0 19px 40px rgba(28,42,42,.12)}
@@ -86,6 +144,7 @@ body:has(.finder-home) .floating-kakao .kakao-channel-icon{flex:none;width:30px;
 .finder-stage-role .finder-choice{height:clamp(178px,22vw,218px);background:linear-gradient(112deg,#fff 35%,var(--finder-wash) 100%)}
 .finder-stage-role .finder-choice:has(input:checked){background:linear-gradient(112deg,#fff 35%,var(--finder-wash) 100%);border-color:var(--finder-accent)}
 .finder-stage-role .finder-choice .finder-choice-overline,.finder-stage-role .finder-choice .finder-choice-arrow{color:var(--finder-accent)}
+.finder-stage-role .finder-choice .finder-choice-overline{font-family:inherit;font-size:11px;letter-spacing:0}
 .finder-stage-role .finder-choice .finder-choice-overline i{background:var(--finder-accent);opacity:.42}
 @media(max-width:700px){.finder-stage-role .finder-choice{height:138px}}
 .finder-stage-role .finder-choice{grid-template-columns:minmax(112px,39%) minmax(0,1fr)}
@@ -96,3 +155,6 @@ body:has(.finder-home) .floating-kakao .kakao-channel-icon{flex:none;width:30px;
 .finder-choice:hover .finder-choice-action b{transform:translateX(4px)}
 @media(max-width:700px){.finder-stage-role .finder-choice{grid-template-columns:minmax(105px,37%) minmax(0,1fr)}.finder-stage-role .finder-choice-body{gap:5px;padding:10px 9px 10px 15px}.finder-choice-action{margin-top:2px;font-size:11px}.finder-choice-action b{font-size:15px}}
 @media(max-width:355px){.finder-stage-role .finder-choice{grid-template-columns:34% minmax(0,1fr)}.finder-stage-role .finder-choice-body{padding-left:12px}}
+.home-legal{display:flex;justify-content:center;gap:22px;padding:28px 16px 42px;font-size:12px;color:#777d85}
+.home-legal a{color:inherit;text-decoration:none}
+.home-legal a:hover,.home-legal a:focus-visible{text-decoration:underline;text-underline-offset:3px}

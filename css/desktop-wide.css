@@ -1,0 +1,44 @@
+/* Keep the compact phone layout; give desktop visitors the full browser canvas. */
+@media (min-width: 901px) {
+  :root { --app-canvas-width: 100vw; }
+  main, #siteHeader { width: 100%; max-width: none; }
+  .shell { width: min(1440px, calc(100% - 96px)); }
+  #siteHeader .header-inner { width: min(1440px, calc(100% - 96px)); }
+
+  .finder-home { max-width: 1440px; padding-top: 88px; }
+  .finder-stage-role .finder-content {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    column-gap: clamp(36px, 5vw, 88px);
+    row-gap: 46px;
+    align-items: center;
+  }
+  .finder-stage-role .finder-intro { max-width: none; margin: 0; }
+  .finder-stage-role .finder-intro h1 { font-size: clamp(48px, 4.2vw, 72px); }
+  .finder-stage-role .finder-feature-video {
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    aspect-ratio: 16 / 9;
+  }
+  .finder-stage-role .finder-steps,
+  .finder-stage-role .finder-home-highlight,
+  .finder-stage-role .finder-home-reviews,
+  .finder-stage-role .finder-home-closing,
+  .finder-stage-role .home-legal { grid-column: 1 / -1; }
+  .finder-stage-role .finder-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .finder-stage-role .finder-choice { height: clamp(178px, 15vw, 228px); }
+  .finder-stage-role .finder-choice strong { font-size: clamp(21px, 2vw, 28px); }
+  .finder-stage-role .finder-choice small { font-size: 14px; }
+  .finder-stage-role .finder-home-highlight { width: 100%; margin: 0; }
+  .finder-stage-role .finder-feature-offer { max-width: none; margin: 0; }
+  .finder-stage-role .finder-feature-offer + .finder-feature-offer { margin: 0; padding-top: 29px; }
+  .finder-stage-role .finder-home-reviews { width: 100%; margin-top: 18px; }
+  .finder-stage-role .finder-home-review-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .finder-stage-role .finder-home-review img { height: 260px; object-fit: cover; object-position: top; }
+  .finder-stage-role .finder-home-closing { margin-top: 0; }
+  .finder-stage-role .home-legal { padding-bottom: 0; }
+}

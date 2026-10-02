@@ -44,7 +44,7 @@ for(const key of ['lyrics-video','bride-entrance','groom-entrance','rush']){
  const src=markup.match(/src="([^"]+)"/)[1]
  assert.ok(existsSync(new URL('../'+src,import.meta.url)))
 }
-assert.match(source,/cta\('상품·가격 보기','\/event\/solo'\)/)
+assert.match(source,/cta\('가격 보기','\/event\/solo'\)/)
 const final=source.match(/'<section class="arc-section arc-final"><h2>축가는 직접,[^\n]+/)[0]
 assert.doesNotMatch(final,/action\('카카오톡 상담'/)
 assert.match(context.priceSidebarSection(),/type="submit"/)
