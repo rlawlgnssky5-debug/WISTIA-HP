@@ -1,0 +1,41 @@
+/* Keep the existing price design, make writing a single uninterrupted step */
+.booking-calculator #consultForm{margin:0;padding:0;min-width:0}
+.booking-undecided{display:flex;align-items:center;gap:10px;margin:18px 0 0;font-size:13px;color:#667d8d;cursor:pointer}
+.booking-undecided input{width:18px;height:18px;accent-color:#59778c;flex-shrink:0}
+.booking-base-amount[hidden],.inquiry-price-options[hidden],.contact-quote[hidden]{display:none!important}
+.inquiry-price-options{margin:28px 0 0;border-top:1px solid #dce4ea;border-bottom:1px solid #dce4ea}
+.inquiry-price-options>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;list-style:none;cursor:pointer}
+.inquiry-price-options>summary::-webkit-details-marker{display:none}
+.inquiry-price-options>summary>span{display:grid;gap:6px}
+.inquiry-price-options>summary strong{font-size:18px;font-weight:600;color:#344b5b}
+.inquiry-price-options>summary small{font-size:12px;color:#7b8c99}
+.inquiry-price-options>summary>b{font-size:24px;font-weight:400;color:#59778c}
+.inquiry-price-options[open]>summary>b{font-size:0}
+.inquiry-price-options[open]>summary>b::after{content:'−';font-size:24px}
+.inquiry-price-options>div{padding-bottom:26px}
+.inquiry-price-options .calculator-step{margin-top:22px}
+.inquiry-shortcut{width:100%;border:0;text-align:left;cursor:pointer;font:inherit;font-size:14px;font-weight:600}
+#app .contact-page.contact-embedded{max-width:none;padding:50px 0 0;scroll-margin-top:95px}
+.contact-embedded .contact-intro{text-align:left;margin:0 0 24px}
+.contact-embedded .contact-welcome{font-size:13px;margin-bottom:12px}
+.contact-embedded .contact-intro h2{font-size:26px;line-height:1.5;margin:0;letter-spacing:-.04em}
+.contact-embedded .contact-intro>p:not(.contact-welcome){font-size:14px;margin-top:12px}
+.contact-field input[readonly]{background:#e9eff4;color:#476175}
+.contact-embedded .contact-submit{font-size:13px;gap:12px;line-height:1.7;word-break:keep-all}
+.ar-commerce-detail .arc-actions:has(>a:only-child){grid-template-columns:1fr}
+.arc-recording-flow li:nth-child(2){background:linear-gradient(135deg,#dcebe4,#f2f8f5);color:#638779}
+.arc-recording-flow li:nth-child(2) b{color:#37584a}
+.arc-recording-flow li:nth-child(3){background:linear-gradient(110deg,#e0eaf3 0%,#e5f0e9 100%);color:#547c77}
+@media(max-width:900px){
+ body.inquiry-visible .booking-price-sidebar{display:none!important}
+ .contact-embedded .contact-form{padding:26px 20px}
+}
+@media(max-width:600px){
+ #app .contact-page.contact-embedded{padding:36px 0 0}
+ .contact-embedded .contact-form{padding:22px 16px}
+ .contact-embedded .contact-intro h2{font-size:24px}
+ .contact-embedded .contact-submit{padding:14px 12px;font-size:12px}
+ .booking-undecided{font-size:12px;line-height:1.7}
+ .booking-price-sidebar>.button{max-width:170px;white-space:normal;line-height:1.6}
+ .inquiry-price-options>summary strong{font-size:16px}
+}

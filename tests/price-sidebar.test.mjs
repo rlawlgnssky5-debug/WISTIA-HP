@@ -14,7 +14,7 @@ const options=source.slice(source.indexOf('function renderProductOption('),sourc
 const benefits=source.slice(source.indexOf('function eventBenefitsSection('),source.indexOf('function renderEvent('))
 const nodes=new Map()
 const node=id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',innerHTML:'',hidden:false});return nodes.get(id)}
-const context={window:{},document:{querySelector:node},finderPriceContext:()=>null,img:(src,alt)=>`<img src="${src}" alt="${alt}">`}
+const context={window:{},document:{querySelector:node},inquiryUndecided:false,refreshInquiryQuote:()=>{},finderPriceContext:()=>null,img:(src,alt)=>`<img src="${src}" alt="${alt}">`}
 runInNewContext(definitions+pricing+formatPrice+'\n'+moneyFormatters+`
 let currentEventProduct='duet-film',currentEventPurpose='',selectedFilmFormat='live',selectedFilmPeople=2
 let selectedOptions=new Set(),selectedEvents=new Set(),optionQuantities={},chosenOption=''
@@ -47,7 +47,7 @@ for(const key of ['lyrics-video','bride-entrance','groom-entrance','rush']){
 assert.match(source,/cta\('가격 보기','\/event\/solo'\)/)
 const final=source.match(/'<section class="arc-section arc-final"><h2>축가는 직접,[^\n]+/)[0]
 assert.doesNotMatch(final,/action\('카카오톡 상담'/)
-assert.match(context.priceSidebarSection(),/type="submit"/)
+assert.match(context.priceSidebarSection(),/type="button" data-inquiry-jump/)
 assert.match(css,/grid-template-columns:minmax\(0,1fr\) 300px/)
 assert.match(css,/position:sticky!important/)
 assert.match(css,/@media\(max-width:900px\)/)

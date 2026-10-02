@@ -17,7 +17,7 @@ const WISTIA_SEO = {
   "/ar/self":{title:"AR 녹음 안내 | 위스티아",description:"위스티아 AR 축가 사전 녹음 안내 화면입니다."},
   "/ar/friend":{title:"AR 녹음 안내 | 위스티아",description:"위스티아 AR 축가 사전 녹음 안내 화면입니다."}
  },
- event:{title:"얼마일까 | 위스티아 사전녹음·영상 가격 계산",description:"상품별 예상 가격을 바로 확인하세요. AR 축가 사전녹음과 녹음 메이킹 필름의 위스티아 이벤트 가격 계산과 카카오 상담."},
+ event:{title:"문의 양식 · 구성과 가격 선택 | 위스티아",description:"상품과 옵션, 이벤트 혜택을 선택하고 문의 일정을 함께 작성하세요. 예상 가격과 문의 내용을 복사해 카카오톡으로 상담할 수 있습니다"},
  location:{title:"오시는 길 | 경기도 부천 위스티아",description:"위스티아는 경기도 부천시 석천로170번길 19, 2층에 있습니다. 부천시청역 1번 출구에서 도보 약 300m입니다."}
 };
 if(typeof window!=="undefined")window.WISTIA_SEO=WISTIA_SEO;

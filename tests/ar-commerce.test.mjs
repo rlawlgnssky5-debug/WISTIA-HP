@@ -48,6 +48,6 @@ assert.equal(minutes[0].textContent,'60')
 assert.equal(formats[0].textContent,'SOLO(1인)')
 assert.equal(links[2].href,'/event/solo')
 // New detail CTAs go to options first, modal confirmation remains unchanged
-assert.match(source,/route\(\{scrollAnchor\}\);if\(consult\)copyConsultationAndShowDialog\(\)/)
+assert.match(source,/route\(\{scrollAnchor\}\);if\(consult\)jumpToInquiry\(\)/)
 assert.match(source,/app.innerHTML=arCommerceDetail\(p,key\)/)
 console.log('AR commerce content, options, section targets and existing consultation delegation passed')
