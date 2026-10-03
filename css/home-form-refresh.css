@@ -1,0 +1,99 @@
+/* Home hierarchy: preserve the silver-blue editorial style and real media. */
+#app .we-home .we-heading{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;margin-bottom:32px}
+#app .we-home .we-heading :is(h2,p){width:100%;margin:0;text-align:center!important}
+#app .we-home .we-heading>p{max-width:620px;margin-inline:auto;line-height:1.85;text-wrap:balance}
+#app .we-home .we-section-tag{display:inline-flex;align-items:center;justify-content:center;width:fit-content;margin:0 auto 18px;padding:7px 14px;border:1px solid #d6e0e7;border-radius:4px;background:#f2f6f8;color:#456174;font-size:12px;line-height:1.5;letter-spacing:.04em}
+#app .we-home .we-heading>.we-section-tag{margin-bottom:0}
+#app .we-home .we-section{padding-block:64px}
+#app .we-home #homeServices h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.04em}
+#app .we-home .we-services{gap:24px}
+#app .we-home .we-service{grid-template-columns:140px minmax(0,1fr);gap:24px;padding:26px;border-radius:8px;background:linear-gradient(135deg,#f0f4f7,#fafbfc);text-align:center}
+#app .we-home .we-service figure{grid-row:auto;align-self:center}
+#app .we-home .we-service-copy{display:flex;flex-direction:column;align-items:center;min-width:0}
+#app .we-home .we-product-number{display:inline-block;font-size:12px;font-weight:650;letter-spacing:.1em;color:#4b6b80;margin-bottom:10px}
+#app .we-home .we-service .we-meta{justify-content:center;width:100%;padding:0;font-size:11px;line-height:1.7}
+#app .we-home .we-service :is(h3,p){text-align:center!important}
+#app .we-home .we-service h3{font-size:23px;margin:14px 0 12px;line-height:1.4}
+#app .we-home .we-service p{font-size:13px;line-height:1.85}
+#app .we-home .we-service-link{align-self:center;margin-top:18px;min-height:32px;font-size:12px}
+#app .we-home .we-affordability .we-location{padding:32px 24px;border-radius:8px;background:linear-gradient(140deg,#f0f4f7,#fafbfc);text-align:center}
+#app .we-home .we-affordability :is(h2,p){text-align:center!important}
+#app .we-home .we-affordability h2{margin:0 0 22px}
+#app .we-home .we-affordability p{margin:8px auto;max-width:660px;line-height:1.85;text-wrap:balance}
+#app .we-home .we-review-wrap>.we-shell{text-align:center;padding-top:48px}
+#app .we-home .review-carousel-head header{text-align:center;margin-inline:auto}
+#app .we-home .we-home-location{padding-bottom:56px}
+/* Google-Forms-like question cards, still a local form with explicit Kakao handoff. */
+body[data-page=event]{background:#f1f3f5}
+#app .booking-calculator-wrap.consultation-flow{width:calc(100% - 40px);max-width:720px;margin:28px auto 48px;padding:0!important;background:transparent}
+#app .consultation-flow .booking-calculator{display:block;background:transparent;border:0;padding:0;box-shadow:none}
+#app .consultation-flow .calculator-content{width:100%;padding:0;background:transparent}
+#app .consultation-flow #consultForm{display:grid;gap:16px}
+#app .consultation-flow .calculator-intro{padding:26px 28px!important;border:1px solid #dfe4e8;border-top:7px solid #4d6b81;border-radius:8px;background:#fff}
+#app .consultation-flow .calculator-intro h1{font-size:28px;font-weight:650;text-align:left;letter-spacing:-.035em}
+#app .consultation-flow .calculator-intro p{font-size:14px;line-height:1.8;text-align:left}
+#app .consultation-flow .consultation-step{padding:26px 28px!important;border:1px solid #dfe4e8;border-radius:8px!important;background:#fff!important;margin:0!important;text-align:left}
+#app .consultation-flow .booking-step{display:inline-block;font-size:11px;color:#6a7f8e;letter-spacing:.12em}
+#app .consultation-flow .consultation-step h2{font-size:20px;font-weight:600;line-height:1.5;margin:7px 0 10px;text-align:left}
+#app .consultation-flow .consultation-step-heading>p{font-size:13px;text-align:left}
+#app .consultation-flow .booking-product-grid{display:grid;grid-template-columns:1fr;gap:8px}
+#app .consultation-flow .booking-product-card{min-width:0}
+#app .consultation-flow .booking-product-face{display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:70px;padding:13px 14px 13px 42px!important;border:1px solid #e0e5e9;border-radius:5px;background:#fff;box-shadow:none}
+#app .consultation-flow .booking-product-card input{left:14px;top:24px;transform:none;width:18px;height:18px}
+#app .consultation-flow .booking-product-card input:checked+.booking-product-face{border:1px solid #658499;background:#f2f6f9;box-shadow:none}
+#app .consultation-flow .booking-product-face strong{font-size:15px;font-weight:500}
+#app .consultation-flow .booking-product-face small{font-size:12px;line-height:1.5}
+#app .consultation-flow .product-choice-state{display:none}
+#app .consultation-flow .booking-undecided{padding:13px 14px;margin-top:8px;border-radius:5px;background:#fff;gap:10px}
+#app .consultation-flow .booking-undecided strong{font-size:14px;font-weight:500}
+#app .consultation-flow .booking-undecided>b{display:none}
+#app .consultation-flow .booking-base-choice>p{font-size:14px;font-weight:500}
+#app .consultation-flow .booking-base-choice .calculator-option-list{grid-template-columns:1fr;gap:8px}
+#app .consultation-flow .booking-base-choice .option-choice{flex-wrap:nowrap;align-items:center;gap:10px;min-height:60px;padding:12px 14px!important;border:1px solid #e0e5e9;border-radius:5px!important;background:#fff}
+#app .consultation-flow .booking-base-choice .option-choice:has(input:checked){border-color:#658499;background:#f2f6f9}
+#app .consultation-flow .booking-base-choice .option-choice strong{font-size:14px;font-weight:500}
+#app .consultation-flow .booking-base-choice .option-choice small{font-size:12px}
+#app .consultation-flow .booking-base-choice .option-choice>b{margin-left:0;width:auto;font-size:14px;white-space:nowrap}
+#app .consultation-flow .booking-base-amount{padding-top:16px;margin-top:18px;font-size:13px}
+#app .consultation-flow .booking-base-amount strong{font-size:20px}
+#app .consultation-flow .consultation-field-grid{grid-template-columns:1fr;gap:24px}
+#app .consultation-flow .contact-field{padding-top:18px;border-top:1px solid #edf0f2;gap:10px}
+#app .consultation-flow fieldset.contact-field{padding-top:18px;border-top:1px solid #edf0f2}
+#app .consultation-flow .contact-field>span,#app .consultation-flow .contact-field>legend{font-size:15px;font-weight:500;color:#2c3b45}
+#app .consultation-flow .contact-field>span>small{font-size:11px;color:#b24747}
+#app .consultation-flow .contact-field input:not([type=radio]),#app .consultation-flow .contact-field select{border-radius:4px;border:1px solid #dce3e8;background:#fff;height:46px;font-size:15px}
+#app .consultation-flow .contact-field input[type=text]{border-width:0 0 1px;border-radius:0;padding-inline:0}
+#app .consultation-flow .contact-date-toggle{margin:0;gap:10px}
+#app .consultation-flow .contact-date-toggle span{border-radius:4px;min-height:44px;font-size:13px}
+#app .consultation-flow .consultation-subtitle{font-size:15px;font-weight:500}
+#app .consultation-flow .has-option-photo{grid-template-columns:18px minmax(0,1fr) auto;padding:12px 0!important;border-radius:0;background:#fff!important;gap:12px}
+#app .consultation-flow .has-option-photo>.option-photo{display:none}
+#app .consultation-flow .has-option-photo>.option-copy{grid-column:2;grid-row:auto}
+#app .consultation-flow .has-option-photo>b{grid-column:3;grid-row:auto;font-size:13px}
+#app .consultation-flow .consultation-gifts{padding:22px 0 0;background:#fff!important;border-radius:0;border-top:1px solid #edf0f2}
+#app .consultation-flow .consultation-gift-heading{grid-template-columns:1fr}
+#app .consultation-flow .consultation-gift-icon{display:none}
+#app .consultation-flow .consultation-gift-heading h3{font-size:16px}
+#app .consultation-flow .benefit-total{grid-column:1}
+#app .consultation-flow .event-benefit-card{background:#fff;border-radius:4px;border:1px solid #e3e8ec}
+#app .consultation-flow .event-benefit-card:has(input:checked){background:#f2f6f9;border-color:#658499}
+#app .consultation-flow .booking-price-sidebar{display:none!important}
+#app .consultation-flow .contact-submit{min-height:50px;border-radius:5px!important;font-size:14px!important}
+@media(max-width:900px){#app .we-home .we-service{grid-template-columns:120px minmax(0,1fr);gap:20px;padding:22px}}
+@media(max-width:600px){
+ #app .we-home .we-section{padding-block:44px}
+ #app .we-home .we-heading{gap:14px;margin-bottom:26px}
+ #app .we-home .we-section-tag{font-size:11px;padding:6px 12px}
+ #app .we-home .we-service{grid-template-columns:96px minmax(0,1fr);gap:16px;padding:18px 14px}
+ #app .we-home .we-service h3{font-size:19px;margin:12px 0 8px}
+ #app .we-home .we-service p{font-size:12px}
+ #app .we-home .we-service .we-meta{font-size:10px}
+ #app .we-home .we-product-number{font-size:11px;margin-bottom:8px}
+ #app .we-home .we-affordability .we-location{padding:28px 16px}
+ #app .booking-calculator-wrap.consultation-flow{width:calc(100% - 32px);margin:20px auto 36px}
+ #app .consultation-flow .calculator-intro,#app .consultation-flow .consultation-step{padding:22px 18px!important}
+ #app .consultation-flow .calculator-intro h1{font-size:25px}
+ #app .consultation-flow .consultation-step h2{font-size:19px}
+ #app .consultation-flow .contact-submit{font-size:13px!important;padding:14px}
+}
+@media(max-width:360px){#app .we-home .we-service{grid-template-columns:78px minmax(0,1fr);gap:12px;padding:16px 12px}#app .we-home .we-service h3{font-size:17px}#app .we-home .we-service .we-meta{font-size:9px}}

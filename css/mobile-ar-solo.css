@@ -1,4 +1,10 @@
-/* Approved SOLO mobile presentation, no desktop or DUET layout replacement */
+/* Approved SOLO/DUET and story-film mobile presentation; desktop commerce layouts stay intact. */
+.detail-price-reason{padding:70px 24px;text-align:center;background:#f6f8f9;color:#263a48}
+.detail-price-reason .shell{max-width:720px;margin:auto}
+.detail-price-reason .price-reason-label{font-size:12px;letter-spacing:.12em;color:#728590}
+.detail-price-reason h2{font-size:32px;margin:14px 0 28px}
+.detail-price-reason p{font-size:15px;line-height:1.8;color:#657784}
+.detail-price-reason .price-reason-lead{font-size:23px;color:#304856;margin-bottom:24px}
 @media (max-width:768px){
  body:has(.mobile-ar-solo){background:#fff}
  body:has(#app .mobile-ar-solo) #floatingKakao,body:has(#app .mobile-ar-solo) #soloDesktopCta{display:none!important}
@@ -304,4 +310,53 @@
   #app .mobile-ar-solo :is(.arc-point,.arc-section,.mas-detail-cover) h2{font-size:25px!important}
   #app .mobile-ar-solo .mas-bottom :is(a,button){font-size:13px}
  }
+ /* In-place event disclosure uses approved conditions, without a second calculator. */
+ #app .mobile-ar-solo .mas-event-disclosure{margin:18px 0 0;border:1px solid #dce5e9;border-radius:8px;background:#f7f9fa;text-align:left}
+ #app .mobile-ar-solo .mas-event-disclosure summary{display:grid;grid-template-columns:28px minmax(0,1fr) 20px;gap:10px;align-items:center;min-height:66px;padding:13px 14px;cursor:pointer;list-style:none}
+ #app .mobile-ar-solo .mas-event-disclosure summary::-webkit-details-marker{display:none}
+ #app .mobile-ar-solo .mas-event-disclosure summary:focus-visible{outline:2px solid #496980;outline-offset:3px;border-radius:8px}
+ #app .mobile-ar-solo .mas-event-gift{font-size:24px}
+ #app .mobile-ar-solo .mas-event-disclosure summary strong{font-size:14px;font-weight:650;color:#345064}
+ #app .mobile-ar-solo .mas-event-disclosure summary small{display:block;font-size:11px;margin-top:3px;color:#71818b}
+ #app .mobile-ar-solo .mas-event-chevron{font-size:22px;text-align:center;color:#6f8492}
+ #app .mobile-ar-solo .mas-event-disclosure[open] .mas-event-chevron{transform:rotate(180deg)}
+ #app .mobile-ar-solo .mas-event-content{padding:0 14px 14px;border-top:1px solid #e1e8ec}
+ #app .mobile-ar-solo .mas-event-content ul{list-style:none;padding:0;margin:0}
+ #app .mobile-ar-solo .mas-event-content li{padding:14px 0;border-bottom:1px solid #e1e8ec}
+ #app .mobile-ar-solo .mas-event-content li>div{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#344c5e}
+ #app .mobile-ar-solo .mas-event-content b{white-space:nowrap;color:#4b697d}
+ #app .mobile-ar-solo .mas-event-content p{font-size:12px!important;line-height:1.65!important;text-align:left!important;margin:6px 0 0!important;color:#657784}
+ #app .mobile-ar-solo .mas-event-content .mas-event-note{font-size:11px!important;margin-top:13px!important}
+ #app .mobile-ar-solo .detail-price-reason{background:linear-gradient(145deg,#f0f4f6,#fafbfb)!important}
+ #app .mobile-ar-solo .detail-price-reason .shell{width:100%;padding:0}
+ #app .mobile-ar-solo .detail-price-reason h2{font-size:23px!important;margin:12px 0 22px!important}
+ #app .mobile-ar-solo .detail-price-reason .price-reason-lead{font-size:18px!important;line-height:1.65!important;color:#304856}
+ /* Real story footage stays 16:9; no portrait crop or repeated AR media. */
+ #app .mobile-story-film .mas-story-media{position:relative;aspect-ratio:16/9;background:#e9edef;overflow:hidden}
+ #app .mobile-story-film .mas-story-video{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;padding:0;margin:0;cursor:pointer;background:none}
+ #app .mobile-story-film .mas-story-video img{width:100%;height:100%;object-fit:contain;display:block}
+ #app .mobile-story-film .mas-story-play{position:absolute;right:14px;bottom:14px;padding:9px 13px;border-radius:24px;background:#ffffffec;color:#354f62;font-size:12px;font-weight:600}
+ #app .mobile-story-film .mas-story-media .detail-inline-video{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;aspect-ratio:auto;border-radius:0}
+ #app .mobile-story-film .mas-story-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+ #app .mobile-story-film .mas-summary h1 span{font-size:17px}
+ #app .mobile-story-film .mas-information dl>div:nth-child(4) dd{white-space:normal;font-size:13px;line-height:1.8}
+ #app .mobile-story-film .mas-story-chapters ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px;list-style:none;margin:28px 0 0;padding:0;text-align:left}
+ #app .mobile-story-film .mas-story-chapters figure{margin:0;aspect-ratio:16/9;overflow:hidden;border-radius:6px}
+ #app .mobile-story-film .mas-story-chapters img{display:block;width:100%;height:100%;object-fit:cover}
+ #app .mobile-story-film .mas-story-chapters li>div{padding:10px 0 0;text-align:left}
+ #app .mobile-story-film .mas-story-chapters li span{font-family:Georgia,serif;font-size:12px;color:#8697a1}
+ #app .mobile-story-film .mas-story-chapters h3{font-size:15px!important;line-height:1.45;text-align:left!important;margin:5px 0}
+ #app .mobile-story-film .mas-story-chapters li p{font-size:12px!important;line-height:1.65!important;text-align:left!important;margin:0}
+ #app .mobile-story-film .ar-expert-panel-sub{white-space:normal}
+ #app .mobile-story-film .mas-story-process .shell{width:100%;padding:0}
+ #app .mobile-story-film .mas-story-process .wps-head{display:block;text-align:center;margin-bottom:24px}
+ #app .mobile-story-film .mas-story-process .wps-head h2{font-size:23px!important}
+ #app .mobile-story-film .story-process-folder summary{display:grid!important;padding:16px 12px!important;grid-template-columns:48px minmax(0,1fr);gap:8px 12px;min-height:110px}
+ #app .mobile-story-film .story-process-folder .process-folder-label strong{font-size:16px}
+ #app .mobile-story-film .story-process-folder .process-folder-label small{font-size:11px;line-height:1.6}
+ #app .mobile-story-film .process-folder-art{width:48px;grid-row:1/3;transform:scale(.72);transform-origin:left center}
+ #app .mobile-story-film .process-folder-cue{grid-column:2;font-size:11px;margin:0}
+ #app .mobile-story-film .story-process-folder .story-process-card{grid-column:1;grid-row:auto}
+ #app .mobile-story-film .story-process-copy :is(h3,p){text-align:left!important}
+ #app .mobile-story-film .story-process-grid{grid-template-columns:1fr}
 }

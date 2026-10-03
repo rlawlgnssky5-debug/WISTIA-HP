@@ -16,6 +16,13 @@ let selectedOptions=new Set(),selectedEvents=new Set(),optionQuantities={saved:2
 `+calculate+bridge,context)
 const api=context.window.WistiaQuote
 const baseline=runInNewContext('JSON.stringify({state:quoteState(),optionQuantities,chosenOption})',context)
+let copiedQuote=''
+context.copyConsultationAndShowDialog=async text=>{copiedQuote=text}
+await api.consultKakao({key:'duo',format:'live',options:['lyrics-video'],events:['blog']})
+assert.match(copiedQuote,/DUET\(2인\) · 2시간/)
+assert.match(copiedQuote,/최종 예상 가격 : 170,000원/)
+assert.match(copiedQuote,/가사 영상 추가 \+40,000원/)
+assert.equal(runInNewContext('JSON.stringify({state:quoteState(),optionQuantities,chosenOption})',context),baseline,'Kakao handoff must preserve the open inquiry draft')
 const cases=[
  [{key:'solo'},120000],
  [{key:'duo'},160000],
@@ -51,7 +58,9 @@ runInNewContext('setQuoteState(state)',context)
 assert.doesNotMatch(context.consultationText(),/메이킹|−70,000원/)
 assert.match(context.consultationText(),/영상 구성 : 스토리형 영상/)
 assert.match(context.consultationText(),/최종 예상 가격 : 350,000원/)
-assert.match(question,/api\(\)\.apply\(state\);try\{await api\(\)\.consult\(\)/)
+assert.match(question,/try\{await api\(\)\.consultKakao\(state\)/)
+assert.match(question,/data-qe-consult>카카오톡 문의 →/)
+assert.doesNotMatch(question,/api\(\)\.apply\(state\)/,'quote-to-Kakao must not navigate to a form')
 assert.match(question,/contextPath!==location\.pathname/)
 assert.match(question,/addEventListener\('cancel'/)
 assert.doesNotMatch(question,/<input|<textarea|window\.open|pf\.kakao\.com/)
@@ -84,4 +93,8 @@ await tap('', 'data-qe-back')
 assert.match(modal.innerHTML,/어떤 축가를 준비하시나요/,'back skips the retired format question too')
 await tap('film');await tap('none-options');await tap('none-events')
 assert.match(modal.innerHTML,/<strong>350,000원<\/strong>/,'story film keeps its base price after both skips')
+await tap('', 'data-qe-consult')
+assert.equal(modal.open,false,'Kakao handoff closes the estimate dialog')
+assert.match(copiedQuote,/최종 예상 가격 : 350,000원/)
+assert.equal(questionContext.location.pathname,'/','Kakao handoff does not navigate to a form')
 console.log('Quick estimate shared prices, preview isolation, options, benefits, consultation text and handoff passed')

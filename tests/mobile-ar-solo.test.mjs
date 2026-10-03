@@ -8,6 +8,7 @@ const scope={
  PRODUCTS:{solo:{normal:120000,resultVideo:'assets/video/groom-wedding-song-ar.mp4'},duo:{normal:160000,resultVideo:'assets/video/duo-wedding-song-ar.mp4'}},
  AR_DETAIL_CONTENT:{solo:{poster:'assets/img/ar-detail/solo-live-proof.jpg'}},
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
+ EVENTS:[{label:'참여 혜택',discount:70000,detail:'승인된 조건'}],shortWon:n=>(n/10000)+'만원',
  soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2 id="soloReviewTitle">실제 고객 후기</h2><p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p></header></section>',
  productPackageOverview:()=>'<div>기본 구성</div>',productComparisonSection:()=>'<section>장점</section>',arExpertStory:()=>'<section>엔지니어</section>',
  faq:items=>items.map(([q,a])=>'<details><summary>'+q+'</summary><p>'+a+'</p></details>').join(''),footer:()=>'<footer></footer>',
@@ -64,7 +65,7 @@ assert.ok(html.indexOf('mas-information')<html.indexOf('id="reviews"'))
 assert.ok(html.indexOf('id="reviews"')<html.indexOf('POINT 01'))
 assert.doesNotMatch(html,/mas-detail-cover|마음은 직접 전하고/)
 assert.match(html,/<dt>녹음시간<\/dt>/)
-assert.match(html,/<dt>포함 작업<\/dt><dd>녹음 · 보컬 디렉팅 · 수작업 보정 · 믹싱 · 마스터링<\/dd>/)
+assert.match(html,/<dt>포함 작업<\/dt><dd>녹음 · 보컬 디렉팅 · 음정·박자 보정 · 믹싱 · 마스터링<\/dd>/)
 assert.match(html,/<dt>제작 기간<\/dt><dd>녹음 후 최대 7일 이내<\/dd>/)
 assert.match(html,/<section class="arc-section arc-process mas-process" id="arcProcess"><h2>진행 순서<\/h2>/)
 assert.doesNotMatch(html,/준비부터 전달까지<br>이렇게 진행합니다/)
@@ -124,7 +125,7 @@ assert.match(css,/@media \(max-width:768px\)/)
 assert.match(css,/body:has\(#app \.mobile-ar-solo\) #floatingKakao/)
 assert.match(css,/safe-area-inset-bottom/)
 assert.match(css,/menu-open,\.modal-open/)
-assert.match(source,/\['\/detail\/solo','\/detail\/duo'\]\.includes\(routePath\(\)\)/)
+assert.match(source,/\['\/detail\/solo','\/detail\/duo','\/detail\/duet-film'\]\.includes\(routePath\(\)\)/)
 assert.doesNotMatch(source,/WistiaMobileSolo\?\./)
 assert.doesNotMatch(shell,/src="js\/mobile-ar-solo\.js/)
 assert.match(css,/arc-recording-flow svg\{[^}]*margin:8px auto 0/)

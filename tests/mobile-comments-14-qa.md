@@ -15,3 +15,15 @@
 - 사용자 확정 슬로건: 완성도는 높이고, 부담은 줄인 가격을 약속드립니다
 - 증빙: `qa/mobile-comments-14-key-20261003.jpg`, `qa/mobile-comments-14-location-20261003.jpg`
 - 실제 휴대폰 Safari 및 광고 이벤트 관리자 수신 검수는 아님
+
+## 운영 배포 검수
+
+- 커밋: `14b69bbaf8eb4b53d45056110d9c95ba87c56136`, main 정상 푸시
+- Vercel: success / Deployment has completed
+- 배포: https://vercel.com/wistia1/wistia/Apo7BfamnuWGNYSWb8qbLsgnPfUs
+- 공개 홈·SOLO·DUET·문의·오시는 길 HTTP 200 및 새 캐시 반영
+- 공개 SOLO·DUET 320·390px 가로 넘침 0, 콘텐츠 폭 305·375px
+- 공개 SOLO 두 폭 및 DUET 320px 요청한 긴 문구 내부 넘침 0
+- 공개 보정 전·후 탭 즉시 재생, AR 70→69% 즉시 재생 및 0:23까지 시간 진행, 다른 플레이어 정지 확인
+- 공개 지도 두 서비스 링크와 확정 슬로건 확인, 검수 탭 오류·경고 0
+- 공개 증빙: `qa/mobile-comments-14-production-20261003.jpg`
