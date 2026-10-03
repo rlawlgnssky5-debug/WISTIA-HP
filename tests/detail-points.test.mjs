@@ -7,6 +7,7 @@ const scope={
  PRODUCTS:{solo:{normal:120000,resultVideo:'assets/video/groom-wedding-song-ar.mp4'},duo:{normal:160000,resultVideo:'assets/video/duo-wedding-song-ar.mp4'}},
  AR_DETAIL_CONTENT:{solo:{poster:'assets/img/ar-detail/solo-live-proof.jpg'},'duet-film':{poster:'story.jpg',videoLabel:'스토리'}},
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
+ EVENTS:[],shortWon:n=>(n/10000)+'만원',
  filmFormatPrice:()=>350000,selectedFilmPeople:2,
  soloReviewCarousel:()=>'<section id="reviews"></section>',
  productPackageOverview:()=>'<div>기본 구성</div>',productComparisonSection:()=>'<section>장점</section>',

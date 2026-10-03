@@ -1,11 +1,11 @@
-/* Approved SOLO/DUET and story-film mobile presentation; desktop commerce layouts stay intact. */
+/* Approved SOLO/DUET and story-film mobile composition, shared at every viewport width. */
 .detail-price-reason{padding:70px 24px;text-align:center;background:#f6f8f9;color:#263a48}
 .detail-price-reason .shell{max-width:720px;margin:auto}
 .detail-price-reason .price-reason-label{font-size:12px;letter-spacing:.12em;color:#728590}
 .detail-price-reason h2{font-size:32px;margin:14px 0 28px}
 .detail-price-reason p{font-size:15px;line-height:1.8;color:#657784}
 .detail-price-reason .price-reason-lead{font-size:23px;color:#304856;margin-bottom:24px}
-@media (max-width:768px){
+@media (min-width:0px){
  body:has(.mobile-ar-solo){background:#fff}
  body:has(#app .mobile-ar-solo) #floatingKakao,body:has(#app .mobile-ar-solo) #soloDesktopCta{display:none!important}
  body:has(.mobile-ar-solo) #siteHeader{background:#fff!important;box-shadow:none;border-bottom:1px solid #edf0f2}
@@ -211,6 +211,8 @@
  #app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:42px 20px!important}
  #app .mobile-ar-solo .arc-engineer .shell{width:100%;max-width:none;margin-inline:0}
  #app .mobile-ar-solo .ar-expert-panel-content{padding:22px 0!important}
+ #app .mobile-ar-solo .ar-expert-panel-media.ar-expert-broadcast{aspect-ratio:3/2;background:#edf2f7}
+ #app .mobile-ar-solo .ar-expert-broadcast img{object-fit:contain!important;object-position:center!important;filter:none!important}
  #app .mobile-ar-solo .ar-expert-panel-sub{white-space:nowrap;font-size:13px!important;letter-spacing:-.025em}
  #app .mobile-ar-solo .arc-faq .faq-list{width:100%;margin:32px 0 0;padding:0}
  #app .mobile-ar-solo .arc-faq .faq-list details{box-sizing:border-box;width:100%;margin-inline:0;padding-inline:16px}
@@ -359,4 +361,44 @@
  #app .mobile-story-film .story-process-folder .story-process-card{grid-column:1;grid-row:auto}
  #app .mobile-story-film .story-process-copy :is(h3,p){text-align:left!important}
  #app .mobile-story-film .story-process-grid{grid-template-columns:1fr}
+}
+/* Wider canvas only: same sections, copy, controls and order as the approved mobile page. */
+@media (min-width:769px){
+ body:has(.mobile-ar-solo) .header-inner{height:72px;min-height:72px;padding-inline:24px}
+ #app .mobile-ar-solo{max-width:1120px;margin-inline:auto;padding-bottom:108px}
+ #app .mobile-ar-solo .mas-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:40px;padding:32px 40px 40px}
+ #app .mobile-ar-solo .mas-intro .mas-gallery{align-self:start}
+ #app .mobile-ar-solo .mas-intro .mas-gallery-caption{padding-top:0;font-size:13px}
+ #app .mobile-ar-solo .mas-intro .mas-gallery-viewport,#app .mobile-story-film .mas-story-media{border-radius:12px}
+ #app .mobile-ar-solo .mas-intro .mas-summary{padding:20px 0}
+ #app .mobile-ar-solo .mas-intro .mas-summary h1{font-size:28px!important;line-height:1.45}
+ #app .mobile-ar-solo .mas-intro .mas-summary h1 span{font-size:20px}
+ #app .mobile-ar-solo .mas-intro .mas-description{font-size:15px;white-space:normal}
+ #app .mobile-ar-solo .mas-intro .mas-included{gap:8px;flex-wrap:wrap}
+ #app .mobile-ar-solo .mas-intro .mas-included span{font-size:12px}
+ #app .mobile-ar-solo .mas-intro .mas-price strong{font-size:38px}
+ #app .mobile-ar-solo .mas-event-price{flex-wrap:wrap}
+ #app .mobile-ar-solo :is(.mas-selection,.mas-information){padding:36px 48px}
+ #app .mobile-ar-solo :is(.mas-selection,.mas-information) h2{font-size:24px}
+ #app .mobile-ar-solo .mas-selection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 32px}
+ #app .mobile-ar-solo .mas-selection h2{grid-column:1/-1;margin-bottom:4px}
+ #app .mobile-ar-solo .mas-variant,#app .mobile-ar-solo .mas-variant:first-of-type,#app .mobile-ar-solo .mas-variant:last-child{padding:20px;border:1px solid #dbe3e9;border-radius:8px;background:#fff}
+ #app .mobile-ar-solo .mas-variant.is-selected{border-color:#7591a5;background:#f1f6f9}
+ #app .mobile-ar-solo .mas-information dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+ #app .mobile-ar-solo :is(.arc-point,.arc-section){padding:64px 48px!important}
+ #app .mobile-ar-solo :is(.arc-point,.arc-section)>:not(header){max-width:800px;margin-inline:auto!important}
+ #app .mobile-ar-solo :is(.arc-point,.arc-section) h2,#app .mobile-ar-solo .wistia-ba-copy h2{font-size:32px!important}
+ #app .mobile-ar-solo :is(.arc-point,.arc-section) p,#app .mobile-ar-solo .wistia-ba-copy p:not(.detail-point-label){font-size:15px!important}
+ #app .mobile-ar-solo :is(#arcDetails,#reviews,#arcFaq,#arcProcess){scroll-margin-top:88px}
+ #app .mobile-ar-solo .solo-reviews{padding-block:48px}
+ #app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:64px 48px!important}
+ #app .mobile-ar-solo .arc-engineer .shell{max-width:900px;margin-inline:auto}
+ #app .mobile-ar-solo .arc-advantages .wistia-advantages{padding:64px 48px}
+ #app .mobile-ar-solo .detail-price-reason{padding:56px 48px}
+ #app .mobile-ar-solo .detail-price-reason h2{font-size:32px!important}
+ #app .mobile-ar-solo .mas-bottom{left:50%;right:auto;bottom:16px;transform:translateX(-50%);width:calc(100% - 48px);max-width:640px;padding:10px;border:1px solid #c9d6df;border-radius:12px;box-shadow:0 6px 24px #20354224}
+ #app .mobile-story-film .mas-story-chapters ol{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px}
+ #app .mobile-story-film .mas-story-chapters h3{font-size:18px!important}
+ #app .mobile-story-film .story-process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #app .mobile-story-film .story-process-folder .story-process-card{grid-column:auto;grid-row:auto}
 }
