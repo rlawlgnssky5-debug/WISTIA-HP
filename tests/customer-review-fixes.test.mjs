@@ -26,7 +26,7 @@ assert.doesNotMatch(ar,/음정·박자는 다듬고|직접 부르는 순간에�
 assert.match(ar,/wistiaBeforeAfterSection\(\)/)
 assert.match(ar,/arCdRatioSection\(\)/)
 assert.match(ar,/arCustomerVideoData\(key\)/)
-assert.match(app,/duet-live-proof\.jpg/)
+assert.match(app,/duet-live-proof-v2\.jpg/)
 assert.match(app,/routePath\(\)==='\/section\/homeProcess'/)
 assert.match(css,/#quickEstimate \.qe-choice\{[^\n]+border:1px solid/)
 assert.match(css,/#app \.footer \.footer-brand[^\n]+color:#29343e/)
