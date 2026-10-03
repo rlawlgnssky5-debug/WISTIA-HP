@@ -37,6 +37,9 @@ for (const product of products) {
 page('/info/location', seo.location)
 // The shared product brand links here; direct visits must serve the app as well.
 page('/info/about', {title:'위스티아 소개 | 경기도 부천 웨딩 축가 전문 스튜디오',description:'위스티아의 보컬 디렉팅·음원 제작·영상 연출 전문가와 웨딩 축가 제작 과정을 소개합니다'})
+page('/info/faq', {title:'자주 묻는 질문 | 위스티아',description:'위스티아의 축가 녹음과 영상 제작, 예약 및 진행에 관한 자주 묻는 질문을 확인하세요'})
+page('/info/process', {title:'진행 안내 | 위스티아',description:'상담과 예약부터 녹음·촬영, 보정과 완성 파일 전달까지 위스티아의 제작 과정을 안내합니다'})
+page('/events', {title:'후기 참여 이벤트 | 위스티아',description:'위스티아의 할인과 후기 페이백 혜택, 각 이벤트의 참여 조건을 확인하세요'})
 // Home section links must also resolve on direct visits and refreshes.
 for (const section of ['homeServices','homeCases','homeLocation','homeProcess']) {
   page(`/section/${section}`, seo.home, {robots:'noindex, follow'})

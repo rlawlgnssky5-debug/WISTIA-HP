@@ -1,0 +1,64 @@
+/* Mobile-first finishing pass: shared type, rhythm and generous touch targets. */
+#app .mobile-ar-solo.ar-commerce-detail .detail-point-label{
+ box-sizing:border-box!important;display:inline-flex!important;align-items:center;justify-content:center;
+ width:94px!important;min-width:94px;height:32px!important;padding:0!important;margin:0 0 18px!important;
+ font-family:var(--sans)!important;font-size:13px!important;font-weight:700!important;
+ line-height:18px!important;letter-spacing:.06em!important;font-variant-numeric:tabular-nums;
+ color:#fff!important;background:#354f62!important;border:1px solid #486479!important;border-radius:4px;
+ box-shadow:inset 0 1px 0 #ffffff24,0 2px 0 #263e4e;white-space:nowrap
+}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots{gap:0}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots button{
+ position:relative;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent
+}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots button::after{
+ content:"";display:block;width:10px;height:10px;border:1.5px solid #8d9daa;border-radius:50%;background:#fff
+}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots button[aria-pressed="true"]{background:transparent;border:0}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots button[aria-pressed="true"]::after{background:#435967;border-color:#435967}
+#app .mobile-ar-solo .mas-intro .mas-gallery-dots button:focus-visible{outline:2px solid #496980;outline-offset:-4px}
+#app .mobile-ar-solo .mas-event-price{gap:8px 10px;flex-wrap:wrap;align-items:baseline}
+#app .mobile-ar-solo .mas-intro .mas-event-price>span{font-size:12px;line-height:1.6;word-break:keep-all}
+#app .mobile-ar-solo .mas-event-price>strong{white-space:nowrap;font-variant-numeric:tabular-nums}
+#app .mobile-ar-solo .mas-gallery-caption{word-break:keep-all;text-wrap:balance}
+#app .mobile-ar-solo .mas-information dd small{font-size:11px}
+#app .mobile-ar-solo .mas-intro .mas-included{flex-wrap:wrap;gap:6px}
+#app .mobile-ar-solo .mas-intro .mas-included span{font-size:11px;line-height:1.5;padding:5px 8px;white-space:nowrap}
+#app .mobile-ar-solo .mas-key-note{border-radius:12px}
+#app .mobile-ar-solo :is(.arc-point,.arc-section)>header>p,
+#app .mobile-ar-solo .wistia-ba-copy>p:not(.detail-point-label){word-break:keep-all;text-wrap:pretty}
+#app .mobile-ar-solo .mas-story-play{min-height:44px;display:flex;align-items:center;gap:5px}
+#app .mobile-ar-solo .mas-story-video:focus-visible{outline:3px solid #496980;outline-offset:-4px}
+/* The mobile form keeps the browser's normal zoom while editing. */
+#app .consultation-flow .contact-field input:not([type=radio]):not([type=checkbox]),
+#app .consultation-flow .contact-field select,#app .consultation-flow textarea{font-family:var(--sans);font-size:16px}
+#app .consultation-flow :is(.contact-field,.event-benefit-card,.booking-price-card){min-width:0}
+#app .consultation-flow .contact-submit{word-break:keep-all;text-wrap:balance}
+@media(max-width:768px){
+ #app .mobile-ar-solo :is(.arc-point,.arc-section) h2,
+ #app .mobile-ar-solo .wistia-ba-copy h2{font-size:23px!important;line-height:1.45!important;letter-spacing:-.035em;word-break:keep-all;text-wrap:balance;margin:0 0 14px!important}
+ #app .mobile-ar-solo .arc-lyrics .arc-option-fee{margin:0 0 12px!important;font-size:12px!important}
+ #app .mobile-ar-solo .wistia-ba-copy>p:not(.detail-point-label){margin:10px 0!important}
+ #app .mobile-ar-solo .mas-key-note>p{margin-bottom:0!important}
+ #app .we-home .we-heading h2,#app .we-home .we-affordability h2,
+ #app .we-home .we-review-wrap h2{font-size:26px;line-height:1.45;letter-spacing:-.035em;text-wrap:balance;word-break:keep-all}
+ #app .we-home .we-service .we-meta{font-size:11px;line-height:1.7;word-break:keep-all}
+ #app .we-home .we-service h3{font-size:19px;line-height:1.45;text-wrap:balance;word-break:keep-all}
+ #app .we-home .we-service p{font-size:13px;line-height:1.75;word-break:keep-all}
+ #app .we-home .we-service-link{margin-top:14px}
+ #app .we-home .we-service figure{border-radius:9px;overflow:hidden}
+ #app .we-home .we-section-tag{font-family:var(--sans);font-size:12px;line-height:18px;padding:6px 12px;letter-spacing:.03em}
+ #app .we-home .we-actions .button{border-radius:8px;min-height:48px}
+ #app .we-home .we-actions .button.dark{background:linear-gradient(180deg,#4c6d83,#354f62);box-shadow:inset 0 1px 0 #ffffff40,0 3px 0 #223b4d}
+ #app .we-home .we-actions .button:not(.dark){border:1px solid #d1dde5;background:linear-gradient(180deg,#fff,#edf3f7);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c6d3dd}
+}
+@media(max-width:360px){
+ #app .mobile-ar-solo :is(.arc-point,.arc-section) h2,#app .mobile-ar-solo .wistia-ba-copy h2{font-size:22px!important}
+ #app .mobile-ar-solo .mas-key-editorial h2{font-size:20px!important}
+ #app .we-home .we-heading h2,#app .we-home .we-affordability h2,#app .we-home .we-review-wrap h2{font-size:24px}
+ #app .we-home .we-service h3{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){
+ #app .we-home .we-service:hover,#app .we-home .we-service:active,
+ #app .mobile-ar-solo .mas-bottom :is(a,button):hover,#app .mobile-ar-solo .mas-bottom :is(a,button):active{transform:none}
+}
