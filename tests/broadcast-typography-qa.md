@@ -41,4 +41,19 @@ Use case: compositing / ads-marketing. Create a finished premium typography illu
 - 직접 실행 회귀 시험 25개 통과, 앱 JS 구문·Git 차이 검사 및 정적 HTML 23개 재생성 통과
 - 앱/공통 상세 CSS 캐시: `20261004-broadcast-type-1`
 - 실제 휴대폰 실기 테스트 및 외부 카카오톡 전송 없음
-- 운영 배포 결과는 배포 완료 후 추가
+- 앱 외 연락 양식·빠른 견적 JS 구문 검사도 통과
+
+## 운영 배포 완료
+
+- 커밋: `db177a02716b177243958bb08b92018710cbbb59`, 기존 main 정상 푸시, 강제 푸시/배포 설정 변경 없음
+- GitHub Vercel 상태: `success`, `Deployment has completed`
+- 배포 기록: https://vercel.com/wistia1/wistia/R5zBGoyt8caUT7AsFzqMmunDVwFL
+- 운영 주소: https://www.wistiastudio.com/detail/solo
+- 홈·SOLO·DUET·스토리·문의·오시는 길·새 이미지 HTTP 200, 새 앱/공통 상세 CSS 캐시 확인
+- 공개 앱 소스의 새 이미지 포함, 이전 사운드 번호 없음, 지정된 DUET 추가 설명 없음, 공통 상세 렌더러 적용 확인
+- 실제 공개 브라우저 세 상품 × 320·390·1022px 9개 조합: 공통 구성/새 이미지 로딩/전체 표시 정상, 사운드 번호 없음, 루트/검사한 텍스트 가로 넘침 0
+- 공개 홈 320·1022px: 두 상품 카드의 1px 테두리·입체 단차 그림자·확정 슬로건 확인, 루트 가로 넘침 0
+- 공개 SOLO 영상 재생 중 1022→390px 변경 후 일시정지 없이 2.99153→3.150393초 진행 확인, FAQ 첫 항목 펼침 정상
+- 공개 직접 상세 탭 오류·경고 0, 외부 카카오톡 전송 없음
+- 공개 증빙: `qa/broadcast-typography-production-pc-20261004.png`, `qa/broadcast-typography-production-mobile-20261004.png`
+- 배포 후 기록/증빙은 로컬에 보관, 운영 소스는 위 커밋과 일치

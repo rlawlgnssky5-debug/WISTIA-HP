@@ -1,0 +1,55 @@
+/* WISTIA refinement: intact identity, compact editorial graphics and tactile actions. */
+:root{--header:64px}
+#siteHeader{height:var(--header)!important;min-height:var(--header);overflow:visible}
+#siteHeader .header-inner{height:100%;min-height:0;padding-block:0;align-items:center}
+#siteHeader .brand-group{align-items:center;min-width:0;gap:12px}
+#siteHeader .wordmark{align-items:center;gap:10px;flex-shrink:0;min-height:40px;overflow:visible}
+#siteHeader .wordmark img{width:36px;height:36px;flex:0 0 36px;object-fit:contain;filter:brightness(.48)}
+#siteHeader .wordmark>span{font:400 21px/1.1 Georgia,serif;letter-spacing:.13em;color:#283944}
+#siteHeader .wordmark small{font:400 7px/1.4 var(--sans);letter-spacing:.16em;margin-top:4px;color:#697e8d}
+#app .mobile-ar-solo .mas-intro .mas-brand{width:fit-content;max-width:100%;min-height:68px;gap:13px;margin-bottom:20px;padding:12px 15px;border:1px solid #e1e8ed;border-radius:12px;background:linear-gradient(130deg,#fff,#f4f7f9);box-shadow:inset 0 1px 0 #fff,0 3px 10px #253d5010;align-items:center}
+#app .mobile-ar-solo .mas-intro .mas-brand>img{width:40px;height:40px;flex:0 0 40px;object-fit:contain;border:0;border-radius:0;padding:0;filter:brightness(.42)}
+#app .mobile-ar-solo .mas-intro .mas-brand>span{gap:5px}
+#app .mobile-ar-solo .mas-intro .mas-brand b{font:400 21px/1.1 Georgia,serif;letter-spacing:.13em;color:#2b3d49}
+#app .mobile-ar-solo .mas-intro .mas-brand small{font-size:10px;letter-spacing:.015em;color:#697e8d;line-height:1.5}
+#app .mobile-ar-solo .mas-intro .mas-brand>svg{width:14px;height:14px;flex:0 0 14px;margin-left:6px;fill:none;stroke:#7b909e;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+/* Keep the illustration small: typography is supporting evidence, not a full-screen poster. */
+#app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:36px 20px!important}
+#app .mobile-ar-solo .ar-expert-split.is-single{max-width:560px;margin-inline:auto}
+#app .mobile-ar-solo .ar-expert-split.is-single .ar-expert-panel{padding:20px;border:1px solid #e0e7ec;border-radius:14px;background:linear-gradient(135deg,#fff,#f6f8fa);box-shadow:inset 0 1px 0 #fff,0 4px 14px #2e455614;overflow:hidden}
+#app .mobile-ar-solo .ar-expert-panel-media.ar-expert-broadcast{display:block;width:min(100%,420px);aspect-ratio:3/1;max-height:140px;margin-inline:auto;border-radius:8px;background:#f7f9fb}
+#app .mobile-ar-solo .ar-expert-broadcast img{display:block;width:100%;height:100%;object-fit:contain!important;filter:none!important}
+#app .mobile-ar-solo .ar-expert-panel-content{padding:18px 0 0!important}
+#app .mobile-ar-solo .ar-expert-panel-keyword{font-size:19px!important;line-height:1.5}
+#app .mobile-ar-solo .ar-expert-panel-sub{font-size:12px!important;white-space:normal;word-break:keep-all;line-height:1.7}
+#app .mobile-ar-solo .ar-expert-panel-detail{font-size:13px!important;line-height:1.85}
+/* Shallow 3D buttons: white satin secondary, slate-navy primary, 4px tactile base. */
+#app .mobile-ar-solo .mas-bottom{gap:10px;padding:9px 12px calc(14px + env(safe-area-inset-bottom));border:1px solid #d5e0e7;border-radius:16px 16px 0 0;background:#f9fbfcf5;backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 #fff,0 -4px 20px #29435714}
+#app .mobile-ar-solo .mas-bottom :is(a,button){height:46px;min-height:44px;border-radius:10px;border:1px solid #b7c9d6;font-size:14px;font-weight:650;letter-spacing:-.02em;color:#354f62;background:linear-gradient(180deg,#fff,#eef3f7);box-shadow:inset 0 1px 0 #fff,0 4px 0 #bbcbd6,0 6px 10px #253d5012;transition:transform .15s ease,box-shadow .15s ease}
+#app .mobile-ar-solo .mas-bottom a{color:#fff;border-color:#314e63;background:linear-gradient(180deg,#4c6d83,#354f62);box-shadow:inset 0 1px 0 #a6bec86b,0 4px 0 #223b4d,0 6px 12px #1f394527}
+#app .mobile-ar-solo .mas-bottom :is(a,button):active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff40,0 1px 0 #bbcbd6}
+#app .mobile-ar-solo .mas-bottom a:active{box-shadow:inset 0 1px 0 #ffffff40,0 1px 0 #223b4d}
+#app .mobile-ar-solo .mas-bottom :is(a,button):focus-visible{outline:2px solid #496980;outline-offset:5px}
+/* The supplied specialist view uses discrete cards instead of a flat ruled band. */
+#app .info-page-about .wistia-specialists{padding:44px 0 40px}
+#app .info-page-about .wistia-specialists>header{margin-bottom:26px}
+#app .info-page-about .wistia-specialist-grid{gap:20px;border:0}
+#app .info-page-about .wistia-specialist-grid article,#app .info-page-about .wistia-specialist-grid article:first-child,#app .info-page-about .wistia-specialist-grid article:last-child{padding:20px;border:1px solid #dce5eb;border-radius:12px;background:linear-gradient(135deg,#fff,#f7f9fb);box-shadow:inset 0 1px 0 #fff,0 4px 0 #e3eaf0,0 12px 22px #2842530d}
+#app .info-page-about .wistia-specialist-grid img{border-radius:8px}
+#app .info-page-about .wistia-about-closing{padding:44px 24px;border-top:0;border-radius:12px}
+@media(min-width:769px){
+ :root{--header:72px}
+ #app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:44px 48px!important}
+ #app .mobile-ar-solo .mas-bottom{max-width:560px;bottom:16px;border-radius:16px;padding:10px 12px 15px;box-shadow:inset 0 1px 0 #fff,0 4px 0 #d8e3eb,0 12px 26px #20354224}
+}
+@media(max-width:600px){
+ #app .info-page-about .wistia-specialists{padding:32px 0}
+ #app .info-page-about .wistia-specialist-grid{grid-template-columns:1fr;gap:16px}
+ #app .info-page-about .wistia-specialist-grid article,#app .info-page-about .wistia-specialist-grid article:first-child,#app .info-page-about .wistia-specialist-grid article:last-child{display:block;padding:18px}
+ #app .info-page-about .wistia-specialist-grid article>span{font-size:22px;margin-bottom:12px}
+ #app .info-page-about .wistia-specialist-grid img{width:100%;aspect-ratio:16/9;object-fit:contain;background:#f0f3f6}
+ #app .info-page-about .wistia-specialist-grid article>p{margin-top:15px}
+ #app .info-page-about .wistia-about-closing{padding:32px 18px}
+}
+@media(hover:hover) and (pointer:fine){#app .mobile-ar-solo .mas-bottom :is(a,button):hover{transform:translateY(-1px)}}
+@media(prefers-reduced-motion:reduce){#app .mobile-ar-solo .mas-bottom :is(a,button){transition:none}}

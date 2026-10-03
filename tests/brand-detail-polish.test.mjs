@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict'
+import {readFileSync,existsSync} from 'node:fs'
+import {runInNewContext} from 'node:vm'
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const source=read('js/app.js'),css=read('css/brand-detail-polish.css'),shell=read('index.html')
+const scope={img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">'}
+runInNewContext(source.slice(source.indexOf('function mobileStudioBrand('),source.indexOf('function mobileStoryFilmDetail(')),scope)
+const brand=scope.mobileStudioBrand()
+assert.match(brand,/<b>WISTIA<\/b>/)
+assert.match(brand,/웨딩 축가 전문 스튜디오/)
+assert.match(brand,/href="\/info\/about"/)
+assert.match(brand,/<svg[^>]*aria-hidden="true"/)
+assert.doesNotMatch(brand,/<i(?:\s|>)|WISTIA ›/)
+assert.match(css,/#siteHeader\{height:var\(--header\)!important;min-height:var\(--header\)/)
+assert.match(css,/#siteHeader \.header-inner\{height:100%;min-height:0/)
+assert.match(css,/--header:64px/)
+assert.match(css,/--header:72px/)
+assert.match(css,/\.mas-brand b\{font:400 21px\/1\.1 Georgia,serif/)
+assert.match(css,/\.ar-expert-broadcast\{display:block;width:min\(100%,420px\);aspect-ratio:3\/1;max-height:140px/)
+assert.match(css,/\.ar-expert-broadcast img\{[^}]*object-fit:contain!important/)
+assert.match(css,/0 4px 0 #223b4d/)
+assert.match(css,/0 4px 0 #bbcbd6/)
+assert.match(css,/prefers-reduced-motion:reduce/)
+assert.match(css,/\.mas-bottom :is\(a,button\):focus-visible/)
+assert.match(css,/\.info-page-about \.wistia-specialist-grid\{gap:20px;border:0\}/)
+assert.ok(existsSync(new URL('../assets/img/ar-detail/broadcast-typography-wistia-v2.png',import.meta.url)))
+assert.ok(shell.includes('css/brand-detail-polish.css?v=20261004-brand-polish-1'))
+console.log('Unclipped shared header height, refined brand identity, compact broadcast art and tactile CTA states passed')
