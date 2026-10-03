@@ -39,4 +39,10 @@ Use case: style-transfer. Edit target: the supplied broadcast typography illustr
 - 캐시: 앱과 새 브랜드 CSS의 `20261004-brand-polish-1`
 - 로컬 증빙: `qa/brand-polish-intro-mobile-20261004.png`, `qa/brand-polish-intro-pc-20261004.png`, `qa/brand-polish-expert-pc-20261004.png`, `qa/brand-polish-specialists-pc-20261004.png`
 
-운영 반영 결과는 검수 완료 후 추가
+## 운영 배포
+
+- 디자인 변경 커밋 `bd83ac1fb06d1dd508c2ba71cd6c00b17347a05b`를 main에 정상 푸시, Vercel success 및 Deployment has completed 확인
+- 배포 주소: https://vercel.com/wistia1/wistia/DvE7xKF1xaagtfe4cAzhhjde7H7s
+- 홈·세 상품·DUET 문의·새 CSS·새 이미지 HTTP 200, HTML 새 캐시 반영 확인
+- 운영 `/info/about`의 직접 방문 404를 발견, 상품 브랜드 링크로 이동하는 화면을 직접 새로고침해도 열도록 정적 HTML 생성 경로 추가, 재생성 24개 및 회귀 검사 통과
+- 경로 보완 배포와 공개 브라우저 검수 결과는 완료 후 추가

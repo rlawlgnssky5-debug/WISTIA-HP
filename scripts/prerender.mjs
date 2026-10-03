@@ -35,6 +35,8 @@ for (const product of products) {
   page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
 }
 page('/info/location', seo.location)
+// The shared product brand links here; direct visits must serve the app as well.
+page('/info/about', {title:'위스티아 소개 | 경기도 부천 웨딩 축가 전문 스튜디오',description:'위스티아의 보컬 디렉팅·음원 제작·영상 연출 전문가와 웨딩 축가 제작 과정을 소개합니다'})
 // Home section links must also resolve on direct visits and refreshes.
 for (const section of ['homeServices','homeCases','homeLocation','homeProcess']) {
   page(`/section/${section}`, seo.home, {robots:'noindex, follow'})
