@@ -1098,7 +1098,7 @@ function mobileDetailEvents(){
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
-function mobileStudioBrand(){return '<a class="mas-brand" href="/info/about">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>'}
+function mobileStudioBrand(){return '<div class="mas-brand">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></div>'}
 function mobileStoryFilmDetail(p){
  const key='duet-film',price=filmFormatPrice(key,'live'),eventPrice=Math.max(0,price-EVENTS.reduce((total,event)=>total+event.discount,0)),content=AR_DETAIL_CONTENT[key]
  const info=[['상품','축가 스토리 필름'],['인원 · 곡수','2인 · 1곡'],['녹음·촬영 시간','총 180분 <small>안내·연습·부가 시간 포함</small>'],['포함 작업','녹음 · 보컬 디렉팅 · 음정·박자 보정<br>믹싱 · 마스터링 · 영상 제작'],['전달 파일','본식 상영용 영상 · 완성 음원'],['제작 기간','촬영·자료 전달 완료 후 약 14일']]

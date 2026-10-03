@@ -12,7 +12,6 @@
 #app .mobile-ar-solo .mas-intro .mas-brand>span{gap:5px}
 #app .mobile-ar-solo .mas-intro .mas-brand b{font:400 21px/1.1 Georgia,serif;letter-spacing:.13em;color:#2b3d49}
 #app .mobile-ar-solo .mas-intro .mas-brand small{font-size:10px;letter-spacing:.015em;color:#697e8d;line-height:1.5}
-#app .mobile-ar-solo .mas-intro .mas-brand>svg{width:14px;height:14px;flex:0 0 14px;margin-left:6px;fill:none;stroke:#7b909e;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 /* Keep the illustration small: typography is supporting evidence, not a full-screen poster. */
 #app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:36px 20px!important}
 #app .mobile-ar-solo .ar-expert-split.is-single{max-width:560px;margin-inline:auto}

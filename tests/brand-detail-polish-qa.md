@@ -45,4 +45,11 @@ Use case: style-transfer. Edit target: the supplied broadcast typography illustr
 - 배포 주소: https://vercel.com/wistia1/wistia/DvE7xKF1xaagtfe4cAzhhjde7H7s
 - 홈·세 상품·DUET 문의·새 CSS·새 이미지 HTTP 200, HTML 새 캐시 반영 확인
 - 운영 `/info/about`의 직접 방문 404를 발견, 상품 브랜드 링크로 이동하는 화면을 직접 새로고침해도 열도록 정적 HTML 생성 경로 추가, 재생성 24개 및 회귀 검사 통과
-- 경로 보완 배포와 공개 브라우저 검수 결과는 완료 후 추가
+- 경로 보완 커밋 `f9b98dc0baade6326cf8da77881e9bb55f6df85d` main 정상 푸시, Vercel success 및 Deployment has completed 확인
+- 최종 배포 주소: https://vercel.com/wistia1/wistia/FqbvxcYKz9yw78wxYg559n5WcEAH
+- 공개 `/info/about` 직접 요청 HTTP 200 및 새 캐시 반영 확인, 실제 브랜드 링크 클릭도 소개 화면으로 연결
+- 공개 세 상품 × 320·390·1022px 9개 조합: 공통 헤더 잘림 0·루트 가로 넘침 0, 새 이미지 2172×724 로딩, contain 전체 표시, PC 420×140px 및 입체 버튼 그림자 확인
+- 공개 AR 320px 223×74.33px·390px 293×97.66px, 스토리 320px 265×88.33px·390px 335×111.66px
+- 공개 소개 PC 카드 세 개의 1px 테두리·입체 그림자·가로 넘침 0 확인, 공개 직접 SOLO 탭 오류·경고 0
+- 공개 증빙: `qa/brand-polish-production-intro-20261004.png`, `qa/brand-polish-production-expert-20261004.png`, `qa/brand-polish-production-specialists-20261004.png`
+- 배포 후 결과 기록과 공개 증빙은 로컬에 보관, 운영 소스는 최종 배포 커밋과 일치
