@@ -61,18 +61,20 @@
       if(start(pausedAt>=duration()?0:pausedAt)){isPlaying=true;sync()}
     }
     function pause(){playRequest++;pendingPlay=false;pausedAt=position();stopSource();isPlaying=false;sync()}
-    function activate(next){
-      if(!['before','after'].includes(next)||next===mode)return
+    function activate(next,autoPlay=false){
+      if(!['before','after'].includes(next))return
+      if(next===mode){if(autoPlay&&!isPlaying&&!pendingPlay)play();return}
       const current=position(),resume=isPlaying
       stopSource();isPlaying=false;mode=next;pausedAt=Math.min(current,duration()||current)
       tabs.forEach(tab=>{const active=tab.dataset.mode===mode;tab.classList.toggle('active',active);tab.setAttribute('aria-pressed',String(active))})
       badge.className='bap-badge mode-'+mode;badgeText.textContent=status
       playBtn.className='bap-play mode-'+mode;errorEl.hidden=!failures[mode]
-      if(resume&&activeBuffer())play();else sync()
+      sync()
+      if(resume||autoPlay||pendingPlay)play()
     }
     playBtn.addEventListener('click',()=>isPlaying?pause():play(),{signal})
-    tabs.forEach(tab=>tab.addEventListener('click',()=>activate(tab.dataset.mode),{signal}))
-    switchBtn.addEventListener('click',()=>activate(mode==='before'?'after':'before'),{signal})
+    tabs.forEach(tab=>tab.addEventListener('click',()=>activate(tab.dataset.mode,true),{signal}))
+    switchBtn.addEventListener('click',()=>activate(mode==='before'?'after':'before',true),{signal})
     function makePeaks(buffer,count=120){
       const data=buffer.getChannelData(0),size=Math.max(1,Math.floor(data.length/count)),result=[]
       for(let i=0;i<count;i++){let sum=0;for(let j=0;j<size;j++)sum+=Math.abs(data[i*size+j]||0);result.push(sum/size)}

@@ -90,10 +90,10 @@
 
   function render(){const moodText=moodFor(value),percent=(value-30)/70*100,tone=nearest(value);root.style.setProperty('--wistia-ratio-progress',percent);root.dataset.ratio=String(value);root.dataset.tone=String(tone);input.value=String(value);input.setAttribute('aria-valuetext',value+'% '+moodText);current.textContent=value+'%';mood.textContent=moodText;root.querySelectorAll('.wistia-ar__ratio-marks span').forEach(node=>node.classList.toggle('is-active',Number(node.dataset.value)===tone))}
   // 비율이 바뀌어도 재생은 멈추지 않는다 — 음원 간 볼륨만 부드럽게 넘어간다
-  function setValue(next){touched();const selected=clamp(next);if(selected===value)return;value=selected;render();applyMix(false);if(ctx)loadAll();else load(nearest(value))}
-  function onWheel(event){const delta=Math.abs(event.deltaY)>=Math.abs(event.deltaX)?event.deltaY:event.deltaX,direction=Math.sign(delta);if(!direction)return;const next=value+(direction>0?1:-1);if(next<30||next>100)return;event.preventDefault();setValue(next)}
+  function setValue(next,autoPlay=false){touched();const selected=clamp(next);if(selected===value)return;value=selected;render();applyMix(false);if(autoPlay&&!isPlaying&&!pendingPlay)start();else if(ctx)loadAll();else load(nearest(value))}
+  function onWheel(event){const delta=Math.abs(event.deltaY)>=Math.abs(event.deltaX)?event.deltaY:event.deltaX,direction=Math.sign(delta);if(!direction)return;const next=value+(direction>0?1:-1);if(next<30||next>100)return;event.preventDefault();setValue(next,true)}
 
-  on(input,'input',event=>setValue(event.target.value))
+  on(input,'input',event=>setValue(event.target.value,true))
   // 턴테이블은 재생 버튼 역할만 한다, 소리 비율은 비율 바(드래그·클릭·휠·키보드)에서만 바뀐다
   on(stage,'click',togglePlay)
   on(stage,'keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePlay()}})
