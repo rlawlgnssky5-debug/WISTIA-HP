@@ -1375,7 +1375,7 @@ function renderEvent(key,purpose="",undecided=false){
  const options=eventProductOptions(key,purpose);
  const choices=bookingExtraSection(p,purpose,options,"03")+eventBenefitsSection("03");
  const sidebar=priceSidebarSection().replace('</aside>',window.WistiaContact.submit().replace('<button type="submit"','<button form="contactInquiryForm" type="submit"')+'</aside>')
- app.innerHTML='<section class="shell section booking-calculator-wrap consultation-flow"><div class="booking-calculator"><div class="calculator-content"><form id="contactInquiryForm"><div id="consultForm"><header class="calculator-intro"><h1>상담 신청</h1><p>원하시는 상품과 일정을 알려주세요</p></header>'+bookingBaseSection(key)+window.WistiaContact.render(null,{integrated:true})+'<section class="consultation-step consultation-options"'+(undecided?' hidden':'')+' aria-labelledby="optionsTitle"><header class="consultation-step-heading"><span class="booking-step">03</span><h2 id="optionsTitle">옵션과 이벤트 혜택</h2><p>선택 사항이므로 건너뛰셔도 괜찮습니다</p></header>'+choices+'</section></div></form></div>'+sidebar+'</div></section>'+footer()
+ app.innerHTML='<section class="shell section booking-calculator-wrap consultation-flow"><div class="booking-calculator"><div class="calculator-content"><form id="contactInquiryForm" novalidate><div id="consultForm"><header class="calculator-intro"><h1>상담 신청</h1><p>원하시는 상품과 일정을 알려주세요</p></header>'+bookingBaseSection(key)+window.WistiaContact.render(null,{integrated:true})+'<section class="consultation-step consultation-options"'+(undecided?' hidden':'')+' aria-labelledby="optionsTitle"><header class="consultation-step-heading"><span class="booking-step">03</span><h2 id="optionsTitle">옵션과 이벤트 혜택</h2><p>선택 사항이므로 건너뛰셔도 괜찮습니다</p></header>'+choices+'</section></div></form></div>'+sidebar+'</div></section>'+footer()
  updatePrice()
  mountInquiryObserver()
 }
@@ -1466,6 +1466,13 @@ function showDialog(html,type){
  dialog.showModal();document.body.classList.add("modal-open");document.querySelector("#siteHeader").inert=true;app.inert=true;document.querySelector("#floatingKakao").inert=true;dialog.querySelector(type==="consult-copy-dialog"?".consult-copy-action":"button").focus()
 }
 function closeDialog(){if(!dialog.open)return;dialog.close();dialog.innerHTML="";dialog.classList.remove("consult-copy-modal");document.body.classList.remove("modal-open");document.querySelector("#siteHeader").inert=false;app.inert=false;document.querySelector("#floatingKakao").inert=false;if(lastDialogFocus?.isConnected)lastDialogFocus.focus()}
+function showContactValidationDialog(issues){
+ const items=issues.map(issue=>'<li><strong>'+escapeHtml(issue.label)+'</strong><span>'+escapeHtml(issue.message)+'</span></li>').join('')
+ showDialog('<span class="consult-copy-mark" aria-hidden="true">!</span><h2>문의 내용을 확인해 주세요</h2><p>아래 항목을 입력하거나 수정해야<br>문의 내용을 복사할 수 있어요</p><ul class="consult-validation-list">'+items+'</ul><p class="consult-validation-hint">정해지지 않은 일정은 미정으로 두셔도 괜찮아요</p><button type="button" class="button dark consult-copy-action" data-close>입력 내용 수정하기</button><a class="button consult-copy-action consult-direct-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>문의 양식 없이 바로 상담할래요</a>',"consult-copy-dialog")
+ dialog.setAttribute('aria-label','문의 작성 안내')
+ // Closing or choosing edit returns to the first invalid field without losing the draft
+ lastDialogFocus=issues[0].control
+}
 function openVideo(id){
  const w=WORKS.find(x=>x.id===id);if(!w)return;
  window.wistiaClaimPlayback?.("video-frame")
@@ -1725,8 +1732,8 @@ document.addEventListener("change",e=>{
  if(el.dataset.songOption){chosenOption=el.checked?el.dataset.songOption:"";updatePrice()}
  if(priceScrollY!==null)requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:priceScrollY,behavior:"instant"})))
 })
-document.addEventListener('input',e=>{if(e.target.closest('[data-contact-fields]'))window.WistiaContact.syncReview()})
-document.addEventListener("submit",e=>{if(e.target.id==='contactInquiryForm'){e.preventDefault();refreshInquiryQuote();const values=Object.fromEntries(new FormData(e.target));copyConsultationAndShowDialog(window.WistiaContact.text(values,contactQuote))}})
+document.addEventListener('input',e=>{if(e.target.closest('#contactInquiryForm'))e.target.removeAttribute('aria-invalid');if(e.target.closest('[data-contact-fields]'))window.WistiaContact.syncReview()})
+document.addEventListener("submit",e=>{if(e.target.id==='contactInquiryForm'){e.preventDefault();const issues=window.WistiaContact.validationIssues(e.target);if(issues.length){showContactValidationDialog(issues);return}refreshInquiryQuote();const values=Object.fromEntries(new FormData(e.target));copyConsultationAndShowDialog(window.WistiaContact.text(values,contactQuote))}})
 dialog.addEventListener("cancel",e=>{e.preventDefault();closeDialog()})
 dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");document.querySelector("#menuToggle")?.focus()}})

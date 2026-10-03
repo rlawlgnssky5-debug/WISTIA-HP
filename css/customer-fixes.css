@@ -387,6 +387,14 @@ body.menu-open #menuToggle span:nth-child(3){transform:translateX(-2px) rotate(-
 .consult-copy-dialog p{margin:12px 0 0;color:#66777d;font-size:15px;line-height:1.6;word-break:keep-all}
 .consult-copy-dialog .consult-copy-action{display:flex;align-items:center;justify-content:center;min-height:54px;margin-top:28px;padding:12px 16px;text-align:center;font-size:14px;line-height:1.45;white-space:normal;word-break:keep-all}
 .consult-copy-fallback{display:block;width:100%;min-height:160px;margin-top:20px;padding:12px;border:1px solid #cbd4d7;border-radius:8px;background:#f7f9f9;color:#263237;font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;text-align:left}
+#mediaDialog.consult-copy-modal{max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto}
+.consult-validation-list{display:grid;gap:12px;margin:20px 0 0;padding:16px;list-style:none;text-align:left;border:1px solid #dce5e9;border-radius:12px;background:#f3f7f9}
+.consult-validation-list li{display:grid;gap:4px;color:#314d5e;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.consult-validation-list li span{color:#657983}
+.consult-copy-dialog .consult-validation-hint{font-size:13px}
+.consult-validation-list~.consult-copy-action{width:100%;border-radius:12px}
+.consult-copy-dialog .consult-direct-action{margin-top:12px;border:1px solid #b9cbd5;background:linear-gradient(#fff,#edf3f6);color:#314d5e;box-shadow:0 3px 0 #d7e2e8}
+#contactInquiryForm [aria-invalid="true"]{border-color:#a7493c;box-shadow:0 0 0 2px #a7493c18}
 @media(max-width:360px){.consult-copy-dialog{padding:48px 20px 22px}.consult-copy-dialog .consult-copy-action{font-size:13px}}
 
 /* One unmistakable price CTA across every product detail page */
