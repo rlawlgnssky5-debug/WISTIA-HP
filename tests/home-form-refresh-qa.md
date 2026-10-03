@@ -63,3 +63,14 @@
 - 운영 증빙 tests/qa/home-form-production-20261004.png, tests/qa/home-form-inquiry-production-20261004.png
 - 공개 검수 중 홈 구간 직접 방문 / 새로고침의 404를 발견, SPA 내부 이동은 정상이나 정적 HTML이 없어 기존 서버에서 직접 주소를 처리하지 못함
 - 기존 링크 네 경로(homeServices·homeCases·homeLocation·homeProcess)를 정적 생성 목록에 추가, 내용과 호스팅 설정은 보존하며 noindex 처리
+
+## 최종 보완 배포
+
+- 커밋 `a64f962c2167e039fb60336ab9f98de129d3d9f2` main 푸시와 Vercel success / Deployment has completed 확인
+- 배포 https://vercel.com/wistia1/wistia/DmoWCu5FccCaZ8rLdsY8kuQaoZqr
+- 홈·홈 구간 네 경로·상담 SOLO/DUET/스토리·AR SOLO/스토리 상세의 HTTP 200 및 새 캐시 반영 확인
+- 실제 운영 브라우저에서 `/section/homeServices` 새로고침 후 상품 소개·두 상품·여덟 구간 태그·가로 넘침 0 확인
+- 직접 회귀 시험 22개 재통과, 최종 정적 HTML 23개
+- 임시 viewport 원복, 운영 홈 상품 소개 탭을 결과로 유지
+- 운영 확인 https://www.wistiastudio.com
+- 배포 후 이 완료 기록은 로컬 보관, 운영 소스는 위 최종 커밋과 일치

@@ -20,24 +20,26 @@ let copiedQuote=''
 context.copyConsultationAndShowDialog=async text=>{copiedQuote=text}
 await api.consultKakao({key:'duo',format:'live',options:['lyrics-video'],events:['blog']})
 assert.match(copiedQuote,/DUET\(2인\) · 2시간/)
-assert.match(copiedQuote,/최종 예상 가격 : 170,000원/)
+assert.match(copiedQuote,/결제 예상 금액 : 200,000원/)
+assert.match(copiedQuote,/페이백 완료 후 혜택가 : 170,000원/)
 assert.match(copiedQuote,/가사 영상 추가 \+40,000원/)
 assert.equal(runInNewContext('JSON.stringify({state:quoteState(),optionQuantities,chosenOption})',context),baseline,'Kakao handoff must preserve the open inquiry draft')
 const cases=[
  [{key:'solo'},120000],
  [{key:'duo'},160000],
- [{key:'duo',options:['lyrics-video','bride-entrance'],events:['blog']},210000],
- [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},210000],
+ [{key:'duo',options:['lyrics-video','bride-entrance'],events:['blog']},240000],
+ [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},270000],
  [{key:'solo',events:['voice-photo-consent']},110000],
  [{key:'duo',events:['voice-photo-consent']},150000],
- [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},50000],
+ [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},110000],
+ [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent','weekday']},100000],
  [{key:'duet-film',events:['voice-photo-consent']},340000],
  [{key:'duet-film',format:'making',events:['voice-photo-consent']},340000],
  [{key:'duet-film'},350000],
  [{key:'duet-film',format:'making'},350000],
- [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},380000],
+ [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},390000],
  [{key:'solo-film',format:'making'},120000],
- [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},400000]
+ [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},460000]
 ]
 for(const [state,expected] of cases){
  const result=api.preview({format:'live',options:[],events:[],...state})
@@ -46,18 +48,18 @@ for(const [state,expected] of cases){
 }
 assert.equal(api.context().key,'duo')
 assert.equal(api.options('duet-film').some(o=>o.key==='lyrics-video'),false)
-assert.equal(api.events().length,5)
+assert.equal(api.events().length,6)
 assert.equal(api.events().find(event=>event.key==='voice-photo-consent').discount,10000)
 context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance'],events:['blog']}
 runInNewContext('setQuoteState(state)',context)
-assert.match(context.consultationText(),/최종 예상 가격 : 210,000원/)
+assert.match(context.consultationText(),/결제 예상 금액 : 240,000원/)
 assert.match(context.consultationText(),/가사 영상 추가 \+40,000원/)
-assert.match(context.consultationText(),/블로그 리뷰 −30,000원/)
+assert.match(context.consultationText(),/후기 페이백 : 블로그 리뷰 30,000원/)
 context.state={key:'duet-film',format:'making',options:[],events:[]}
 runInNewContext('setQuoteState(state)',context)
 assert.doesNotMatch(context.consultationText(),/메이킹|−70,000원/)
 assert.match(context.consultationText(),/영상 구성 : 스토리형 영상/)
-assert.match(context.consultationText(),/최종 예상 가격 : 350,000원/)
+assert.match(context.consultationText(),/결제 예상 금액 : 350,000원/)
 assert.match(question,/try\{await api\(\)\.consultKakao\(state\)/)
 assert.match(question,/data-qe-consult>카카오톡 문의 →/)
 assert.doesNotMatch(question,/api\(\)\.apply\(state\)/,'quote-to-Kakao must not navigate to a form')
@@ -95,6 +97,6 @@ await tap('film');await tap('none-options');await tap('none-events')
 assert.match(modal.innerHTML,/<strong>350,000원<\/strong>/,'story film keeps its base price after both skips')
 await tap('', 'data-qe-consult')
 assert.equal(modal.open,false,'Kakao handoff closes the estimate dialog')
-assert.match(copiedQuote,/최종 예상 가격 : 350,000원/)
+assert.match(copiedQuote,/결제 예상 금액 : 350,000원/)
 assert.equal(questionContext.location.pathname,'/','Kakao handoff does not navigate to a form')
 console.log('Quick estimate shared prices, preview isolation, options, benefits, consultation text and handoff passed')

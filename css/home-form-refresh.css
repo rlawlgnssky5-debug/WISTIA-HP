@@ -77,7 +77,7 @@ body[data-page=event]{background:#f1f3f5}
 #app .consultation-flow .benefit-total{grid-column:1}
 #app .consultation-flow .event-benefit-card{background:#fff;border-radius:4px;border:1px solid #e3e8ec}
 #app .consultation-flow .event-benefit-card:has(input:checked){background:#f2f6f9;border-color:#658499}
-#app .consultation-flow .booking-price-sidebar{display:none!important}
+#app .consultation-flow .booking-price-sidebar{display:flex!important}
 #app .consultation-flow .contact-submit{min-height:50px;border-radius:5px!important;font-size:14px!important}
 @media(max-width:900px){#app .we-home .we-service{grid-template-columns:120px minmax(0,1fr);gap:20px;padding:22px}}
 @media(max-width:600px){
@@ -97,3 +97,56 @@ body[data-page=event]{background:#f1f3f5}
  #app .consultation-flow .contact-submit{font-size:13px!important;padding:14px}
 }
 @media(max-width:360px){#app .we-home .we-service{grid-template-columns:78px minmax(0,1fr);gap:12px;padding:16px 12px}#app .we-home .we-service h3{font-size:17px}#app .we-home .we-service .we-meta{font-size:9px}}
+
+/* Approved comments: aligned directions, simple product picker and separate quote. */
+#app .we-home .we-directions-grid{grid-template-columns:minmax(0,1fr);justify-items:center;gap:28px;max-width:760px;margin-inline:auto;text-align:center}
+#app .we-home .wistia-directions-map{width:100%;max-width:560px;margin:0 auto;text-align:center}
+#app .we-home .wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain}
+#app .we-home .we-directions-copy{width:100%;text-align:center!important}
+#app .we-home .we-directions-copy :is(h3,p){text-align:center!important}
+#app .we-home .studio-address{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 6px}
+#app .we-home .studio-address-city{width:100%;text-align:center!important}
+#app .we-home .wistia-location-links{justify-content:center}
+#app .footer-message .mas-footer-slogan{display:block;font-size:clamp(11.5px,1.45vw,16px)!important;line-height:1.7;font-weight:500;letter-spacing:-.045em;white-space:nowrap}
+#app .booking-calculator-wrap.consultation-flow{max-width:1100px}
+#app .consultation-flow .booking-calculator{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+#app .consultation-flow .booking-product-select{display:block;margin-top:20px}
+#app .consultation-flow #bookingService{display:block;width:100%;min-height:48px;padding:12px 14px;border:1px solid #cbd7df;border-radius:5px;background:#fff;color:#2d3c46;font-size:16px}
+#app .consultation-flow .contact-time-selects{grid-template-columns:1fr}
+#app .consultation-flow .event-benefit-group{margin-top:24px}
+#app .consultation-flow .event-benefit-group h4{font-size:15px;margin:0 0 6px;color:#36556b}
+#app .consultation-flow .event-group-note{font-size:12px;line-height:1.8;margin:0 0 14px;color:#728391}
+#app .consultation-flow .event-terms{margin:0;padding:0 14px 14px 42px;font-size:12px;line-height:1.8;color:#728391}
+#app .consultation-flow .event-benefit-card.is-unavailable{opacity:.6}
+#app .consultation-flow .booking-price-sidebar{position:sticky!important;top:94px;bottom:auto!important;left:auto!important;right:auto!important;width:100%!important;padding:0!important;display:flex!important;flex-direction:column;gap:14px;border:0!important;background:transparent!important;box-shadow:none!important;transform:none!important;z-index:10}
+#app .consultation-flow .booking-price-card{background:#fff;border:1px solid #dfe4e8;border-top:4px solid #4d6b81;border-radius:8px;padding:22px 20px}
+#app .consultation-flow .booking-price-sidebar .quote-eyebrow{display:block;font-size:16px;font-weight:600;letter-spacing:0}
+#app .consultation-flow .booking-price-sidebar #quoteService{display:block;font-size:16px;margin-bottom:20px}
+#app .consultation-flow .booking-price-sidebar .quote-regular:not([hidden]){display:flex}
+#app .consultation-flow .booking-live-total{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
+#app .consultation-flow .booking-live-total strong{font-size:32px!important}
+#app .consultation-flow .quote-price-rows{display:grid;font-size:12px}
+#app .consultation-flow .quote-selected-lines{display:grid;gap:10px;margin:16px 0 0;padding-top:14px;border-top:1px solid #edf0f2;font-size:11px;line-height:1.7}
+#app .consultation-flow .quote-selected-lines:empty{display:none}
+#app .consultation-flow .quote-selected-lines>div{display:flex;justify-content:space-between;gap:12px}
+#app .consultation-flow .quote-selected-lines dd{margin:0;flex-shrink:0}
+#app .consultation-flow .quote-effective{font-size:12px;line-height:1.8;margin-top:16px}
+#app .consultation-flow .quote-effective strong{display:block;color:#466679;font-size:18px}
+#app .consultation-flow .booking-price-sidebar .quote-note{display:block;margin-top:16px;font-size:11px;line-height:1.8}
+#app .consultation-flow .booking-price-sidebar .contact-privacy-note{font-size:11px;margin:0;line-height:1.8}
+#app .consultation-flow .booking-price-sidebar .contact-submit{width:100%;white-space:normal;line-height:1.6;min-height:52px}
+#app .mas-benefit-note{font-size:11px;color:#718491;line-height:1.8;margin:10px 0 0}
+#app .mas-event-content h4{font-size:13px;margin:16px 0 8px;color:#476579}
+@media(min-width:1000px){#app .consultation-flow .booking-price-sidebar{max-height:calc(100dvh - 112px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}}
+@media(max-width:999px){
+ #app .booking-calculator-wrap.consultation-flow{max-width:720px}
+ #app .consultation-flow .booking-calculator{display:block}
+ #app .consultation-flow .booking-price-sidebar{position:static!important;margin-top:16px}
+ #app .footer-message{text-align:center;width:100%}
+}
+@media(max-width:600px){
+ #app .consultation-flow .event-choice{grid-template-columns:18px minmax(0,1fr)!important;gap:10px}
+ #app .consultation-flow .event-choice>b{grid-column:2;text-align:left;font-size:12px}
+ #app .consultation-flow .event-terms{padding-left:40px}
+ #app .we-home .we-directions-grid{gap:22px}
+}
