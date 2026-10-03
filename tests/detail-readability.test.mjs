@@ -20,10 +20,16 @@ async function exercise(reduced=false){
  const listeners={},cleanups=[],animations=[],properties=new Map()
  const summary={addEventListener(type,fn){listeners[type]=fn}}
  const content={scrollHeight:640,inert:false,style:{set height(value){properties.set('height',value)},set overflow(value){properties.set('overflow',value)},removeProperty(key){properties.delete(key)}},getBoundingClientRect:()=>({height:640}),animate(frames,options){let resolve,reject;const finished=new Promise((yes,no)=>{resolve=yes;reject=no});const animation={frames,options,finished,resolve,cancel(){reject(new Error('cancelled'))}};animations.push(animation);return animation}}
- const folder={open:false,dataset:{},querySelector:selector=>selector==='summary'?summary:content}
- const context={document:{querySelectorAll:()=>[folder]},limited:()=>reduced,cleanups,listen:(el,type,fn)=>el.addEventListener(type,fn)}
+ const classes=new Set()
+ const folder={open:false,dataset:{},classList:{add:key=>classes.add(key),remove:key=>classes.delete(key),toggle(key,on){on?classes.add(key):classes.delete(key)}},querySelector:selector=>selector==='summary'?summary:content}
+ let observerCallback,observed=null,disconnected=false
+ class IntersectionObserver{constructor(callback){observerCallback=callback}observe(el){observed=el}disconnect(){disconnected=true}}
+ const context={document:{querySelectorAll:()=>[folder]},IntersectionObserver,limited:()=>reduced,cleanups,listen:(el,type,fn)=>el.addEventListener(type,fn)}
  runInNewContext(fn,context);context.processFolders()
  if(reduced){assert.equal(listeners.click,undefined);assert.equal(animations.length,0);return}
+ assert.equal(observed,summary);assert.equal(classes.has('is-cue-visible'),false)
+ observerCallback([{isIntersecting:true}]);assert.equal(classes.has('is-cue-visible'),true)
+ observerCallback([{isIntersecting:false}]);assert.equal(classes.has('is-cue-visible'),false)
  const click=()=>listeners.click({preventDefault(){}})
  click();assert.equal(folder.open,true);assert.equal(folder.dataset.folderMotion,'opening');assert.equal(animations[0].frames[0].height,'0px');assert.equal(animations[0].frames[1].height,'640px')
  click();assert.equal(folder.dataset.folderMotion,'closing');assert.equal(content.inert,true)
@@ -34,6 +40,7 @@ async function exercise(reduced=false){
  assert.equal(folder.open,false);assert.equal(content.inert,false)
  click();cleanups.forEach(fn=>fn());await Promise.resolve()
  assert.equal(properties.size,0);assert.equal(content.inert,false)
+ assert.equal(disconnected,true);assert.equal(classes.has('is-cue-visible'),false)
 }
 await exercise();await exercise(true)
 console.log('16:9 uncropped film, fixed expert copy, centered badge, free editing copy and reversible folder motion: passed')

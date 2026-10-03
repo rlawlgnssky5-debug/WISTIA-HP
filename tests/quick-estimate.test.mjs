@@ -25,10 +25,11 @@ const cases=[
  [{key:'duo',events:['voice-photo-consent']},150000],
  [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},50000],
  [{key:'duet-film',events:['voice-photo-consent']},340000],
- [{key:'duet-film',format:'making',events:['voice-photo-consent']},270000],
+ [{key:'duet-film',format:'making',events:['voice-photo-consent']},340000],
  [{key:'duet-film'},350000],
- [{key:'duet-film',format:'making'},280000],
- [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},310000],
+ [{key:'duet-film',format:'making'},350000],
+ [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},380000],
+ [{key:'solo-film',format:'making'},120000],
  [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},400000]
 ]
 for(const [state,expected] of cases){
@@ -47,8 +48,9 @@ assert.match(context.consultationText(),/가사 영상 추가 \+40,000원/)
 assert.match(context.consultationText(),/블로그 리뷰 −30,000원/)
 context.state={key:'duet-film',format:'making',options:[],events:[]}
 runInNewContext('setQuoteState(state)',context)
-assert.match(context.consultationText(),/녹음 메이킹 필름으로 변경 −70,000원/)
-assert.match(context.consultationText(),/최종 예상 가격 : 280,000원/)
+assert.doesNotMatch(context.consultationText(),/메이킹|−70,000원/)
+assert.match(context.consultationText(),/영상 구성 : 스토리형 영상/)
+assert.match(context.consultationText(),/최종 예상 가격 : 350,000원/)
 assert.match(question,/api\(\)\.apply\(state\);try\{await api\(\)\.consult\(\)/)
 assert.match(question,/contextPath!==location\.pathname/)
 assert.match(question,/addEventListener\('cancel'/)
@@ -75,6 +77,11 @@ assert.doesNotMatch(modal.innerHTML,/<dt>신부 입장곡 추가|<dt>블로그 �
 await tap('', 'data-qe-back');await tap('', 'data-qe-back')
 assert.match(modal.innerHTML,/data-qe-choice="none-options" aria-pressed="true"/,'going back preserves the no-extras answer')
 questionContext.window.WistiaQuickEstimate.close();questionContext.window.WistiaQuickEstimate.open()
-await tap('film');await tap('making');await tap('none-options');await tap('none-events')
-assert.match(modal.innerHTML,/<strong>280,000원<\/strong>/,'film making price remains unchanged after both skips')
+await tap('film')
+assert.match(modal.innerHTML,/2 \/ 3/,'film skips the retired format question')
+assert.doesNotMatch(modal.innerHTML,/메이킹|data-qe-choice="making"/)
+await tap('', 'data-qe-back')
+assert.match(modal.innerHTML,/어떤 축가를 준비하시나요/,'back skips the retired format question too')
+await tap('film');await tap('none-options');await tap('none-events')
+assert.match(modal.innerHTML,/<strong>350,000원<\/strong>/,'story film keeps its base price after both skips')
 console.log('Quick estimate shared prices, preview isolation, options, benefits, consultation text and handoff passed')

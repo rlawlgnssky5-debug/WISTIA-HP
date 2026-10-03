@@ -30,7 +30,7 @@ function page(path, data, options={}) {
 }
 
 for (const product of products) {
-  const retired = ['wedding', 'proposal'].includes(product)
+  const retired = ['wedding', 'proposal', 'solo-film'].includes(product)
   page(`/detail/${product}`, retired ? seo.home : seo.detail[product], retired ? {robots:'noindex, follow'} : {})
   page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
 }

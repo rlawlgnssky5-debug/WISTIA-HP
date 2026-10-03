@@ -116,3 +116,10 @@ body{--app-canvas-width:1280px}
 }
 @media(max-width:360px){:root{--page-gutter:16px}#app .info-page-intro h1{font-size:29px}.story-process-folder .story-process-card{grid-template-columns:76px minmax(0,1fr);gap:12px}.story-process-folder .story-process-media{width:76px}.process-folder-label strong{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.story-process-folder[open] .story-process-card{animation:none}.process-folder-art i,.process-folder-art b{transition:none}}
+
+/* Keep street and floor on the same address line, with the city as context. */
+#app .studio-address{grid-template-columns:max-content max-content;gap:6px;align-items:baseline;justify-content:start;text-align:left;max-width:100%;font-size:clamp(18px,5.3vw,32px)}
+#app .studio-address-city{grid-column:1/-1;text-align:left}
+#app .studio-address-floor{font-size:.72em;white-space:nowrap}
+#app .studio-address-floor:before{content:", ";color:inherit}
+@media(max-width:360px){#app .studio-address{font-size:19px;column-gap:3px}}

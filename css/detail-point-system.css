@@ -1,0 +1,40 @@
+/* Existing product content, one consistent hierarchy */
+#app .ar-commerce-detail .detail-point-label{
+ display:inline-block;font-size:22px!important;font-weight:700;line-height:1.5;letter-spacing:.08em;
+ color:#304456;background:linear-gradient(90deg,transparent,#eaf0f5 25%,#eaf0f5 75%,transparent);
+ padding:8px 22px;margin:0 0 24px
+}
+#app .arc-lyrics .arc-option-fee{font-size:14px;font-weight:600;color:#50677b;margin:0 0 16px}
+#app .ar-commerce-detail .wistia-ba-copy h2,#app .film-commerce-detail .wps-head h2{
+ font-size:clamp(26px,3.5vw,40px)!important;line-height:1.4!important;word-break:keep-all;text-wrap:balance
+}
+.story-process-folder>summary{position:relative;cursor:pointer;transition:box-shadow .2s ease,background .2s ease}
+.story-process-folder>summary:hover,.story-process-folder>summary:focus-visible{
+ box-shadow:0 8px 24px #64798e1a,inset 0 0 0 1px #7892a6
+}
+.story-process-folder>summary:focus-visible{outline:2px solid #506f88;outline-offset:4px}
+.process-folder-art{position:relative}
+.folder-open-label{display:inline-flex;align-items:center;gap:10px}
+.folder-cue-arrow{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:#3d5a72;box-shadow:0 2px 8px #566e8420}
+.process-folder-sparks{position:absolute;inset:-10px -6px;pointer-events:none}
+.process-folder-sparks em{position:absolute;width:5px;height:5px;border-radius:50%;background:#7895ab;opacity:0}
+.process-folder-sparks em:nth-child(1){top:8px;right:4px;--spark-delay:0s}
+.process-folder-sparks em:nth-child(2){top:30px;right:-4px;--spark-delay:.18s}
+.process-folder-sparks em:nth-child(3){top:0;right:22px;--spark-delay:.36s}
+@media(prefers-reduced-motion:no-preference){
+ html[data-studio-motion="on"] .story-process-folder:not([open]) .folder-cue-arrow{animation:folder-cue-nudge 2.8s ease-in-out 3}
+ html[data-studio-motion="on"] .story-process-folder:not([open]) .process-folder-sparks em{animation:folder-spark 2.8s ease-out var(--spark-delay) 3}
+ html[data-studio-motion="on"] .story-process-folder:not(.is-cue-visible) .folder-cue-arrow,
+ html[data-studio-motion="on"] .story-process-folder:not(.is-cue-visible) .process-folder-sparks em{animation-play-state:paused}
+ html[data-studio-motion="on"] .story-process-folder>summary:hover .process-folder-art b{transform:rotateX(-20deg) translateY(-3px)}
+}
+@keyframes folder-cue-nudge{0%,65%,100%{transform:translateY(0)}76%{transform:translateY(4px)}88%{transform:translateY(0)}}
+@keyframes folder-spark{0%,65%,100%{opacity:0;transform:translateY(5px) scale(.6)}76%{opacity:.8;transform:translateY(-3px) scale(1)}88%{opacity:0;transform:translateY(-10px) scale(.7)}}
+@media(max-width:768px){
+ #app .ar-commerce-detail .detail-point-label{font-size:18px!important;padding:6px 18px;margin-bottom:20px}
+ #app .arc-lyrics .arc-option-fee{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+ .story-process-folder>summary{transition:none}
+ .folder-cue-arrow,.process-folder-sparks em{animation:none!important}
+}

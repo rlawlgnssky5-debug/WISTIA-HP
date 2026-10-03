@@ -18,7 +18,9 @@
     const canvas=root.querySelector('.bap-wave')
     const errorEl=root.querySelector('.bap-error')
     const status='보정 전과 후의 보컬 소스는 같은 녹음본입니다'
-    const buffers={before:null,after:null},peakSets={before:null,after:null},failures={before:false,after:false}
+    const buffers={before:null,after:null},failures={before:false,after:false}
+    // Both recordings share a timeline; keep one reference shape when switching audio.
+    let sharedPeaks=null
     const controller=new AbortController()
     const signal=controller.signal
     // The mobile floating contact panel must never cover this player's controls.
@@ -29,7 +31,7 @@
     playerObserver?.observe(root.querySelector('.bap-player'))
     const fmt=value=>{const time=Number.isFinite(value)?value:0;return Math.floor(time/60)+':'+String(Math.floor(time%60)).padStart(2,'0')}
     const activeBuffer=()=>buffers[mode]
-    const activePeaks=()=>peakSets[mode]
+    const activePeaks=()=>sharedPeaks
     const duration=()=>activeBuffer()?.duration||0
     const position=()=>isPlaying&&audioCtx?Math.min(pausedAt+(audioCtx.currentTime-startedAt),duration()):pausedAt
     const ensureContext=()=>audioCtx||(audioCtx=new (global.AudioContext||global.webkitAudioContext)())
@@ -86,7 +88,7 @@
     canvas.addEventListener('click',event=>{if(!duration())return;const rect=canvas.getBoundingClientRect(),next=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width))*duration();if(isPlaying)start(next);else pausedAt=next;sync()},{signal})
     async function decode(arrayBuffer){const Offline=global.OfflineAudioContext||global.webkitOfflineAudioContext;if(Offline)return new Offline(1,1,44100).decodeAudioData(arrayBuffer);const context=ensureContext();return context.decodeAudioData(arrayBuffer)}
     async function load(kind,src){
-      try{const response=await fetch(src,{signal});if(!response.ok)throw new Error('HTTP '+response.status);const buffer=await decode(await response.arrayBuffer());if(destroyed)return;buffers[kind]=buffer;peakSets[kind]=makePeaks(buffer);failures[kind]=false}
+      try{const response=await fetch(src,{signal});if(!response.ok)throw new Error('HTTP '+response.status);const buffer=await decode(await response.arrayBuffer());if(destroyed)return;buffers[kind]=buffer;if(kind==='before')sharedPeaks=makePeaks(buffer);failures[kind]=false}
       catch(error){if(error.name==='AbortError')return;failures[kind]=true;console.error('[WISTIA Before/After]',error)}
       if(kind===mode){playBtn.removeAttribute('aria-busy');errorEl.hidden=!failures[kind];if(pendingPlay&&audioCtx&&audioCtx.state==='running'){global.wistiaClaimPlayback?.('before-after');if(start(pausedAt)){pendingPlay=false;isPlaying=true}}sync()}
       if(buffers.before||buffers.after)root.classList.remove('is-loading')

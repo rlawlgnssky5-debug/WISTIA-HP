@@ -4,11 +4,12 @@ import {runInNewContext} from 'node:vm'
 
 const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
 const commerce=source.slice(source.indexOf('function arRecordingPoster('),source.indexOf('function renderDetail('))
-const handlers=new Map(),root={dataset:{},querySelectorAll:selector=>groups[selector]||[]}
+const handlers=new Map(),root={dataset:{},querySelector:()=>null,querySelectorAll:selector=>groups[selector]||[]}
 const control=key=>({dataset:{arTime:key},attrs:{},setAttribute(name,value){this.attrs[name]=value},addEventListener(type,fn){handlers.set(this,fn)}})
 const buttons=[control('solo'),control('duo')],prices=[{},{}],hours=[{},{},{}],minutes=[{}],links=[{},{},{}],formats=[{}]
 const groups={'[data-ar-time]':buttons,'[data-ar-price]':prices,'[data-ar-hours]':hours,'[data-ar-minutes]':minutes,'[data-ar-price-link]':links,'[data-ar-format]':formats}
 const context={PRODUCTS:{solo:{normal:120000},duo:{normal:160000}},AR_DETAIL_CONTENT:{solo:{poster:'proof.jpg'}},document:{querySelector:()=>root},img:(src,alt)=>`<img src="${src}" alt="${alt}">`,soloReviewCarousel:()=>'<section id="reviews">직접 보내주신 카카오톡 후기 원문입니다</section>',wistiaBeforeAfterSection:()=>'<section id="wistiaBeforeAfter"></section>',arCdRatioSection:()=>'<section id="arRatioExperience"></section>',productPackageOverview:()=>'<strong>녹음 60분</strong>',productComparisonSection:()=>'<section>위스티아의 장점</section>',arExpertStory:()=>'<section>사운드 완성</section>',faq:items=>items.map(([question,answer])=>`<details><summary>${question}</summary><p>${answer}</p></details>`).join(''),footer:()=>'<footer></footer>'}
+runInNewContext(source.slice(source.indexOf('function detailPointSection('),source.indexOf('function filmCommerceDetail(')),context)
 runInNewContext(commerce,context)
 const markup=context.arCommerceDetail({resultVideo:'proof.mp4'})
 const duoMarkup=context.arCommerceDetail({resultVideo:'duo.mp4',normal:160000},'duo')

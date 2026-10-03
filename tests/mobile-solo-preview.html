@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>위스티아 모바일 시안</title>
+ <meta name="robots" content="noindex,nofollow">
+ <style>
+  *{box-sizing:border-box}body{margin:0;background:#e8edf1;font:13px system-ui,sans-serif;color:#344858}
+  header{height:64px;width:430px;max-width:100%;display:flex;justify-content:center;align-items:center;gap:10px;padding:10px}
+  header b{font-size:13px}select{font:inherit;padding:6px;border:1px solid #c5d0d8;border-radius:4px;background:#fff;color:inherit}
+  .section-toolbar{width:430px;max-width:100%;min-height:40px;padding:0 20px 10px;text-align:center}
+  .section-toolbar label{display:flex;align-items:center;justify-content:center;gap:10px}
+  .section-toolbar select{min-width:0;max-width:280px;flex:1}
+  iframe{display:block;width:390px;max-width:calc(100% - 40px);height:min(900px,calc(100dvh - 104px));margin:0 20px;border:0;background:#fff}
+ </style>
+</head>
+<body>
+ <header><label>페이지 <select id="mobilePage"><option value="solo">AR 1인</option><option value="duo">AR 듀엣</option><option value="home">홈</option></select></label><label>화면 폭 <select id="mobileWidth"><option>320</option><option selected>390</option><option>430</option></select></label></header>
+ <div class="section-toolbar"><label>섹션 이동 <select id="reviewSection" aria-label="검토할 섹션"><option>화면 로딩 중</option></select></label></div>
+ <iframe id="mobileSoloFrame" title="AR 축가 1인 모바일 미리보기" src="/detail/solo"></iframe>
+ <script>
+  const frame=document.querySelector('iframe'),pages={solo:'/detail/solo',duo:'/detail/duo',home:'/'}
+  const picker=document.querySelector('#mobilePage'),initial=new URLSearchParams(location.search).get('page')
+  const sectionPicker=document.querySelector('#reviewSection')
+  let reviewObserver=null
+  // Keep the jump menu outside the product page without adding visible section markers
+  const sectionNames={
+   'arc-product':'영상 · 상품 · 가격','arc-package':'상품 기본 구성','arc-empathy':'축가 걱정 안내',
+   'arc-reviews':'실제 고객 후기','arc-point-recording':'POINT 01 · 구간별 녹음','arc-point-key':'POINT 02 · 키 조절',
+   'arc-point-tuning':'POINT 03 · 보컬 보정','arc-point-ratio':'POINT 04 · AR 비율 체험','arc-lyrics':'POINT 05 · 가사 영상',
+   'arc-advantages':'위스티아의 장점','arc-engineer':'사운드 전문가','arc-process':'진행 순서','arc-faq':'자주 묻는 질문',
+   'arc-time-guide':'인원 · 시간 · 가격 비교','arc-notices':'예약 전 안내','arc-final':'마지막 상담 안내',
+   'mas-intro':'영상 · 브랜드 · 상품 소개','mas-gallery':'본식 영상','mas-summary':'상품명 · 가격','mas-selection':'인원 선택','mas-benefits':'이벤트 혜택',
+   'mas-information':'상품정보','mas-location':'오시는 길','footer':'하단 스튜디오 정보'
+  }
+  function reviewSections(root){
+   return [...(root?.children||[])].filter(el=>Object.keys(sectionNames).some(name=>el.classList.contains(name)))
+  }
+  function refreshSectionPicker(){
+   const doc=frame.contentDocument,root=doc?.querySelector('.ar-commerce-detail')
+   const path=frame.contentWindow?.location.pathname
+   const nextPage=path==='/detail/duo'?'duo':path==='/detail/solo'?'solo':path==='/'?'home':''
+   if(nextPage){picker.value=nextPage;frame.title=picker.selectedOptions[0].textContent+' 모바일 미리보기'}
+   if(root?.dataset.reviewSections==='ready')return
+   sectionPicker.replaceChildren();sectionPicker.disabled=!root
+   if(!root){sectionPicker.add(new Option('AR 상세에서 섹션을 확인하세요',''));return}
+   root.dataset.reviewSections='ready'
+   const sections=reviewSections(root)
+   sections.forEach((section,index)=>{
+    const name=Object.keys(sectionNames).find(name=>section.classList.contains(name))
+    sectionPicker.add(new Option(sectionNames[name],String(index)))
+   })
+  }
+  // Wait for the app's async render and refresh the menu after an actual SPA page change
+  frame.addEventListener('load',()=>{
+   reviewObserver?.disconnect()
+   const app=frame.contentDocument?.querySelector('#app')
+   if(app){reviewObserver=new frame.contentWindow.MutationObserver(refreshSectionPicker);reviewObserver.observe(app,{childList:true})}
+   refreshSectionPicker()
+  })
+  sectionPicker.addEventListener('change',()=>{
+   const target=reviewSections(frame.contentDocument?.querySelector('.ar-commerce-detail'))[Number(sectionPicker.value)]
+   if(target)frame.contentWindow.scrollTo({top:frame.contentWindow.scrollY+target.getBoundingClientRect().top-80,behavior:'instant'})
+  })
+  if(pages[initial]){picker.value=initial;frame.src=pages[initial];frame.title=picker.selectedOptions[0].textContent+' 모바일 미리보기'}
+  picker.addEventListener('change',()=>{frame.src=pages[picker.value];frame.title=picker.selectedOptions[0].textContent+' 모바일 미리보기'})
+  document.querySelector('#mobileWidth').addEventListener('change',event=>{frame.style.width=event.target.value+'px'})
+ </script>
+</body>
+</html>

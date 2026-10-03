@@ -1,0 +1,31 @@
+/* Latest customer review: simpler home and explicit interactive boundaries */
+.we-home .we-hero{min-height:0;padding-bottom:32px}
+.we-home .we-hero-grid.we-hero-text{grid-template-columns:1fr;padding-block:48px 36px;gap:0}
+.we-home .we-hero-text h1{max-width:900px}
+.we-home .we-hero-text .we-lead{max-width:600px}
+.we-home .we-affordability .we-location{margin:0;padding:0;border:0}
+.we-affordability h2{font-size:clamp(28px,3vw,42px);line-height:1.4;margin:18px 0 24px}
+.we-home .we-directions-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.we-home .wistia-directions-map{margin:0;max-width:481px;width:100%}
+.we-home .wistia-directions-map img{display:block;width:100%;height:auto;aspect-ratio:481/347;object-fit:contain}
+.we-directions-copy h3{font-size:clamp(22px,2.5vw,32px);line-height:1.5;margin-bottom:24px}
+.we-directions-copy p{font-size:14px;line-height:1.9;margin-block:12px}
+.we-directions-copy .wistia-location-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+#quickEstimate .qe-choice{position:relative;border:1px solid #aebcc7;background:#f7f9fb;color:#29343e;box-shadow:none;padding-right:42px}
+#quickEstimate .qe-choice small{color:#526474}
+#quickEstimate .qe-choice.is-selected{border:2px solid #47667e;background:#dce8f0;padding:19px 41px 19px 19px}
+#quickEstimate .qe-choice.is-selected:after{content:'✓';position:absolute;right:16px;top:16px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#47667e;color:#fff;font-size:14px}
+#quickEstimate .qe-top button{display:flex;align-items:center;justify-content:center;padding:0;line-height:1;flex:0 0 44px}
+#quickEstimate .qe-top button svg{display:block;flex:none}
+#app .footer .footer-brand,#app .footer .footer-brand b{color:#29343e}
+#app .footer .footer-brand small{color:#586774}
+#app .footer .footer-brand>img{filter:grayscale(1) brightness(0);opacity:.85}
+.ar-commerce-detail .arc-point-tuning,.ar-commerce-detail .arc-point-ratio{padding-top:32px}
+.ar-commerce-detail .solo-review-carousel>.shell{width:100%;max-width:1152px;margin-inline:auto}
+@media(max-width:768px){
+ .we-home .we-hero-grid.we-hero-text{padding-block:32px 24px}
+ .we-home .we-directions-grid{grid-template-columns:1fr;gap:28px}
+ .we-directions-copy .studio-address-street{white-space:nowrap}
+ #quickEstimate .qe-choice.is-selected{padding:15px 41px 15px 15px}
+ .ar-commerce-detail .arc-point-tuning,.ar-commerce-detail .arc-point-ratio{padding-top:20px}
+}

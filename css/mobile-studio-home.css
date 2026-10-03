@@ -1,0 +1,15 @@
+/* Alignment only, keep existing home / DUET layouts, image sizes, spacing and floating actions */
+@media(max-width:768px){
+ #app :is(.we-home,.ar-commerce-detail) :is(h1,h2,h3,p,figcaption){text-align:center!important}
+ #app .we-home :is(.we-meta,.we-actions,.we-hero-foot,.we-carousel-controls,.wistia-location-links){justify-content:center}
+ #app .we-home :is(.we-service,.we-location,.we-directions-copy,.we-final){text-align:center}
+ #app :is(.we-home,.ar-commerce-detail) :is(.solo-type-line,.ar-expert-panel-content,.wistia-advantages header,.solo-review-intro,.bap-tabs strong,.bap-tabs small){text-align:center!important}
+ #app .ar-commerce-detail .arc-summary{text-align:center}
+ #app .ar-commerce-detail .arc-actions{justify-content:center}
+ /* Center the caption and waveform without changing the recording card or image layout */
+ #app .ar-commerce-detail .arc-recording-flow li{text-align:center;justify-items:center}
+ #app .ar-commerce-detail .arc-recording-flow svg{display:block;margin-inline:auto}
+ #app .ar-commerce-detail .ar-story-intro{text-align:center!important;margin-inline:auto!important}
+ #app :is(.we-home,.ar-commerce-detail) .footer-main{align-items:center;text-align:center}
+ #app :is(.we-home,.ar-commerce-detail) .footer :is(.footer-brand,.footer-links,.footer-bottom){justify-content:center;text-align:center}
+}

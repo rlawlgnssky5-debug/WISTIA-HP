@@ -61,6 +61,9 @@
   document.querySelectorAll('.story-process-folder').forEach(folder=>{
    const summary=folder.querySelector('summary'),content=folder.querySelector('.process-folder-content')
    if(!summary||!content||typeof content.animate!=='function'||limited())return
+   const cueObserver=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>entries.forEach(entry=>folder.classList.toggle('is-cue-visible',entry.isIntersecting)),{threshold:.2}):null
+   if(cueObserver)cueObserver.observe(summary);else folder.classList.add('is-cue-visible')
+   cleanups.push(()=>{cueObserver?.disconnect();folder.classList.remove('is-cue-visible')})
    let targetOpen=folder.open,animation=null,revision=0
    const clear=()=>{content.style.removeProperty('height');content.style.removeProperty('overflow');content.inert=false;delete folder.dataset.folderMotion}
    listen(summary,'click',event=>{
