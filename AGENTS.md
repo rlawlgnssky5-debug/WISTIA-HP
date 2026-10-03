@@ -13,6 +13,8 @@
 - 홈 제작 설명과 FAQ의 실제 펼침을 확인했다, 새 직접 검수 탭의 오류/경고는 0이다, 이전 미리보기 탭의 원인 미확정 MutationObserver 기록은 별개다
 - 회귀 시험 22개·앱/견적 JS 구문·Git 차이 검사·정적 HTML 19개 재생성을 통과했다, 앱·견적·새 홈/폼 CSS 캐시는 `20261004-home-form-1`이며 스토리 모바일 CSS는 `20261003-story-commerce-1`이다
 - 검수 기록은 `tests/home-form-refresh-qa.md`, 로컬 증빙은 `tests/qa/home-form-home-local-20261004.png`, `tests/qa/home-form-inquiry-local-20261004.png`다, 이전 스토리 변경과 함께 기존 main→Vercel 경로로 배포한다
+- 수정본은 커밋 `6b241776e399d413a0a544c7ece5b0989bfab002`로 main 푸시했으며 Vercel success 및 Deployment has completed를 확인했다, 공개 홈·상담 폼의 320·390·663·1440px 가로 넘침 0과 실제 카카오톡 견적 복사·입력 보존·AR/스토리 새 내용 반영을 확인했다
+- 공개 검수에서 홈의 구간 주소 직접 방문/새로고침 404를 발견했다, 기존 내부 SPA 이동은 정상이며 홈 구간 네 링크를 정적 생성 목록에 추가해 직접 주소도 열리도록 보완한다, 호스팅 설정 변경은 없으며 복제 페이지는 noindex 처리한다
 
 ## 2026-10-04 — 스토리 필름 모바일 AR형 재구성과 이벤트 펼침
 

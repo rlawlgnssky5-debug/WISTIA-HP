@@ -35,4 +35,8 @@ for (const product of products) {
   page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
 }
 page('/info/location', seo.location)
+// Home section links must also resolve on direct visits and refreshes.
+for (const section of ['homeServices','homeCases','homeLocation','homeProcess']) {
+  page(`/section/${section}`, seo.home, {robots:'noindex, follow'})
+}
 for (const [path, data] of Object.entries(seo.noindex)) page(path, data, {robots:'noindex, follow'})

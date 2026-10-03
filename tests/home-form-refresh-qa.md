@@ -49,3 +49,17 @@
 - tests/qa/home-form-inquiry-local-20261004.png
 
 배포 및 공개 확인 결과는 실제 완료 후 아래 기록
+
+## 최초 운영 배포와 공개 검수
+
+- 커밋 `6b241776e399d413a0a544c7ece5b0989bfab002` main 푸시, Vercel success 및 Deployment has completed 확인
+- 운영 홈·SOLO·스토리·상담·신규 CSS·앱 HTTP 200과 캐시 반영 확인
+- 공개 홈과 상담 폼의 320·390·663·1440px 가로 넘침 0, 상품/질문 카드 내부 넘침 0
+- 공개 빠른 견적 DUET·추가/할인 없음 16만원 복사·홈 주소 유지·카카오톡 확인창 확인
+- 공개 상담 이름 입력 후 DUET 전환 시 이름 보존·16만원 갱신
+- 공개 스토리 35만원/최대 혜택 28만원·여섯 장면·가격 독립 섹션·이벤트 펼침 및 AR 음정·박자 보정/녹음 후 7일 안내 반영
+- 공개 SOLO·스토리 320·390px 가로 넘침 0, 직접 검수 탭 오류·경고 0
+- 외부 채팅 이동 및 메시지 전송 없음
+- 운영 증빙 tests/qa/home-form-production-20261004.png, tests/qa/home-form-inquiry-production-20261004.png
+- 공개 검수 중 홈 구간 직접 방문 / 새로고침의 404를 발견, SPA 내부 이동은 정상이나 정적 HTML이 없어 기존 서버에서 직접 주소를 처리하지 못함
+- 기존 링크 네 경로(homeServices·homeCases·homeLocation·homeProcess)를 정적 생성 목록에 추가, 내용과 호스팅 설정은 보존하며 noindex 처리
