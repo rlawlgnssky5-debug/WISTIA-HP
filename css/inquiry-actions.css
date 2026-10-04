@@ -1,0 +1,19 @@
+/* The inquiry form, not a separate estimate, is the sole configuration flow. */
+body.inquiry-visible #floatingKakao{display:none!important}
+body[data-page="home"]:not(.menu-open):not(.modal-open) #floatingKakao{grid-template-columns:minmax(0,1fr)!important;width:144px!important;left:auto!important;right:12px!important}
+#app .mobile-ar-solo .mas-bottom{grid-template-columns:minmax(0,1fr)}
+body.inquiry-visible #app{padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+#app .inquiry-actions{position:fixed;z-index:80;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,720px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);gap:10px;padding:10px 12px calc(16px + env(safe-area-inset-bottom));box-sizing:border-box;border:1px solid #d5e0e7;border-radius:16px 16px 0 0;background:#f9fbfcf5;backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 #fff,0 -4px 20px #29435714;pointer-events:auto}
+#app .inquiry-actions :is(a,button){display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-width:0;min-height:60px;height:auto;margin:0;padding:10px 12px;box-sizing:border-box;border:1px solid #b7c9d6;border-radius:10px;color:#354f62;background:linear-gradient(180deg,#fff,#eef3f7);box-shadow:inset 0 1px 0 #fff,0 4px 0 #bbcbd6,0 6px 10px #253d5012;font-size:14px;font-weight:650;letter-spacing:-.025em;line-height:1.5;text-align:center;text-decoration:none;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+#app .inquiry-actions .contact-submit{color:#fff;border-color:#314e63;background:linear-gradient(180deg,#4c6d83,#354f62);box-shadow:inset 0 1px 0 #a6bec86b,0 4px 0 #223b4d,0 6px 12px #1f394527}
+#app .inquiry-actions .contact-submit{font-size:14px!important;border-radius:10px!important;padding:10px 12px!important}
+#app .inquiry-actions .contact-submit>span{font-size:inherit!important;line-height:inherit!important}
+#app .inquiry-actions .contact-submit>span:first-child{min-width:0}
+#app .inquiry-actions .contact-submit>span[aria-hidden]{flex:none}
+#app .inquiry-actions :is(a,button):focus-visible{outline:2px solid #496980;outline-offset:4px}
+#app .inquiry-actions :is(a,button):active{transform:translateY(3px);box-shadow:inset 0 1px 0 #ffffff40,0 1px 0 #bbcbd6}
+body.menu-open #app .inquiry-actions,body.modal-open #app .inquiry-actions{visibility:hidden;pointer-events:none}
+@media(max-width:540px){#app .inquiry-actions .contact-submit>span[aria-hidden]{display:none}}
+@media(max-width:360px){#app .inquiry-actions{gap:8px;padding-inline:10px}#app .inquiry-actions :is(a,button){font-size:13px!important;padding-inline:8px!important}}
+@media(min-width:769px){#app .inquiry-actions{bottom:16px;border-radius:16px;box-shadow:inset 0 1px 0 #fff,0 4px 0 #d8e3eb,0 12px 26px #20354224}}
+@media(prefers-reduced-motion:reduce){#app .inquiry-actions :is(a,button){transition:none}}

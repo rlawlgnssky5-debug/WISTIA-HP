@@ -113,7 +113,7 @@ assert.match(source,/el\.matches\("\.mobile-ar-solo \.mas-selection \.mas-varian
 assert.match(html,/120,000원/);assert.match(html,/160,000원/)
 assert.match(html,/할인·페이백 모두 적용 후 혜택가<\/span><strong>40,000원/)
 assert.match(html,/\(1곡 · 1인 · 1시간\)/)
-assert.match(html,/data-quick-estimate>빠른 견적/)
+assert.doesNotMatch(html,/data-quick-estimate|빠른 견적/)
 assert.match(html,/href="\/event\/solo">카카오톡 문의/)
 assert.doesNotMatch(html,/장바구니|바로구매|별점|구매 1위|arc-bottom|arc-time-guide|arc-empathy|arc-package|mas-benefits|경기도 부천 스튜디오 · 오시는 길/)
 for(const path of [...html.matchAll(/(?:src|poster)="(assets\/[^"]+)"/g)].map(m=>m[1]))assert.ok(existsSync(new URL('../'+path,import.meta.url)),path)
