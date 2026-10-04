@@ -16,6 +16,8 @@
     const timeNow=root.querySelector('.bap-time b')
     const timeAll=root.querySelector('.bap-time span')
     const canvas=root.querySelector('.bap-wave')
+    const waveStyle=typeof getComputedStyle==='function'?getComputedStyle(root):null
+    const waveColors={before:waveStyle?.getPropertyValue('--ba-wave-before').trim()||'#777d80',after:waveStyle?.getPropertyValue('--ba-wave-after').trim()||'#202324',rest:waveStyle?.getPropertyValue('--ba-wave-rest').trim()||'#dfe1e2'}
     const errorEl=root.querySelector('.bap-error')
     const status='보정 전과 후의 보컬 소스는 같은 녹음본입니다'
     const buffers={before:null,after:null},failures={before:false,after:false}
@@ -84,7 +86,7 @@
     function draw(){
       const context=canvas.getContext('2d'),width=canvas.width,height=canvas.height,peaks=activePeaks()||fallback(),progress=duration()?position()/duration():0
       context.clearRect(0,0,width,height);const gap=width/peaks.length,barWidth=gap*.55
-      peaks.forEach((peak,index)=>{const barHeight=Math.max(height*.12,peak*height*.82);context.fillStyle=index/peaks.length<progress?(mode==='before'?'#777d80':'#202324'):'#dfe1e2';context.fillRect(index*gap+(gap-barWidth)/2,(height-barHeight)/2,barWidth,barHeight)})
+      peaks.forEach((peak,index)=>{const barHeight=Math.max(height*.12,peak*height*.82);context.fillStyle=index/peaks.length<progress?waveColors[mode]:waveColors.rest;context.fillRect(index*gap+(gap-barWidth)/2,(height-barHeight)/2,barWidth,barHeight)})
     }
     function resize(){const rect=canvas.getBoundingClientRect(),dpr=global.devicePixelRatio||1;canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.max(1,Math.round(rect.height*dpr));draw()}
     canvas.addEventListener('click',event=>{if(!duration())return;const rect=canvas.getBoundingClientRect(),next=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width))*duration();if(isPlaying)start(next);else pausedAt=next;sync()},{signal})

@@ -21,7 +21,7 @@ function page(path, data, options={}) {
     .replace(/(<meta property="og:url" content=")[^"]*(">)/, `$1${url}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${url}$2`)
   if (options.robots) {
-    html = html.replace('<meta name="theme-color" content="#ffffff">', `<meta name="theme-color" content="#ffffff">\n  <meta name="robots" content="${escapeHtml(options.robots)}">`)
+    html = html.replace(/(<meta name="theme-color" content="[^"]+">)/, `$1\n  <meta name="robots" content="${escapeHtml(options.robots)}">`)
   }
   const target = resolve(root, path.slice(1) + '.html')
   mkdirSync(dirname(target), {recursive:true})

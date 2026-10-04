@@ -500,7 +500,7 @@ const REVIEW_QUOTES = [
  {index:3,quote:"실수를 많이 한것 같아서 걱정했는데",body:"너무너무 만족스럽습니다! 그리고 영상이랑 노래가 너무 이뻐서 무한재생하게 되네요",tag:"완성된 노래와 영상을 받고"},
  {index:1,quote:"여자친구가 너무 좋아하네요",body:"예쁘게 잘 만들어주셔서 감사합니다",tag:"마음을 전한 뒤 보내주신 말"}
 ]
-function kakao(){return config.accounts?.kakao || KAKAO_FALLBACK}
+function kakao(){return (config.accounts?.kakao || KAKAO_FALLBACK).replace(/^http:\/\/pf\.kakao\.com\//,'https://pf.kakao.com/')}
 function img(src,alt,eager=false){return '<img src="'+escapeHtml(src)+'" alt="'+escapeHtml(alt)+'" loading="'+(eager?"eager":"lazy")+'" decoding="async"'+(eager?' fetchpriority="high"':"")+'>'}
 function arrow(){return '<span aria-hidden="true">↗</span>'}
 function label(text){return '<p class="eyebrow">'+text+'</p>'}
@@ -1468,11 +1468,29 @@ function showDialog(html,type){
 }
 function closeDialog(){if(!dialog.open)return;dialog.close();dialog.innerHTML="";dialog.classList.remove("consult-copy-modal");document.body.classList.remove("modal-open");document.querySelector("#siteHeader").inert=false;app.inert=false;document.querySelector("#floatingKakao").inert=false;if(lastDialogFocus?.isConnected)lastDialogFocus.focus()}
 function showContactValidationDialog(issues){
- const items=issues.map(issue=>'<li><strong>'+escapeHtml(issue.label)+'</strong><span>'+escapeHtml(issue.message)+'</span></li>').join('')
- showDialog('<span class="consult-copy-mark" aria-hidden="true">!</span><h2>문의 내용을 확인해 주세요</h2><p>아래 항목을 입력하거나 수정해야<br>문의 내용을 복사할 수 있어요</p><ul class="consult-validation-list">'+items+'</ul><p class="consult-validation-hint">정해지지 않은 일정은 미정으로 두셔도 괜찮아요</p><button type="button" class="button dark consult-copy-action" data-close>입력 내용 수정하기</button><a class="button consult-copy-action consult-direct-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>문의 양식 없이 바로 상담할래요</a>',"consult-copy-dialog")
+ const form=issues[0].control.form
+ showDialog('<h2>필수 항목을 작성해 주세요</h2><p>이 창에서 바로 수정하실 수 있어요</p><form id="contactValidationForm" novalidate>'+window.WistiaContact.validationEditor(issues)+'<p class="consult-validation-hint">정해지지 않은 일정은 미정으로 두셔도 괜찮아요</p><button type="submit" class="button dark consult-copy-action inquiry-edit-submit"><span data-submit-label>(작성이 필요해요😭)</span></button></form><a class="button consult-copy-action consult-direct-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>문의 양식 없이 바로 상담할래요</a>',"consult-copy-dialog")
  dialog.setAttribute('aria-label','문의 작성 안내')
- // Closing or choosing edit returns to the first invalid field without losing the draft
+ const editor=dialog.querySelector('#contactValidationForm'),button=editor.querySelector('button')
+ const sync=()=>window.WistiaContact.syncSubmitState(form,button)
+ const edit=e=>{
+  const input=e.target.closest('[data-inquiry-edit]');if(!input)return
+  const control=issues[Number(input.dataset.inquiryEdit)].control
+  control.value=input.value;control.dispatchEvent(new Event('change',{bubbles:true}))
+  const issue=window.WistiaContact.validationIssues(form,{mark:false}).find(item=>item.control===control)
+  input.setAttribute('aria-invalid',String(Boolean(issue)));control.setAttribute('aria-invalid',String(Boolean(issue)))
+  editor.querySelector('#'+input.id+'-error').textContent=issue?issue.label+' '+issue.message:''
+  sync()
+ }
+ editor.addEventListener('input',edit);editor.addEventListener('change',edit)
+ editor.addEventListener('submit',e=>{e.preventDefault();const remaining=window.WistiaContact.validationIssues(form);if(remaining.length){showContactValidationDialog(remaining);return}closeDialog();form.requestSubmit()})
+ sync();editor.querySelector('[data-inquiry-edit]').focus()
+ // Closing the editor preserves its changes and returns to the original field
  lastDialogFocus=issues[0].control
+}
+function showKakaoInquiryDialog(formPath){
+ showDialog('<h2>어떻게 상담할까요?</h2><p>편하신 방법을 선택해 주세요</p><a class="button dark consult-copy-action" href="'+escapeHtml(formPath)+'" data-close>문의 양식 작성할게요!</a><a class="button consult-copy-action consult-direct-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>바로 상담할래요!</a>',"consult-copy-dialog")
+ dialog.setAttribute('aria-label','카카오톡 문의 방법 선택')
 }
 function openVideo(id){
  const w=WORKS.find(x=>x.id===id);if(!w)return;
@@ -1702,6 +1720,7 @@ cleanHashRoute();
 document.addEventListener("click",e=>{
  if(document.body.classList.contains('menu-open')&&!e.target.closest('#mainMenu,#menuToggle')){document.body.classList.remove('menu-open');const toggle=document.querySelector('#menuToggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','메뉴 열기');e.preventDefault();return}
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
+ if(el.id==='floatingKakaoChat'||el.matches('.mas-bottom > a')){e.preventDefault();showKakaoInquiryDialog(el.id==='floatingKakaoChat'?'/contact':el.getAttribute('href'));return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
  if(el.matches(".skip-link")){e.preventDefault();app.focus();return}
  if(el.matches("[data-close]")){closeDialog();if(el.tagName==="BUTTON")return}

@@ -11,7 +11,7 @@ const embedded=api.render(quote,{embedded:true})
 assert.equal((embedded.match(/<h1/g)||[]).length,0)
 assert.equal((embedded.match(/<form/g)||[]).length,1)
 assert.match(embedded,/name="service" value="AR 축가 사전녹음" readonly/)
-assert.match(embedded,/문의 내용 복사하고 카카오톡 상담하기/)
+assert.match(embedded,/작성이 필요해요😭/)
 assert.match(api.render(null,{embedded:true}),/name="service" value="상담 후 결정" readonly/)
 assert.match(api.render(null,{embedded:true}),/class="contact-quote" hidden/)
 const submitted=api.text({name:'검수',source:'인스타 광고',service:quote.service},quote)
@@ -20,7 +20,7 @@ assert.match(submitted,/최종 예상 가격 : 130,000원/)
 assert.doesNotMatch(api.text({service:'상담 후 결정'},null),/가격|120,000/)
 const sync=source.slice(source.indexOf('function refreshInquiryQuote(){'),source.indexOf('function jumpToInquiry(){'))
 const preview={hidden:false,querySelector:()=>({textContent:''})},service={readOnly:true,value:''}
-context.document={querySelector:selector=>selector==='#contactInquiryForm'?({querySelector:key=>key==='[name="service"]'?service:preview}):null}
+context.document={querySelectorAll:()=>[],querySelector:selector=>selector==='#contactInquiryForm'?({elements:[],querySelector:key=>key==='[name="service"]'?service:preview}):null}
 api.syncQuote(quote);assert.equal(service.value,quote.service);assert.equal(preview.hidden,false)
 api.syncQuote(null);assert.equal(service.value,'상담 후 결정');assert.equal(preview.hidden,true)
 const state={inquiryUndecided:false,currentEventProduct:'solo',window:{WistiaContact:{syncQuote:()=>{}}},calculate:()=>({product:{title:'AR'},finalPrice:130000}),shortWon:()=> '13만원',consultationText:()=>submitted}
@@ -59,14 +59,14 @@ assert.match(source,/POINT 02|POINT '\+number/)
 assert.match(source,/linearGradient id="arJoinedWave"/)
 assert.match(css,/arc-recording-flow li:nth-child\(2\)/)
 context.FormData=class {constructor(form){this.entries=form.data}[Symbol.iterator](){return this.entries[Symbol.iterator]()}}
-const draftForm={data:[['name','검수'],['source','메타 광고'],['service','AR 축가 사전녹음'],['quoteProduct','solo'],['arDuration','on'],['eventDateMode','unknown'],['timeStart','17:00']]}
+const draftForm={elements:[],data:[['name','검수'],['source','메타 광고'],['service','AR 축가 사전녹음'],['quoteProduct','solo'],['arDuration','on'],['eventDateMode','unknown'],['timeStart','17:00']]}
 const draft=api.snapshot(draftForm)
 assert.equal(draft.name,'검수')
 assert.equal(draft.timeStart,'17:00')
 assert.equal(draft.quoteProduct,undefined,'restoring inquiry fields must not overwrite the newly selected product')
 assert.equal(draft.arDuration,undefined,'restoring inquiry fields must not overwrite SOLO/DUET')
 const reviewNode={innerHTML:''}
-context.document={querySelector:selector=>selector==='#contactInquiryForm'?draftForm:selector==='#contactReview'?reviewNode:null}
+context.document={querySelectorAll:()=>[],querySelector:selector=>selector==='#contactInquiryForm'?draftForm:selector==='#contactReview'?reviewNode:null}
 api.syncReview()
 assert.match(reviewNode.innerHTML,/검수/)
 assert.match(reviewNode.innerHTML,/메타 광고/)

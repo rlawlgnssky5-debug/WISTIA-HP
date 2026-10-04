@@ -1,0 +1,16 @@
+/* Inquiry choice and editable validation preserve the active brand palette */
+#mediaDialog#mediaDialog.consult-copy-modal{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain}
+#mediaDialog#mediaDialog .consult-copy-dialog{min-width:0}
+#mediaDialog#mediaDialog .consult-copy-action{white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere;font-size:14px!important;line-height:1.5!important;min-height:52px!important}
+#mediaDialog#mediaDialog #contactValidationForm{display:grid;gap:16px;margin:24px 0 12px;min-width:0;text-align:left}
+#mediaDialog#mediaDialog .inquiry-edit-field{display:grid;gap:8px;min-width:0}
+#mediaDialog#mediaDialog .inquiry-edit-field label{font-size:15px!important;font-weight:650}
+#mediaDialog#mediaDialog .inquiry-edit-field :is(input,select,textarea){width:100%;min-width:0;box-sizing:border-box;padding:12px 14px;border:1px solid var(--warm-brown,#7B625B)!important;border-radius:14px!important;background:var(--warm-ivory,#FBF8F4)!important;color:var(--deep-brown,#3C302C)!important;font-size:16px!important;line-height:1.5}
+#mediaDialog#mediaDialog .inquiry-edit-field :is(input,select,textarea):focus-visible{outline:2px solid var(--warm-brown,#7B625B);outline-offset:3px}
+#mediaDialog#mediaDialog .inquiry-edit-error{margin:0!important;font-size:13px!important;line-height:1.6!important;color:var(--deep-brown,#3C302C)!important}
+#mediaDialog#mediaDialog .inquiry-edit-error:empty{display:none}
+#mediaDialog#mediaDialog .inquiry-edit-submit{margin:0!important;width:100%;text-align:center}
+#mediaDialog#mediaDialog .consult-copy-action [data-submit-label]{font-size:inherit!important;line-height:inherit!important}
+#mediaDialog#mediaDialog .consult-validation-hint{margin:0!important;font-size:13px!important;line-height:1.6!important;text-align:center}
+#app#app .inquiry-actions .contact-submit [data-submit-label]{white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere}
+#app#app .inquiry-submit-next,#mediaDialog#mediaDialog .inquiry-submit-next{white-space:nowrap!important;font-size:inherit!important}

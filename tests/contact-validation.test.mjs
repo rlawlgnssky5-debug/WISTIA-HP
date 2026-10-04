@@ -5,7 +5,7 @@ const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 const context={window:{}}
 runInNewContext(read('js/contact-form.js'),context)
 const api=context.window.WistiaContact
-const control=(name,value,options={})=>({name,value,required:false,willValidate:true,validity:{valid:true},tagName:'INPUT',attributes:{},setAttribute(key,value){this.attributes[key]=value},removeAttribute(key){delete this.attributes[key]},...options})
+const control=(name,value,options={})=>({name,value,required:false,willValidate:true,validity:{valid:true},tagName:'INPUT',attributes:{},setAttribute(key,value){this.attributes[key]=value},removeAttribute(key){delete this.attributes[key]},hasAttribute(key){return key in this.attributes},getAttribute(key){return this.attributes[key]},...options})
 const name=control('name','',{required:true}),service=control('service','',{required:true,tagName:'SELECT'}),date=control('bookingDate','',{willValidate:false})
 const form={id:'contactInquiryForm',elements:[name,service,date],data:[['name','검수'],['service','상담 후 결정']]}
 let issues=api.validationIssues(form)
@@ -33,13 +33,18 @@ assert.equal(copyCount,1);assert.equal(refreshCount,1)
 submitHandler({target:{id:'anotherForm'},preventDefault(){throw Error('unrelated form')}})
 assert.equal(copyCount,1)
 const popup=source.slice(source.indexOf('function showContactValidationDialog('),source.indexOf('function openVideo('))
-Object.assign(context,{escapeHtml:value=>String(value).replaceAll('<','&lt;').replaceAll('>','&gt;'),kakao:()=> 'https://pf.kakao.com/_GbExjX/chat',showDialog(html,type){shown={html,type}},dialog:{setAttribute(){}},lastDialogFocus:null})
+name.form=form
+context.document.querySelectorAll=()=>[]
+const editor={querySelector(selector){return selector==='button'?{dataset:{},setAttribute(){},querySelector(){return {textContent:''}}}:{focus(){}}},addEventListener(){}}
+Object.assign(context,{escapeHtml:value=>String(value).replaceAll('<','&lt;').replaceAll('>','&gt;'),kakao:()=> 'https://pf.kakao.com/_GbExjX/chat',showDialog(html,type){shown={html,type}},dialog:{setAttribute(){},querySelector(){return editor}},lastDialogFocus:null})
 runInNewContext(popup,context)
 context.showContactValidationDialog([{control:name,label:'<성함>',message:'<입력>'}])
 assert.match(shown.html,/&lt;성함&gt;/);assert.doesNotMatch(shown.html,/<성함>/)
 assert.match(shown.html,/문의 양식 없이 바로 상담할래요/)
 assert.match(shown.html,/href="https:\/\/pf.kakao.com\/_GbExjX\/chat" target="_blank" rel="noopener noreferrer" data-close/)
-assert.match(shown.html,/type="button"[^>]+data-close>입력 내용 수정하기/)
+assert.match(shown.html,/<form id="contactValidationForm" novalidate/)
+assert.match(shown.html,/<input type="text"[^>]+data-inquiry-edit="0"/)
+assert.match(shown.html,/type="submit"[^>]+inquiry-edit-submit/)
 assert.equal(context.lastDialogFocus,name)
 const flowCss=read('css/consultation-flow.css')
 const mobileSidebar=flowCss.match(/@media\(max-width:900px\)\{\s*(?:\/\*[\s\S]*?\*\/\s*)?body\[data-page=event\] \.consultation-flow \.booking-price-sidebar\{([^}]+)\}/)?.[1]

@@ -1,0 +1,91 @@
+/* Wedding palette: dusty pink identity, beige canvas, brown actions, ivory relief.
+   A deeper brown is reserved for small text where the three brand colours alone
+   do not provide enough contrast. Real media and the Kakao mark stay unchanged. */
+html[data-wistia-theme="dusty-wedding"],html[data-wistia-theme="dusty-wedding"] body{
+ --dusty-pink:#EFA8B8;--warm-beige:#EFE3D5;--warm-brown:#7B625B;--warm-ivory:#FBF8F4;--deep-brown:#3C302C;
+ --brand-pink:var(--dusty-pink);--brand-black:var(--deep-brown);--brand-gray:var(--warm-ivory);
+ --brand-line:rgba(123,98,91,.18);--brand-muted:rgba(60,48,44,.76);
+ --ink:var(--deep-brown)!important;--muted:var(--brand-muted)!important;--line:var(--brand-line)!important;
+ --wash:var(--warm-beige)!important;--paper:var(--warm-ivory)!important;--white:var(--warm-ivory)!important;
+ background:var(--warm-beige)!important;color:var(--deep-brown);accent-color:var(--warm-brown);color-scheme:light;
+}
+html[data-wistia-theme="dusty-wedding"] #app#app,html[data-wistia-theme="dusty-wedding"] #app#app :is(.we-home,.we-section,.we-review-wrap,.mobile-ar-solo,.mas-intro,.mas-summary,.mas-selection,.mas-information,.arc-section,.arc-point,.arc-engineer,.arc-advantages,.solo-review-carousel,.wistia-ba-section,.wistia-ar,.info-page,.info-section,.footer,.before-after-page,.consultation-flow,.booking-calculator,.booking-extra){background:var(--warm-beige)!important}
+html[data-wistia-theme="dusty-wedding"] #siteHeader#siteHeader{background:var(--warm-beige)!important;border-color:transparent!important}
+html[data-wistia-theme="dusty-wedding"] #menuToggle#menuToggle span{background:var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #mainMenu#mainMenu{background:var(--warm-brown)!important;color:var(--warm-ivory)!important;border-color:transparent!important;border-radius:28px 0 0 28px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--warm-ivory)!important}
+/* Rounded colour fields, with no outline frames or raised slide-like plinths. */
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero{width:calc(100% - 40px);max-width:1120px;margin:18px auto 0;padding:40px 22px 48px;border-radius:36px;background:var(--dusty-pink)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero :is(.we-meta,.we-kicker,.we-lead){color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero .we-meta{margin-bottom:32px}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero .we-kicker{margin-bottom:20px}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero .we-lead{margin-top:24px}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-service{background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:28px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-service figure{border-radius:22px;overflow:hidden}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-service h3{margin-top:10px}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-service-link{min-height:44px;padding:8px 18px;border:0;border-radius:999px;background:var(--warm-beige)!important;color:var(--deep-brown)!important;text-decoration:none}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.we-section-tag,.detail-point-label){background:transparent!important;color:var(--deep-brown)!important;border-color:transparent!important;border-radius:999px;box-shadow:none!important;letter-spacing:.06em}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-product-number{padding:5px 10px;border-radius:999px;background:var(--warm-beige)!important;color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-affordability .we-location{background:var(--warm-brown)!important;color:var(--warm-ivory)!important;border-radius:32px;box-shadow:none!important;padding:34px 24px}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-affordability .we-location .we-section-tag{background:var(--dusty-pink)!important;color:var(--deep-brown)!important;border-color:transparent!important;border-radius:999px}
+/* A solid brown CTA is the accent, pink is the identity rather than every button. */
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.button,.arc-button,.wistia-location-links a,.inquiry-direct,.bap-tab,.bap-switch){background:var(--warm-ivory)!important;color:var(--deep-brown)!important;border-color:transparent!important;border-radius:20px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.button.dark,.contact-submit,.mas-bottom>a,.we-case-play,.mas-story-play,.bap-play,.wistia-ar__play){background:var(--warm-brown)!important;color:var(--warm-ivory)!important;border-color:transparent!important;border-radius:20px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.bap-play,.wistia-ar__play,.bap-switch){border-radius:999px}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.mas-bottom,.inquiry-actions){background:var(--warm-beige)!important;border-color:transparent!important;border-radius:28px 28px 0 0;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.contact-submit,.mas-bottom>a,.inquiry-direct):active{box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.we-craft-list details,.we-craft-list summary,.we-home-faq details,.we-directions-copy,.wistia-about-closing,.wistia-specialist-grid article,.arc-recording-flow li,.arc-free-edit,.arc-key-statement,.ar-expert-story,.ar-expert-panel,.story-process-folder>summary,.story-process-grid li,.wistia-advantages li,.detail-price-reason,.mas-event-disclosure,.mas-event-list,.mas-event-content,.bap-player,.bap-body,.bap-tabs,.bap-badge,.bap-hint,.bap-note){background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:24px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .we-craft-list details summary{border-radius:24px}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.mas-included span,.mas-story-chapters li){background:rgba(239,168,184,.32)!important;color:var(--deep-brown)!important;border-radius:999px}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-event-price strong{background:transparent!important;color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-event-price{color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-variant.is-selected{background:var(--dusty-pink)!important;color:var(--deep-brown)!important;border-color:transparent!important;border-radius:22px}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-variant:not(.is-selected){background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:22px}
+/* Rounded faces must preserve the original text and radio gutters at every width. */
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant{padding:18px 16px!important;gap:12px;margin-top:0}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant+.mas-variant{margin-top:12px}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant>div{flex:1 1 0;min-width:0}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant>small{flex:0 0 auto;white-space:nowrap;padding-inline:2px}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant i{border-color:var(--warm-brown)!important;background:var(--warm-ivory)!important}
+/* Keep the genuine-video caption inside the media, separate from page copy. */
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-gallery[data-mobile-gallery]{position:relative}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-gallery[data-mobile-gallery] .mas-gallery-caption{position:absolute;z-index:2;top:12px;left:12px;right:auto;width:max-content;max-width:calc(100% - 80px);margin:0;padding:7px 10px;border-radius:10px;background:rgba(251,248,244,.94)!important;color:var(--deep-brown)!important;text-align:left!important;font-size:11px;line-height:1.5;word-break:keep-all;text-wrap:wrap;pointer-events:none}
+/* Forms remain separate questions, now softly shaped instead of outline boxes. */
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.calculator-intro,.consultation-step,.consultation-field-grid>.contact-field,.booking-price-card,.event-benefit-card,.consultation-gifts){background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:24px!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .consultation-flow .calculator-intro{background:var(--dusty-pink)!important;border:0;border-radius:28px!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .consultation-flow .booking-calculator{background:transparent!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .consultation-flow .consultation-fields{background:transparent!important;border-color:transparent!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .inquiry-actions :is(.contact-submit,.inquiry-direct){border-radius:20px!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.booking-product-face,.option-choice,.contact-date-toggle span){background:var(--warm-beige)!important;border-color:transparent!important;border-radius:16px!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){background:var(--dusty-pink)!important;color:var(--deep-brown)!important;border-color:transparent!important;box-shadow:inset 0 0 0 1px var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(input,select,textarea){accent-color:var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .contact-field:has([aria-invalid="true"]){box-shadow:inset 4px 0 0 var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .bap-tab.active[data-mode="before"]{background:var(--warm-brown)!important;color:var(--warm-ivory)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .bap-tab.active[data-mode="after"]{background:var(--dusty-pink)!important;color:var(--deep-brown)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .bap-badge.mode-after{background:var(--dusty-pink)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .wistia-ba-section{--ba-wave-before:var(--warm-brown);--ba-wave-after:var(--deep-brown);--ba-wave-rest:rgba(123,98,91,.18)}
+html[data-wistia-theme="dusty-wedding"] #app#app .wistia-ar__ratio-field{background:linear-gradient(90deg,var(--dusty-pink) 0,var(--dusty-pink) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--warm-ivory) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--warm-ivory) 100%)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .wistia-ar__ratio-input::-webkit-slider-thumb{background:var(--warm-brown)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .wistia-ar__ratio-input::-moz-range-thumb{background:var(--warm-brown)!important;box-shadow:none!important}
+/* The cut/join diagram needs two distinct clips, then the same two halves joined. */
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-cut-clips>div{background:var(--dusty-pink)!important;color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-cut-clips>div:last-child{background:var(--warm-beige)!important;color:var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--dusty-pink) 50%,var(--warm-beige) 50%)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-joined-clip>div{color:var(--deep-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-joined-clip>div:last-child{color:var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-cut-poster{background:var(--warm-ivory)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .mas-cut-seam{border-left-color:var(--warm-brown)!important}
+html[data-wistia-theme="dusty-wedding"] #app#app :is(.wistia-events,.wistia-events-intro,.wistia-location-address){background:var(--warm-beige)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #app#app .wistia-event-card{background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:24px}
+/* Modal actions remain clearly distinct and touch targets are not reduced. */
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog{background:var(--warm-ivory)!important;color:var(--deep-brown)!important;border-radius:28px;border-color:transparent!important;box-shadow:0 20px 70px rgba(60,48,44,.15)}
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog::backdrop{background:rgba(60,48,44,.5)}
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog .button{background:var(--warm-beige)!important;color:var(--deep-brown)!important;border-color:transparent!important;border-radius:20px;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog .button.dark{background:var(--warm-brown)!important;color:var(--warm-ivory)!important;box-shadow:none!important}
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li){background:var(--dusty-pink)!important;color:var(--deep-brown)!important;border-color:transparent!important}
+html[data-wistia-theme="dusty-wedding"] #mediaDialog#mediaDialog .consult-validation-list{background:var(--warm-beige)!important;border-color:transparent!important;border-radius:20px}
+html[data-wistia-theme="dusty-wedding"] #floatingKakao #floatingKakaoChat{box-shadow:0 6px 16px rgba(60,48,44,.12)!important}
+html[data-wistia-theme="dusty-wedding"] ::selection{background:var(--dusty-pink);color:var(--deep-brown)}
+@media(min-width:769px){html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero{padding:56px 32px 64px;border-radius:44px}}
+@media(min-width:769px){html[data-wistia-theme="dusty-wedding"] #app#app .mas-selection .mas-variant+.mas-variant{margin-top:0}}
+@media(max-width:360px){html[data-wistia-theme="dusty-wedding"] #app#app .we-home .we-hero{width:calc(100% - 28px);padding-inline:16px;border-radius:28px}}
