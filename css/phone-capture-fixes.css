@@ -1,4 +1,4 @@
-/* Only the eleven phone-capture requests, no theme or pricing changes. */
+/* Phone-capture requests and seven scoped home follow-ups, no theme or pricing changes. */
 #quickEstimate{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));margin:auto}
 #quickEstimate .qe-shell{max-height:calc(100dvh - 26px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:0;box-sizing:border-box}
 #quickEstimate .qe-top{flex-shrink:0}
@@ -11,14 +11,23 @@
 #app .we-home .we-carousel-controls{display:none}
 #app .we-home .we-hero>.we-meta{justify-content:center;text-align:center}
 #app .we-home .we-hero>.we-meta>span{max-width:none;text-align:center}
-body[data-page="home"] #floatingPrice{display:none}
+/* Latest home comments restore only the fixed quick estimate, not hero CTAs. */
+body[data-page="home"]:not(.menu-open):not(.modal-open) #floatingKakao{display:grid!important;grid-template-columns:1fr;gap:8px;right:12px!important;left:auto!important;transform:none!important;width:144px!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;padding:0!important}
+body[data-page="home"] #floatingKakao :is(#floatingPrice,#floatingKakaoChat){display:flex;justify-content:center;flex:none!important;min-width:0;width:100%!important;height:48px!important;min-height:48px!important;margin-left:0;padding:10px 12px!important;font-size:12px!important;white-space:nowrap}
+#app .we-home .we-hero{min-height:0;padding-bottom:16px}
+#app .we-home .we-hero-grid{padding-bottom:16px}
+#app .we-home #homeServices{padding-top:40px}
+#app .we-home .we-service h3{margin-top:8px}
+#app .we-home .we-affordability .we-location>p{font-size:15px;line-height:1.85}
+#app .mobile-story-film .story-process-folder .process-folder-content{padding-top:16px}
+#app .mobile-story-film .story-process-folder .story-process-grid{margin-top:0}
 #app .mobile-ar-solo .mas-intro .mas-brand{min-height:0;gap:9px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;margin-bottom:16px}
 #app .mobile-ar-solo .mas-intro .mas-brand>img{width:30px;height:30px;flex-basis:30px}
 #app .mobile-ar-solo .mas-intro .mas-brand b{font-size:17px}
 #app .mobile-ar-solo .mas-intro .mas-brand small{font-size:9px}
-@media(max-width:768px){
- #app .we-home .we-service .we-meta>span:first-child{white-space:nowrap;font-size:11px;letter-spacing:-.025em;max-width:none}
- body[data-page="home"] #floatingKakao #floatingKakaoChat{flex:none!important;width:calc(50% - 3px)!important;margin-left:auto}
+@media(max-width:540px){
+ body[data-page="home"]:not(.menu-open):not(.modal-open) #floatingKakao{left:12px!important;right:12px!important;width:calc(100% - 24px)!important;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #app .we-home .we-affordability .we-location>p{font-size:14px}
 }
 @media(max-width:700px) and (max-height:700px){
  #quickEstimate[data-step="0"] .qe-top{margin-bottom:8px}
