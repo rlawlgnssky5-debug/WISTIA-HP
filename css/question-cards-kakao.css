@@ -1,0 +1,28 @@
+/* Separate each question like a form, retaining the site's silver-blue accent. */
+#app .consultation-flow .consultation-fields{padding:0!important;border:0;background:transparent!important;box-shadow:none}
+#app .consultation-flow .consultation-fields>.consultation-step-heading{padding:8px 4px 0}
+#app .consultation-flow .consultation-fields>.consultation-step-heading>p{margin-bottom:16px}
+#app .consultation-flow .consultation-field-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+#app .consultation-flow .consultation-field-grid>.contact-field{display:flex;flex-direction:column;gap:16px;margin:0;padding:24px 28px!important;border:1px solid #dfe4e8;border-radius:8px;background:#fff;box-sizing:border-box;min-width:0;transition:border-color .15s ease}
+#app .consultation-flow .consultation-field-grid>fieldset.contact-field{display:block}
+#app .consultation-flow .consultation-field-grid>.contact-field>legend{float:left;width:100%;padding:0;margin:0 0 16px;font-size:16px;font-weight:500;line-height:1.6}
+#app .consultation-flow .consultation-field-grid>.contact-field>span{font-size:16px;font-weight:500;line-height:1.6}
+#app .consultation-flow .consultation-field-grid>.contact-field:focus-within{border-color:#7892a4}
+#app .consultation-flow .consultation-field-grid>.contact-field:has([aria-invalid="true"]){border-color:#b34f4f}
+#app .consultation-flow .contact-field input:not([type=radio]),#app .consultation-flow .contact-field select{font-size:16px}
+#app .consultation-flow .contact-field input[type=text]{height:44px;padding-inline:0;border:0;border-bottom:1px solid #b8c4cc;border-radius:0;background:transparent}
+#app .consultation-flow .contact-field input[type=text]:focus{outline:none;border-bottom:2px solid #4d6b81}
+#app .consultation-flow .contact-field input[type=text]:focus-visible{outline:2px solid #587b93;outline-offset:4px}
+#app .consultation-flow .contact-date-toggle{clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;gap:10px}
+#app .consultation-flow .contact-time-selects{clear:both;grid-template-columns:minmax(0,1fr)}
+#app .consultation-flow .contact-time-selects .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#app .consultation-flow .contact-field em{display:block;margin-top:12px;font-size:12px;line-height:1.7}
+/* Reuse the supplied Kakao asset; keep an accessible label without visible text. */
+body[data-page] #floatingKakao,body[data-page="home"]:not(.menu-open):not(.modal-open) #floatingKakao{width:56px!important;left:auto!important;right:16px!important;bottom:calc(18px + env(safe-area-inset-bottom))!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important;padding:0!important;transform:none!important;background:transparent!important;border:0!important}
+body[data-page] #floatingKakao #floatingKakaoChat{display:flex!important;align-items:center;justify-content:center;flex:none!important;width:56px!important;height:56px!important;min-height:56px!important;margin:0!important;padding:0!important;border:0!important;border-radius:14px!important;overflow:hidden;background:#fee500!important;box-shadow:0 4px 0 #d5bb16,0 8px 18px #293b4b24!important}
+body[data-page] #floatingKakao #floatingKakaoChat::before,body[data-page] #floatingKakao #floatingKakaoChat::after{display:none!important}
+body[data-page] #floatingKakao #floatingKakaoChat img{display:block!important;flex:none;width:66px!important;height:66px!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;object-fit:contain;opacity:1!important;filter:none!important;transform:none!important;pointer-events:none}
+body[data-page] #floatingKakao #floatingKakaoChat:active{transform:translateY(3px)!important;box-shadow:0 1px 0 #d5bb16,0 4px 10px #293b4b24!important}
+body[data-page] #floatingKakao #floatingKakaoChat:focus-visible{outline:3px solid #496980;outline-offset:5px}
+@media(max-width:600px){#app .consultation-flow .consultation-field-grid>.contact-field{padding:22px 18px!important}}
+@media(prefers-reduced-motion:reduce){#app .consultation-flow .consultation-field-grid>.contact-field{transition:none}}
