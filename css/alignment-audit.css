@@ -1,0 +1,6 @@
+/* Preserve the approved centered hero at every responsive width. */
+#app .we-home .we-hero-grid.we-hero-text{grid-template-columns:minmax(0,1fr);text-align:center}
+#app .we-home .we-hero-grid.we-hero-text>div{width:100%;min-width:0;margin-inline:auto;text-align:center}
+#app .we-home .we-hero :is(.we-kicker,h1,.we-lead){text-align:center;margin-inline:auto}
+#app .we-home .we-hero h1{width:100%;max-width:900px}
+#app .we-home .we-hero .we-lead{width:100%;max-width:600px}
