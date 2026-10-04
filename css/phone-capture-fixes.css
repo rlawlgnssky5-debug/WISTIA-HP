@@ -18,7 +18,7 @@ body[data-page="home"] #floatingPrice{display:none}
 #app .mobile-ar-solo .mas-intro .mas-brand small{font-size:9px}
 @media(max-width:768px){
  #app .we-home .we-service .we-meta>span:first-child{white-space:nowrap;font-size:11px;letter-spacing:-.025em;max-width:none}
- body[data-page="home"] #floatingKakaoChat{flex:none!important;width:calc(50% - 3px)!important;margin-left:auto}
+ body[data-page="home"] #floatingKakao #floatingKakaoChat{flex:none!important;width:calc(50% - 3px)!important;margin-left:auto}
 }
 @media(max-width:700px) and (max-height:700px){
  #quickEstimate[data-step="0"] .qe-top{margin-bottom:8px}
