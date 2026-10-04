@@ -25,3 +25,15 @@
 - 직접 실행 기존 회귀 27개 통과, git diff --check 통과
 
 로컬 증빙: tests/qa/contact-pointer-local-390-20261004.png
+
+## 운영 배포 및 실제 클릭 확인
+
+- 커밋 ef020235fdfd0b9130dd13a19db738609bb57e20을 기존 main에 정상 푸시했고 Vercel success / Deployment has completed 확인
+- 배포 주소: https://vercel.com/wistia1/wistia/6dVSBonWHBRcm8oMcD96ZQzM1MZd
+- 운영 SOLO·DUET·스토리·직접 문의 네 경로 HTTP 200 및 새 CSS 캐시 확인
+- 운영 CSS 화면 폭 390px에서 각 화면의 실제 복사 버튼 클릭 → 성함 누락 안내, 수정 후 실제 버튼 클릭 → 복사 완료 및 클립보드 검수 성함 확인
+- 운영 SOLO·스토리·직접 문의에서 pointer auto 및 페이지 가로 넘침 0 확인, 검수 탭 오류·경고 0
+- 운영 SOLO의 양식 없이 바로 상담 링크 실제 클릭 → 카카오톡 채널 새 탭 연결 및 클립보드 불변 확인
+- 320px 요청 이후에도 실제 innerWidth는 390px였으므로 운영 320px 완료로 기록하지 않음, 로컬의 실제 320px 검수와 구분
+- 운영 증빙: tests/qa/contact-pointer-production-390-20261004.png
+- 실제 휴대폰 실기 검수와 실제 상담 메시지 전송은 하지 않음, 배포 후 기록·증빙은 로컬 보관

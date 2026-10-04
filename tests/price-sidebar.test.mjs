@@ -50,7 +50,7 @@ for(const key of ['lyrics-video','bride-entrance','groom-entrance','rush']){
  const src=markup.match(/src="([^"]+)"/)[1]
  assert.ok(existsSync(new URL('../'+src,import.meta.url)))
 }
-assert.match(source,/cta\('문의 작성','\/event\/solo'\)/)
+assert.doesNotMatch(source,/cta\('문의 작성','\/event\/solo'\)/,'phone capture request removes the home inquiry button')
 const final=source.match(/'<section class="arc-section arc-final"><h2>축가는 직접,[^\n]+/)[0]
 assert.doesNotMatch(final,/action\('카카오톡 상담'/)
 assert.doesNotMatch(context.priceSidebarSection(),/<button|data-inquiry-jump/)

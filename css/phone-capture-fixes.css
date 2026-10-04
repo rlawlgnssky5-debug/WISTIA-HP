@@ -1,0 +1,44 @@
+/* Only the eleven phone-capture requests, no theme or pricing changes. */
+#quickEstimate{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));margin:auto}
+#quickEstimate .qe-shell{max-height:calc(100dvh - 26px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:0;box-sizing:border-box}
+#quickEstimate .qe-top{flex-shrink:0}
+#quickEstimate .qe-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;touch-action:pan-y;scrollbar-width:thin}
+/* The old hidden horizontal review strip blocked vertical scroll chaining. */
+#app .review-captures{overscroll-behavior:auto;touch-action:pan-y}
+#app .review-captures :is(.review-loop,.review-set,.review-capture,.review-capture-image,img){touch-action:pan-y}
+#app .mobile-ar-solo .mas-format-badge{display:none}
+#app .story-process-folder .process-flow{display:none}
+#app .we-home .we-carousel-controls{display:none}
+#app .we-home .we-hero>.we-meta{justify-content:center;text-align:center}
+#app .we-home .we-hero>.we-meta>span{max-width:none;text-align:center}
+body[data-page="home"] #floatingPrice{display:none}
+#app .mobile-ar-solo .mas-intro .mas-brand{min-height:0;gap:9px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;margin-bottom:16px}
+#app .mobile-ar-solo .mas-intro .mas-brand>img{width:30px;height:30px;flex-basis:30px}
+#app .mobile-ar-solo .mas-intro .mas-brand b{font-size:17px}
+#app .mobile-ar-solo .mas-intro .mas-brand small{font-size:9px}
+@media(max-width:768px){
+ #app .we-home .we-service .we-meta>span:first-child{white-space:nowrap;font-size:11px;letter-spacing:-.025em;max-width:none}
+ body[data-page="home"] #floatingKakaoChat{flex:none!important;width:calc(50% - 3px)!important;margin-left:auto}
+}
+@media(max-width:700px) and (max-height:700px){
+ #quickEstimate[data-step="0"] .qe-top{margin-bottom:8px}
+ #quickEstimate[data-step="0"] .qe-progress{margin-bottom:12px}
+ #quickEstimate[data-step="0"] .qe-step{margin:0 0 8px}
+ #quickEstimate[data-step="0"] .qe-description{margin-bottom:12px}
+ #quickEstimate[data-step="0"] .qe-choice{min-height:0;gap:6px;padding-top:12px;padding-bottom:12px}
+ #quickEstimate[data-step="0"] .qe-scroll{padding-bottom:12px}
+}
+@media(max-width:700px) and (max-height:560px){
+ #quickEstimate[data-step="0"] .qe-shell{padding:12px 14px 0}
+ #quickEstimate[data-step="0"] .qe-top{margin-bottom:6px}
+ #quickEstimate[data-step="0"] .qe-progress{margin-bottom:8px}
+ #quickEstimate[data-step="0"] .qe-step{font-size:12px;line-height:1.4;margin-bottom:6px}
+ #quickEstimate[data-step="0"] .qe-scroll h2{font-size:20px;line-height:1.35;margin-bottom:8px}
+ #quickEstimate[data-step="0"] .qe-description{font-size:12px;line-height:1.5;margin-bottom:10px}
+ #quickEstimate[data-step="0"] .qe-choices{gap:8px}
+ #quickEstimate[data-step="0"] .qe-choice{gap:4px;padding-top:9px;padding-bottom:9px}
+ #quickEstimate[data-step="0"] .qe-choice strong{font-size:15px}
+ #quickEstimate[data-step="0"] .qe-choice small{font-size:12px;line-height:1.6}
+ #quickEstimate[data-step="0"] .qe-actions{padding-block:10px}
+ #quickEstimate[data-step="0"] .qe-actions>span{font-size:10px;line-height:1.5}
+}

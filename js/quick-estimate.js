@@ -10,6 +10,7 @@
  function close(){if(!modal.open)return;modal.close();inert(false);document.body.classList.remove('modal-open');if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true})}
  function choice(value,title,description='',selected=false){return '<button type="button" class="qe-choice'+(selected?' is-selected':'')+'" data-qe-choice="'+value+'" aria-pressed="'+selected+'"><strong>'+title+'</strong>'+(description?'<small>'+description+'</small>':'')+'</button>'}
  function render(){
+  modal.setAttribute('data-step',String(step))
   const film=state.key==='duet-film',options=api().options(state.key),events=api().events(),result=api().preview(state)
   let title='',description='',content=''
   if(step===0){title='어떤 축가를 준비하시나요?';description='본식에서 마음을 전할 방식을 골라주세요';content=choice('ar','직접 부르는 AR 축가','목소리는 미리 녹음하고, 본식에서는 직접 노래해요',!film)+choice('film','축가 스토리 필름','우리 목소리와 이야기를 영상으로 상영해요',film)}
