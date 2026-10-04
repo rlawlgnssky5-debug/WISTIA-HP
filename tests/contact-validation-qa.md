@@ -31,3 +31,17 @@
 - 캐시: 20261004-inquiry-validation-1
 
 증빙: tests/qa/contact-validation-local-390-20261004.png
+
+## 운영 배포 및 검수
+
+- 커밋 cc95fc29526dbfe33cb8c15763cc173116b187e8 → 기존 main 정상 푸시
+- Vercel success / Deployment has completed
+- 배포: https://vercel.com/wistia1/wistia/H71HMPDvUqwhhQFNyjMZghgNxBn2
+- 운영 contact 화면에서 빈 성함 복사 버튼 클릭 → 요청한 안내 및 바로 상담 링크 표시
+- 320·390px 페이지와 팝업 내부 가로 넘침 0
+- 수정 버튼 → 성함 초점 복귀, 정상 작성 Enter → 복사 완료 팝업과 실제 클립보드 성함 포함
+- 단독 공개 검수 탭 오류·경고 0
+- 문의·SOLO/DUET/스토리 신청서·SOLO 상세 HTTP 200 및 새 캐시
+- 실제 상담 메시지는 전송하지 않았으며 실제 휴대폰 실기 검수는 아님
+- 증빙: tests/qa/contact-validation-production-390-20261004.png
+- 배포 후 검수 기록과 증빙은 로컬 보관
