@@ -50,7 +50,7 @@
 
 - 직접 실행 회귀 검사 42개, 실패 0
 - 앱/보정/문의 JavaScript 구문 및 Git 차이 검사 통과
-- 정적 HTML 27개 재생성
+- 최초 정적 HTML 27개 재생성, 운영 검수 후 선택 화면 3개를 추가하여 최종 30개
 - `desktop-layout.test.mjs`의 직접 터미널 브라우저 구동은 실행하지 않고 지원 브라우저 반응형 실측으로 대체
 - 새 `studio-editorial.test.mjs`로 서체·미디어 홈·버튼 대비·입력·초점·움직임 감소·전체 폴더 유지 검증
 - 로컬: `tests/qa/editorial-home-local-1022-20261006.png`
@@ -59,4 +59,10 @@
 
 ## 배포
 
-최신 요청으로 기존 main → GitHub → Vercel 배포 승인, 운영 결과는 배포 후 이 기록에 추가
+최신 요청으로 기존 main → GitHub → Vercel 배포 승인
+
+- 첫 디자인 배포 커밋 `d589e899e82c48652231d282ad44b2e1e0e3d699`, Vercel success / Deployment has completed
+- 공개 홈·상품·신청서·정보·이벤트·비교·기존 보조 화면·홈 섹션·개인정보 등 23경로 HTTP 200과 새 디자인 캐시 확인
+- 새 디자인 CSS·서체 CSS·앱 JS의 공개 내용과 커밋 일치 확인
+- 공개 `/find/role`, `/find/service`, `/find/people` 직접 방문은 기존 404로 확인되어 정적 생성 목록에 추가, 초기 검사 오류 후의 오래된 응답 변수 값은 유효 결과로 취급하지 않음
+- 해당 3개 정적 HTML은 기존 화면/선택 로직을 그대로 실행하며 noindex 처리, 최종 운영 결과는 보완 배포 후 추가

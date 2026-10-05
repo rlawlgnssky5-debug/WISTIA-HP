@@ -21,6 +21,10 @@ assert.match(css,/@media\(prefers-reduced-motion:no-preference\)/)
 assert.doesNotMatch(css,/display:none|pointer-events:none|filter:|visibility:hidden/)
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','event/solo','event/duo','event/duet-film','info/about','info/faq','info/process','info/location','events','song','film','ar/self','ar/friend','before-after']) assert.match(read(route+'.html'),/studio-editorial.css/)
 assert.match(read('privacy.html'),/studio-editorial.css/)
+for(const route of ['find/role','find/service','find/people']) {
+ assert.match(read(route+'.html'),/studio-editorial.css/)
+ assert.match(read(route+'.html'),/name="robots" content="noindex, follow"/)
+}
 assert.match(source,/story-process-folder home-process-folder" open/)
 assert.match(source,/function mobileArProcess\(key="solo"\)\{\s*const steps=detailStudioSteps\(key\)/)
 assert.match(source,/완성도는 높이고, 부담은 줄인 가격을 약속드립니다/)

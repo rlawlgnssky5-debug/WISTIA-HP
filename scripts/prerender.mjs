@@ -44,4 +44,8 @@ page('/events', {title:'후기 참여 이벤트 | 위스티아',description:'위
 for (const section of ['homeServices','homeCases','homeLocation','homeProcess']) {
   page(`/section/${section}`, seo.home, {robots:'noindex, follow'})
 }
+// Finder routes also need a static entry point for direct visits and refreshes.
+for (const stage of ['role','service','people']) {
+  page(`/find/${stage}`, seo.home, {robots:'noindex, follow'})
+}
 for (const [path, data] of Object.entries(seo.noindex)) page(path, data, {robots:'noindex, follow'})
