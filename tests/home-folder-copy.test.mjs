@@ -15,7 +15,7 @@ assert.match(home,/<details class="story-process-folder home-process-folder" ope
 assert.equal(home.match(/<summary>.*?<\/summary>/)[0],story.match(/<summary>.*?<\/summary>/)[0])
 assert.match(home,/class="process-folder-content"><div class="we-craft-grid">/)
 for(const title of ['구간별 녹음 · 1:1 디렉팅','수작업 음정·박자 보정','방송 음악 작업 엔지니어'])assert.ok(home.includes(title))
-for(const photo of ['03-vocal-directing.webp','05-melodyne.webp','06-mixing.webp'])assert.ok(home.includes(photo))
+for(const photo of ['process-no-people/03.svg','process-no-people/05.svg','process-no-people/06.svg'])assert.ok(home.includes(photo))
 assert.match(css,/\.ba-essential\{[^}]*white-space:nowrap/)
 assert.match(css,/\.wistia-emphasis-underline\{[^}]*text-underline-offset:4px/)
 assert.match(read('js/site-motion.js'),/document.querySelectorAll\('\.story-process-folder'\)/)

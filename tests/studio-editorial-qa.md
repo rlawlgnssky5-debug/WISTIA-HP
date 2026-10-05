@@ -66,3 +66,25 @@
 - 새 디자인 CSS·서체 CSS·앱 JS의 공개 내용과 커밋 일치 확인
 - 공개 `/find/role`, `/find/service`, `/find/people` 직접 방문은 기존 404로 확인되어 정적 생성 목록에 추가, 초기 검사 오류 후의 오래된 응답 변수 값은 유효 결과로 취급하지 않음
 - 해당 3개 정적 HTML은 기존 화면/선택 로직을 그대로 실행하며 noindex 처리, 최종 운영 결과는 보완 배포 후 추가
+
+## 최종 운영 검수
+
+- 최종 커밋 `7732e213701c4f6559f009c0de383b1528eff300`, 기존 main에 정상 푸시
+- Vercel `success` / `Deployment has completed`
+- 배포: https://vercel.com/wistia1/wistia/B2vN5L2FY9gJEcC9vJp8pASkfeAc
+- 운영: https://www.wistiastudio.com
+- 26개 검수 경로 및 과거 상품 주소 6개, 총 32주소 HTTP 200과 새 디자인 CSS 캐시 확인
+- 선택 화면 3주소의 직접 접속 오류 해결, 과거 상품 주소 6개는 화면 생성 완료 후 기존 홈 이동 확인
+- 앱 JS·디자인 CSS·서체 CSS의 공개 내용과 커밋 내용 일치 확인
+- 화면 생성 완료를 명시적으로 기다린 후 공개 26경로 × 320·390·1022px = 78개 조합 재검사, 로컬 156개 조합도 같은 조건으로 재검사
+- 가로 넘침/검사 대상 내부 잘림/표시 이미지 오류/계산된 본문 서체 누락 0
+- 공개 SOLO·DUET 7단계 / 스토리 8단계 모두 확인, AR Enter 및 스토리 Space 폴더 재개방 시 전체 단계 유지
+- 공개 SOLO 영상 재생과 폭 변경 후 시간 진행·재생 상태 유지, 직접 검수 탭 오류/경고 0
+- 공개 문의 필수 안내창에서 직접 성함 입력 후 Enter, 복사 완료창과 실제 클립보드 DUET 2인/2시간/160,000원 확인
+- 공개 스토리 선택 변경 시 성함 보존과 350,000원 표시, 최종 외부 채팅 이동은 실행하지 않음
+- 320×500px 누락 안내 팝업의 화면 안 표시, 320×300px에서 내부 overflow-y:auto와 모든 내용 스크롤 접근 확인
+- 공개 증빙: `tests/qa/editorial-home-production-1022-20261006.png`
+- 공개 증빙: `tests/qa/editorial-process-production-390-20261006.png`
+- 공개 증빙: `tests/qa/editorial-inquiry-production-390-20261006.png`
+- 임시 검수 viewport는 원복, 최종 운영 홈 탭은 결과로 유지
+- 공개 검수 후 기록과 증빙은 로컬에 보관하며 배포 소스 변경은 없음

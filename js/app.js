@@ -21,12 +21,12 @@ const PRODUCTS = {
       ["어떤 키가 맞는지 모르겠어요", "음역을 확인하고 가장 편하게 부를 수 있는 키를 함께 정합니다"]
     ],
     steps: [
-      ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process/consultation.webp"],
-      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/ar-process/self/01-recording.webp"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process/vocal-directing.webp"],
-      ["AR 속 내 목소리 비율 선택", "스튜디오에서 리허설과 AR 연습 방법을 안내해 드리며, 실제 노래 방식에 맞춰 1:1 맞춤 비율을 결정합니다", "assets/img/ar-process/self/03-ratio-casual.webp"],
-      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process/melodyne-tuning.webp"],
-      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/ar-process/02-mixing.webp"],
+      ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
+      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["AR 속 내 목소리 비율 선택", "스튜디오에서 리허설과 AR 연습 방법을 안내해 드리며, 실제 노래 방식에 맞춰 1:1 맞춤 비율을 결정합니다", "assets/img/process-no-people/04.svg"],
+      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
+      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
       ["최종 검수 & 완성본 전달", "본식에서 바로 사용할 수 있도록 전체 음원을 검수한 뒤 전달합니다", {duration:"약 7일",note:"녹음 완료 후 일정 확정"}]
     ],
     included: ["녹음 및 1대1 디렉팅", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
@@ -56,12 +56,12 @@ const PRODUCTS = {
       ["둘 다 녹음이 처음이에요", "파트별로 나눠 천천히 녹음한 뒤 두 목소리를 자연스럽게 합칩니다"]
     ],
     steps: [
-      ["맞춤 제작 상담 · 곡과 파트 확인", "두 분의 음역과 예식 분위기를 확인해 곡·키·파트·화음 구성을 함께 정합니다", "assets/img/process/consultation.webp"],
+      ["맞춤 제작 상담 · 곡과 파트 확인", "두 분의 음역과 예식 분위기를 확인해 곡·키·파트·화음 구성을 함께 정합니다", "assets/img/process-no-people/01.svg"],
       ["스튜디오 방문 · 듀엣 녹음 준비", "두 분의 마이크와 헤드폰을 맞추고 각자 부를 파트와 함께 부를 구간을 확인합니다", "assets/img/duet-film/duet-recording.webp"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 소절씩 녹음하고 두 목소리의 호흡과 타이밍을 맞춥니다", "assets/img/process/vocal-directing.webp"],
-      ["AR 속 목소리 비율 선택", "30% · 50% · 70% · 100%를 실제 음원으로 비교해 두 분이 함께 부르기 편한 비율을 선택합니다", "assets/img/ar-process/self/03-ratio-casual.webp"],
-      ["멜로다인 수작업 보컬 보정", "각자의 음색은 살리면서 음정·박자·화음과 함께 부르는 구간의 타이밍을 세밀하게 다듬습니다", "assets/img/process/melodyne-tuning.webp"],
-      ["전문 엔지니어 믹싱 & 듀엣 AR 제작", "두 보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR로 완성합니다", "assets/img/ar-process/02-mixing.webp"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 소절씩 녹음하고 두 목소리의 호흡과 타이밍을 맞춥니다", "assets/img/process-no-people/03.svg"],
+      ["AR 속 목소리 비율 선택", "30% · 50% · 70% · 100%를 실제 음원으로 비교해 두 분이 함께 부르기 편한 비율을 선택합니다", "assets/img/process-no-people/04.svg"],
+      ["멜로다인 수작업 보컬 보정", "각자의 음색은 살리면서 음정·박자·화음과 함께 부르는 구간의 타이밍을 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
+      ["전문 엔지니어 믹싱 & 듀엣 AR 제작", "두 보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR로 완성합니다", "assets/img/process-no-people/06.svg"],
       ["최종 검수 & 완성본 전달", "본식에서 바로 사용할 수 있도록 두 보컬과 전체 음원을 검수한 뒤 전달합니다", {duration:"약 7일",note:"녹음 완료 후 일정 확정"}]
     ],
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
@@ -305,12 +305,12 @@ const AR_PURPOSES = {
     lead: "떨리는 축가를 미리 준비하고 본식에서는 더 안정적으로",
     useCase: "신랑 또는 신부가 자신의 결혼식에서 직접 부르는 축가",
     items: [
-      ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process/consultation.webp"],
-      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/ar-process/self/01-recording.webp"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process/vocal-directing.webp"],
-      ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 본식에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/ar-process/self/03-ratio-casual.webp"],
-      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process/melodyne-tuning.webp"],
-      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/ar-process/02-mixing.webp"],
+      ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
+      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 본식에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/process-no-people/04.svg"],
+      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
+      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
       ["최종 검수 & 완성본 전달", "본식에서 바로 사용할 수 있도록 전체 음원을 검수한 뒤 전달합니다", {duration:"약 7일",note:"녹음 완료 후 일정 확정"}]
     ]
   },
@@ -321,12 +321,12 @@ const AR_PURPOSES = {
     lead: "소중한 사람의 결혼식에서 실수 부담은 줄이고 마음은 그대로",
     useCase: "친구나 지인의 결혼식에서 직접 불러주는 축가",
     items: [
-      ["맞춤 제작 상담 · 곡과 키 확인", "축가 분위기와 음역을 확인해 곡·키·현장에서 사용할 AR 방향을 함께 정합니다", "assets/img/process/consultation.webp"],
-      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/ar-process/friend/01-female.webp"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process/vocal-directing.webp"],
-      ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 현장에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/ar-process/friend/03-female.webp"],
-      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process/melodyne-tuning.webp"],
-      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/ar-process/friend/02-female.webp"],
+      ["맞춤 제작 상담 · 곡과 키 확인", "축가 분위기와 음역을 확인해 곡·키·현장에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
+      ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 현장에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/process-no-people/04.svg"],
+      ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
+      ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
       ["최종 검수 & 완성본 전달", "예식장에서 바로 사용할 수 있도록 전체 음원을 검수한 뒤 전달합니다", {duration:"약 7일",note:"녹음 완료 후 일정 확정"}]
     ],
   }
@@ -432,20 +432,20 @@ const FILM_FORMATS = {
   }
 }
 const FILM_FORMAT_IMAGES = {
-  wedding:{live:"assets/img/film-types/music-video-film.webp",making:"assets/img/film-types/recording-making-film.webp"},
-  "duet-film":{live:"assets/img/film-types/music-video-film.webp",making:"assets/img/film-types/recording-making-film.webp"},
-  "solo-film":{live:"assets/img/film-types/music-video-film.webp",making:"assets/img/film-types/recording-making-film.webp"},
-  proposal:{live:"assets/img/film-types/music-video-film.webp",making:"assets/img/film-types/recording-making-film.webp"}
+  wedding:{live:"assets/img/song-film/duet-video-cover.jpg",making:"assets/img/process-no-people/02.svg"},
+  "duet-film":{live:"assets/img/song-film/duet-video-cover.jpg",making:"assets/img/process-no-people/02.svg"},
+  "solo-film":{live:"assets/img/song-film/duet-video-cover.jpg",making:"assets/img/process-no-people/02.svg"},
+  proposal:{live:"assets/img/song-film/duet-video-cover.jpg",making:"assets/img/process-no-people/02.svg"}
 }
 const FILM_PROCESS_IMAGES = {
-  wedding:["assets/img/process/consultation.webp",["assets/img/film-types/recording-making-female.webp","assets/img/film-types/recording-making-male.webp"],"assets/img/film-types/music-video-film.webp","assets/img/process/melodyne-tuning.webp","assets/img/ar-process/02-mixing.webp","assets/img/process/video-color-grading.webp"],
-  "duet-film":["assets/img/process/consultation.webp",["assets/img/film-types/recording-making-female.webp","assets/img/film-types/recording-making-male.webp"],"assets/img/film-types/music-video-film.webp","assets/img/process/melodyne-tuning.webp","assets/img/ar-process/02-mixing.webp","assets/img/process/video-color-grading.webp"],
-  "solo-film":["assets/img/process/consultation.webp","assets/img/process/vocal-directing.webp","assets/img/solo-film/solo-film-cover-v2.webp","assets/img/process/melodyne-tuning.webp","assets/img/ar-process/02-mixing.webp","assets/img/process/video-color-grading.webp"],
-  proposal:["assets/img/process/consultation.webp","assets/img/process/vocal-directing.webp","assets/img/proposal/process-02.webp","assets/img/process/melodyne-tuning.webp","assets/img/ar-process/02-mixing.webp","assets/img/process/video-color-grading.webp"]
+  wedding:["assets/img/process-no-people/01.svg",["assets/img/process-no-people/02.svg","assets/img/process-no-people/02.svg"],"assets/img/song-film/duet-video-cover.jpg","assets/img/process-no-people/05.svg","assets/img/process-no-people/06.svg","assets/img/process-no-people/06.svg"],
+  "duet-film":["assets/img/process-no-people/01.svg",["assets/img/process-no-people/02.svg","assets/img/process-no-people/02.svg"],"assets/img/song-film/duet-video-cover.jpg","assets/img/process-no-people/05.svg","assets/img/process-no-people/06.svg","assets/img/process-no-people/06.svg"],
+  "solo-film":["assets/img/process-no-people/01.svg","assets/img/process-no-people/03.svg","assets/img/solo-film/solo-film-cover-v2.webp","assets/img/process-no-people/05.svg","assets/img/process-no-people/06.svg","assets/img/process-no-people/06.svg"],
+  proposal:["assets/img/process-no-people/01.svg","assets/img/process-no-people/03.svg","assets/img/proposal/process-02.webp","assets/img/process-no-people/05.svg","assets/img/process-no-people/06.svg","assets/img/process-no-people/06.svg"]
 }
 const FILM_PRICE_IMAGES = {
-  wedding:{making:["assets/img/film-types/recording-making-female.webp","assets/img/film-types/recording-making-male.webp"]},
-  "duet-film":{making:["assets/img/film-types/recording-making-female.webp","assets/img/film-types/recording-making-male.webp"]}
+  wedding:{making:["assets/img/process-no-people/02.svg","assets/img/process-no-people/02.svg"]},
+  "duet-film":{making:["assets/img/process-no-people/02.svg","assets/img/process-no-people/02.svg"]}
 }
 const FILM_FORMAT_PRICES = {
   wedding:{live:350000,making:280000},
@@ -501,7 +501,7 @@ const REVIEW_QUOTES = [
  {index:1,quote:"여자친구가 너무 좋아하네요",body:"예쁘게 잘 만들어주셔서 감사합니다",tag:"마음을 전한 뒤 보내주신 말"}
 ]
 function kakao(){return (config.accounts?.kakao || KAKAO_FALLBACK).replace(/^http:\/\/pf\.kakao\.com\//,'https://pf.kakao.com/')}
-function img(src,alt,eager=false){return '<img src="'+escapeHtml(src)+'" alt="'+escapeHtml(alt)+'" loading="'+(eager?"eager":"lazy")+'" decoding="async"'+(eager?' fetchpriority="high"':"")+'>'}
+function img(src,alt,eager=false){if(src.includes('/process-no-people/')){const labels={"01":"상담","02":"녹음","03":"디렉팅","04":"비율 선택","05":"보컬 보정","06":"믹싱"};alt=(labels[src.match(/(\d{2})\.svg$/)?.[1]]||"작업")+' 과정을 설명하는 인물 없는 도식'}return '<img src="'+escapeHtml(src)+'" alt="'+escapeHtml(alt)+'" loading="'+(eager?"eager":"lazy")+'" decoding="async"'+(eager?' fetchpriority="high"':"")+'>'}
 function arrow(){return '<span aria-hidden="true">↗</span>'}
 function label(text){return '<p class="eyebrow">'+text+'</p>'}
 function heading(kicker,title,description=""){return '<div class="section-heading'+(kicker?"":" no-kicker")+'">'+(kicker?label(kicker):"")+'<div><h2>'+title+'</h2>'+(description?'<p>'+description+'</p>':"")+'</div></div>'}
@@ -687,27 +687,27 @@ function processAccordionMedia(step){const media=step[2];if(typeof media==="obje
 function processAccordionList(steps){return '<div class="process-accordion">'+steps.map((s,i)=>'<details><summary data-process-step><span>'+String(i+1).padStart(2,"0")+'</span><h3>'+s[0]+'</h3><b aria-hidden="true">+</b></summary><div class="process-accordion-body">'+processAccordionMedia(s)+'<p>'+s[1]+'</p></div></details>').join("")+'</div>'}
 function songProcessSection(steps){return '<section class="shell section song-process-section" id="process">'+heading("","진행 과정","항목을 누르면 사진과 자세한 설명을 볼 수 있습니다")+processAccordionList(steps)+'</section>'}
 const SOLO_STUDIO_PROCESS=[
- {id:1,eyebrow:"CONSULTATION",title:"맞춤 제작 상담<br>곡과 키 확인",short:"맞춤 제작 상담",description:"예식 분위기와 음역을 확인해 곡과 키를 정하고, 본식에서 사용할 AR의 방향을 함께 설계합니다.",meta:[["방식","1:1 상담"],["준비","원하는 곡"]],image:"assets/img/process-studio/01-consultation.webp"},
- {id:2,eyebrow:"RECORDING",title:"스튜디오 방문<br>녹음 준비",short:"녹음 준비",description:"마이크와 헤드폰을 편안하게 맞춘 뒤, 컨디션과 호흡을 확인하며 녹음을 준비합니다.",meta:[["장소","위스티아 스튜디오"],["안내","장비 세팅"]],image:"assets/img/process-studio/02-recording.webp"},
- {id:3,eyebrow:"VOCAL DIRECTING",title:"1:1 보컬 디렉팅<br>구간별 녹음",short:"1:1 보컬 디렉팅",description:"엔지니어가 호흡·발음·감정 표현을 안내하고, 부담 없는 길이로 나누어 한 구간씩 녹음합니다.",meta:[["방식","구간별 녹음"],["진행","1:1 디렉팅"]],image:"assets/img/process-studio/03-vocal-directing.webp"},
- {id:4,eyebrow:"AR BALANCE",title:"AR 속 내 목소리<br>비율 선택",short:"AR 비율 선택",description:"같은 노래를 여러 비율로 직접 들어보고, 실제 본식에서 가장 편안한 목소리 비율을 결정합니다.",meta:[["비교","30–100%"],["결정","맞춤 비율"]],image:"assets/img/process-studio/04-ratio.webp"},
- {id:5,eyebrow:"VOCAL EDITING",title:"멜로다인 수작업<br>보컬 보정",short:"수작업 보정",description:"원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다.",meta:[["보정","수작업"],["기준","음색 유지"]],image:"assets/img/process-studio/05-melodyne.webp"},
- {id:6,eyebrow:"MIXING & MASTERING",title:"전문 엔지니어 믹싱<br>AR 제작",short:"믹싱 · AR 제작",description:"보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다.",meta:[["작업","믹싱"],["출력","본식용 AR"]],image:"assets/img/process-studio/06-mixing.webp"},
+ {id:1,eyebrow:"CONSULTATION",title:"맞춤 제작 상담<br>곡과 키 확인",short:"맞춤 제작 상담",description:"예식 분위기와 음역을 확인해 곡과 키를 정하고, 본식에서 사용할 AR의 방향을 함께 설계합니다.",meta:[["방식","1:1 상담"],["준비","원하는 곡"]],image:"assets/img/process-no-people/01.svg"},
+ {id:2,eyebrow:"RECORDING",title:"스튜디오 방문<br>녹음 준비",short:"녹음 준비",description:"마이크와 헤드폰을 편안하게 맞춘 뒤, 컨디션과 호흡을 확인하며 녹음을 준비합니다.",meta:[["장소","위스티아 스튜디오"],["안내","장비 세팅"]],image:"assets/img/process-no-people/02.svg"},
+ {id:3,eyebrow:"VOCAL DIRECTING",title:"1:1 보컬 디렉팅<br>구간별 녹음",short:"1:1 보컬 디렉팅",description:"엔지니어가 호흡·발음·감정 표현을 안내하고, 부담 없는 길이로 나누어 한 구간씩 녹음합니다.",meta:[["방식","구간별 녹음"],["진행","1:1 디렉팅"]],image:"assets/img/process-no-people/03.svg"},
+ {id:4,eyebrow:"AR BALANCE",title:"AR 속 내 목소리<br>비율 선택",short:"AR 비율 선택",description:"같은 노래를 여러 비율로 직접 들어보고, 실제 본식에서 가장 편안한 목소리 비율을 결정합니다.",meta:[["비교","30–100%"],["결정","맞춤 비율"]],image:"assets/img/process-no-people/04.svg"},
+ {id:5,eyebrow:"VOCAL EDITING",title:"멜로다인 수작업<br>보컬 보정",short:"수작업 보정",description:"원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다.",meta:[["보정","수작업"],["기준","음색 유지"]],image:"assets/img/process-no-people/05.svg"},
+ {id:6,eyebrow:"MIXING & MASTERING",title:"전문 엔지니어 믹싱<br>AR 제작",short:"믹싱 · AR 제작",description:"보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다.",meta:[["작업","믹싱"],["출력","본식용 AR"]],image:"assets/img/process-no-people/06.svg"},
  {id:7,eyebrow:"FINAL DELIVERY",title:"최종 검수<br>완성본 전달",short:"최종 검수 · 전달",description:"본식에서 바로 사용할 수 있도록 전체 음원을 최종 검수한 뒤 완성 파일을 전달합니다.",meta:[["제작","약 7일"],["전달","완성 음원"]],image:"assets/img/process-studio/07-delivery.svg"}
 ]
 const DUO_STUDIO_PROCESS=[
- {id:1,eyebrow:"CONSULTATION",title:"함께하는 맞춤 상담<br>곡·키·파트 확인",short:"맞춤 제작 상담",description:"예식 분위기와 두 사람의 음역을 확인해 곡과 키, 파트를 정하고 본식용 듀엣 AR의 방향을 함께 설계합니다.",meta:[["방식","1:1 상담"],["준비","원하는 곡"]],image:"assets/img/process-studio/01-consultation.webp"},
- {id:2,eyebrow:"RECORDING",title:"스튜디오 방문<br>듀엣 녹음 준비",short:"듀엣 녹음 준비",description:"두 사람의 마이크와 헤드폰을 편안하게 맞춘 뒤, 각자의 컨디션과 호흡을 확인하며 녹음을 준비합니다.",meta:[["장소","위스티아 스튜디오"],["안내","장비 세팅"]],image:"assets/img/process-studio/02-recording.webp"},
- {id:3,eyebrow:"DUET DIRECTING",title:"듀엣 보컬 디렉팅<br>파트별 구간 녹음",short:"듀엣 보컬 디렉팅",description:"각자의 파트와 화음이 자연스럽게 맞물리도록 안내하고, 부담 없는 길이로 나누어 구간별로 녹음합니다.",meta:[["방식","파트별 녹음"],["진행","듀엣 디렉팅"]],image:"assets/img/process-studio/03-vocal-directing.webp"},
- {id:4,eyebrow:"DUET BALANCE",title:"두 목소리의 AR<br>밸런스 확인",short:"듀엣 밸런스",description:"각자의 목소리와 화음이 가장 자연스럽게 들리는 지점을 확인해 본식용 AR 밸런스를 결정합니다.",meta:[["비교","보컬 · 화음"],["결정","맞춤 밸런스"]],image:"assets/img/process-studio/04-ratio.webp"},
- {id:5,eyebrow:"VOCAL EDITING",title:"멜로다인 수작업<br>보컬 보정",short:"수작업 보정",description:"두 사람의 원래 음색은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다.",meta:[["보정","수작업"],["기준","음색 유지"]],image:"assets/img/process-studio/05-melodyne.webp"},
- {id:6,eyebrow:"MIXING & MASTERING",title:"듀엣 믹싱과<br>본식용 AR 제작",short:"듀엣 AR 제작",description:"두 보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 듀엣 AR 음원으로 완성합니다.",meta:[["작업","듀엣 믹싱"],["출력","본식용 AR"]],image:"assets/img/process-studio/06-mixing.webp"},
+ {id:1,eyebrow:"CONSULTATION",title:"함께하는 맞춤 상담<br>곡·키·파트 확인",short:"맞춤 제작 상담",description:"예식 분위기와 두 사람의 음역을 확인해 곡과 키, 파트를 정하고 본식용 듀엣 AR의 방향을 함께 설계합니다.",meta:[["방식","1:1 상담"],["준비","원하는 곡"]],image:"assets/img/process-no-people/01.svg"},
+ {id:2,eyebrow:"RECORDING",title:"스튜디오 방문<br>듀엣 녹음 준비",short:"듀엣 녹음 준비",description:"두 사람의 마이크와 헤드폰을 편안하게 맞춘 뒤, 각자의 컨디션과 호흡을 확인하며 녹음을 준비합니다.",meta:[["장소","위스티아 스튜디오"],["안내","장비 세팅"]],image:"assets/img/process-no-people/02.svg"},
+ {id:3,eyebrow:"DUET DIRECTING",title:"듀엣 보컬 디렉팅<br>파트별 구간 녹음",short:"듀엣 보컬 디렉팅",description:"각자의 파트와 화음이 자연스럽게 맞물리도록 안내하고, 부담 없는 길이로 나누어 구간별로 녹음합니다.",meta:[["방식","파트별 녹음"],["진행","듀엣 디렉팅"]],image:"assets/img/process-no-people/03.svg"},
+ {id:4,eyebrow:"DUET BALANCE",title:"두 목소리의 AR<br>밸런스 확인",short:"듀엣 밸런스",description:"각자의 목소리와 화음이 가장 자연스럽게 들리는 지점을 확인해 본식용 AR 밸런스를 결정합니다.",meta:[["비교","보컬 · 화음"],["결정","맞춤 밸런스"]],image:"assets/img/process-no-people/04.svg"},
+ {id:5,eyebrow:"VOCAL EDITING",title:"멜로다인 수작업<br>보컬 보정",short:"수작업 보정",description:"두 사람의 원래 음색은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다.",meta:[["보정","수작업"],["기준","음색 유지"]],image:"assets/img/process-no-people/05.svg"},
+ {id:6,eyebrow:"MIXING & MASTERING",title:"듀엣 믹싱과<br>본식용 AR 제작",short:"듀엣 AR 제작",description:"두 보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 듀엣 AR 음원으로 완성합니다.",meta:[["작업","듀엣 믹싱"],["출력","본식용 AR"]],image:"assets/img/process-no-people/06.svg"},
  {id:7,eyebrow:"FINAL DELIVERY",title:"최종 검수<br>완성본 전달",short:"최종 검수 · 전달",description:"본식에서 바로 사용할 수 있도록 듀엣 AR과 완성 음원을 최종 검수한 뒤 전달합니다.",meta:[["제작","약 7일"],["전달","듀엣 AR · 완성 음원"]],image:"assets/img/process-studio/07-delivery.svg"}
 ]
 const DETAIL_PROCESS_IMAGES={
  wedding:["assets/img/wedding/01-guest-message.webp","assets/img/wedding/02-interview.webp","assets/img/wedding/03-lipsync-mv.webp","assets/img/wedding/04-recording-making.webp","assets/img/wedding/05-couple-memories.webp","assets/img/wedding/06-letter.webp","assets/img/wedding/03-lipsync-mv.webp"],
  "duet-film":["assets/img/song-film/duet-scene-01.jpg","assets/img/song-film/duet-scene-02.jpg","assets/img/song-film/duet-scene-03.jpg","assets/img/song-film/duet-scene-04.jpg","assets/img/song-film/duet-video-cover.jpg","assets/img/song-film/duet-video-cover.jpg","assets/img/song-film/duet-video-cover.jpg"],
- "solo-film":["assets/img/process/consultation.webp","assets/img/film-types/recording-making-female.webp","assets/img/solo-film/solo-film-cover-v2.webp","assets/img/process/melodyne-tuning.webp","assets/img/ar-process/02-mixing.webp","assets/img/process/video-color-grading.webp","assets/img/process-studio/07-delivery.svg"],
+ "solo-film":["assets/img/process-no-people/01.svg","assets/img/process-no-people/02.svg","assets/img/solo-film/solo-film-cover-v2.webp","assets/img/process-no-people/05.svg","assets/img/process-no-people/06.svg","assets/img/process-no-people/06.svg","assets/img/process-studio/07-delivery.svg"],
  proposal:["assets/img/proposal/process-01.webp","assets/img/proposal/process-02.webp","assets/img/proposal/process-03.webp","assets/img/proposal/process-04.webp","assets/img/proposal/process-05.webp","assets/img/proposal-video-cover.jpg","assets/img/proposal-video-cover.jpg"]
 }
 function detailStudioSteps(key="solo"){
@@ -729,13 +729,13 @@ function storyProcessCards(steps){
  const summaries=[['곡·파트 상담','곡·키·파트와 본식 상영 시점을 함께 정합니다'],['구간별 녹음','1:1 디렉팅으로 두 목소리와 화음을 맞춰 녹음합니다'],['축가 영상 촬영','노래와 이야기에 맞춘 뮤직비디오·메시지 장면을 촬영합니다'],['수작업 보컬 보정','음색은 살리고 음정·박자·호흡을 세밀하게 다듬습니다'],['믹싱·마스터링','목소리와 반주의 균형을 맞춰 최종 사운드를 완성합니다'],['영상 편집','컷·색감·싱크·자막을 노래의 흐름에 맞춰 편집합니다'],['최종 검수','음원과 영상의 싱크·밸런스·흐름을 확인합니다'],['완성본 전달','영상과 완성 음원을 전달합니다 · 촬영·자료 전달 후 약 14일']]
  const cards=[...steps.slice(0,-1),last,last].map((step,i)=>({...step,title:summaries[i][0],description:summaries[i][1]}))
  const photos=[
-  ["assets/img/process-studio/01-consultation.webp","곡과 파트를 함께 상담하는 과정 예시"],
-  ["assets/img/process-studio/02-recording.webp","헤드폰과 마이크로 보컬을 녹음하는 과정 예시"],
+  ["assets/img/process-no-people/01.svg","곡과 파트를 함께 상담하는 과정 예시"],
+  ["assets/img/process-no-people/02.svg","헤드폰과 마이크로 보컬을 녹음하는 과정 예시"],
   ["assets/img/duet-film/duet-recording.webp","카메라로 보컬 장면을 촬영하는 제작 영상 장면"],
-  ["assets/img/process-studio/05-melodyne.webp","음정과 박자를 보정하는 프로그램 작업 예시"],
-  ["assets/img/process-studio/06-mixing.webp","음원 프로그램과 믹싱 콘솔로 사운드를 완성하는 작업 예시"],
-  ["assets/img/process/video-color-grading.webp","영상의 컷과 색감을 편집하는 프로그램 작업 예시"],
-  ["assets/img/process-studio/04-ratio.webp","헤드폰으로 완성 사운드를 확인하는 과정 예시"],
+  ["assets/img/process-no-people/05.svg","음정과 박자를 보정하는 프로그램 작업 예시"],
+  ["assets/img/process-no-people/06.svg","음원 프로그램과 믹싱 콘솔로 사운드를 완성하는 작업 예시"],
+  ["assets/img/process-no-people/06.svg","영상의 컷과 색감을 편집하는 프로그램 작업 예시"],
+  ["assets/img/process-no-people/04.svg","헤드폰으로 완성 사운드를 확인하는 과정 예시"],
   ["assets/img/song-film/duet-video-cover.jpg","전달되는 완성 축가 영상의 제작 사례"]
  ]
  return '<section class="wistia-process-studio story-process-cards" id="process" aria-labelledby="processStudioTitle"><div class="shell"><header class="wps-head"><p class="wps-kicker">제작 과정</p><h2 id="processStudioTitle">처음부터 끝까지,<br>맞춤형으로 케어해드립니다</h2><p>상담부터 완성본 전달까지, 여덟 단계로 준비합니다</p></header><details class="story-process-folder" open><summary><span class="process-folder-art" aria-hidden="true"><i></i><b></b><span class="process-folder-sparks"><em></em><em></em><em></em></span></span><span class="process-folder-label"><strong>제작 과정 살펴보기</strong><small>클릭하면 단계별 사진과 설명이 펼쳐집니다</small></span><span class="process-folder-cue"><span class="folder-open-label"><span class="folder-open-text">클릭하여 열기</span><span class="folder-cue-arrow" aria-hidden="true">↓</span></span><span class="folder-close-label">접어두기 ↑</span></span></summary><div class="process-folder-content"><p class="process-flow" aria-label="제작 순서 1단계부터 8단계까지">'+cards.map((_,i)=>'<span>'+String(i+1).padStart(2,'0')+'</span>'+(i<cards.length-1?'<i aria-hidden="true">→</i>':'')).join('')+'</p><ol class="story-process-grid">'+cards.map((step,i)=>'<li class="story-process-card" style="--process-index:'+i+';--process-row:'+(Math.floor(i/2)+1)+';--process-column:'+(i%2+1)+'"><div class="story-process-media">'+img(photos[i][0],photos[i][1],true)+'</div><div class="story-process-copy"><span class="story-process-number">'+String(i+1).padStart(2,"0")+'</span><h3>'+escapeHtml(step.title.replace(/ & /g," · "))+'</h3><p>'+escapeHtml(step.description)+'</p></div></li>').join('')+'</ol><p class="process-photo-note">작업 사진은 과정 이해를 위한 예시이며, 촬영·완성 영상은 기존 제작 사례입니다</p></div></details></div></section>'
@@ -764,12 +764,12 @@ function renderWeddingHome(){
  const service=(key,title,hook,photo,number)=>'<a class="we-service" href="/detail/'+key+'" data-cursor="자세히 보기"><figure>'+img(photo,title)+'</figure><div class="we-service-copy"><span class="we-product-number">상품 '+number+'</span><h3>'+title+'</h3><p><strong>'+hook+'</strong></p><span class="we-service-link">상품과 가격 보기 ↗</span></div></a>'
  const cases=[['스토리 필름','우리 목소리로 완성한 축가 영상','aSKrlQwmnHI'],['녹음 장면','녹음하는 순간까지 담은 축가','pTBfPEWlyZU'],['스토리 필름','두 사람의 이야기를 담은 영상','5ZuTmQWCRJk'],['스토리 필름','직접 부른 노래로 완성한 웨딩 영상','AQ9Z1flOUPo']]
  const affordability='<section class="we-shell we-section we-affordability" id="homePriceReason"><div class="we-location"><span class="we-kicker we-section-tag">POINT 02 · 가격 안내</span><h2>왜 저렴한가요?</h2><p><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div></section>'
- app.innerHTML='<div class="we-home"><section class="we-hero we-shell studio-home-hero"><div class="we-meta"><span>WISTIA · 웨딩 축가 전문 스튜디오</span></div><div class="we-hero-grid we-hero-text"><div><p class="we-kicker">목소리로 전하는 결혼식</p><h1><span class="type-line">웨딩 축가</span><span class="type-line">전문 스튜디오</span></h1><div class="studio-hero-actions"><a href="/detail/solo">AR 축가 사전녹음 <span aria-hidden="true">↗</span></a><a href="/detail/duet-film">축가 스토리 필름 <span aria-hidden="true">↗</span></a></div></div><figure class="studio-hero-media">'+img('assets/img/hero/wistia-hero-main.webp','마이크 앞에서 노래를 녹음하는 스튜디오 이미지',true)+'</figure></div></section>'+
+ app.innerHTML='<div class="we-home"><section class="we-hero we-shell"><div class="we-meta"><span>WISTIA · 웨딩 축가 전문 스튜디오</span></div><div class="we-hero-grid we-hero-text"><div><p class="we-kicker">목소리로 전하는 결혼식</p><h1><span class="type-line">웨딩 축가</span><span class="type-line">전문 스튜디오</span></h1></div></div></section>'+
  '<section class="we-shell we-section" id="homeServices"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 01</span><h2>상품 소개</h2><p>직접 부르는 축가와 우리 목소리로 만든 영상<br>두 가지 방식으로 준비합니다</p></header><div class="we-services">'+service('solo','AR 축가 사전녹음','결혼식에서 직접 축가를 부른다면','assets/img/ar-detail/solo-live-proof.jpg','01')+service('duet-film','축가 스토리 필름','우리 목소리로 축가 영상을 만든다면','https://i.ytimg.com/vi/AQ9Z1flOUPo/maxresdefault.jpg','02')+'</div></section>'+
  affordability+'<section class="we-section we-cases" id="homeCases"><header class="we-heading we-shell"><span class="we-kicker we-section-tag">POINT 03 · 실제 제작 영상</span><h2>말보다 먼저,<br>목소리가 전한 마음</h2><p class="we-cases-guide"><span class="we-cases-guide-full">위스티아의 실제 제작 영상입니다, 재생 버튼을 눌러 바로 확인하세요</span><span class="we-cases-guide-compact">실제 제작 영상, 눌러 확인하세요</span></p></header><div class="we-carousel" data-case-carousel tabindex="0" role="region" aria-label="축가 사례, 좌우 방향키 또는 드래그로 넘기기" data-cursor="넘기기">'+cases.map(([type,title,id],i)=>'<article class="we-case"><button type="button" class="we-case-video" data-inline-youtube="https://www.youtube.com/embed/'+id+'?rel=0" data-cursor="재생" aria-label="'+title+' 유튜브 영상 재생"><figure>'+img('https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',title)+'<span class="we-case-play">▶ <b>영상 보기</b></span></figure></button><div class="we-case-bar"><span>0'+(i+1)+'</span><strong>'+title+'</strong><span>'+type+'</span></div><a class="we-case-source" href="https://www.youtube.com/watch?v='+id+'" target="_blank" rel="noopener noreferrer">YouTube에서 보기 ↗</a></article>').join('')+'</div><div class="we-carousel-controls we-shell"><span data-case-count>01 / '+String(cases.length).padStart(2,'0')+'</span><div><button type="button" data-case-prev aria-label="이전 사례">←</button><button type="button" data-case-next aria-label="다음 사례">→</button></div></div></section>'+
  '<div class="we-review-wrap"><div class="we-shell"><span class="we-kicker we-section-tag">POINT 04 · 고객 후기</span></div>'+soloReviewCarousel()+'</div>'+
  '<section class="we-section we-proof we-shell" id="homeSound"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 05 · 보컬 보정</span><h2>보컬 보정<br>비포 애프터</h2><p>같은 녹음본의 보정 전후를 직접 들어보세요</p></header>'+wistiaBeforeAfterSection(true)+'</section>'+
- '<section class="we-section we-shell" id="homeExpert"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 06 · 제작 과정</span><h2>어떻게 완성할까요?</h2></header><details class="story-process-folder home-process-folder" open><summary><span class="process-folder-art" aria-hidden="true"><i></i><b></b><span class="process-folder-sparks"><em></em><em></em><em></em></span></span><span class="process-folder-label"><strong>제작 과정 살펴보기</strong><small>클릭하면 단계별 사진과 설명이 펼쳐집니다</small></span><span class="process-folder-cue"><span class="folder-open-label"><span class="folder-open-text">클릭하여 열기</span><span class="folder-cue-arrow" aria-hidden="true">↓</span></span><span class="folder-close-label">접어두기 ↑</span></span></summary><div class="process-folder-content"><div class="we-craft-grid"><div class="we-craft-list">'+[['구간별 녹음 · 1:1 디렉팅','처음부터 끝까지 완벽하게 부를 필요 없이, 어려운 구간부터 차근차근 맞춰갑니다','assets/img/process-studio/03-vocal-directing.webp'],['수작업 음정·박자 보정','목소리의 느낌을 살리며 음정과 박자를 세밀하게 다듬습니다','assets/img/process-studio/05-melodyne.webp'],['방송 음악 작업 엔지니어','〈싱어게인2〉·〈불후의 명곡〉 방송 음악 작업에 참여한 엔지니어가 음원을 완성합니다</p><p>음정과 박자는 한 구간씩 수작업으로 다듬고, 목소리와 반주의 균형은 믹싱·마스터링으로 조율합니다</p><p>원래 목소리의 느낌을 살리면서 본식에서 선명하게 들리도록 완성합니다','assets/img/process-studio/06-mixing.webp']].map(([title,copy,photo],i)=>'<details name="home-craft"'+(i===0?' open':'')+'><summary><span>0'+(i+1)+'</span><strong>'+title+'</strong><em>살펴보기</em><b>+</b></summary><div class="we-craft-content"><figure>'+img(photo,title)+'</figure><div><p>'+copy+'</p></div></div></details>').join('')+'</div></div></div></details></section>'+
+ '<section class="we-section we-shell" id="homeExpert"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 06 · 제작 과정</span><h2>어떻게 완성할까요?</h2></header><details class="story-process-folder home-process-folder" open><summary><span class="process-folder-art" aria-hidden="true"><i></i><b></b><span class="process-folder-sparks"><em></em><em></em><em></em></span></span><span class="process-folder-label"><strong>제작 과정 살펴보기</strong><small>클릭하면 단계별 사진과 설명이 펼쳐집니다</small></span><span class="process-folder-cue"><span class="folder-open-label"><span class="folder-open-text">클릭하여 열기</span><span class="folder-cue-arrow" aria-hidden="true">↓</span></span><span class="folder-close-label">접어두기 ↑</span></span></summary><div class="process-folder-content"><div class="we-craft-grid"><div class="we-craft-list">'+[['구간별 녹음 · 1:1 디렉팅','처음부터 끝까지 완벽하게 부를 필요 없이, 어려운 구간부터 차근차근 맞춰갑니다','assets/img/process-no-people/03.svg'],['수작업 음정·박자 보정','목소리의 느낌을 살리며 음정과 박자를 세밀하게 다듬습니다','assets/img/process-no-people/05.svg'],['방송 음악 작업 엔지니어','〈싱어게인2〉·〈불후의 명곡〉 방송 음악 작업에 참여한 엔지니어가 음원을 완성합니다</p><p>음정과 박자는 한 구간씩 수작업으로 다듬고, 목소리와 반주의 균형은 믹싱·마스터링으로 조율합니다</p><p>원래 목소리의 느낌을 살리면서 본식에서 선명하게 들리도록 완성합니다','assets/img/process-no-people/06.svg']].map(([title,copy,photo],i)=>'<details name="home-craft"'+(i===0?' open':'')+'><summary><span>0'+(i+1)+'</span><strong>'+title+'</strong><em>살펴보기</em><b>+</b></summary><div class="we-craft-content"><figure>'+img(photo,title)+'</figure><div><p>'+copy+'</p></div></div></details>').join('')+'</div></div></div></details></section>'+
 
 
  '<section class="we-shell we-section we-home-faq"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 07 · 자주 묻는 질문</span><h2>궁금한 것부터<br>확인하세요</h2></header>'+faq(GENERAL_FAQ.slice(0,4))+'</section>'+homeDirectionsSection()+
@@ -796,7 +796,8 @@ function detailDecisionSection(key,purpose=""){
 function renderHome(requested="role"){
  if(requested==="role"){renderWeddingHome();return}
  const stage=requested==="people"&&finderChoice.moment?"people":requested==="service"&&finderChoice.role==="couple"?"service":"role"
- const visuals={role:{singer:["assets/img/finder-ai/character-ar-vocal-v3.jpg","01","축가 음원","내 목소리로 전하는 축가"],couple:["assets/img/finder-ai/character-wedding-film.jpg","02","식전 상영 영상","노래와 장면을 함께"],proposal:["assets/img/finder-ai/character-proposal-film.jpg","03","프로포즈 영상","마음을 담은 한 편의 영상"],making:["assets/img/finder-ai/character-making-film.jpg","04","녹음 메이킹 영상","녹음하는 순간을 영상으로"]},service:{pre:["assets/img/wedding/01-guest-message.webp","01","BEFORE CEREMONY",""],ceremony:["assets/img/solo-film/solo-film-cover-v2.webp","02","AT THE CEREMONY",""]},people:{one:["assets/img/ar-detail/solo-live-proof.jpg","01","SOLO",""],two:["assets/img/song-film/duet-video-cover.jpg","02","TOGETHER",""]}}
+ if(stage==="role"){renderWeddingHome();return} // Unselected finder entry must use the restored text-only home
+ const visuals={role:{singer:["assets/img/ar-detail/duet-live-proof-v2.jpg","01","축가 음원","내 목소리로 전하는 축가"],couple:["assets/img/ar-detail/duet-live-proof-v2.jpg","02","식전 상영 영상","노래와 장면을 함께"],proposal:["assets/img/ar-detail/duet-live-proof-v2.jpg","03","프로포즈 영상","마음을 담은 한 편의 영상"],making:["assets/img/ar-detail/duet-live-proof-v2.jpg","04","녹음 메이킹 영상","녹음하는 순간을 영상으로"]},service:{pre:["assets/img/wedding/01-guest-message.webp","01","BEFORE CEREMONY",""],ceremony:["assets/img/solo-film/solo-film-cover-v2.webp","02","AT THE CEREMONY",""]},people:{one:["assets/img/ar-detail/solo-live-proof.jpg","01","SOLO",""],two:["assets/img/song-film/duet-video-cover.jpg","02","TOGETHER",""]}}
  const choices=(name,items)=>items.map(([value,title,example])=>{const [photo,number,eyebrow,caption]=visuals[stage][value];const role=stage==="role";return '<label class="finder-choice"><input type="radio" name="'+name+'" value="'+value+'"><span class="finder-choice-photo" aria-hidden="true"><img src="'+photo+'" alt="" loading="lazy"></span><span class="finder-choice-body"><span class="finder-choice-overline">'+number+' <i></i> '+eyebrow+'</span><strong>'+title+'</strong>'+(example||caption?'<small>'+(example||caption)+'</small>':'')+(role?'<span class="finder-choice-action">자세히 보기 <b>→</b></span>':'')+'</span>'+(role?'':'<span class="finder-choice-arrow" aria-hidden="true">↗</span>')+'</label>'}).join("")
  Object.values(visuals.role).forEach(visual=>visual[1]="")
  visuals.role.making[2]="STORY FILM"
@@ -806,8 +807,8 @@ function renderHome(requested="role"){
   people:{number:"03",title:"혼자 준비하시나요, 두 분이 함께 준비하시나요?",description:"노래를 녹음하고 영상에 참여하는 인원을 선택해 주세요",name:"finderPeople",items:[["one","1인 · 혼자 준비해요","신랑 또는 신부 한 분이 노래하고 준비하는 경우"],["two","2인 · 두 분이 함께 준비해요","신랑신부 두 분이 함께 노래하고 준비하는 경우"]]}
  }
  const config=configs[stage],back=stage==="service"?"#/":"#/find/service"
- const editorialHero=stage==="role"?'<section class="editorial-home-hero" aria-labelledby="editorialHomeTitle"><img src="assets/img/hero/wistia-hero-main.webp" alt="마이크 앞에서 웨딩 축가를 녹음하는 모습" fetchpriority="high"><div class="editorial-hero-top"><span>웨딩 축가 전문 스튜디오</span><a href="/info/location">경기도 부천 ↗</a></div><div class="editorial-hero-copy"><p>본식에서 전할 노래를 함께 준비합니다</p><h1 id="editorialHomeTitle">웨딩 축가<br>전문 스튜디오</h1><p class="editorial-hero-description">AR 축가 사전녹음과 축가 스토리 필름<br>경기도 부천, 위스티아</p><div class="editorial-hero-actions"><a href="/detail/solo">AR 축가 보기 <span aria-hidden="true">↗</span></a><a href="/event/solo">가격·상담 안내 <span aria-hidden="true">↗</span></a></div><a class="editorial-service-scroll" href="#/section/homeServices">축가 상품 살펴보기 <span aria-hidden="true">↓</span></a></div><p class="editorial-hero-caption">위스티아 — 우리의 목소리로 전하는 결혼식</p></section>':''
- const editorialStory=stage==="role"?'<section class="editorial-home-story"><div class="editorial-story-heading"><span class="eyebrow">WEDDING SONG SPECIALISTS</span><h2>직접 부르는 축가,<br>우리 이야기로 만든 축가 영상</h2><p>경기도 부천의 웨딩 축가 전문 스튜디오<br>내 목소리를 미리 준비하는 AR 축가 사전녹음과<br>우리의 이야기를 담는 축가 스토리 필름을 만납니다</p><a class="text-link" href="#/info/about">위스티아는 어떤 곳인가요? <span aria-hidden="true">↗</span></a></div><figure><img src="assets/img/process-studio/06-mixing.webp" alt="축가 음원 보정과 믹싱 작업" loading="lazy"><figcaption>AR 축가 사전녹음 — 내 목소리를 미리 녹음해 당일 축가를 더 안정적으로</figcaption></figure><figure><img src="assets/img/wedding/04-recording-making.webp" alt="축가 영상 녹음 제작 현장" loading="lazy"><figcaption>축가 스토리 필름 — 우리의 이야기를 담아 하객들도 함께 즐기는 영상으로</figcaption></figure><a class="editorial-location-link" href="#/info/location"><span>경기도 부천 · 웨딩 축가 전문 스튜디오</span><span>오시는 길 ↗</span></a></section>':''
+ const editorialHero="" // Never restore the rejected AI portrait hero
+ const editorialStory=stage==="role"?'<section class="editorial-home-story"><div class="editorial-story-heading"><span class="eyebrow">WEDDING SONG SPECIALISTS</span><h2>직접 부르는 축가,<br>우리 이야기로 만든 축가 영상</h2><p>경기도 부천의 웨딩 축가 전문 스튜디오<br>내 목소리를 미리 준비하는 AR 축가 사전녹음과<br>우리의 이야기를 담는 축가 스토리 필름을 만납니다</p><a class="text-link" href="#/info/about">위스티아는 어떤 곳인가요? <span aria-hidden="true">↗</span></a></div><figure><img src="assets/img/process-no-people/06.svg" alt="축가 음원 보정과 믹싱 작업" loading="lazy"><figcaption>AR 축가 사전녹음 — 내 목소리를 미리 녹음해 당일 축가를 더 안정적으로</figcaption></figure><figure><img src="assets/img/wedding/04-recording-making.webp" alt="축가 영상 녹음 제작 현장" loading="lazy"><figcaption>축가 스토리 필름 — 우리의 이야기를 담아 하객들도 함께 즐기는 영상으로</figcaption></figure><a class="editorial-location-link" href="#/info/location"><span>경기도 부천 · 웨딩 축가 전문 스튜디오</span><span>오시는 길 ↗</span></a></section>':''
  const headingTag=stage==="role"?"h2":"h1"
  app.innerHTML=editorialHero+'<section id="homeServices" class="finder-home shell finder-stage-'+stage+'" aria-labelledby="finderTitle"><div class="finder-content">'+(stage==="role"?"":'<a class="finder-back" href="'+back+'">← 이전 질문</a>')+'<header class="finder-intro"><span class="eyebrow">'+(stage==="role"?'OUR SERVICES':config.number)+'</span><'+headingTag+' id="finderTitle">'+config.title+'</'+headingTag+'><p>'+config.description+'</p></header><div class="finder-steps"><fieldset class="finder-step"><legend class="sr-only">'+config.title+'</legend><div class="finder-options">'+choices(config.name,config.items)+'</div></fieldset></div></div></section>'+editorialStory
  updateHomeFinder()
@@ -815,7 +816,7 @@ function renderHome(requested="role"){
 }
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
- const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><p class="info-section-kicker">WEDDING VOCAL · FILM STUDIO</p><h2>말로 다 전하지 못한 마음을<br>직접 부른 노래와 영상에 담습니다</h2><p>한 곡의 노래가 한 편의 영상이 되기까지, 목소리에 담긴 마음이 장면까지 자연스럽게 이어지도록 녹음부터 음원 작업, 촬영과 편집을 함께합니다</p></div><figure>'+img("assets/img/wedding/04-recording-making.webp","위스티아 웨딩 보컬 녹음 현장",true)+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><p class="info-section-kicker">ONE TEAM, THREE SPECIALISTS</p><h2 id="specialistTitle">각 분야의 전문가가<br>하나의 결과물을 완성합니다</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-studio/03-vocal-directing.webp","1대1 보컬 디렉팅",true)+'<p>현장</p><h3>편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-studio/06-mixing.webp","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3>내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉와 〈불후의 명곡〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article><article><span>03</span>'+img("assets/img/wedding/03-lipsync-mv.webp","웨딩 영상 촬영과 편집",true)+'<p>영상</p><h3>노래의 감정이 장면까지 이어지도록</h3><small>7년 경력 영상 편집 디자이너가 이야기와 예식 분위기에 맞춰 촬영본을 한 편의 작품으로 엮습니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
+ const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><p class="info-section-kicker">WEDDING VOCAL · FILM STUDIO</p><h2>말로 다 전하지 못한 마음을<br>직접 부른 노래와 영상에 담습니다</h2><p>한 곡의 노래가 한 편의 영상이 되기까지, 목소리에 담긴 마음이 장면까지 자연스럽게 이어지도록 녹음부터 음원 작업, 촬영과 편집을 함께합니다</p></div><figure>'+img("assets/img/wedding/04-recording-making.webp","위스티아 웨딩 보컬 녹음 현장",true)+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><p class="info-section-kicker">ONE TEAM, THREE SPECIALISTS</p><h2 id="specialistTitle">각 분야의 전문가가<br>하나의 결과물을 완성합니다</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-no-people/03.svg","1대1 보컬 디렉팅",true)+'<p>현장</p><h3>편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-no-people/06.svg","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3>내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉와 〈불후의 명곡〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article><article><span>03</span>'+img("assets/img/wedding/03-lipsync-mv.webp","웨딩 영상 촬영과 편집",true)+'<p>영상</p><h3>노래의 감정이 장면까지 이어지도록</h3><small>7년 경력 영상 편집 디자이너가 이야기와 예식 분위기에 맞춰 촬영본을 한 편의 작품으로 엮습니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
  const address="경기도 부천시 석천로170번길 19, 2층"
  const locationContent='<div class="wistia-location"><div class="wistia-location-address"><span>WISTIA STUDIO · BUCHEON</span><h2 class="studio-address"><span class="studio-address-city">경기도 부천시</span><span class="studio-address-street">석천로170번길 19</span><span class="studio-address-floor">2층</span></h2><p>부천시청역 1번 출구에서<br class="mobile-copy-break"> 도보 약 300m 거리입니다</p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 <span aria-hidden="true">↗</span></a></div></div><div class="wistia-location-details"><article><span>01 / SUBWAY</span><h3>지하철로 오실 때</h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><span>02 / PARKING</span><h3>차량으로 오실 때</h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
  const directionsMap='<figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</a><figcaption>지도 이미지를 누르면 크게 볼 수 있습니다</figcaption></figure>'
@@ -977,9 +978,9 @@ function arSalesDetail(p,key){
  const hours=key==="duo"?2:1
  const proof=detailHookHero(p,key).replace(/<h1 id="arHookTitle">/, '<h2 id="arHookTitle">').replace('</h1>','</h2>')
  return '<div class="solo-detail-scope ar-detail-scope ar-sales-detail" data-ar-product="'+key+'">'+
- '<section class="ar-sales-intro" aria-labelledby="arSalesTitle"><p class="sales-brand">WISTIA <span>목소리와 영상</span></p><p class="sales-product">AR 축가 사전녹음 · '+hours+'시간</p><h1 id="arSalesTitle">떨리는 축가,<br><strong>내 목소리는<br>미리 완성하세요</strong></h1><p class="sales-lead">마음은 직접 전하고,<br>목소리는 미리 준비할 수 있으니까</p><div class="sales-tags"><span>#구간별녹음</span><span>#자연스러운보정</span><span>#내목소리AR</span></div><div class="sales-intro-photo"><img src="assets/img/process-studio/03-vocal-directing.webp" alt="스튜디오에서 마이크 앞에 서서 보컬을 녹음하는 모습" fetchpriority="high"><span>경기도 부천 · WISTIA STUDIO</span></div><div class="sales-checks"><div><b>01</b><strong>한 소절씩</strong><span>구간별 녹음</span></div><div><b>02</b><strong>목소리는 그대로</strong><span>수작업 보정</span></div><div><b>03</b><strong>본식에 맞게</strong><span>AR 비율 조절</span></div></div></section>'+
+ '<section class="ar-sales-intro" aria-labelledby="arSalesTitle"><p class="sales-brand">WISTIA <span>목소리와 영상</span></p><p class="sales-product">AR 축가 사전녹음 · '+hours+'시간</p><h1 id="arSalesTitle">떨리는 축가,<br><strong>내 목소리는<br>미리 완성하세요</strong></h1><p class="sales-lead">마음은 직접 전하고,<br>목소리는 미리 준비할 수 있으니까</p><div class="sales-tags"><span>#구간별녹음</span><span>#자연스러운보정</span><span>#내목소리AR</span></div><div class="sales-intro-photo"><img src="assets/img/process-no-people/03.svg" alt="스튜디오에서 마이크 앞에 서서 보컬을 녹음하는 모습" fetchpriority="high"><span>경기도 부천 · WISTIA STUDIO</span></div><div class="sales-checks"><div><b>01</b><strong>한 소절씩</strong><span>구간별 녹음</span></div><div><b>02</b><strong>목소리는 그대로</strong><span>수작업 보정</span></div><div><b>03</b><strong>본식에 맞게</strong><span>AR 비율 조절</span></div></div></section>'+
  '<section class="sales-proof"><header class="sales-section-heading"><p class="sales-point">THE MOMENT</p><h2>그날의 긴장보다,<br><strong>전하고 싶은 마음이 먼저</strong></h2><p>실제 고객님의 본식 영상으로 확인해 보세요</p></header>'+proof+'</section>'+
- '<section class="sales-recording"><header class="sales-section-heading"><p class="sales-point">핵심 01 · 구간별 녹음</p><h2>한 곡을 한 번에?<br><strong>한 소절씩이면 괜찮습니다</strong></h2><p>처음부터 끝까지 완벽하게 부를 필요 없이<br>구간별 녹음과 1:1 디렉팅으로 차근차근 완성합니다</p></header><figure><img src="assets/img/ar-process/self/01-recording.webp" alt="위스티아 스튜디오에서 헤드폰을 착용하고 녹음하는 실제 현장" loading="lazy"><figcaption>편한 키를 찾고, 내 속도에 맞춰 녹음합니다</figcaption></figure><ol class="sales-recording-steps"><li><span>01</span><strong>편한 키 찾기</strong></li><li><span>02</span><strong>구간별 녹음</strong></li><li><span>03</span><strong>1:1 디렉팅</strong></li></ol></section>'+
+ '<section class="sales-recording"><header class="sales-section-heading"><p class="sales-point">핵심 01 · 구간별 녹음</p><h2>한 곡을 한 번에?<br><strong>한 소절씩이면 괜찮습니다</strong></h2><p>처음부터 끝까지 완벽하게 부를 필요 없이<br>구간별 녹음과 1:1 디렉팅으로 차근차근 완성합니다</p></header><figure><img src="assets/img/process-no-people/02.svg" alt="위스티아 스튜디오에서 헤드폰을 착용하고 녹음하는 실제 현장" loading="lazy"><figcaption>편한 키를 찾고, 내 속도에 맞춰 녹음합니다</figcaption></figure><ol class="sales-recording-steps"><li><span>01</span><strong>편한 키 찾기</strong></li><li><span>02</span><strong>구간별 녹음</strong></li><li><span>03</span><strong>1:1 디렉팅</strong></li></ol></section>'+
  '<div class="sales-tuning"><header class="sales-section-heading"><p class="sales-point">핵심 02 · 자연스러운 보정</p><h2>음정과 박자는 다듬고,<br><strong>내 목소리의 느낌은 그대로</strong></h2></header>'+wistiaBeforeAfterSection()+'</div>'+
  '<div class="sales-engineer">'+arExpertStory(key)+'</div>'+
  (key==="solo"?'<div class="sales-ratio"><p class="sales-point">핵심 03 · 목소리 비율</p>'+arCdRatioSection()+'</div>':'')+
@@ -1016,7 +1017,7 @@ return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail film-co
 // Conversion helpers are reused unchanged, consultation first goes to the calculator
 function arRecordingPoster(){
  const wave='<svg viewBox="0 0 140 28" aria-hidden="true"><path d="M2 14h4m4-4v8m5-13v18m5-22v26m5-19v12m5-17v22m5-14v6m5-13v20m5-16v12m5-20v28m5-22v16m5-13v10m5-8v6m5-12v18m5-16v14m5-19v24m5-20v16m5-13v10m5-8v6m5-12v18m5-15v12m5-8v4m5-7v10m5-8v6m5-5v4m5-2h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
- return '<section class="arc-point arc-point-recording" id="arcRecording"><header><span class="arc-kicker detail-point-label">POINT 01</span><h2>한 곡을 한 번에?<br><mark>한 소절씩 녹음하세요</mark></h2><p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p></header><figure class="arc-recording-poster" aria-label="한 소절씩 녹음하고 연결하는 과정 안내"><div class="arc-recording-photos"><div>'+img('assets/img/process-studio/02-recording.webp','마이크 앞에서 한 소절씩 녹음하는 장면')+'<span>한 소절씩 녹음</span></div><div>'+img('assets/img/process-studio/06-mixing.webp','녹음 파형과 구간이 표시된 음원 작업 프로그램 화면')+'<span>프로그램에서 구간 확인</span></div></div><ol class="arc-recording-flow"><li><b>01 · 첫 소절</b>'+wave+'</li><li><b>02 · 다음 소절</b>'+wave+'</li><li><b>03 · 자연스럽게 연결</b>'+wave.replace('<path','<defs><linearGradient id="arJoinedWave"><stop offset="0%" stop-color="#506f88"/><stop offset="49%" stop-color="#506f88"/><stop offset="51%" stop-color="#638779"/><stop offset="100%" stop-color="#638779"/></linearGradient></defs><path').replace('stroke="currentColor"','stroke="url(#arJoinedWave)"')+'</li></ol><figcaption>녹음 → 듣고 디렉팅 → 다음 구간 녹음<br>구간별 녹음 방식을 설명하는 이미지입니다</figcaption></figure></section>'
+ return '<section class="arc-point arc-point-recording" id="arcRecording"><header><span class="arc-kicker detail-point-label">POINT 01</span><h2>한 곡을 한 번에?<br><mark>한 소절씩 녹음하세요</mark></h2><p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p></header><figure class="arc-recording-poster" aria-label="한 소절씩 녹음하고 연결하는 과정 안내"><div class="arc-recording-photos"><div>'+img('assets/img/process-no-people/02.svg','마이크 앞에서 한 소절씩 녹음하는 장면')+'<span>한 소절씩 녹음</span></div><div>'+img('assets/img/process-no-people/06.svg','녹음 파형과 구간이 표시된 음원 작업 프로그램 화면')+'<span>프로그램에서 구간 확인</span></div></div><ol class="arc-recording-flow"><li><b>01 · 첫 소절</b>'+wave+'</li><li><b>02 · 다음 소절</b>'+wave+'</li><li><b>03 · 자연스럽게 연결</b>'+wave.replace('<path','<defs><linearGradient id="arJoinedWave"><stop offset="0%" stop-color="#506f88"/><stop offset="49%" stop-color="#506f88"/><stop offset="51%" stop-color="#638779"/><stop offset="100%" stop-color="#638779"/></linearGradient></defs><path').replace('stroke="currentColor"','stroke="url(#arJoinedWave)"')+'</li></ol><figcaption>녹음 → 듣고 디렉팅 → 다음 구간 녹음<br>구간별 녹음 방식을 설명하는 이미지입니다</figcaption></figure></section>'
 }
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
@@ -1059,7 +1060,7 @@ function arCommerceDetail(p,key="solo"){
  '<section class="arc-empathy arc-section" id="arcEmpathy"><span class="arc-kicker">축가가 걱정되신다면</span><h2>노래 실력보다<br><mark>내 목소리가 먼저입니다</mark></h2><p>떨려서 음정이 흔들릴까 봐, 가사를 놓칠까 봐<br>혼자 걱정하지 마세요</p><div class="arc-emphasis">미리 녹음한 내 목소리가<br>본식에서 함께합니다</div><p>내 목소리가 담긴 AR을 재생하며 직접 부르는 축가<br>마음은 직접 전하고, 목소리는 미리 준비합니다</p></section>'+
  '<div class="arc-reviews">'+soloReviewCarousel().replace('직접 보내주신 카카오톡 후기 원문입니다','녹음·영상 상품 고객님이 직접 보내주신 카카오톡 후기 원문입니다')+'</div>'+
  arRecordingPoster()+
- point('02','원곡이 높다면?<br><mark>내 목소리에 맞춥니다</mark>','원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 상담에서 확인합니다','assets/img/process-studio/03-vocal-directing.webp','목소리에 맞는 키와 녹음 방향을 상담하는 과정 예시')+
+ point('02','원곡이 높다면?<br><mark>내 목소리에 맞춥니다</mark>','원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 상담에서 확인합니다','assets/img/process-no-people/03.svg','목소리에 맞는 키와 녹음 방향을 상담하는 과정 예시')+
  '<section class="arc-point arc-point-tuning" aria-label="보컬 보정 전후 듣기">'+detailPointSection(wistiaBeforeAfterSection(),'03')+'</section>'+
  '<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>'+
 
@@ -1348,7 +1349,7 @@ function calculate(){
 }
 function renderProductOption(o){
   if(o.quantity){const quantity=optionQuantities[o.key]||0,unit=o.unit||"회",priceUnit=o.priceUnit||"회당";return '<div class="option-choice quantity-option"><span class="option-symbol" aria-hidden="true">+</span><span><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><div class="quantity-control" aria-label="'+o.label+' 선택 수"><button type="button" data-option-minus="'+o.key+'" aria-label="'+o.label+' 줄이기">−</button><output data-option-count="'+o.key+'">'+quantity+unit+'</output><button type="button" data-option-plus="'+o.key+'" aria-label="'+o.label+' 늘리기">+</button><b>'+priceUnit+' +'+shortWon(o.price)+'</b></div></div>'}
-  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"],"bride-entrance":["assets/img/song-options/bride-entrance-v1.webp","신부가 예식장 버진로드로 입장하는 장면 예시"],"groom-entrance":["assets/img/song-options/groom-entrance-v1.webp","신랑이 예식장 버진로드로 입장하는 장면 예시"],"rush":["assets/img/process/video-color-grading.webp","빠른 작업을 위한 영상 편집 작업 예시"]}
+  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"],"bride-entrance":["assets/img/process-no-people/02.svg","신부가 예식장 버진로드로 입장하는 장면 예시"],"groom-entrance":["assets/img/process-no-people/02.svg","신랑이 예식장 버진로드로 입장하는 장면 예시"],"rush":["assets/img/process-no-people/06.svg","빠른 작업을 위한 영상 편집 작업 예시"]}
   const photo=photos[o.key],image=photo?'<span class="option-photo'+(o.key==="lyrics-video"?' lyric-option-image':'')+'">'+img(...photo)+'</span>':''
   return '<label class="option-choice'+(image?' has-option-photo':'')+'">'+image+'<input type="checkbox" data-option="'+o.key+'" '+(selectedOptions.has(o.key)?"checked":"")+'><span class="option-copy"><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><b>'+(o.price?'+'+shortWon(o.price):'상담 후 안내')+'</b></label>'
 }
