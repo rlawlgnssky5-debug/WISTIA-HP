@@ -5,10 +5,13 @@ const index=read('index.html'),css=read('css/dusty-wedding-theme.css')
 assert.match(index,/<html lang="ko" data-wistia-theme="monochrome" data-wistia-typography="maru-pretendard-fixed">/)
 assert.match(index,/<meta name="theme-color" content="#FFFFFF">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.equal(sheets.at(-4),'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1')
-assert.equal(sheets.at(-3),'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1')
-assert.equal(sheets.at(-2),'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1')
-assert.equal(sheets.at(-1),'css/functional-card-clarity.css?v=20261005-detail-comments14-1')
+assert.deepEqual(sheets.slice(-5),[
+ 'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
+ 'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
+ 'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
+ 'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
+ 'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1'
+])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)
 assert.match(css,/\.we-home \.we-hero\{[^\n]*background:var\(--dusty-pink\)/)

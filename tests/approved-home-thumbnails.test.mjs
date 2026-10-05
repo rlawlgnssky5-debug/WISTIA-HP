@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const source=read('js/app.js'),index=read('index.html'),css=read('css/approved-home-thumbnails.css')
+const helper=source.split('function renderApprovedHomeThumbnails(){')[1].split('function renderWeddingHome(){')[0]
+const ids=['aSKrlQwmnHI','5ZuTmQWCRJk','AQ9Z1flOUPo']
+assert.deepEqual([...helper.matchAll(/\['([^']+)'/g)].map(m=>m[1]),ids)
+assert.doesNotMatch(helper,/pTBfPEWlyZU|wistia-hero-main|finder-ai|https:/)
+for(const id of ids){
+ const bytes=readFileSync(new URL('../assets/img/home-approved/'+id+'.jpg',import.meta.url))
+ assert.equal(bytes.readUInt16BE(0),0xffd8)
+ assert.equal(bytes.readUInt16BE(bytes.length-2),0xffd9)
+ assert.ok(bytes.length>100000)
+}
+assert.match(helper,/width="1280" height="720" loading="eager" decoding="async"/)
+assert.match(helper,/fetchpriority="high"/)
+assert.match(source,/we-hero we-shell we-hero-thumbnails/)
+assert.match(source,/renderApprovedHomeThumbnails\(\)\+'<div class="we-hero-copy"><p class="we-kicker">목소리로 전하는 결혼식<\/p><h1><span class="type-line">웨딩 축가<\/span><span class="type-line">전문 스튜디오<\/span>/)
+assert.match(index,/approved-home-thumbnails.css\?v=20261006-approved-home-thumbnails-1/)
+assert.ok(index.indexOf('approved-home-thumbnails.css')>index.indexOf('functional-card-clarity.css'))
+assert.match(css,/object-fit:contain;filter:none/)
+assert.match(css,/aspect-ratio:1.06/)
+assert.match(css,/@media\(max-width:768px\)/)
+assert.match(css,/data-studio-motion="on"/)
+assert.match(css,/animation:wistia-approved-photo-enter \.65s cubic-bezier\(\.22,1,\.36,1\) backwards/)
+assert.match(css,/animation-delay:\.08s/)
+assert.match(css,/animation-delay:\.16s/)
+assert.match(css,/@keyframes wistia-approved-photo-enter\{from\{opacity:\.65;transform:translateY\(12px\)\}to\{opacity:1;transform:translateY\(0\)\}\}/)
+assert.match(css,/\.we-hero-thumbnail:hover\{transform:translateY\(-4px\)\}/)
+assert.match(css,/data-studio-motion="off".*animation:none;transition:none;transform:none/)
+assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
+assert.doesNotMatch(css,/infinite|font-family|grayscale|object-fit:cover|z-index:99/)
+assert.doesNotMatch(css.slice(css.indexOf('@media(prefers-reduced-motion:reduce)')),/animation-delay|animation:wistia/)
+for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/process','find/role','section/homeServices'])assert.match(read(route+'.html'),/approved-home-thumbnails.css\?v=20261006-approved-home-thumbnails-1/)
+console.log('Three different approved real thumbnails, original copy, scoped responsive layout and reduced-motion protection passed')
