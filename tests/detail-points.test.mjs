@@ -16,6 +16,8 @@ const scope={
  bookingGuideSection:()=>'',faq:()=>'',footer:()=>'<footer></footer>',
  arCdRatioSection:()=>'<section id="arRatioExperience"><p class="wistia-ar__eyebrow" data-solo-kicker>AR RATIO EXPERIENCE</p><h2>AR 비율</h2></section>'
 }
+runInNewContext(app.slice(app.indexOf('const SOLO_STUDIO_PROCESS='),app.indexOf('const DUO_STUDIO_PROCESS=')),scope)
+runInNewContext(app.slice(app.indexOf('function detailStudioSteps('),app.indexOf('function processStudioMeta(')),scope)
 runInNewContext(app.slice(app.indexOf('function wistiaBeforeAfterSection('),app.indexOf('function setExpertPanel(')),scope)
 runInNewContext(app.slice(app.indexOf('function detailPointSection('),app.indexOf('function initArCommerceDetail(')),scope)
 const labels=html=>Array.from(html.matchAll(/class="[^"]*detail-point-label"[^>]*>(POINT \d{2})</g),m=>m[1])

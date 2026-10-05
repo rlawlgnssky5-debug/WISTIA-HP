@@ -1,0 +1,70 @@
+/* Approved 2026-10-05: fixed MaruBuri headings + Pretendard body/UI.
+   Black identity/CTA, white reading canvas, gray supporting fields.
+   Preserve layout, original media, the Kakao mark and all inquiry behaviour. */
+html[data-wistia-theme="monochrome"],html[data-wistia-theme="monochrome"] body{
+ --mono-black:#111111;--mono-white:#FFFFFF;--mono-gray:#E8E8E8;
+ --font-heading:"MaruBuri",serif;--font-body:"Pretendard Variable","Pretendard",sans-serif;
+ --serif:var(--font-heading);--sans:var(--font-body);
+ /* Compatibility aliases keep the approved rounded layout, not its old colours. */
+ --dusty-pink:var(--mono-gray);--warm-beige:var(--mono-white);--warm-brown:var(--mono-black);--warm-ivory:var(--mono-white);--deep-brown:var(--mono-black);
+ --brand-pink:var(--mono-gray);--brand-black:var(--mono-black);--brand-gray:var(--mono-gray);
+ --brand-muted:rgba(17,17,17,.72);--brand-line:var(--mono-gray);
+ --ink:var(--mono-black)!important;--muted:var(--brand-muted)!important;--line:var(--mono-gray)!important;
+ --wash:var(--mono-gray)!important;--paper:var(--mono-white)!important;--white:var(--mono-white)!important;
+ --soft:var(--mono-gray)!important;--silver:var(--brand-muted)!important;
+ color:var(--mono-black);background:var(--mono-white)!important;accent-color:var(--mono-black);
+}
+/* The font families are locked independently of the colour theme. */
+html[data-wistia-typography="maru-pretendard-fixed"] body,
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao),
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao) *{
+ font-family:var(--font-body,"Pretendard Variable","Pretendard",sans-serif)!important;
+}
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6),
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6) *,
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#siteHeader .wordmark>span,#app .mas-brand b,#app .footer-brand b){
+ font-family:var(--font-heading,"MaruBuri",serif)!important;
+}
+html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog,#siteHeader) :is(button,input,select,textarea,.button,.mas-bottom a,.inquiry-direct,.we-service-link,.wordmark small){
+ font-family:var(--font-body,"Pretendard Variable","Pretendard",sans-serif)!important;
+}
+html[data-wistia-theme="monochrome"] #siteHeader#siteHeader{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #mainMenu#mainMenu *{border-color:rgba(255,255,255,.25)!important}
+html[data-wistia-theme="monochrome"] #app#app .we-home :is(.we-service,.we-directions-copy){background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-service-link{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.we-product-number,.mas-included span,.mas-story-chapters li,.mas-detail-events summary,.mas-event-toggle,.arc-free-edit,.arc-key-statement){background:var(--mono-gray)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-affordability .we-location .we-section-tag{background:var(--mono-white)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.mas-variant.is-selected,.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){background:var(--mono-gray)!important;color:var(--mono-black)!important;box-shadow:inset 0 0 0 1px var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.mas-variant:not(.is-selected),.mas-event-disclosure,.story-process-folder>summary,.story-process-grid li,.detail-price-reason,.ar-expert-panel,.wistia-specialist-grid article){background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.consultation-flow,.booking-calculator,.booking-extra){background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .consultation-flow .calculator-intro{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(input:not([type=radio]):not([type=checkbox]):not([type=range]),select,textarea){background:var(--mono-white)!important;color:var(--mono-black)!important;border-color:rgba(17,17,17,.25)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.mas-bottom,.inquiry-actions){background:var(--mono-white)!important;border-top:1px solid var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .inquiry-direct{background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-selection .mas-variant i{border-color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.wistia-ar,.wistia-ba-section){--ba-before:var(--mono-black);--ba-after:var(--mono-black);--ba-surface:var(--mono-white);--ba-soft:var(--mono-gray);--ba-wave-before:var(--mono-black);--ba-wave-after:var(--mono-black);--ba-wave-rest:var(--mono-gray)}
+html[data-wistia-theme="monochrome"] #app#app :is(.bap-tab.active[data-mode="after"],.bap-badge.mode-after,.wistia-ar__label){background:var(--mono-gray)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .wistia-ar__ratio-field{background:linear-gradient(90deg,var(--mono-black) 0,var(--mono-black) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--mono-gray) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--mono-gray) 100%)!important}
+/* Two different clips must stay distinct, including their joined halves. */
+html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div{background:var(--mono-black)!important;color:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div *{color:inherit!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div:last-child{background:var(--mono-gray)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--mono-black) 50%,var(--mono-gray) 50%)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div,html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div *{color:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div:last-child,html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div:last-child *{color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-cut-seam svg{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow div[style*="background"]{background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow div[style*="#dcebe4"]{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow svg stop{stop-color:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .wistia-events-intro:after{box-shadow:0 0 0 37px rgba(17,17,17,.05),0 0 0 74px rgba(17,17,17,.025)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.info-faq-group h2,.info-process .booking-guide article,.process-folder-sparks em,.wistia-ar__switch){background:var(--mono-gray)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.review-capture,.review-capture-image,.wistia-ar__lever){background:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app :is(.process-folder-art i,.process-folder-art b,.wistia-location-address){background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-gallery[data-mobile-gallery] .mas-gallery-caption{background:rgba(255,255,255,.94)!important;color:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #mediaDialog#mediaDialog{box-shadow:0 20px 70px rgba(17,17,17,.15)}
+html[data-wistia-theme="monochrome"] #mediaDialog#mediaDialog::backdrop{background:rgba(17,17,17,.55)}
+html[data-wistia-theme="monochrome"] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li,.consult-validation-list){background:var(--mono-gray)!important}
+html[data-wistia-theme="monochrome"] #mediaDialog#mediaDialog :is(textarea,.consult-copy-fallback){background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #floatingKakao #floatingKakaoChat{box-shadow:0 6px 16px rgba(17,17,17,.12)!important}
+html[data-wistia-theme="monochrome"] ::selection{background:var(--mono-black);color:var(--mono-white)}

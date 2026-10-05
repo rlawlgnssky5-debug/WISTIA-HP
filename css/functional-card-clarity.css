@@ -1,0 +1,137 @@
+/* Readability and grouping only: retain the approved fonts, palette and behaviour. */
+/* Explicit diagram contrast overrides the legacy global SVG stroke rule. */
+html[data-wistia-theme="monochrome"] #app#app #arcRecording .mas-cut-poster :is(.mas-cut-clips>div,.mas-joined-clip>div)>svg path[stroke]{stroke:currentColor!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-cut-poster{background:var(--mono-white)!important;border:1px solid var(--mono-gray);border-radius:24px}
+html[data-wistia-theme="monochrome"] #app#app .ar-essential-line{
+ display:block;font-size:clamp(11px,2.2vw,14px)!important;line-height:1.7!important;white-space:nowrap;text-wrap:nowrap;
+}
+html[data-wistia-theme="monochrome"] #app#app .ar-line-compact{display:none}
+html[data-wistia-theme="monochrome"] #app#app .mas-intro:has(.mas-gallery[data-mobile-gallery]){padding-top:32px!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-gallery[data-mobile-gallery]{margin-top:0!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-gallery[data-mobile-gallery] .mas-gallery-caption{
+ top:28px;left:20px;padding:9px 12px;max-width:calc(100% - 40px);
+}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-note{background:var(--mono-gray)!important;border-radius:24px}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare{
+ display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);gap:8px;align-items:center;margin:18px 0;
+}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare>div{padding:16px 8px;border-radius:16px;background:var(--mono-white);min-width:0}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare b{display:block;font-size:clamp(11px,2vw,14px);line-height:1.5}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare svg{height:64px;max-width:180px;margin:12px auto;color:var(--mono-black)}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare svg path{stroke:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-compare svg ellipse{fill:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-key-arrow{font-size:22px}
+html[data-wistia-theme="monochrome"] #app#app .story-process-folder .process-folder-art i,
+html[data-wistia-theme="monochrome"] #app#app .story-process-folder .process-folder-art:before{background:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .story-process-folder .process-folder-art b{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0;list-style:none}
+html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-card{background:var(--mono-gray)!important;border-radius:20px}
+@media(max-width:768px){
+ html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-grid{grid-template-columns:1fr}
+ html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-card{grid-column:1;grid-row:auto}
+}
+@media(max-width:400px){
+ html[data-wistia-theme="monochrome"] #app#app .ar-line-full{display:none}
+ html[data-wistia-theme="monochrome"] #app#app .ar-line-compact{display:inline}
+}
+html[data-wistia-theme="monochrome"] #app#app .wistia-emphasis-underline{
+ text-decoration:underline;text-decoration-color:currentColor;text-decoration-thickness:1px;text-underline-offset:4px;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .ba-essential{
+ font-size:clamp(12px,2.3vw,14px)!important;line-height:1.7!important;white-space:nowrap;text-wrap:nowrap;
+}
+html[data-wistia-theme="monochrome"] #app#app .home-process-folder>.process-folder-content{padding-top:20px}
+html[data-wistia-theme="monochrome"] #app#app .home-process-folder>summary{
+ background:var(--mono-gray)!important;color:var(--mono-black)!important;
+}
+html[data-wistia-theme="monochrome"] #app#app .home-process-folder .process-folder-art i,
+html[data-wistia-theme="monochrome"] #app#app .home-process-folder .process-folder-art:before{background:var(--mono-black)!important}
+html[data-wistia-theme="monochrome"] #app#app .home-process-folder .process-folder-art b{background:var(--mono-white)!important}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-player{
+ background:var(--mono-gray)!important;border:0!important;border-radius:24px!important;box-shadow:none!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-body{
+ background:transparent!important;border:0!important;border-radius:0!important;gap:16px;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter :is(.bap-badge,.bap-controls){
+ background:transparent!important;border:0!important;margin:0!important;padding:0!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-badge{
+ color:var(--mono-black)!important;text-align:center!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-wave{
+ background:var(--mono-white)!important;border:0!important;border-radius:16px;margin:0!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-tabs{
+ background:transparent!important;border:0!important;margin:0!important;padding:0!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-tab{
+ background:var(--mono-white)!important;color:var(--mono-black)!important;border:0!important;border-radius:16px!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-tab.active{
+ background:var(--mono-black)!important;color:var(--mono-white)!important;
+}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-tab *{color:inherit!important}
+html[data-wistia-theme="monochrome"] #app#app #wistiaBeforeAfter .bap-switch{
+ background:var(--mono-white)!important;color:var(--mono-black)!important;box-shadow:0 0 0 3px var(--mono-gray)!important;
+}
+/* One question/work group per card, not a frame around every paragraph. */
+html[data-wistia-theme="monochrome"] #app#app :is(.we-craft-list details,.we-home-faq details,.faq-list details,.arc-recording-flow li,.wistia-advantages li,.ar-expert-story,.wistia-about-closing){
+ background:var(--mono-gray)!important;border:0!important;border-radius:24px;
+}
+html[data-wistia-theme="monochrome"] #app#app :is(.we-craft-list,.we-home-faq,.faq-list) details>summary{
+ background:transparent!important;border:0!important;
+}
+html[data-wistia-theme="monochrome"] #app#app :is(.we-home-faq,.faq-list) details>p{
+ border:0!important;
+}
+/* Secondary actions must not disappear into the white page. */
+html[data-wistia-theme="monochrome"] #app#app :is(.wistia-location-links a,.button:not(.dark),.arc-button:not(.dark)){
+ background:var(--mono-gray)!important;color:var(--mono-black)!important;
+}
+html[data-wistia-theme="monochrome"] #app#app :is(.bap-tab,.we-craft-list summary,.we-home-faq summary,.faq-list summary,.wistia-location-links a):focus-visible{
+ outline:2px solid var(--mono-black);outline-offset:3px;
+}
+/* Nine marked home comments: compact copy, centered faces and deliberate spacing. */
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-service-copy{gap:12px}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-service-copy :is(.we-product-number,h3,p){margin:0!important}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-service-link{
+ display:inline-flex;align-items:center;justify-content:center;align-self:center;width:min(100%,160px);min-height:44px;padding:8px 14px;margin:0!important;box-sizing:border-box;line-height:1.4;text-align:center!important;
+}
+html[data-wistia-theme="monochrome"] #app#app .we-home #homeServices .we-section-tag{
+ background:var(--mono-black)!important;color:var(--mono-white)!important;border:0!important;border-radius:8px;min-height:32px;padding:6px 14px;letter-spacing:.04em;
+}
+html[data-wistia-theme="monochrome"] #app#app .we-home #homeCases .we-cases-guide{
+ max-width:none;white-space:nowrap;text-wrap:nowrap;font-size:clamp(12px,2.1vw,14px);line-height:1.7;
+}
+html[data-wistia-theme="monochrome"] #app#app .we-cases-guide-compact{display:none}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-directions-copy{
+ padding:28px 22px 30px;box-sizing:border-box;
+}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-directions-copy .wistia-location-links{
+ margin-top:22px;gap:12px;
+}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-directions-copy .wistia-location-links a{
+ display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 18px;background:var(--mono-white)!important;line-height:1.4;
+}
+html[data-wistia-theme="monochrome"] #siteHeader#siteHeader .wordmark{gap:8px;padding:0;align-items:center}
+html[data-wistia-theme="monochrome"] #siteHeader#siteHeader .wordmark img{width:30px;height:30px;flex:0 0 30px;object-fit:contain}
+html[data-wistia-theme="monochrome"] #siteHeader#siteHeader .wordmark>span{
+ display:flex;flex-direction:column;align-items:flex-start;font-size:18px;line-height:1.15;letter-spacing:.1em;
+}
+html[data-wistia-theme="monochrome"] #siteHeader#siteHeader .wordmark small{margin-top:3px;font-size:7px;line-height:1.4;letter-spacing:.1em}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero{padding:32px 22px 36px}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-meta{margin-bottom:24px}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-hero-grid{padding:0}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-kicker{margin-bottom:16px}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero h1{margin:0}
+html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-lead{margin:20px 0 0}
+@media(max-width:600px){
+ html[data-wistia-theme="monochrome"] #app#app .we-cases-guide-full{display:none}
+ html[data-wistia-theme="monochrome"] #app#app .we-cases-guide-compact{display:inline}
+ html[data-wistia-theme="monochrome"] #app#app .we-home .we-directions-copy{padding:24px 16px 26px}
+}
+@media(min-width:769px){
+ html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero{padding:40px 32px 44px}
+ html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-meta{margin-bottom:28px}
+}

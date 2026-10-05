@@ -9,7 +9,6 @@
     const tabs=[...root.querySelectorAll('.bap-tab')]
     const switchBtn=root.querySelector('.bap-switch')
     const badge=root.querySelector('.bap-badge')
-    const badgeText=badge.querySelector('b')
     const playBtn=root.querySelector('.bap-play')
     const playGlyph=playBtn.querySelector('.bap-play-icon')
     const playLabel=playBtn.querySelector('.bap-play-label')
@@ -19,7 +18,6 @@
     const waveStyle=typeof getComputedStyle==='function'?getComputedStyle(root):null
     const waveColors={before:waveStyle?.getPropertyValue('--ba-wave-before').trim()||'#777d80',after:waveStyle?.getPropertyValue('--ba-wave-after').trim()||'#202324',rest:waveStyle?.getPropertyValue('--ba-wave-rest').trim()||'#dfe1e2'}
     const errorEl=root.querySelector('.bap-error')
-    const status='보정 전과 후의 보컬 소스는 같은 녹음본입니다'
     const buffers={before:null,after:null},failures={before:false,after:false}
     // Both recordings share a timeline; keep one reference shape when switching audio.
     let sharedPeaks=null
@@ -69,7 +67,8 @@
       const current=position(),resume=isPlaying
       stopSource();isPlaying=false;mode=next;pausedAt=Math.min(current,duration()||current)
       tabs.forEach(tab=>{const active=tab.dataset.mode===mode;tab.classList.toggle('active',active);tab.setAttribute('aria-pressed',String(active))})
-      badge.className='bap-badge mode-'+mode;badgeText.textContent=status
+      // The fixed comparison caption and its emphasis survive mode changes.
+      badge.className='bap-badge mode-'+mode
       playBtn.className='bap-play mode-'+mode;errorEl.hidden=!failures[mode]
       sync()
       if(resume||autoPlay||pendingPlay)play()

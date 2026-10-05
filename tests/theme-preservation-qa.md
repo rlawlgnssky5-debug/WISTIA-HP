@@ -33,3 +33,17 @@
 - 최신 `잘 해서 배포까지 해줘` 명령으로 이전 로컬 시안의 배포 보류를 해제, 기존 main→Vercel 배포 경로 사용
 - 실제 휴대폰·카카오톡 인앱·외부 상담 메시지 전송은 검수하지 않음
 - 운영 배포 완료 여부와 공개 검수는 완료 후 아래에 별도로 기록
+
+## 운영 배포 완료와 공개 검수
+
+- 커밋 `d424ddd652cc6552b9caec1d9659afc2b0707410`을 기존 main에 정상 푸시, Vercel `success` / `Deployment has completed` 확인
+- 배포: https://vercel.com/wistia1/wistia/J6gP1ZyLTpSWdMiBTY5xH35eZEPm
+- 운영: https://www.wistiastudio.com/detail/solo
+- 홈·세 상세·문의·세 신청서·오시는 길 및 새 CSS의 HTTP 200 확인
+- 공개 위 9개 경로 × 320·390·691·1022px 36개 화면 조합에서 활성 테마/캐시·카드 안쪽 여백·영상 문구 12px 위치·두 색 도식 및 연결 반쪽·빠른 견적 제거 유지·가로 넘침/검사 문구 잘림 0 확인
+- 공개 SOLO→DUET 실제 인원 변경, 상품별 문의 선택 팝업 → DUET 신청서 → 팝업 성함 수정 → Enter의 복사 완료 안내와 2인·2시간·160,000원 클립보드 확인
+- 공개 DUET의 새 `duet-live-proof-v2.jpg` poster와 영상 3.37초 실제 진행·이벤트 펼침 확인
+- 공개 보정 후 선택 즉시 재생의 0:03 / 1:25 표시 및 영상 모두 정지, 메뉴 바깥 터치 닫기를 확인
+- 공개 검수 탭 오류/경고 0, 실제 상담 링크 클릭·메시지 전송 및 휴대폰 실기 검수는 하지 않음
+- 운영 증빙: `tests/qa/theme-restored-video-production-390-20261005.png`, `theme-restored-selection-production-390-20261005.png`, `theme-restored-diagram-production-390-20261005.png`, `theme-restored-inquiry-production-390-20261005.png`
+- 이 배포 후 확인 기록과 운영 증빙은 로컬에 보관하며 운영 소스는 위 커밋과 일치
