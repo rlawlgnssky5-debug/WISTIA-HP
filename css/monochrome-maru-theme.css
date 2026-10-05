@@ -1,9 +1,9 @@
-/* Approved 2026-10-05: fixed MaruBuri headings + Pretendard body/UI.
+/* Revised by explicit 2026-10-06 font-change request: Pretendard headings/body/UI.
    Black identity/CTA, white reading canvas, gray supporting fields.
    Preserve layout, original media, the Kakao mark and all inquiry behaviour. */
 html[data-wistia-theme="monochrome"],html[data-wistia-theme="monochrome"] body{
  --mono-black:#111111;--mono-white:#FFFFFF;--mono-gray:#E8E8E8;
- --font-heading:"MaruBuri",serif;--font-body:"Pretendard Variable","Pretendard",sans-serif;
+ --font-heading:"Pretendard Variable","Pretendard",sans-serif;--font-body:"Pretendard Variable","Pretendard",sans-serif;
  --serif:var(--font-heading);--sans:var(--font-body);
  /* Compatibility aliases keep the approved rounded layout, not its old colours. */
  --dusty-pink:var(--mono-gray);--warm-beige:var(--mono-white);--warm-brown:var(--mono-black);--warm-ivory:var(--mono-white);--deep-brown:var(--mono-black);
@@ -14,18 +14,17 @@ html[data-wistia-theme="monochrome"],html[data-wistia-theme="monochrome"] body{
  --soft:var(--mono-gray)!important;--silver:var(--brand-muted)!important;
  color:var(--mono-black);background:var(--mono-white)!important;accent-color:var(--mono-black);
 }
-/* The font families are locked independently of the colour theme. */
-html[data-wistia-typography="maru-pretendard-fixed"] body,
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao),
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao) *{
+/* Typography is independent of palette, with the current human-approved family. */
+html[data-wistia-typography="pretendard-editorial"] body,
+html[data-wistia-typography="pretendard-editorial"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao),
+html[data-wistia-typography="pretendard-editorial"] :is(#app,#siteHeader,#mainMenu,#mediaDialog,#floatingKakao) *{
  font-family:var(--font-body,"Pretendard Variable","Pretendard",sans-serif)!important;
 }
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6),
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6) *,
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#siteHeader .wordmark>span,#app .mas-brand b,#app .footer-brand b){
- font-family:var(--font-heading,"MaruBuri",serif)!important;
+html[data-wistia-typography="pretendard-editorial"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6),
+html[data-wistia-typography="pretendard-editorial"] :is(#app,#mediaDialog) :is(h1,h2,h3,h4,h5,h6) *{
+ font-family:var(--font-heading,"Pretendard Variable","Pretendard",sans-serif)!important;
 }
-html[data-wistia-typography="maru-pretendard-fixed"] :is(#app,#mediaDialog,#siteHeader) :is(button,input,select,textarea,.button,.mas-bottom a,.inquiry-direct,.we-service-link,.wordmark small){
+html[data-wistia-typography="pretendard-editorial"] :is(#app,#mediaDialog,#siteHeader) :is(button,input,select,textarea,.button,.mas-bottom a,.inquiry-direct,.we-service-link,.wordmark small){
  font-family:var(--font-body,"Pretendard Variable","Pretendard",sans-serif)!important;
 }
 html[data-wistia-theme="monochrome"] #siteHeader#siteHeader{background:var(--mono-white)!important}
