@@ -44,12 +44,16 @@ assert.match(context.eventBenefitsSection('03'),/할인 최대 2만원 · 후기
 set({key:'solo',options:['lyrics-video','groom-entrance']})
 assert.equal(node('#mobilePrice').textContent,'20만원')
 assert.equal(node('#quoteRegular').hidden,true,'deselecting benefits clears the strike-through')
-for(const key of ['lyrics-video','bride-entrance','groom-entrance','rush']){
+for(const key of ['lyrics-video','bride-entrance','groom-entrance']){
  const markup=context.renderProductOption({key,label:key,detail:'설명',price:40000})
  assert.match(markup,/has-option-photo/)
  const src=markup.match(/src="([^"]+)"/)[1]
  assert.ok(existsSync(new URL('../'+src,import.meta.url)))
 }
+set({key:'solo',options:['rush']})
+assert.equal(node('#mobilePrice').textContent,'12만원','an old rush selection does not add a removed fee')
+assert.equal(node('#quoteOptions').textContent,'0원')
+assert.doesNotMatch(node('#bookingSummary').innerHTML,/빠른 작업|30,000원/)
 assert.doesNotMatch(source,/cta\('문의 작성','\/event\/solo'\)/,'phone capture request removes the home inquiry button')
 const final=source.match(/'<section class="arc-section arc-final"><h2>축가는 직접,[^\n]+/)[0]
 assert.doesNotMatch(final,/action\('카카오톡 상담'/)

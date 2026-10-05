@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import {graphicsFixture} from './studio-graphics-fixture.mjs'
 import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
@@ -15,7 +16,7 @@ const scope={
  arCdRatioSection:()=>'<section id="arRatioExperience"><p class="wistia-ar__eyebrow">AR RATIO EXPERIENCE</p><h2>AR 비율</h2></section>',
  matchMedia:()=>({matches:mobile})
 }
-runInNewContext(source.slice(source.indexOf('const SOLO_STUDIO_PROCESS='),source.indexOf('const DUO_STUDIO_PROCESS=')),scope)
+runInNewContext(graphicsFixture(source)+source.slice(source.indexOf('const SOLO_STUDIO_PROCESS='),source.indexOf('const DUO_STUDIO_PROCESS=')),scope)
 runInNewContext(source.slice(source.indexOf('function detailStudioSteps('),source.indexOf('function processStudioMeta(')),scope)
 runInNewContext(source.slice(source.indexOf('function wistiaBeforeAfterSection('),source.indexOf('function setExpertPanel(')),scope)
 runInNewContext(source.slice(source.indexOf('function detailPointSection('),source.indexOf('function filmCommerceDetail(')),scope)
@@ -86,7 +87,9 @@ assert.doesNotMatch(desktop,/가사 영상 옵션 견적 뽑기/)
 assert.doesNotMatch(html,/<span data-solo-kicker>고객 후기|직접 보내주신 카카오톡 후기 원문입니다/)
 assert.match(html,/<section class="arc-section arc-notices mas-notices">/)
 assert.match(html,/<strong>납기<\/strong><div><b>최대 7일 이내<\/b><small>녹음 후/)
-for(const term of ['3회까지 무료','4회차부터 회당 1만원','3일 이내 · +3만원','가능한 일정에 한해 진행'])assert.ok(html.includes(term),term)
+for(const term of ['3회까지 무료','4회차부터 회당 1만원'])assert.ok(html.includes(term),term)
+assert.doesNotMatch(html,/빠른 작업|3일 이내|\+3만원/,'removed rush option does not appear in the mobile booking notice')
+assert.doesNotMatch(desktop,/빠른 작업|3일 이내|\+3만원/,'removed rush option does not appear in the unified desktop notice')
 assert.doesNotMatch(html,/mas-notice-options/)
 assert.match(html,/가사 영상 제작 필요하신가요\?/)
 assert.match(html,/보정·믹싱의 마법, 티 나지 않게 자연스럽게/)

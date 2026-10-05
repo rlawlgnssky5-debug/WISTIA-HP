@@ -2,15 +2,18 @@ import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 const css=read('css/monochrome-maru-theme.css'),index=read('index.html'),base=read('css/dusty-wedding-theme.css')
-assert.match(index,/data-wistia-theme="monochrome" data-wistia-typography="maru-pretendard-fixed"/)
-assert.match(index,/hangeul_static\/css\/maru-buri.css/)
+assert.match(index,/data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir"/)
+assert.doesNotMatch(index,/hangeul_static\/css\/maru-buri.css/)
 assert.match(index,/pretendardvariable-dynamic-subset.min.css/)
 assert.doesNotMatch(index,/fonts.googleapis.com\/css2\?family=Noto/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-3),[
+assert.deepEqual(sheets.slice(-6),[
  'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
  'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
- 'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1'
+ 'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
+ 'css/noir-minimal.css?v=20261006-noir-minimal-1',
+ 'css/studio-graphics.css?v=20261006-studio-graphics-1',
+ 'css/luxury-finish.css?v=20261006-luxury-finish-1'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)
@@ -31,10 +34,10 @@ assert.doesNotMatch(css,/filter:|img\s*\{/,'actual media and brand mark must not
 for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/solo','event/duo','event/duet-film','info/location','info/about','info/faq','info/process','events']){
  const page=read(route+'.html')
  assert.match(page,/monochrome-maru-theme.css\?v=20261005-monochrome-maru-1/)
- assert.match(page,/data-wistia-typography="maru-pretendard-fixed"/)
+ assert.match(page,/data-wistia-typography="pretendard-noir"/)
 }
 assert.match(read('js/contact-form.js'),/작성이 필요해요😭/)
 assert.match(read('js/contact-form.js'),/이제 복사하고 카카오톡으로! 😁/)
 const lum=h=>{const c=h.match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return c[0]*.2126+c[1]*.7152+c[2]*.0722}
 for(const light of ['FFFFFF','E8E8E8'])assert.ok((lum(light)+.05)/(lum('111111')+.05)>=7)
-console.log('Fixed MaruBuri/Pretendard pair, monochrome roles, genuine media, preserved geometry and inquiry flow: passed')
+console.log('Legacy monochrome geometry, active sans successor, genuine media and preserved inquiry flow: passed')

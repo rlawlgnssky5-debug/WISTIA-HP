@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">스튜디오 녹음 준비</title><desc id="desc">콘덴서 마이크와 헤드폰, 입력 레벨을 표현한 인물 없는 스튜디오 장비 일러스트</desc>
+<rect width="960" height="540" fill="#252421"/><rect x="590" width="370" height="540" fill="#F5F4F0"/>
+<path d="M40 82h510M40 458h510M630 82h290M630 458h290" stroke="#85827C"/>
+<g font-family="Arial,sans-serif" font-size="14" letter-spacing="3"><text x="40" y="52" fill="#DDDCD8">WISTIA / RECORDING ROOM</text><text x="920" y="52" fill="#66645F" text-anchor="end">02 — RECORDING</text></g>
+<g fill="none" stroke="#DDDCD8" stroke-width="2"><rect x="264" y="119" width="64" height="173" rx="32"/><path d="M264 155h64M264 233h64M276 135v92m10-98v98m10-100v100m10-98v98m10-92v92M245 231v43c0 29 22 49 51 49s51-20 51-49v-43M253 278h86M250 263l20 32m72-32-20 32M296 323v102M267 425h58"/><ellipse cx="296" cy="275" rx="80" ry="20"/><circle cx="433" cy="237" r="59"/><path d="M433 296v112m0-112-38 25M235 282l-39 33-17 80"/></g>
+<g stroke="#85827C" stroke-width="1"><path d="M40 407h155M358 407h192M393 215h80M393 225h80M393 235h80M393 245h80M393 255h80"/></g>
+<g fill="none" stroke="#252421" stroke-width="3"><path d="M696 283v-38a79 79 0 0 1 158 0v38"/><rect x="689" y="256" width="28" height="70" rx="8"/><rect x="833" y="256" width="28" height="70" rx="8"/><path d="M700 248v-7a75 75 0 0 1 150 0v7"/></g>
+<g stroke="#252421" stroke-width="2"><path d="M650 384h20m10-11v22m10-27v32m10-42v52m10-37v22m10-34v44m10-51v58m10-42v26m10-32v38m10-47v56m10-43v30m10-24v18m10-14v10m10-8h20"/></g>
+<text x="40" y="493" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MICROPHONE / HEADPHONES / LEVEL</text><circle cx="882" cy="493" r="4" fill="#252421"/>
+</svg>

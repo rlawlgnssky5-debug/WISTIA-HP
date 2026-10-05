@@ -1,0 +1,52 @@
+/* WISTIA studio graphic system — vector artwork, not synthetic photographs */
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-icon{display:inline-block;width:24px;height:24px;vertical-align:middle;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.5}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art{width:96px;height:72px;perspective:none;flex-basis:96px;transform:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art:before{content:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art>svg{display:block;width:100%;height:100%;overflow:visible}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg path[stroke="#252421"]{stroke:#252421!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg path[stroke="#85827C"],
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg g>path:not([stroke]){stroke:#85827C!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg path[fill="#DDDCD8"]{fill:#DDDCD8!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg path[fill="#F5F4F0"]{fill:#F5F4F0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art svg text{fill:#252421!important}
+.studio-folder-front{transform-origin:56px 75px;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.studio-folder-paper{transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.story-process-folder[open] .studio-folder-front{transform:translateY(5px) scaleY(.76)}
+.story-process-folder[open] .studio-folder-paper{transform:translateY(-6px)}
+html[data-wistia-palette="noir-minimal"] #app#app#app .folder-cue-arrow{background:none!important;box-shadow:none!important;border-radius:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .folder-close-label .studio-icon{width:16px;height:16px;margin-left:4px}
+html[data-wistia-palette="noir-minimal"] #app#app#app img[src*="/studio-graphics/"]{object-fit:contain!important;filter:none!important;border-radius:0!important;aspect-ratio:16/9}
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-broadcast img{aspect-ratio:3/1}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-media:has(img[src*="/studio-graphics/"]){background:#F5F4F0!important}
+/* The artwork is part of the explanation, not a tiny decorative thumbnail */
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-grid{width:100%!important;max-width:none!important;margin-inline:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-grid .story-process-card{display:block!important;padding:0!important;background:#FFFFFF!important;border:1px solid #D5D3CD!important;border-radius:4px!important;overflow:hidden}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-media{width:100%!important;height:auto!important;aspect-ratio:16/9;border-radius:0!important;overflow:hidden}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-media img{width:100%!important;height:100%!important;object-fit:contain!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-copy{padding:20px 22px 22px!important;text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-copy :is(h3,p){text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-number{margin:0 0 9px!important;background:none!important;border-radius:0!important;box-shadow:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-cut-poster{border-radius:4px!important;padding:24px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-cut-poster :is(.mas-cut-clips>div,.mas-joined-clip){border-radius:2px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare>div{border:1px solid #D5D3CD;border-radius:2px!important;background:#F5F4F0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare .studio-key-art{width:100%;height:84px;max-width:180px;color:#252421!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare .studio-key-art rect{fill:currentColor!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-gift{background:none!important;border-radius:0!important;box-shadow:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-gift .studio-icon{width:26px;height:26px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-chevron .studio-icon{width:18px;height:18px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .package-feature-icon{background:none!important;box-shadow:none!important;border-radius:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__vinyl{aspect-ratio:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.ar-icon-play,.ar-icon-pause) .studio-icon{width:24px;height:24px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-switch .studio-icon{width:22px;height:22px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-play-icon{font-size:0!important;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-play-icon:before{content:"";width:14px;height:16px;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%)}
+html[data-wistia-palette="noir-minimal"] #app#app#app .is-playing .bap-play-icon:before{width:12px;height:16px;background:none;clip-path:none;border-left:3px solid currentColor;border-right:3px solid currentColor}
+html[data-wistia-palette="noir-minimal"] #app#app#app .footer-social svg{stroke-width:1.5!important;stroke-linecap:square;stroke-linejoin:miter}
+html[data-wistia-palette="noir-minimal"] #siteHeader .back-button .studio-icon{width:22px;height:22px;transform:rotate(180deg)}
+html[data-wistia-palette="noir-minimal"] #siteHeader #menuToggle span{height:1.5px!important}
+@media(max-width:768px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-art{width:66px;height:54px;flex-basis:66px;grid-row:1/3}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .mas-cut-poster{padding:18px!important}
+}
+@media(prefers-reduced-motion:reduce){.studio-folder-front,.studio-folder-paper{transition:none!important}}
+html[data-studio-motion="off"] :is(.studio-folder-front,.studio-folder-paper){transition:none!important}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">내 목소리의 AR 비율 선택</title><desc id="desc">30, 50, 70, 100 퍼센트를 비교하며 편안한 목소리 비율을 정하는 네 개의 스튜디오 페이더</desc>
+<rect width="960" height="540" fill="#252421"/><path d="M40 82h880M40 458h880" stroke="#85827C"/>
+<g font-family="Arial,sans-serif" font-size="14" fill="#DDDCD8" letter-spacing="3"><text x="40" y="52">WISTIA / VOICE BALANCE</text><text x="920" y="52" text-anchor="end">04 — AR RATIO</text></g>
+<g fill="none" stroke="#66645F"><path d="M220 130v240M390 130v240M560 130v240M730 130v240M205 130h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30M375 130h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30M545 130h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30M715 130h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30m-30 40h30"/></g>
+<g stroke="#DDDCD8" stroke-width="2"><path d="M220 300v70M390 250v120M560 202v168M730 130v240"/></g>
+<g fill="#F5F4F0"><rect x="199" y="289" width="42" height="22" rx="1"/><rect x="369" y="239" width="42" height="22" rx="1"/><rect x="539" y="191" width="42" height="22" rx="1"/><rect x="709" y="119" width="42" height="22" rx="1"/></g><g stroke="#252421"><path d="M206 300h28M376 250h28M546 202h28M716 130h28"/></g>
+<g fill="#F5F4F0" font-family="Georgia,serif" font-size="40" text-anchor="middle"><text x="220" y="427">30<tspan font-family="Arial,sans-serif" font-size="16">%</tspan></text><text x="390" y="427">50<tspan font-family="Arial,sans-serif" font-size="16">%</tspan></text><text x="560" y="427">70<tspan font-family="Arial,sans-serif" font-size="16">%</tspan></text><text x="730" y="427">100<tspan font-family="Arial,sans-serif" font-size="16">%</tspan></text></g>
+<text x="40" y="493" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">LISTEN / COMPARE / FIND YOUR BALANCE</text>
+</svg>

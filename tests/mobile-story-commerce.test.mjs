@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import {graphicsFixture} from './studio-graphics-fixture.mjs'
 import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
@@ -11,6 +12,7 @@ const scope={
  faq:items=>'<div class="faq-list">'+items.map(([q,a])=>'<details><summary>'+q+'</summary><p>'+a+'</p></details>').join('')+'</div>',
  detailStudioSteps:()=>Array.from({length:7},(_,i)=>({id:i+1,title:'단계',description:'제작 설명'}))
 }
+runInNewContext(graphicsFixture(source),scope)
 const evaluate=(start,end)=>runInNewContext(source.slice(source.indexOf(start),source.indexOf(end)),scope)
 evaluate('const PRODUCTS =','const EVENTS =')
 evaluate('const EVENTS =','const ACTUAL_REVIEW_IMAGES')

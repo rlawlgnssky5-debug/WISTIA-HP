@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">믹싱과 마스터링</title><desc id="desc">보컬과 반주를 조율하는 콘솔의 페이더와 두 개의 레벨 미터</desc>
+<rect width="960" height="540" fill="#252421"/><path d="M40 82h880M40 458h880" stroke="#85827C"/>
+<g font-family="Arial,sans-serif" font-size="14" fill="#DDDCD8" letter-spacing="3"><text x="40" y="52">WISTIA / SOUND FINISHING</text><text x="920" y="52" text-anchor="end">06 — MIX / MASTER</text></g>
+<g stroke="#66645F" fill="none"><rect x="40" y="122" width="600" height="292"/><path d="M140 122v292M240 122v292M340 122v292M440 122v292M540 122v292M70 252v120M170 252v120M270 252v120M370 252v120M470 252v120M570 252v120"/></g>
+<g stroke="#DDDCD8" fill="none" stroke-width="2"><circle cx="90" cy="165" r="15"/><circle cx="190" cy="165" r="15"/><circle cx="290" cy="165" r="15"/><circle cx="390" cy="165" r="15"/><circle cx="490" cy="165" r="15"/><circle cx="590" cy="165" r="15"/><path d="M90 165v-12M190 165l8-9M290 165l-8-9M390 165v-12M490 165l9-8M590 165l-9-8"/></g>
+<g fill="#DDDCD8"><rect x="78" y="205" width="24" height="8"/><rect x="178" y="205" width="24" height="8"/><rect x="278" y="205" width="24" height="8"/><rect x="378" y="205" width="24" height="8"/><rect x="478" y="205" width="24" height="8"/><rect x="578" y="205" width="24" height="8"/><rect x="55" y="271" width="30" height="20"/><rect x="155" y="308" width="30" height="20"/><rect x="255" y="294" width="30" height="20"/><rect x="355" y="318" width="30" height="20"/><rect x="455" y="286" width="30" height="20"/><rect x="555" y="302" width="30" height="20"/></g>
+<g fill="#F5F4F0"><rect x="730" y="160" width="26" height="226"/><rect x="778" y="178" width="26" height="208"/></g><g stroke="#252421" stroke-width="3"><path d="M726 185h82M726 205h82M726 225h82M726 245h82M726 265h82M726 285h82M726 305h82M726 325h82M726 345h82M726 365h82"/></g>
+<g fill="#DDDCD8" font-family="Arial,sans-serif" font-size="12" letter-spacing="2"><text x="720" y="139">OUTPUT / L + R</text><text x="40" y="493">VOICE + MUSIC / A CLEAR, NATURAL BALANCE</text></g>
+</svg>

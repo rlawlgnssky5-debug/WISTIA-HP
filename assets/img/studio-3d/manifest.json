@@ -1,0 +1,110 @@
+{
+  "method": "built-in image_gen",
+  "purpose": "Object-only illustrative 3D artwork, not actual studio photography",
+  "palette": [
+    "#252421",
+    "#F5F4F0",
+    "#DDDCD8"
+  ],
+  "assets": [
+    {
+      "name": "consultation",
+      "source": "exec-ccfa95b0-3c19-48da-8252-8c3f6cc57aba.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a premium ivory clipboard with a blank sheet of paper, a charcoal pen and two small sculptural speech bubbles beside it, symbolizing a music production consultation. Paper entirely blank, no writing.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/consultation.webp"
+    },
+    {
+      "name": "recording",
+      "source": "exec-7aa74a64-072e-431f-b7aa-01b88ca49b44.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a large brushed-silver condenser studio microphone on a compact charcoal stand with a circular black pop-filter and one pair of professional charcoal over-ear headphones beside it. Realistic recognizable devices, simple arrangement, entire microphone and headphones visible.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/recording.webp"
+    },
+    {
+      "name": "directing",
+      "source": "exec-1caf2200-3450-48f9-8bc9-77fc24a285f2.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: two short horizontal charcoal audio waveform strips with raised silver waveform bars physically joining into one continuous strip, with a small metallic pair of editing scissors beside the join. Clearly explain recording in separate short sections and connecting the good takes. No abstract sculpture.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/directing.webp"
+    },
+    {
+      "name": "folder",
+      "source": "exec-5956aec6-d680-4aec-9d18-703f65ec4e71.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Square canvas. Subject: one elegant charcoal physical archive folder slightly open, containing three blank thick ivory sheets. Isometric three-quarter view, realistic firm folded edges and precise layered paper, no rounded toy blob. Centered folder, no other objects. Genuine transparent background with soft minimal contact shadow.",
+      "transparent": true,
+      "output": "assets/img/studio-3d/folder.webp"
+    },
+    {
+      "name": "balance",
+      "source": "exec-d39b6efe-c37e-4405-9fce-106d817dac91.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: four individual precision brushed-silver audio faders on a small matte charcoal control panel, each at a clearly different vertical position. Four raised waveform symbols behind the faders grow from quiet to louder, intuitive live voice versus recorded voice balance. No numeric scales, no knobs with text.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/balance.webp"
+    },
+    {
+      "name": "vocal-editing",
+      "source": "exec-3c22e2f3-bdfb-4e31-b955-bc1793c7e40e.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: one charcoal glass audio editing panel seen in refined three-quarter perspective, a few ivory musical pitch blocks aligned in tidy horizontal tracks, one gently irregular silver melody line and the same melody smoothly corrected into aligned pitch blocks. A precision edit tool/cursor nearby. Clearly audio pitch correction, no lettering or numerical axes.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/vocal-editing.webp"
+    },
+    {
+      "name": "mixing",
+      "source": "exec-c1ee1858-cc87-4965-b176-11868c93fe6e.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a compact professional charcoal audio mixing console with six silver sliders, subtly different slider positions, a neat row of knobs, and two ivory stereo meter columns. Realistic elegant device, simple clean perspective, no labels, no inscriptions, no instrument branding.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/mixing.webp"
+    },
+    {
+      "name": "delivery",
+      "source": "exec-29da3123-2c94-4515-8a33-45c0c0fec1a0.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a neatly finished ivory music file card bearing only an embossed dark waveform symbol, a small metallic verification check-mark badge and a premium charcoal file sleeve. The clear metaphor is checked finished audio ready for delivery. No writing, no document lines, no letter shapes.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/delivery.webp"
+    },
+    {
+      "name": "film-editing",
+      "source": "exec-81f451f3-677d-43fc-8d78-7bf97f31b771.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: an elegant charcoal desktop video editing monitor and a short row of three thick video timeline tiles in front. Monitor shows only abstract monochrome landscape stills in a large preview and three simple timeline blocks, no interface text, no people. One small silver edit cursor, realistic crisp screen silhouette.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/film-editing.webp"
+    },
+    {
+      "name": "sound-review",
+      "source": "exec-8f757120-4895-4395-9c26-5b3991b767eb.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: premium charcoal over-ear headphones leaning beside a horizontal raised ivory audio waveform, with a small solid metallic check mark to communicate final listening quality approval. No other objects, no wording.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/sound-review.webp"
+    },
+    {
+      "name": "bride-entrance",
+      "source": "exec-2d382660-9d3e-4a72-b215-d84a6687afdd.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a refined miniature ivory wedding aisle with two small floral arrangements and a clean architectural doorway at its end, one recognizable brushed-silver music-note sculpture in the foreground to suggest entrance music. No bride, no people, no figurines, no text. Elegant minimal wedding music visual, not a photograph.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/bride-entrance.webp"
+    },
+    {
+      "name": "groom-entrance",
+      "source": "exec-b9d452f3-0689-4ae4-a108-ebfe8faa5fed.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: a refined miniature charcoal and ivory wedding ceremony doorway, two slim architectural side columns, a short aisle leading towards it and one brushed-silver music-note sculpture, minimal entrance music visual with a darker handsome material balance. No groom, no people, no figurines, no text.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/groom-entrance.webp"
+    },
+    {
+      "name": "vinyl",
+      "source": "exec-e8d642dd-43f6-4892-acd6-c489bc7ebacd.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Square canvas, top-down strictly centered perfect circular geometry. Subject: one premium black vinyl record with fine realistic concentric grooves and a plain ivory circular center label with a small centered spindle hole, no writing or symbol on the label. Genuine transparent background. Vinyl entirely visible with 7% outer margin. No tilt, no perspective ellipse, no player or other objects.",
+      "transparent": true,
+      "output": "assets/img/studio-3d/vinyl.webp"
+    },
+    {
+      "name": "key-shift",
+      "source": "exec-b4a06990-db08-40f0-9157-1785348f9613.png",
+      "prompt": "Use case: stylized-concept. Asset type: premium explanatory 3D object render for WISTIA wedding music studio website. One coherent professional product-style 3D illustration, not an actual studio photograph. Minimal, modern, chic, high-end editorial design. Warm charcoal #252421, brushed pewter/silver, ivory #F5F4F0 only. Refined bevels, realistic matte materials, gentle studio illumination, restrained soft contact shadow. All objects fully in frame with generous negative-space border, balanced centered composition, crisp immediately recognizable silhouette. No people, no faces, no hands. ABSOLUTELY NO text, letters, numbers, logos, labels, watermark, UI headings or tiny captions. No gold, no neon, no cartoon bubbles, no noisy scenery, no infographic collage. Landscape 16:9. Subject: one premium miniature brushed-silver and ivory piano keyboard in three-quarter perspective. Above it are two sets of three thick sculptural music notes, one set visibly higher and the same pattern lower; a simple downward curved metallic arrow connects the sets, clearly conveying lowering a song's key to a comfortable vocal range. No letters, labels or numeric pitch scales. No extra abstract objects.",
+      "transparent": false,
+      "output": "assets/img/studio-3d/key-shift.webp"
+    }
+  ],
+  "source_directory": "generated_images/01a07ed4-903d-7e31-a6e7-30b0140927d4"
+}

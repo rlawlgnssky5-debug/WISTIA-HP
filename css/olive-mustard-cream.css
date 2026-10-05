@@ -1,0 +1,71 @@
+/* Approved colour direction, 2026-10-06
+   Mustard #E7B928 / olive #667044 / cream #F2EBD9
+   Colour roles only: retain fonts, layout, genuine media and all behaviour
+   The monochrome attribute remains a compatibility hook for the approved layout */
+html[data-wistia-palette="olive-mustard-cream"],
+html[data-wistia-palette="olive-mustard-cream"] body{
+ --palette-mustard:#E7B928;--palette-olive:#667044;--palette-cream:#F2EBD9;
+ --palette-ink:#4B5234;--palette-on-mustard:#30361F;--palette-paper:#FFFDF4;
+ --palette-soft:#E6E3CD;--palette-selected:#EEDCA6;--palette-muted:#59613F;--palette-wave:#87916B;
+ --palette-line:rgba(75,82,52,.24);
+ --mono-black:var(--palette-ink);--mono-white:var(--palette-paper);--mono-gray:var(--palette-soft);
+ --dusty-pink:var(--palette-soft);--warm-beige:var(--palette-cream);--warm-brown:var(--palette-ink);--warm-ivory:var(--palette-paper);--deep-brown:var(--palette-ink);
+ --brand-pink:var(--palette-mustard);--brand-black:var(--palette-ink);--brand-gray:var(--palette-cream);
+ --brand-muted:var(--palette-muted);--brand-line:var(--palette-line);
+ --ink:var(--palette-ink)!important;--muted:var(--palette-muted)!important;--line:var(--palette-line)!important;
+ --wash:var(--palette-cream)!important;--paper:var(--palette-paper)!important;--white:var(--palette-paper)!important;
+ --soft:var(--palette-soft)!important;--silver:var(--palette-muted)!important;
+ color:var(--palette-ink);background:var(--palette-cream)!important;accent-color:var(--palette-olive);
+}
+/* Cream reading canvas, olive feature fields, mustard as a small accent */
+html[data-wistia-palette] #siteHeader#siteHeader{background:var(--palette-cream)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette] #menuToggle#menuToggle span{background:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app{background:var(--palette-cream)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app .we-home .we-hero.we-hero-thumbnails{background:var(--palette-olive)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app .we-home .we-hero.we-hero-thumbnails :is(.we-meta,.we-kicker,h1){color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app .we-home .we-hero-thumbnail{background:var(--palette-cream);border-color:var(--palette-cream)!important}
+html[data-wistia-palette] #app#app .we-home .we-affordability .we-location{background:var(--palette-olive)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app .we-home .we-affordability .we-location :is(h2,p){color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app :is(.we-section-tag,.detail-point-label),
+html[data-wistia-palette] #app#app .we-home #homeServices .we-section-tag,
+html[data-wistia-palette] #app#app .we-home .we-affordability .we-location .we-section-tag{background:var(--palette-mustard)!important;color:var(--palette-on-mustard)!important}
+html[data-wistia-palette] #app#app :is(.arc-point,.wistia-ba-section) .wps-kicker{color:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app :is(.mas-step-number,.mas-story-chapters em,.wistia-event-card-top strong){background:var(--palette-mustard)!important;color:var(--palette-on-mustard)!important}
+html[data-wistia-palette] #app#app :is(.we-service,.we-directions-copy,.we-craft-list details,.we-home-faq details,.faq-list details,.ar-expert-story,.ar-expert-panel,.story-process-card,.wistia-specialist-grid article,.wistia-advantages li,.detail-price-reason,.mas-key-note){background:var(--palette-soft)!important}
+/* Primary and secondary actions, including consultation dialogs */
+html[data-wistia-palette] #app#app :is(.button.dark,.arc-button.dark,.contact-submit,.mas-bottom>a,.we-service-link,.we-case-play,.mas-story-play,.bap-play,.wistia-ar__play),
+html[data-wistia-palette] #app#app #wistiaBeforeAfter .bap-tab.active,
+html[data-wistia-palette] #app#app .bap-tab.active[data-mode],
+html[data-wistia-palette] #mediaDialog#mediaDialog .button.dark{
+ background:var(--palette-olive)!important;color:var(--palette-paper)!important;
+}
+/* Do not fade the small source labels against the olive/paper tab surfaces */
+html[data-wistia-palette] #app#app #wistiaBeforeAfter .bap-tab small{opacity:1!important}
+html[data-wistia-palette] #app#app :is(.contact-submit,.mas-bottom>a,.we-service-link,.bap-play,.wistia-ar__play,.bap-tab.active) *,
+html[data-wistia-palette] #mediaDialog#mediaDialog .button.dark *{color:inherit!important}
+html[data-wistia-palette] #app#app :is(.inquiry-direct,.button:not(.dark),.arc-button:not(.dark),.wistia-location-links a),
+html[data-wistia-palette] #app#app .we-home .we-directions-copy .wistia-location-links a,
+html[data-wistia-palette] #mediaDialog#mediaDialog .button:not(.dark){background:var(--palette-paper)!important;color:var(--palette-ink)!important;border-color:var(--palette-olive)!important}
+html[data-wistia-palette] #app#app :is(.mas-variant.is-selected,.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){background:var(--palette-selected)!important;color:var(--palette-ink)!important;box-shadow:inset 0 0 0 1px var(--palette-olive)!important}
+html[data-wistia-palette] #app#app :is(input,select,textarea){accent-color:var(--palette-olive)!important;caret-color:var(--palette-ink)}
+html[data-wistia-palette] #app#app :is(input,select,textarea,button,a,summary):focus-visible,
+html[data-wistia-palette] #mediaDialog#mediaDialog :focus-visible{outline-color:var(--palette-ink)!important}
+/* Preserve visible sound states, clip halves and waveform contrast */
+html[data-wistia-palette] #app#app :is(.wistia-ba-section,.wistia-ar){--ba-wave-before:var(--palette-ink);--ba-wave-after:var(--palette-olive);--ba-wave-rest:var(--palette-wave);--ba-before:var(--palette-olive);--ba-after:var(--palette-olive)}
+html[data-wistia-palette] #app#app .mas-cut-clips>div{background:var(--palette-olive)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app .mas-cut-clips>div:last-child{background:var(--palette-soft)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--palette-olive) 50%,var(--palette-soft) 50%)!important}
+html[data-wistia-palette] #app#app .mas-joined-clip>div{color:var(--palette-paper)!important}
+html[data-wistia-palette] #app#app .mas-joined-clip>div:last-child{color:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-olive)!important;border-color:var(--palette-ink)!important}
+html[data-wistia-palette] #app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-olive)!important}
+/* Menu and modal chrome, without recolouring the Kakao mark or any media */
+html[data-wistia-palette] #mainMenu#mainMenu{background:var(--palette-olive)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--palette-paper)!important}
+html[data-wistia-palette] #mediaDialog#mediaDialog{background:var(--palette-paper)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette] #mediaDialog#mediaDialog::backdrop{background:rgba(48,54,31,.6)}
+html[data-wistia-palette] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li,.consult-validation-list){background:var(--palette-soft)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette] ::selection{background:var(--palette-mustard);color:var(--palette-on-mustard)}
+/* Standalone privacy page: legal text and existing typography stay untouched */
+html[data-wistia-palette] .wrap :is(p,li,td,th,.lead,.eyebrow,.meta){color:var(--palette-ink)}
+html[data-wistia-palette] :is(.top,.wrap section,.wrap th,.wrap td,body>footer){border-color:var(--palette-line)}

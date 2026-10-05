@@ -1,0 +1,99 @@
+/* Approved colour direction, 2026-10-06
+   Pink #FF82B2 / purple #7657D5 / lavender #F7F1FF
+   Colour and typography only: retain layout, genuine media and all behaviour
+   The monochrome attribute remains a compatibility hook for the approved layout */
+html[data-wistia-palette="pink-purple-lavender"],
+html[data-wistia-palette="pink-purple-lavender"] body{
+ --palette-pink:#FF82B2;--palette-purple:#7657D5;--palette-lavender:#F7F1FF;
+ --palette-ink:#372455;--palette-on-pink:#39245F;--palette-paper:#FFFFFF;
+ --palette-soft:#ECE2FA;--palette-selected:#FFD2E4;--palette-muted:#685681;--palette-wave:#9280B1;
+ --palette-line:rgba(55,36,85,.24);
+ --mono-black:var(--palette-ink);--mono-white:var(--palette-paper);--mono-gray:var(--palette-soft);
+ --dusty-pink:var(--palette-soft);--warm-beige:var(--palette-lavender);--warm-brown:var(--palette-ink);--warm-ivory:var(--palette-paper);--deep-brown:var(--palette-ink);
+ --brand-pink:var(--palette-pink);--brand-black:var(--palette-ink);--brand-gray:var(--palette-lavender);
+ --brand-muted:var(--palette-muted);--brand-line:var(--palette-line);
+ --ink:var(--palette-ink)!important;--muted:var(--palette-muted)!important;--line:var(--palette-line)!important;
+ --wash:var(--palette-lavender)!important;--paper:var(--palette-paper)!important;--white:var(--palette-paper)!important;
+ --soft:var(--palette-soft)!important;--silver:var(--palette-muted)!important;
+ color:var(--palette-ink);background:var(--palette-lavender)!important;accent-color:var(--palette-purple);
+}
+/* Lavender reading canvas, pink hero/points, purple actions/feature fields */
+html[data-wistia-palette="pink-purple-lavender"] #siteHeader#siteHeader{background:var(--palette-lavender)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #menuToggle#menuToggle span{background:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app{background:var(--palette-lavender)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-hero.we-hero-thumbnails{background:var(--palette-pink)!important;color:var(--palette-on-pink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-hero.we-hero-thumbnails :is(.we-meta,.we-kicker,h1){color:var(--palette-on-pink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-hero-thumbnail{background:var(--palette-lavender);border-color:var(--palette-lavender)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-affordability .we-location{background:var(--palette-purple)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-affordability .we-location :is(h2,p){color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.we-section-tag,.detail-point-label),
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home #homeServices .we-section-tag,
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-affordability .we-location .we-section-tag{background:var(--palette-pink)!important;color:var(--palette-on-pink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.arc-point,.wistia-ba-section) .wps-kicker{color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.mas-step-number,.mas-story-chapters em,.wistia-event-card-top strong){background:var(--palette-pink)!important;color:var(--palette-on-pink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.we-service,.we-directions-copy,.we-craft-list details,.we-home-faq details,.faq-list details,.ar-expert-story,.ar-expert-panel,.story-process-card,.wistia-specialist-grid article,.wistia-advantages li,.detail-price-reason,.mas-key-note){background:var(--palette-soft)!important}
+/* Primary and secondary actions, including consultation dialogs */
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.button.dark,.arc-button.dark,.contact-submit,.mas-bottom>a,.we-service-link,.we-case-play,.mas-story-play,.bap-play,.wistia-ar__play),
+html[data-wistia-palette="pink-purple-lavender"] #app#app #wistiaBeforeAfter .bap-tab.active,
+html[data-wistia-palette="pink-purple-lavender"] #app#app .bap-tab.active[data-mode],
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog .button.dark{
+ background:var(--palette-purple)!important;color:var(--palette-paper)!important;
+}
+/* Do not fade the small source labels against the purple/paper tab surfaces */
+html[data-wistia-palette="pink-purple-lavender"] #app#app #wistiaBeforeAfter .bap-tab small{opacity:1!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.contact-submit,.mas-bottom>a,.we-service-link,.bap-play,.wistia-ar__play,.bap-tab.active) *,
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog .button.dark *{color:inherit!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.inquiry-direct,.button:not(.dark),.arc-button:not(.dark),.wistia-location-links a),
+html[data-wistia-palette="pink-purple-lavender"] #app#app .we-home .we-directions-copy .wistia-location-links a,
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog .button:not(.dark){background:var(--palette-paper)!important;color:var(--palette-ink)!important;border-color:var(--palette-purple)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.mas-variant.is-selected,.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){background:var(--palette-selected)!important;color:var(--palette-ink)!important;box-shadow:inset 0 0 0 1px var(--palette-purple)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(input,select,textarea){accent-color:var(--palette-purple)!important;caret-color:var(--palette-ink)}
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(input,select,textarea,button,a,summary):focus-visible,
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog :focus-visible{outline-color:var(--palette-ink)!important}
+/* Preserve visible sound states, clip halves and waveform contrast */
+html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.wistia-ba-section,.wistia-ar){--ba-wave-before:var(--palette-ink);--ba-wave-after:var(--palette-purple);--ba-wave-rest:var(--palette-wave);--ba-before:var(--palette-purple);--ba-after:var(--palette-purple)}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-cut-clips>div{background:var(--palette-purple)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-cut-clips>div:last-child{background:var(--palette-soft)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--palette-purple) 50%,var(--palette-soft) 50%)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip>div{color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip>div:last-child{color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-purple)!important;border-color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-purple)!important}
+/* Menu and modal chrome, without recolouring the Kakao mark or any media */
+html[data-wistia-palette="pink-purple-lavender"] #mainMenu#mainMenu{background:var(--palette-purple)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--palette-paper)!important}
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog{background:var(--palette-paper)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog::backdrop{background:rgba(55,36,85,.6)}
+html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li,.consult-validation-list){background:var(--palette-soft)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="pink-purple-lavender"] ::selection{background:var(--palette-pink);color:var(--palette-on-pink)}
+/* Standalone privacy page: legal text stays unchanged, shared sans follows */
+html[data-wistia-palette="pink-purple-lavender"] .wrap :is(p,li,td,th,.lead,.eyebrow,.meta){color:var(--palette-ink)}
+html[data-wistia-palette="pink-purple-lavender"] :is(.top,.wrap section,.wrap th,.wrap td,body>footer){border-color:var(--palette-line)}
+/* Modern sans typography: no layout replacement, no extra font dependency */
+html[data-wistia-typography="pretendard-soft"],
+html[data-wistia-typography="pretendard-soft"] body{
+ --font-heading:"Pretendard Variable","Pretendard",sans-serif;
+ --font-body:"Pretendard Variable","Pretendard",sans-serif;
+ --serif:var(--font-heading);--sans:var(--font-body);
+ font-family:var(--font-body)!important;
+}
+html[data-wistia-typography="pretendard-soft"] :is(#app,#siteHeader,#mainMenu,#mediaDialog),
+html[data-wistia-typography="pretendard-soft"] :is(#app,#siteHeader,#mainMenu,#mediaDialog) *,
+html[data-wistia-typography="pretendard-soft"] :is(.wrap,.top,body>footer),
+html[data-wistia-typography="pretendard-soft"] :is(.wrap,.top,body>footer) *{
+ font-family:var(--font-body)!important;
+}
+html[data-wistia-typography="pretendard-soft"] #app#app :is(h1,h2,h3,h4,h5,h6),
+html[data-wistia-typography="pretendard-soft"] .wrap :is(h1,h2,h3){
+ font-weight:650!important;letter-spacing:-.035em!important;
+}
+html[data-wistia-typography="pretendard-soft"] #app#app :is(h1,h2,h3,h4,h5,h6) *{
+ font-weight:inherit!important;letter-spacing:inherit!important;
+}
+html[data-wistia-typography="pretendard-soft"] #app#app .we-home .we-hero h1{
+ font-weight:750!important;letter-spacing:-.045em!important;
+}
+html[data-wistia-typography="pretendard-soft"] #siteHeader .wordmark>span,
+html[data-wistia-typography="pretendard-soft"] #app :is(.mas-brand b,.footer-brand b){
+ font-weight:650!important;letter-spacing:.07em!important;
+}

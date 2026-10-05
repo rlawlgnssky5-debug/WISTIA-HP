@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import {graphicsFixture} from './studio-graphics-fixture.mjs'
 import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
@@ -16,7 +17,7 @@ const scope={
  bookingGuideSection:()=>'',faq:()=>'',footer:()=>'<footer></footer>',
  arCdRatioSection:()=>'<section id="arRatioExperience"><p class="wistia-ar__eyebrow" data-solo-kicker>AR RATIO EXPERIENCE</p><h2>AR 비율</h2></section>'
 }
-runInNewContext(app.slice(app.indexOf('const SOLO_STUDIO_PROCESS='),app.indexOf('const DUO_STUDIO_PROCESS=')),scope)
+runInNewContext(graphicsFixture(app)+app.slice(app.indexOf('const SOLO_STUDIO_PROCESS='),app.indexOf('const DUO_STUDIO_PROCESS=')),scope)
 runInNewContext(app.slice(app.indexOf('function detailStudioSteps('),app.indexOf('function processStudioMeta(')),scope)
 runInNewContext(app.slice(app.indexOf('function wistiaBeforeAfterSection('),app.indexOf('function setExpertPanel(')),scope)
 runInNewContext(app.slice(app.indexOf('function detailPointSection('),app.indexOf('function initArCommerceDetail(')),scope)
@@ -55,5 +56,5 @@ assert.match(css,/prefers-reduced-motion:no-preference/)
 assert.match(css,/data-studio-motion="on"/)
 assert.match(css,/prefers-reduced-motion:reduce/)
 assert.match(css,/folder-cue-nudge 2\.8s ease-in-out 3/)
-assert.match(app,/process-folder-art" aria-hidden="true"/)
+assert.match(app,/studio-folder-art studio-folder-3d" aria-hidden="true"><img src="assets\/img\/studio-3d\/folder\.webp" alt=""/)
 console.log('AR and story POINT order, product-specific video swaps, fees and restrained folder cues passed')

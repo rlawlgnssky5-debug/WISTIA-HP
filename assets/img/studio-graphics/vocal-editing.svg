@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">음정과 박자 수작업 보정</title><desc id="desc">피아노 음역 눈금 위의 보컬 음정 곡선을 한 음씩 정리하는 편집 도식</desc>
+<rect width="960" height="540" fill="#F5F4F0"/><path d="M40 82h880M40 458h880" stroke="#85827C"/>
+<g font-family="Arial,sans-serif" font-size="14" fill="#66645F" letter-spacing="3"><text x="40" y="52">WISTIA / VOCAL EDITING</text><text x="920" y="52" text-anchor="end">05 — PRECISION</text></g>
+<rect x="40" y="122" width="880" height="292" fill="#FFFFFF" stroke="#D5D3CD"/>
+<g stroke="#DDDCD8"><path d="M110 122v292M210 122v292M310 122v292M410 122v292M510 122v292M610 122v292M710 122v292M810 122v292M110 158h810M110 194h810M110 230h810M110 266h810M110 302h810M110 338h810M110 374h810"/></g>
+<g fill="#252421"><path d="M40 122h42v24H40zm0 60h42v24H40zm0 36h42v24H40zm0 96h42v24H40zm0 36h42v24H40z"/><rect x="145" y="265" width="114" height="16" rx="2"/><rect x="279" y="228" width="116" height="16" rx="2"/><rect x="415" y="192" width="100" height="16" rx="2"/><rect x="535" y="228" width="130" height="16" rx="2"/><rect x="689" y="265" width="167" height="16" rx="2"/></g>
+<path d="M130 300c17-5 19-47 42-46s23 24 48 18 33 8 47-16 36-46 56-40 28 20 56 18 39-67 61-55 24 44 53 30 30 23 57 18 43-5 65 20 33-2 54 19 46 12 70 0 71 40 104 7" fill="none" stroke="#85827C" stroke-width="2"/>
+<path d="M144 289h116M278 253h118M414 218h102M534 253h132M688 289h168" stroke="#85827C" stroke-dasharray="3 5"/>
+<g fill="#66645F" font-family="Arial,sans-serif" font-size="12" letter-spacing="2"><text x="40" y="493">PITCH / TIMING / ORIGINAL TONE</text><text x="920" y="493" text-anchor="end">EDITED BY HAND</text></g>
+</svg>

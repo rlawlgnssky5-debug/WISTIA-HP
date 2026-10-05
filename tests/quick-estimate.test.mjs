@@ -28,7 +28,7 @@ const cases=[
  [{key:'solo'},120000],
  [{key:'duo'},160000],
  [{key:'duo',options:['lyrics-video','bride-entrance'],events:['blog']},240000],
- [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},270000],
+ [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},240000],
  [{key:'solo',events:['voice-photo-consent']},110000],
  [{key:'duo',events:['voice-photo-consent']},150000],
  [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},110000],
@@ -39,7 +39,7 @@ const cases=[
  [{key:'duet-film',format:'making'},350000],
  [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},390000],
  [{key:'solo-film',format:'making'},120000],
- [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},460000]
+ [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},430000]
 ]
 for(const [state,expected] of cases){
  const result=api.preview({format:'live',options:[],events:[],...state})
@@ -48,6 +48,7 @@ for(const [state,expected] of cases){
 }
 assert.equal(api.context().key,'duo')
 assert.equal(api.options('duet-film').some(o=>o.key==='lyrics-video'),false)
+for(const key of ['solo','duo','duet-film'])assert.equal(api.options(key).some(o=>o.key==='rush'),false,'removed rush option is not offered for '+key)
 assert.equal(api.events().length,6)
 assert.equal(api.events().find(event=>event.key==='voice-photo-consent').discount,10000)
 context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance'],events:['blog']}

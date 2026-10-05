@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict'
+import {graphicsFixture} from './studio-graphics-fixture.mjs'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const app=read('js/app.js'),css=read('css/customer-review-fixes.css')
 let home=''
 const start=app.indexOf('function renderApprovedHomeThumbnails'),end=app.indexOf('function detailPriceData')
-runInNewContext(app.slice(start,end)+';renderWeddingHome()',{
+runInNewContext(graphicsFixture(app)+app.slice(start,end)+';renderWeddingHome()',{
  app:{set innerHTML(value){home=value}},img:()=>'',cta:()=>'',faq:()=>'',
  GENERAL_FAQ:[],soloReviewCarousel:()=>'<section id="reviews"></section>',
  wistiaBeforeAfterSection:()=>'',homeDirectionsSection:()=>'<section id="homeLocation"></section>',footer:()=>''

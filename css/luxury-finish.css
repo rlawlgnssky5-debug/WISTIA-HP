@@ -1,0 +1,178 @@
+/* WISTIA luxury finish — space belongs to the content, not extra ornament
+   Keep the approved NOIR palette, real media, prices and touch targets
+   Never hide the genuine lyric-video example in the option or detail section */
+
+/* Numbered strengths: distinct cards, inset numbers and breathing room */
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages ol{
+ display:grid!important;gap:18px!important;border:0!important;margin:0!important;padding:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li{
+ grid-template-columns:42px minmax(0,1fr)!important;align-items:start;gap:22px!important;
+ padding:28px 26px!important;margin:0!important;min-width:0;box-sizing:border-box;
+ border:1px solid var(--palette-line)!important;background:var(--palette-paper)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantage-number{
+ display:block;margin:2px 0 0!important;font-size:20px!important;line-height:1.4!important;
+ font-style:normal!important;font-weight:500!important;letter-spacing:.04em!important;color:var(--palette-muted)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li>div{min-width:0}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li small{
+ font-size:11px!important;line-height:1.6!important;letter-spacing:.08em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li h3{
+ margin:10px 0 16px!important;line-height:1.55!important;letter-spacing:-.015em!important;word-break:keep-all;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li p{
+ margin:0!important;font-size:14px!important;line-height:1.85!important;letter-spacing:0!important;
+ word-break:keep-all;overflow-wrap:anywhere;
+}
+
+/* Existing prose and process copy: readable leading without squeezing letters */
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-copy{
+ padding:24px 24px 28px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-card .story-process-copy h3{
+ margin:12px 0 16px!important;line-height:1.55!important;letter-spacing:-.015em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-card .story-process-copy p{
+ margin:0!important;line-height:1.85!important;letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-heading,.arc-point>header,.ar-story-intro) h2{
+ line-height:1.5!important;
+}
+
+/* Inquiry questions stay separate; one card is not a pile of touching text */
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-step{
+ padding:28px 24px!important;margin:0 0 24px!important;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-step h2{
+ margin:12px 0 14px!important;line-height:1.5!important;letter-spacing:-.015em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow :is(.consultation-step>p,.consultation-step-heading>p){
+ margin:0 0 24px!important;line-height:1.8!important;letter-spacing:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-subtitle{
+ margin:0 0 18px!important;line-height:1.5!important;letter-spacing:-.01em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .calculator-option-list{gap:18px!important}
+
+/* Genuine examples and new object artwork are a visible full-width part of the option */
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo{
+ display:grid!important;grid-template-columns:20px minmax(0,1fr)!important;gap:12px 14px!important;
+ padding:18px!important;align-items:start;min-width:0;min-height:44px;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>.option-photo{
+ display:block!important;grid-column:1/-1!important;grid-row:1!important;width:100%!important;
+ height:auto!important;aspect-ratio:16/9!important;margin:0 0 10px!important;overflow:hidden;border-radius:2px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>.option-photo img{
+ display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;filter:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>input{
+ grid-column:1!important;grid-row:2!important;width:20px;height:20px;margin:3px 0 0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>.option-copy{
+ grid-column:2!important;grid-row:2!important;display:grid;gap:8px!important;min-width:0;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>.option-copy strong{
+ font-size:15px!important;line-height:1.6!important;letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>.option-copy small{
+ font-size:12px!important;line-height:1.8!important;letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo>b{
+ grid-column:2!important;grid-row:3!important;margin:0!important;padding:0!important;line-height:1.5!important;text-align:left!important;
+}
+/* Protected business example: not decorative artwork and never opt-in visibility */
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.lyric-option-image,[data-lyric-example]){
+ display:block!important;visibility:visible!important;opacity:1!important;content-visibility:visible!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-lyrics>figure{
+ display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;
+ max-width:800px!important;margin:32px auto 0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-lyrics>figure img{
+ display:block!important;width:100%!important;height:auto!important;aspect-ratio:16/9;object-fit:contain!important;filter:none!important;
+}
+
+/* Review benefits: heading, live total, group note and option conditions each have space */
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gifts{
+ margin:36px 0 0!important;padding:28px 24px!important;min-width:0;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gift-heading{
+ display:block!important;margin:0 0 30px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gift-heading h3{
+ font-size:21px!important;line-height:1.5!important;margin:0!important;letter-spacing:-.015em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gift-heading p{
+ font-size:13px!important;line-height:1.8!important;margin:12px 0 0!important;letter-spacing:0!important;word-break:keep-all;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-total{
+ display:block!important;margin:22px 0 0!important;padding:14px 16px!important;background:var(--palette-soft)!important;
+ font-size:13px!important;line-height:1.8!important;letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-benefit-group{
+ margin:32px 0 0!important;padding:0!important;min-width:0;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-benefit-group h4{
+ margin:0 0 12px!important;font-size:17px!important;line-height:1.6!important;letter-spacing:-.01em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-group-note{
+ margin:0 0 20px!important;font-size:12px!important;line-height:1.85!important;letter-spacing:0!important;
+ word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-list{display:grid!important;gap:14px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-benefit-card{
+ margin:0!important;min-width:0;overflow:visible!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-choice{
+ display:grid!important;grid-template-columns:20px minmax(0,1fr)!important;gap:10px 14px!important;
+ padding:18px 18px 10px!important;min-height:56px!important;align-items:start;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-choice input{
+ width:20px;height:20px;margin:3px 0 0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-choice :is(span,strong){
+ min-width:0;font-size:14px!important;line-height:1.8!important;letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-choice>b{
+ grid-column:2!important;font-size:13px!important;line-height:1.6!important;letter-spacing:0!important;
+ margin:0!important;text-align:left!important;white-space:normal!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-terms{
+ margin:0!important;padding:0 18px 20px 52px!important;font-size:12px!important;line-height:1.85!important;
+ letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gifts>.fine{
+ margin:26px 0 0!important;line-height:1.85!important;letter-spacing:0!important;word-break:keep-all;
+}
+
+@media(max-width:600px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li{
+  grid-template-columns:30px minmax(0,1fr)!important;gap:16px!important;padding:24px 20px!important;
+ }
+ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantage-number{font-size:18px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-step{padding:24px 18px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gifts{padding:24px 18px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .booking-extra .has-option-photo{padding:16px!important}
+}
+@media(max-width:360px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages li{padding:22px 16px!important;gap:14px!important}
+ /* Avoid a nested three-frame squeeze on 320px while preserving one clear benefits group */
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .consultation-gifts{
+  padding:28px 0 0!important;border:0!important;border-top:1px solid var(--palette-line)!important;border-radius:0!important;
+ }
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-choice{padding-inline:14px!important;gap:10px 12px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .event-terms{padding:0 14px 18px 46px!important}
+}
+
+/* Object-only 3D artwork, never desaturate genuine photos or hide the real example */
+html[data-wistia-palette="noir-minimal"] #app#app#app img[src*="/studio-3d/"]{display:block;object-fit:contain!important;filter:none!important;aspect-ratio:16/9}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-3d{display:block!important;overflow:visible}
+html[data-wistia-palette="noir-minimal"] #app#app#app .studio-folder-3d img{width:100%!important;height:100%!important;aspect-ratio:1!important;transform:rotate(1deg);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder[open] .studio-folder-3d img{transform:translateY(-3px) rotate(-2deg)}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__vinyl{aspect-ratio:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-3d{display:block!important;width:100%!important;height:auto!important;margin:24px auto!important;aspect-ratio:16/9;object-fit:contain!important;border-radius:4px}
+@media(prefers-reduced-motion:reduce){.studio-folder-3d img{transition:none!important;transform:none!important}}
+html[data-studio-motion="off"] .studio-folder-3d img{transition:none!important;transform:none!important}

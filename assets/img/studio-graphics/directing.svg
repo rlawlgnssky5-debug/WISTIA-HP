@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">구간별 녹음과 디렉팅</title><desc id="desc">나누어 녹음한 두 구간에서 좋은 부분을 골라 하나의 보컬 트랙으로 연결하는 편집 도식</desc>
+<rect width="960" height="540" fill="#F5F4F0"/><path d="M40 82h880M40 458h880" stroke="#85827C"/>
+<g font-family="Arial,sans-serif" font-size="14" fill="#66645F" letter-spacing="3"><text x="40" y="52">WISTIA / VOCAL SESSION</text><text x="920" y="52" text-anchor="end">03 — DIRECTING</text></g>
+<g font-family="Arial,sans-serif" font-size="12" fill="#66645F" letter-spacing="2"><text x="40" y="148">TAKE 01</text><text x="510" y="148">TAKE 02</text><text x="40" y="326">SELECT / JOIN</text></g>
+<rect x="40" y="169" width="410" height="106" fill="#252421"/><rect x="510" y="169" width="410" height="106" fill="#DDDCD8"/>
+<g fill="none" stroke-width="2" stroke-linecap="butt"><path d="M74 222h18m12-10v20m14-22v24m14-44v64m14-38v12m14-51v90m14-64v38m14-43v48m14-31v14m14-23v32m14-42v52m14-39v26m14-23v20m14-15v10m14-9v8m14-4h22" stroke="#F5F4F0"/><path d="M544 222h18m12-12v24m14-30v36m14-43v50m14-37v24m14-30v36m14-23v10m14-43v76m14-50v24m14-34v44m14-33v22m14-21v20m14-13v6m14-12v18m14-11v4m14-2h22" stroke="#252421"/></g>
+<path d="M480 162v120" stroke="#85827C" stroke-dasharray="4 6"/><path d="m471 294 9 10 9-10" fill="none" stroke="#252421" stroke-width="2"/>
+<rect x="40" y="350" width="440" height="78" fill="#252421"/><rect x="480" y="350" width="440" height="78" fill="#DDDCD8"/>
+<g fill="none" stroke-width="2"><path d="M74 389h18m12-9v18m14-19v20m14-32v46m14-25v4m14-36v68m14-44v20m14-34v48m14-31v14m14-19v24m14-36v48m14-30v12m14-18v24m14-15v6m14-9v12m14-6h22" stroke="#F5F4F0"/><path d="M544 389h18m12-10v20m14-24v28m14-37v42m14-25v8m14-25v42m14-27v12m14-30v52m14-39v26m14-26v26m14-23v20m14-13v6m14-12v18m14-11v4m14-2h22" stroke="#252421"/></g>
+<rect x="464" y="369" width="32" height="40" fill="#F5F4F0" stroke="#85827C"/><path d="M473 385h14m-14 8h14" stroke="#252421"/>
+<text x="40" y="493" fill="#66645F" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">ONE PHRASE AT A TIME / ONE NATURAL VOICE</text>
+</svg>

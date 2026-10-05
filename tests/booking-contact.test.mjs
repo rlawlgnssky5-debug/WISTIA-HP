@@ -7,8 +7,9 @@ const context={window:{}}
 runInNewContext(read('js/contact-form.js'),context)
 const api=context.window.WistiaContact
 const markup=api.render()
-const keys=['source','name','service','eventDate','bookingDate','time']
-assert.equal((markup.match(/class="contact-field(?: |")/g)||[]).length,6)
+const keys=['source','service','eventDate','bookingDate','time']
+assert.equal((markup.match(/class="contact-field(?: |")/g)||[]).length,5)
+assert.doesNotMatch(markup,/contact-name|name="name"|성함/)
 for(const key of keys){
  assert.match(markup,new RegExp('for="contact-'+key+'"'))
  assert.match(markup,new RegExp('id="contact-'+key+'" name="'+(key==='time'?'timeStart':key)+'"'))
@@ -22,11 +23,11 @@ assert.equal((markup.match(/data-contact-date-mode=/g)||[]).length,4)
 assert.doesNotMatch(markup,/name="(?:eventDate|bookingDate|time|purpose)" type="text"/)
 assert.match(markup,/홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다/)
 assert.doesNotMatch(read('js/contact-form.js'),/fetch\(|localStorage|XMLHttpRequest/)
-const values={source:'인스타',name:'검수용 문의',service:'AR 축가 사전녹음',eventDate:'2026년 11월 15일',bookingDate:'10월 15일',timeStart:'15:00'}
+const values={source:'인스타',service:'AR 축가 사전녹음',eventDate:'2026년 11월 15일',bookingDate:'10월 15일',timeStart:'15:00'}
 const text=api.text(values)
-assert.equal((text.match(/^• /gm)||[]).length,6)
+assert.equal((text.match(/^• /gm)||[]).length,5)
 for(const value of Object.values(values))assert.ok(text.includes(value))
-assert.match(api.text({}),/성함 : 미정/)
+assert.doesNotMatch(api.text({name:'과거 초안 이름'}),/성함|과거 초안 이름/)
 assert.match(api.text({eventDate:'2026-11-15',bookingDate:'2026-10-08',timeStart:'15:00',timeEnd:'17:30',purpose:'축가'}),/예식일, 예정일 : 2026년 11월 15일/)
 assert.match(api.text({bookingDate:'2026-10-08',bookingDateMode:'unknown',timeStart:'15:00',timeEnd:'17:30'}),/희망 예약일 : 미정/)
 assert.match(api.text({timeStart:'15:00',timeEnd:'17:30'}),/희망 시간 : 15:00/)
@@ -63,6 +64,6 @@ assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
 assert.match(css,/input:focus-visible/)
 assert.match(css,/font-size:16px/)
 const page=read('contact.html')
-assert.match(page,/contact-form.js\?v=20261005-inquiry-choice-editor-1/)
+assert.match(page,/contact-form.js\?v=20261006-luxury-inquiry-1/)
 assert.match(page,/noindex,\s*follow/)
-console.log('Six contact fields, single start time, dropdown, clipboard text, preserved draft and no server transmission passed')
+console.log('Five contact fields without names, single start time, dropdown, clipboard text, preserved draft and no server transmission passed')
