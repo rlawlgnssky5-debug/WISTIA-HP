@@ -13,7 +13,7 @@ assert.deepEqual(sheets.slice(-8),[
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
  'css/noir-minimal.css?v=20261006-noir-minimal-1',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-review-drag-red-1'
+ 'css/luxury-finish.css?v=20261006-reviews-five-1'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)

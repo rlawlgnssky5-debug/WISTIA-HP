@@ -13,7 +13,7 @@ assert.deepEqual(sheets.slice(-6),[
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
  'css/noir-minimal.css?v=20261006-noir-minimal-1',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-review-drag-red-1'
+ 'css/luxury-finish.css?v=20261006-reviews-five-1'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)

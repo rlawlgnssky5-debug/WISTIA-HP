@@ -267,7 +267,7 @@ const EVENTS = [
   { key: "weekday", type: "discount", label: "월~목 평일 할인", discount: 10000, detail: "월요일~목요일 녹음·촬영 예약 시 1만원 할인 · 최종 일정과 적용 여부는 상담에서 확인합니다" }
 ]
 
-const ACTUAL_REVIEW_IMAGES = Array.from({ length: 11 }, (_, index) => index===5?"assets/img/reviews/review-06-clean.webp":`assets/img/reviews/review-${String(index + 1).padStart(2, "0")}.webp`)
+const ACTUAL_REVIEW_IMAGES = Array.from({ length: 16 }, (_, index) => index===5?"assets/img/reviews/review-06-clean.webp":`assets/img/reviews/review-${String(index + 1).padStart(2, "0")}.webp`)
 const SOLO_REVIEW_IMAGES=[...Array.from({length:8},(_,index)=>`assets/img/reviews/showcase/review-${String(index+1).padStart(2,"0")}-black.webp`),...Array.from({length:3},(_,index)=>`assets/img/reviews/showcase/review-${String(index+9).padStart(2,"0")}-light.webp`)]
 
 const DETAIL_STORIES = {
