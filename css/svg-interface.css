@@ -1,0 +1,148 @@
+/* A shared SVG title column, not a replacement for photography or 3D explanation art */
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-title,
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-title{
+ display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;gap:14px!important;
+ align-items:start!important;width:100%!important;max-width:100%!important;min-width:0!important;
+ text-align:left!important;box-sizing:border-box;text-wrap:pretty;justify-content:start!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-title{grid-template-columns:24px minmax(0,1fr)!important;gap:10px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-title-icon{
+ display:flex!important;align-items:center;justify-content:center;width:32px!important;height:32px!important;
+ margin:7px 0 0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;
+ color:inherit!important;flex-shrink:0;text-align:left!important;line-height:1!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-title-icon>.studio-icon{display:block!important;width:32px!important;height:32px!important;margin:0!important;transform:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-title>.svg-title-icon{width:24px!important;height:24px!important;margin-top:3px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-title>.svg-title-icon>.studio-icon{width:24px!important;height:24px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-text{
+ display:block!important;min-width:0!important;width:auto!important;margin:0!important;padding:0!important;
+ text-align:left!important;word-break:keep-all;overflow-wrap:anywhere;color:inherit!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-text :is(span,strong,b,mark){text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-text :is(.ar-copy-emphasis,.ar-copy-emphasis-text){
+ padding-inline:0!important;margin-inline:0!important;transform:none!important;text-align:left!important;background:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-text .ar-copy-emphasis-bg{display:none!important;background:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-heading{
+ --svg-title-indent:46px;min-width:0!important;box-sizing:border-box;text-align:left!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(header.svg-section-heading,.section-heading.svg-section-heading){
+ display:block!important;max-width:none!important;width:100%!important;margin-inline:0!important;
+ align-items:start!important;justify-items:start!important;text-align:left!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-heading>.svg-section-title{margin-inline:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-description{
+ width:auto!important;max-width:none!important;margin-left:var(--svg-title-indent,46px)!important;margin-right:0!important;
+ text-align:left!important;line-height:1.8!important;word-break:keep-all;overflow-wrap:anywhere;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-description :is(span,strong,b){text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-kicker{
+ margin-left:var(--svg-title-indent,46px)!important;margin-right:0!important;align-self:flex-start!important;
+ justify-self:start!important;text-align:left!important;max-width:calc(100% - 46px)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-copy{min-width:0!important;text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-description{
+ text-align:left!important;margin-left:34px!important;margin-right:0!important;max-width:none!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+/* Whole home sections use one content edge, even when reviews span the viewport */
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home{--svg-home-gutter:48px;--svg-home-width:1152px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home :is(#homeServices,#homeSound,#homeExpert,.we-home-faq){
+ width:100%!important;max-width:none!important;margin-inline:0!important;
+ padding-inline:max(var(--svg-home-gutter),calc((100% - var(--svg-home-width))/2))!important;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home :is(.we-cases>.we-heading,.we-review-wrap>.we-shell,.we-home-location){
+ width:calc(100% - var(--svg-home-gutter)*2)!important;max-width:var(--svg-home-width)!important;margin-inline:auto!important;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-home-location>.we-heading{width:100%!important;max-width:none!important;margin-inline:0!important;padding-inline:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .reviews-section{padding-inline:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .solo-review-carousel>.shell{
+ width:calc(100% - var(--svg-home-gutter)*2)!important;max-width:var(--svg-home-width)!important;padding-inline:0!important;margin-inline:auto!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability{width:100%!important;max-width:none!important;margin-inline:0!important;box-sizing:border-box}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability .we-location{
+ padding-inline:max(var(--svg-home-gutter),calc((100% - var(--svg-home-width))/2))!important;box-sizing:border-box;border-radius:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-heading{gap:0!important;align-items:start!important;text-align:left!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-heading>.svg-section-title{margin:16px 0 18px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-head{width:100%!important;gap:24px!important;align-items:flex-end!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-head>header{flex:1;min-width:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-service-copy{align-items:start!important;justify-items:start!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-service-copy>.svg-item-description{margin-top:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-service-copy>.we-service-link{align-self:start!important;justify-self:start!important;margin-left:34px!important;width:calc(100% - 34px)!important;max-width:220px!important}
+/* Keep card columns and forms intact, only their title/description alignment changes */
+html[data-wistia-palette="noir-minimal"] #app#app#app .mobile-ar-solo .svg-section-heading{max-width:100%!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mobile-ar-solo .mas-selection>.svg-section-title{grid-column:1/-1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-information dl>div{grid-template-columns:112px minmax(0,1fr)!important;gap:18px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-information dl>div dd,
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-information dl>div dd :is(small,span){
+ min-width:0!important;max-width:100%!important;white-space:normal!important;
+ word-break:keep-all!important;overflow-wrap:anywhere!important;line-height:1.8!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-information .svg-info-label{
+ display:grid!important;grid-template-columns:18px minmax(0,1fr)!important;gap:8px!important;align-items:start!important;
+ min-width:0!important;text-align:left!important;line-height:1.7;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-info-icon,
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-info-icon>.studio-icon{
+ display:block!important;width:18px!important;height:18px!important;margin:2px 0 0!important;padding:0!important;background:none!important;color:inherit!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-info-icon>.studio-icon{margin:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-info-text{display:block;min-width:0;text-align:left!important;word-break:keep-all;overflow-wrap:anywhere}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header .svg-item-title{font-size:inherit!important;margin:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header .svg-section-title{font-size:inherit!important;margin:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header :is(.svg-item-title,.svg-section-title){
+ display:inline-flex!important;width:auto!important;max-width:100%!important;gap:9px!important;align-items:center!important;flex:0 1 auto;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header .svg-title-icon{margin-top:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-affordability .svg-title-icon{color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) :is(.svg-section-title,.svg-section-description,.svg-section-description u){
+ text-align:left!important;color:var(--palette-paper)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) .svg-section-description{
+ margin-left:var(--svg-title-indent,46px)!important;margin-right:0!important;max-width:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) .svg-section-kicker{
+ margin-left:var(--svg-title-indent,46px)!important;margin-right:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-submit-icon{
+ display:inline-flex!important;align-items:center;justify-content:center;width:22px!important;height:22px!important;
+ margin:0 12px 0 0;padding:0!important;background:none!important;color:inherit!important;flex:0 0 22px;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .svg-submit-icon>.studio-icon{display:block!important;width:22px!important;height:22px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .contact-submit{display:flex!important;align-items:center!important;justify-content:center!important;gap:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .contact-submit [data-submit-label]{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;min-width:0;line-height:1.6;overflow-wrap:anywhere;gap:4px}
+/* Real SVGs carry functional glyphs, preserving the original controls and labels */
+html[data-wistia-palette="noir-minimal"] :is(#app#app#app,#mainMenu#mainMenu,#mediaDialog#mediaDialog) .svg-chrome-icon{
+ display:inline-flex!important;align-items:center;justify-content:center;width:20px!important;height:20px!important;
+ min-width:20px;vertical-align:middle;margin:0 3px;padding:0!important;border:0!important;box-shadow:none!important;
+ background:none!important;color:inherit!important;line-height:1;flex-shrink:0;pointer-events:none;
+}
+html[data-wistia-palette="noir-minimal"] :is(#app#app#app,#mainMenu#mainMenu,#mediaDialog#mediaDialog) .svg-chrome-icon>.studio-icon{
+ display:block!important;width:20px!important;height:20px!important;transform:none!important;vertical-align:middle;
+}
+html[data-wistia-palette="noir-minimal"] :is(#app#app#app,#mainMenu#mainMenu,#mediaDialog#mediaDialog) .svg-chevron-right>.studio-icon{transform:rotate(-90deg)!important}
+html[data-wistia-palette="noir-minimal"] :is(#app#app#app,#mainMenu#mainMenu,#mediaDialog#mediaDialog) .svg-chevron-left>.studio-icon{transform:rotate(90deg)!important}
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle{display:grid;place-items:center}
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle>span{
+ grid-area:1/1;display:block!important;width:28px!important;height:28px!important;background:none!important;
+ margin:0!important;padding:0!important;border:0!important;transform:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle svg{display:block;width:28px;height:28px;color:var(--palette-ink)}
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle[aria-expanded="false"]>.svg-menu-close,
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle[aria-expanded="true"]>.svg-menu-open{display:none!important}
+@media(max-width:768px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home{--svg-home-gutter:20px}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-title-icon{margin-top:4px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-head{flex-wrap:wrap!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-head>header{flex-basis:100%!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-controls{margin-left:46px!important}
+}
+@media(max-width:359px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home{--svg-home-gutter:16px}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-title{grid-template-columns:28px minmax(0,1fr)!important;gap:12px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-title>.svg-title-icon,
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-title>.svg-title-icon>.studio-icon{width:28px!important;height:28px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-heading{--svg-title-indent:40px}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-kicker{max-width:calc(100% - 40px)!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .mas-information dl>div{grid-template-columns:96px minmax(0,1fr)!important;gap:12px!important}
+}

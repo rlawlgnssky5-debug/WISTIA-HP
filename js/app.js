@@ -533,14 +533,49 @@ const STUDIO_ICON_PATHS={
  arrow:'<path d="M3 12h18m-7-7 7 7-7 7"/>',
  down:'<path d="M12 3v18m-7-7 7 7 7-7"/>',
  up:'<path d="M12 21V3m-7 7 7-7 7 7"/>',
- chevron:'<path d="m5 9 7 7 7-7"/>'
+ chevron:'<path d="m5 9 7 7 7-7"/>',
+ package:'<path d="m3 7 9-4 9 4-9 4-9-4Zm0 0v10l9 4 9-4V7M12 11v10M7.5 5l9 4"/>',
+ receipt:'<path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3Z"/><path d="M8 7h8M8 11h8M8 15h4"/>',
+ workflow:'<rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M12 6h6v6M6 12v6h6m-3-3 3 3-3 3"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2m6 0h2m-10 3h2m6 0h2"/>',
+ help:'<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4M12 16.5h.01"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ minus:'<path d="M5 12h14"/>',
+ tag:'<path d="M3 3h8l10 10-8 8L3 11V3Z"/><circle cx="7.5" cy="7.5" r="1"/>',
+ refund:'<path d="M4 8a8 8 0 1 1-1 7M4 3v5h5M10 8h4m-4 4h4m-2-4v8"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
+ people:'<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 5v3"/>',
+ note:'<path d="M9 17V5l11-2v12M9 9l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2.5"/><ellipse cx="17" cy="16" rx="3" ry="2.5"/>',
+ file:'<path d="M5 3h9l5 5v13H5V3Zm9 0v5h5M8 12h8M8 16h6"/>',
+ shield:'<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/>',
+ headphones:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/>',
+ compare:'<path d="M12 3v18M3 8h6m-3-3L3 8l3 3M21 16h-6m3-3 3 3-3 3"/>',
+ menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
+ close:'<path d="m6 6 12 12M18 6 6 18"/>',
+ previous:'<path d="M21 12H3m7-7-7 7 7 7"/>',
+ next:'<path d="M3 12h18m-7-7 7 7-7 7"/>',
+ external:'<path d="M9 5H4v15h15v-5M13 4h7v7m0-7L10 14"/>',
+ drag:'<path d="M3 12h18M7 8l-4 4 4 4m10-8 4 4-4 4M10 6h4m-4 12h4"/>',
+ speaker:'<path d="M3 9h4l5-4v14l-5-4H3V9Zm13-1a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+ copy:'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M5 16H3V3h13v2"/>'
 }
-function studioIcon(name){return '<svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false">'+(STUDIO_ICON_PATHS[name]||STUDIO_ICON_PATHS.check)+'</svg>'}
+function studioIcon(name){return '<svg class="studio-icon" data-icon="'+(STUDIO_ICON_PATHS[name]?name:'check')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false">'+(STUDIO_ICON_PATHS[name]||STUDIO_ICON_PATHS.check)+'</svg>'}
+function prepareSvgPlayerControls(){
+ app.querySelectorAll('.bap-play-icon,.wistia-ar__play-icon').forEach(span=>{span.innerHTML=studioIcon('play')+studioIcon('pause');span.setAttribute('aria-hidden','true')})
+ app.querySelectorAll('.bap-play').forEach(button=>button.setAttribute('aria-pressed','false'))
+ const arPlay=app.querySelector('.wistia-ar__play')
+ if(arPlay&&!arPlay.querySelector('.wistia-ar__play-label'))arPlay.insertAdjacentHTML('beforeend','<span class="wistia-ar__play-label">재생</span>')
+ app.querySelectorAll('.bap-switch').forEach(button=>{button.innerHTML=studioIcon('swap')+'<span>전환</span>';button.setAttribute('aria-label','보정 후로 전환하여 듣기')})
+ const ratio=app.querySelector('.wistia-ar__ratio')
+ if(ratio&&!ratio.querySelector('.wistia-ar__ratio-hint'))ratio.insertAdjacentHTML('beforeend','<p class="wistia-ar__ratio-hint">'+studioIcon('drag')+'<span>손잡이를 좌우로 움직여 비교하세요</span></p>')
+ const input=ratio?.querySelector('.wistia-ar__ratio-input')
+ if(input){input.setAttribute('aria-describedby','arRatioDragHint');ratio.querySelector('.wistia-ar__ratio-hint').id='arRatioDragHint'}
+}
 function processFolderArt(){return '<span class="studio-folder-art studio-folder-3d" aria-hidden="true"><img src="assets/img/studio-3d/folder.webp" alt="" loading="eager" decoding="async"></span>'}
 function studioKeyArtwork(comfortable=false){const shift=comfortable?17:0;return '<svg class="studio-key-art" viewBox="0 0 180 90" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width=".7" opacity=".3"><path d="M8 16h164M8 31h164M8 46h164M8 61h164M8 76h164M8 16v60m41-60v60m41-60v60m41-60v60m41-60v60"/></g><g fill="currentColor"><rect x="16" y="'+(45+shift)+'" width="27" height="8"/><rect x="56" y="'+(30+shift)+'" width="27" height="8"/><rect x="96" y="'+(15+shift)+'" width="27" height="8"/><rect x="136" y="'+(30+shift)+'" width="27" height="8"/></g><path d="M20 '+(57+shift)+'H43m17-15h23m17-15h23m17 15h23" fill="none" stroke="currentColor" stroke-width="1"/></svg>'}
 function studioWaveformGraphic(){const bars=[4,8,15,23,17,9,20,29,14,6,18,24,13,7,11,5];return '<svg class="studio-wave-art" viewBox="0 0 120 32" aria-hidden="true"><path d="M3 16h6'+bars.map((h,i)=>'M'+(13+i*6)+' '+(16-h/2)+'v'+h).join('')+'M110 16h7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="butt"/></svg>'}
 function img(src,alt,eager=false){const graphic=STUDIO_GRAPHIC_ASSETS[src];if(graphic){src=graphic[0]==="broadcast"?"assets/img/studio-graphics/broadcast.svg":"assets/img/studio-3d/"+graphic[0]+".webp";alt=graphic[1].replace("스튜디오 그래픽","3D 제작 안내 그래픽")}else if(/^assets\/img\/studio-graphics\/(?!broadcast|priority)[a-z-]+\.svg$/.test(src)){src=src.replace("/studio-graphics/","/studio-3d/").replace(".svg",".webp")}return '<img src="'+escapeHtml(src)+'" alt="'+escapeHtml(alt)+'" loading="'+(eager?"eager":"lazy")+'" decoding="async"'+(eager?' fetchpriority="high"':"")+'>'}
-function arrow(){return '<span aria-hidden="true">↗</span>'}
+function arrow(){return '<span class="svg-link-arrow" aria-hidden="true">'+studioIcon('external')+'</span>'}
 function label(text){return '<p class="eyebrow">'+text+'</p>'}
 function heading(kicker,title,description=""){return '<div class="section-heading'+(kicker?"":" no-kicker")+'">'+(kicker?label(kicker):"")+'<div><h2>'+title+'</h2>'+(description?'<p>'+description+'</p>':"")+'</div></div>'}
 function cta(text,href,style="dark"){return '<a class="button '+style+'" href="'+href+'">'+text+arrow()+'</a>'}
@@ -1522,6 +1557,7 @@ function consultationText(){
 }
 function showDialog(html,type){
  lastDialogFocus=document.activeElement;dialog.innerHTML='<div class="dialog-content '+type+'"><button class="dialog-close" data-close aria-label="닫기">×</button>'+html+'</div>';
+ window.WistiaSvgUI?.mountChrome(dialog,studioIcon)
  dialog.classList.toggle("consult-copy-modal",type==="consult-copy-dialog");dialog.setAttribute("aria-label",type==="consult-copy-dialog"?"상담 양식 복사 안내":"영상, 고객 후기 및 상담 내용")
  dialog.showModal();document.body.classList.add("modal-open");document.querySelector("#siteHeader").inert=true;app.inert=true;document.querySelector("#floatingKakao").inert=true;dialog.querySelector(type==="consult-copy-dialog"?".consult-copy-action":"button").focus()
 }
@@ -1720,6 +1756,8 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  if(home)renderHome(type==="find"?key:"role");else if(type==="contact")renderContactPage();else if(type==="before-after")renderBeforeAfterPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  window.WistiaGuide?.destroy?.()
  document.querySelector('#guideLayer')?.remove()
+ prepareSvgPlayerControls()
+ window.WistiaSvgUI?.mount(app,studioIcon)
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArCommerceDetail();
@@ -1764,13 +1802,13 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  if(reuseArPriceForm)firstRender=false;else requestAnimationFrame(()=>{const anchor=scrollAnchor?document.querySelector(scrollAnchor):null;if(anchor&&previousAnchorTop!=null)window.scrollTo({top:window.scrollY+anchor.getBoundingClientRect().top-previousAnchorTop,behavior:"instant"});else if(preserveScroll)window.scrollTo({top:previousScrollY,behavior:"instant"});else if(target?.id==='homeCases'){const title=target.querySelector('h2')||target;window.scrollTo({top:window.scrollY+title.getBoundingClientRect().top-innerHeight*.35,behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}else if(target)target.scrollIntoView({behavior:firstRender||matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});else window.scrollTo({top:0,behavior:"instant"});firstRender=false});
  if(!reuseArPriceForm)app.focus({preventScroll:true});
  normalizeInternalLinks();
- normalizeInquiryLinks();mountInquiryObserver()
+ normalizeInquiryLinks();window.WistiaSvgUI?.mountChrome(document,studioIcon);mountInquiryObserver()
  window.WistiaMotion?.mount()
  document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.pathname===routePath())a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
 }
 function normalizeInquiryLinks(){
  document.querySelectorAll('.arc-actions').forEach(group=>{const links=group.querySelectorAll('a[href^="/event/"]');if(links.length>1)links[1].remove()})
- document.querySelectorAll('.arc-actions a[href^="/event/"],.detail-benefit-teaser a[href^="/event/"],.detail-next a[href^="/event/"]').forEach(link=>{link.textContent="문의 양식 작성으로 →";link.classList.add('is-primary');link.removeAttribute("data-ar-consult")})
+ document.querySelectorAll('.arc-actions a[href^="/event/"],.detail-benefit-teaser a[href^="/event/"],.detail-next a[href^="/event/"]').forEach(link=>{link.innerHTML='문의 양식 작성으로 '+studioIcon('next');link.classList.add('is-primary');link.removeAttribute("data-ar-consult")})
  document.querySelectorAll('.arc-online-note').forEach(note=>note.textContent='구성 선택 → 문의 양식 작성 → 복사 후 카카오톡 상담')
 }
 function goBack(){if((history.state?.wistiaDepth||0)>0)history.back();else{history.replaceState(history.state,"","/"+location.search);route()}}

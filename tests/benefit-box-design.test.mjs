@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
+import {assertContactBusinessPreserved,assertBeforeAfterCorePreserved} from './svg-interface-fixture.mjs'
 import {runInNewContext} from 'node:vm'
 import {graphicsFixture,assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertManualReviews} from './manual-reviews-fixture.mjs'
@@ -103,11 +104,9 @@ for(const [key,base] of [['solo',120000],['duo',160000],['duet-film',350000]]){
 assertPreservedAppLogic(source)
 assertManualReviews(source)
 assertInquiryWithoutName(read('js/contact-form.js'))
-for(const [path,digest] of [
- ['js/contact-form.js','6bf5d4dd3e56d5a46533f133b72990e959ae68620628fb30b43661642590b202'],
- ['js/before-after.js','9d426e6cf8106e4eef646412b310747e9fc2b492cb9fc8dc8691a60c5d32ab60'],
- ['js/quick-estimate.js','d3c34804d4c951aad4a628f501fe878a7cdf0aaaea1c116bbcb1e9e64464b40b']
-])assert.equal(textHash(path),digest,path+' remains unchanged from deployed HEAD')
+assertContactBusinessPreserved(read('js/contact-form.js'))
+assertBeforeAfterCorePreserved(read('js/before-after.js'))
+assert.equal(textHash('js/quick-estimate.js'),'d3c34804d4c951aad4a628f501fe878a7cdf0aaaea1c116bbcb1e9e64464b40b','unused quick estimate remains unchanged from deployed HEAD')
 
 const reviewHashes=['c34f36e0763fece782dd51343734e8c9b1bc3cf46dd450442c454011f1b6bb87','ee5a9f80df26b10046cb12383d92539d00945d0555901e6b6a2f4d1abe90d2a6','82f8aefd3500ed2b818523a472d856524bb21c12dfe7c42d5f3ebe639fc4bfb0','fc2da2aa7e5fb4658a916ea56d16a4047071ae5e45e58da32ceef52e4636a0d7','047b61fe0fdf596c7f09a31924dab97e0b28733f00aaa19c2a1307641817094a','47ff783549421d3e538e92f2ef240fcb35e52695aac0f6096971b55b7e09b59b','695751ebf0fc9a73485e385befe4bbdec733a87917a9256c2e387e3e0cb3e996','929fbe2166f459cf2ad7693e8c78fbdae56a515f1d04089a3a9e803acbf7b876','dc7e3ad502bdead4c9e233a412cafeadb502673ad37c37f5eaa0282f3f90ccd1','14ec6a4807fc94baada76923beeb35abddf7933fb5956b178d8f9bb0847d3189','80e61027606a5a3be1928e60ca578e057c7e8ce390a8dc6b28857f256752131e','24bbdfc0787c96ba4406b223e784a0753ce1f69fc47edea9703d76d81267688d','0c79775358105675a204461f09fc477d40af426af126f4f775e55d8976ad8117','42ceecd5a10ed775026548a8fc1ec84f8e7866394fb0d17c1fb3a0a8c2c20cfb','f68f9e03b5a1b72bf80d2270f20908b61f3be9c23c1647ad5aa0ee4c5eb314d7','2a8b8f52f00db96e0e4d22c31e07bd7773fc43d1e47e99bb228c7c1700596399']
 for(let index=0;index<reviewHashes.length;index++){
@@ -143,7 +142,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261006-benefit-boxes-1/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261007-svg-interface-1/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
 console.log('Yellow transparent 3D gift, three two-box renderers, six intact benefits, 192 real calculations, selection preservation, protected inquiry/player/reviews/lyric and caches passed')

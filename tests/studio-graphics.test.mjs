@@ -44,10 +44,19 @@ assert.match(css,/\.studio-folder-art:before\{content:none!important/)
 assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
 assert.match(css,/data-studio-motion="off"/)
 assert.doesNotMatch(css,/\.studio-folder-art\{[^}]*display:none/)
-assert.match(index,/app.js\?v=20261006-benefit-boxes-1/)
+assert.match(index,/app.js\?v=20261007-svg-interface-1/)
 assert.ok(index.lastIndexOf('studio-graphics.css')>index.lastIndexOf('noir-minimal.css'))
 assertPreservedAppLogic(source)
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
 assertInquiryWithoutName(read('js/contact-form.js')) // Name removal supersedes the earlier whole-file inquiry lock
-assert.equal(hash(read('js/before-after.js')),'9d426e6cf8106e4eef646412b310747e9fc2b492cb9fc8dc8691a60c5d32ab60')
+// The SVG and accessible playback labels may change; decoding, waveform and audio timing may not
+const beforeAfter=read('js/before-after.js')
+for(const [start,end,digest] of [
+ ['    function start(offset){','    function activate(next,autoPlay=false){','f4dc19e3ada603f939e215ac15fc03de245aecdde3397843ae242ff830000d5f'],
+ ['    function makePeaks(buffer,count=120){',"    root.classList.add('is-loading')",'d0682b27127d7e7e8c7ec77ff3fbe063a39fc844e9a0f0e2eb87af94a74f5109']
+]){
+ const a=beforeAfter.indexOf(start),b=beforeAfter.indexOf(end,a+start.length)
+ assert.ok(a>=0&&b>a,'audio core boundaries remain available')
+ assert.equal(hash(beforeAfter.slice(a,b)),digest,'before/after audio timing and decoding remain unchanged')
+}
 console.log('Archived vector art, restored 3D broadcast, new text-inclusive video expertise and preserved business/playback logic passed')

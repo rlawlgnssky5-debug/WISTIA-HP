@@ -1,0 +1,69 @@
+/* Real SVG control glyphs and clearly separated comparison controls */
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tabs{
+ display:grid!important;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)!important;align-items:stretch;gap:10px!important;margin-top:20px!important;padding:0!important;background:transparent!important;border-radius:0!important
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab{
+ display:flex!important;flex-direction:column;align-items:flex-start!important;justify-content:center;gap:7px!important;min-width:0;min-height:88px!important;padding:17px 20px!important;border:1px solid #B8B4AC!important;border-radius:6px!important;background:#FFFFFF!important;color:#252421!important;text-align:left!important;box-shadow:none!important;cursor:pointer
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab.active[data-mode]{background:#252421!important;border-color:#252421!important;color:#FFFFFF!important;box-shadow:inset 0 -3px 0 #777268!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab :is(strong,small){color:inherit!important;text-align:left!important;white-space:normal!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab strong{font-size:20px!important;line-height:1.35}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab small{font-size:11px!important;letter-spacing:.02em!important;line-height:1.5;opacity:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-switch{
+ position:static!important;inset:auto!important;transform:none!important;align-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:52px!important;min-width:0;height:62px!important;padding:7px 4px;border:1px solid #B8B4AC!important;border-radius:6px!important;background:#FFFFFF!important;color:#252421!important;font-size:11px!important;font-weight:600;line-height:1.2;box-shadow:none!important;cursor:pointer
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-switch .studio-icon{width:23px!important;height:23px!important;color:inherit!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play){
+ display:inline-flex!important;align-items:center;justify-content:center;gap:9px;min-width:96px;width:auto!important;min-height:44px;height:44px!important;padding:0 14px!important;border:1px solid #252421!important;border-radius:6px!important;background:#252421!important;color:#FFFFFF!important;box-shadow:none!important;transform:none!important;cursor:pointer
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play-icon,.wistia-ar__play-icon){
+ display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 20px;width:20px!important;height:20px!important;margin:0!important;border:0!important;background:none!important;clip-path:none!important;font-size:0!important;color:inherit!important
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play-icon,.wistia-ar__play-icon):before,
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play-icon,.wistia-ar__play-icon):after{content:none!important;display:none!important;border:0!important;background:none!important;clip-path:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play-icon,.wistia-ar__play-icon)>.studio-icon{width:20px!important;height:20px!important;flex-shrink:0;color:inherit!important;stroke:currentColor!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play) [data-icon="pause"]{display:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play)[aria-pressed="true"] [data-icon="play"]{display:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play)[aria-pressed="true"] [data-icon="pause"]{display:block!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play-label,.wistia-ar__play-label){font-size:13px!important;font-weight:650;line-height:1;letter-spacing:0!important;color:inherit!important;white-space:nowrap}
+/* A pending download must not erase the play glyph or its caption */
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-play[aria-busy="true"]:after{content:none!important;display:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play)[aria-busy="true"]{opacity:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-play[aria-busy="true"]>*{opacity:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter :is(.bap-tab,.bap-switch):hover{border-color:#252421!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.wistia-ar__play):hover{background:#413E38!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-play,.bap-switch,.bap-tab,.wistia-ar__play,.wistia-ar__volume):focus-visible{outline:2px solid #252421!important;outline-offset:4px!important}
+
+/* Pale, thin native range track, with a large white SVG-grip handle */
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio{cursor:default!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-field{height:62px!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-field:before{content:"";position:absolute;top:35px;left:19px;right:19px;height:8px;border-radius:999px;background:linear-gradient(90deg,#918A7D 0,#918A7D calc(var(--wistia-ratio-progress)*1%),#E1DFD9 calc(var(--wistia-ratio-progress)*1%),#E1DFD9 100%);pointer-events:none}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-end{top:0!important;transform:none!important;color:#625D54!important;font-size:10px!important;line-height:1.2;letter-spacing:.1em!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-end--live{left:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-end--ar{right:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input{inset:16px 0 auto!important;height:46px!important;appearance:none;-webkit-appearance:none;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;cursor:ew-resize!important;touch-action:pan-y}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input::-webkit-slider-runnable-track{height:46px;background:transparent!important;border:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input::-webkit-slider-thumb{width:38px;height:38px;margin-top:4px;appearance:none;-webkit-appearance:none;border:2px solid #625D54!important;border-radius:50%;background:#FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Cpath d='M15 13v12m4-12v12m4-12v12' fill='none' stroke='%23625D54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/34px 34px no-repeat!important;box-shadow:0 2px 5px #25242120!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input::-moz-range-track{height:46px;background:transparent!important;border:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input::-moz-range-progress{height:46px;background:transparent!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input::-moz-range-thumb{width:34px;height:34px;border:2px solid #625D54!important;border-radius:50%;background:#FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Cpath d='M15 13v12m4-12v12m4-12v12' fill='none' stroke='%23625D54' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/34px 34px no-repeat!important;box-shadow:0 2px 5px #25242120!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-input:focus-visible{outline:2px solid #625D54!important;outline-offset:2px!important;border-radius:24px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.wistia-ar__coach,.wistia-ar__scroll-hint){display:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin:16px 0 0;color:#625D54!important;font-size:12px;line-height:1.5;letter-spacing:0!important;text-align:center}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-hint .studio-icon{width:18px!important;height:18px!important;color:inherit!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-marks{margin-top:8px!important;color:#625D54!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__ratio-marks span.is-active{color:#252421!important;font-weight:750!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__player{grid-template-columns:auto minmax(0,1fr) auto;gap:12px 10px;width:min(100%,340px);margin-top:24px}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__play{grid-column:1/3;grid-row:1;justify-self:start}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__time{grid-column:1;grid-row:2;color:#625D54!important;font-size:12px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__seek{grid-column:2;grid-row:2;height:30px!important;touch-action:pan-y}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__time--total{grid-column:3;grid-row:2}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__volume{grid-column:3;grid-row:1;width:44px!important;height:44px!important;border:1px solid #B8B4AC!important;border-radius:6px!important;background:#FFFFFF!important;color:#252421!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-ar__error{position:static;grid-column:1/-1;font-size:12px!important}
+@media(max-width:480px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tabs{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab{min-height:90px!important;padding:14px 11px!important;gap:6px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab strong{font-size:17px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab small{font-size:10px!important;letter-spacing:0!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-switch{width:44px!important;font-size:10px!important}
+}

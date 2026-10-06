@@ -14,6 +14,6 @@ assert.match(css,/\.mas-joined-clip\{background:linear-gradient\(90deg,var\(--du
 assert.match(css,/\.mas-joined-clip>div:last-child\{color:var\(--warm-brown\)/)
 assert.match(app,/showKakaoInquiryDialog/)
 assert.match(app,/contactValidationForm/)
-assert.match(read('js/contact-form.js'),/이제 복사하고 카카오톡으로! 😁/)
+assert.match(read('js/contact-form.js'),/이제 복사하고 카카오톡으로!'/)
 for(const route of ['','contact','detail/solo','detail/duo','detail/duet-film'])assert.match(read(route?route+'.html':'index.html'),/dusty-wedding-theme.css\?v=20261005-monochrome-maru-1/)
 console.log('Media caption, selection gutters, two-clip diagram mapping and existing inquiry flow preserved')

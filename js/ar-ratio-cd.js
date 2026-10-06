@@ -15,7 +15,7 @@
  function initArCdRatio(selector='#arRatioExperience'){
   const root=document.querySelector(selector);if(!root)return null
   const q=s=>root.querySelector(s)
-  const input=q('.wistia-ar__ratio-input'),current=q('.wistia-ar__ratio-current'),mood=q('[data-ratio-mood]'),stage=q('.wistia-ar__disc-stage'),ratioBox=q('.wistia-ar__ratio'),play=q('.wistia-ar__play'),seek=q('.wistia-ar__seek'),timeNow=q('[data-current-time]'),timeTotal=q('[data-duration]'),volume=q('.wistia-ar__volume'),error=q('.wistia-ar__error')
+  const input=q('.wistia-ar__ratio-input'),current=q('.wistia-ar__ratio-current'),mood=q('[data-ratio-mood]'),stage=q('.wistia-ar__disc-stage'),ratioBox=q('.wistia-ar__ratio'),play=q('.wistia-ar__play'),playLabel=q('.wistia-ar__play-label'),seek=q('.wistia-ar__seek'),timeNow=q('[data-current-time]'),timeTotal=q('[data-duration]'),volume=q('.wistia-ar__volume'),error=q('.wistia-ar__error')
   const listeners=[],buffers={},loading={},failures={},sources={},gains={},aborter=new AbortController()
   let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,observer=null,playRequest=0
   const on=(node,event,handler,opts)=>{if(!node)return;node.addEventListener(event,handler,opts);listeners.push(()=>node.removeEventListener(event,handler,opts))}
@@ -58,7 +58,7 @@
   const stopAll=()=>ANCHORS.forEach(stopSource)
   function startAll(at){startedAt=ctx.currentTime-at;ANCHORS.forEach(r=>startSource(r,at))}
 
-  function setPlaying(state){root.classList.toggle('is-playing',state);stage.classList.toggle('is-playing',state);play.setAttribute('aria-pressed',String(state));play.setAttribute('aria-label',state?'일시정지':'재생');stage.setAttribute('aria-label',state?'턴테이블 일시정지':'턴테이블 재생');stage.setAttribute('aria-pressed',String(state))}
+  function setPlaying(state){root.classList.toggle('is-playing',state);stage.classList.toggle('is-playing',state);play.setAttribute('aria-pressed',String(state));play.setAttribute('aria-label',state?'일시정지':'재생');if(playLabel)playLabel.textContent=state?'일시정지':'재생';stage.setAttribute('aria-label',state?'턴테이블 일시정지':'턴테이블 재생');stage.setAttribute('aria-pressed',String(state))}
   function progress(){const d=duration(),pos=position();timeNow.textContent=format(pos);timeTotal.textContent=format(d);seek.max=String(d||1);seek.value=String(pos);seek.style.setProperty('--wistia-progress',d?(pos/d*100)+'%':'0%')}
   function tick(){progress();if(!isPlaying)return;if(position()>=duration()-.02){stopAll();isPlaying=false;offset=0;setPlaying(false);progress();return}raf=requestAnimationFrame(tick)}
   function begin(){

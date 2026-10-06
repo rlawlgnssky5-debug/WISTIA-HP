@@ -10,7 +10,6 @@
     const switchBtn=root.querySelector('.bap-switch')
     const badge=root.querySelector('.bap-badge')
     const playBtn=root.querySelector('.bap-play')
-    const playGlyph=playBtn.querySelector('.bap-play-icon')
     const playLabel=playBtn.querySelector('.bap-play-label')
     const timeNow=root.querySelector('.bap-time b')
     const timeAll=root.querySelector('.bap-time span')
@@ -41,7 +40,9 @@
       root.dataset.position=String(current)
       root.classList.toggle('is-playing',isPlaying)
       timeNow.textContent=fmt(current);timeAll.textContent=fmt(duration())
-      playGlyph.textContent=isPlaying?'Ⅱ':'▶';playLabel.textContent=isPlaying?'일시정지':'재생';playBtn.setAttribute('aria-label',isPlaying?'일시정지':'재생')
+      // Keep the inline SVG pair intact; CSS follows the actual playback state.
+      playLabel.textContent=isPlaying?'일시정지':'재생';playBtn.setAttribute('aria-label',isPlaying?'일시정지':'재생');playBtn.setAttribute('aria-pressed',String(isPlaying))
+      switchBtn.setAttribute('aria-label',mode==='before'?'보정 후로 전환하여 듣기':'보정 전으로 전환하여 듣기')
       draw()
     }
     function start(offset){
