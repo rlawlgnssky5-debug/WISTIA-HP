@@ -2,6 +2,17 @@
    Keep the approved NOIR palette, real media, prices and touch targets
    Never hide the genuine lyric-video example in the option or detail section */
 
+/* Permanent price exception: benefit prices stay red under every palette */
+html[data-wistia-theme] #app#app#app :is(.mas-event-price,.mas-event-price strong,.quote-effective,.quote-effective strong){color:#C62828!important;background:transparent!important}
+html[data-wistia-theme] #quickEstimate#quickEstimate#quickEstimate .qe-result .qe-note:has(b),
+html[data-wistia-theme] #quickEstimate#quickEstimate#quickEstimate .qe-result .qe-note b{color:#C62828!important}
+
+/* Horizontal touch gestures belong to the carousel, vertical gestures to the page */
+#app #reviewTrack{touch-action:pan-y pinch-zoom;cursor:grab;user-select:none;-webkit-user-select:none}
+#app #reviewTrack.is-dragging{cursor:grabbing}
+#app #reviewTrack img{-webkit-user-drag:none;pointer-events:none}
+#app #reviewTrack:focus-visible{outline:2px solid var(--palette-ink);outline-offset:6px}
+
 /* Numbered strengths: distinct cards, inset numbers and breathing room */
 html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-advantages ol{
  display:grid!important;gap:18px!important;border:0!important;margin:0!important;padding:0!important;

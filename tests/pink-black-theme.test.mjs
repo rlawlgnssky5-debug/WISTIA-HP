@@ -14,7 +14,7 @@ assert.deepEqual(sheets.slice(-8),[
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
  'css/noir-minimal.css?v=20261006-noir-minimal-1',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-luxury-finish-1'
+ 'css/luxury-finish.css?v=20261006-review-drag-red-1'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

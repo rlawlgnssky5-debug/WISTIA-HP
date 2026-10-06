@@ -354,6 +354,7 @@ let reviewFrame
 let reviewTarget=0
 let reviewDisplay=0
 let reviewLast=0
+let reviewCleanup=null,reviewHoldUntil=0
 const dialog = document.querySelector("#mediaDialog")
 const MENU = []
 const NAVIGATION_GROUPS = [
@@ -682,34 +683,45 @@ function detailComparison(){return wistiaAdvantagesSection()}
 function detailIncluded(p){const items=p.included||[];if(!items.length)return "";return '<section class="shell section detail-included" aria-labelledby="detailIncludedTitle">'+heading("","최종 완성본에 포함됩니다","상담부터 제작과 전달까지 기본 구성에 포함되는 항목입니다")+'<ul>'+items.map((item,i)=>'<li><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+item+'</strong></li>').join("")+'</ul></section>'}
 function reviewMetrics(){const loop=document.querySelector(".review-loop"),set=loop?.querySelector(".review-set"),card=set?.querySelector(".review-capture");if(!loop||!set||!card)return null;const gap=parseFloat(getComputedStyle(set).gap)||0;return{loop,setWidth:set.getBoundingClientRect().width,step:card.getBoundingClientRect().width+gap}}
 function paintReviews(metrics=reviewMetrics()){if(!metrics||!metrics.setWidth)return;const offset=((reviewDisplay%metrics.setWidth)+metrics.setWidth)%metrics.setWidth;metrics.loop.style.transform='translate3d('+(-offset)+'px,0,0)'}
-function moveReviews(direction=1){const metrics=reviewMetrics();if(!metrics)return;reviewTarget+=direction*metrics.step}
+function moveReviews(direction=1){const metrics=reviewMetrics();if(!metrics)return;reviewTarget=reviewDisplay+direction*metrics.step;reviewDisplay=reviewTarget;reviewHoldUntil=Date.now()+5000;paintReviews(metrics)}
 function startReviewCarousel(reset=true){
  cancelAnimationFrame(reviewFrame)
+ reviewCleanup?.();reviewCleanup=null
  const initial=reviewMetrics();if(!initial)return
- if(reset){reviewTarget=0;reviewDisplay=0}
+ if(reset){reviewTarget=0;reviewDisplay=0;reviewHoldUntil=0}
  reviewLast=0
  paintReviews(initial)
- const mobileTrack=document.querySelector('.mobile-ar-solo #reviews')
- let paused=false,resumeTimer=0
- if(mobileTrack){
-  const pause=()=>{clearTimeout(resumeTimer);paused=true}
-  const resume=()=>{clearTimeout(resumeTimer);paused=false}
-  mobileTrack.addEventListener('mouseenter',pause)
-  mobileTrack.addEventListener('mouseleave',resume)
-  mobileTrack.addEventListener('touchstart',pause,{passive:true})
-  const resumeAfterTouch=()=>{clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{paused=false},5000)}
-  mobileTrack.addEventListener('touchend',resumeAfterTouch,{passive:true})
-  mobileTrack.addEventListener('touchcancel',resumeAfterTouch,{passive:true})
-  mobileTrack.addEventListener('click',()=>{pause();resumeAfterTouch()})
-  mobileTrack.addEventListener('focusin',pause)
-  mobileTrack.addEventListener('focusout',resume)
- }
- const speed=matchMedia("(prefers-reduced-motion: reduce)").matches?.026:.04
+ const track=document.querySelector('#reviewTrack'),listeners=[]
+ let hovered=false,focused=false,gesture=null
+ const listen=(type,handler,options)=>{track.addEventListener(type,handler,options);listeners.push(()=>track.removeEventListener(type,handler,options))}
+ const hold=()=>{reviewHoldUntil=Date.now()+5000}
+ track.tabIndex=0
+ track.setAttribute('aria-label','실제 고객 후기, 좌우로 밀거나 방향키로 넘기세요')
+ listen('pointerenter',event=>{if(event.pointerType==='mouse')hovered=true})
+ listen('pointerleave',event=>{if(event.pointerType==='mouse')hovered=false})
+ listen('focusin',()=>{focused=true})
+ listen('focusout',()=>{focused=false;hold()})
+ listen('dragstart',event=>event.preventDefault())
+ listen('pointerdown',event=>{if(event.button!==0||!event.isPrimary)return;hold();gesture={id:event.pointerId,x:event.clientX,y:event.clientY,start:reviewDisplay,axis:null};reviewTarget=reviewDisplay})
+ listen('pointermove',event=>{
+  if(!gesture||event.pointerId!==gesture.id)return
+  const dx=event.clientX-gesture.x,dy=event.clientY-gesture.y
+  if(!gesture.axis&&Math.max(Math.abs(dx),Math.abs(dy))>6){gesture.axis=Math.abs(dx)>Math.abs(dy)?'x':'y';if(gesture.axis==='x'){track.setPointerCapture(event.pointerId);track.classList.add('is-dragging')}}
+  if(gesture.axis!=='x')return
+  event.preventDefault();reviewDisplay=gesture.start-dx;reviewTarget=reviewDisplay;paintReviews()
+ },{passive:false})
+ const endGesture=event=>{if(!gesture||event.pointerId!==gesture.id)return;const id=gesture.id;gesture=null;track.classList.remove('is-dragging');if(track.hasPointerCapture(id))track.releasePointerCapture(id);hold()}
+ listen('pointerup',endGesture)
+ listen('pointercancel',endGesture)
+ listen('lostpointercapture',endGesture)
+ listen('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();moveReviews(event.key==='ArrowRight'?1:-1)}})
+ reviewCleanup=()=>{listeners.forEach(remove=>remove());track.classList.remove('is-dragging')}
+ const speed=matchMedia("(prefers-reduced-motion: reduce)").matches?0:.04
  const tick=now=>{
   if(!document.querySelector("#reviewTrack"))return
   const metrics=reviewMetrics();if(!metrics)return
   const elapsed=reviewLast?Math.min(now-reviewLast,50):0;reviewLast=now
-  if(paused){reviewFrame=requestAnimationFrame(tick);return}
+  if(hovered||focused||gesture||Date.now()<reviewHoldUntil){reviewFrame=requestAnimationFrame(tick);return}
   reviewTarget+=elapsed*speed
   const ease=1-Math.exp(-elapsed/320)
   reviewDisplay+=(reviewTarget-reviewDisplay)*ease
