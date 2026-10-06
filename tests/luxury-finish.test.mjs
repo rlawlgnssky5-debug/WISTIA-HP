@@ -41,6 +41,12 @@ assert.match(block('.event-benefit-group'),/margin:32px 0 0!important/)
 assert.match(block('.event-list'),/gap:14px!important/)
 assert.match(block('.event-choice'),/min-height:56px!important/)
 assert.match(block('.event-terms'),/padding:0 18px 20px 52px!important;[\s\S]*line-height:1\.85!important/)
+// The final consistency sheet now separates payment discounts and later review paybacks
+assert.match(consistency,/\.benefit-kind-grid\{[^}]*display:grid!important;grid-template-columns:minmax\(0,1fr\)!important;gap:20px!important/)
+assert.match(consistency,/\.benefit-kind-grid>\.benefit-kind-card\{[^}]*padding:22px!important;[^}]*border:1px solid var\(--palette-line\)!important/)
+assert.match(consistency,/\.benefit-kind-card \.benefit-kind-header\{[^}]*gap:10px 14px;[^}]*margin:0 0 18px!important;padding:0 0 18px!important/)
+assert.match(consistency,/\.benefit-kind-card :is\(\.benefit-kind-note,\.event-group-note\)\{[^}]*margin:0 0 22px!important;[^}]*line-height:1\.85!important/)
+assert.match(consistency,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 
 // Option examples are content, not tiny icons, and remain visible without selecting the checkbox
 assert.match(block('.has-option-photo>.option-photo'),/display:block!important;[\s\S]*width:100%!important;[\s\S]*aspect-ratio:16\/9!important/)

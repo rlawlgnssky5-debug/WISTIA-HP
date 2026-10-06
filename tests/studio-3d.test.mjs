@@ -8,7 +8,7 @@ const manifest=JSON.parse(read('assets/img/studio-3d/manifest.json'))
 const expected=['consultation','recording','directing','folder','balance','vocal-editing','mixing','delivery','film-editing','sound-review','bride-entrance','groom-entrance','vinyl','key-shift']
 assert.equal(manifest.method,'built-in image_gen')
 assert.deepEqual(manifest.assets.map(x=>x.name).sort(),expected.sort())
-assert.equal(readdirSync(new URL('../assets/img/studio-3d/',import.meta.url)).filter(x=>x.endsWith('.webp')).length,14)
+assert.deepEqual(readdirSync(new URL('../assets/img/studio-3d/',import.meta.url)).filter(x=>x.endsWith('.webp')).sort(),[...manifest.assets.map(art=>art.output.split('/').at(-1)),'gift-benefits-yellow-v1.webp'].sort(),'the fourteen approved studio objects are preserved, with only the separately approved yellow gift added')
 let bytes=0
 for(const art of manifest.assets){
  const data=read(art.output);bytes+=data.length

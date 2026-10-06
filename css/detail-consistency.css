@@ -60,3 +60,143 @@ html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-ex
 @media(max-width:600px){
  html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-content{padding:24px 20px 28px!important}
 }
+
+/* Benefits are two different payment timings, not one uninterrupted list */
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:20px!important;
+ min-width:0;align-items:start;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid>.benefit-kind-card{
+ min-width:0;margin:0!important;padding:22px!important;box-sizing:border-box;
+ border:1px solid var(--palette-line)!important;border-radius:6px!important;
+ background:var(--palette-paper)!important;color:var(--palette-ink)!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-card[data-benefit-type="discount"]{
+ background:var(--palette-offwhite)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-card .benefit-kind-header{
+ display:flex!important;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 14px;
+ margin:0 0 18px!important;padding:0 0 18px!important;border-bottom:1px solid var(--palette-line)!important;
+ text-align:left!important;min-width:0;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-card .benefit-kind-header :is(h2,h4){
+ margin:0!important;font-size:19px!important;line-height:1.5!important;letter-spacing:-.01em!important;
+ color:var(--palette-ink)!important;text-align:left!important;word-break:keep-all;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header .benefit-kind-limit{
+ font-size:17px!important;font-weight:600!important;line-height:1.5!important;letter-spacing:0!important;
+ color:var(--palette-ink)!important;white-space:normal!important;word-break:keep-all;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-header .benefit-kind-timing{
+ flex-basis:100%;font-size:12px!important;font-weight:500!important;line-height:1.6!important;
+ letter-spacing:0!important;color:var(--palette-muted)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-card :is(.benefit-kind-note,.event-group-note){
+ margin:0 0 22px!important;padding:0!important;font-size:12px!important;line-height:1.85!important;
+ letter-spacing:0!important;color:var(--palette-muted)!important;text-align:left!important;
+ word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure>summary{
+ grid-template-columns:48px minmax(0,1fr) 20px!important;gap:12px!important;
+ min-height:80px!important;padding:16px!important;box-sizing:border-box;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure>summary .mas-event-gift{
+ display:flex!important;align-items:center;justify-content:center;flex:none;
+ width:48px!important;height:48px!important;background:#FFF7DC!important;border-radius:8px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-gift img{
+ display:block!important;width:48px!important;height:48px!important;aspect-ratio:1!important;
+ object-fit:contain!important;filter:none!important;margin:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure .mas-event-content{
+ padding:22px 18px!important;background:transparent!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group ul{
+ display:grid!important;gap:16px!important;list-style:none;padding:0!important;margin:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li{
+ padding:0 0 16px!important;margin:0!important;border-bottom:1px solid var(--palette-line)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li:last-child{
+ padding-bottom:0!important;border-bottom:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li>div{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;
+ font-size:13px!important;line-height:1.65!important;text-align:left!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li strong{
+ font-weight:550!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li b{
+ font-size:12px!important;line-height:1.65!important;color:var(--palette-ink)!important;
+ white-space:normal!important;letter-spacing:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-group li p{
+ margin:10px 0 0!important;padding:0!important;line-height:1.85!important;color:var(--palette-muted)!important;
+ word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-content .mas-event-note{
+ margin:22px 0 0!important;font-size:11px!important;line-height:1.85!important;
+}
+/* The inquiry cards keep the original inputs and live price-selection bindings */
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-kind-card .event-list{gap:14px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-kind-card .event-benefit-card{
+ background:var(--palette-paper)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-kind-card .event-benefit-card:has(input:checked){
+ background:var(--palette-selected)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-groups{
+ margin:0 32px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-events-list{
+ margin:0!important;gap:16px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card{
+ padding:20px 18px!important;background:var(--palette-paper)!important;border-radius:4px!important;
+ border-color:var(--palette-line)!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card:before{content:none!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card h3{
+ margin:18px 0!important;font-size:18px!important;line-height:1.6!important;letter-spacing:-.01em!important;
+ color:var(--palette-ink)!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card p{
+ display:block!important;padding-top:14px!important;line-height:1.85!important;color:var(--palette-muted)!important;
+ word-break:keep-all;overflow-wrap:anywhere;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card p>span{
+ display:block;margin-bottom:8px;color:var(--palette-muted)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card-top{
+ flex-wrap:wrap;gap:12px;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card-top :is(span,strong){
+ color:var(--palette-ink)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card-top strong{
+ background:var(--palette-soft)!important;border-radius:3px!important;padding:8px 10px!important;
+}
+@media(min-width:769px){
+ /* Fit two boxes only where the actual content column has enough width */
+ html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))!important;
+ }
+}
+@media(max-width:600px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid>.benefit-kind-card{padding:20px 18px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure .mas-event-content{padding:20px 14px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-groups{margin:0 20px!important}
+}
+@media(max-width:360px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid>.benefit-kind-card{padding:18px 14px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure .mas-event-content{padding:18px 12px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .mas-event-disclosure>summary{padding:14px 12px!important;gap:10px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-groups{margin:0 16px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-kind-card .event-choice{
+  padding:16px 12px 10px!important;gap:10px!important;
+ }
+ html[data-wistia-palette="noir-minimal"] #app#app#app .consultation-flow .benefit-kind-card .event-terms{
+  padding:0 12px 18px 42px!important;
+ }
+}

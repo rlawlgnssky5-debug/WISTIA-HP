@@ -1,0 +1,9 @@
+{
+  "mode": "built-in image_gen",
+  "purpose": "Decorative yellow gift icon, not actual customer/studio photography",
+  "prompt": "Use case: stylized-concept\nAsset type: transparent 3D gift icon for the WISTIA wedding music website's benefits disclosure, rendered as a single small UI object\nPrimary request: one premium yellow gift box with a neatly tied ribbon, immediately recognizable as a gift at 44px display size\nSubject: single compact cubic gift box and lid, restrained elegant bow with two ribbon loops on top, three-quarter front view with the whole gift fully visible\nStyle/medium: high-end realistic 3D product render, minimal modern chic, precision beveled edges, satin matte materials, subtle soft highlights, restrained soft contact shadow\nColor palette: warm luminous yellow #E7B928 gift box with lighter butter-yellow #FFE39B satin ribbon, not metallic gold, no navy or pink\nComposition/framing: square, centered, gift fills roughly 78% of the canvas, generous transparent margin, simple silhouette with no other objects\nScene/backdrop: genuinely transparent background\nConstraints: no people, no faces, no hands, no letters, no numbers, no logos, no text, no watermark, no confetti, no sparkles, no cartoon toy exaggeration, no surrounding UI or background tile, no floating disconnected lid\nPurpose: visually warm gift benefit accent within an otherwise charcoal ivory premium wedding studio website",
+  "source": "generated_images/01a07ed4-903d-7e31-a6e7-30b0140927d4/exec-7c858e52-db8b-4690-96bf-f5dd7bb08ca6.png",
+  "transparent": true,
+  "output": "assets/img/studio-3d/gift-benefits-yellow-v1.webp",
+  "conversion": "Proportional downsize to 256px WebP, original alpha preserved; no content edits"
+}

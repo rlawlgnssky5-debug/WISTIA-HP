@@ -8,7 +8,8 @@ runInNewContext(source.slice(source.indexOf('const EXPERT_CARDS='),source.indexO
 for(const key of ['solo','duo','duet-film']){
  const html=scope.arExpertStory(key)
  assert.match(html,/ar-expert-broadcast/)
- assert.match(html,/broadcast-typography-wistia-v2\.png/)
+ assert.match(html,/broadcast-typography-noir-v3\.webp/)
+ assert.doesNotMatch(html,/broadcast-typography-wistia-v2\.png/,'the latest charcoal tone replaces active navy artwork without deleting the source')
  assert.match(html,/싱어게인2/)
  assert.match(html,/불후의 명곡/)
  assert.doesNotMatch(html,/01 · 사운드 완성|02 · 사운드 완성|mixing-engineer/)
@@ -28,4 +29,5 @@ assert.match(source,/처음부터 끝까지 완벽하게 부를 필요 없이 �
 assert.match(css,/\.ar-expert-panel-media\.ar-expert-broadcast\{aspect-ratio:3\/2/)
 assert.match(css,/\.ar-expert-broadcast img\{object-fit:contain!important/)
 assert.ok(existsSync(new URL('../assets/img/ar-detail/broadcast-typography-wistia-v2.png',import.meta.url)))
+assert.ok(existsSync(new URL('../assets/img/ar-detail/broadcast-typography-noir-v3.webp',import.meta.url)))
 console.log('Person-free broadcast typography, removed sound index, concise recording time facts and preserved unrelated copy passed')
