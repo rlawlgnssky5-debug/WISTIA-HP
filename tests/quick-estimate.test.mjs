@@ -55,7 +55,7 @@ context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance']
 runInNewContext('setQuoteState(state)',context)
 assert.match(context.consultationText(),/결제 예상 금액 : 240,000원/)
 assert.match(context.consultationText(),/가사 영상 추가 \+40,000원/)
-assert.match(context.consultationText(),/후기 페이백 : 블로그 리뷰 30,000원/)
+assert.match(context.consultationText(),/4\) 선택한 후기 페이백\n블로그 리뷰 30,000원/)
 context.state={key:'duet-film',format:'making',options:[],events:[]}
 runInNewContext('setQuoteState(state)',context)
 assert.doesNotMatch(context.consultationText(),/메이킹|−70,000원/)

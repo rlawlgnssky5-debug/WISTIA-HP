@@ -85,9 +85,14 @@
   syncSubmitState(form)
  }
  function text(values,quote){
-  const lines=[welcome,'','[ 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐅𝐨𝐫𝐦 ]','']
-  fields.forEach(([key,label])=>{let value=String(values[key]||'').trim();if(key==='eventDate'||key==='bookingDate')value=values[key+'Mode']==='unknown'?'':formatDate(value);if(key==='time')value=values.timeStart||'';lines.push('• '+label+' : '+(value||'미정'),'')})
-  if(quote?.text)lines.push('━━━━━','선택한 구성과 가격',quote.text.split('━━━━━').slice(1).join('━━━━━').trim())
+  const quoteBody=quote?.text?.split('━━━━━').slice(1).join('━━━━━').trim()
+  const lines=['[위스티아 상담 요청]','']
+  let next=1
+  if(quoteBody){lines.push(quoteBody,'');const numbers=[...quoteBody.matchAll(/^(\d+)\) /gm)].map(match=>Number(match[1]));next=numbers.length?Math.max(...numbers)+1:1}
+  else{lines.push((next++)+') 희망 서비스','희망 서비스 : '+(String(values.service||'').trim()||'미정'),'')}
+  lines.push((next++)+') 예약 일정')
+  fields.filter(([key])=>['eventDate','bookingDate','time'].includes(key)).forEach(([key,label])=>{let value=String(values[key]||'').trim();if(key==='eventDate'||key==='bookingDate')value=values[key+'Mode']==='unknown'?'':formatDate(value);if(key==='time')value=values.timeStart||'';lines.push(label+' : '+(value||'미정'))})
+  lines.push('',next+') 유입 경로','어디에서 보고 오셨나요? : '+(String(values.source||'').trim()||'선택 안 함'))
   return lines.join('\n').trim()
  }
  global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor}

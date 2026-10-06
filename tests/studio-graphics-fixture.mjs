@@ -17,6 +17,7 @@ export function assertPreservedAppLogic(source){
   ['function prepareArHookVideo(','const arVideoFeedbackTimers=','81fa4f0227ad2014abd541bda4f14cc7871311c866d74caef781bf3fdfb17b7d'],
   ['function calculate(','function renderProductOption(','aedb3c1dfc12f868d47abe4eb409b4b2a4998eb4ea0e6c8ba515e7a5ddfa6dca'],
   ['function updatePrice(','function quoteState(','4bacbaab5beba1de91c42cc356f20dd4f09e178794d99ba8332f7b5f4102c33a'],
-  ['function quoteState(','function showDialog(','4e6ea97cda101b91be4135d85c821a96f48a8862e6d93626592a42d77ae9c8d3']
+  // Only the copy formatter changes under the numbered-inquiry request
+  ['function quoteState(','function consultationText(','ab5c1d094d774e59468230190f9b09560d28a62c0539140c8498879047a7f821']
  ])assert.equal(createHash('sha256').update(section(source,a,b)).digest('hex'),hash,'approved business/playback behaviour remains unchanged: '+a)
 }

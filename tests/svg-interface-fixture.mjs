@@ -4,9 +4,10 @@ import {createHash} from 'node:crypto'
 const hash=text=>createHash('sha256').update(text.replace(/\r\n/g,'\n')).digest('hex')
 
 export function assertContactBusinessPreserved(source){
- const start=source.indexOf(' function submitIcon('),end=source.indexOf(' function validationEditor(')
- assert.ok(start>=0&&end>start,'the independent SVG submit UI has explicit boundaries')
- assert.equal(hash(source.slice(0,start)+source.slice(end)),'552616bc6bbd3e39d7d42b072c10c3d5c17068cedabe2f7baf69e260f32d7ffe','contact fields, validation, drafts and copy text remain unchanged outside the SVG submit label UI')
+ const start=source.indexOf(' function submitIcon('),end=source.indexOf(' function validationEditor('),copy=source.indexOf(' function text(')
+ assert.ok(start>=0&&end>start&&copy>end,'the SVG submit UI and explicitly revised copy formatter have independent boundaries')
+ assert.equal(hash(source.slice(0,start)+source.slice(end,copy)),'0bb7626053f21a25fad1239af9dbdf4a2006b5ca2002a5c0569df8c1a02eb12a','contact fields, validation and drafts remain unchanged outside the SVG submit UI and numbered copy formatter')
+ assert.match(source,/global.WistiaContact=\{render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor\}/)
 }
 
 export function assertBeforeAfterCorePreserved(source){
