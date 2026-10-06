@@ -1,0 +1,62 @@
+/* One approved price-story treatment for the home and every product detail */
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason){
+ box-sizing:border-box;background:var(--palette-charcoal)!important;color:var(--palette-paper)!important;
+ border:0!important;border-radius:4px!important;box-shadow:none!important;
+ padding:40px 24px!important;text-align:center!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .detail-price-reason>.shell{
+ width:100%!important;max-width:1000px!important;min-width:0;padding:0!important;margin:0 auto!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) :is(h2,p,u){
+ color:var(--palette-paper)!important;text-align:center!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) :is(.we-section-tag,.price-reason-label){
+ display:inline-block!important;background:var(--palette-stone)!important;color:var(--palette-on-stone)!important;
+ padding:8px 14px!important;border:0!important;border-radius:2px!important;box-shadow:none!important;
+ margin:0!important;font-size:12px!important;line-height:1.5!important;letter-spacing:.06em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) h2{
+ font-size:clamp(26px,3vw,38px)!important;line-height:1.4!important;margin:22px 0 30px!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) p{
+ max-width:1000px!important;margin:16px auto 0!important;font-size:15px!important;line-height:1.85!important;
+ letter-spacing:0!important;word-break:keep-all;overflow-wrap:anywhere;white-space:normal!important;text-wrap:balance;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-notices .mas-rush-notice :is(b,small){
+ white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+@media(max-width:600px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason){padding:32px 20px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-home .we-affordability .we-location,.detail-price-reason) p{font-size:14px!important}
+}
+
+/* Story composition: remove the old pill-shaped tinted shadow/background */
+html[data-wistia-palette="noir-minimal"] #app#app#app .mobile-story-film .mas-story-chapters :is(li,figure,li>div){
+ background:transparent!important;box-shadow:none!important;filter:none!important;border-radius:0!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mobile-story-film .mas-story-chapters figure{
+ border-radius:4px!important;aspect-ratio:16/9!important;
+}
+/* Both expert panels share one image ratio, typography and copy spacing */
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel{
+ display:flex!important;flex-direction:column!important;padding:0!important;border-radius:4px!important;
+ background:var(--palette-paper)!important;box-shadow:none!important;overflow:hidden;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-media{
+ display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;max-width:none!important;aspect-ratio:3/1!important;
+ background:#F5F4F0!important;flex:none!important;overflow:hidden;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-media img{
+ display:block!important;width:100%!important;height:100%!important;aspect-ratio:3/1!important;
+ max-width:none!important;max-height:none!important;object-fit:contain!important;filter:none!important;transform:none!important;transition:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-content{
+ display:flex!important;flex:1!important;flex-direction:column!important;gap:16px!important;padding:28px 24px 32px!important;
+ align-items:center!important;text-align:center!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-content :is(strong,span){
+ text-align:center!important;white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere;
+}
+@media(max-width:600px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .ar-expert-readable .ar-expert-panel-content{padding:24px 20px 28px!important}
+}

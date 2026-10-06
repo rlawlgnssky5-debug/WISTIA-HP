@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in imagegen",
+  "assets": [
+    {
+      "path": "assets/img/story-polish/film-expert-v1.webp",
+      "generated": "exec-cb549fc7-dfbd-4085-a175-a68bc1f0e05b.png",
+      "prompt": "Use case: ads-marketing. Asset type: WISTIA premium website film-direction expert graphic, a new raster image with typography. Create a single very wide 3:1 image (not a webpage screenshot) on a flat pale warm-grey / ivory background. Minimal modern chic upscale, understated silver/charcoal sculptural 3D lettering with restrained shallow extrusion, subtle highlights. Center the exact large Korean text \"영상 연출\" prominently. Below it place the exact smaller crisp readable text \"7년 경력 영상 편집 디자이너\". At left include one modest silver/charcoal 3D film clapperboard and a small editing timeline strip, no people. Even balanced generous whitespace, every object fully visible, no large drop shadows, no glowing effects, no gold/pink/purple, no extra decorative panels, no extra words or watermark. The image should complement silver navy broadcast title artwork, while being tasteful and readable at 350px wide. Literal text must be verbatim and cleanly spelled."
+    },
+    {
+      "path": "assets/img/story-polish/filming-v1.webp",
+      "generated": "exec-7327fa93-d4e4-46b3-a165-ffa2aa700883.png",
+      "reference": "assets/img/studio-3d/film-editing.webp",
+      "prompt": "Use case: stylized-concept. Asset type: one 16:9 website production-process illustration for WISTIA filming a wedding song music video. Reference image is style-only, matching premium dark charcoal/silver/ivory polished restrained 3D realism. Create a single elegant studio product scene of a professional video camera on a compact tripod, a small clapperboard and a simple ivory storyboard with three blank picture windows; no real footage, no people or faces. Matte charcoal surfaces, satin silver edges, soft ivory accents, subtly illuminated charcoal background, realistic depth, soft restrained contact shadows. All objects fully visible with comfortable margins and a centered compact composition suited to a web card. No text, numbers, logos, watermark, decorative particles, glowing effects or colorful accents. Wide landscape 16:9. Image must communicate filming intuitively and match the reference render materials."
+    },
+    {
+      "path": "assets/img/ar-detail/broadcast-typography-wistia-v2.png",
+      "action": "Restored original approved silver/navy artwork, not regenerated"
+    }
+  ]
+}

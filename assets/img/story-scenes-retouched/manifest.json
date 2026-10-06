@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-06",
+  "mode": "built-in image_gen edits",
+  "scope": "Only the six chapter example cards for duet story film, with both letter alternates preserved",
+  "authorization": "User explicitly requested only the faces be made prettier / more handsome in attachment 5",
+  "originals": "All seven original source files preserved unchanged",
+  "disclosure": "Illustrative edited scene stills, not untouched customer photographs or modified source videos",
+  "invariants": "Face-focused natural retouch requested, existing pose, hair, body, clothes, scene, composition and Korean subtitles visually retained; generated output can differ slightly in surrounding texture, not a pixel-identical edit",
+  "format": "WebP quality 92, method 6, no post-generation face compositing, cropping, resizing or other edits",
+  "promptGroups": {
+    "shared": "Use case: identity-preserve; Asset type: existing WISTIA story film scene illustration, face-only flattering photographic retouch; Input image 1: sole edit target; change ONLY the facial skin and facial features of the already-present adult Korean man and woman to be subtly more handsome and beautiful, as tasteful natural portrait retouching, while retaining recognizable identities, ethnic appearance, ages, existing expressions and exactly the same head directions; keep camera composition, crop, dimensions and aspect ratio, background, existing lighting/color grade, hair, head outlines, ears, bodies, clothes, hands, props, microphones, phone screens, shoulders and all existing Korean subtitles; do not retype subtitles or remove text; only facial regions may be refined with healthy natural skin, flattering eyes and smile; avoid plastic/doll face, exaggerated slimming, new identities/people/haircuts, changed scene/pose/clothes/text, global sharpening or color grading, watermarks/borders",
+    "recordingAdditional": "If foreground man is facing away, preserve back of head unchanged; retain woman's original soft focus, no artificial background sharpening; very subtle face-only improvement sufficient"
+  },
+  "assets": [
+    {
+      "source": "assets/img/duet-film/duet-guest-message.webp",
+      "output": "assets/img/story-scenes-retouched/duet-guest-message-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-guest-message-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-60b8a151-6408-4dee-8353-6bbe818611c9.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-interview.webp",
+      "output": "assets/img/story-scenes-retouched/duet-interview-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-interview-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-25bda88c-f29c-4769-8b67-e78573eddcc7.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-memories.webp",
+      "output": "assets/img/story-scenes-retouched/duet-memories-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-memories-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-9b728a65-6cee-4063-8e94-f98db86a1b2d.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-recording.webp",
+      "output": "assets/img/story-scenes-retouched/duet-recording-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-recording-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-304f2896-b69e-4e18-99a6-29f92e758ac0.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-music-video.webp",
+      "output": "assets/img/story-scenes-retouched/duet-music-video-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-music-video-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-c101f6cc-03a5-42de-b0f9-5ccb7567ad85.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-letter-bride.webp",
+      "output": "assets/img/story-scenes-retouched/duet-letter-bride-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-letter-bride-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-1485b9d5-ae87-46d9-8a8b-d925e55328d8.png"
+    },
+    {
+      "source": "assets/img/duet-film/duet-letter-groom.webp",
+      "output": "assets/img/story-scenes-retouched/duet-letter-groom-face-v1.webp",
+      "rawOutput": "tests/qa/story-face-raw/duet-letter-groom-face-v1.png",
+      "generatedSource": "C:/Users/User/.codex/generated_images/01a11023-1596-7c03-b09e-a2004ed79669/exec-6dcafba6-4dad-4fd1-b48a-c7c317fd8a7b.png"
+    }
+  ]
+}

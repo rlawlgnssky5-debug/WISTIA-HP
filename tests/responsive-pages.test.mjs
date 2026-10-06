@@ -8,14 +8,23 @@ const fn=app.slice(app.indexOf('function storyProcessCards('),app.indexOf('funct
 const scope={img:(src,alt)=>`<img src="${src}" alt="${alt}">`,escapeHtml:x=>x}
 runInNewContext(graphicsFixture(app)+fn,scope)
 const markup=scope.storyProcessCards(Array.from({length:7},()=>({})))
-assert.equal((markup.match(/<img /g)||[]).length,9,'one decorative 3D folder plus all eight actual stage images')
+assert.equal((markup.match(/<img /g)||[]).length,9,'one decorative 3D folder plus all eight explanatory stage images')
 assert.equal((markup.match(/<li class="story-process-card"/g)||[]).length,8)
 const storyMedia=[...markup.matchAll(/<div class="story-process-media"><img src="([^"]+)" alt="([^"]+)"/g)]
 assert.equal(storyMedia.length,8,'decorative folder must not count as or replace a production stage')
 assert.ok(storyMedia.every(([,src,alt])=>src&&alt),'all story production stages retain meaningful media')
+assert.deepEqual(storyMedia.map(([,src])=>src),[
+ 'assets/img/studio-3d/consultation.webp',
+ 'assets/img/studio-3d/recording.webp',
+ 'assets/img/story-polish/filming-v1.webp',
+ 'assets/img/studio-3d/vocal-editing.webp',
+ 'assets/img/studio-3d/mixing.webp',
+ 'assets/img/studio-3d/film-editing.webp',
+ 'assets/img/studio-3d/sound-review.webp',
+ 'assets/img/studio-3d/delivery.webp'
+],'every production-stage illustration uses the approved 3D style, not actual customer stills')
 assert.deepEqual([...markup.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m=>m[1]),['곡·파트 상담','구간별 녹음','축가 영상 촬영','수작업 보컬 보정','믹싱·마스터링','영상 편집','최종 검수','완성본 전달'])
-assert.match(markup,/src="assets\/img\/duet-film\/duet-recording\.webp"/,'real filming image stays in stage three')
-assert.match(markup,/src="assets\/img\/song-film\/duet-video-cover\.jpg"/,'real finished video stays in stage eight')
+assert.doesNotMatch(markup,/src="assets\/img\/(?:duet-film|song-film)\//,'real customer photos remain in the composition and video evidence, not explanatory process cards')
 assert.match(markup,/촬영·자료 전달 후 약 14일/)
 assert.match(markup,/studio-folder-art studio-folder-3d" aria-hidden="true"><img[^>]*alt=""/,'new decorative folder is hidden only from assistive reading')
 assert.match(markup,/<details class="story-process-folder" open><summary>/)
@@ -46,4 +55,4 @@ for(const key of ['solo','duo']){
  assert.match(ar,/본식에서 바로 사용할 수 있도록/)
 }
 for(const [,src] of markup.matchAll(/src="([^"]+)"/g))assert.ok(existsSync(new URL('../'+src,import.meta.url)),src)
-console.log('Decorative 3D folder separated from eight story/seven AR stages, shared responsive pages and supplied map: passed')
+console.log('Decorative 3D folder separated from eight 3D story/seven AR stages, shared responsive pages and supplied map: passed')

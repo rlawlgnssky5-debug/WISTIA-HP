@@ -6,7 +6,7 @@ assert.match(index,/<html lang="ko" data-wistia-theme="monochrome" data-wistia-t
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
 assert.ok(sheets.includes('css/pink-black-theme.css?v=20261005-pink-black-preview-1'))
-assert.deepEqual(sheets.slice(-8),[
+assert.deepEqual(sheets.slice(-9),[
  'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
  'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
  'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
@@ -14,7 +14,8 @@ assert.deepEqual(sheets.slice(-8),[
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
  'css/noir-minimal.css?v=20261006-noir-minimal-1',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-reviews-five-1'
+ 'css/luxury-finish.css?v=20261006-reviews-five-1',
+ 'css/detail-consistency.css?v=20261006-detail-match-1'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

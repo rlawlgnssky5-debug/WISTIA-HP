@@ -510,7 +510,6 @@ const STUDIO_GRAPHIC_ASSETS={
  "assets/img/process-no-people/05.svg":["vocal-editing","보컬 보정을 설명하는 인물 없는 스튜디오 그래픽"],
  "assets/img/process-no-people/06.svg":["mixing","믹싱 과정을 설명하는 인물 없는 스튜디오 그래픽"],
  "assets/img/process-studio/07-delivery.svg":["delivery","최종 검수와 완성본 전달을 설명하는 스튜디오 그래픽"],
- "assets/img/ar-detail/broadcast-typography-wistia-v2.png":["broadcast","싱어게인2와 불후의 명곡 방송 음악 작업 참여 타이포그래피"]
 }
 const STUDIO_ICON_PATHS={
  microphone:'<rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M6 10v2a6 6 0 0 0 12 0v-2M12 18v3.5M8.5 21.5h7M10.5 6h3m-3 3h3"/>',
@@ -645,7 +644,7 @@ function startArIndexAuto(wheel){stopArIndexAuto();if(matchMedia("(prefers-reduc
 function setArIndexActive(wheel,index){const items=[...wheel.querySelectorAll(".ar-index-item")];items.forEach((b,i)=>{const active=i===index;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))})}
 function initArIndexWheel(){const wheel=document.querySelector(".ar-index-wheel");stopArIndexAuto();if(!wheel)return;const items=[...wheel.querySelectorAll(".ar-index-item")];if(!items.length)return;setArIndexActive(wheel,0);let resumeTimer=null;const pauseAuto=()=>{stopArIndexAuto();clearTimeout(resumeTimer)};const resumeAuto=()=>{clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>startArIndexAuto(wheel),3200)};items.forEach((b,i)=>{b.addEventListener("mouseenter",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("focus",()=>{pauseAuto();setArIndexActive(wheel,i)});b.addEventListener("click",()=>{pauseAuto();setArIndexActive(wheel,i);resumeAuto()});b.addEventListener("blur",()=>{if(!wheel.matches(":hover"))resumeAuto()})});wheel.addEventListener("mouseleave",()=>{if(!wheel.matches(":focus-within"))resumeAuto()});startArIndexAuto(wheel)}
 const EXPERT_CARDS=[
- {index:"01 · 영상 연출",keyword:"영상 연출",sub:"7년 경력 영상 편집 디자이너",detail:"한 곡의 감정이 본식 장면까지<br>자연스럽게 이어지도록 설계합니다.",image:"assets/img/song/solo.webp",alt:"실제 녹음 세션에서 사용된 마이크"},
+ {index:"",keyword:"영상 연출",sub:"7년 경력 영상 편집 디자이너",detail:"한 곡의 감정이 본식 장면까지<br>자연스럽게 이어지도록 설계합니다.",image:"assets/img/story-polish/film-expert-v1.webp",alt:"영상 연출, 7년 경력 영상 편집 디자이너를 담은 3D 타이포그래피"},
  {index:"",keyword:"사운드 완성",sub:"〈싱어게인2〉·〈불후의 명곡〉 방송 음악 작업 참여",detail:"<span class=\"ar-essential-line\"><span class=\"ar-line-full\">목소리의 음정과 밸런스를 다듬어, 자연스럽게 들리는 AR을 완성합니다</span><span class=\"ar-line-compact\">음정과 밸런스를 다듬어 자연스러운 AR로</span></span>",image:"assets/img/ar-detail/broadcast-typography-wistia-v2.png",alt:"싱어게인2와 불후의 명곡 타이틀을 담은 위스티아 실버 네이비 그래픽"}
 ]
 const EXPERT_CARD_ICONS=[
@@ -672,7 +671,7 @@ const WISTIA_ADVANTAGES=[
  ["보컬 보정","음정·박자 수작업 보정","자동 보정에만 의존하지 않고 원래 목소리의 느낌을 살려 세밀하게 보정합니다"],
  ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"]
 ]
-function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="price-reason-label">가격에 대한 이야기</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead">서울이 아닌 부천에서 운영해<br>가격 부담을 낮췄습니다</p><p>보컬 디렉팅·음정·박자 보정·믹싱·마스터링은 기본 구성에 포함합니다</p><p class="ar-essential-line"><span class="ar-line-full">기본 가격과 추가 옵션을 미리 확인하고 필요한 구성만 선택하세요</span><span class="ar-line-compact">가격·옵션을 확인하고 필요한 구성만 선택하세요</span></p></div></section>'}
+function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="we-section-tag price-reason-label">POINT 02 · 가격 안내</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead"><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div></section>'}
 function wistiaAdvantagesSection(){return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><ol>'+WISTIA_ADVANTAGES.map(([category,title,description],index)=>'<li><span class="wistia-advantage-number">'+String(index+1).padStart(2,"0")+'</span><div><small>'+category+'</small><h3>'+title+'</h3><p>'+description+'</p></div></li>').join("")+'</ol></div></section>'+detailPriceReason()}
 function productComparisonSection(){return wistiaAdvantagesSection()}
 function prepareArHookVideo(){document.querySelectorAll(".ar-hook-media video").forEach(video=>{const button=video.closest('.ar-hook-media')?.querySelector("[data-ar-video-toggle]");if(!button)return;const update=()=>{const playing=!video.paused&&!video.ended;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",update);update()})}
@@ -779,14 +778,14 @@ function storyProcessCards(steps){
  const summaries=[['곡·파트 상담','곡·키·파트와 본식 상영 시점을 함께 정합니다'],['구간별 녹음','1:1 디렉팅으로 두 목소리와 화음을 맞춰 녹음합니다'],['축가 영상 촬영','노래와 이야기에 맞춘 뮤직비디오·메시지 장면을 촬영합니다'],['수작업 보컬 보정','음색은 살리고 음정·박자·호흡을 세밀하게 다듬습니다'],['믹싱·마스터링','목소리와 반주의 균형을 맞춰 최종 사운드를 완성합니다'],['영상 편집','컷·색감·싱크·자막을 노래의 흐름에 맞춰 편집합니다'],['최종 검수','음원과 영상의 싱크·밸런스·흐름을 확인합니다'],['완성본 전달','영상과 완성 음원을 전달합니다 · 촬영·자료 전달 후 약 14일']]
  const cards=[...steps.slice(0,-1),last,last].map((step,i)=>({...step,title:summaries[i][0],description:summaries[i][1]}))
  const photos=[
-  ["assets/img/process-no-people/01.svg","곡과 파트를 함께 상담하는 과정 예시"],
-  ["assets/img/process-no-people/02.svg","헤드폰과 마이크로 보컬을 녹음하는 과정 예시"],
-  ["assets/img/duet-film/duet-recording.webp","카메라로 보컬 장면을 촬영하는 제작 영상 장면"],
-  ["assets/img/process-no-people/05.svg","음정과 박자를 보정하는 프로그램 작업 예시"],
-  ["assets/img/process-no-people/06.svg","음원 프로그램과 믹싱 콘솔로 사운드를 완성하는 작업 예시"],
-  ["assets/img/studio-graphics/film-editing.svg","영상의 컷과 색감을 편집하는 인물 없는 스튜디오 그래픽"],
-  ["assets/img/studio-graphics/sound-review.svg","헤드폰으로 완성 사운드를 확인하는 인물 없는 스튜디오 그래픽"],
-  ["assets/img/song-film/duet-video-cover.jpg","전달되는 완성 축가 영상의 제작 사례"]
+  ["assets/img/studio-3d/consultation.webp","곡과 파트를 상담하는 3D 제작 안내"],
+  ["assets/img/studio-3d/recording.webp","헤드폰과 마이크로 보컬을 녹음하는 3D 제작 안내"],
+  ["assets/img/story-polish/filming-v1.webp","카메라와 슬레이트로 축가 영상을 촬영하는 3D 제작 안내"],
+  ["assets/img/studio-3d/vocal-editing.webp","음정과 박자를 보정하는 3D 제작 안내"],
+  ["assets/img/studio-3d/mixing.webp","목소리와 반주를 믹싱하는 3D 제작 안내"],
+  ["assets/img/studio-3d/film-editing.webp","영상의 컷과 색감을 편집하는 3D 제작 안내"],
+  ["assets/img/studio-3d/sound-review.webp","완성 사운드를 확인하는 3D 제작 안내"],
+  ["assets/img/studio-3d/delivery.webp","영상과 완성 음원을 전달하는 3D 제작 안내"]
  ]
  return '<section class="wistia-process-studio story-process-cards" id="process" aria-labelledby="processStudioTitle"><div class="shell"><header class="wps-head"><p class="wps-kicker">제작 과정</p><h2 id="processStudioTitle">처음부터 끝까지,<br>맞춤형으로 케어해드립니다</h2><p>상담부터 완성본 전달까지, 여덟 단계로 준비합니다</p></header><details class="story-process-folder" open><summary>'+processFolderArt()+'<span class="process-folder-label"><strong>제작 과정 살펴보기</strong><small>클릭하면 단계별 사진과 설명이 펼쳐집니다</small></span><span class="process-folder-cue"><span class="folder-open-label"><span class="folder-open-text">클릭하여 열기</span><span class="folder-cue-arrow" aria-hidden="true">'+studioIcon('down')+'</span></span><span class="folder-close-label">접어두기 '+studioIcon('up')+'</span></span></summary><div class="process-folder-content"><p class="process-flow" aria-label="제작 순서 1단계부터 8단계까지">'+cards.map((_,i)=>'<span>'+String(i+1).padStart(2,'0')+'</span>'+(i<cards.length-1?'<i aria-hidden="true">→</i>':'')).join('')+'</p><ol class="story-process-grid">'+cards.map((step,i)=>'<li class="story-process-card" style="--process-index:'+i+';--process-row:'+(Math.floor(i/2)+1)+';--process-column:'+(i%2+1)+'"><div class="story-process-media">'+img(photos[i][0],photos[i][1],true)+'</div><div class="story-process-copy"><span class="story-process-number">'+String(i+1).padStart(2,"0")+'</span><h3>'+escapeHtml(step.title.replace(/ & /g," · "))+'</h3><p>'+escapeHtml(step.description)+'</p></div></li>').join('')+'</ol><p class="process-photo-note">일러스트는 제작 과정 안내용이며, 촬영·완성 영상은 실제 제작 사례입니다</p></div></details></div></section>'
 }
@@ -1147,7 +1146,7 @@ function mobileArProcess(key="solo"){
 }
 function mobileArNotices(story=false){
  const address=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
- return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'최대 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'녹음 후')+'</small></div></li><li><strong>수정</strong><div><b>3회까지 무료</b><small>4회차부터 회당 1만원</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><p class="mas-location-city">경기도 부천시</p><address>석천로170번길 19 <span>2층</span></address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+address+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
+ return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'최대 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'녹음 후')+'</small></div></li><li><strong>수정</strong><div><b>3회까지 무료</b><small>4회차부터 회당 1만원</small></div></li><li class="mas-rush-notice"><strong>빠른 작업</strong><div><b>요청 시 3일 이내 · 추가 3만원</b><small>제작 일정과 자료 준비 상태를 상담에서 확인한 뒤, 가능한 경우에만 진행합니다</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><p class="mas-location-city">경기도 부천시</p><address>석천로170번길 19 <span>2층</span></address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+address+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
 function mobileDetailEvents(){
@@ -1158,10 +1157,11 @@ function mobileDetailEvents(){
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
 function mobileStudioBrand(){return '<div class="mas-brand">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></div>'}
+function storySceneImage(src,alt){const name=src.match(/^assets\/img\/duet-film\/(duet-(?:guest-message|interview|memories|recording|music-video|letter-bride|letter-groom))\.webp$/);return img(name?'assets/img/story-scenes-retouched/'+name[1]+'-face-v1.webp':src,name?alt+' · 얼굴 보정한 구성 안내 예시':alt)}
 function mobileStoryFilmDetail(p){
  const key='duet-film',price=filmFormatPrice(key,'live'),eventPrice=Math.max(0,price-EVENTS.reduce((total,event)=>total+event.discount,0)),content=AR_DETAIL_CONTENT[key]
  const info=[['상품','축가 스토리 필름'],['인원 · 곡수','2인 · 1곡'],['녹음·촬영 시간','총 180분 <small>안내·연습·부가 시간 포함</small>'],['포함 작업','녹음 · 보컬 디렉팅 · 음정·박자 보정<br>믹싱 · 마스터링 · 영상 제작'],['전달 파일','본식 상영용 영상 · 완성 음원'],['제작 기간','촬영·자료 전달 완료 후 약 14일']]
- const chapters=p.composition.map(([title,copy,photo],i)=>'<li><figure>'+img(Array.isArray(photo)?photo[0]:photo,title+' 제작 영상 장면')+'</figure><div><span>0'+(i+1)+'</span><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')
+ const chapters=p.composition.map(([title,copy,photo],i)=>'<li><figure>'+storySceneImage(Array.isArray(photo)?photo[0]:photo,title+' 제작 영상 장면')+'</figure><div><span>0'+(i+1)+'</span><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')
  const experts=detailPointSection(arExpertStory(key).replace('자연스럽게 들리는 AR을 완성합니다','영상과 어우러지는 완성 음원을 만듭니다'),'02')
  const vocal=storyVocalSection().replace('한 소절씩 녹음하고 1:1 디렉팅을 받으며, 스토리 필름에 담길 두 분의 노래를 준비합니다','한 소절씩 녹음하고, 두 목소리를 함께 맞춥니다').replace('녹음 후에는 음정·박자를 수작업으로 세밀하게 보정해 원래 목소리의 느낌은 살리고 더욱 자연스럽게 완성합니다','보정·믹싱의 마법, 티 나지 않게 자연스럽게').replace('<span class="ba-paragraph">보정·믹싱의 마법','<span class="ba-paragraph mas-tuning-line">보정·믹싱의 마법')
  const process=detailPointSection(verticalProcessSection(key),'04').replace('story-process-cards"','story-process-cards arc-section arc-process mas-story-process"').replace('id="process"','id="arcProcess"').replace('처음부터 끝까지,<br>맞춤형으로 케어해드립니다','진행 순서')

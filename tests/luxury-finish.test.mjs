@@ -5,17 +5,25 @@ import {runInNewContext} from 'node:vm'
 
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 const digest=path=>createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex')
-const css=read('css/luxury-finish.css'),app=read('js/app.js'),index=read('index.html')
+const css=read('css/luxury-finish.css'),consistency=read('css/detail-consistency.css'),app=read('js/app.js'),index=read('index.html')
 const block=selector=>{
  const position=css.indexOf(selector+'{')
  assert.notEqual(position,-1,selector+' must have an explicit finish rule')
  return css.slice(position,css.indexOf('}',position)+1)
 }
 
-// Preserve the approved flat broadcast artwork and the genuine lyric example byte-for-byte
+// Keep the archived broadcast vector and genuine lyric example byte-for-byte
+// The newest request restores the original 3D broadcast PNG, not the archived SVG mapping
 assert.equal(digest('assets/img/studio-graphics/broadcast.svg'),'e59ec317eb091527adb6b7553e94bc0e563ad8e9efe5a4e7fff09a57241e270e')
 assert.equal(digest('assets/img/song-options/lyric-video-v2.webp'),'ca947d5ef39db38f9e296be8d378f222fad426c55406750693de237616c9414b')
-assert.doesNotMatch(css,/@import|font-family:|url\(|grayscale\(|\.ar-expert-broadcast/)
+assert.doesNotMatch(css,/@import|font-family:|url\(|grayscale\(/)
+
+// Latest story polish keeps both expert media equally sized and removes inherited chapter tint/shadows
+assert.match(consistency,/\.ar-expert-readable \.ar-expert-panel-media\{[^}]*width:100%!important;[^}]*height:auto!important;[^}]*aspect-ratio:3\/1!important/)
+assert.match(consistency,/\.ar-expert-readable \.ar-expert-panel-media img\{[^}]*aspect-ratio:3\/1!important;[^}]*object-fit:contain!important;filter:none!important/)
+assert.match(consistency,/\.ar-expert-readable \.ar-expert-panel-content\{[^}]*gap:16px!important;[^}]*padding:28px 24px 32px!important/)
+assert.match(consistency,/\.mas-story-chapters :is\(li,figure,li>div\)\{[^}]*background:transparent!important;box-shadow:none!important;filter:none!important;border-radius:0!important/)
+assert.match(consistency,/\.mas-story-chapters figure\{[^}]*aspect-ratio:16\/9!important/)
 
 // Earlier inherited cards had padding 27px 0 and no list gap; both are intentionally repaired
 assert.match(block('.wistia-advantages ol'),/display:grid!important;gap:18px!important/)
@@ -54,4 +62,4 @@ for(const html of [unchecked,checked]){
  assert.doesNotMatch(html,/hidden|display:none/)
 }
 assert.ok(index.indexOf('css/luxury-finish.css?')>index.indexOf('css/studio-graphics.css?'),'finishing CSS must load after older hiding and graphic rules')
-console.log('Luxury spacing, full-size always-visible genuine lyric examples and approved broadcast preserved: passed')
+console.log('Luxury spacing, full-size always-visible genuine lyric examples and archived broadcast preserved: passed')
