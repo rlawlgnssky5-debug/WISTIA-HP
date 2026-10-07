@@ -1,7 +1,7 @@
 import {availability} from '../lib/notion-availability.mjs'
-import {createRequire} from 'node:module'
-const require=createRequire(import.meta.url)
-const {validDate}=require('../js/booking-availability.js')
+// Static import (no import.meta): Vercel compiles api/*.js from ESM to CommonJS.
+import bookingRules from '../js/booking-availability.js'
+const {validDate}=bookingRules
 export default async function handler(request,response){
  response.setHeader('Cache-Control','no-store')
  if(request.method!=='GET'){response.setHeader('Allow','GET');return response.status(405).json({ok:false})}
