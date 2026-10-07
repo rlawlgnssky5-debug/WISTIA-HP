@@ -7,7 +7,7 @@ assert.doesNotMatch(index,/hangeul_static\/css\/maru-buri.css/)
 assert.match(index,/pretendardvariable-dynamic-subset.min.css/)
 assert.doesNotMatch(index,/fonts.googleapis.com\/css2\?family=Noto/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-10),[
+assert.deepEqual(sheets.slice(-11),[
  'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
  'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
@@ -17,7 +17,8 @@ assert.deepEqual(sheets.slice(-10),[
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261008-contact-calendar-3'
+ 'css/booking-availability.css?v=20261008-contact-calendar-4',
+ 'css/detail-section-layout.css?v=20261008-contact-calendar-4'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)

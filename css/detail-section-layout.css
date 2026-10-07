@@ -1,0 +1,53 @@
+/* Product detail sections share one centered content column. Media controls retain their layout. */
+html #app#app#app#app .ar-commerce-detail{--detail-content-width:900px;--detail-section-space:56px;--detail-gutter:24px}
+html #app#app#app#app .ar-commerce-detail .detail-section-layout{
+ box-sizing:border-box!important;width:100%!important;max-width:none!important;margin:0 auto!important;
+ padding-block:var(--detail-section-space)!important;
+ padding-inline:max(var(--detail-gutter),calc((100% - var(--detail-content-width))/2))!important;
+ text-align:center!important;background:#F5F4F0!important;border:0!important;box-shadow:none!important;
+}
+/* Nested copies cannot add another off-center padded shell inside that column. */
+html #app#app#app#app .ar-commerce-detail .detail-section-layout :is(.shell,.wistia-ba-section,.wistia-ba-layout,.wistia-ar,.wistia-ar__artboard,.ar-expert-story,.wistia-advantages,.wistia-process-studio){
+ box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:auto!important;padding-inline:0!important;
+}
+html #app#app#app#app .ar-commerce-detail .detail-section-layout :is(.ar-expert-story,.wistia-advantages,.wistia-process-studio){padding-block:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+html #app#app#app#app .ar-commerce-detail .detail-section-layout> :is(header,div,figure,ol,ul,details,dl){max-width:100%!important;margin-inline:auto!important}
+html #app#app#app#app .ar-commerce-detail :is(.svg-section-heading,.section-heading,.ar-story-intro,.wps-head){
+ width:100%!important;max-width:none!important;margin-inline:auto!important;text-align:center!important;align-items:center!important;justify-items:center!important;
+}
+html #app#app#app#app .ar-commerce-detail :is(h2.svg-section-title,h3.svg-item-title,h4.svg-item-title){
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;
+ width:100%!important;max-width:100%!important;margin-inline:auto!important;text-align:center!important;
+}
+html #app#app#app#app .ar-commerce-detail :is(.svg-section-title,.svg-item-title)>.svg-title-icon{margin:0!important;align-self:center!important}
+html #app#app#app#app .ar-commerce-detail :is(.svg-section-text,.svg-section-text span,.svg-section-text strong,.svg-section-text b,.svg-section-text mark){text-align:center!important;margin-inline:auto!important}
+html #app#app#app#app .ar-commerce-detail :is(.svg-section-description,.svg-item-description,.svg-section-kicker){
+ margin-inline:auto!important;max-width:100%!important;text-align:center!important;align-self:center!important;justify-self:center!important;
+}
+html #app#app#app#app .ar-commerce-detail :is(.svg-section-description,.svg-item-description) :is(span,strong,b,u){text-align:center!important}
+html #app#app#app#app .ar-commerce-detail :is(.detail-point-label,.price-reason-label){
+ display:table!important;width:fit-content!important;max-width:100%!important;min-height:44px!important;
+ margin:0 auto 20px!important;padding:10px 20px!important;border:1px solid #252421!important;border-radius:6px!important;
+ background:#252421!important;color:#FFFCF5!important;box-shadow:none!important;
+ font-size:14px!important;line-height:1.5!important;font-weight:600!important;letter-spacing:.08em!important;text-align:center!important;
+}
+html #app#app#app#app .ar-commerce-detail .detail-point-number{font-size:23px!important;font-weight:750!important;line-height:1!important;color:inherit!important;letter-spacing:.02em!important}
+/* A charcoal price story uses the same column and a reversed, high-contrast badge. */
+html #app#app#app#app .ar-commerce-detail .detail-price-reason{background:#252421!important;color:#FFFCF5!important;text-align:center!important}
+html #app#app#app#app .ar-commerce-detail .detail-price-reason :is(.detail-point-label,.price-reason-label){background:#FFFCF5!important;color:#252421!important;border-color:#FFFCF5!important}
+/* Warm flat cards replace cool gradients, without changing the media inside. */
+html #app#app#app#app .ar-commerce-detail :is(.mas-key-note,.ar-expert-panel,.wistia-advantages li,.arc-recording-poster,.mas-cut-poster,.arc-notices ul){
+ background:#EFEAE1!important;box-shadow:none!important;border-color:#D8D1C5!important;color:#252421!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-notices ul{box-sizing:border-box;max-width:var(--detail-content-width)!important;width:100%!important;margin-inline:auto!important;padding:4px 20px!important;border:1px solid #D8D1C5!important;border-radius:6px!important}
+html #app#app#app#app .ar-commerce-detail .arc-notices li{border-color:#D8D1C5!important;color:#252421!important}
+html #app#app#app#app .ar-commerce-detail .arc-notices li :is(strong,b,small,p){color:#252421!important}
+@media(max-width:768px){html #app#app#app#app .ar-commerce-detail{--detail-section-space:40px;--detail-gutter:20px}}
+@media(max-width:359px){html #app#app#app#app .ar-commerce-detail{--detail-gutter:16px}}
+
+html #app#app#app#app .ar-commerce-detail .detail-section-group{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important}
+html #app#app#app#app .ar-commerce-detail .arc-reviews .solo-review-carousel{width:100%!important;max-width:none!important;padding:0!important;margin:0!important}
+
+html #app#app#app#app .ar-commerce-detail .wistia-advantages li{grid-template-columns:minmax(0,1fr)!important;justify-items:center!important;text-align:center!important;gap:12px!important}
+html #app#app#app#app .ar-commerce-detail :is(.wistia-advantages li>div,.ar-expert-panel-content){width:100%!important;text-align:center!important}
+html #app#app#app#app .ar-commerce-detail :is(.wistia-advantages li small,.wistia-advantages li p,.ar-expert-panel-keyword,.ar-expert-panel-sub,.ar-expert-panel-detail){text-align:center!important;color:#56534d!important}

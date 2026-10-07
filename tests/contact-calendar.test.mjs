@@ -29,15 +29,22 @@ const markup=api.render(null,{integrated:true})
 assert.doesNotMatch(markup,/type="date"|\(\s*\)/)
 assert.match(markup,/calendar-inline" id="calendar-bookingDate"/)
 assert.match(markup,/calendar-popup" id="calendar-eventDate"[^>]* hidden/)
-assert.match(markup,/목·금·토·일만 운영해요/)
+assert.doesNotMatch(markup,/calendar-operating|booking-availability-note|목·금·토·일만 운영해요|data-booking-refresh|예약 가능 시간 다시 확인/)
+assert.match(markup,/data-booking-status role="status" aria-live="polite" hidden/)
+for(const options of [{},{embedded:true},{integrated:true}]){
+ const form=api.render(null,options)
+ assert.doesNotMatch(form,/calendar-operating|booking-availability-note|data-booking-refresh|예약 가능 시간 다시 확인/,'every shared inquiry rendering removes the notices')
+ assert.match(form,/data-booking-status role="status" aria-live="polite" hidden/)
+}
+assert.doesNotMatch(read('js/quick-estimate.js'),/calendar-operating|booking-availability-note|예약 가능 시간 다시 확인/,'quick estimate uses no separate operating notice')
 assert.match(markup,/data-calendar-times role="radiogroup"/)
 for(const key of ['eventDate','bookingDate'])assert.match(markup,new RegExp('name="'+key+'" type="text" hidden tabindex="-1" disabled'))
 // Copy formatting remains separate from the Korean UI weekday display.
-assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/희망 예약일 : 2026년 10월 16일\n/)
+assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/녹음 방문일 \(스튜디오 예약일\) : 2026년 10월 16일\n/)
 assert.doesNotMatch(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/\(금\)/)
 for(const page of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(x=>x.endsWith('.html')).map(x=>'event/'+x)]){
  const html=read(page)
- for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-3'),page+' '+asset)
+ for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-4'),page+' '+asset)
 }
 assert.match(read('api/availability.js'),/module.exports/,'CommonJS endpoint stays intact')
 console.log('Custom calendars: Korean weekdays, ISO values, closed weekdays, past dates, today/selection, leap months and cache versions passed')

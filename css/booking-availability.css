@@ -61,3 +61,7 @@ html #app#app#app#app .contact-calendar .calendar-day:disabled,
 html #app#app#app#app .contact-calendar .calendar-day:disabled>span,
 html #app#app#app#app .calendar-time-grid button:disabled,
 html #app#app#app#app .calendar-time-grid button:disabled>small{color:#79756b!important}
+/* Explain the two separate dates without changing calendar or input behavior. */
+html #app#app#app#app .contact-date-field>legend{max-width:100%;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+html #app#app#app#app .contact-date-description{margin:0;font-size:13px;line-height:1.75;color:#66645f;text-align:left;word-break:keep-all;overflow-wrap:anywhere}
+html #app#app#app#app .contact-date-bookingDate{margin-top:20px!important;background:#F5F4F0!important;border-left:3px solid #56534d!important}

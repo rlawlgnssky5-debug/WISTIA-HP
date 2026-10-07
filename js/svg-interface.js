@@ -58,6 +58,25 @@
    if(node.matches('.eyebrow,.detail-point-label,.arc-kicker,.we-kicker,.we-section-tag,.price-reason-label,[data-solo-kicker],.wps-kicker,.wistia-ar__eyebrow,.wistia-ba-eyebrow,.info-section-kicker'))node.classList.add('svg-section-kicker')
   }
  }
+ function detailLayout(root){
+  for(const scope of all(root,'.ar-commerce-detail')){
+   for(const group of scope.querySelectorAll(':scope > .arc-advantages')){
+    group.classList.add('detail-section-group')
+    for(const section of group.children)if(section.matches('section')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
+   }
+   for(const section of scope.children){
+    if(section.matches('section,.arc-engineer,.arc-reviews')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
+   }
+  }
+  for(const badge of all(root,'.ar-commerce-detail .detail-point-label,.ar-commerce-detail .price-reason-label')){
+   if(badge.dataset.pointNumberMounted)continue
+   const match=/^(POINT\s+)(\d+)(.*)$/.exec(badge.textContent)
+   if(!match)continue
+   const number=badge.ownerDocument.createElement('span');number.className='detail-point-number';number.textContent=match[2]
+   badge.replaceChildren(badge.ownerDocument.createTextNode(match[1]),number,badge.ownerDocument.createTextNode(match[3]))
+   badge.dataset.pointNumberMounted='true'
+  }
+ }
  function mount(root,icon){
   if(!root||typeof icon!=='function')return
   const titles=all(root,'h2,h3,h4,.info-page-intro>h1,.calculator-intro>h1,.contact-intro>h1')
@@ -103,6 +122,7 @@
    label.classList.add('svg-info-label')
    label.dataset.svgInfoMounted='true'
   }
+  detailLayout(root)
  }
  function replaceGlyphs(node,icon){
   const value=node.nodeValue
