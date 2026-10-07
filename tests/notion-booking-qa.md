@@ -1,6 +1,6 @@
 # 2026-10-08 노션 예약 마감 검수
 
-## 최신 상태 — 연결·환경변수 완료, 미리보기 검수 통과, 운영 배포
+## 최신 상태 — 연결·환경변수 완료, 미리보기·운영 검수 통과 (2026-10-08)
 
 - 노션 읽기 전용 내부 연결 생성 및 기존 `녹음실 일정` 접근 권한 부여 완료 (2026-10-08)
 - Vercel `wistia` 프로젝트에 `NOTION_BOOKING_TOKEN`(Sensitive)과 `NOTION_BOOKING_DATA_SOURCE_ID`가 Production·Preview 모두 등록된 것을 Vercel 환경변수 목록(값 비공개 조회)으로 확인 (등록 시각 2026-10-08 03:22–03:27 KST)
@@ -25,9 +25,15 @@
 - 스토리/SOLO/DUET/SOLO 전환 즉시 반영: 스토리 14:30~18:30 + 21:30~23:00 마감, DUET 15:30~18:30 + 22:30·23:00 마감
 - 10-16 마감 없음, 10-12 월요일 휴무 표시
 
-### 운영 검수
+### 운영 검수 — `99d7c83`, `dpl_FsgYnAMoSQ9RpvijDfMxVW3wCMKQ` (2026-10-08 03:53 KST, curl 직접 확인)
 
-- 대기 중 — main 반영 후 아래에 결과 추가
+- main을 `10b2079`에서 fast-forward 반영, Vercel 운영 배포 READY
+- `https://www.wistiastudio.com/api/availability?date=2026-10-11` → 200, blocks `[{"start":"2026-10-11T08:00:00.000Z","end":"2026-10-11T10:00:00.000Z"}]`, 응답 필드는 ok·date·timeZone·operatingDays·blocks·checkedAt뿐(개인정보 없음)
+- `?date=2026-10-16` → 200, blocks `[]`
+- `/api/health` → 200 `{"service":"wistia","status":"ok",...}`
+- `/event/solo`·`/event/duo`·`/event/duet-film`·`/contact` → 200, 모두 `js/booking-availability.js`·`css/booking-availability.css`(`?v=20261008-notion-booking-1`) 참조, 두 파일 200이며 운영 JS에 8초 시간 제한 반영 확인
+- 운영 화면의 브라우저 조작 검수는 미리보기와 같은 코드 기준이며 별도 실행하지 않음
+- 되돌릴 대상: 이전 운영 배포 `dpl_9D8dhvoGVu89ozWz1uBMRj3bERUF` (`10b2079`)
 
 ## 이전 기록 — 후속 왕명에 따른 기존 가계부 단독 연결 정정
 
