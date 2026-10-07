@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
-import {availability,interval,extractBlocks,mergeBlocks} from '../lib/notion-availability.mjs'
+import {availability,availabilityRange,interval,extractBlocks,mergeBlocks} from '../lib/notion-availability.mjs'
 import handler from '../api/availability.js'
 const require=createRequire(import.meta.url)
 const rules=require('../js/booking-availability.js')
@@ -52,3 +52,38 @@ const wrongMethod=respond();await handler({method:'POST',query:{}},wrongMethod);
 const offline=respond();await handler({method:'GET',query:{date:'2026-10-11'}},offline);assert.equal(offline.code,503)
 assert.doesNotMatch(JSON.stringify(offline.payload),/token|NOTION_|source|PRIVATE/i)
 console.log('Existing ledger only, read-only privacy, pagination, cancellation, KST visit dates, duration overlap and offline-safe API passed')
+
+for(const [from,to,expected] of [['2026-10-01','2026-11-11',true],['2026-10-01','2026-11-12',false],['2026-10-10','2026-10-09',false],['2026-02-30','2026-03-01',false]])assert.equal(rules.validRange(from,to),expected)
+const beforeRange=calls.length
+const range=await availabilityRange('2026-10-01','2026-10-31',{env,fetcher})
+assert.equal(calls.length-beforeRange,3,'a range reads the ledger once, including required pagination, not per day')
+assert.equal(range.from,'2026-10-01');assert.equal(range.to,'2026-10-31')
+assert.deepEqual(range.blocks,result.blocks)
+assert.doesNotMatch(JSON.stringify(range),/PRIVATE|TEST_ONLY|987654|클라이언트|이메일|입금/)
+await assert.rejects(availabilityRange('2026-10-01','2026-11-12',{env,fetcher}))
+await assert.rejects(availabilityRange('2026-10-01','2026-10-31',{env,fetcher:async()=>{throw Error('timeout')}}))
+for(const query of [{from:'2026-10-01'},{to:'2026-10-31'},{from:'2026-10-01',to:'2026-11-12'},{date:'2026-10-09',from:'2026-10-01',to:'2026-10-31'}]){const response=respond();await handler({method:'GET',query},response);assert.equal(response.code,400)}
+const full=extractBlocks([booking({start:'2026-10-09'})])
+for(const key of ['solo','duo','duet-film','undecided'])assert.equal(rules.dayClosed('2026-10-09',key,full,0),true,'date-only closure applies to every product')
+const onlySolo=[{start:'2026-10-10T14:00:00+09:00',end:'2026-10-11T00:00:00+09:00'}]
+assert.equal(rules.dayClosed('2026-10-10','solo',onlySolo,0),false)
+assert.equal(rules.dayClosed('2026-10-10','duo',onlySolo,0),true)
+assert.equal(rules.dayClosed('2026-10-10','duet-film',onlySolo,0),true)
+for(const key of ['solo','duo','duet-film'])assert.equal(rules.dayClosed('2026-10-11',key,[block],0),false,'partial bookings keep date selectable')
+assert.equal(rules.dayClosed('2026-10-09','solo',[{start:'2026-10-09T00:00:00+09:00',end:'2026-10-09T12:00:00+09:00'},{start:'2026-10-09T12:00:00+09:00',end:'2026-10-10T00:00:00+09:00'}],0),true,'adjacent blocks cover the entire KST day')
+console.log('42-day validation, single range query, privacy, failure handling and product-specific closed days passed')
+const originalFetch=globalThis.fetch,originalToken=process.env.NOTION_BOOKING_TOKEN,originalSource=process.env.NOTION_BOOKING_DATA_SOURCE_ID
+try{
+ Object.assign(process.env,env);globalThis.fetch=fetcher
+ const rangeResponse=respond();await handler({method:'GET',query:{from:'2026-10-01',to:'2026-10-31'}},rangeResponse)
+ assert.equal(rangeResponse.code,200);assert.equal(rangeResponse.headers['Cache-Control'],'no-store')
+ assert.equal(rangeResponse.payload.from,'2026-10-01')
+ const dateResponse=respond();await handler({method:'GET',query:{date:'2026-10-11'}},dateResponse)
+ assert.equal(dateResponse.code,200);assert.deepEqual(Object.keys(dateResponse.payload),['ok','date','timeZone','operatingDays','blocks','checkedAt'],'legacy date shape is unchanged')
+ assert.doesNotMatch(JSON.stringify(rangeResponse.payload),/PRIVATE|TEST_ONLY|987654/)
+}finally{
+ globalThis.fetch=originalFetch
+ if(originalToken===undefined)delete process.env.NOTION_BOOKING_TOKEN;else process.env.NOTION_BOOKING_TOKEN=originalToken
+ if(originalSource===undefined)delete process.env.NOTION_BOOKING_DATA_SOURCE_ID;else process.env.NOTION_BOOKING_DATA_SOURCE_ID=originalSource
+}
+console.log('CommonJS handler native dynamic import: range and legacy date success passed')

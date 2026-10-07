@@ -29,12 +29,12 @@ const cases=[
  [{key:'duo'},160000],
  [{key:'duo',options:['lyrics-video','bride-entrance'],events:['blog']},240000],
  [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},240000],
- [{key:'solo',events:['voice-photo-consent']},110000],
- [{key:'duo',events:['voice-photo-consent']},150000],
- [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},110000],
- [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent','weekday']},110000],
- [{key:'duet-film',events:['voice-photo-consent']},340000],
- [{key:'duet-film',format:'making',events:['voice-photo-consent']},340000],
+ [{key:'solo',events:['voice-photo-consent']},120000],
+ [{key:'duo',events:['voice-photo-consent']},160000],
+ [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},120000],
+ [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent','weekday']},120000],
+ [{key:'duet-film',events:['voice-photo-consent']},350000],
+ [{key:'duet-film',format:'making',events:['voice-photo-consent']},350000],
  [{key:'duet-film'},350000],
  [{key:'duet-film',format:'making'},350000],
  [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},390000],
@@ -49,13 +49,13 @@ for(const [state,expected] of cases){
 assert.equal(api.context().key,'duo')
 assert.equal(api.options('duet-film').some(o=>o.key==='lyrics-video'),false)
 for(const key of ['solo','duo','duet-film'])assert.equal(api.options(key).some(o=>o.key==='rush'),false,'removed rush option is not offered for '+key)
-assert.equal(api.events().length,5)
-assert.equal(api.events().find(event=>event.key==='voice-photo-consent').discount,10000)
+assert.equal(api.events().length,4)
+assert.equal(api.events().find(event=>event.key==='voice-photo-consent'),undefined)
 context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance'],events:['blog']}
 runInNewContext('setQuoteState(state)',context)
 assert.match(context.consultationText(),/결제 예상 금액 : 240,000원/)
 assert.match(context.consultationText(),/가사 영상 추가 \+40,000원/)
-assert.match(context.consultationText(),/4\) 선택한 후기 페이백\n블로그 리뷰 30,000원/)
+assert.match(context.consultationText(),/3\) 선택한 후기 페이백\n블로그 리뷰 30,000원/)
 context.state={key:'duet-film',format:'making',options:[],events:[]}
 runInNewContext('setQuoteState(state)',context)
 assert.doesNotMatch(context.consultationText(),/메이킹|−70,000원/)

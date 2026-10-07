@@ -10,11 +10,15 @@ try{
   page.on('pageerror',error=>errors.push(error.message))
   await page.clock.install({time:new Date('2026-10-08T03:00:00Z')})
   await page.route('https://**/*',route=>route.abort())
-  let requests=0,mode='ready'
+  let requests=0,rangeRequests=0,mode='ready'
   await page.route('**/api/availability?*',async route=>{
    requests++;if(mode==='timeout')return
    if(mode==='offline'){await route.abort();return}
-   const date=new URL(route.request().url()).searchParams.get('date')
+   const params=new URL(route.request().url()).searchParams,date=params.get('date')
+   if(params.has('from')){
+    rangeRequests++
+    await route.fulfill({json:{ok:true,from:params.get('from'),to:params.get('to'),blocks:[{start:'2026-10-09T00:00:00+09:00',end:'2026-10-10T00:00:00+09:00'},{start:'2026-10-10T14:00:00+09:00',end:'2026-10-11T00:00:00+09:00'},{start:'2026-10-11T17:00:00+09:00',end:'2026-10-11T19:00:00+09:00'}]}});return
+   }
    await route.fulfill({json:{ok:true,date,blocks:[{start:date+'T15:00:00+09:00',end:date+'T16:00:00+09:00'}]}})
   })
   await page.goto(base+'/contact')
@@ -35,6 +39,15 @@ try{
   await trigger.click();await page.locator('#scheduleTitle').click();await popup.waitFor({state:'hidden'})
   await page.locator('[data-contact-date-mode="bookingDate"][value="date"]').check()
   const calendar=page.locator('#calendar-bookingDate')
+  await page.waitForFunction(()=>document.querySelector('[data-calendar-day="2026-10-09"]').disabled)
+  assert.match(await calendar.locator('[data-calendar-day="2026-10-09"]').innerText(),/마감/)
+  assert.equal(await calendar.locator('[data-calendar-day="2026-10-10"]').isDisabled(),false,'SOLO fits before 14:00')
+  assert.equal(await calendar.locator('[data-calendar-day="2026-10-11"]').isDisabled(),false,'17–19 partial closure stays clickable')
+  assert.equal(rangeRequests,1,'one month query shared across mounts')
+  if(process.env.WISTIA_CALENDAR_SCREENSHOTS){await calendar.scrollIntoViewIfNeeded();await page.screenshot({path:process.env.WISTIA_CALENDAR_SCREENSHOTS+'/calendar-'+width+'.png'})}
+  assert.equal(await page.locator('[data-event="voice-photo-consent"]').count(),0)
+  assert.doesNotMatch(await page.locator('#contactInquiryForm').innerText(),/활용 동의|선택 할인|할인 최대/)
+
   for(const day of ['12','13','14']){
    const closed=calendar.locator('[data-calendar-day="2026-10-'+day+'"]')
    assert.equal(await closed.isDisabled(),true);assert.match(await closed.innerText(),/마감/)
@@ -64,6 +77,8 @@ try{
   // Re-mounting for product changes preserves ISO values and re-evaluates duration.
   await page.locator('[data-base-product="duo"]').click()
   assert.equal(await page.locator('#contact-bookingDate').inputValue(),'2026-10-16')
+  assert.equal(await page.locator('[data-calendar-day="2026-10-10"]').isDisabled(),true,'DUET has no possible starts')
+  assert.equal(rangeRequests,1,'product switch reuses month data')
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   assert.equal(await page.locator('[data-calendar-time="13:30"]').isDisabled(),true,'DUET duration closes overlapping starts')
   await page.evaluate(()=>{window.calendarCopied='';navigator.clipboard.writeText=async text=>{window.calendarCopied=text}})
@@ -77,6 +92,7 @@ try{
   await page.clock.runFor(8001)
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='unavailable')
   assert.match(await page.locator('[data-booking-status]').innerText(),/카카오톡/)
+  assert.equal(await page.locator('[data-calendar-day="2026-10-09"]').isDisabled(),false,'failed range must not close days with stale data')
   assert.equal(await page.locator('[data-calendar-time="13:00"]').isDisabled(),false,'fallback keeps wish times selectable with a notice')
   await page.locator('[data-contact-date-mode="bookingDate"][value="unknown"]').check()
   assert.equal(await calendar.isVisible(),false)

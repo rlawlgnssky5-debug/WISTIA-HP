@@ -61,3 +61,12 @@ API는 읽기 전용이며 요청마다 최신 노션 데이터를 조회
 동시 예약을 확정하는 결제 시스템이 아니므로 가계부에 입력하기 전 최종 예약 충돌 확인은 기존 상담 절차대로 유지
 
 공식 자료: [내부 연결](https://developers.notion.com/guides/get-started/internal-connections), [데이터 소스 조회](https://developers.notion.com/reference/query-a-data-source)
+
+## 문의 달력 범위 조회 (2026-10-08)
+
+- `GET /api/availability?from=YYYY-MM-DD&to=YYYY-MM-DD`: 양 끝 날짜 포함 최대 42일. 날짜 누락·역순·초과·`date`와 혼용은 400.
+- 응답: `{ok, from, to, timeZone, operatingDays, blocks: [{start, end}], checkedAt}`. 개인정보 없이 시간 구간만 반환하며 마지막 날짜의 늦은 시작 시간 계산을 위해 다음 날 구간까지 포함한다.
+- 기존 `?date=` 응답 형태는 유지한다. 범위당 기존 가계부를 한 번 읽는다(스키마 확인 및 필요한 페이지네이션 포함). 취소·지출·보관/휴지통 제외, 날짜만 있거나 종료 없는 방문일 전일 마감 규칙은 동일하다.
+- 달력은 월 범위를 조회하고 00:00~24:00 KST 전일 마감 또는 선택 상품의 시작 가능 시간 없음이면 회색 `마감`/disabled로 표시한다. 부분 예약은 가능한 시작 시간이 남아 있으면 선택할 수 있다.
+- 상품 변경은 범위 결과를 공유한다. 범위 실패·8초 초과·잘못된 응답은 마감 근거로 쓰지 않고 날짜 선택 후 기존 하루 조회를 수행한다. 하루 조회 실패는 카카오톡 확인 안내로 끝나며 복사 전 강제 재조회는 유지한다.
+- `api/availability.js`는 CommonJS이며 핸들러에서 `.mjs`를 native dynamic import한다. 노션 스키마/조회/페이지네이션은 전체 8초 제한을 공유한다.

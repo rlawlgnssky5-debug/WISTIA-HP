@@ -27,13 +27,12 @@ assert.deepEqual(events,[
  {key:'reaction',type:'payback',label:'현장 리액션 영상',discount:10000,detail:'본식 현장 촬영 파일 제공'},
  {key:'cafe',type:'payback',label:'웨딩 카페 후기',discount:10000,detail:'300자 이상 · 관련 사진 4장 이상'},
  {key:'instagram',type:'payback',label:'인스타그램 후기',discount:10000,detail:'후기 50자 이상 · 사진 4장 이상 · BGM 추가 · 공식 계정 태그 · 공개 계정'},
- {key:'voice-photo-consent',type:'discount',label:'웨딩 사진 · 음성 비포 애프터 활용 동의',discount:10000,detail:'웨딩 사진 1장(얼굴 공개) 제공 + 음성 비포 애프터 활용 동의 · 동의 여부와 활용 범위는 예약 상담에서 확인합니다'}
-],'only the explicitly abolished weekday benefit is removed')
+],'the four review paybacks remain unchanged')
 
 const checkGroups=html=>{
  const groups=[...html.matchAll(/<section class="[^"]*benefit-kind-card" data-benefit-type="(discount|payback)"[^>]*>([\s\S]*?)<\/section>/g)]
- assert.deepEqual(groups.map(match=>match[1]),['discount','payback'],'two separate boxes in payment order')
- for(const [index,type,title,maximum,timing] of [[0,'discount','할인','1만원','결제 시 할인'],[1,'payback','후기 페이백','6만원','조건 확인 후 지급']]){
+ assert.deepEqual(groups.map(match=>match[1]),['payback'],'two separate boxes in payment order')
+ for(const [index,type,title,maximum,timing] of [[0,'payback','후기 페이백','6만원','조건 확인 후 지급']]){
   const group=groups[index][2]
   assert.match(group,new RegExp('<h[24]>'+title+'</h[24]>'))
   assert.ok(group.includes('class="benefit-kind-limit">최대 '+maximum+'</strong>'))
@@ -43,16 +42,15 @@ const checkGroups=html=>{
    assert.equal(group.includes(event.detail),event.type===type,event.key+' keeps its full condition')
   }
  }
- assert.ok(groups[1][2].includes('결제 금액에서 미리 차감하지 않습니다'),'payback timing is never disguised as an immediate discount')
+ assert.ok(groups[0][2].includes('결제 금액에서 미리 차감하지 않습니다'),'payback timing is never disguised as an immediate discount')
  return groups
 }
 
 const detail=scope.mobileDetailEvents()
 const detailGroups=checkGroups(detail)
 assert.match(detail,/<details class="mas-event-disclosure"><summary>/,'native disclosure remains initially closed and keyboard operable')
-assert.match(detail,/참여 혜택 최대 7만원/)
-assert.equal((detailGroups[0][2].match(/<li>/g)||[]).length,1)
-assert.equal((detailGroups[1][2].match(/<li>/g)||[]).length,4)
+assert.match(detail,/참여 혜택 최대 6만원/)
+assert.equal((detailGroups[0][2].match(/<li>/g)||[]).length,4)
 assert.doesNotMatch(detail,/<input|<form|data-event=/,'detail disclosure cannot change the inquiry selection')
 const gift='assets/img/studio-3d/gift-benefits-yellow-v1.webp'
 assert.ok(detail.includes('<span class="mas-event-gift" aria-hidden="true"><img src="/'+gift+'" alt="" width="48" height="48"'),'the yellow 3D gift is decorative, not duplicated accessible content')
@@ -63,9 +61,8 @@ for(const keys of [[],['weekday','blog'],events.map(event=>event.key)]){
  scope.selectedKeys=keys
  runInNewContext('selectedEvents=new Set(selectedKeys)',scope)
  const inquiry=scope.eventBenefitsSection('03'),groups=checkGroups(inquiry)
- assert.equal((groups[0][2].match(/data-event=/g)||[]).length,1)
- assert.equal((groups[1][2].match(/data-event=/g)||[]).length,4)
- assert.equal((inquiry.match(/class="event-terms"/g)||[]).length,5)
+ assert.equal((groups[0][2].match(/data-event=/g)||[]).length,4)
+ assert.equal((inquiry.match(/class="event-terms"/g)||[]).length,4)
  for(const event of events){
   const input=inquiry.match(new RegExp('<input[^>]+data-event="'+event.key+'"[^>]*>'))
   assert.ok(input,event.key+' retains its original selection binding')
@@ -77,8 +74,7 @@ for(const keys of [[],['weekday','blog'],events.map(event=>event.key)]){
 }
 scope.renderEventsPage()
 const publicGroups=checkGroups(scope.app.innerHTML)
-assert.equal((publicGroups[0][2].match(/class="wistia-event-card"/g)||[]).length,1)
-assert.equal((publicGroups[1][2].match(/class="wistia-event-card"/g)||[]).length,4)
+assert.equal((publicGroups[0][2].match(/class="wistia-event-card"/g)||[]).length,4)
 assert.doesNotMatch(scope.app.innerHTML,/<input|<form/,'the general event listing remains read-only')
 
 // Exercise all 32 remaining benefit combinations for all three active products
@@ -87,7 +83,7 @@ let currentEventProduct='solo',currentEventPurpose='',selectedFilmFormat='live',
 let selectedOptions=new Set(['rush']),optionQuantities={},chosenOption=''
 `+slice('function eventProductOptions(','function renderProductOption('),scope)
 for(const [key,base] of [['solo',120000],['duo',160000],['duet-film',350000]]){
- for(let mask=0;mask<32;mask++){
+ for(let mask=0;mask<16;mask++){
   const chosen=events.filter((event,index)=>mask&(1<<index))
   scope.calculationState={key,keys:chosen.map(event=>event.key)}
   const result=runInNewContext('currentEventProduct=calculationState.key;selectedEvents=new Set(calculationState.keys);calculate()',scope)
@@ -141,7 +137,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261008-notion-booking-1/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261008-contact-calendar-3/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
-console.log('Yellow gift, five benefits, 96 calculations, selection preservation, protected assets and caches passed')
+console.log('Yellow gift, four paybacks, 48 calculations, selection preservation, protected assets and caches passed')

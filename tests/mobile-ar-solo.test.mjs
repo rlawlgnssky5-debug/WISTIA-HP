@@ -9,7 +9,7 @@ const scope={
  PRODUCTS:{solo:{normal:120000,resultVideo:'assets/video/groom-wedding-song-ar.mp4'},duo:{normal:160000,resultVideo:'assets/video/duo-wedding-song-ar.mp4'}},
  AR_DETAIL_CONTENT:{solo:{poster:'assets/img/ar-detail/solo-live-proof.jpg'}},
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
- EVENTS:[['discount',10000],['discount',10000],['payback',30000],['payback',10000],['payback',10000],['payback',10000]].map(([type,discount])=>({type,label:'참여 혜택',discount,detail:'승인된 조건'})),shortWon:n=>(n/10000)+'만원',
+ EVENTS:[['payback',30000],['payback',10000],['payback',10000],['payback',10000]].map(([type,discount])=>({type,label:'참여 혜택',discount,detail:'승인된 조건'})),shortWon:n=>(n/10000)+'만원',
  soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2 id="soloReviewTitle">실제 고객 후기</h2><p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p></header></section>',
  productPackageOverview:()=>'<div>기본 구성</div>',productComparisonSection:()=>'<section>장점</section>',arExpertStory:()=>'<section>엔지니어</section>',
  faq:items=>items.map(([q,a])=>'<details><summary>'+q+'</summary><p>'+a+'</p></details>').join(''),footer:()=>'<footer></footer>',
@@ -32,7 +32,7 @@ assert.match(duetMobile,/data-ar-product="duo"/)
 assert.match(duetMobile,/DUET · 2인/)
 assert.match(duetMobile,/duo-wedding-song-ar\.mp4/)
 assert.match(duetMobile,/href="\/event\/duo"/)
-assert.match(duetMobile,/할인·페이백 모두 적용 후 혜택가<\/span><strong>80,000원/)
+assert.match(duetMobile,/페이백 완료 후 혜택가<\/span><strong>100,000원/)
 mobile=false
 assert.equal(scope.arCommerceDetail(scope.PRODUCTS.solo),html,'SOLO PC and mobile markup match')
 assert.equal(scope.arCommerceDetail(scope.PRODUCTS.duo,'duo'),duetMobile,'DUET PC and mobile markup match')
@@ -120,7 +120,7 @@ assert.match(source,/reviewDisplay=gesture.start-dx/)
 assert.match(html,/href="\/detail\/duo"/)
 assert.match(source,/el\.matches\("\.mobile-ar-solo \.mas-selection \.mas-variant"\)\?"\.mobile-ar-solo \.mas-selection"/)
 assert.match(html,/120,000원/);assert.match(html,/160,000원/)
-assert.match(html,/할인·페이백 모두 적용 후 혜택가<\/span><strong>40,000원/)
+assert.match(html,/페이백 완료 후 혜택가<\/span><strong>60,000원/)
 assert.match(html,/\(1곡 · 1인 · 1시간\)/)
 assert.doesNotMatch(html,/data-quick-estimate|빠른 견적/)
 assert.match(html,/href="\/event\/solo">카카오톡 문의/)

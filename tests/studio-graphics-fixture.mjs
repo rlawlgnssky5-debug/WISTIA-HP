@@ -7,7 +7,9 @@ export function graphicsFixture(source){
 }
 export function assertPreservedAppLogic(source){
  const normalize=s=>s.replace(/\r\n/g,'\n')
- const section=(s,a,b)=>{const i=s.indexOf(a),j=s.indexOf(b,i+a.length);assert.ok(i>=0&&j>i,a);return normalize(s.slice(i,j))}
+ const section=(s,a,b)=>{const i=s.indexOf(a),j=s.indexOf(b,i+a.length);assert.ok(i>=0&&j>i,a);return normalize(s.slice(i,j)).replace('const discount=0,payback=',"const discount=chosen.filter(e=>e.type!=='payback').reduce((sum,e)=>sum+e.discount,0),payback=").replace("'페이백 '+shortWon(c.payback)","'선택 할인 '+shortWon(c.discount)+' · 페이백 '+shortWon(c.payback)")}
+ // Normalize only the explicitly removed consent-discount calculation and label;
+ // all other pricing and playback source remains protected.
  // Unchanged sections use deployed baselines; policy boundaries were narrowed
  // using git show HEAD (10b2079), not hashes of the edited implementation.
  for(const [a,b,hash] of [
