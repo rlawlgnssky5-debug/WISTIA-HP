@@ -46,6 +46,73 @@ assert.equal(form.dataset.scheduleState,'ready','stale responses cannot overwrit
 date.disabled=true;api.changed(date);await flush();assert.equal(form.dataset.scheduleState,'unknown')
 assert.equal(list.hidden,true)
 api.mount(null);events.visibilitychange();assert.equal(requests.length,5)
+
+// Regression: the two reported hangs and the timeout fallback, with controllable timers.
+function harness(){
+ const requests=[],timers=[]
+ const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){}}},Date,Intl,AbortController,
+  setTimeout(fn,ms){timers.push({fn,ms,cleared:false});return timers.length},clearTimeout(id){if(timers[id-1])timers[id-1].cleared=true},
+  fetch(url,options){return new Promise((resolve,reject)=>requests.push({url,options,resolve,reject}))}}
+ runInNewContext(source,context)
+ const fire=min=>{for(const timer of timers)if(!timer.cleared&&timer.ms>=min){timer.cleared=true;timer.fn()}}
+ return {api:context.window.WistiaBooking,requests,fire}
+}
+function makeForm(){
+ const date=control(''),time=control(''),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
+ date.disabled=true
+ time.options=['','14:30','15:30','16:00','16:30','17:00','18:30','19:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
+ Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
+ const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
+ date.closest=time.closest=()=>form
+ return {form,date,time,status,list,opt:value=>time.options.find(option=>option.value===value)}
+}
+const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10:00:00Z'}]
+{ // (a) first date entry: radio change, date change, updatePrice re-mount and duplicate change must share one request
+ const {api,requests}=harness(),f=makeForm()
+ api.mount(f.form,'solo');await flush();assert.equal(f.form.dataset.scheduleState,'unknown')
+ f.date.disabled=false;api.changed(f.date);await flush()
+ f.date.value=day;api.changed(f.date);api.mount(f.form,'solo');api.changed(f.date)
+ assert.equal(f.form.dataset.scheduleState,'loading')
+ assert.ok(f.time.options.filter(option=>option.value).every(option=>option.disabled),'no time is selectable as available while checking')
+ assert.equal(f.list.hidden,true)
+ assert.equal(requests.length,1,'the only in-flight response is shared, not dropped')
+ requests[0].resolve(payload(day,booking));await flush();await flush()
+ assert.equal(f.form.dataset.scheduleState,'ready')
+ assert.equal(f.opt('16:30').disabled,true);assert.match(f.opt('16:30').textContent,/마감/)
+ assert.equal(f.opt('16:00').disabled,false);assert.equal(f.opt('19:00').disabled,false)
+}
+{ // (a') first date entry whose request never answers: timeout fallback, never "available"
+ const {api,requests,fire}=harness(),f=makeForm()
+ api.mount(f.form,'solo');f.date.disabled=false;f.date.value=day;api.changed(f.date)
+ assert.equal(f.form.dataset.scheduleState,'loading');assert.equal(api.timeoutMs,8000)
+ fire(api.timeoutMs);await flush();await flush()
+ assert.equal(requests[0].options.signal.aborted,true)
+ assert.equal(f.form.dataset.scheduleState,'unavailable');assert.match(f.status.textContent,/카카오톡에서 가능 여부/)
+ assert.equal(f.list.hidden,true,'fallback never lists times as available')
+ assert.ok(f.time.options.every(option=>!/마감/.test(option.textContent)))
+ api.changed(f.date);assert.equal(requests.length,2,'a timed-out date is retried, not served from cache')
+}
+{ // (b) product switch story → SOLO re-renders the form while the story request is still in flight
+ const {api,requests}=harness(),story=makeForm()
+ api.mount(story.form,'duet-film');story.date.disabled=false;story.date.value=day;api.changed(story.date)
+ const solo=makeForm();api.mount(solo.form,'solo');assert.equal(solo.form.dataset.scheduleState,'unknown')
+ solo.date.disabled=false;solo.date.value=day;api.changed(solo.date);api.changed(solo.date);api.mount(solo.form,'solo')
+ assert.equal(solo.form.dataset.scheduleState,'loading');assert.equal(requests.length,1,'switching products reuses the in-flight date request')
+ requests[0].resolve(payload(day,booking));await flush();await flush()
+ assert.equal(solo.form.dataset.scheduleState,'ready')
+ assert.equal(solo.opt('16:30').disabled,true);assert.equal(solo.opt('16:00').disabled,false,'SOLO uses 60 minutes')
+ // (b') switching back again renders immediately from the known closures for the new duration
+ const story2=makeForm();api.mount(story2.form,'duet-film');story2.date.disabled=false;story2.date.value=day;api.changed(story2.date)
+ assert.equal(story2.form.dataset.scheduleState,'ready');assert.equal(requests.length,1)
+ assert.equal(story2.opt('14:30').disabled,true);assert.equal(story2.opt('19:00').disabled,false,'story blocks 180-minute overlaps')
+ const solo2=makeForm();api.mount(solo2.form,'solo');solo2.date.disabled=false;solo2.date.value=day;api.mount(solo2.form,'solo')
+ assert.equal(solo2.form.dataset.scheduleState,'ready');assert.equal(solo2.opt('16:00').disabled,false);assert.equal(solo2.opt('16:30').disabled,true)
+ // copy refresh: always a fresh request even with a cached schedule, and a failure shows the Kakao fallback
+ const copy=api.refresh();assert.equal(requests.length,2,'schedule is re-fetched right before copying');assert.equal(solo2.form.dataset.scheduleState,'loading')
+ requests[1].reject(Error('notion down'));await copy
+ assert.equal(solo2.form.dataset.scheduleState,'unavailable');assert.match(solo2.status.textContent,/카카오톡에서 가능 여부/)
+ const late=api.refresh();requests[2].resolve(payload(day,booking));await late;assert.equal(solo2.form.dataset.scheduleState,'ready')
+}
 const contact=readFileSync(new URL('../js/contact-form.js',import.meta.url),'utf8'),app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
 assert.match(contact,/role="status" aria-live="polite"/)
 assert.match(contact,/aria-describedby="bookingAvailabilityStatus"/)

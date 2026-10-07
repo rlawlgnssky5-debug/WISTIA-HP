@@ -32,6 +32,13 @@ service.value='상담 후 결정';await submitHandler({target:form,preventDefaul
 assert.equal(copyCount,1);assert.equal(refreshCount,1)
 await submitHandler({target:{id:'anotherForm'},preventDefault(){throw Error('unrelated form')}})
 assert.equal(copyCount,1)
+// The submit handler re-fetches the schedule before copying, and copies with the Kakao note if that fails
+const order=[];const copied=context.copyConsultationAndShowDialog
+context.window.WistiaBooking={refresh(){order.push('refresh');return Promise.resolve()}}
+context.copyConsultationAndShowDialog=text=>{order.push('copy');copied(text)}
+await submitHandler({target:form,preventDefault(){}})
+assert.deepEqual(order,['refresh','copy'],'schedule refresh completes before the inquiry is copied')
+delete context.window.WistiaBooking;context.copyConsultationAndShowDialog=copied
 const popup=source.slice(source.indexOf('function showContactValidationDialog('),source.indexOf('function openVideo('))
 date.form=form
 context.document.querySelectorAll=()=>[]
