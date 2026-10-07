@@ -7,7 +7,7 @@ runInNewContext(read('js/contact-form.js'),context)
 const api=context.window.WistiaContact
 const control=(name,value,options={})=>({name,value,required:false,willValidate:true,validity:{valid:true},tagName:'INPUT',attributes:{},setAttribute(key,value){this.attributes[key]=value},removeAttribute(key){delete this.attributes[key]},hasAttribute(key){return key in this.attributes},getAttribute(key){return this.attributes[key]},...options})
 const name=control('name','',{required:true}),service=control('service','',{required:true,tagName:'SELECT'}),date=control('bookingDate','',{willValidate:false})
-const form={id:'contactInquiryForm',elements:[name,service,date],data:[['name','과거 초안'],['service','상담 후 결정']]}
+const form={id:'contactInquiryForm',dataset:{},isConnected:true,elements:[name,service,date],data:[['name','과거 초안'],['service','상담 후 결정']]}
 let issues=api.validationIssues(form)
 assert.deepEqual(Array.from(issues,issue=>[issue.label,issue.message]),[['희망 서비스','선택해 주세요']])
 assert.equal(name.attributes['aria-invalid'],undefined,'removed name is not validated')
@@ -26,11 +26,11 @@ Object.assign(context,{document:{addEventListener(type,fn){submitHandler=fn}},re
 runInNewContext(handler,context)
 service.value='';date.validity.valid=true
 let prevented=false
-submitHandler({target:form,preventDefault(){prevented=true}})
+await submitHandler({target:form,preventDefault(){prevented=true}})
 assert.equal(prevented,true);assert.equal(copyCount,0);assert.equal(refreshCount,0);assert.equal(shown[0].control,service)
-service.value='상담 후 결정';submitHandler({target:form,preventDefault(){}})
+service.value='상담 후 결정';await submitHandler({target:form,preventDefault(){}})
 assert.equal(copyCount,1);assert.equal(refreshCount,1)
-submitHandler({target:{id:'anotherForm'},preventDefault(){throw Error('unrelated form')}})
+await submitHandler({target:{id:'anotherForm'},preventDefault(){throw Error('unrelated form')}})
 assert.equal(copyCount,1)
 const popup=source.slice(source.indexOf('function showContactValidationDialog('),source.indexOf('function openVideo('))
 date.form=form

@@ -11,15 +11,15 @@
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
  const timeOptions=Array.from({length:21},(_,index)=>{const hour=13+Math.floor(index/2),minute=index%2?'30':'00';return '<option value="'+hour+':'+minute+'">'+hour+'시'+(minute==='30'?' 30분':'')+'</option>'}).join('')
  function dateField(key,label){
-  return '<fieldset class="contact-field contact-date-field"><legend>'+label+'</legend><div class="contact-date-toggle"><label><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="date" disabled aria-describedby="contact-'+key+'-hint"><em id="contact-'+key+'-hint">'+(key==='bookingDate'?'월~목 예약 시 평일 할인 · 예약 가능 여부는 상담에서 확인합니다':'달력에서 날짜를 선택해 주세요')+'</em><small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
+  return '<fieldset class="contact-field contact-date-field"><legend>'+label+'</legend><div class="contact-date-toggle"><label><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="date" disabled aria-describedby="contact-'+key+'-hint"><em id="contact-'+key+'-hint">'+(key==='bookingDate'?'목·금·토·일 운영 · 월·화·수 휴무':'달력에서 날짜를 선택해 주세요')+'</em><small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
- function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart"><option value="">미정</option>'+timeOptions+'</select></label></div><em>13시~23시 · 방문 가능한 시간을 선택해 주세요</em></fieldset>'}
+ function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><aside class="booking-availability-note"><strong>목·금·토·일 운영</strong><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite">월·화·수는 휴무입니다 · 예약일을 선택하면 마감 시간을 확인합니다</p><small data-booking-open-times hidden></small><button type="button" data-booking-refresh>예약 가능 시간 다시 확인</button></aside></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
    if(!invalid){if(mark)control.removeAttribute('aria-invalid');return []}
    if(mark)control.setAttribute('aria-invalid','true')
-   const label=fields.find(field=>field[0]===control.name)?.[1]||'입력 내용'
+   const label=fields.find(field=>field[0]===(control.name==='timeStart'?'time':control.name))?.[1]||'입력 내용'
    return [{control,label,message:missing?(control.tagName==='SELECT'?'선택해 주세요':'입력해 주세요'):(control.validationMessage||'입력 내용을 확인해 주세요')}]
   })
  }
@@ -28,6 +28,7 @@
   if(target.dataset.contactDateMode){const key=target.dataset.contactDateMode,panel=form.querySelector('[data-contact-date-panel="'+key+'"]'),input=panel.querySelector('input'),known=target.value==='date';panel.hidden=!known;input.disabled=!known;if(!known){input.setCustomValidity('');input.removeAttribute('aria-invalid');panel.querySelector('.contact-input-error').hidden=true}}
   const booking=form.querySelector('#contact-bookingDate'),dateError=form.querySelector('[data-contact-date-error="bookingDate"]')
   booking.setCustomValidity('');booking.removeAttribute('aria-invalid');dateError.hidden=true
+  global.WistiaBooking?.changed(target)
  }
  const formatDate=value=>/^\d{4}-\d{2}-\d{2}$/.test(value)?value.replace(/^(\d{4})-(\d{2})-(\d{2})$/,'$1년 $2월 $3일'):value
  function render(quote,{embedded=false,integrated=false}={}){
@@ -82,6 +83,7 @@
   if(!form||!values)return
   for(const [key,value] of Object.entries(values)){if(key==='service'||!snapshotKeys.has(key))continue;const controls=[...form.elements].filter(el=>el.name===key);controls.forEach(el=>{if(el.type==='radio')el.checked=el.value===value;else el.value=value})}
   form.querySelectorAll('[data-contact-date-mode]:checked').forEach(update)
+  global.WistiaBooking?.changed(form.querySelector('#contact-bookingDate'))
   syncSubmitState(form)
  }
  function text(values,quote){
@@ -92,6 +94,7 @@
   else{lines.push((next++)+') 희망 서비스','희망 서비스 : '+(String(values.service||'').trim()||'미정'),'')}
   lines.push((next++)+') 예약 일정')
   fields.filter(([key])=>['eventDate','bookingDate','time'].includes(key)).forEach(([key,label])=>{let value=String(values[key]||'').trim();if(key==='eventDate'||key==='bookingDate')value=values[key+'Mode']==='unknown'?'':formatDate(value);if(key==='time')value=values.timeStart||'';lines.push(label+' : '+(value||'미정'))})
+  if(values.bookingDateMode==='date'&&values.bookingDate)lines.push('일정 안내 : 희망 일정이며 예약 가능 여부와 최종 확정은 카카오톡 상담에서 확인')
   lines.push('',next+') 유입 경로','어디에서 보고 오셨나요? : '+(String(values.source||'').trim()||'선택 안 함'))
   return lines.join('\n').trim()
  }

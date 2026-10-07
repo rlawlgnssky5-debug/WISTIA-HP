@@ -263,8 +263,7 @@ const EVENTS = [
   { key: "reaction", type: "payback", label: "현장 리액션 영상", discount: 10000, detail: "본식 현장 촬영 파일 제공" },
   { key: "cafe", type: "payback", label: "웨딩 카페 후기", discount: 10000, detail: "300자 이상 · 관련 사진 4장 이상" },
   { key: "instagram", type: "payback", label: "인스타그램 후기", discount: 10000, detail: "후기 50자 이상 · 사진 4장 이상 · BGM 추가 · 공식 계정 태그 · 공개 계정" },
-  { key: "voice-photo-consent", type: "discount", label: "웨딩 사진 · 음성 비포 애프터 활용 동의", discount: 10000, detail: "웨딩 사진 1장(얼굴 공개) 제공 + 음성 비포 애프터 활용 동의 · 동의 여부와 활용 범위는 예약 상담에서 확인합니다" },
-  { key: "weekday", type: "discount", label: "월~목 평일 할인", discount: 10000, detail: "월요일~목요일 녹음·촬영 예약 시 1만원 할인 · 최종 일정과 적용 여부는 상담에서 확인합니다" }
+  { key: "voice-photo-consent", type: "discount", label: "웨딩 사진 · 음성 비포 애프터 활용 동의", discount: 10000, detail: "웨딩 사진 1장(얼굴 공개) 제공 + 음성 비포 애프터 활용 동의 · 동의 여부와 활용 범위는 예약 상담에서 확인합니다" }
 ]
 
 const ACTUAL_REVIEW_IMAGES = Array.from({ length: 16 }, (_, index) => index===5?"assets/img/reviews/review-06-clean.webp":`assets/img/reviews/review-${String(index + 1).padStart(2, "0")}.webp`)
@@ -1459,7 +1458,7 @@ function bookingExtraSection(p,purpose,options,step){
 }
 function eventBenefitsSection(step){
  const group=(type,title,timing,note)=>{const items=EVENTS.filter(e=>e.type===type),maximum=items.reduce((total,e)=>total+e.discount,0);return '<section class="event-benefit-group benefit-kind-card" data-benefit-type="'+type+'" aria-label="'+title+' 선택"><header class="benefit-kind-header"><h4>'+title+'</h4><strong class="benefit-kind-limit">최대 '+shortWon(maximum)+'</strong><span class="benefit-kind-timing">'+timing+'</span></header><p class="event-group-note">'+note+'</p><div class="event-list">'+items.map(e=>'<div class="event-benefit-card"><label class="event-choice"><input type="checkbox" data-event="'+e.key+'" '+(selectedEvents.has(e.key)?'checked':'')+'><span><strong>'+e.label+'</strong></span><b>'+(type==='payback'?'페이백 ':'할인 −')+shortWon(e.discount)+'</b></label><p class="event-terms">'+e.detail+'</p></div>').join('')+'</div></section>'}
- return '<section class="event-benefits consultation-gifts" aria-labelledby="giftTitle"><header class="consultation-gift-heading"><div><h3 id="giftTitle">후기 참여 이벤트</h3><p>할인 최대 2만원 · 후기 페이백 최대 6만원</p></div><span class="benefit-total" id="eventDiscountTotal" aria-live="polite">선택 할인 0원 · 페이백 0원</span></header><div class="benefit-kind-grid">'+group('discount','할인','결제 시 할인','선택한 조건이 확인되면 결제 금액에서 할인됩니다')+group('payback','후기 페이백','조건 확인 후 지급','참여 조건 충족 확인 후 돌려드리는 금액이며, 결제 금액에서 미리 차감하지 않습니다')+'</div><p class="fine">참여 조건과 최종 혜택 적용 여부는 상담에서 확인합니다</p></section>'
+ return '<section class="event-benefits consultation-gifts" aria-labelledby="giftTitle"><header class="consultation-gift-heading"><div><h3 id="giftTitle">후기 참여 이벤트</h3><p>할인 최대 1만원 · 후기 페이백 최대 6만원</p></div><span class="benefit-total" id="eventDiscountTotal" aria-live="polite">선택 할인 0원 · 페이백 0원</span></header><div class="benefit-kind-grid">'+group('discount','할인','결제 시 할인','선택한 조건이 확인되면 결제 금액에서 할인됩니다')+group('payback','후기 페이백','조건 확인 후 지급','참여 조건 충족 확인 후 돌려드리는 금액이며, 결제 금액에서 미리 차감하지 않습니다')+'</div><p class="fine">참여 조건과 최종 혜택 적용 여부는 상담에서 확인합니다</p></section>'
 }
 function priceSidebarSection(){return '<aside class="booking-mobile-bar booking-static-bar booking-follow-total booking-price-sidebar" aria-label="선택한 구성의 예상 가격"><div class="booking-price-card"><p class="quote-eyebrow">선택한 구성</p><h2 id="quoteService"></h2><div class="quote-regular" id="quoteRegular" hidden><span>할인 적용 전</span><s id="quoteBeforePrice"></s></div><div class="booking-live-total"><span>결제 예상 금액</span><strong id="mobilePrice" aria-live="polite"></strong></div><dl class="quote-price-rows"><div><dt>기본 가격</dt><dd id="quoteBase"></dd></div><div><dt>추가 옵션</dt><dd id="quoteOptions"></dd></div><div><dt>할인</dt><dd id="quoteDiscount"></dd></div><div><dt>후기 페이백</dt><dd id="quotePayback"></dd></div></dl><dl class="quote-selected-lines" id="quoteSelections"></dl><p class="quote-effective" id="quoteEffectiveRow" hidden>페이백 완료 후 혜택가 <strong id="quoteEffective"></strong></p><p class="quote-note">페이백은 참여 조건 충족 확인 후 지급되며 결제 시 미리 차감되지 않습니다</p></div><p class="quote-conditions">최종 금액과 제작 가능 일정은 상담에서 확인합니다</p></aside>'}
 function renderEvent(key,purpose="",undecided=false){
@@ -1478,6 +1477,7 @@ function refreshInquiryQuote(){
  const c=calculate()
  contactQuote=inquiryUndecided?null:{service:["solo","duo"].includes(currentEventProduct)?"AR 축가 사전녹음":"축가 스토리 필름",summary:c.product.title+" · "+shortWon(c.finalPrice),text:consultationText()}
  window.WistiaContact?.syncQuote(contactQuote)
+ window.WistiaBooking?.mount(document.querySelector('#contactInquiryForm'),inquiryUndecided?'undecided':currentEventProduct)
 }
 function jumpToInquiry(){
  requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -1517,14 +1517,6 @@ function updatePrice(){
  const regular=document.querySelector('#quoteRegular');if(regular)regular.hidden=c.discount===0||inquiryUndecided
  if(inquiryUndecided){setQuoteText('quoteService','상담 후 결정');setQuoteText('mobilePrice','미정');setQuoteText('quoteBase','상담 후 안내');setQuoteText('quoteOptions','선택 없음');setQuoteText('quoteDiscount','선택 없음');setQuoteText('quotePayback','선택 없음')}
  refreshInquiryQuote()
-}
-function syncWeekdayDiscount(){
- const date=document.querySelector('#contact-bookingDate'),choice=document.querySelector('[data-event="weekday"]');if(!date||!choice)return
- const day=!date.disabled&&date.value?new Date(date.value+'T12:00:00').getDay():null,unavailable=day!==null&&![1,2,3,4].includes(day)
- choice.disabled=unavailable
- if(unavailable){choice.checked=false;selectedEvents.delete('weekday')}
- choice.closest('.event-benefit-card').classList.toggle('is-unavailable',unavailable)
- choice.title=unavailable?'월~목 녹음·촬영 예약에만 적용됩니다':''
 }
 // The question dialog shares the existing calculator, never a second price table
 function quoteState(){return {key:currentEventProduct,purpose:currentEventPurpose,format:selectedFilmFormat,people:selectedFilmPeople,options:[...selectedOptions],events:[...selectedEvents]}}
@@ -1759,6 +1751,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  document.querySelector('#guideLayer')?.remove()
  prepareSvgPlayerControls()
  window.WistiaSvgUI?.mount(app,studioIcon)
+ window.WistiaBooking?.mount(document.querySelector('#contactInquiryForm'),inquiryUndecided?'undecided':currentEventProduct)
  prepareRatioAudioSources();
  prepareArHookVideo();
  initArCommerceDetail();
@@ -1820,6 +1813,7 @@ document.addEventListener("click",e=>{
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
  if(el.id==='floatingKakaoChat'||el.matches('.mas-bottom > a')){e.preventDefault();showKakaoInquiryDialog(el.id==='floatingKakaoChat'?'/contact':el.getAttribute('href'));return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
+ if(el.hasAttribute('data-booking-refresh')){window.WistiaBooking?.refresh();return}
  if(el.matches(".skip-link")){e.preventDefault();app.focus();return}
  if(el.matches("[data-close]")){closeDialog();if(el.tagName==="BUTTON")return}
  if(el.id==="headerBack")goBack();
@@ -1838,9 +1832,9 @@ document.addEventListener("click",e=>{
 })
 document.addEventListener("change",e=>{
  const el=e.target;
- if(el.closest('[data-contact-fields]')){window.WistiaContact.update(el);syncWeekdayDiscount();updatePrice();return}
+ if(el.closest('[data-contact-fields]')){window.WistiaContact.update(el);updatePrice();return}
  const priceScrollY=document.body.dataset.page==="event"?window.scrollY:null;
- if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value,draft=window.WistiaContact.snapshot(document.querySelector('#contactInquiryForm'));if(next!==currentEventProduct||inquiryUndecided){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next==='undecided'?"/contact"+location.search:"/event/"+next+location.search);route({preserveScroll:true,reuseEventForm:!!el.dataset.baseProduct});window.WistiaContact.restore(document.querySelector('#contactInquiryForm'),draft);syncWeekdayDiscount();updatePrice()}return}
+ if(el.matches('[data-product-select],[data-base-product]')){const next=el.dataset.baseProduct||el.value,draft=window.WistiaContact.snapshot(document.querySelector('#contactInquiryForm'));if(next!==currentEventProduct||inquiryUndecided){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next==='undecided'?"/contact"+location.search:"/event/"+next+location.search);route({preserveScroll:true,reuseEventForm:!!el.dataset.baseProduct});window.WistiaContact.restore(document.querySelector('#contactInquiryForm'),draft);updatePrice()}return}
  if(el.dataset.event){el.checked?selectedEvents.add(el.dataset.event):selectedEvents.delete(el.dataset.event);updatePrice()}
  if(el.dataset.option){el.checked?selectedOptions.add(el.dataset.option):selectedOptions.delete(el.dataset.option);updatePrice()}
  if(el.dataset.filmPeople){selectedFilmPeople=Number(el.dataset.filmPeople);updatePrice()}
@@ -1849,7 +1843,7 @@ document.addEventListener("change",e=>{
  if(priceScrollY!==null)requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:priceScrollY,behavior:"instant"})))
 })
 document.addEventListener('input',e=>{if(e.target.closest('#contactInquiryForm'))e.target.removeAttribute('aria-invalid');if(e.target.closest('[data-contact-fields]'))window.WistiaContact.syncReview()})
-document.addEventListener("submit",e=>{if(e.target.id==='contactInquiryForm'){e.preventDefault();const issues=window.WistiaContact.validationIssues(e.target);if(issues.length){showContactValidationDialog(issues);return}refreshInquiryQuote();const values=Object.fromEntries(new FormData(e.target));copyConsultationAndShowDialog(window.WistiaContact.text(values,contactQuote))}})
+document.addEventListener("submit",async e=>{if(e.target.id==='contactInquiryForm'){e.preventDefault();const form=e.target;if(form.dataset.copyPending==='true')return;form.dataset.copyPending='true';try{await window.WistiaBooking?.refresh();if(!form.isConnected)return;const issues=window.WistiaContact.validationIssues(e.target);if(issues.length){showContactValidationDialog(issues);return}refreshInquiryQuote();const values=Object.fromEntries(new FormData(e.target));copyConsultationAndShowDialog(window.WistiaContact.text(values,contactQuote))}finally{delete form.dataset.copyPending}}})
 dialog.addEventListener("cancel",e=>{e.preventDefault();closeDialog()})
 dialog.addEventListener("click",e=>{if(e.target===dialog)closeDialog()})
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");document.querySelector("#menuToggle")?.focus()}})

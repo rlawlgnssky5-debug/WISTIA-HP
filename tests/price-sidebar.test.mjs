@@ -40,7 +40,7 @@ set({key:'duet-film',format:'making',options:['bride-entrance'],events:['blog','
 assert.equal(node('#mobilePrice').textContent,'39만원')
 assert.equal(node('#quoteEffective').textContent,'330,000원')
 assert.equal(node('#eventDiscountTotal').textContent,'선택 할인 0원 · 페이백 6만원')
-assert.match(context.eventBenefitsSection('03'),/할인 최대 2만원 · 후기 페이백 최대 6만원/)
+assert.match(context.eventBenefitsSection('03'),/할인 최대 1만원 · 후기 페이백 최대 6만원/)
 set({key:'solo',options:['lyrics-video','groom-entrance']})
 assert.equal(node('#mobilePrice').textContent,'20만원')
 assert.equal(node('#quoteRegular').hidden,true,'deselecting benefits clears the strike-through')
@@ -59,7 +59,7 @@ const final=source.match(/'<section class="arc-section arc-final"><h2>축가는 
 assert.doesNotMatch(final,/action\('카카오톡 상담'/)
 assert.doesNotMatch(context.priceSidebarSection(),/<button|data-inquiry-jump/)
 assert.match(context.eventBenefitsSection('03'),/후기 참여 이벤트/)
-assert.equal((context.eventBenefitsSection('03').match(/class="event-terms"/g)||[]).length,6)
+assert.equal((context.eventBenefitsSection('03').match(/class="event-terms"/g)||[]).length,5)
 assert.doesNotMatch(context.eventBenefitsSection('03'),/<details|<summary/)
 context.inquiryUndecided=true
 set({key:'solo',options:['lyrics-video'],events:['blog']})

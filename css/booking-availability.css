@@ -1,0 +1,8 @@
+.booking-availability-note{margin-top:14px;padding:16px;border:1px solid #DDDCD8;background:#F5F4F0;color:#252421;border-radius:4px;text-align:left;overflow-wrap:anywhere}
+.booking-availability-note strong{display:block;margin-bottom:8px;font-size:15px;font-weight:600}
+.booking-availability-note p{margin:0;font-size:14px;line-height:1.7;color:#66645F}
+.booking-availability-note [data-state="closed"]{color:#252421;font-weight:600}
+.booking-availability-note [data-booking-open-times]{display:block;margin-top:10px;font-size:13px;line-height:1.8;color:#66645F}
+.booking-availability-note [hidden]{display:none!important}
+.booking-availability-note button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:10px;padding:8px 14px;border:1px solid #DDDCD8;background:#fff;color:#252421;border-radius:4px;font:inherit;font-size:14px;cursor:pointer}
+.booking-availability-note button:focus-visible{outline:2px solid #252421;outline-offset:3px}

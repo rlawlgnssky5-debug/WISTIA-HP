@@ -32,7 +32,7 @@ const cases=[
  [{key:'solo',events:['voice-photo-consent']},110000],
  [{key:'duo',events:['voice-photo-consent']},150000],
  [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},110000],
- [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent','weekday']},100000],
+ [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent','weekday']},110000],
  [{key:'duet-film',events:['voice-photo-consent']},340000],
  [{key:'duet-film',format:'making',events:['voice-photo-consent']},340000],
  [{key:'duet-film'},350000],
@@ -49,7 +49,7 @@ for(const [state,expected] of cases){
 assert.equal(api.context().key,'duo')
 assert.equal(api.options('duet-film').some(o=>o.key==='lyrics-video'),false)
 for(const key of ['solo','duo','duet-film'])assert.equal(api.options(key).some(o=>o.key==='rush'),false,'removed rush option is not offered for '+key)
-assert.equal(api.events().length,6)
+assert.equal(api.events().length,5)
 assert.equal(api.events().find(event=>event.key==='voice-photo-consent').discount,10000)
 context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance'],events:['blog']}
 runInNewContext('setQuoteState(state)',context)
