@@ -42,6 +42,15 @@ SOLO 1시간, DUET 2시간, 스토리 3시간 전체 구간이 기존 예약과 
 4) 배포 경로: 브랜치 `notion-booking-availability` → Vercel 미리보기 검수 → main 운영 배포
 5) 실제 검수 결과(미리보기·운영 `/api/availability`)는 `tests/notion-booking-qa.md`에 기록
 
+## 2026-10-08 실제 상태
+
+- 연결: 기존 가계부 `녹음실 일정` 하나만 읽는 노션 읽기 전용 내부 연결 (쓰기 권한 없음, 노션 기록 수정 없음)
+- 환경변수: Vercel Production·Preview 모두 등록 (`NOTION_BOOKING_TOKEN`은 Sensitive, 값 비공개)
+- 배포 중 발견·수정한 문제
+  - `ERR_REQUIRE_ESM`: Vercel이 `api/availability.js`를 CommonJS로 변환한 뒤 `.mjs` 라이브러리를 require하지 못해 500 발생 → `api/availability.js`를 CommonJS로 작성하고 `lib/notion-availability.mjs`는 동적 `import()`로 불러오도록 수정 (`vercel build` 결과물을 Node 20·22·24에서 직접 실행해 재현·확인)
+  - `예약 가능 시간을 확인하고 있습니다` 멈춤: 첫 날짜 입력과 상품 전환(스토리→SOLO) 때 진행 중 조회가 취소되거나 응답이 늦으면 확인 중 상태에 머묾 → 같은 날짜 조회 공유, 30초 결과 재사용, 8초 시간 제한 후 카카오톡 확인 안내로 전환, 확인 중에는 시간 선택 불가, 문의 복사 직전에는 항상 새로 조회
+- 2026-10-08 KST 미리보기 실제 노션 데이터 검수 통과, 운영 결과는 `tests/notion-booking-qa.md`에 기록
+
 토큰을 재발급하면 Vercel의 `NOTION_BOOKING_TOKEN`만 교체하고 재배포할 것
 연결 권한이 해제되면 API는 503을 반환하고 화면은 카카오톡 확인 안내로 전환됨(예약 가능으로 표시하지 않음)
 

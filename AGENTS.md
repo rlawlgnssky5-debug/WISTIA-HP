@@ -33,6 +33,9 @@
 - 배포는 브랜치 `notion-booking-availability` → Vercel 미리보기 검수 → main 순서로 진행한다, 미리보기·운영 검수 결과는 `tests/notion-booking-qa.md`, 사용 안내는 `docs/notion-booking-setup.md`에 기록한다
 - 같은 작업 사본의 SOLO POINT 정렬 수정(`css/svg-interface.css`, 캐시 `20261007-point-alignment-1`)과 과거 배포 기록·출력물은 이 배포에 포함하지 않았고 로컬 작업 사본에 그대로 보존한다
 - 로컬 API 미리보기는 4175이며 4174 기존 미리보기 프로세스는 종료하지 않는다
+- `api/availability.js`는 반드시 CommonJS로 유지하고 `.mjs`는 동적 `import()`로 불러온다, Vercel이 ESM `api/*.js`를 CommonJS로 변환하여 `.mjs` require 시 `ERR_REQUIRE_ESM` 500이 발생했다(2026-10-08 수정), 서버 변경은 `vercel build` 결과물로 재현 검사한다
+- 일정 확인은 항상 마감 표시 또는 카카오톡 확인 안내로 끝나야 한다, 같은 날짜 조회 공유·상품 전환 시 진행 중 조회 유지·8초 시간 제한·확인 중 시간 선택 불가·문의 복사 직전 강제 재조회를 유지한다(확인 중 멈춤 2026-10-08 수정)
+- 2026-10-08 KST 미리보기 `4c5d0b3`(`dpl_7ij9Wh9fu1qovNoKDX8aZ7EUUyVA`)를 실제 노션 데이터로 검수 통과했다, 사용자 승인에 따라 main 운영 배포하며 운영 결과는 `tests/notion-booking-qa.md`에 기록한다
 
 ## 2026-10-07 — 제목·기능 SVG와 섹션 정렬
 
