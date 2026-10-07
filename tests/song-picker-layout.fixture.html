@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/design.css">
+  <link rel="stylesheet" href="../css/responsive-pages.css">
   <style>
     *, *::before, *::after { animation: none !important; transition: none !important; }
   </style>
@@ -16,17 +18,19 @@
     <button data-close-modal></button><button id="copyConsult"></button><button id="openKakao"></button>
   </div>
   <script>location.hash = "#/song"</script>
+  <script src="../js/seo-meta.js"></script>
   <script src="../js/app.js"></script>
   <script>
-    route()
-    const cards = [...document.querySelectorAll(".song-card")].map(card => {
+    renderPicker("song")
+    const cards = [...document.querySelectorAll(".picker-grid > article")].map(card => {
       const cardRect = card.getBoundingClientRect()
-      const imageRect = card.querySelector(".song-card-image").getBoundingClientRect()
-      return { href: card.getAttribute("href"), top: cardRect.top, left: cardRect.left, width: cardRect.width, height: cardRect.height, imageWidth: imageRect.width }
+      const imageRect = card.querySelector(".picker-photo").getBoundingClientRect()
+      return { href: card.querySelector(".picker-photo").getAttribute("href"), top: cardRect.top, left: cardRect.left, width: cardRect.width, height: cardRect.height, imageWidth: imageRect.width }
     })
     const result = document.createElement("pre")
     result.id = "result"
-    result.textContent = JSON.stringify({ viewport: document.documentElement.clientWidth, cards })
+    const picker=document.querySelector(".picker"),padding=getComputedStyle(picker)
+    result.textContent = JSON.stringify({ viewport: document.documentElement.clientWidth, contentWidth:picker.clientWidth-parseFloat(padding.paddingLeft)-parseFloat(padding.paddingRight), cards })
     document.body.replaceChildren(result)
   </script>
 </body>

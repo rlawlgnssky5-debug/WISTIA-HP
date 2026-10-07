@@ -6,3 +6,58 @@
 .booking-availability-note [hidden]{display:none!important}
 .booking-availability-note button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:10px;padding:8px 14px;border:1px solid #DDDCD8;background:#fff;color:#252421;border-radius:4px;font:inherit;font-size:14px;cursor:pointer}
 .booking-availability-note button:focus-visible{outline:2px solid #252421;outline-offset:3px}
+/* Date and time controls share the form's cream paper and charcoal ink. */
+#app .contact-calendar{box-sizing:border-box;width:100%;min-width:0;padding:14px 10px;background:#F5F4F0;color:#252421;border:1px solid #56534d;border-radius:6px;font:inherit;text-align:left}
+#app .contact-calendar[hidden],#app .calendar-time-grid[hidden],#app .contact-time-selects label[hidden],#app input[data-calendar-value]{display:none!important}
+#app .calendar-popup{position:fixed;z-index:1000;max-height:calc(100dvh - 24px);overflow:auto;box-shadow:0 14px 40px #25242126}
+#app .calendar-caption{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin-bottom:16px}
+#app .calendar-caption strong{font-size:16px;font-weight:650}
+#app .calendar-caption [data-calendar-selection]{flex:1;min-width:180px;font-size:14px;line-height:1.7}
+#app .contact-calendar button,#app .calendar-trigger,#app .calendar-time-grid button{box-sizing:border-box;min-height:44px;margin:0;padding:0;border:1px solid #b9b5ab;border-radius:4px;background:#fffcf5;color:#252421;font:inherit;font-size:15px;font-weight:500;cursor:pointer;box-shadow:none;touch-action:manipulation}
+#app .contact-calendar button:focus-visible,#app .calendar-trigger:focus-visible,#app .calendar-time-grid button:focus-visible{outline:2px solid #252421;outline-offset:2px}
+#app .contact-calendar button:disabled,#app .calendar-time-grid button:disabled{background:#e9e6df;color:#79756b;border-color:#e0dcd2;cursor:default}
+#app .calendar-navigation{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+#app .calendar-navigation>button,#app .calendar-close{flex:0 0 44px;width:44px;display:grid;place-items:center}
+#app .calendar-caption .calendar-close{margin-left:auto}
+#app .contact-calendar svg,#app .calendar-trigger svg{width:20px;height:20px}
+#app .calendar-month-selects{display:flex;justify-content:center;gap:6px;flex:1;min-width:0}
+#app .calendar-month-selects label{min-width:0}
+#app#app#app .contact-calendar select{width:auto;max-width:100%;min-width:0;height:44px;min-height:44px;padding:0 22px 0 8px;background-color:#fffcf5!important;color:#252421!important;border:1px solid #56534d!important;font:inherit;font-size:15px;font-weight:600}
+#app .calendar-operating{margin:0 0 14px;padding:12px;background:#e8e2d7;border-left:3px solid #56534d;font-size:15px;font-weight:600;line-height:1.65;color:#252421}
+#app .calendar-operating span{font-weight:500}
+#app .calendar-weekdays,#app .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+#app .calendar-weekdays{margin-bottom:6px;text-align:center;font-size:13px;font-weight:600;line-height:28px}
+#app .contact-calendar .calendar-day{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:40px;min-height:48px;padding:4px 0;line-height:1.2}
+#app .calendar-day small,#app .calendar-time-grid small{font-size:10px;line-height:1.25;font-weight:500;letter-spacing:0}
+#app .contact-calendar .calendar-day.is-today{border:2px solid #56534d}
+#app .contact-calendar .calendar-day.is-today>span{text-decoration:underline;text-underline-offset:3px}
+#app .contact-calendar .calendar-day.is-selected:not(:disabled),#app .calendar-time-grid button[aria-checked="true"]:not(:disabled){background:#302d27;color:#fffcf5;border-color:#302d27}
+#app .contact-calendar .calendar-day:not(:disabled):hover,#app .calendar-time-grid button:not(:disabled):hover{box-shadow:inset 0 0 0 1px #56534d}
+#app .calendar-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px;padding-top:12px;border-top:1px solid #c5bfb2;font-size:12px;line-height:1.6}
+#app .calendar-legend span{display:inline-flex;align-items:center;gap:6px}
+#app .calendar-legend i{width:12px;height:12px;box-sizing:border-box;border-radius:2px}
+#app .legend-unavailable{background:#e9e6df;border:1px solid #c5bfb2}
+#app .legend-today{background:#fffcf5;border:2px solid #56534d}
+#app .legend-selected{background:#302d27;border:1px solid #302d27}
+#app .calendar-trigger{display:flex;justify-content:space-between;align-items:center;width:100%;padding:12px;text-align:left}
+#app .calendar-time-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;clear:both}
+#app .calendar-time-grid button{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:4px;min-height:48px;padding:8px}
+@media(min-width:700px){#app .calendar-inline{max-width:520px}#app .calendar-time-grid{max-width:520px;grid-template-columns:repeat(4,minmax(0,1fr))}#app .contact-calendar .calendar-day{min-height:56px}}
+@media(max-width:450px){#app .contact-calendar{padding:12px 4px}#app .calendar-weekdays,#app .calendar-grid{gap:1px}#app .calendar-caption{padding-inline:6px}#app .calendar-navigation{gap:4px}#app .calendar-month-selects{gap:3px}#app .calendar-legend{gap:8px;padding-inline:4px}#app .calendar-operating{padding:10px 8px}}
+/* Keep seven 40px date targets inside narrow inquiry cards. */
+@media(max-width:450px){
+ #app#app#app .consultation-flow .contact-date-field .contact-date-picker{margin-inline:-12px}
+ #app#app#app .contact-calendar .calendar-caption [data-calendar-selection]{flex-basis:100%;min-width:0}
+ #app .calendar-caption .calendar-close{position:absolute;right:10px;top:10px}
+}
+@media(max-width:360px){#app#app#app .consultation-flow .contact-date-field .contact-date-picker{margin-inline:-42px}}
+/* Legacy form label rules also match nested spans; restore control inheritance. */
+#app#app#app .contact-calendar .calendar-day>span,#app#app#app .calendar-time-grid button>small{color:inherit!important}
+html #app#app#app#app .contact-calendar .calendar-day.is-selected:not(:disabled),
+html #app#app#app#app .contact-calendar .calendar-day.is-selected:not(:disabled)>span,
+html #app#app#app#app .calendar-time-grid button[aria-checked="true"]:not(:disabled),
+html #app#app#app#app .calendar-time-grid button[aria-checked="true"]:not(:disabled)>small{color:#fffcf5!important}
+html #app#app#app#app .contact-calendar .calendar-day:disabled,
+html #app#app#app#app .contact-calendar .calendar-day:disabled>span,
+html #app#app#app#app .calendar-time-grid button:disabled,
+html #app#app#app#app .calendar-time-grid button:disabled>small{color:#79756b!important}

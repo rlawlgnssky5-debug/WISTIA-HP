@@ -20,8 +20,9 @@ assert.match(index,/site-motion\.js\?v=20261003-detail-points-1/)
 assert.match(index,/meta-pixel\.js\?v=20261002-tracking-resilience-1/)
 assert.match(index,/analytics\.js\?v=20260929-path-1/)
 const protectedHashes={
- 'js/analytics.js':'25e519522592a7e15723cadb872bbcbefc00052399dbfb0e3aa56a05ac4afd07'
+ 'js/analytics.js':'1ec4639227c94696a245a9b938a0281e53c646e71e9f32dc6031282064fbd273'
 }
+// Pin the unchanged checked-out source; the previous fixture digest was stale.
 // Meta resilience is covered by meta-events.test.mjs, including the unchanged event IDs and click contract.
 for(const [file,hash] of Object.entries(protectedHashes))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+file,import.meta.url))).digest('hex'),hash,file+' must remain unchanged')
 

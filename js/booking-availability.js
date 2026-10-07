@@ -28,7 +28,7 @@
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
  const fallbackMessage='일정 자동 확인이 연결되지 않았거나 잠시 지연되고 있습니다 · 희망 일정으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}
- function sync(){global.WistiaContact?.syncSubmitState(activeForm)}
+ function sync(){global.WistiaContact?.syncSubmitState(activeForm);global.WistiaContact?.syncTimeChoices?.(activeForm)}
  function message(text,state){const ui=controls();if(!ui)return;ui.status.textContent=text;ui.status.dataset.state=state;activeForm.dataset.scheduleState=state;sync()}
  function openList(text){const list=activeForm?.querySelector('[data-booking-open-times]');if(list){list.textContent=text;list.hidden=!text}}
  function resetTimes(disabled=false){const ui=controls();if(!ui)return;[...ui.time.options].forEach(option=>{option.dataset.originalLabel??=option.textContent;option.disabled=disabled&&!!option.value;option.textContent=option.dataset.originalLabel});ui.time.setCustomValidity('')}
@@ -100,6 +100,7 @@
  function mount(form,key='solo'){
   activeForm=form||null;activeKey=key
   if(!activeForm){generation++;return}
+  global.WistiaContact?.mountCalendars?.(activeForm)
   return check()
  }
  function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm)return check()}

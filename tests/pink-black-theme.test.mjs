@@ -18,7 +18,7 @@ assert.deepEqual(sheets.slice(-12),[
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261008-notion-booking-1'
+ 'css/booking-availability.css?v=20261008-contact-calendar-1'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

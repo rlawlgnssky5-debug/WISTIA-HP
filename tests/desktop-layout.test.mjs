@@ -86,5 +86,5 @@ const measureLayout = (width, height) => measureFixture("desktop-layout.fixture.
 {
   const layout = measureFixture("song-picker-layout.fixture.html", 390, 844)
   assert.ok(layout.cards[1].top > layout.cards[0].top + layout.cards[0].height, "모바일 축가 선택 카드는 한 열로 쌓여야 합니다")
-  assert.ok(layout.cards.every(card => card.width >= 350), "모바일 축가 선택 카드는 콘텐츠 너비를 채워야 합니다")
+  assert.ok(layout.cards.every(card => Math.abs(card.width - layout.contentWidth) <= 1), "모바일 축가 선택 카드는 콘텐츠 너비를 채워야 합니다")
 }
