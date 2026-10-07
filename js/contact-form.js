@@ -25,11 +25,11 @@
  function displayDate(value){const date=parseDate(value);return date?date.getUTCFullYear()+'년 '+(date.getUTCMonth()+1)+'월 '+date.getUTCDate()+'일 ('+weekdays[date.getUTCDay()]+')':'날짜를 선택해 주세요'}
  function isoDate(date){return date.toISOString().slice(0,10)}
  function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||[0,4,5,6].includes(date.getUTCDay()))}
- function calendarCells(year,month,key,selected='',today=calendarToday()){
+ function calendarCells(year,month,key,selected='',today=calendarToday(),full=null){
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
-   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),closed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),past=value<today,enabled=selectableDate(value,key,today)
+   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),past=value<today,closed=key==='bookingDate'&&([1,2,3].includes(date.getUTCDay())||(!past&&!!full?.has(value))),enabled=!closed&&selectableDate(value,key,today)
    cells+='<button type="button" class="calendar-day'+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed?' · 마감':past?' · 예약불가':'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(closed?'<small>마감</small>':past?'<small>불가</small>':'')+'</button>'
   }
   return cells
@@ -64,7 +64,9 @@
   calendar.querySelector('[data-calendar-selection]').textContent=displayDate(input.value)
   if(state.trigger)state.trigger.querySelector('[data-calendar-display]').textContent=displayDate(input.value)
   const grid=calendar.querySelector('[data-calendar-grid]')
-  grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today)
+  // Fully booked days come only from a successfully loaded month schedule for the current product.
+  state.full=key==='bookingDate'?global.WistiaBooking?.fullDays?.(state.year,state.month)||null:null
+  grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,state.full)
   const active=grid.querySelector('[data-calendar-day="'+(focusValue||input.value||today)+'"]:not(:disabled)')||grid.querySelector('button:not(:disabled)')
   if(active){active.tabIndex=0;if(focusValue)active.focus()}
   if(openCalendar===state)positionCalendar(state)
@@ -102,7 +104,7 @@
     if(button.hasAttribute('data-calendar-close')){closeCalendar(true);return}
     if(button.hasAttribute('data-calendar-move')){changeMonth(state,Number(button.dataset.calendarMove));return}
     const value=button.dataset.calendarDay
-    if(value&&selectableDate(value,key)){
+    if(value&&selectableDate(value,key)&&!state.full?.has(value)){
      input.value=value;paintCalendar(state,value);if(key==='eventDate')closeCalendar(true)
      input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))
     }
@@ -119,8 +121,9 @@
     if(event.key==='PageUp'||event.key==='PageDown'){event.preventDefault();changeMonth(state,(event.key==='PageUp'?-1:1)*(event.shiftKey?12:1));calendar.querySelector('.calendar-day[tabindex="0"]')?.focus();return}
     const amount=moves[event.key];if(!amount)return
     event.preventDefault();const date=parseDate(value);date.setUTCDate(date.getUTCDate()+amount)
-    for(let i=0;i<7&&!selectableDate(isoDate(date),key);i++){if(isoDate(date)<calendarToday())return;date.setUTCDate(date.getUTCDate()+Math.sign(amount))}
-    if(!selectableDate(isoDate(date),key))return
+    const pick=value=>selectableDate(value,key)&&!state.full?.has(value)
+    for(let i=0;i<7&&!pick(isoDate(date));i++){if(isoDate(date)<calendarToday())return;date.setUTCDate(date.getUTCDate()+Math.sign(amount))}
+    if(!pick(isoDate(date)))return
     state.year=date.getUTCFullYear();state.month=date.getUTCMonth();paintCalendar(state,isoDate(date))
    })
    paintCalendar(state)

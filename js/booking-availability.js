@@ -17,7 +17,20 @@
   if(!isOperatingDay(date)||!isOperatingDay(endDay))return true
   return blocks.some(block=>start<Date.parse(block.end)&&end>Date.parse(block.start))
  }
- const rules={validDate,today,isOperatingDay,duration,slotBlocked,operatingDays}
+ // Same start times as the inquiry time list (13:00–23:00, every 30 minutes).
+ const startTimes=Array.from({length:21},(_,index)=>String(13+Math.floor(index/2))+(index%2?':30':':00'))
+ // A booking covering the whole KST day (date-only Notion entry or missing end) closes it for every product.
+ function wholeDayBlocked(date,blocks){
+  if(!validDate(date))return false
+  const start=Date.parse(date+'T00:00:00+09:00'),end=start+86400000
+  return blocks.some(block=>Date.parse(block.start)<=start&&Date.parse(block.end)>=end)
+ }
+ function dayFull(date,minutes,blocks,now=Date.now()){
+  if(!isOperatingDay(date))return false
+  if(wholeDayBlocked(date,blocks))return true
+  return startTimes.every(time=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,minutes,blocks))
+ }
+ const rules={validDate,today,isOperatingDay,duration,slotBlocked,startTimes,wholeDayBlocked,dayFull,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
@@ -78,6 +91,40 @@
   inflight.set(date,entry)
   return entry.promise
  }
+ // Month calendar: one range request per visible month, shared and cached like single dates.
+ // Only successfully loaded ledger data can close a day; a failed or late range marks nothing
+ // and the clicked date still goes through the per-date check and Kakao fallback.
+ const rangeCache=new Map(),rangeInflight=new Map()
+ const pad=value=>String(value).padStart(2,'0')
+ function monthRange(year,month){const last=new Date(Date.UTC(year,month+1,0)).getUTCDate();return [year+'-'+pad(month+1)+'-01',year+'-'+pad(month+1)+'-'+pad(last)]}
+ function validBlocks(blocks){return Array.isArray(blocks)&&blocks.every(block=>Number.isFinite(Date.parse(block?.start))&&Number.isFinite(Date.parse(block?.end))&&Date.parse(block.end)>Date.parse(block.start))}
+ function loadRange(from,to){
+  const key=from+'|'+to,hit=rangeCache.get(key)
+  if(hit&&Date.now()-hit.at<cacheMs)return Promise.resolve(hit)
+  if(rangeInflight.has(key))return rangeInflight.get(key)
+  const controller=new AbortController()
+  let timer
+  const request=(async()=>{
+   const response=await fetch('/api/availability?from='+from+'&to='+to,{signal:controller.signal,cache:'no-store',credentials:'same-origin'})
+   if(!response.ok)throw Error('unavailable')
+   const payload=await response.json()
+   if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response')
+   return payload.blocks
+  })()
+  request.catch(()=>{})
+  const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
+  const promise=Promise.race([request,timeout]).then(blocks=>({blocks}),()=>({failed:true})).then(result=>{const entry={...result,at:Date.now()};rangeCache.set(key,entry);return entry}).finally(()=>{clearTimeout(timer);rangeInflight.delete(key)})
+  rangeInflight.set(key,promise)
+  return promise
+ }
+ function fullDays(year,month){
+  const [from,to]=monthRange(year,month),hit=rangeCache.get(from+'|'+to),full=new Set()
+  if((!hit||Date.now()-hit.at>=cacheMs)&&!rangeInflight.has(from+'|'+to))loadRange(from,to).then(result=>{if(!result.failed&&activeForm?.isConnected)global.WistiaContact?.mountCalendars?.(activeForm)})
+  if(!hit||hit.failed)return full
+  const minutes=duration(activeKey)
+  for(let day=1;day<=Number(to.slice(8));day++){const date=from.slice(0,8)+pad(day);if(dayFull(date,minutes,hit.blocks))full.add(date)}
+  return full
+ }
  async function check(force=false){
   const ui=controls();if(!ui)return
   ui.date.min=today()
@@ -104,6 +151,6 @@
   return check()
  }
  function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm)return check()}
- global.WistiaBooking={...rules,mount,changed,refresh:()=>check(true),timeoutMs}
+ global.WistiaBooking={...rules,mount,changed,refresh:()=>check(true),fullDays,timeoutMs}
  global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden&&activeForm?.isConnected)check(true)})
 })(typeof window==='object'?window:globalThis)

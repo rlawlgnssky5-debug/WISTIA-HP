@@ -51,4 +51,51 @@ const invalid=respond();await handler({method:'GET',query:{date:'2026-02-30'}},i
 const wrongMethod=respond();await handler({method:'POST',query:{}},wrongMethod);assert.equal(wrongMethod.code,405)
 const offline=respond();await handler({method:'GET',query:{date:'2026-10-11'}},offline);assert.equal(offline.code,503)
 assert.doesNotMatch(JSON.stringify(offline.payload),/token|NOTION_|source|PRIVATE/i)
-console.log('Existing ledger only, read-only privacy, pagination, cancellation, KST visit dates, duration overlap and offline-safe API passed')
+// Range mode: one ledger query for a calendar month, same exclusions and privacy as ?date=
+{
+ const {availabilityRange,validRange,maxRangeDays}=await import('../lib/notion-availability.mjs')
+ const rangeCalls=[]
+ const rows=[
+  booking({start:'2026-10-09'}),
+  booking({start:'2026-10-11T17:00:00+09:00',end:'2026-10-11T19:00:00+09:00'}),
+  booking({start:'2026-10-16T13:00:00+09:00',end:'2026-10-16T23:00:00+09:00'},'취소'),
+  booking({start:'2026-10-17'},null,'지출'),
+  booking({start:'2026-11-05'})
+ ]
+ const rangeFetcher=async(url,options)=>{
+  rangeCalls.push({url,options})
+  if(options.method==='GET')return {ok:true,json:async()=>({properties:{'방문일':{type:'date',id:'visit'},'취소 여부':{type:'select',id:'cancel'},'수입/지출':{type:'select',id:'income'}}})}
+  assert.equal(options.method,'POST','query only, no page writes')
+  assert.deepEqual(new URL(url).searchParams.getAll('filter_properties'),['visit','cancel','income'])
+  return {ok:true,json:async()=>({results:rows,has_more:false,next_cursor:null})}
+ }
+ const month=await availabilityRange('2026-10-01','2026-10-31',{env,fetcher:rangeFetcher})
+ assert.equal(rangeCalls.length,2,'one schema read and one query for the whole month')
+ assert.ok(rangeCalls.every(call=>['GET','POST'].includes(call.options.method)))
+ assert.deepEqual(Object.keys(month).sort(),['blocks','checkedAt','from','ok','operatingDays','timeZone','to'])
+ assert.deepEqual(month.blocks,[{start:'2026-10-08T15:00:00.000Z',end:'2026-10-09T15:00:00.000Z'},{start:'2026-10-11T08:00:00.000Z',end:'2026-10-11T10:00:00.000Z'}],'date-only day blocked whole, cancelled and expense rows excluded, other months clipped')
+ assert.ok(month.blocks.every(block=>Object.keys(block).join()==='start,end'))
+ assert.doesNotMatch(JSON.stringify(month),/PRIVATE|TEST_ONLY|9675|987654|클라이언트|이메일|입금/)
+ const solo=rules.duration('solo')
+ assert.equal(rules.dayFull('2026-10-09',solo,month.blocks,0),true,'date-only entry closes every SOLO start')
+ assert.equal(rules.dayFull('2026-10-11',solo,month.blocks,0),false,'partly booked day stays open')
+ assert.equal(rules.dayFull('2026-10-11',180,month.blocks,0),false)
+ assert.equal(rules.dayFull('2026-10-12',solo,[],0),false,'closed weekdays are labelled by the weekday rule, not as fully booked')
+ assert.equal(rules.dayFull('2026-10-16',solo,month.blocks,0),false,'cancelled booking releases the day')
+ const lastDay=await availabilityRange('2026-10-31','2026-10-31',{env,fetcher:async(url,options)=>options.method==='GET'?rangeFetcher(url,options):{ok:true,json:async()=>({results:[booking({start:'2026-11-01T00:00:00+09:00',end:'2026-11-01T01:00:00+09:00'})],has_more:false})}})
+ assert.equal(lastDay.blocks.length,1,'range keeps the next-day block for late starts on its last day')
+ assert.equal(rules.slotBlocked('2026-10-31','23:00',120,lastDay.blocks),true)
+ assert.equal(maxRangeDays,42)
+ for(const [from,to,ok] of [['2026-10-01','2026-10-31',true],['2026-10-01','2026-11-11',true],['2026-10-01','2026-11-12',false],['2026-10-31','2026-10-01',false],['2026-10-01','2026-02-30',false]])assert.equal(validRange(from,to),ok,from+'..'+to)
+ await assert.rejects(availabilityRange('2026-10-01','2026-12-31',{env,fetcher:rangeFetcher}))
+ await assert.rejects(availabilityRange('2026-10-01','2026-10-31',{env:{},fetcher:rangeFetcher}))
+ const tooLong=respond();await handler({method:'GET',query:{from:'2026-10-01',to:'2026-12-31'}},tooLong);assert.equal(tooLong.code,400)
+ const reversed=respond();await handler({method:'GET',query:{from:'2026-10-31',to:'2026-10-01'}},reversed);assert.equal(reversed.code,400)
+ const halfRange=respond();await handler({method:'GET',query:{from:'2026-10-01'}},halfRange);assert.equal(halfRange.code,400)
+ const repeated=respond();await handler({method:'GET',query:{from:['2026-10-01','2026-10-02'],to:'2026-10-31'}},repeated);assert.equal(repeated.code,400)
+ const rangeOffline=respond();await handler({method:'GET',query:{from:'2026-10-01',to:'2026-10-31'}},rangeOffline)
+ assert.equal(rangeOffline.code,503);assert.equal(rangeOffline.headers['Cache-Control'],'no-store')
+ assert.doesNotMatch(JSON.stringify(rangeOffline.payload),/token|NOTION_|source|PRIVATE/i)
+ const missing=respond();await handler({method:'GET',query:{}},missing);assert.equal(missing.code,400);assert.equal(missing.payload.message,'날짜를 확인해 주세요','?date= behaviour unchanged')
+}
+console.log('Existing ledger only, month range, read-only privacy, pagination, cancellation, KST visit dates, duration overlap and offline-safe API passed')
