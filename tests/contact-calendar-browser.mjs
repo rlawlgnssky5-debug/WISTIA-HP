@@ -37,7 +37,7 @@ try{
   const calendar=page.locator('#calendar-bookingDate')
   for(const day of ['12','13','14']){
    const closed=calendar.locator('[data-calendar-day="2026-10-'+day+'"]')
-   assert.equal(await closed.isDisabled(),true);assert.match(await closed.innerText(),/휴무/)
+   assert.equal(await closed.isDisabled(),true);assert.match(await closed.innerText(),/마감/)
   }
   assert.equal(await calendar.locator('[data-calendar-day="2026-10-07"]').isDisabled(),true)
   await calendar.locator('[data-calendar-day="2026-10-16"]').click()

@@ -26,5 +26,6 @@
 ## 변경 범위
 
 - `js/contact-form.js`, `js/booking-availability.js`, `css/booking-availability.css`, 관련 테스트.
-- 공유 스크립트/CSS를 읽는 HTML은 해당 세 자산의 캐시 쿼리만 변경 (`20261008-contact-calendar-1`).
+- 공유 스크립트/CSS를 읽는 HTML은 해당 세 자산의 캐시 쿼리만 변경 (`20261008-contact-calendar-2`).
 - `api/availability.js` CommonJS 원문, `js/app.js`, 승인 이미지·실제 후기·가사 예시·빨간 혜택가·POINT CSS는 변경 없음.
+- 2026-10-08 후속: 희망 예약일 달력·안내의 월·화·수 표기를 `휴무`에서 `마감`으로 변경 (날짜 칸 표시·aria-label·안내 문구·범례·상태 메시지), 캐시 `20261008-contact-calendar-2`.
