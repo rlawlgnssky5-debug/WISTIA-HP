@@ -27,7 +27,7 @@ for(const key of ['solo','duo','duet-film']){
  assert.match(html,/〈싱어게인2〉·〈불후의 명곡〉 방송 음악 작업 참여/)
  assert.match(html,/<strong class="ar-expert-panel-keyword">사운드 완성<\/strong>/)
 }
-assert.equal(textDigest(experts.replaceAll(asset,oldAsset).replaceAll(alt,oldAlt)),'801242480e68bf827391267f930a6c7e25b2f18267637aa40c2012e7ab69a181','expert headings, facts, layout and behaviour remain unchanged from deployed HEAD')
+assert.equal(textDigest(experts.replaceAll(asset,oldAsset).replaceAll(alt,oldAlt).replaceAll('film-expert-v2','film-expert-v1').replaceAll('크몽 7년 디자이너','7년 경력 영상 편집 디자이너')),'801242480e68bf827391267f930a6c7e25b2f18267637aa40c2012e7ab69a181','expert headings, facts, layout and behaviour remain unchanged from deployed HEAD')
 assert.equal(digest(oldAsset),'af7f610506d96dab20753b836fa6a01c97a10948ea16d3deb4464cca2883d929','original navy PNG is preserved byte-for-byte')
 assert.ok(existsSync(new URL('../'+asset,import.meta.url)))
 assert.notEqual(digest(asset),digest(oldAsset),'the new image is a separate edited asset')
@@ -39,7 +39,7 @@ assert.ok(expertCssStart>=0&&benefitCssStart>expertCssStart,'expert CSS has an i
 assert.equal(textDigest(css.slice(expertCssStart,benefitCssStart).trimEnd()),'0459e767289ba0fcc93bdcc299d0f4a182edcf96c0373daed17e200e17af39e3','broadcast/expert layout CSS remains unchanged from deployed HEAD')
 assert.doesNotMatch(css,/grayscale\(|sepia\(|hue-rotate\(|saturate\(/)
 assert.match(css,/\.ar-expert-readable \.ar-expert-panel-media img\{[^}]*object-fit:contain!important;filter:none!important/)
-assert.match(index,/js\/app.js\?v=20261008-contact-calendar-4/)
+assert.match(index,/js\/app.js\?v=20261008-contact-calendar-5/)
 assert.match(index,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/)
 
 assertPreservedAppLogic(app)

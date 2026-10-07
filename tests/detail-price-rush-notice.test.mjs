@@ -6,7 +6,7 @@ const app=read('js/app.js'),css=read('css/detail-consistency.css')
 const context={mobileArDesignIcon:()=>'<svg></svg>'}
 runInNewContext(app.match(/^function detailPriceReason[^\n]+/m)[0]+app.slice(app.indexOf('function mobileArNotices('),app.indexOf('// Read-only disclosure shares')),context)
 const price=context.detailPriceReason()
-assert.match(price,/<span class="we-section-tag price-reason-label">POINT 02 · 가격 안내/)
+assert.match(price,/<span class="we-section-tag price-reason-label">가격 안내/)
 assert.match(price,/<u class="wistia-emphasis-underline">서울이 아닌 부천<\/u>에서 운영해 가격 부담을 낮췄습니다/)
 assert.match(price,/보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다/)
 assert.doesNotMatch(price,/<br>|가격에 대한 이야기|기본 가격과 추가 옵션/,'approved home copy remains identical without forced line breaks')

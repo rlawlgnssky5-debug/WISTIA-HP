@@ -49,13 +49,13 @@ api.mount(null);events.visibilitychange();assert.equal(requests.length,5)
 
 // Regression: the two reported hangs and the timeout fallback, with controllable timers.
 function harness(){
- const requests=[],timers=[]
- const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){}}},Date,Intl,AbortController,
+ const requests=[],timers=[],rangeNotifications=[]
+ const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){},refreshCalendarRange(from,to){rangeNotifications.push([from,to])}}},Date,Intl,AbortController,
   setTimeout(fn,ms){timers.push({fn,ms,cleared:false});return timers.length},clearTimeout(id){if(timers[id-1])timers[id-1].cleared=true},
   fetch(url,options){return new Promise((resolve,reject)=>requests.push({url,options,resolve,reject}))}}
  runInNewContext(source,context)
  const fire=min=>{for(const timer of timers)if(!timer.cleared&&timer.ms>=min){timer.cleared=true;timer.fn()}}
- return {api:context.window.WistiaBooking,requests,fire}
+ return {api:context.window.WistiaBooking,requests,fire,rangeNotifications}
 }
 function makeForm(){
  const date=control(''),time=control(''),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
@@ -120,11 +120,12 @@ assert.match(app,/await window.WistiaBooking\?\.refresh\(\)/,'fresh check before
 console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refresh/reopening, offline wish-only mode, stale response guard, accessibility and copy refresh passed')
 
 { // Range checks are shared; malformed/offline/timed-out results never become calendar data.
- const {api,requests,fire}=harness(),from='2027-10-01',to='2027-10-31'
+ const {api,requests,fire,rangeNotifications}=harness(),from='2027-10-01',to='2027-10-31'
  const first=api.loadRange(from,to),shared=api.loadRange(from,to)
  assert.equal(requests.length,1)
  requests[0].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:booking})})
  await Promise.all([first,shared]);assert.deepEqual(JSON.parse(JSON.stringify(api.calendarBlocks(from,to))),booking)
+ assert.deepEqual(rangeNotifications,[[from,to]],'successful late response notifies every mounted calendar')
  await api.loadRange(from,to);assert.equal(requests.length,1,'successful range is cached')
  const invalid=api.loadRange(from,to,true)
  assert.equal(api.calendarBlocks(from,to),null,'fresh check drops stale calendar data immediately')
@@ -135,6 +136,7 @@ console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refre
  assert.equal(api.calendarBlocks(from,to),null)
  requests[2].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:booking})});await flush()
  assert.equal(api.calendarBlocks(from,to),null,'late timed-out success cannot poison the range cache')
+ assert.equal(rangeNotifications.length,3,'timed-out success cannot send a later redraw with invalid data')
  const offline=api.loadRange(from,to);requests[3].reject(Error('offline'));await assert.rejects(offline)
  assert.equal(api.calendarBlocks(from,to),null)
  const bad=api.loadRange(from,to);requests[4].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:[{start:'invalid',end:'invalid'}]})});await assert.rejects(bad)

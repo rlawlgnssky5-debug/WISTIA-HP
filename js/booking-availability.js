@@ -46,7 +46,7 @@
   const controller=new AbortController();let timer
   const request=(async()=>{const response=await fetch('/api/availability?from='+from+'&to='+to,{signal:controller.signal,cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('unavailable');const payload=await response.json();if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response');return payload.blocks})()
   const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
-  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});return blocks},error=>{rangeCache.delete(id);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
+  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeCache.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
   rangeInflight.set(id,promise);return promise
  }
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}

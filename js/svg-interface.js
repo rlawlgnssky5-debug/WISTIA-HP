@@ -68,7 +68,10 @@
     if(section.matches('section,.arc-engineer,.arc-reviews')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
    }
   }
-  for(const badge of all(root,'.ar-commerce-detail .detail-point-label,.ar-commerce-detail .price-reason-label')){
+  for(const section of all(root,'.we-home .we-section,.we-home .we-review-wrap')){
+   if(section.querySelector('.we-section-tag'))section.classList.add('home-point-layout')
+  }
+  for(const badge of all(root,'.ar-commerce-detail .detail-point-label,.ar-commerce-detail .price-reason-label,.we-home .we-section-tag')){
    if(badge.dataset.pointNumberMounted)continue
    const match=/^(POINT\s+)(\d+)(.*)$/.exec(badge.textContent)
    if(!match)continue

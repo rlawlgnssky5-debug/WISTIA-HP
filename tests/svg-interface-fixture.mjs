@@ -18,7 +18,7 @@ export function assertContactBusinessPreserved(source){
   const protectedText=source.slice(i,j).replace(/\r\n/g,'\n').replace("  global.WistiaBooking?.changed(form.querySelector('#contact-bookingDate'))\n",'').replace('  mountCalendars(form)\n','').replaceAll('결혼식 날짜 (예식일)','예식일, 예정일').replaceAll('녹음 방문일 (스튜디오 예약일)','희망 예약일')
   assert.equal(hash(protectedText),digest,'unchanged contact logic: '+a)
  }
- assert.match(source,/global.WistiaContact=\{render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,syncTimeChoices,calendar:/)
+ assert.match(source,/global.WistiaContact=\{render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,calendar:/)
 }
 
 export function assertBeforeAfterCorePreserved(source){
