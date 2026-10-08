@@ -48,9 +48,9 @@ assert.equal(list.hidden,true)
 api.mount(null);events.visibilitychange();assert.equal(requests.length,5)
 
 // Regression: the two reported hangs and the timeout fallback, with controllable timers.
-function harness(){
+function harness(clock=Date){
  const requests=[],timers=[],rangeNotifications=[]
- const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){},refreshCalendarRange(from,to){rangeNotifications.push([from,to])}}},Date,Intl,AbortController,
+ const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){},refreshCalendarRange(from,to){rangeNotifications.push([from,to])}}},Date:clock,Intl,AbortController,
   setTimeout(fn,ms){timers.push({fn,ms,cleared:false});return timers.length},clearTimeout(id){if(timers[id-1])timers[id-1].cleared=true},
   fetch(url,options){return new Promise((resolve,reject)=>requests.push({url,options,resolve,reject}))}}
  runInNewContext(source,context)
@@ -128,9 +128,9 @@ console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refre
  assert.deepEqual(rangeNotifications,[[from,to]],'successful late response notifies every mounted calendar')
  await api.loadRange(from,to);assert.equal(requests.length,1,'successful range is cached')
  const invalid=api.loadRange(from,to,true)
- assert.equal(api.calendarBlocks(from,to),null,'fresh check drops stale calendar data immediately')
+ assert.deepEqual(JSON.parse(JSON.stringify(api.calendarBlocks(from,to))),booking,'validated closures remain visible during refresh')
  requests[1].resolve({ok:true,json:async()=>({ok:true,from,to:'2027-11-01',blocks:[]})})
- await assert.rejects(invalid);assert.equal(api.calendarBlocks(from,to),null)
+ await assert.rejects(invalid);assert.equal(api.calendarBlocks(from,to),null);assert.equal(api.calendarRangeFailed(from,to),true)
  const timeout=api.loadRange(from,to);const rejected=assert.rejects(timeout)
  fire(8000);await rejected;assert.equal(requests[2].options.signal.aborted,true)
  assert.equal(api.calendarBlocks(from,to),null)
@@ -142,4 +142,20 @@ console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refre
  const bad=api.loadRange(from,to);requests[4].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:[{start:'invalid',end:'invalid'}]})});await assert.rejects(bad)
  await assert.rejects(api.loadRange('2027-10-01','2027-11-12'));assert.equal(requests.length,5,'invalid range makes no request')
  console.log('Range sharing, cache, forced refresh, malformed data, offline and timeout/late-response safety passed')
+}
+
+// Reproduction: after the 30s request cache expires a repaint must still have closures.
+{
+ let now=Date.parse('2026-10-08T03:00Z')
+ class Clock extends Date{static now(){return now}}
+ const {api,requests}=harness(Clock),from='2026-10-01',to='2026-10-31'
+ const blocks=[9,18,25].map(day=>({start:`2026-10-${String(day-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(day).padStart(2,'0')}T15:00Z`}))
+ const first=api.loadRange(from,to);requests[0].resolve({ok:true,json:async()=>({ok:true,from,to,blocks})});await first
+ now+=31000
+ assert.deepEqual(JSON.parse(JSON.stringify(api.calendarBlocks(from,to))),blocks)
+ const fresh=api.loadRange(from,to);assert.equal(requests.length,2,'expired request cache triggers a new query')
+ assert.deepEqual(JSON.parse(JSON.stringify(api.calendarBlocks(from,to))),blocks,'pending query cannot erase known closures')
+ requests[1].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:[]})});await fresh
+ assert.equal(api.calendarBlocks(from,to).length,0,'only successful newer results reopen dates')
+ assert.equal(api.calendarRangeFailed(from,to),false)
 }

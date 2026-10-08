@@ -39,7 +39,7 @@ assert.ok(expertCssStart>=0&&benefitCssStart>expertCssStart,'expert CSS has an i
 assert.equal(textDigest(css.slice(expertCssStart,benefitCssStart).trimEnd()),'0459e767289ba0fcc93bdcc299d0f4a182edcf96c0373daed17e200e17af39e3','broadcast/expert layout CSS remains unchanged from deployed HEAD')
 assert.doesNotMatch(css,/grayscale\(|sepia\(|hue-rotate\(|saturate\(/)
 assert.match(css,/\.ar-expert-readable \.ar-expert-panel-media img\{[^}]*object-fit:contain!important;filter:none!important/)
-assert.match(index,/js\/app.js\?v=20261008-contact-calendar-5/)
+assert.match(index,/js\/app.js\?v=20261008-contact-calendar-7/)
 assert.match(index,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/)
 
 assertPreservedAppLogic(app)

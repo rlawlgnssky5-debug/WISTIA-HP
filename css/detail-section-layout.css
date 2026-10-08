@@ -77,3 +77,31 @@ html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .wist
 html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .wistia-ba-copy{width:100%!important;max-width:100%!important;text-align:center!important;margin-inline:auto!important}
 html #app#app#app#app .we-home .we-affordability .we-location{background:#252421!important;color:#FFFCF5!important;border:0!important;box-shadow:none!important}
 html #app#app#app#app .we-home .we-affordability .we-section-tag{background:#FFFCF5!important;color:#252421!important;border-color:#FFFCF5!important}
+
+/* Shared directions address and label/value pairs follow one centered axis. */
+html #app#app#app#app :is(.wistia-location,.ar-commerce-detail .we-directions-copy){text-align:center!important}
+html #app#app#app#app :is(.wistia-location-address,.wistia-location-details,.ar-commerce-detail .we-directions-copy){width:100%!important;max-width:900px!important;margin-inline:auto!important;text-align:center!important}
+html #app#app#app#app .wistia-location .studio-address{display:flex!important;flex-direction:column!important;align-items:center!important;width:100%!important;text-align:center!important;gap:8px!important}
+html #app#app#app#app .wistia-location .studio-address :is(span,.svg-section-text){width:100%!important;max-width:100%!important;text-align:center!important;margin-inline:auto!important}
+html #app#app#app#app :is(.wistia-location-links,.wistia-location-details){justify-content:center!important}
+html #app#app#app#app .wistia-location-details article{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
+html #app#app#app#app .wistia-location-details :is(span,h3,p){width:100%!important;text-align:center!important;margin-inline:auto!important}
+html #app#app#app#app .ar-commerce-detail .we-directions-copy dl>div{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
+html #app#app#app#app .ar-commerce-detail .we-directions-copy :is(dt,dd){margin-inline:0!important;text-align:center!important}
+html #app#app#app#app .wistia-location-details{display:flex!important;flex-direction:column!important;align-items:center!important}
+html #app#app#app#app .wistia-location-details article{box-sizing:border-box!important;width:100%!important;max-width:900px!important;padding-inline:20px!important;border-right:0!important}
+html #app#app#app#app .wistia-location{display:flex!important;flex-direction:column!important;align-items:center!important;gap:28px!important}
+html #app#app#app#app .wistia-location>.wistia-directions-map{width:100%!important;max-width:900px!important;margin-inline:auto!important}
+html #app#app#app#app .wistia-location .studio-address :is(.studio-address-city,.studio-address-street,.studio-address-floor){display:block!important;width:100%!important;text-align:center!important}
+html #app#app#app#app .wistia-location .svg-title-icon{margin:0!important;align-self:center!important}
+/* A full-width description box keeps the existing POINT axis exact at subpixel precision. */
+html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .svg-section-description{box-sizing:border-box!important;width:100%!important}
+html #app#app#app#app .wistia-location :is(h2.svg-section-title,h3.svg-item-title){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important;text-align:center!important}
+
+/* The actual shared detail directions block: one axis, no two-column label table. */
+html #app#app#app#app .ar-commerce-detail .mas-location{background:#F5F4F0!important;text-align:center!important}
+html #app#app#app#app .ar-commerce-detail .mas-location :is(header,.mas-location-city,address,dl,dl>div,dt,dd,dd small){box-sizing:border-box!important;width:100%!important;max-width:800px!important;margin-inline:auto!important;text-align:center!important;color:#56534d!important}
+html #app#app#app#app .ar-commerce-detail .mas-location :is(header,dl>div){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+html #app#app#app#app .ar-commerce-detail .mas-location::before,
+html #app#app#app#app .ar-commerce-detail .mas-location::after{content:none!important;display:none!important}
+@media(max-width:900px){html #app#app#app#app .ar-commerce-detail .mas-bottom{bottom:0!important;margin-bottom:0!important;border-radius:0!important}}

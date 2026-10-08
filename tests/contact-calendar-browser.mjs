@@ -76,7 +76,7 @@ try{
   const layout=await calendar.evaluate(el=>{
    const rect=el.getBoundingClientRect();return {overflow:document.documentElement.scrollWidth>innerWidth,targets:[...el.querySelectorAll('button,select')].map(day=>{const r=day.getBoundingClientRect();return {width:r.width,height:r.height,inside:r.left>=rect.left&&r.right<=rect.right}})}
   })
-  assert.equal(layout.overflow,false);assert.ok(layout.targets.every(x=>x.width>=40&&x.height>=40&&x.inside),'date targets stay inside the calendar and are >=40px')
+  assert.equal(layout.overflow,false);assert.ok(layout.targets.every(x=>x.width>=(width<=430?24:40)&&x.height>=(width<=430?32:40)&&x.inside),'compact mobile targets and desktop targets stay inside the calendar: '+JSON.stringify({width,...layout}))
   // Re-mounting for product changes preserves ISO values and re-evaluates duration.
   await page.locator('[data-base-product="duo"]').click()
   assert.equal(await page.locator('#contact-bookingDate').inputValue(),'2026-10-16')

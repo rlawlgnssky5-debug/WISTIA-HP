@@ -65,3 +65,56 @@ html #app#app#app#app .calendar-time-grid button:disabled>small{color:#79756b!im
 html #app#app#app#app .contact-date-field>legend{max-width:100%;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
 html #app#app#app#app .contact-date-description{margin:0;font-size:13px;line-height:1.75;color:#66645f;text-align:left;word-break:keep-all;overflow-wrap:anywhere}
 html #app#app#app#app .contact-date-bookingDate{margin-top:20px!important;background:#F5F4F0!important;border-left:3px solid #56534d!important}
+
+/* Third pass: the action names the destination; the header has a single brand line. */
+html #app#app#app#app .contact-submit [data-submit-label]{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;white-space:nowrap!important}
+html #app#app#app#app .entrance-option-image{aspect-ratio:16/9!important;height:auto!important;max-height:none!important;overflow:hidden!important;background:#F5F4F0!important}
+html #app#app#app#app .entrance-option-image img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:contain!important;object-position:center center!important}
+html #siteHeader .wordmark{align-items:center!important}
+html #siteHeader .wordmark>span{display:flex!important;align-items:center!important;line-height:1!important}
+@media(max-width:430px){
+ html #app#app#app#app :is(.contact-date-field,.contact-date-picker,.contact-date-toggle,.contact-time-field){min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+ html #app#app#app#app .contact-date-picker{width:100%!important;margin-inline:0!important}
+ html #app#app#app#app .contact-date-field{padding-inline:12px!important}
+ html #app#app#app#app .contact-date-field :is(input[type="text"],.calendar-trigger){width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+ html #app#app#app#app .contact-date-field :is(legend,.contact-date-description,em){min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important;word-break:keep-all!important}
+ html #app#app#app#app .contact-calendar{box-sizing:border-box!important;max-width:100%!important;padding:8px 4px!important}
+ html #app#app#app#app .calendar-inline{width:100%!important}
+ html #app#app#app#app .calendar-caption{gap:3px 6px!important;margin-bottom:8px!important;padding-inline:2px!important}
+ html #app#app#app#app .calendar-caption strong{font-size:13px!important}
+ html #app#app#app#app .calendar-caption [data-calendar-selection]{min-width:0!important;font-size:11px!important;line-height:1.5!important}
+ html #app#app#app#app .calendar-navigation{gap:4px!important;margin-bottom:6px!important}
+ html #app#app#app#app .contact-calendar button{min-height:32px!important;font-size:12px!important;padding:0!important}
+ html #app#app#app#app .contact-calendar .calendar-day{height:34px!important;min-height:34px!important;gap:1px!important}
+ html #app#app#app#app .calendar-day small{font-size:9px!important;line-height:1.1!important}
+ html #app#app#app#app .calendar-navigation>button,html #app#app#app#app .calendar-close{flex-basis:32px!important;width:32px!important;height:32px!important}
+ html #app#app#app#app .contact-calendar select{height:32px!important;min-height:32px!important;font-size:12px!important;padding:0 17px 0 5px!important}
+ html #app#app#app#app .calendar-weekdays{margin-bottom:4px!important;font-size:10px!important}
+ html #app#app#app#app :is(.calendar-grid,.calendar-weekdays){gap:2px!important}
+ html #app#app#app#app .calendar-legend{margin-top:6px!important;gap:8px!important;font-size:9px!important;line-height:1.5!important}
+ html #app#app#app#app .calendar-time-grid{gap:5px!important}
+ html #app#app#app#app .calendar-time-grid button{min-height:34px!important;padding:5px!important;font-size:12px!important}
+ html #app#app#app#app .contact-submit{font-size:13px!important;padding-inline:8px!important;min-width:0!important;max-width:100%!important}
+}
+html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!important}
+@media(max-width:430px){
+ html #app#app#app#app .inquiry-actions{grid-template-columns:minmax(0,1fr)!important;gap:6px!important;padding-block:8px calc(12px + env(safe-area-inset-bottom))!important}
+ html #app#app#app#app .inquiry-actions .inquiry-direct{min-height:36px!important;font-size:12px!important;padding-block:6px!important}
+ html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important}
+ body[data-page="event"] #app{padding-bottom:132px!important}
+}
+@media(max-width:430px){
+ html #app#app#app#app :is(.calendar-grid,.calendar-weekdays){grid-template-columns:repeat(7,minmax(0,1fr))!important}
+ html #app#app#app#app .contact-calendar .calendar-day{min-width:0!important;width:100%!important}
+}
+
+/* Keep the booking controls on the card axis, with room to scroll above the CTA. */
+html #app#app#app#app :is(.calendar-inline,.calendar-time-grid){width:100%!important;max-width:520px!important;margin-inline:auto!important}
+html #app#app#app#app [data-calendar-range-status]{font-size:12px;line-height:1.7;color:#66645f;text-align:center}
+html{scroll-padding-bottom:160px}
+body[data-page="event"] #app{padding-bottom:160px!important}
+html #app#app#app#app .consultation-flow :is(.calendar-day,.calendar-time-grid button,.option-photo){scroll-margin-block:24px 160px}
+@media(max-width:430px){
+ html #app#app#app#app .calendar-popup{position:relative!important;left:auto!important;top:auto!important;width:100%!important;margin-top:12px!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;z-index:auto!important}
+}
+html #app#app#app#app [data-calendar-range-status][hidden]{display:none!important}

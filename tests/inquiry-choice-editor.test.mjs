@@ -12,12 +12,12 @@ const button=()=>({dataset:{},attributes:{},label:{innerHTML:''},setAttribute(ke
 const mainButton=button(),modalButton=button()
 state.document={querySelector:()=>form,querySelectorAll:()=>[mainButton]}
 assert.equal(api.syncSubmitState(),false)
-assert.equal(mainButton.attributes['aria-label'],'(작성이 필요해요)')
+assert.equal(mainButton.attributes['aria-label'],'작성한 내용으로 카카오톡 문의하기')
 assert.equal(control.attributes['aria-invalid'],undefined,'state updates do not mark untouched fields invalid')
 control.value='   ';assert.equal(api.syncSubmitState(),false)
 control.value='검수';assert.equal(api.syncSubmitState(),true)
-assert.equal(mainButton.attributes['aria-label'],'이제 복사하고 카카오톡으로!')
-assert.match(mainButton.label.innerHTML,/class="inquiry-submit-next"/)
+assert.equal(mainButton.attributes['aria-label'],'작성한 내용으로 카카오톡 문의하기')
+assert.doesNotMatch(mainButton.label.innerHTML,/inquiry-submit-next|<br>/)
 control.value='"<img src=x>'
 const escaped=api.validationEditor([{control,label:'<유입 경로>',message:'<입력>'}])
 assert.match(escaped,/&lt;유입 경로&gt;/);assert.match(escaped,/value="&quot;&lt;img src=x&gt;"/);assert.doesNotMatch(escaped,/<img/)

@@ -52,7 +52,7 @@ try{
    const points=await p.evaluate(()=>{
     const center=n=>{const r=n.getBoundingClientRect();return r.x+r.width/2},visible=n=>n&&n.getBoundingClientRect().width>0
     return [...document.querySelectorAll('.ar-commerce-detail .detail-point-label,.we-home .home-point-layout .we-section-tag')].filter(visible).map(badge=>{
-     const section=badge.closest('.detail-section-layout,.home-point-layout'),title=section.querySelector('h2'),icon=title?.querySelector('.svg-title-icon'),description=section.querySelector('p.svg-section-description'),box=[...section.querySelectorAll('.review-captures,.bap-player,.mas-key-note,.arc-recording-poster,.ar-expert-story,.mas-story-chapters>ol,.we-services,.we-carousel,.story-process-folder,.faq,.we-directions')].find(visible)||section.querySelector('figure')
+     const section=badge.closest('.detail-section-layout,.home-point-layout'),title=section.querySelector('h2'),icon=title?.querySelector('.svg-title-icon'),description=section.querySelector('p.svg-section-description')||section.querySelector('header>p:not(.detail-point-label)'),box=[...section.querySelectorAll('.review-captures,.bap-player,.mas-key-note,.arc-recording-poster,.ar-expert-story,.mas-story-chapters>ol,.we-services,.we-carousel,.story-process-folder,.faq,.we-directions')].find(visible)||section.querySelector('figure')
      return {point:badge.textContent.trim(),badge:center(badge),title:visible(title)?center(title):null,icon:visible(icon)?center(icon):null,description:visible(description)?center(description):null,box:visible(box)?center(box):null,background:getComputedStyle(badge).backgroundColor}
     })
    })
