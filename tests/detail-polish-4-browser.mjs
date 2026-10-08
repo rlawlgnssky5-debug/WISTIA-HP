@@ -17,14 +17,14 @@ try{
   const layout=await page.evaluate(event=>{
    const rect=n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}}
    const bar=document.querySelector(event?'.inquiry-actions':'.mas-bottom'),container=document.querySelector(event?'.consultation-flow':'.ar-commerce-detail')
-   const selectors=event?['#contact-source','[data-calendar-time="23:00"]','.entrance-option-image']:['.mas-map-links a']
+   const selectors=event?['#contact-source','[data-calendar-time="23:00"]','.booking-extra .option-choice']:['.mas-map-links a']
    return {bar:rect(bar),container:rect(container),overflow:document.documentElement.scrollWidth-innerWidth,targets:selectors.flatMap(selector=>[...document.querySelectorAll(selector)].map(n=>({selector,...rect(n)}))),headerBottom:document.querySelector('#siteHeader').getBoundingClientRect().bottom,padding:parseFloat(getComputedStyle(document.querySelector(event?'#contactInquiryForm':'.ar-commerce-detail')).paddingBottom)}
   },event)
   assert.equal(layout.overflow,0)
   if(width===1280){assert.equal((layout.bar.left+layout.bar.right)/2,width/2);if(event){assert.equal(layout.bar.left,layout.container.left);assert.equal(layout.bar.right,layout.container.right)}assert.ok(layout.padding>=(event?160:112));for(const target of layout.targets)if(target.height)assert.ok(target.bottom<layout.bar.top,JSON.stringify({path,width,target,bar:layout.bar}))}
   else{assert.equal(layout.bar.left,0);assert.equal(layout.bar.right,390);assert.equal(layout.bar.bottom,844)}
   const scrollChecks=[]
-  if(event&&width===1280)for(const selector of ['#contact-source','[data-calendar-time="23:00"]','.entrance-option-image']){
+  if(event&&width===1280)for(const selector of ['#contact-source','[data-calendar-time="23:00"]','.booking-extra .option-choice']){
    const target=page.locator(selector).last();if(!await target.count())continue
    await target.scrollIntoViewIfNeeded()
    const clear=await target.evaluate(n=>{const r=n.getBoundingClientRect(),bar=document.querySelector('.inquiry-actions').getBoundingClientRect();return {top:r.top,bottom:r.bottom,barTop:bar.top}})

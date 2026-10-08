@@ -31,7 +31,7 @@
  // Requests are shared per date (a re-mount, product switch or repeated change never drops
  // the only in-flight response) and always settle within timeoutMs.
  const timeoutMs=8000,cacheMs=30000,cache=new Map(),inflight=new Map()
- const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Set()
+ const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Set(),dateFailures=new Set()
  let activeForm=null,activeKey='solo',generation=0
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
  const fallbackMessage='카카오톡 확인 필요 · 일정 자동 확인이 연결되지 않았거나 잠시 지연되고 있습니다 · 희망 일정으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
@@ -42,12 +42,12 @@
  async function loadRange(from,to,fresh=false){
   if(!validRange(from,to))throw Error('invalid range')
   const id=from+':'+to,hit=rangeCache.get(id)
-  if(!fresh&&hit&&Date.now()-hit.at<cacheMs)return hit.blocks
+  if(!fresh&&hit&&!rangeFailures.has(id)&&Date.now()-hit.at<cacheMs)return hit.blocks
   if(rangeInflight.has(id))return rangeInflight.get(id)
   const controller=new AbortController();let timer
   const request=(async()=>{const response=await fetch('/api/availability?from='+from+'&to='+to,{signal:controller.signal,cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('unavailable');const payload=await response.json();if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response');return payload.blocks})()
   const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
-  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});rangeFailures.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeCache.delete(id);rangeFailures.add(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
+  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});rangeFailures.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeFailures.add(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
   rangeInflight.set(id,promise);return promise
  }
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}
@@ -77,12 +77,13 @@
  }
  function fallback(){
   // Never a confirmed-available state: wish times stay selectable only with the Kakao notice.
-  openList('');dateError('');restrictTimes([])
+  const date=controls()?.date.value,from=date?.slice(0,7)+'-01',to=validDate(date)?new Date(Date.UTC(Number(date.slice(0,4)),Number(date.slice(5,7)),0)).toISOString().slice(0,10):''
+  openList('');dateError('');restrictTimes(cache.get(date)?.blocks??calendarBlocks(from,to)??[])
   message(fallbackMessage,'unavailable')
  }
  function load(date,fresh){
   const hit=cache.get(date)
-  if(!fresh&&hit&&Date.now()-hit.at<cacheMs)return Promise.resolve(hit.blocks)
+  if(!fresh&&hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs)return Promise.resolve(hit.blocks)
   const running=inflight.get(date)
   if(running&&(running.fresh||!fresh))return running.promise
   for(const [key,entry] of inflight)if(key!==date){entry.controller.abort();inflight.delete(key)}
@@ -97,7 +98,7 @@
   })()
   request.catch(()=>{})
   const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
-  entry.promise=Promise.race([request,timeout]).then(blocks=>{cache.set(date,{blocks,at:Date.now()});return blocks},error=>{if(inflight.get(date)===entry)cache.delete(date);throw error}).finally(()=>{clearTimeout(timer);if(inflight.get(date)===entry)inflight.delete(date)})
+  entry.promise=Promise.race([request,timeout]).then(blocks=>{cache.set(date,{blocks,at:Date.now()});dateFailures.delete(date);return blocks},error=>{dateFailures.add(date);throw error}).finally(()=>{clearTimeout(timer);if(inflight.get(date)===entry)inflight.delete(date)})
   inflight.set(date,entry)
   return entry.promise
  }
@@ -110,7 +111,7 @@
   if(!validDate(date)||date<today()){dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
   if(!isOperatingDay(date)){dateError('월·화·수는 마감입니다, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 마감 · 목·금·토·일 운영','closed');return}
   const hit=!force&&cache.get(date)
-  if(hit&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
+  if(hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
   // While checking, no time can be chosen as confirmed-available and the form cannot be copied.
   resetTimes(true);ui.date.setCustomValidity(pendingMessage);message(pendingMessage,'loading')
   let blocks,failed=false

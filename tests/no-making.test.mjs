@@ -22,8 +22,8 @@ for(const [path,expected] of [
 const extra=app.slice(app.indexOf('function bookingExtraSection('),app.indexOf('function eventBenefitsSection('))
 const context={renderProductOption:option=>'<label>'+option.label+'</label>'}
 runInNewContext(extra,context)
-const markup=context.bookingExtraSection({key:'duet-film'},'making',[{label:'신부 입장곡 추가'}],'02')
-assert.match(markup,/신부 입장곡 추가/)
+const markup=context.bookingExtraSection({key:'duet-film'},'making',[{label:'1절 녹음 추가'}],'02')
+assert.match(markup,/1절 녹음 추가/)
 assert.doesNotMatch(markup,/메이킹|data-film-making|−7만원/)
 const packageSection=app.slice(app.indexOf('function productPackageOverview('),app.indexOf('function bookingGuideSection('))
 assert.doesNotMatch(packageSection,/package-making-option|녹음 메이킹 필름으로 변경/)

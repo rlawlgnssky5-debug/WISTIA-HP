@@ -21,6 +21,7 @@ export function assertPreservedAppLogic(source){
   ['function calculate(','function renderProductOption(','aedb3c1dfc12f868d47abe4eb409b4b2a4998eb4ea0e6c8ba515e7a5ddfa6dca'],
   ['function updatePrice(','// The question dialog','e6224c67f0c874b3060d2dcb5fb2e12d6644ba730e1c6c4a2714dbb686d5c387'],
   // Only the copy formatter changes under the numbered-inquiry request
-  ['function quoteState(','function consultationText(','ab5c1d094d774e59468230190f9b09560d28a62c0539140c8498879047a7f821']
+  // Round 6 explicitly removes retired option keys from restored selections.
+  ['function quoteState(','function consultationText(','37f2a87e73896d2bbdc4a5e8dc7fbe9f39deae2a0be13466093e5c2c8514f70d']
  ])assert.equal(createHash('sha256').update(section(source,a,b)).digest('hex'),hash,'approved business/playback behaviour remains unchanged: '+a)
 }
