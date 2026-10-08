@@ -384,6 +384,7 @@ const INFO_FAQ_GROUPS=[
   ["주차는 가능한가요?","스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 공영주차장 이용 요금은 별도로 발생하므로 주차비 지원은 어려운 점 참고해 주세요"]
  ]},
  {title:"녹음 안내",items:[
+  ["녹음 시간이 남으면 다른 곡도 녹음할 수 있나요?","모든 상품은 1곡 기준이에요. 곡마다 녹음·튠·믹스 작업이 따로 들어가서, 녹음 시간이 남아도 다른 곡은 '1절 녹음 추가'로 진행돼요. 1절 녹음 추가는 +60,000원이며 녹음·튠·믹스를 포함합니다."],
   ["노래를 잘 못해도 괜찮나요?","물론입니다 한 곡을 처음부터 끝까지 부르는 대신 구간별로 나누어 녹음하고, 옆에서 1:1로 디렉팅해 드립니다 녹음 후에는 음정과 박자를 자연스럽게 보정합니다"],
   ["곡의 키는 어떻게 정하나요?","원키가 어렵다면 목소리에 맞게 편한 키로 조정할 수 있습니다 녹음 전 직접 불러보며 가장 자연스럽게 부를 수 있는 키를 함께 정합니다"],
   ["녹음 전에 무엇을 준비하면 되나요?","진행할 곡의 MR과 원하는 키를 미리 보내주시면 좋습니다 듀엣이라면 파트 분배도 알려주세요 가사나 원하는 구성, 축가하고 싶은 영상이나 분위기가 있다면 함께 보내주셔도 됩니다"],
@@ -459,17 +460,16 @@ const BASE_FILM_FORMAT = {
   proposal:"live"
 }
 
-const FILM_ENTRANCE_OPTIONS = [
-  {key:"bride-entrance",label:"신부 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000},
-  {key:"groom-entrance",label:"신랑 입장곡 추가",detail:"입장곡 하이라이트 부분 녹음",price:40000}
+const EXTRA_RECORDING_OPTIONS = [
+  {key:"extra-verse",label:"1절 녹음 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000}
 ]
 const PRODUCT_OPTIONS = {
-  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS],
-  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...FILM_ENTRANCE_OPTIONS],
-  wedding:[...FILM_ENTRANCE_OPTIONS],
-  "duet-film":[...FILM_ENTRANCE_OPTIONS],
-  "solo-film":[...FILM_ENTRANCE_OPTIONS],
-  proposal:[...FILM_ENTRANCE_OPTIONS]
+  solo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...EXTRA_RECORDING_OPTIONS],
+  duo:[{key:"lyrics-video",label:"가사 영상 추가",detail:"가사를 담은 영상 추가",price:40000},...EXTRA_RECORDING_OPTIONS],
+  wedding:[...EXTRA_RECORDING_OPTIONS],
+  "duet-film":[...EXTRA_RECORDING_OPTIONS],
+  "solo-film":[...EXTRA_RECORDING_OPTIONS],
+  proposal:[...EXTRA_RECORDING_OPTIONS]
 }
 const FRIEND_PRODUCT_OPTIONS = [
 ]
@@ -478,6 +478,7 @@ const WORKS = [
  {id:"proposal-film",category:"프로포즈",product:"proposal",title:"위스티아 프로포즈 필름",description:"직접 부른 노래와 고백을 담은 프로포즈 영상",image:"assets/img/proposal-video-cover.jpg",video:PRODUCTS.proposal.videoUrl}
 ]
 const GENERAL_FAQ = [
+ ["녹음 시간이 남으면 다른 곡도 녹음할 수 있나요","모든 상품은 1곡 기준이에요. 곡마다 녹음·튠·믹스 작업이 따로 들어가서, 녹음 시간이 남아도 다른 곡은 '1절 녹음 추가'로 진행돼요. 1절 녹음 추가는 +60,000원이며 녹음·튠·믹스를 포함합니다."],
  ["노래를 잘 못해도 가능한가요","가능합니다 처음 녹음하는 분도 한 구간씩 편하게 부를 수 있도록 안내합니다 원래 목소리와 감정을 살리고 음정과 박자는 자연스럽게 다듬습니다"],
  ["AR은 무엇이고, 본식에서는 어떻게 사용하나요","AR은 미리 녹음한 목소리가 포함된 반주 음원입니다 예식장에서 AR을 틀고 그 위에 직접 노래합니다 목소리 비율과 재생 방법을 상담하고, 본식 전에 예식장 담당자와 음향 리허설을 확인해 주세요"],
  ["곡이나 키를 아직 정하지 못했어요","괜찮습니다 원하는 분위기와 음역을 확인해 곡과 편하게 부를 수 있는 키를 함께 정합니다"],
@@ -704,7 +705,7 @@ const WISTIA_ADVANTAGES=[
  ["보컬 보정","음정·박자 수작업 보정","자동 보정에만 의존하지 않고 원래 목소리의 느낌을 살려 세밀하게 보정합니다"],
  ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"]
 ]
-function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="we-section-tag price-reason-label">가격 안내</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead"><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div></section>'}
+function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="we-section-tag price-reason-label">가격 안내</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead"><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div>'+'<p class="single-song-note">모든 상품은 1곡 기준이에요. 곡마다 녹음·튠·믹스 작업이 따로 들어가서, 녹음 시간이 남아도 다른 곡은 \'1절 녹음 추가\'로 진행돼요.</p>'+'</section>'}
 function wistiaAdvantagesSection(){return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><ol>'+WISTIA_ADVANTAGES.map(([category,title,description],index)=>'<li><span class="wistia-advantage-number">'+String(index+1).padStart(2,"0")+'</span><div><small>'+category+'</small><h3>'+title+'</h3><p>'+description+'</p></div></li>').join("")+'</ol></div></section>'+detailPriceReason()}
 function productComparisonSection(){return wistiaAdvantagesSection()}
 function prepareArHookVideo(){document.querySelectorAll(".ar-hook-media video").forEach(video=>{const button=video.closest('.ar-hook-media')?.querySelector("[data-ar-video-toggle]");if(!button)return;const update=()=>{const playing=!video.paused&&!video.ended;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",update);update()})}
@@ -853,7 +854,7 @@ function renderApprovedHomeThumbnails(){
 function renderWeddingHome(){
  const service=(key,title,hook,photo,number)=>'<a class="we-service" href="/detail/'+key+'" data-cursor="자세히 보기"><figure>'+img(photo,title)+'</figure><div class="we-service-copy"><span class="we-product-number">상품 '+number+'</span><h3>'+title+'</h3><p><strong>'+hook+'</strong></p><span class="we-service-link">상품과 가격 보기 ↗</span></div></a>'
  const cases=[['스토리 필름','우리 목소리로 완성한 축가 영상','aSKrlQwmnHI'],['녹음 장면','녹음하는 순간까지 담은 축가','pTBfPEWlyZU'],['스토리 필름','두 사람의 이야기를 담은 영상','5ZuTmQWCRJk'],['스토리 필름','직접 부른 노래로 완성한 웨딩 영상','AQ9Z1flOUPo']]
- const affordability='<section class="we-shell we-section we-affordability" id="homePriceReason"><div class="we-location"><span class="we-kicker we-section-tag">POINT 02 · 가격 안내</span><h2>왜 저렴한가요?</h2><p><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div></section>'
+ const affordability='<section class="we-shell we-section we-affordability" id="homePriceReason"><div class="we-location"><span class="we-kicker we-section-tag">POINT 02 · 가격 안내</span><h2>왜 저렴한가요?</h2><p><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div>'+'<p class="single-song-note">모든 상품은 1곡 기준이에요. 곡마다 녹음·튠·믹스 작업이 따로 들어가서, 녹음 시간이 남아도 다른 곡은 \'1절 녹음 추가\'로 진행돼요.</p>'+'</section>'
  app.innerHTML='<div class="we-home"><section class="we-hero we-shell we-hero-thumbnails"><div class="we-meta"><span>WISTIA · 웨딩 축가 전문 스튜디오</span></div><div class="we-hero-grid we-hero-text">'+renderApprovedHomeThumbnails()+'<div class="we-hero-copy"><p class="we-kicker">목소리로 전하는 결혼식</p><h1><span class="type-line">웨딩 축가</span><span class="type-line">전문 스튜디오</span></h1></div></div></section>'+
  '<section class="we-shell we-section" id="homeServices"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 01</span><h2>상품 소개</h2><p>직접 부르는 축가와 우리 목소리로 만든 영상<br>두 가지 방식으로 준비합니다</p></header><div class="we-services">'+service('solo','AR 축가 사전녹음','결혼식에서 직접 축가를 부른다면','assets/img/ar-detail/solo-live-proof.jpg','01')+service('duet-film','축가 스토리 필름','우리 목소리로 축가 영상을 만든다면','https://i.ytimg.com/vi/AQ9Z1flOUPo/maxresdefault.jpg','02')+'</div></section>'+
  affordability+'<section class="we-section we-cases" id="homeCases"><header class="we-heading we-shell"><span class="we-kicker we-section-tag">POINT 03 · 실제 제작 영상</span><h2>말보다 먼저,<br>목소리가 전한 마음</h2><p class="we-cases-guide"><span class="we-cases-guide-full">위스티아의 실제 제작 영상입니다, 재생 버튼을 눌러 바로 확인하세요</span><span class="we-cases-guide-compact">실제 제작 영상, 눌러 확인하세요</span></p></header><div class="we-carousel" data-case-carousel tabindex="0" role="region" aria-label="축가 사례, 좌우 방향키 또는 드래그로 넘기기" data-cursor="넘기기">'+cases.map(([type,title,id],i)=>'<article class="we-case"><button type="button" class="we-case-video" data-inline-youtube="https://www.youtube.com/embed/'+id+'?rel=0" data-cursor="재생" aria-label="'+title+' 유튜브 영상 재생"><figure>'+img('https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',title)+'<span class="we-case-play">▶ <b>영상 보기</b></span></figure></button><div class="we-case-bar"><span>0'+(i+1)+'</span><strong>'+title+'</strong><span>'+type+'</span></div><a class="we-case-source" href="https://www.youtube.com/watch?v='+id+'" target="_blank" rel="noopener noreferrer">YouTube에서 보기 ↗</a></article>').join('')+'</div><div class="we-carousel-controls we-shell"><span data-case-count>01 / '+String(cases.length).padStart(2,'0')+'</span><div><button type="button" data-case-prev aria-label="이전 사례">←</button><button type="button" data-case-next aria-label="다음 사례">→</button></div></div></section>'+
@@ -1059,7 +1060,7 @@ function productPackageOverview(key,purpose=""){
  const title=ar?"AR 축가 사전녹음 구성":key==="solo-film"?(twoMaking?"2인":"1인")+" 축가 녹음 메이킹 필름 구성":proposal?"프로포즈 · 답프로포즈 스토리형 구성":key==="duet-film"?"듀엣 축가 영상 구성":"듀엣 식전 스토리 필름 구성"
  const storyItems=story?proposal?[["mv","뮤직비디오 클립"],["interview","인터뷰"],["letter","전하는 편지"]]:[["mv","뮤직비디오 클립"],["message","하객 메시지"],["interview","인터뷰"],["letter","전하는 편지"]]:[]
  const items=[[ar?"microphone":"camera",duration],["tune","수작업 음정·박자 보정"],["mix","믹싱"],["master","마스터링"],...storyItems]
- const description=ar?"1곡 기준으로 마디·구간별로 녹음하고 음정과 박자를 수작업으로 다듬습니다 가사 영상은 4만원, 신부·신랑 입장곡 하이라이트 부분 녹음은 인당 4만원에 추가할 수 있습니다":key==="solo-film"?"녹음 메이킹은 노래를 완성하는 실제 과정을 담습니다 스토리형으로 업그레이드하면 협업 촬영 스튜디오의 뮤직비디오 클립, 노래 전 하객 메시지, 인터뷰와 노래 후 전하는 편지가 추가됩니다":proposal?"협업 촬영 스튜디오의 뮤직비디오 클립과 인터뷰, 전하는 편지를 더해 고백의 이야기를 완성합니다":"협업 촬영 스튜디오의 뮤직비디오 클립과 하객 메시지, 인터뷰, 전하는 편지를 노래와 함께 엮습니다"
+ const description=ar?"1곡 기준으로 마디·구간별로 녹음하고 음정과 박자를 수작업으로 다듬습니다 가사 영상은 4만원, 다른 곡 1절 녹음은 녹음·튠·믹스 포함 6만원에 추가할 수 있습니다":key==="solo-film"?"녹음 메이킹은 노래를 완성하는 실제 과정을 담습니다 스토리형으로 업그레이드하면 협업 촬영 스튜디오의 뮤직비디오 클립, 노래 전 하객 메시지, 인터뷰와 노래 후 전하는 편지가 추가됩니다":proposal?"협업 촬영 스튜디오의 뮤직비디오 클립과 인터뷰, 전하는 편지를 더해 고백의 이야기를 완성합니다":"협업 촬영 스튜디오의 뮤직비디오 클립과 하객 메시지, 인터뷰, 전하는 편지를 노래와 함께 엮습니다"
  return '<section class="package-overview" aria-labelledby="packageOverviewTitle"><div class="shell"><p class="package-overview-eyebrow">상품 구성</p><h2 id="packageOverviewTitle">'+title+'</h2><div class="package-feature-grid">'+items.map(([icon,text])=>'<div class="package-feature"><span class="package-feature-icon" aria-hidden="true">'+packageIcon(icon)+'</span><strong>'+text+'</strong></div>').join("")+'</div><p class="package-overview-description">'+description+'</p>'+'</div></section>'
 }
 function bookingGuideSection(){return '<section class="booking-guide shell" aria-labelledby="bookingGuideTitle"><h2 id="bookingGuideTitle">이용 전 기본 안내</h2><div><article><span>01 이용 시간</span><p>표기된 시간에는 기본 안내, 연습 및 기타 부가 시간이 포함됩니다</p></article><article><span>02 추가 수정</span><p>3회까지 무료이며, 4회차부터 회당 10,000원입니다</p></article></div></section>'}
@@ -1160,7 +1161,7 @@ function arCommerceDetail(p,key="solo"){
  '<section class="arc-section arc-process" id="arcProcess"><span class="arc-kicker">진행 순서</span><h2>준비부터 전달까지<br>이렇게 진행합니다</h2><ol>'+[['상담·예약','원하는 곡, 녹음 시간과 본식 일정을 확인합니다'],['방문·녹음','경기도 부천 스튜디오에서 구간별 녹음과 1:1 디렉팅을 진행합니다'],['보정·완성','음정·박자를 수작업으로 다듬고 믹싱·마스터링을 진행합니다'],['음원 전달','본식용 AR과 완성 음원을 받고 예식장 담당자와 재생을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><div><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')+'</ol></section>'+
  '<section class="arc-section arc-faq" id="arcFaq"><span class="arc-kicker">Q & A</span><h2>자주 묻는 질문</h2>'+faq(questions)+'</section>'+
  '<section class="arc-section arc-time-guide"><span class="arc-kicker">인원과 녹음 시간</span><h2>혼자 또는 함께,<br>인원에 맞게 선택하세요</h2><div class="arc-time-cards"><article><h3>SOLO(1인)</h3><strong>12만원</strong><p>1곡 기준 · 1시간</p></article><article><h3>DUET(2인)</h3><strong>16만원</strong><p>1곡 기준 · 2시간</p></article></div><p>SOLO는 1인, DUET은 2인 녹음 상품입니다<br>표시 시간에는 안내·연습·부가 시간이 포함됩니다</p></section>'+
- '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>3회까지 무료, 4회차부터 회당 1만원</span></li><li><strong>추가 옵션</strong> <span>가사 영상 +4만원<br>신부·신랑 입장곡 하이라이트 녹음 각각 +4만원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
+ '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>3회까지 무료, 4회차부터 회당 1만원</span></li><li><strong>추가 옵션</strong> <span>가사 영상 +4만원<br>1절 녹음 추가 +6만원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
  '<section class="arc-section arc-final"><h2>축가는 직접,<br>준비는 위스티아와 함께</h2><p>선택한 구성과 가격을 복사한 뒤<br>카카오톡에서 일정을 확인하세요</p><div class="arc-actions">'+action('가격·옵션 확인')+'</div></section>'+footer()+
  '<aside class="arc-bottom" aria-label="상품 가격과 상담"><span><small>AR 축가 · <span data-ar-hours>'+hours+'</span>시간</small><b><span data-ar-price>'+amount+'</span>원</b></span>'+action('가격 보기')+action('카카오톡 상담',true)+'</aside></div>'
  // The approved mobile composition is canonical at every width; CSS handles sizing only.
@@ -1439,8 +1440,8 @@ function calculate(){
 }
 function renderProductOption(o){
   if(o.quantity){const quantity=optionQuantities[o.key]||0,unit=o.unit||"회",priceUnit=o.priceUnit||"회당";return '<div class="option-choice quantity-option"><span class="option-symbol" aria-hidden="true">+</span><span><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><div class="quantity-control" aria-label="'+o.label+' 선택 수"><button type="button" data-option-minus="'+o.key+'" aria-label="'+o.label+' 줄이기">−</button><output data-option-count="'+o.key+'">'+quantity+unit+'</output><button type="button" data-option-plus="'+o.key+'" aria-label="'+o.label+' 늘리기">+</button><b>'+priceUnit+' +'+shortWon(o.price)+'</b></div></div>'}
-  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"],"bride-entrance":["assets/img/story-polish/entrance-bride-v2.webp","신부 입장곡 하이라이트 녹음 안내 그래픽"],"groom-entrance":["assets/img/story-polish/entrance-groom-v2.webp","신랑 입장곡 하이라이트 녹음 안내 그래픽"]}
-  const photo=photos[o.key],image=photo?'<span data-option-art class="option-photo'+(["bride-entrance","groom-entrance"].includes(o.key)?' entrance-option-image':'')+(o.key==="lyrics-video"?' lyric-option-image':'')+'"'+(o.key==="lyrics-video"?' data-lyric-example':'')+'>'+img(photo[0],photo[1],o.key==="lyrics-video")+'</span>':''
+  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"]}
+  const photo=photos[o.key],image=photo?'<span data-option-art class="option-photo'+(o.key==="lyrics-video"?' lyric-option-image':'')+'"'+(o.key==="lyrics-video"?' data-lyric-example':'')+'>'+img(photo[0],photo[1],o.key==="lyrics-video")+'</span>':''
   return '<label class="option-choice'+(image?' has-option-photo'+(o.key==="lyrics-video"?' has-lyric-image':''):'')+'">'+image+'<input type="checkbox" data-option="'+o.key+'" '+(selectedOptions.has(o.key)?"checked":"")+'><span class="option-copy"><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><b>'+(o.price?'+'+shortWon(o.price):'상담 후 안내')+'</b></label>'
 }
 function bookingBaseSection(key){
@@ -1453,7 +1454,7 @@ function bookingBaseSection(key){
 }
 function bookingExtraSection(p,purpose,options,step){
  const content=options.map(renderProductOption).join("")
- return '<div class="booking-extra"><h3 class="consultation-subtitle">추가 옵션</h3><div class="calculator-option-list">'+content+'</div></div>'
+ return '<div class="booking-extra"><h3 class="consultation-subtitle">추가 옵션</h3>'+'<p class="single-song-note">모든 상품은 1곡 기준이에요. 곡마다 녹음·튠·믹스 작업이 따로 들어가서, 녹음 시간이 남아도 다른 곡은 \'1절 녹음 추가\'로 진행돼요.</p>'+'<div class="calculator-option-list">'+content+'</div></div>'
 }
 function eventBenefitsSection(step){
  const group=(type,title,timing,note)=>{const items=EVENTS.filter(e=>e.type===type),maximum=items.reduce((total,e)=>total+e.discount,0);return '<section class="event-benefit-group benefit-kind-card" data-benefit-type="'+type+'" aria-label="'+title+' 선택"><header class="benefit-kind-header"><h4>'+title+'</h4><strong class="benefit-kind-limit">최대 '+shortWon(maximum)+'</strong><span class="benefit-kind-timing">'+timing+'</span></header><p class="event-group-note">'+note+'</p><div class="event-list">'+items.map(e=>'<div class="event-benefit-card"><label class="event-choice"><input type="checkbox" data-event="'+e.key+'" '+(selectedEvents.has(e.key)?'checked':'')+'><span><strong>'+e.label+'</strong></span><b>'+(type==='payback'?'페이백 ':'할인 −')+shortWon(e.discount)+'</b></label><p class="event-terms">'+e.detail+'</p></div>').join('')+'</div></section>'}
@@ -1522,7 +1523,7 @@ function updatePrice(){
 function quoteState(){return {key:currentEventProduct,purpose:currentEventPurpose,format:selectedFilmFormat,people:selectedFilmPeople,options:[...selectedOptions],events:[...selectedEvents]}}
 function setQuoteState(state){
  currentEventProduct=["solo","duo","duet-film"].includes(state.key)?state.key:"solo";currentEventPurpose=state.purpose==="making"?"":state.purpose||"";selectedFilmFormat="live";selectedFilmPeople=state.people||1
- selectedOptions=new Set(state.options||[]);selectedEvents=new Set(state.events||[]);optionQuantities={};chosenOption=""
+ selectedOptions=new Set((state.options||[]).filter(key=>eventProductOptions(currentEventProduct,currentEventPurpose).some(option=>option.key===key)));selectedEvents=new Set(state.events||[]);optionQuantities={};chosenOption=""
 }
 window.WistiaQuote={
  options:key=>eventProductOptions(key).map(item=>({...item})),events:()=>EVENTS.map(item=>({...item})),

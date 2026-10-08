@@ -156,3 +156,7 @@ html #app#app#app#app .contact-time-field{scroll-margin-block:80px 160px}
  html #app#app#app#app .contact-calendar select[data-calendar-month]{width:56px!important;min-width:56px!important}
  html #app#app#app#app .contact-calendar select{font-size:11px!important;padding-inline:4px!important}
 }
+
+/* Expanding dates never moves the browser's scroll anchor. */
+html #app#app#app#app #contactInquiryForm{overflow-anchor:none!important}
+html #app#app#app#app .single-song-note{width:100%!important;max-width:800px!important;min-width:0;box-sizing:border-box!important;margin:16px auto!important;text-align:center!important;font-size:13px;line-height:1.75;color:#66645f}

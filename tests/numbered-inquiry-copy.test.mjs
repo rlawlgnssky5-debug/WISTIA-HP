@@ -51,8 +51,8 @@ for(const key of ['solo','duo','duet-film']){
   if(result.payback)assert.match(copied,new RegExp('페이백 완료 후 혜택가 : '+context.won(result.effectivePrice)))
  }
 }
-const options=quoteFor({key:'duo',options:['lyrics-video','bride-entrance'],events:[]})
-assert.match(options,/추가 옵션 :\n가사 영상 추가 \+40,000원\n신부 입장곡 추가 \+40,000원/)
-assert.match(options,/추가 옵션 합계 : \+80,000원/)
-assert.match(options,/결제 예상 금액 : 240,000원/)
+const options=quoteFor({key:'duo',options:['lyrics-video','extra-verse'],events:[]})
+assert.match(options,/추가 옵션 :\n가사 영상 추가 \+40,000원\n1절 녹음 추가 \+60,000원/)
+assert.match(options,/추가 옵션 합계 : \+100,000원/)
+assert.match(options,/결제 예상 금액 : 260,000원/)
 console.log('Numbered quote and inquiry, line-separated options/benefits, no stale names, and 192 price combinations passed')

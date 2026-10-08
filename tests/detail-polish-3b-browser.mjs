@@ -21,19 +21,19 @@ try{
   await page.clock.fastForward(31000);await page.evaluate(()=>WistiaContact.mountCalendars(document.querySelector('#contactInquiryForm')));await closed();await release();await closed()
   await page.locator('[data-contact-date-mode="eventDate"][value="date"]').check()
   const popup=await page.locator('#calendar-eventDate').evaluate(n=>{const r=n.getBoundingClientRect(),card=n.closest('.contact-date-field').getBoundingClientRect(),next=document.querySelector('.contact-date-bookingDate').getBoundingClientRect();return {position:getComputedStyle(n).position,top:r.top,bottom:r.bottom,left:r.left,right:r.right,cardBottom:card.bottom,nextTop:next.top}})
-  if(width===390){assert.equal(popup.position,'relative');assert.ok(popup.bottom<=popup.cardBottom&&popup.bottom<popup.nextTop);assert.ok(popup.top>=0&&popup.bottom<=844)}
-  await page.keyboard.press('Escape');await page.locator('[data-calendar-trigger="bookingDate"]').click();await calendar.locator('[data-calendar-day="2026-10-11"]').click();await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  if(width===390){assert.equal(popup.position,'relative');assert.ok(popup.bottom<=popup.cardBottom&&popup.bottom<popup.nextTop);assert.ok(popup.left>=0&&popup.right<=390)}
+  await page.locator('#calendar-eventDate [data-calendar-close]').click();await page.locator('[data-calendar-trigger="bookingDate"]').click();await calendar.locator('[data-calendar-day="2026-10-11"]').click();await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   assert.equal(await page.locator('[data-calendar-time="16:30"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="18:30"]').isDisabled(),false)
   await page.locator('[data-calendar-trigger="bookingDate"]').click()
   const layout=await page.evaluate(()=>{const offset=(n,parent)=>{const a=n.getBoundingClientRect(),b=parent.getBoundingClientRect();return a.x+a.width/2-b.x-b.width/2};const calendar=document.querySelector('#calendar-bookingDate'),times=document.querySelector('[data-calendar-times]');return {calendarOffset:offset(calendar,calendar.closest('fieldset')),timeOffset:offset(times,times.closest('fieldset')),overflow:document.documentElement.scrollWidth-innerWidth,padding:parseFloat(getComputedStyle(document.querySelector('#app')).paddingBottom),barHeight:document.querySelector('.inquiry-actions').getBoundingClientRect().height}})
   assert.ok(Math.abs(layout.calendarOffset)<=1);assert.ok(Math.abs(layout.timeOffset)<=1);assert.equal(layout.overflow,0);assert.ok(layout.padding>layout.barHeight+16)
   const unobscured=[]
-  for(const selector of ['[data-calendar-time="23:00"]','.entrance-option-image']){const target=page.locator(selector).first();await target.scrollIntoViewIfNeeded();const clear=await target.evaluate(n=>{const r=n.getBoundingClientRect(),bar=document.querySelector('.inquiry-actions').getBoundingClientRect();return {selector:n.className||n.dataset.calendarTime,bottom:r.bottom,barTop:bar.top,visible:r.bottom<=bar.top}});assert.equal(clear.visible,true);unobscured.push(clear)}
+  for(const selector of ['[data-calendar-time="23:00"]','.booking-extra .option-choice']){const target=page.locator(selector).first();await target.scrollIntoViewIfNeeded();const clear=await target.evaluate(n=>{const r=n.getBoundingClientRect(),bar=document.querySelector('.inquiry-actions').getBoundingClientRect();return {selector:n.className||n.dataset.calendarTime,bottom:r.bottom,barTop:bar.top,visible:r.bottom<=bar.top}});assert.equal(clear.visible,true);unobscured.push(clear)}
   layout.unobscured=unobscured
   if(!await calendar.isVisible())await page.locator('[data-calendar-trigger="bookingDate"]').click()
   fail=true;await page.evaluate(()=>{void WistiaBooking.loadRange('2026-10-01','2026-10-31',true).catch(()=>{})});await release();assert.match(await calendar.locator('[data-calendar-range-status]').innerText(),/카카오톡 확인 필요/);assert.equal(await calendar.locator('[data-calendar-range-status]').isVisible(),true)
-  // Failure does not manufacture closed days or a confirmed-available state.
-  assert.equal(await calendar.locator('[data-calendar-day="2026-10-09"]').isDisabled(),false)
+  // Failed refresh preserves validated closures and displays the Kakao fallback.
+  assert.equal(await calendar.locator('[data-calendar-day="2026-10-09"]').isDisabled(),true)
   results.push({width,path:'/event/solo',requests,popup,...layout,closures:[9,18,25],lateResponse:true,expiryRemount:true,failureNotice:true});await page.close()
   for(const path of ['/detail/solo','/detail/duet-film']){
    const p=await browser.newPage({viewport:{width,height:844}});await p.route('https://**/*',r=>r.abort());await p.goto(base+path);await p.locator('.mas-location').waitFor();await p.waitForTimeout(100)

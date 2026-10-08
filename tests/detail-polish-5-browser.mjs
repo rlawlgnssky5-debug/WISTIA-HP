@@ -18,7 +18,7 @@ try{
    const mode=page.locator(`[data-contact-date-mode="${key}"][value="date"]`),calendar=page.locator(`#calendar-${key}`),trigger=page.locator(`[data-calendar-trigger="${key}"]`)
    assert.equal(await calendar.isVisible(),false)
    await mode.check();await calendar.waitFor({state:'visible'});assert.equal(await trigger.getAttribute('aria-expanded'),'true')
-   await mode.click();assert.equal(await calendar.isVisible(),false,'repeated 日期 selection closes')
+   await mode.click();assert.equal(await calendar.isVisible(),true,'repeated date selection only opens')
    await mode.click();await calendar.waitFor({state:'visible'})
    const controls=await calendar.locator('select').evaluateAll(nodes=>nodes.map(n=>{const s=getComputedStyle(n),r=n.getBoundingClientRect(),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=`${s.fontWeight} ${s.fontSize} ${s.fontFamily}`;const text=n.selectedOptions[0].textContent;return {text,width:r.width,textWidth:ctx.measureText(text).width,available:r.width-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)-parseFloat(s.borderLeftWidth)-parseFloat(s.borderRightWidth)-22,left:r.left,right:r.right}}))
    assert.deepEqual(controls.map(x=>x.text),['2026년','10월']);for(const c of controls){assert.ok(c.available>=c.textWidth,JSON.stringify(c));assert.ok(c.left>=0&&c.right<=width)}
@@ -27,11 +27,12 @@ try{
     for(const day of ['09','18','25']){const cell=calendar.locator(`[data-calendar-day="2026-10-${day}"]`);assert.equal(await cell.isDisabled(),true);assert.match(await cell.innerText(),/마감/);assert.match(await cell.getAttribute('aria-label'),/마감/)}
     for(const day of ['01','02','03','04','05','06','07','12','13','14']){const cell=calendar.locator(`[data-calendar-day="2026-10-${day}"]`);assert.equal(await cell.isDisabled(),true);assert.equal(await cell.innerText(),String(Number(day)))}
    }
-   await calendar.locator('[data-calendar-day="2026-10-11"]').click();assert.equal(await calendar.isVisible(),false);assert.equal(await trigger.getAttribute('aria-expanded'),'false');assert.match(await trigger.innerText(),/2026년 10월 11일 \(일\)/);assert.match(await trigger.innerText(),/변경/)
+   await calendar.locator('[data-calendar-day="2026-10-11"]').click();assert.equal(await calendar.isVisible(),true);await calendar.locator('[data-calendar-close]').click();assert.equal(await trigger.getAttribute('aria-expanded'),'false');assert.match(await trigger.innerText(),/2026년 10월 11일 \(일\)/);assert.match(await trigger.innerText(),/변경/)
    let time=null
    if(key==='bookingDate'){
     await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
     assert.equal(await page.locator('[data-calendar-time="16:30"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="18:30"]').isDisabled(),false)
+    await page.locator('.contact-time-field').scrollIntoViewIfNeeded()
     time=await page.locator('.contact-time-field').evaluate(n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,headerBottom:document.querySelector('#siteHeader').getBoundingClientRect().bottom,barTop:document.querySelector('.inquiry-actions').getBoundingClientRect().top}})
     assert.ok(time.top>=time.headerBottom&&time.top<time.barTop,JSON.stringify(time))
     const columns=await page.locator('[data-calendar-times]').evaluate(n=>getComputedStyle(n).gridTemplateColumns.split(' ').length)
@@ -51,6 +52,7 @@ try{
    console.log(`${width}px ${key}: open/toggle/select/auto-close/change/close/unknown, year-month text and last row passed`)
   }
   await page.locator('[data-contact-date-mode="eventDate"][value="unknown"]').check()
+  await page.locator('[data-calendar-trigger="bookingDate"]').click();const bookingCalendar=page.locator('#calendar-bookingDate');await bookingCalendar.locator('[data-calendar-year]').selectOption('2026');await bookingCalendar.locator('[data-calendar-month]').selectOption('9');await bookingCalendar.locator('[data-calendar-day="2026-10-11"]').click();await bookingCalendar.locator('[data-calendar-close]').click()
   await page.evaluate(()=>{window.copy5='';navigator.clipboard.writeText=async value=>{window.copy5=value}})
   await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.copy5.startsWith('[위스티아 상담 요청]'))
   const plain=await page.evaluate(()=>window.copy5);assert.match(plain,/추가 옵션 : 없음/);assert.match(plain,/예상 금액 : 120,000원/);assert.doesNotMatch(plain,/^\d+\) /gm)
@@ -58,13 +60,13 @@ try{
   await page.locator('[data-contact-date-mode="eventDate"][value="date"]').click()
   const wedding=page.locator('#calendar-eventDate');await wedding.locator('[data-calendar-year]').selectOption('2027');await wedding.locator('[data-calendar-month]').selectOption('0');await wedding.locator('[data-calendar-day="2027-01-09"]').click()
   await page.locator('[data-calendar-time="15:30"]').click()
-  for(const option of ['lyrics-video','bride-entrance'])await page.locator(`input[data-option="${option}"]`).check()
+  for(const option of ['lyrics-video','extra-verse'])await page.locator(`input[data-option="${option}"]`).check()
   for(const event of ['blog','instagram'])await page.locator(`input[data-event="${event}"]`).check()
   await page.locator('#contact-source').selectOption('메타 광고')
   await page.evaluate(()=>{window.copy5=''})
   await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.copy5.startsWith('[위스티아 상담 요청]'))
   const full=await page.evaluate(()=>window.copy5)
-  assert.match(full,/예상 금액 : 200,000원/);assert.match(full,/페이백 합계 : −40,000원/);assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15시 30분/);assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
+  assert.match(full,/예상 금액 : 220,000원/);assert.match(full,/페이백 합계 : −40,000원/);assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15시 30분/);assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
   if(width===390)writeFileSync('work/5-copy-examples.json',JSON.stringify({plain,full},null,2))
   await page.close()
  }

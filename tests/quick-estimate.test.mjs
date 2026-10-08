@@ -25,10 +25,13 @@ assert.match(copiedQuote,/페이백 완료 후 혜택가 : 170,000원/)
 assert.match(copiedQuote,/가사 영상 추가 \+40,000원/)
 assert.equal(runInNewContext('JSON.stringify({state:quoteState(),optionQuantities,chosenOption})',context),baseline,'Kakao handoff must preserve the open inquiry draft')
 const cases=[
+ [{key:'solo',options:['extra-verse']},180000],
+ [{key:'duo',options:['extra-verse','lyrics-video']},260000],
+ [{key:'duet-film',options:['extra-verse']},410000],
  [{key:'solo'},120000],
  [{key:'duo'},160000],
- [{key:'duo',options:['lyrics-video','bride-entrance'],events:['blog']},240000],
- [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},240000],
+ [{key:'duo',options:['lyrics-video','extra-verse'],events:['blog']},260000],
+ [{key:'solo',options:['lyrics-video','bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},160000],
  [{key:'solo',events:['voice-photo-consent']},120000],
  [{key:'duo',events:['voice-photo-consent']},160000],
  [{key:'solo',events:['blog','reaction','cafe','instagram','voice-photo-consent']},120000],
@@ -37,9 +40,9 @@ const cases=[
  [{key:'duet-film',format:'making',events:['voice-photo-consent']},350000],
  [{key:'duet-film'},350000],
  [{key:'duet-film',format:'making'},350000],
- [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},390000],
+ [{key:'duet-film',format:'making',options:['bride-entrance'],events:['cafe']},350000],
  [{key:'solo-film',format:'making'},120000],
- [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},430000]
+ [{key:'duet-film',options:['bride-entrance','groom-entrance','rush'],events:['blog','reaction','cafe','instagram']},350000]
 ]
 for(const [state,expected] of cases){
  const result=api.preview({format:'live',options:[],events:[],...state})
@@ -51,9 +54,9 @@ assert.equal(api.options('duet-film').some(o=>o.key==='lyrics-video'),false)
 for(const key of ['solo','duo','duet-film'])assert.equal(api.options(key).some(o=>o.key==='rush'),false,'removed rush option is not offered for '+key)
 assert.equal(api.events().length,4)
 assert.equal(api.events().find(event=>event.key==='voice-photo-consent'),undefined)
-context.state={key:'duo',format:'live',options:['lyrics-video','bride-entrance'],events:['blog']}
+context.state={key:'duo',format:'live',options:['lyrics-video','extra-verse'],events:['blog']}
 runInNewContext('setQuoteState(state)',context)
-assert.match(context.consultationText(),/결제 예상 금액 : 240,000원/)
+assert.match(context.consultationText(),/결제 예상 금액 : 260,000원/)
 assert.match(context.consultationText(),/가사 영상 추가 \+40,000원/)
 assert.match(context.consultationText(),/3\) 선택한 후기 페이백\n블로그 리뷰 30,000원/)
 context.state={key:'duet-film',format:'making',options:[],events:[]}
@@ -75,9 +78,9 @@ const questionContext={window:{WistiaQuote:api},location:{pathname:'/'},document
 runInNewContext(question,questionContext)
 const tap=async(value,attribute='')=>{const button={dataset:{qeChoice:value},hasAttribute:name=>name===attribute};await handlers.get('click')({target:{closest:()=>button}})}
 questionContext.window.WistiaQuickEstimate.open()
-await tap('ar');await tap('solo');await tap('bride-entrance')
+await tap('ar');await tap('solo');await tap('extra-verse')
 assert.match(modal.innerHTML,/3 \/ 4/,'paid options retain the multiple-choice stage')
-assert.match(modal.innerHTML,/data-qe-choice="bride-entrance" aria-pressed="true"/)
+assert.match(modal.innerHTML,/data-qe-choice="extra-verse" aria-pressed="true"/)
 await tap('none-options')
 assert.match(modal.innerHTML,/4 \/ 4/,'no extras immediately advances to events')
 await tap('blog')
