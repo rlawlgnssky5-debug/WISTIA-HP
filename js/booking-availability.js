@@ -31,22 +31,23 @@
  // Requests are shared per date (a re-mount, product switch or repeated change never drops
  // the only in-flight response) and always settle within timeoutMs.
  const timeoutMs=8000,cacheMs=30000,cache=new Map(),inflight=new Map()
- const rangeCache=new Map(),rangeInflight=new Map()
+ const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Set()
  let activeForm=null,activeKey='solo',generation=0
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
  const fallbackMessage='카카오톡 확인 필요 · 일정 자동 확인이 연결되지 않았거나 잠시 지연되고 있습니다 · 희망 일정으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
  function validBlocks(blocks){return Array.isArray(blocks)&&blocks.every(block=>Number.isFinite(Date.parse(block.start))&&Number.isFinite(Date.parse(block.end))&&Date.parse(block.end)>Date.parse(block.start))}
- function calendarBlocks(from,to){const hit=rangeCache.get(from+':'+to);return hit&&Date.now()-hit.at<cacheMs?hit.blocks:null}
+ // Freshness controls requests, not whether validated closures remain visible.
+ function calendarBlocks(from,to){return rangeCache.get(from+':'+to)?.blocks??null}
+ function calendarRangeFailed(from,to){return rangeFailures.has(from+':'+to)}
  async function loadRange(from,to,fresh=false){
   if(!validRange(from,to))throw Error('invalid range')
-  const id=from+':'+to,hit=!fresh&&calendarBlocks(from,to)
-  if(hit)return hit
+  const id=from+':'+to,hit=rangeCache.get(id)
+  if(!fresh&&hit&&Date.now()-hit.at<cacheMs)return hit.blocks
   if(rangeInflight.has(id))return rangeInflight.get(id)
-  rangeCache.delete(id)
   const controller=new AbortController();let timer
   const request=(async()=>{const response=await fetch('/api/availability?from='+from+'&to='+to,{signal:controller.signal,cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('unavailable');const payload=await response.json();if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response');return payload.blocks})()
   const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
-  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeCache.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
+  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});rangeFailures.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeCache.delete(id);rangeFailures.add(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
   rangeInflight.set(id,promise);return promise
  }
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}
@@ -126,6 +127,6 @@
   return check()
  }
  function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm)return check()}
- global.WistiaBooking={...rules,mount,changed,refresh:()=>{global.WistiaContact?.mountCalendars?.(activeForm,true);return check(true)},loadRange,calendarBlocks,calendarKey:()=>activeKey,timeoutMs}
+ global.WistiaBooking={...rules,mount,changed,refresh:()=>{global.WistiaContact?.mountCalendars?.(activeForm,true);return check(true)},loadRange,calendarBlocks,calendarRangeFailed,calendarKey:()=>activeKey,timeoutMs}
  global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden&&activeForm?.isConnected){global.WistiaContact?.mountCalendars?.(activeForm,true);check(true)}})
 })(typeof window==='object'?window:globalThis)

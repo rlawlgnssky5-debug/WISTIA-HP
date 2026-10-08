@@ -107,3 +107,14 @@ html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!impor
  html #app#app#app#app :is(.calendar-grid,.calendar-weekdays){grid-template-columns:repeat(7,minmax(0,1fr))!important}
  html #app#app#app#app .contact-calendar .calendar-day{min-width:0!important;width:100%!important}
 }
+
+/* Keep the booking controls on the card axis, with room to scroll above the CTA. */
+html #app#app#app#app :is(.calendar-inline,.calendar-time-grid){width:100%!important;max-width:520px!important;margin-inline:auto!important}
+html #app#app#app#app [data-calendar-range-status]{font-size:12px;line-height:1.7;color:#66645f;text-align:center}
+html{scroll-padding-bottom:160px}
+body[data-page="event"] #app{padding-bottom:160px!important}
+html #app#app#app#app .consultation-flow :is(.calendar-day,.calendar-time-grid button,.option-photo){scroll-margin-block:24px 160px}
+@media(max-width:430px){
+ html #app#app#app#app .calendar-popup{position:relative!important;left:auto!important;top:auto!important;width:100%!important;margin-top:12px!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;z-index:auto!important}
+}
+html #app#app#app#app [data-calendar-range-status][hidden]{display:none!important}

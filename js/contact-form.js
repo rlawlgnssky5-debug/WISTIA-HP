@@ -35,15 +35,15 @@
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
-   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,enabled=selectableDate(value,key,today)&&!closed
-   cells+='<button type="button" class="calendar-day'+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed?' · 마감':past?' · 예약불가':'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':!weekdayClosed&&past?'<small>불가</small>':'')+'</button>'
+   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,enabled=selectableDate(value,key,today)&&!closed
+   cells+='<button type="button" class="calendar-day'+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(notionClosed?' · 마감':past||weekdayClosed?' · 예약불가':'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':'')+'</button>'
   }
   return cells
  }
  const calendarIcon=direction=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="'+(direction==='prev'?'m14 6-6 6 6 6':'m10 6 6 6-6 6')+'"/></svg>'
  function calendarMarkup(key,label){
   const booking=key==='bookingDate'
-  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="'+(booking?'group':'dialog')+'" aria-label="'+label+' 달력"'+(!booking?' hidden':'')+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+(!booking?'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>':'')+'</div><div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map(day=>'<span>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div></div>'
+  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="'+(booking?'group':'dialog')+'" aria-label="'+label+' 달력"'+(!booking?' hidden':'')+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+(!booking?'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>':'')+'</div><div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map(day=>'<span>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div>'+(booking?'<p data-calendar-range-status role="status" aria-live="polite" hidden>카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다</p>':'')+'</div>'
  }
  const calendarStates=new WeakMap()
  let openCalendar=null,outsideListener=false
@@ -53,6 +53,7 @@
   if(restoreFocus)state.trigger.focus()
  }
  function positionCalendar(state){
+  if(global.innerWidth<=430){state.calendar.style.width='100%';state.calendar.style.left='';state.calendar.style.top='';return}
   const rect=state.trigger.getBoundingClientRect(),card=state.trigger.closest('.contact-date-field').getBoundingClientRect(),compact=global.innerWidth<=430,width=Math.min(360,global.innerWidth-24,compact?card.width-24:360)
   state.calendar.style.width=width+'px'
   const height=state.calendar.offsetHeight
@@ -72,6 +73,8 @@
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
   grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo')
+  const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
+  if(rangeStatus)rangeStatus.hidden=!booking?.calendarRangeFailed?.(from,to)
   if(key==='bookingDate'&&booking?.loadRange){
    const id=from+':'+to
    if(state.rangeId!==id){state.rangeId=id;booking.loadRange(from,to).catch(()=>{}).finally(()=>{if(state.rangeId===id&&calendar.isConnected)paintCalendar(state)})}
@@ -107,6 +110,7 @@
    let state=calendarStates.get(calendar)
    if(state){
     if(fresh&&key==='bookingDate'&&global.WistiaBooking?.loadRange){const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0)));global.WistiaBooking.loadRange(from,to,true).catch(()=>{}).finally(()=>{if(calendar.isConnected)paintCalendar(state)})}
+    if(key==='bookingDate'&&!fresh)state.rangeId=null
     paintCalendar(state);return
    }
    const date=(input.value>=calendarToday()?parseDate(input.value):null)||parseDate(calendarToday()),trigger=form.querySelector('[data-calendar-trigger="'+key+'"]')
@@ -116,6 +120,7 @@
     closeCalendar();const date=(input.value>=calendarToday()?parseDate(input.value):null)||parseDate(calendarToday());state.year=date.getUTCFullYear();state.month=date.getUTCMonth()
     calendar.hidden=false;openCalendar=state;trigger.setAttribute('aria-expanded','true');paintCalendar(state);positionCalendar(state)
     calendar.querySelector('.calendar-day[tabindex="0"]')?.focus()
+    if(global.innerWidth<=430)calendar.scrollIntoView({block:'center',behavior:'instant'})
    })
    calendar.addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button||button.disabled)return

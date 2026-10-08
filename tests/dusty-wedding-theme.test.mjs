@@ -17,8 +17,8 @@ assert.deepEqual(sheets.slice(-13),[
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261008-contact-calendar-6',
- 'css/detail-section-layout.css?v=20261008-contact-calendar-6'
+ 'css/booking-availability.css?v=20261008-contact-calendar-7',
+ 'css/detail-section-layout.css?v=20261008-contact-calendar-7'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)

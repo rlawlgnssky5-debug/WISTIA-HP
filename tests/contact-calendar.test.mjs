@@ -20,7 +20,7 @@ assert.equal(calendar.selectableDate('2026-10-07','bookingDate','2026-10-08'),fa
 assert.equal(calendar.selectableDate('2026-10-08','bookingDate','2026-10-08'),true,'today is included')
 const cells=calendar.cells(2026,9,'bookingDate','2026-10-16','2026-10-08')
 assert.equal((cells.match(/data-calendar-day=/g)||[]).length,31)
-for(const date of ['2026-10-12','2026-10-13','2026-10-14']){
+for(const date of ['2026-10-01','2026-10-02','2026-10-03','2026-10-04','2026-10-05','2026-10-06','2026-10-07','2026-10-12','2026-10-13','2026-10-14']){
  const cell=cells.match(new RegExp('<button[^>]*data-calendar-day="'+date+'"[^>]*>.*?</button>'))[0]
  assert.match(cell,/ disabled/);assert.doesNotMatch(cell,/<small>/)
 }
@@ -47,7 +47,7 @@ assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/녹음
 assert.doesNotMatch(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/\(금\)/)
 for(const page of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(x=>x.endsWith('.html')).map(x=>'event/'+x)]){
  const html=read(page)
- for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-6'),page+' '+asset)
+ for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-7'),page+' '+asset)
 }
 assert.match(read('api/availability.js'),/module.exports/,'CommonJS endpoint stays intact')
 console.log('Custom calendars: Korean weekdays, ISO values, closed weekdays, past dates, today/selection, leap months and cache versions passed')
