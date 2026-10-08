@@ -3,7 +3,7 @@ import {createRequire} from 'node:module'
 import {writeFileSync,mkdirSync} from 'node:fs'
 mkdirSync('work',{recursive:true})
 const {chromium}=createRequire(import.meta.url)('playwright')
-const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']})
+const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']})
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',results=[]
 const blocks=[9,18,25].map(day=>({start:`2026-10-${String(day-1).padStart(2,'0')}T15:00:00Z`,end:`2026-10-${String(day).padStart(2,'0')}T15:00:00Z`})).concat({start:'2026-10-11T07:30:00Z',end:'2026-10-11T09:30:00Z'})
 try{
