@@ -15,7 +15,7 @@ export function assertContactBusinessPreserved(source){
   [' function restore(',' function text(','5090a2553b89985f780526c969cb20db6574c334481b6d9684a86e6c5948d28e']
  ]){
   const i=source.indexOf(a),j=source.indexOf(b,i+a.length)
-  const protectedText=source.slice(i,j).replace(/\r\n/g,'\n').replace("  global.WistiaBooking?.changed(form.querySelector('#contact-bookingDate'))\n",'').replace('  mountCalendars(form)\n','').replaceAll('결혼식 날짜 (예식일)','예식일, 예정일').replaceAll('녹음 방문일 (스튜디오 예약일)','희망 예약일')
+  const protectedText=source.slice(i,j).replace(/\r\n/g,'\n').replace("  global.WistiaBooking?.changed(form.querySelector('#contact-bookingDate'))\n",'').replace('  mountCalendars(form)\n','').replaceAll('결혼식 날짜 (예식일)','예식일, 예정일').replaceAll('녹음 방문일 (스튜디오 예약일)','희망 예약일').replace("['AR 축가 사전녹음','축가 스토리 필름'].map","['AR 축가 사전녹음','축가 스토리 필름','상담 후 결정'].map").replace('작성한 내용으로 카카오톡 문의하기','내용을 작성한 후 복사해<br>카카오톡 채팅창에 붙여넣어 보내주세요 :D')
   assert.equal(hash(protectedText),digest,'unchanged contact logic: '+a)
  }
  assert.match(source,/global.WistiaContact=\{render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,calendar:/)

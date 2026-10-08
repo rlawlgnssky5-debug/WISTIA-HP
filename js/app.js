@@ -921,7 +921,7 @@ function renderEventsPage(){
 }
 let contactQuote=null
 let inquiryUndecided=false,inquiryObserver=null
-function renderContactPage(){renderEvent('solo','',true)}
+function renderContactPage(){renderEvent('solo','')}
 const FINDER_LABELS={role:{couple:"듀엣 식전 스토리 필름",singer:"AR 축가 사전녹음",proposal:"프로포즈 · 답프로포즈",making:"축가 녹음 메이킹 필름"},people:{one:"1인",two:"2인"},moment:{pre:"예식 전 식전 영상",ceremony:"축가 순서에 상영할 영상",live:"예식에서 직접 부를 축가"},lyrics:{yes:"가사 영상 필요",no:"사전 녹음 음원만 필요"}}
 const FINDER_PRODUCTS={"pre/one":"duet-film","pre/two":"duet-film","ceremony/one":"duet-film","ceremony/two":"duet-film","live/one":"solo","live/two":"duo"}
 let finderChoice=(()=>{try{const value=JSON.parse(sessionStorage.getItem("wistia:finder-selection"));return {role:value.role||"",people:value.people||"",moment:value.moment||"",lyrics:value.lyrics||""}}catch{return {role:"",people:"",moment:"",lyrics:""}}})()
@@ -1439,14 +1439,14 @@ function calculate(){
 }
 function renderProductOption(o){
   if(o.quantity){const quantity=optionQuantities[o.key]||0,unit=o.unit||"회",priceUnit=o.priceUnit||"회당";return '<div class="option-choice quantity-option"><span class="option-symbol" aria-hidden="true">+</span><span><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><div class="quantity-control" aria-label="'+o.label+' 선택 수"><button type="button" data-option-minus="'+o.key+'" aria-label="'+o.label+' 줄이기">−</button><output data-option-count="'+o.key+'">'+quantity+unit+'</output><button type="button" data-option-plus="'+o.key+'" aria-label="'+o.label+' 늘리기">+</button><b>'+priceUnit+' +'+shortWon(o.price)+'</b></div></div>'}
-  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"],"bride-entrance":["assets/img/studio-graphics/bride-entrance.svg","신부 입장곡 하이라이트 녹음 안내 그래픽"],"groom-entrance":["assets/img/studio-graphics/groom-entrance.svg","신랑 입장곡 하이라이트 녹음 안내 그래픽"]}
-  const photo=photos[o.key],image=photo?'<span data-option-art class="option-photo'+(o.key==="lyrics-video"?' lyric-option-image':'')+'"'+(o.key==="lyrics-video"?' data-lyric-example':'')+'>'+img(photo[0],photo[1],o.key==="lyrics-video")+'</span>':''
+  const photos={"lyrics-video":["assets/img/song-options/lyric-video-v2.webp","가사 영상 웨딩 장면 예시"],"bride-entrance":["assets/img/story-polish/entrance-bride-v2.webp","신부 입장곡 하이라이트 녹음 안내 그래픽"],"groom-entrance":["assets/img/story-polish/entrance-groom-v2.webp","신랑 입장곡 하이라이트 녹음 안내 그래픽"]}
+  const photo=photos[o.key],image=photo?'<span data-option-art class="option-photo'+(["bride-entrance","groom-entrance"].includes(o.key)?' entrance-option-image':'')+(o.key==="lyrics-video"?' lyric-option-image':'')+'"'+(o.key==="lyrics-video"?' data-lyric-example':'')+'>'+img(photo[0],photo[1],o.key==="lyrics-video")+'</span>':''
   return '<label class="option-choice'+(image?' has-option-photo'+(o.key==="lyrics-video"?' has-lyric-image':''):'')+'">'+image+'<input type="checkbox" data-option="'+o.key+'" '+(selectedOptions.has(o.key)?"checked":"")+'><span class="option-copy"><strong>'+o.label+'</strong><small>'+o.detail+'</small></span><b>'+(o.price?'+'+shortWon(o.price):'상담 후 안내')+'</b></label>'
 }
 function bookingBaseSection(key){
  const service=["solo","duo"].includes(key)?"solo":key
  const services=[["solo","AR 축가 사전녹음"],["duet-film","축가 스토리 필름"]]
- const serviceSelect='<label class="booking-product-select" for="bookingService"><span class="sr-only">상품</span><select id="bookingService" name="quoteProduct" data-product-select>'+[...services,['undecided','아직 고민 중이에요']].map(([value,label])=>'<option value="'+value+'"'+((inquiryUndecided?'undecided':service)===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
+ const serviceSelect='<label class="booking-product-select" for="bookingService"><span class="sr-only">상품</span><select id="bookingService" name="quoteProduct" data-product-select>'+services.map(([value,label])=>'<option value="'+value+'"'+(service===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
  const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>SOLO(1인)</strong><small>1곡 기준 · 1시간</small></span><b>12만원</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>DUET(2인)</strong><small>1곡 기준 · 2시간</small></span><b>16만원</b></label></div></div>':bookingFilmFormatSection(key)
  const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준</p>':''
  return '<section class="booking-base calculator-step consultation-step"><span class="booking-step">01</span><h2>상품 선택</h2><p>원하시는 상품을 선택해 주세요</p>'+serviceSelect+people+note+'<div class="booking-base-amount"'+(inquiryUndecided?' hidden':'')+'><span>기본 가격</span><strong id="basePrice"></strong></div></section>'
@@ -1460,15 +1460,15 @@ function eventBenefitsSection(step){
  return '<section class="event-benefits consultation-gifts" aria-labelledby="giftTitle"><header class="consultation-gift-heading"><div><h3 id="giftTitle">후기 참여 이벤트</h3><p>후기 페이백 최대 6만원</p></div><span class="benefit-total" id="eventDiscountTotal" aria-live="polite">페이백 0원</span></header><div class="benefit-kind-grid">'+group('payback','후기 페이백','조건 확인 후 지급','참여 조건 충족 확인 후 돌려드리는 금액이며, 결제 금액에서 미리 차감하지 않습니다')+'</div><p class="fine">참여 조건과 최종 혜택 적용 여부는 상담에서 확인합니다</p></section>'
 }
 function priceSidebarSection(){return '<aside class="booking-mobile-bar booking-static-bar booking-follow-total booking-price-sidebar" aria-label="선택한 구성의 예상 가격"><div class="booking-price-card"><p class="quote-eyebrow">선택한 구성</p><h2 id="quoteService"></h2><div class="quote-regular" id="quoteRegular" hidden><span>할인 적용 전</span><s id="quoteBeforePrice"></s></div><div class="booking-live-total"><span>결제 예상 금액</span><strong id="mobilePrice" aria-live="polite"></strong></div><dl class="quote-price-rows"><div><dt>기본 가격</dt><dd id="quoteBase"></dd></div><div><dt>추가 옵션</dt><dd id="quoteOptions"></dd></div><div><dt>후기 페이백</dt><dd id="quotePayback"></dd></div></dl><dl class="quote-selected-lines" id="quoteSelections"></dl><p class="quote-effective" id="quoteEffectiveRow" hidden>페이백 완료 후 혜택가 <strong id="quoteEffective"></strong></p><p class="quote-note">페이백은 참여 조건 충족 확인 후 지급되며 결제 시 미리 차감되지 않습니다</p></div><p class="quote-conditions">최종 금액과 제작 가능 일정은 상담에서 확인합니다</p></aside>'}
-function renderEvent(key,purpose="",undecided=false){
- inquiryUndecided=undecided
+function renderEvent(key,purpose=""){
+ inquiryUndecided=false
  if(currentEventProduct!==key||currentEventPurpose!==purpose){selectedEvents.clear();selectedOptions.clear();optionQuantities={};chosenOption=""}
   currentEventProduct=key;currentEventPurpose=purpose;if(FILM_FORMAT_PRODUCTS.has(key))selectedFilmFormat="live";if(key==="solo-film")selectedFilmPeople=purpose==="duo"?2:1;const p=PRODUCTS[key];
  const options=eventProductOptions(key,purpose);
  const choices=bookingExtraSection(p,purpose,options,"03")+eventBenefitsSection("03");
  const sidebar=priceSidebarSection()
  const actions=window.WistiaContact.submit().replace('<button type="submit"','<button form="contactInquiryForm" type="submit"')
- app.innerHTML='<section class="shell section booking-calculator-wrap consultation-flow"><div class="booking-calculator"><div class="calculator-content"><form id="contactInquiryForm" novalidate><div id="consultForm"><header class="calculator-intro"><h1>상담 신청</h1><p>원하시는 상품과 일정을 알려주세요</p></header>'+bookingBaseSection(key)+window.WistiaContact.render(null,{integrated:true})+'<section class="consultation-step consultation-options"'+(undecided?' hidden':'')+' aria-labelledby="optionsTitle"><header class="consultation-step-heading"><span class="booking-step">03</span><h2 id="optionsTitle">옵션과 이벤트 혜택</h2><p>선택 사항이므로 건너뛰셔도 괜찮습니다</p></header>'+choices+'</section></div></form></div>'+sidebar+'</div>'+actions+'</section>'+footer()
+ app.innerHTML='<section class="shell section booking-calculator-wrap consultation-flow"><div class="booking-calculator"><div class="calculator-content"><form id="contactInquiryForm" novalidate><div id="consultForm"><header class="calculator-intro"><h1>상담 신청</h1><p>원하시는 상품과 일정을 알려주세요</p></header>'+bookingBaseSection(key)+window.WistiaContact.render(null,{integrated:true})+'<section class="consultation-step consultation-options" aria-labelledby="optionsTitle"><header class="consultation-step-heading"><span class="booking-step">03</span><h2 id="optionsTitle">옵션과 이벤트 혜택</h2><p>선택 사항이므로 건너뛰셔도 괜찮습니다</p></header>'+choices+'</section></div></form></div>'+sidebar+'</div>'+actions+'</section>'+footer()
  updatePrice()
  mountInquiryObserver()
 }
@@ -1606,7 +1606,7 @@ function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축�
 function header(){
  document.querySelector("#mainMenu")?.remove()
  const siteHeader=document.querySelector("#siteHeader")
- siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>'+studioIcon('arrow')+'</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA<small>목소리와 영상</small></span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
+ siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>'+studioIcon('arrow')+'</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA</span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
  siteHeader.insertAdjacentHTML("afterend",navigationMenu())
  document.querySelector("#floatingKakaoChat").href=kakao()
  const soloCtaKakao=document.querySelector("#soloDesktopCtaKakao");if(soloCtaKakao)soloCtaKakao.href=kakao()
