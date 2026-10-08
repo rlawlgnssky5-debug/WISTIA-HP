@@ -105,3 +105,9 @@ html #app#app#app#app .ar-commerce-detail .mas-location :is(header,dl>div){displ
 html #app#app#app#app .ar-commerce-detail .mas-location::before,
 html #app#app#app#app .ar-commerce-detail .mas-location::after{content:none!important;display:none!important}
 @media(max-width:900px){html #app#app#app#app .ar-commerce-detail .mas-bottom{bottom:0!important;margin-bottom:0!important;border-radius:0!important}}
+
+/* Desktop maps and footer content must scroll clear of the fixed contact bar. */
+@media(min-width:901px){
+ html #app#app#app#app .ar-commerce-detail{padding-bottom:112px!important}
+ html #app#app#app#app .ar-commerce-detail .mas-map-links{scroll-margin-bottom:160px}
+}
