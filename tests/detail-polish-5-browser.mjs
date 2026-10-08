@@ -11,6 +11,7 @@ try{
   const page=await browser.newPage({viewport:{width,height:844}});await page.clock.install({time:new Date('2026-10-08T03:00Z')});await page.route('https://**/*',r=>r.abort())
   await page.route('**/api/availability?*',async r=>{const q=new URL(r.request().url()).searchParams;if(q.has('from'))await page.waitForTimeout(100);await r.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks}})})
   await page.goto(base+'/event/solo',{waitUntil:'domcontentloaded'})
+  await page.locator('#consultForm .consultation-step').first().waitFor({state:'visible'})
   const order=await page.locator('#consultForm .consultation-step').evaluateAll(nodes=>nodes.map(n=>({number:n.querySelector('.booking-step').textContent,title:n.querySelector('h2').textContent})))
   assert.deepEqual(order.map(x=>x.number),['01','02','03','04']);assert.match(order[1].title,/어디에서/);assert.match(order[2].title,/일정/)
   for(const key of ['eventDate','bookingDate']){

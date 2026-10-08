@@ -1479,3 +1479,11 @@
 - 마지막 사용자 추가 요청이 앞선 카카오 내용 순서 요청을 대체한다. 문의 복사는 번호 없이 상품/금액/일정/유입 경로의 12자 구분선 템플릿으로 표시한다. 실제 calculate 결과를 순수 메타데이터로 전달하여 가격/옵션/페이백을 바꾸지 않는다. 동일 연도 날짜는 월/일/요일, 다른 연도는 연도 포함, 시간은 시/분. 과거 quote.text 호출도 기존 값을 읽어 새 형식으로 표시한다. 요청사항 칸은 현재 없어 추가하지 않는다.
 - 캐시 20261008-contact-calendar-9. 노션 API/개인정보 규칙/종일 마감/부분 마감/날짜 차단/문의 전 재조회/POINT/오시는 길/승인 자산/가격/후기/CTA/4차 고정 바는 보존한다.
 - 전체 테스트에 5차 실제 브라우저 동작/2열/섹션 순서/복사 예시를 포함하고 기존 회귀 테스트를 새 disclosure/문구에 맞췄다. Playwright가 없으면 브라우저 회귀만 skip. 결과와 실제 복사 문구 2개는 output/detail-polish-5-report.txt에 기록하며 패치는 output/detail-polish-5.patch.
+
+## 2026-10-08 — cc7ec77 위 5차 검수 보완 5b
+
+- 예식일에만 있던 contact-eventDate-hint와 연결된 aria-describedby를 제거한다. 선택 날짜/변경 버튼과 입력 오류 안내는 유지한다.
+- 터치 재탭 시 label의 pointerdown 이후 본문으로 focusin이 발생해 달력이 닫히고 라디오 click으로 다시 열리는 현상을 재현했다. 날짜 선택 label의 주 포인터 기본 포커스 이동을 막고 기존 라디오 click 한 번으로만 달력을 토글한다. 키보드 및 미정 동작은 유지한다.
+- 360/390px isMobile/hasTouch에서 Locator.tap으로 label/span/radio를 각각 두 차례 열기·닫기 반복하고 hidden 변화가 탭마다 한 번만 발생하는지 검증한다. 선택 후/미정의 중복 안내 없음과 가로 넘침 0도 확인한다.
+- 캐시 버전 20261008-contact-calendar-10. 기존 예약 조회·마감·가격·복사 템플릿·POINT·오시는 길·승인 자산과 5차 통과 동작을 유지한다. Playwright 없는 경우 회귀 테스트 skip을 유지한다.
+- 결과물은 cc7ec77 이후 단일 binary format-patch output/detail-polish-5b.patch와 짧은 보고서 output/detail-polish-5b-report.txt. 푸시/배포하지 않는다.
