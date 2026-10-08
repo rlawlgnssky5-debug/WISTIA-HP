@@ -16,21 +16,21 @@ assert.match(api.render(null,{embedded:true}),/name="service" value="상담 후 
 assert.match(api.render(null,{embedded:true}),/class="contact-quote" hidden/)
 const submitted=api.text({name:'검수',source:'인스타 광고',service:quote.service},quote)
 assert.doesNotMatch(submitted,/성함|검수/)
-assert.match(submitted,/최종 예상 가격 : 130,000원/)
+assert.match(submitted,/예상 금액 : 130,000원/)
 assert.doesNotMatch(api.text({service:'상담 후 결정'},null),/가격|120,000/)
 const sync=source.slice(source.indexOf('function refreshInquiryQuote(){'),source.indexOf('function jumpToInquiry(){'))
 const preview={hidden:false,querySelector:()=>({textContent:''})},service={readOnly:true,value:''}
 context.document={querySelectorAll:()=>[],querySelector:selector=>selector==='#contactInquiryForm'?({elements:[],querySelector:key=>key==='[name="service"]'?service:preview}):null}
 api.syncQuote(quote);assert.equal(service.value,quote.service);assert.equal(preview.hidden,false)
 api.syncQuote(null);assert.equal(service.value,'상담 후 결정');assert.equal(preview.hidden,true)
-const state={inquiryUndecided:false,currentEventProduct:'solo',window:{WistiaContact:{syncQuote:()=>{}}},calculate:()=>({product:{title:'AR'},finalPrice:130000}),shortWon:()=> '13만원',consultationText:()=>submitted}
+const state={inquiryQuoteDetails:()=>({}),inquiryUndecided:false,currentEventProduct:'solo',window:{WistiaContact:{syncQuote:()=>{}}},calculate:()=>({product:{title:'AR'},finalPrice:130000}),shortWon:()=> '13만원',consultationText:()=>submitted}
 runInNewContext('let contactQuote;'+sync+';refreshInquiryQuote();this.quote=contactQuote',state)
 assert.equal(state.quote.text,submitted)
 state.inquiryUndecided=true;runInNewContext('refreshInquiryQuote();this.quote=contactQuote',state);assert.equal(state.quote,null)
 assert.match(source,/function renderContactPage\(\)\{renderEvent\('solo',''\)\}/)
 const integrated=api.render(quote,{integrated:true})
 assert.doesNotMatch(integrated,/<form|문의 양식 작성|contact-quote/)
-assert.match(integrated,/02<\/span><h2[^>]+>일정 작성/)
+assert.match(integrated,/03<\/span><h2[^>]+>일정 작성/)
 assert.match(integrated,/name="service" type="hidden" value="AR 축가 사전녹음" readonly/)
 assert.doesNotMatch(integrated,/name="name"|contact-name|성함/)
 assert.ok(integrated.indexOf('name="eventDateMode"')<integrated.indexOf('name="bookingDateMode"'))

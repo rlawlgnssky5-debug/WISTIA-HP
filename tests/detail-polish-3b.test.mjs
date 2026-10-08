@@ -20,7 +20,7 @@ await test('문의 달력 및 고정 바 PC/모바일 브라우저 회귀',{skip
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{cwd:root,env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  try{
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('preview startup timeout')),10000);server.stdout.once('data',()=>{clearTimeout(timer);resolve()});server.once('error',error=>{clearTimeout(timer);reject(error)});server.once('exit',code=>{clearTimeout(timer);reject(Error('preview exited: '+code))})})
-  for(const script of ['detail-polish-3b-browser.mjs','detail-polish-4-browser.mjs']){
+  for(const script of ['detail-polish-3b-browser.mjs','detail-polish-4-browser.mjs','detail-polish-5-browser.mjs']){
    const run=spawnSync(process.execPath,['tests/'+script],{cwd:root,env:{...process.env,WISTIA_PREVIEW_URL:`http://127.0.0.1:${port}`,WISTIA_BROWSER_EXECUTABLE:executable},encoding:'utf8',timeout:120000})
    assert.equal(run.status,0,run.stderr||String(run.error));console.log(run.stdout.trim())
   }

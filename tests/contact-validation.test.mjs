@@ -22,7 +22,7 @@ const source=read('js/app.js')
 assert.match(source,/<form id="contactInquiryForm" novalidate/)
 const handler=source.split('\n').find(line=>line.startsWith('document.addEventListener("submit",'))
 let submitHandler,copyCount=0,refreshCount=0,shown
-Object.assign(context,{document:{addEventListener(type,fn){submitHandler=fn}},refreshInquiryQuote(){refreshCount++},contactQuote:null,FormData:class{constructor(form){this.data=form.data}[Symbol.iterator](){return this.data[Symbol.iterator]()}},copyConsultationAndShowDialog(text){copyCount++;assert.match(text,/희망 서비스 : 상담 후 결정/);assert.doesNotMatch(text,/성함|과거 초안/)},showContactValidationDialog(issues){shown=issues}})
+Object.assign(context,{document:{addEventListener(type,fn){submitHandler=fn}},refreshInquiryQuote(){refreshCount++},contactQuote:null,FormData:class{constructor(form){this.data=form.data}[Symbol.iterator](){return this.data[Symbol.iterator]()}},copyConsultationAndShowDialog(text){copyCount++;assert.match(text,/📦 상품\n상담 후 결정/);assert.doesNotMatch(text,/성함|과거 초안/)},showContactValidationDialog(issues){shown=issues}})
 runInNewContext(handler,context)
 service.value='';date.validity.valid=true
 let prevented=false
