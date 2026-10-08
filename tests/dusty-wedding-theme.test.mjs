@@ -5,7 +5,7 @@ const index=read('index.html'),css=read('css/dusty-wedding-theme.css')
 assert.match(index,/<html lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-12),[
+assert.deepEqual(sheets.slice(-13),[
  'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
  'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
  'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
@@ -17,7 +17,8 @@ assert.deepEqual(sheets.slice(-12),[
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261008-contact-calendar-3'
+ 'css/booking-availability.css?v=20261008-contact-calendar-5',
+ 'css/detail-section-layout.css?v=20261008-contact-calendar-5'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)

@@ -17,8 +17,8 @@ for(const key of ['solo','duo','duet-film']){
  assert.match(html,/<strong class="ar-expert-panel-keyword">사운드 완성<\/strong>/,'removing an index must not remove the sound expertise heading')
  if(key==='duet-film'){
   assert.match(html,/<strong class="ar-expert-panel-keyword">영상 연출<\/strong>/,'video expertise keeps its clear heading without a mismatched leading index')
-  assert.match(html,/film-expert-v1\.webp/,'video expertise displays the new text-inclusive 3D graphic')
-  assert.match(html,/7년 경력 영상 편집 디자이너/,'the existing video expertise facts are preserved')
+  assert.match(html,/film-expert-v2\.webp/,'video expertise displays the new text-inclusive 3D graphic')
+  assert.match(html,/크몽 7년 디자이너/,'the existing video expertise facts are preserved')
  }
 }
 const timeGuide=source.slice(source.indexOf('<section class="arc-section arc-time-guide"'),source.indexOf('<section class="arc-section arc-time-guide"')+800)

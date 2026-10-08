@@ -14,12 +14,12 @@ runInNewContext(source,context)
 const api=context.window.WistiaBooking,flush=()=>new Promise(resolve=>setTimeout(resolve,0))
 const payload=(selected,blocks=[])=>({ok:true,json:async()=>({ok:true,date:selected,blocks})})
 api.mount(form,'solo');await flush()
-assert.equal(form.dataset.scheduleState,'unknown');assert.equal(requests.length,0)
+assert.equal(form.dataset.scheduleState,'unknown');assert.equal(status.hidden,true);assert.equal(requests.length,0)
 date.value='2027-10-11';api.changed(date);await flush()
 assert.equal(form.dataset.scheduleState,'closed');assert.match(date.validationMessage,/월·화·수/)
 assert.equal(requests.length,0)
 date.value='2027-10-10';api.changed(date)
-assert.equal(form.dataset.scheduleState,'loading');assert.match(date.validationMessage,/확인/)
+assert.equal(form.dataset.scheduleState,'loading');assert.equal(status.hidden,true);assert.match(date.validationMessage,/확인/)
 const booked=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10:00:00Z'}]
 requests.at(-1).resolve(payload(date.value,booked));await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
@@ -34,7 +34,7 @@ assert.equal(requests.length,1,'duration changes reuse known closures')
 const reopen=api.refresh();requests.at(-1).resolve(payload(date.value));await reopen
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
 const offline=api.refresh();requests.at(-1).reject(Error('unconfigured'));await offline
-assert.equal(form.dataset.scheduleState,'unavailable');assert.match(status.textContent,/카카오톡에서 가능 여부/)
+assert.equal(form.dataset.scheduleState,'unavailable');assert.equal(status.hidden,false);assert.match(status.textContent,/카카오톡 확인 필요/)
 assert.equal(date.validationMessage,'');assert.equal(time.validationMessage,'','offline permits wish inquiry, not a false availability promise')
 assert.equal(time.options.find(option=>option.value==='23:00').disabled,true,'known operating-day constraints apply even when Notion is offline')
 date.value='2027-10-14';api.changed(date);const stale=requests.at(-1)
@@ -49,13 +49,13 @@ api.mount(null);events.visibilitychange();assert.equal(requests.length,5)
 
 // Regression: the two reported hangs and the timeout fallback, with controllable timers.
 function harness(){
- const requests=[],timers=[]
- const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){}}},Date,Intl,AbortController,
+ const requests=[],timers=[],rangeNotifications=[]
+ const context={window:{document:{hidden:false,addEventListener(){}},WistiaContact:{syncSubmitState(){},refreshCalendarRange(from,to){rangeNotifications.push([from,to])}}},Date,Intl,AbortController,
   setTimeout(fn,ms){timers.push({fn,ms,cleared:false});return timers.length},clearTimeout(id){if(timers[id-1])timers[id-1].cleared=true},
   fetch(url,options){return new Promise((resolve,reject)=>requests.push({url,options,resolve,reject}))}}
  runInNewContext(source,context)
  const fire=min=>{for(const timer of timers)if(!timer.cleared&&timer.ms>=min){timer.cleared=true;timer.fn()}}
- return {api:context.window.WistiaBooking,requests,fire}
+ return {api:context.window.WistiaBooking,requests,fire,rangeNotifications}
 }
 function makeForm(){
  const date=control(''),time=control(''),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
@@ -120,11 +120,12 @@ assert.match(app,/await window.WistiaBooking\?\.refresh\(\)/,'fresh check before
 console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refresh/reopening, offline wish-only mode, stale response guard, accessibility and copy refresh passed')
 
 { // Range checks are shared; malformed/offline/timed-out results never become calendar data.
- const {api,requests,fire}=harness(),from='2027-10-01',to='2027-10-31'
+ const {api,requests,fire,rangeNotifications}=harness(),from='2027-10-01',to='2027-10-31'
  const first=api.loadRange(from,to),shared=api.loadRange(from,to)
  assert.equal(requests.length,1)
  requests[0].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:booking})})
  await Promise.all([first,shared]);assert.deepEqual(JSON.parse(JSON.stringify(api.calendarBlocks(from,to))),booking)
+ assert.deepEqual(rangeNotifications,[[from,to]],'successful late response notifies every mounted calendar')
  await api.loadRange(from,to);assert.equal(requests.length,1,'successful range is cached')
  const invalid=api.loadRange(from,to,true)
  assert.equal(api.calendarBlocks(from,to),null,'fresh check drops stale calendar data immediately')
@@ -135,6 +136,7 @@ console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refre
  assert.equal(api.calendarBlocks(from,to),null)
  requests[2].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:booking})});await flush()
  assert.equal(api.calendarBlocks(from,to),null,'late timed-out success cannot poison the range cache')
+ assert.equal(rangeNotifications.length,3,'timed-out success cannot send a later redraw with invalid data')
  const offline=api.loadRange(from,to);requests[3].reject(Error('offline'));await assert.rejects(offline)
  assert.equal(api.calendarBlocks(from,to),null)
  const bad=api.loadRange(from,to);requests[4].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:[{start:'invalid',end:'invalid'}]})});await assert.rejects(bad)

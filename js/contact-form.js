@@ -2,8 +2,8 @@
  const fields=[
   ['source','어디에서 보고 오셨나요?','인스타 / 스레드 / 광고 / 카페 / 블로그'],
   ['service','희망 서비스',''],
-  ['eventDate','예식일, 예정일','예: 2026년 11월 15일 또는 미정'],
-  ['bookingDate','희망 예약일','희망 날짜 / 예약 가능 여부는 상담에서 확인'],
+  ['eventDate','결혼식 날짜 (예식일)','예: 2026년 11월 15일 또는 미정'],
+  ['bookingDate','녹음 방문일 (스튜디오 예약일)','희망 날짜 / 예약 가능 여부는 상담에서 확인'],
   ['time','희망 시간','13시부터 ~ 23시까지']
  ]
  const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart'])
@@ -35,15 +35,15 @@
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
-   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),closed=key==='bookingDate'&&([1,2,3].includes(date.getUTCDay())||(blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks))),past=value<today,enabled=selectableDate(value,key,today)&&!closed
-   cells+='<button type="button" class="calendar-day'+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed?' · 마감':past?' · 예약불가':'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(closed?'<small>마감</small>':past?'<small>불가</small>':'')+'</button>'
+   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,enabled=selectableDate(value,key,today)&&!closed
+   cells+='<button type="button" class="calendar-day'+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed?' · 마감':past?' · 예약불가':'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':!weekdayClosed&&past?'<small>불가</small>':'')+'</button>'
   }
   return cells
  }
  const calendarIcon=direction=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="'+(direction==='prev'?'m14 6-6 6 6 6':'m10 6 6 6-6 6')+'"/></svg>'
  function calendarMarkup(key,label){
   const booking=key==='bookingDate'
-  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="'+(booking?'group':'dialog')+'" aria-label="'+label+' 달력"'+(!booking?' hidden':'')+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+(!booking?'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>':'')+'</div><div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+(booking?'<p class="calendar-operating">목·금·토·일만 운영해요<br><span>월·화·수 마감</span></p>':'')+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map(day=>'<span>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div></div>'
+  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="'+(booking?'group':'dialog')+'" aria-label="'+label+' 달력"'+(!booking?' hidden':'')+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+(!booking?'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>':'')+'</div><div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map(day=>'<span>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div></div>'
  }
  const calendarStates=new WeakMap()
  let openCalendar=null,outsideListener=false
@@ -79,6 +79,12 @@
   const active=grid.querySelector('[data-calendar-day="'+(focusValue||input.value||today)+'"]:not(:disabled)')||grid.querySelector('button:not(:disabled)')
   if(active){active.tabIndex=0;if(focusValue)active.focus()}
   if(openCalendar===state)positionCalendar(state)
+ }
+ function refreshCalendarRange(from,to){
+  global.document?.querySelectorAll('[data-calendar="bookingDate"]').forEach(calendar=>{
+   const state=calendarStates.get(calendar)
+   if(state&&isoDate(new Date(Date.UTC(state.year,state.month,1)))===from&&isoDate(new Date(Date.UTC(state.year,state.month+1,0)))===to)paintCalendar(state)
+  })
  }
  function changeMonth(state,amount){
   const date=new Date(Date.UTC(state.year,state.month+amount,1)),today=parseDate(calendarToday())
@@ -162,9 +168,9 @@
   if(focused!==null)list.querySelector('[data-calendar-time="'+focused+'"]')?.focus()
  }
  function dateField(key,label){
-  return '<fieldset class="contact-field contact-date-field"><legend>'+label+'</legend><div class="contact-date-toggle"><label><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled aria-describedby="contact-'+key+'-hint" data-calendar-value>'+ (key==='eventDate'?'<button type="button" class="calendar-trigger" data-calendar-trigger="'+key+'" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendar-'+key+'"><span data-calendar-display>날짜를 선택해 주세요</span>'+calendarIcon('next')+'</button>':'')+calendarMarkup(key,label)+'<em id="contact-'+key+'-hint">'+(key==='bookingDate'?'목·금·토·일 운영 · 월·화·수 마감':'달력에서 날짜를 선택해 주세요')+'</em><small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
+  return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled '+(key==='eventDate'?'aria-describedby="contact-eventDate-hint"':'')+' data-calendar-value>'+ (key==='eventDate'?'<button type="button" class="calendar-trigger" data-calendar-trigger="'+key+'" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendar-'+key+'"><span data-calendar-display>날짜를 선택해 주세요</span>'+calendarIcon('next')+'</button>':'')+calendarMarkup(key,label)+(key==='eventDate'?'<em id="contact-eventDate-hint">달력에서 날짜를 선택해 주세요</em>':'')+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
- function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><aside class="booking-availability-note"><strong>목·금·토·일 운영</strong><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite">월·화·수는 마감입니다 · 예약일을 선택하면 마감 시간을 확인합니다</p><small data-booking-open-times hidden></small><button type="button" data-booking-refresh>예약 가능 시간 다시 확인</button></aside></fieldset>'}
+ function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -223,7 +229,7 @@
  function syncReview(){
   const form=document.querySelector('#contactInquiryForm'),review=document.querySelector('#contactReview');if(!form)return;syncSubmitState(form);if(!review)return
   const values=snapshot(form),date=key=>values[key+'Mode']==='date'&&values[key]?formatDate(values[key]):'미정'
-  const rows=[['예식일, 예정일',date('eventDate')],['희망 예약일',date('bookingDate')],['희망 시간',values.timeStart||'미정'],['유입 경로',values.source||'선택 안 함']]
+  const rows=[['결혼식 날짜 (예식일)',date('eventDate')],['녹음 방문일 (스튜디오 예약일)',date('bookingDate')],['희망 시간',values.timeStart||'미정'],['유입 경로',values.source||'선택 안 함']]
   review.innerHTML=rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escape(value)+'</dd></div>').join('')
  }
  function syncQuote(quote){
@@ -253,5 +259,5 @@
   lines.push('',next+') 유입 경로','어디에서 보고 오셨나요? : '+(String(values.source||'').trim()||'선택 안 함'))
   return lines.join('\n').trim()
  }
- global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,syncTimeChoices,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
+ global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
 })(window)

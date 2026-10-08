@@ -28,7 +28,7 @@ assert.match(text,/조건 충족 확인 후 별도 지급\n결제 시 미리 차
 assert.doesNotMatch(text,/🇼|WELCOME|^• |30,000원 \/|null|undefined|빠른 작업/gm)
 const form=context.window.WistiaContact.text({name:'예전 이름',source:'메타 광고',service:'AR 축가 사전녹음',eventDate:'2026-11-15',eventDateMode:'date',bookingDateMode:'unknown',timeStart:'15:00'},{text})
 assert.deepEqual(numbers(form),[1,2,3,4,5])
-assert.match(form,/\n\n4\) 예약 일정\n예식일, 예정일 : 2026년 11월 15일\n희망 예약일 : 미정\n희망 시간 : 15:00\n\n5\) 유입 경로/)
+assert.match(form,/\n\n4\) 예약 일정\n결혼식 날짜 \(예식일\) : 2026년 11월 15일\n녹음 방문일 \(스튜디오 예약일\) : 미정\n희망 시간 : 15:00\n\n5\) 유입 경로/)
 assert.equal(form.split('결제 예상 금액 :').length,2)
 assert.doesNotMatch(form,/예전 이름|희망 서비스 :|WELCOME|선택한 구성과 가격/)
 const empty=quoteFor({key:'solo',options:[],events:[]})
