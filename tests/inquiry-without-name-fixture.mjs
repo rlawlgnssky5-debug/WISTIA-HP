@@ -15,10 +15,10 @@ export function assertInquiryWithoutName(source){
  }
  const copied=api.text({name:'과거 초안의 성함',source:'인스타',service:quote.service,eventDateMode:'unknown',bookingDateMode:'unknown',timeStart:'15:00'},quote)
  assert.doesNotMatch(copied,/성함|이름|과거 초안/,'legacy name values never enter copied inquiry text')
- assert.match(copied,/결혼식 날짜 \(예식일\) : 미정/)
- assert.match(copied,/녹음 방문일 \(스튜디오 예약일\) : 미정/)
- assert.match(copied,/희망 시간 : 15:00/)
- assert.match(copied,/결제 예상 금액 : 120,000원/)
+ assert.match(copied,/예식일 : 미정/)
+ assert.match(copied,/방문 희망일 : 미정/)
+ assert.match(copied,/희망 시간 : 15시/)
+ assert.match(copied,/예상 금액 : 120,000원/)
  const legacyName={name:'name',value:'현재 값',required:true,willValidate:true,validity:{valid:true}}
  assert.equal(api.validationEditor([{control:legacyName,label:'성함',message:'입력해 주세요'}]),'','a stale name cannot reappear in the validation popup editor')
  const service={name:'service',value:'',required:true,willValidate:true,validity:{valid:true},tagName:'SELECT',removeAttribute(){},setAttribute(){}}

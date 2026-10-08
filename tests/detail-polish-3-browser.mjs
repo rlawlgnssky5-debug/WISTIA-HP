@@ -14,7 +14,7 @@ try{
   assert.deepEqual(await page.locator('#bookingService option').evaluateAll(nodes=>nodes.map(n=>n.value)),['solo','duet-film'])
   assert.equal(await page.locator('#siteHeader .wordmark small').count(),0)
   const cta=page.locator('.contact-submit');assert.equal((await cta.innerText()).trim(),'작성한 내용으로 카카오톡 문의하기')
-  await page.locator('[data-contact-date-mode="eventDate"][value="date"]').check();await page.locator('[data-calendar-trigger="eventDate"]').click()
+  await page.locator('[data-contact-date-mode="eventDate"][value="date"]').check()
   const popup=await page.locator('#calendar-eventDate').evaluate(n=>{const r=n.getBoundingClientRect(),card=document.querySelector('.contact-date-eventDate').getBoundingClientRect();return {left:r.left,right:r.right,height:r.height,cardLeft:card.left,cardRight:card.right}})
   if(width<=430){assert.ok(popup.left>=popup.cardLeft-1);assert.ok(popup.right<=popup.cardRight+1);assert.ok(popup.height<=360)}
   assert.ok(popup.left>=0&&popup.right<=width)

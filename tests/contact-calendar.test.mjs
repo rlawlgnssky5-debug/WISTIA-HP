@@ -43,11 +43,11 @@ assert.doesNotMatch(read('js/quick-estimate.js'),/calendar-operating|booking-ava
 assert.match(markup,/data-calendar-times role="radiogroup"/)
 for(const key of ['eventDate','bookingDate'])assert.match(markup,new RegExp('name="'+key+'" type="text" hidden tabindex="-1" disabled'))
 // Copy formatting remains separate from the Korean UI weekday display.
-assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/녹음 방문일 \(스튜디오 예약일\) : 2026년 10월 16일\n/)
-assert.doesNotMatch(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/\(금\)/)
+assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/방문 희망일 : 10월 16일 \(금\)\n/)
+assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/\(금\)/)
 for(const page of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(x=>x.endsWith('.html')).map(x=>'event/'+x)]){
  const html=read(page)
- for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-8'),page+' '+asset)
+ for(const asset of ['js/contact-form.js','js/booking-availability.js','css/booking-availability.css'])assert.ok(html.includes(asset+'?v=20261008-contact-calendar-10'),page+' '+asset)
 }
 assert.match(read('api/availability.js'),/module.exports/,'CommonJS endpoint stays intact')
 console.log('Custom calendars: Korean weekdays, ISO values, closed weekdays, past dates, today/selection, leap months and cache versions passed')
