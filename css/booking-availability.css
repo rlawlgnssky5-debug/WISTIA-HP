@@ -160,3 +160,11 @@ html #app#app#app#app .contact-time-field{scroll-margin-block:80px 160px}
 /* Expanding dates never moves the browser's scroll anchor. */
 html #app#app#app#app #contactInquiryForm{overflow-anchor:none!important}
 html #app#app#app#app .single-song-note{width:100%!important;max-width:800px!important;min-width:0;box-sizing:border-box!important;margin:16px auto!important;text-align:center!important;font-size:13px;line-height:1.75;color:#66645f}
+
+/* iOS label clicks must remain native touch activations. */
+#app .contact-date-toggle label{touch-action:manipulation}
+html #app#app#app#app .single-song-note span{display:block;white-space:nowrap}
+html #app#app#app#app .contact-notes-field textarea{box-sizing:border-box;width:100%;min-height:112px;resize:vertical;border:1px solid #d8d5cd;border-radius:8px;background:#FFFCF5;color:#252421;padding:12px;font:inherit;line-height:1.6}
+html #app#app#app#app [data-time-date-hint]{margin:12px 0;color:#66645f;font-size:13px;line-height:1.6;text-align:center}
+html #app#app#app#app .calendar-time-grid button:disabled{cursor:default}
+html #app#app#app#app .contact-date-summary{margin:10px 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;font-size:13px!important;line-height:1.6!important;color:#252421!important;cursor:default}

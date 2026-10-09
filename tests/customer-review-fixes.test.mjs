@@ -8,7 +8,7 @@ let home=''
 const start=app.indexOf('function renderApprovedHomeThumbnails'),end=app.indexOf('function detailPriceData')
 runInNewContext(graphicsFixture(app)+app.slice(start,end)+';renderWeddingHome()',{
  app:{set innerHTML(value){home=value}},img:()=>'',cta:()=>'',faq:()=>'',
- GENERAL_FAQ:[],soloReviewCarousel:()=>'<section id="reviews"></section>',
+ detailRecordingOptions:()=>'',GENERAL_FAQ:[],soloReviewCarousel:()=>'<section id="reviews"></section>',
  wistiaBeforeAfterSection:()=>'',homeDirectionsSection:()=>'<section id="homeLocation"></section>',footer:()=>''
 })
 assert.doesNotMatch(home,/studio-scene|homeProcess/)

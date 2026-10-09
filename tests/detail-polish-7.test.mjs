@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict'
+import {readFileSync,readdirSync} from 'node:fs'
+import {runInNewContext} from 'node:vm'
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),contact=read('js/contact-form.js'),app=read('js/app.js')
+assert.doesNotMatch(contact,/scrollIntoView|scrollTo|scrollBy/)
+assert.doesNotMatch(contact,/addEventListener\(['"](?:pointerdown|touchstart|mousedown|focusin|focusout)['"]/)
+for(const match of contact.matchAll(/\.focus\(([^)]*)\)/g))assert.match(match[1],/preventScroll\s*:\s*true/)
+assert.equal([...contact.matchAll(/closeCalendar\(/g)].length,3,'definition plus close button and undecided calls only')
+assert.match(read('css/booking-availability.css'),/contact-date-toggle label\{touch-action:manipulation\}/)
+const window={};runInNewContext(contact,{window})
+const api=window.WistiaContact,markup=api.render(null,{integrated:true})
+assert.doesNotMatch(markup,/class="calendar-trigger"|data-calendar-display|data-calendar-action|달력 열기/)
+assert.match(markup,/data-calendar-summary="eventDate"/)
+assert.match(markup,/data-calendar-summary="bookingDate"/)
+assert.match(markup,/textarea[^>]*name="specialNotes"/)
+assert.doesNotMatch(markup.match(/<textarea[^>]*>/)[0],/required/)
+assert.ok(markup.indexOf('희망 시간')<markup.indexOf('특이사항이나 궁금한 점'))
+assert.match(markup,/날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요/)
+assert.doesNotMatch(api.text({specialNotes:'  '}),/특이사항/)
+const message=api.text({specialNotes:'둘이 같이 와요\n키를 낮추고 싶어요'})
+assert.match(message,/━━━━━━━━━━━━\n특이사항\n둘이 같이 와요\n키를 낮추고 싶어요\n━━━━━━━━━━━━\n유입 경로/)
+assert.equal((message.match(/📦|💰|📅/g)||[]).length,3)
+assert.doesNotMatch(contact,/fetch\(|localStorage|sessionStorage/,'notes remain in the form/in-memory draft and clipboard only')
+assert.doesNotMatch(read('js/booking-availability.js')+read('api/availability.js'),/specialNotes/)
+const definitions=app.slice(app.indexOf('const EXTRA_RECORDING_OPTIONS'),app.indexOf('const WORKS'))
+const options=runInNewContext(definitions+';PRODUCT_OPTIONS',{})
+for(const key of ['solo','duo','duet-film','wedding','proposal','solo-film']){
+ const extra=options[key].filter(o=>o.key.startsWith('extra-'))
+ assert.deepEqual(Array.from(extra,o=>[o.key,o.label,o.price,o.durationLabel]),[['extra-verse','추가 1곡 1절 녹음',60000,'녹음 30분 추가'],['extra-full','추가 1곡 완곡 녹음',120000,'녹음 1시간 추가']])
+}
+for(const key of ['solo','duo'])assert.match(options[key][0].detail,/1곡 기준/)
+assert.doesNotMatch(app,/곡마다 녹음·튠·믹스 작업이 따로|녹음 시간이 남아도/)
+for(const match of app.matchAll(/class="single-song-note"[^>]*>([\s\S]*?)<\/p>/g))assert.equal(match[1],'<span>모든 상품은 1곡 기준이에요.</span><span>다른 곡은 추가 옵션으로 진행돼요.</span>')
+const rationale=runInNewContext(app.match(/^function detailPriceReason[^\n]+/m)[0]+';detailPriceReason()',{})
+assert.doesNotMatch(rationale,/single-song-note|1곡 기준/)
+const playerScope={studioIcon:()=>'<svg></svg>'};runInNewContext(app.slice(app.indexOf('function wistiaBeforeAfterSection('),app.indexOf('function setExpertPanel(')),playerScope)
+const compact=playerScope.wistiaBeforeAfterSection(true)
+assert.doesNotMatch(compact,/wistia-ba-copy|노래를 잘 못해도 괜찮습니다|구간별 녹음, 자연스러운 보정/)
+assert.match(compact,/bap-player|같은 녹음본/);assert.match(compact,/before\.mp3/);assert.match(compact,/after\.mp3/)
+const version='20261009-contact-calendar-12'
+assert.equal(JSON.parse(read('wistia-config.json')).build,version)
+for(const path of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(n=>n.endsWith('.html')).map(n=>'event/'+n)])assert.match(read(path),new RegExp('<html data-build="'+version+'"'))
+// Exercise no-store build checks: untouched reloads, edited and offline pages retain their state.
+let reloads=0,controls=[],form=null,latest=version,failed=false,fetches=0
+const listeners={}
+const context={document:{hidden:false,documentElement:{dataset:{build:version}},querySelector:()=>form,addEventListener:(name,fn)=>{listeners[name]=fn}},window:{addEventListener:(name,fn)=>{listeners[name]=fn}},location:{reload:()=>reloads++},AbortSignal,fetch:async(_url,options)=>{assert.equal(options.cache,'no-store');fetches++;if(failed)throw Error('offline');return {ok:true,json:async()=>({build:latest})}}}
+runInNewContext(app.slice(app.indexOf('let inquiryEdited='),app.indexOf('async function init()'))+';globalThis.buildCheck=checkPageBuild',context)
+await context.buildCheck();assert.equal(reloads,0)
+latest='future-build';await context.buildCheck();assert.equal(reloads,1)
+form={querySelectorAll:()=>controls,querySelector:()=>null};controls=[{value:'작성한 내용'}];await context.buildCheck();assert.equal(reloads,1)
+controls=[];failed=true;await context.buildCheck();assert.equal(reloads,1)
+failed=false;listeners.change({isTrusted:true,target:{closest:()=>form}});await context.buildCheck();assert.equal(reloads,1)
+assert.ok(fetches>=4)
+assert.match(read('assets/img/interface/folder-icon.svg'),/<svg/);assert.match(read('assets/img/interface/gift-icon.svg'),/<svg/)
+console.log('Round 7: touch-safe handlers, stationary focus, close-only calendar, optional private notes, new option prices, single-song placement, compact comparison and safe build reload passed')

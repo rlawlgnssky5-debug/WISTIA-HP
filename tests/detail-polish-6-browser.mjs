@@ -33,7 +33,7 @@ try{
     assert.equal(await page.locator('[data-calendar-time="16:30"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="18:30"]').isDisabled(),false)
    }
    await calendar.locator('[data-calendar-close]').tap();assert.equal(await calendar.isVisible(),false)
-   assert.match(await page.locator(`[data-calendar-trigger="${key}"]`).innerText(),/변경/)
+   assert.match(await page.locator(`[data-calendar-summary="${key}"]`).innerText(),/선택한 날짜:/)
    await page.locator(`[data-calendar-trigger="${key}"]`).tap();assert.equal(await calendar.isVisible(),true)
    await page.locator(`[data-contact-date-mode="${key}"][value="unknown"]`).locator('..').tap();assert.equal(await calendar.isVisible(),false);assert.equal(await page.locator('#contact-'+key).inputValue(),'')
    await label.tap();assert.equal(await calendar.locator('.is-selected').count(),0,'unknown cancels the previous selected date')
@@ -54,7 +54,7 @@ try{
   await verse.check();assert.match(await page.locator('#mobilePrice').innerText(),/18만원/)
   await page.locator('input[data-option="lyrics-video"]').check();assert.match(await page.locator('#mobilePrice').innerText(),/22만원/)
   await page.evaluate(()=>{window.copy6='';navigator.clipboard.writeText=async s=>{window.copy6=s}});await page.locator('.contact-submit').tap();await page.waitForFunction(()=>window.copy6.startsWith('[위스티아 상담 요청]'))
-  const copy=await page.evaluate(()=>window.copy6);assert.match(copy,/1절 녹음 추가 \(\+60,000원\)/);assert.match(copy,/예상 금액 : 220,000원/);assert.doesNotMatch(copy,/신부 입장곡|신랑 입장곡/)
+  const copy=await page.evaluate(()=>window.copy6);assert.match(copy,/추가 1곡 1절 녹음 \(\+60,000원\)/);assert.match(copy,/예상 금액 : 220,000원/);assert.doesNotMatch(copy,/신부 입장곡|신랑 입장곡/)
   if(width===390){mkdirSync('work',{recursive:true});writeFileSync('work/6-copy-example.txt',copy)}
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
   // Initial range failure has no validated closures and cannot advertise open dates.

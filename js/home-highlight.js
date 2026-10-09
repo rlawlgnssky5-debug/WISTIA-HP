@@ -48,7 +48,7 @@
       button.setAttribute('aria-label',state==='playing'?'보컬 보정 전후 하이라이트 일시정지':'보컬 보정 전후 하이라이트 재생')
       button.setAttribute('aria-busy',String(state==='loading'))
       button.disabled=state==='loading'
-      icon.textContent=state==='playing'?'Ⅱ':'▶'
+      icon.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="currentColor">'+(state==='playing'?'<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>':'<path d="m7 4 14 8-14 8Z"/>')+'</svg>'
       label.textContent=state==='playing'?'일시정지':state==='loading'?'준비 중':'비교 재생'
     }
     function stopSources(){

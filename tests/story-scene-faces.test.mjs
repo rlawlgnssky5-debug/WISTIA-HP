@@ -19,7 +19,7 @@ const scope={
  AR_DETAIL_CONTENT:{'duet-film':{poster:'assets/img/song-film/duet-video-cover.jpg',videoLabel:'실제 제작 영상'}},
  detailPointSection:html=>html,
  arExpertStory:()=>'',storyVocalSection:()=>'',verticalProcessSection:()=>'',productComparisonSection:()=>'',
- mobileStudioBrand:()=>'',mobileDetailEvents:()=>'',mobileDetailReviews:()=>'',faq:()=>'',mobileArNotices:()=>'',mobileDetailFooter:()=>''
+ detailRecordingOptions:()=>'',mobileStudioBrand:()=>'',mobileDetailEvents:()=>'',mobileDetailReviews:()=>'',faq:()=>'',mobileArNotices:()=>'',mobileDetailFooter:()=>''
 }
 runInNewContext(helper,scope)
 for(const name of names){
