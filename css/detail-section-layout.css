@@ -128,3 +128,11 @@ html #app#app#app#app .detail-recording-options .svg-title-icon{margin:0!importa
 html #app#app#app#app #bookingSource .contact-field > .sr-only{position:absolute!important;display:block!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
 /* The standalone comparison uses the same unbroken title as embedded comparisons. */
 html #app#app#app#app .before-after-page .vocal-comparison-title{white-space:nowrap!important;font-size:clamp(20px,5.4vw,36px)!important;letter-spacing:-.04em!important;line-height:1.4!important}
+
+/* Standalone audio comparison shares the centered stack used by home/detail POINTs. */
+html #app#app#app#app .before-after-page .wistia-ba-section{width:100%!important;max-width:900px!important;margin:0 auto!important;padding:0!important;background:transparent!important}
+html #app#app#app#app .before-after-page .wistia-ba-layout{display:flex!important;flex-direction:column!important;align-items:center!important;width:100%!important;max-width:100%!important;gap:28px!important}
+html #app#app#app#app .before-after-page .wistia-ba-copy{width:100%!important;margin:0 auto!important;text-align:center!important}
+html #app#app#app#app .before-after-page .vocal-comparison-title{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;margin:0 auto 20px!important;width:100%!important;text-align:center!important}
+html #app#app#app#app .before-after-page .wistia-ba-copy :is(.svg-title-icon,.svg-section-text,p){margin-inline:auto!important;text-align:center!important}
+html #app#app#app#app .before-after-page .bap-player{width:100%!important;max-width:800px!important;margin-inline:auto!important}
