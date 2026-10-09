@@ -136,3 +136,7 @@ html #app#app#app#app .before-after-page .wistia-ba-copy{width:100%!important;ma
 html #app#app#app#app .before-after-page .vocal-comparison-title{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;margin:0 auto 20px!important;width:100%!important;text-align:center!important}
 html #app#app#app#app .before-after-page .wistia-ba-copy :is(.svg-title-icon,.svg-section-text,p){margin-inline:auto!important;text-align:center!important}
 html #app#app#app#app .before-after-page .bap-player{width:100%!important;max-width:800px!important;margin-inline:auto!important}
+
+/* Short replacement headings stay on one line without altering POINT badges or axes. */
+html #app#app#app#app .single-line-heading .svg-section-text{white-space:nowrap!important}
+@media(max-width:600px){html #app#app#app#app .single-line-heading .svg-section-text{font-size:clamp(20px,5vw,26px)!important;letter-spacing:-.04em!important;line-height:1.4!important}}

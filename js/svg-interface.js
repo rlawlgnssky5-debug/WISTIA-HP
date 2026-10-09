@@ -12,7 +12,7 @@
   if(/AR.*비율|비율.*AR|비율을 골라/.test(text))return 'mix'
   if(/페이백/.test(text))return 'refund'
   if(/할인/.test(text))return 'tag'
-  if(/실제.*후기|고객.*후기|리뷰/.test(text))return 'chat'
+  if(/실제.*후기|고객.*후기|리뷰|직접 남겨 주신 이야기/.test(text))return 'chat'
   if(/위스티아.*장점/.test(text))return 'shield'
   if(/예약 전|예약 전에|확인할 사항|예약 안내/.test(text))return 'file'
   if(/자주 묻|궁금|Q\s*&\s*A|FAQ/.test(text))return 'help'

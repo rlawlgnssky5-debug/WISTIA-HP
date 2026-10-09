@@ -21,7 +21,7 @@ try{
   })
   assert.equal(result.overflow,false,path)
   for(const title of result.titles){assert.ok(Math.abs(title.center-width/2)<2,`${path} ${title.text}`);assert.equal(title.align,'center');if(title.iconCenter!==null)assert.ok(Math.abs(title.iconCenter-width/2)<2)}
-  for(const badge of result.badges){assert.ok(Math.abs(badge.center-width/2)<2);if(badge.size!==null)assert.ok(badge.size>=22);assert.notEqual(badge.color,badge.background)}
+  for(const badge of result.badges){assert.ok(Math.abs(badge.center-width/2)<2);if(badge.size!==null)assert.equal(badge.size,15);assert.notEqual(badge.color,badge.background)}
   for(const section of result.sections){assert.equal(section.padding,width===390?'40px':'56px');assert.ok(Math.abs(section.contentWidth-(width===390?350:900))<2)}
   for(const notice of result.notices){assert.ok(Math.abs(notice.center-width/2)<2);assert.equal(notice.gradient,'none')}
   console.log(`${width}px ${path}: centered titles/icons/badges, uniform section width/spacing, warm notice cards passed`)
