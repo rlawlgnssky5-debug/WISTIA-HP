@@ -5,7 +5,7 @@ import {existsSync} from 'node:fs'
 import {spawn,spawnSync} from 'node:child_process'
 import {createServer} from 'node:net'
 let skip=false
-try{const p=createRequire(import.meta.url)('playwright');if(!existsSync(process.env.WISTIA_BROWSER_EXECUTABLE||'/usr/bin/chromium')&&!existsSync(p.webkit.executablePath()))skip='No browser executable installed'}catch(e){if(e.code!=='MODULE_NOT_FOUND')throw e;skip='Playwright not installed'}
+try{const p=createRequire(import.meta.url)('playwright');if(!existsSync(process.env.WISTIA_BROWSER_EXECUTABLE||p.chromium.executablePath())&&!existsSync(p.webkit.executablePath()))skip='No browser executable installed'}catch(e){if(e.code!=='MODULE_NOT_FOUND')throw e;skip='Playwright not installed'}
 await test('Calendar real touch: Chromium and optional WebKit/iPhone, KakaoTalk UA',{skip},async()=>{
  const probe=createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})

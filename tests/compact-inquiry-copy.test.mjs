@@ -22,14 +22,13 @@ AR 축가 SOLO (1인·1시간)
 방문 희망일 : 10월 11일 (일)
 희망 시간 : 미정
 ━━━━━━━━━━━━
-유입 경로 : 선택 안 함
 
 ※ 예약 가능 여부는 상담에서 확정돼요`)
-const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:30',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'추가 1곡 1절 녹음',amount:60000}],paybacks:[{label:'블로그 리뷰',amount:30000},{label:'인스타그램 후기',amount:10000}],paybackTotal:40000}})
-assert.match(full,/추가 옵션 :\n· 가사 영상 \(\+40,000원\)\n· 추가 1곡 1절 녹음 \(\+60,000원\)/)
+const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:00',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'추가 1절 녹음',amount:60000}],paybacks:[{label:'블로그 리뷰',amount:30000},{label:'인스타그램 후기',amount:10000}],paybackTotal:40000}})
+assert.match(full,/추가 옵션 :\n· 가사 영상 \(\+40,000원\)\n· 추가 1절 녹음 \(\+60,000원\)/)
 assert.match(full,/예상 금액 : 220,000원\n기본 120,000원 \+ 옵션 100,000원/)
 assert.match(full,/후기 페이백 :\n· 블로그 리뷰 \(−30,000원\)\n· 인스타 후기 \(−10,000원\)\n페이백 합계 : −40,000원/)
-assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15시 30분/)
+assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15~16시/)
 assert.doesNotMatch(full,/^\d+\) |결제 예상 금액|페이백 완료 후|최종 확정|WELCOME/gm)
 assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
 for(const line of full.split('\n').filter(line=>line.startsWith('━')))assert.equal(line.length,12)
@@ -41,3 +40,6 @@ assert.ok(integrated.indexOf('id="contact-source"')<integrated.indexOf('id="book
 assert.match(integrated,/booking-step">02<\/span><h2 id="sourceTitle">어디에서 보고 오셨나요\?/)
 assert.match(integrated,/booking-step">03<\/span><h2 id="scheduleTitle">일정 작성/)
 console.log('Exact compact Kakao template, real prices/options/paybacks, short dates/times and source-first form passed')
+
+for(const source of ['', '기타', '카카오톡 채널', '선택 안 함'])assert.doesNotMatch(api.text({...values,source},{details}),/유입 경로/);
+for(const source of ['인스타','스레드','메타 광고','카페','블로그','지인 추천'])assert.ok(api.text({...values,source},{details}).includes('유입 경로 : '+source))

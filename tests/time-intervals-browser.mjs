@@ -1,0 +1,95 @@
+import assert from 'node:assert/strict'
+import {createRequire} from 'node:module'
+import {mkdirSync,writeFileSync} from 'node:fs'
+const {chromium}=createRequire(import.meta.url)('playwright')
+const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',results=[],holidayResults=[]
+const browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.WISTIA_BROWSER_EXECUTABLE?{executablePath:process.env.WISTIA_BROWSER_EXECUTABLE}:{})})
+try{
+ for(const width of [360,390,1280]){
+  const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:width<600}),page=await context.newPage()
+  await page.clock.install({time:new Date('2026-10-08T03:00Z')});await page.route('https://**/*',r=>r.abort())
+  const blocks=[9,18,25].map(d=>({start:`2026-10-${String(d-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(d).padStart(2,'0')}T15:00Z`})).concat({start:'2026-10-11T07:30Z',end:'2026-10-11T09:30Z'})
+  await page.route('**/api/availability?*',r=>{const q=new URL(r.request().url()).searchParams;return r.fulfill({json:{ok:true,from:q.get('from'),to:q.get('to'),date:q.get('date'),blocks}})})
+  await page.goto(base+'/event/solo',{waitUntil:'domcontentloaded'});await page.locator('[data-time-date-hint]').waitFor();await page.evaluate(()=>document.fonts.ready)
+  assert.equal(await page.locator('[data-calendar-times] button:visible').count(),0)
+  assert.equal(await page.locator('#contact-specialNotes').getAttribute('placeholder'),null)
+  const source=page.locator('#contact-source')
+  assert.deepEqual(await source.locator('option').evaluateAll(nodes=>nodes.map(n=>n.value)),['','인스타','스레드','메타 광고','카페','블로그','지인 추천'])
+  assert.equal(await source.inputValue(),'');assert.equal(await source.getAttribute('required'),null)
+  assert.equal(await source.locator('option').first().evaluate(n=>n.disabled),true)
+  for(const value of ['기타','카카오톡 채널']){await page.evaluate(value=>WistiaContact.restore(document.querySelector('#contactInquiryForm'),{source:value}),value);assert.equal(await source.inputValue(),'')}
+  await page.evaluate(()=>WistiaContact.restore(document.querySelector('#contactInquiryForm'),{source:'블로그'}));assert.equal(await source.inputValue(),'블로그')
+  await page.evaluate(()=>WistiaContact.restore(document.querySelector('#contactInquiryForm'),{source:''}))
+  await page.waitForFunction(()=>WistiaBooking.calendarBlocks('2026-10-01','2026-10-31')!==null)
+  const colour=async locator=>locator.evaluate(n=>getComputedStyle(n).color)
+  const holidayCheck=async(key,selected=false)=>{
+   const cal=page.locator('#calendar-'+key),cell=day=>cal.locator(`[data-calendar-day="2026-10-${String(day).padStart(2,'0')}"]`)
+   assert.equal(await colour(cal.locator('.calendar-sunday')),'rgb(156, 90, 84)')
+   assert.notEqual(await colour(cal.locator('.calendar-weekdays>span').last()),'rgb(156, 90, 84)')
+   assert.equal(await colour(cell(10).locator('span')),await colour(cell(16).locator('span')),'ordinary Saturday unchanged')
+   assert.equal(await colour(cell(5).locator('span')),'rgb(185, 160, 154)','past holiday is muted red')
+   assert.equal(await colour(cell(9).locator('span')),key==='bookingDate'?'rgb(185, 160, 154)':'rgb(156, 90, 84)')
+   assert.equal(await colour(cell(11).locator('span')),selected?'rgb(255, 252, 245)':'rgb(156, 90, 84)')
+   assert.equal(await cell(9).getAttribute('title'),null)
+   assert.doesNotMatch(await cal.innerText()+await cell(9).getAttribute('aria-label'),/한글날|공휴일 이름/)
+   if(key==='bookingDate')assert.equal(await colour(cell(9).locator('small')),'rgb(121, 117, 107)','closed label stays gray')
+   holidayResults.push({width,key,selected,sundayColour:await colour(cell(11).locator('span')),holidayColour:await colour(cell(9).locator('span')),pastHolidayColour:await colour(cell(5).locator('span')),saturdayColour:await colour(cell(10).locator('span')),holidayNamesVisible:false})
+  }
+  await page.locator('[data-calendar-trigger="eventDate"]').click();await holidayCheck('eventDate')
+  await page.locator('#calendar-eventDate [data-calendar-day="2026-10-11"]').click();await holidayCheck('eventDate',true)
+  await page.locator('#calendar-eventDate [data-calendar-close]').click()
+  await page.locator('[data-calendar-trigger="bookingDate"]').click();await holidayCheck('bookingDate')
+  await page.locator('#calendar-bookingDate [data-calendar-day="2026-10-11"]').click();await holidayCheck('bookingDate',true)
+  await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  const times=page.locator('[data-calendar-times]')
+  const check=async(hours,count,last)=>{
+   const labels=await times.locator('button').evaluateAll(nodes=>nodes.map(n=>n.childNodes[0].textContent))
+   assert.equal(labels[0],'미정');assert.equal(labels.length,count+1)
+   assert.equal(labels[1],`13~${13+hours}시`);assert.equal(labels.at(-1),last)
+   for(const label of labels.slice(1)){const [start,end]=label.replace('시','').split('~').map(Number);assert.equal(end-start,hours);assert.ok(end<=23)}
+   const rows=await times.evaluate(n=>({columns:getComputedStyle(n).gridTemplateColumns.split(' ').length,rows:[...n.children].map(b=>{const r=b.getBoundingClientRect();return {top:r.top,left:r.left,width:r.width}})}))
+   assert.equal(rows.columns,1);for(let i=1;i<rows.rows.length;i++){assert.ok(rows.rows[i].top>rows.rows[i-1].top);assert.equal(rows.rows[i].left,rows.rows[0].left)}
+   results.push({width,hours,count,first:labels[1],last:labels.at(-1),columns:rows.columns})
+  }
+  console.log(`${width}px: source restoration and both calendar holiday colours passed`)
+  await check(1,10,'22~23시')
+  for(const time of ['16:00','17:00','18:00'])assert.equal(await times.locator(`[data-calendar-time="${time}"]`).isDisabled(),true)
+  await times.locator('[data-calendar-time="19:00"]').click()
+  await page.evaluate(()=>{window.intervalCopy='';navigator.clipboard.writeText=async s=>window.intervalCopy=s})
+  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 19~20시'))
+  assert.doesNotMatch(await page.evaluate(()=>window.intervalCopy),/유입 경로/)
+  await source.selectOption('메타 광고')
+  await page.keyboard.press('Escape')
+  await page.locator('[data-base-product="duo"]').check()
+  await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  assert.equal(await page.locator('#contact-bookingDate').inputValue(),'2026-10-11')
+  assert.equal(await page.locator('#contact-time').inputValue(),'','product change clears selected time')
+  await check(2,9,'21~23시')
+  assert.equal(await times.locator('[data-calendar-time="22:00"]').count(),0)
+  for(const time of ['15:00','16:00','17:00','18:00'])assert.equal(await times.locator(`[data-calendar-time="${time}"]`).isDisabled(),true)
+  assert.equal(await times.locator('[data-calendar-time="14:00"]').isDisabled(),false)
+  await times.locator('[data-calendar-time="19:00"]').click()
+  await page.locator('input[data-option="extra-verse"]').check()
+  assert.match(await page.locator('input[data-option="extra-verse"]').locator('..').innerText(),/추가 1절 녹음/)
+  assert.equal(await page.locator('input[data-option="extra-full"]').count(),0)
+  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 19~21시'))
+  const copied=await page.evaluate(()=>window.intervalCopy);assert.match(copied,/추가 1절 녹음 \(\+60,000원\)/);assert.match(copied,/예상 금액 : 220,000원/);assert.doesNotMatch(copied,/완곡 녹음/);assert.match(copied,/유입 경로 : 메타 광고/)
+  await page.keyboard.press('Escape')
+  assert.equal(await page.evaluate(()=>WistiaQuote.preview({key:'solo',options:['extra-full']}).finalPrice),120000,'removed stored option is ignored')
+  await page.locator('#bookingService').selectOption('duet-film')
+  await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  assert.equal(await page.locator('#contact-time').inputValue(),'')
+  await check(3,8,'20~23시')
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
+  for(const path of ['/','/detail/solo','/detail/duo','/detail/duet-film']){
+   await page.goto(base+path,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor();await page.evaluate(()=>document.fonts.ready)
+   assert.equal(await page.locator('.detail-recording-options').count(),0)
+   assert.doesNotMatch(await page.locator('#app').innerText(),/추가 1곡 완곡 녹음/)
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
+  }
+  await context.close();console.log(`${width}px: 1h/2h/3h intervals, closing hour, overlap, reset, one column, Kakao ranges and removed option section passed`)
+ }
+}finally{await browser.close()}
+mkdirSync('work',{recursive:true});writeFileSync('work/10-interval-layout.json',JSON.stringify(results,null,2))
+
+writeFileSync('work/10-holiday-colours.json',JSON.stringify(holidayResults,null,2))

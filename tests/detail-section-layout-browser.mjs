@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
 const {chromium}=createRequire(import.meta.url)('playwright')
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175'
-const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']})
+const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||chromium.executablePath(),headless:true,args:['--no-sandbox']})
 try{
  for(const width of [1280,390])for(const path of ['/detail/solo','/detail/duo','/detail/duet-film']){
   const page=await browser.newPage({viewport:{width,height:900}})

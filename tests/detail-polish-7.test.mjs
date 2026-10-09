@@ -5,7 +5,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),contact=read
 assert.doesNotMatch(contact,/scrollIntoView|scrollTo|scrollBy/)
 assert.doesNotMatch(contact,/addEventListener\(['"](?:pointerdown|touchstart|mousedown|focusin|focusout)['"]/)
 for(const match of contact.matchAll(/\.focus\(([^)]*)\)/g))assert.match(match[1],/preventScroll\s*:\s*true/)
-assert.equal([...contact.matchAll(/closeCalendar\(/g)].length,3,'definition plus close button and undecided calls only')
+assert.equal([...contact.matchAll(/closeCalendar\(/g)].length,4,'definition plus toggle, close button and undecided calls')
 assert.match(read('css/booking-availability.css'),/contact-date-toggle label\{touch-action:manipulation\}/)
 const window={};runInNewContext(contact,{window})
 const api=window.WistiaContact,markup=api.render(null,{integrated:true})
@@ -17,7 +17,7 @@ assert.doesNotMatch(markup.match(/<textarea[^>]*>/)[0],/required/)
 assert.ok(markup.indexOf('희망 시간')<markup.indexOf('특이사항이나 궁금한 점'))
 assert.match(markup,/날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요/)
 assert.doesNotMatch(api.text({specialNotes:'  '}),/특이사항/)
-const message=api.text({specialNotes:'둘이 같이 와요\n키를 낮추고 싶어요'})
+const message=api.text({specialNotes:'둘이 같이 와요\n키를 낮추고 싶어요',source:'인스타'})
 assert.match(message,/━━━━━━━━━━━━\n특이사항\n둘이 같이 와요\n키를 낮추고 싶어요\n━━━━━━━━━━━━\n유입 경로/)
 assert.equal((message.match(/📦|💰|📅/g)||[]).length,3)
 assert.doesNotMatch(contact,/fetch\(|localStorage|sessionStorage/,'notes remain in the form/in-memory draft and clipboard only')
@@ -26,7 +26,7 @@ const definitions=app.slice(app.indexOf('const EXTRA_RECORDING_OPTIONS'),app.ind
 const options=runInNewContext(definitions+';PRODUCT_OPTIONS',{})
 for(const key of ['solo','duo','duet-film','wedding','proposal','solo-film']){
  const extra=options[key].filter(o=>o.key.startsWith('extra-'))
- assert.deepEqual(Array.from(extra,o=>[o.key,o.label,o.price,o.durationLabel]),[['extra-verse','추가 1곡 1절 녹음',60000,'녹음 30분 추가'],['extra-full','추가 1곡 완곡 녹음',120000,'녹음 1시간 추가']])
+ assert.deepEqual(Array.from(extra,o=>[o.key,o.label,o.price,o.durationLabel]),[['extra-verse','추가 1절 녹음',60000,'녹음 30분 추가']])
 }
 for(const key of ['solo','duo'])assert.match(options[key][0].detail,/1곡 기준/)
 assert.doesNotMatch(app,/곡마다 녹음·튠·믹스 작업이 따로|녹음 시간이 남아도/)
@@ -37,7 +37,7 @@ const playerScope={studioIcon:()=>'<svg></svg>'};runInNewContext(app.slice(app.i
 const compact=playerScope.wistiaBeforeAfterSection(true)
 assert.doesNotMatch(compact,/wistia-ba-copy|노래를 잘 못해도 괜찮습니다|구간별 녹음, 자연스러운 보정/)
 assert.match(compact,/bap-player|같은 녹음본/);assert.match(compact,/before\.mp3/);assert.match(compact,/after\.mp3/)
-const version='20261009-detail-polish-9d'
+const version='20261009-detail-polish-10'
 assert.equal(JSON.parse(read('wistia-config.json')).build,version)
 for(const path of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(n=>n.endsWith('.html')).map(n=>'event/'+n)])assert.match(read(path),new RegExp('<html data-build="'+version+'"'))
 // Exercise no-store build checks: untouched reloads, edited and offline pages retain their state.

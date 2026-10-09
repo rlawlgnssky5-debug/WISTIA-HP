@@ -7,13 +7,13 @@ export function assertContactBusinessPreserved(source){
  const start=source.indexOf(' function submitIcon('),end=source.indexOf(' function validationEditor('),copy=source.indexOf(' function text(')
  assert.ok(start>=0&&end>start&&copy>end,'the SVG submit UI and explicitly revised copy formatter and calendar have independent boundaries')
  // Date/time controls and their validation are intentionally revised for Notion.
- // Round 9b explicitly revises the timeOptions baseline to 13:00–22:00 whole hours.
+ // Round 10 explicitly revises interval labels, optional source choices and restoration, and the review time formatter.
  // Protect fields/draft logic from deployed 10b2079; render baseline is explicitly revised for the user-requested source-first section order (5th pass).
  for(const [a,b,digest] of [
-  ['(function(global){',' // Calendar display uses KST dates;','6ada32022b4bccc1e264c3f8de62b924b3678d6c2d6147a8d2412a98d04d56dd'],
-  [' function render(',' function submitIcon(','7f305cd4722122bfb4edd7a9c78fb6f04c97f8c5162cd9b6cee61883aeb9cf01'],
-  [' function validationEditor(',' function restore(','a2a829e8d2ef4343e15088c5468d9f03688c3f62e18275f27ab39b00aa250afd'],
-  [' function restore(',' function text(','5090a2553b89985f780526c969cb20db6574c334481b6d9684a86e6c5948d28e']
+  ['(function(global){',' // Calendar display uses KST dates;','259d61e9a92c889144e3fc63645eccd58503956202733df00231d35801693b70'],
+  [' function render(',' function submitIcon(','fd308b63b32deb88ebafc173a4dd52a8269b00e0b34a2a392f9cbb892e6e87f7'],
+  [' function validationEditor(',' function restore(','e4ab723d0452f6bd5abc13250b6b385e0aa14bf581ef1a698856c1c76c69f30a'],
+  [' function restore(',' function text(','ca71503dc2a2ae3330fc985fe207b382497f1759ce4101a687d070ec74cda0dd']
  ]){
   const i=source.indexOf(a),j=source.indexOf(b,i+a.length)
   // Round 7 adds only the optional notes field and its in-memory draft key.

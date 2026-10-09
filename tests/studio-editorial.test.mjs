@@ -10,7 +10,7 @@ assert.doesNotMatch(source,/studio-home-hero|studio-hero-media|wistia-hero-main|
 assert.doesNotMatch(source,/process-studio\/0[1-6]-[^"']+\.(?:webp|png)/)
 assert.doesNotMatch(source,/song-options\/(?:bride|groom)-entrance-v1/)
 assert.doesNotMatch(source,/film-types\/recording-making/)
-assert.match(index,/js\/app.js\?v=20261009-detail-polish-9d/)
+assert.match(index,/js\/app.js\?v=20261009-detail-polish-10/)
 for(const n of ['01','02','03','04','05','06']){
  const svg=read('assets/img/process-no-people/'+n+'.svg')
  assert.match(svg,/인물 없는 도식/)

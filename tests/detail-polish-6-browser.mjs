@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
 import {writeFileSync,mkdirSync} from 'node:fs'
 const {chromium}=createRequire(import.meta.url)('playwright')
-const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']})
+const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||chromium.executablePath(),args:['--no-sandbox']})
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',results=[]
 const blocks=[9,18,25].map(day=>({start:`2026-10-${String(day-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(day).padStart(2,'0')}T15:00Z`})).concat({start:'2026-10-11T07:30Z',end:'2026-10-11T09:30Z'})
 try{
@@ -20,7 +20,7 @@ try{
    await label.evaluate(n=>window.scrollBy({top:n.getBoundingClientRect().top-130,behavior:'instant'}))
    const before=await positions(label);await tapHere(label);const opened=await positions(label)
    assert.deepEqual(opened,before,'opening does not scroll or move the tapped label')
-   await tapHere(label);assert.equal(await calendar.isVisible(),true);assert.deepEqual(await positions(label),before)
+   await tapHere(label);assert.equal(await calendar.isVisible(),false);assert.deepEqual(await positions(label),before);await tapHere(label);assert.equal(await calendar.isVisible(),true);assert.deepEqual(await positions(label),before)
    const prior=await positions(label);await tapHere(calendar.locator('[data-calendar-day="2026-10-11"]'));const selected=await positions(label)
    assert.deepEqual(selected,prior,'date selection does not move the viewport');assert.equal(await calendar.isVisible(),true)
    const picked=calendar.locator('[data-calendar-day="2026-10-11"]');assert.equal(await picked.getAttribute('aria-pressed'),'true');assert.match(await picked.getAttribute('class'),/is-selected/)
@@ -54,7 +54,7 @@ try{
   await verse.check();assert.match(await page.locator('#mobilePrice').innerText(),/18만원/)
   await page.locator('input[data-option="lyrics-video"]').check();assert.match(await page.locator('#mobilePrice').innerText(),/22만원/)
   await page.evaluate(()=>{window.copy6='';navigator.clipboard.writeText=async s=>{window.copy6=s}});await page.locator('.contact-submit').tap();await page.waitForFunction(()=>window.copy6.startsWith('[위스티아 상담 요청]'))
-  const copy=await page.evaluate(()=>window.copy6);assert.match(copy,/추가 1곡 1절 녹음 \(\+60,000원\)/);assert.match(copy,/예상 금액 : 220,000원/);assert.doesNotMatch(copy,/신부 입장곡|신랑 입장곡/)
+  const copy=await page.evaluate(()=>window.copy6);assert.match(copy,/추가 1절 녹음 \(\+60,000원\)/);assert.match(copy,/예상 금액 : 220,000원/);assert.doesNotMatch(copy,/신부 입장곡|신랑 입장곡/)
   if(width===390){mkdirSync('work',{recursive:true});writeFileSync('work/6-copy-example.txt',copy)}
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
   // Initial range failure has no validated closures and cannot advertise open dates.

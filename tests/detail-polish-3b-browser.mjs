@@ -3,7 +3,7 @@ import {createRequire} from 'node:module'
 import {writeFileSync,mkdirSync} from 'node:fs'
 mkdirSync('work',{recursive:true})
 const {chromium}=createRequire(import.meta.url)('playwright')
-const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']})
+const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||chromium.executablePath(),args:['--no-sandbox']})
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',results=[]
 const blocks=[9,18,25].map(day=>({start:`2026-10-${String(day-1).padStart(2,'0')}T15:00:00Z`,end:`2026-10-${String(day).padStart(2,'0')}T15:00:00Z`})).concat({start:'2026-10-11T07:30:00Z',end:'2026-10-11T09:30:00Z'})
 try{
@@ -22,13 +22,13 @@ try{
   await page.locator('[data-contact-date-mode="eventDate"][value="date"]').check()
   const popup=await page.locator('#calendar-eventDate').evaluate(n=>{const r=n.getBoundingClientRect(),card=n.closest('.contact-date-field').getBoundingClientRect(),next=document.querySelector('.contact-date-bookingDate').getBoundingClientRect();return {position:getComputedStyle(n).position,top:r.top,bottom:r.bottom,left:r.left,right:r.right,cardBottom:card.bottom,nextTop:next.top}})
   if(width===390){assert.equal(popup.position,'relative');assert.ok(popup.bottom<=popup.cardBottom&&popup.bottom<popup.nextTop);assert.ok(popup.left>=0&&popup.right<=390)}
-  await page.locator('#calendar-eventDate [data-calendar-close]').click();await page.locator('[data-calendar-trigger="bookingDate"]').click();await calendar.locator('[data-calendar-day="2026-10-11"]').click();await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  await page.locator('#calendar-eventDate [data-calendar-close]').click();if(!await calendar.isVisible())await page.locator('[data-calendar-trigger="bookingDate"]').click();await calendar.locator('[data-calendar-day="2026-10-11"]').click();await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   assert.equal(await page.locator('[data-calendar-time="17:00"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="19:00"]').isDisabled(),false)
-  await page.locator('[data-calendar-trigger="bookingDate"]').click()
+  if(!await calendar.isVisible())await page.locator('[data-calendar-trigger="bookingDate"]').click()
   const layout=await page.evaluate(()=>{const offset=(n,parent)=>{const a=n.getBoundingClientRect(),b=parent.getBoundingClientRect();return a.x+a.width/2-b.x-b.width/2};const calendar=document.querySelector('#calendar-bookingDate'),times=document.querySelector('[data-calendar-times]');return {calendarOffset:offset(calendar,calendar.closest('fieldset')),timeOffset:offset(times,times.closest('fieldset')),overflow:document.documentElement.scrollWidth-innerWidth,padding:parseFloat(getComputedStyle(document.querySelector('#app')).paddingBottom),barHeight:document.querySelector('.inquiry-actions').getBoundingClientRect().height}})
   assert.ok(Math.abs(layout.calendarOffset)<=1);assert.ok(Math.abs(layout.timeOffset)<=1);assert.equal(layout.overflow,0);assert.ok(layout.padding>layout.barHeight+16)
   const unobscured=[]
-  for(const selector of ['[data-calendar-time="22:00"]','.booking-extra .option-choice']){const target=page.locator(selector).first();await target.scrollIntoViewIfNeeded();const clear=await target.evaluate(n=>{const r=n.getBoundingClientRect(),bar=document.querySelector('.inquiry-actions').getBoundingClientRect();return {selector:n.className||n.dataset.calendarTime,bottom:r.bottom,barTop:bar.top,visible:r.bottom<=bar.top}});assert.equal(clear.visible,true);unobscured.push(clear)}
+  for(const selector of ['[data-calendar-times] button:last-child','.booking-extra .option-choice']){const target=page.locator(selector).first();await target.scrollIntoViewIfNeeded();const clear=await target.evaluate(n=>{const r=n.getBoundingClientRect(),bar=document.querySelector('.inquiry-actions').getBoundingClientRect();return {selector:n.className||n.dataset.calendarTime,bottom:r.bottom,barTop:bar.top,visible:r.bottom<=bar.top}});assert.equal(clear.visible,true);unobscured.push(clear)}
   layout.unobscured=unobscured
   if(!await calendar.isVisible())await page.locator('[data-calendar-trigger="bookingDate"]').click()
   fail=true;await page.evaluate(()=>{void WistiaBooking.loadRange('2026-10-01','2026-10-31',true).catch(()=>{})});await release();assert.match(await calendar.locator('[data-calendar-range-status]').innerText(),/카카오톡 확인 필요/);assert.equal(await calendar.locator('[data-calendar-range-status]').isVisible(),true)

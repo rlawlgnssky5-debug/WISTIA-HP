@@ -16,7 +16,7 @@ await test('Shared comparisons and inquiry headings contain no repeated copy',()
  assert.equal((markup.match(/<h[12]\b/g)||[]).length,1)
  assert.match(markup,/<h1[^>]*class="vocal-comparison-title"[^>]*>노래를 다듬은 전후 비교<\/h1>/)
  assert.equal((markup.match(/같은 녹음본/g)||[]).length,1)
- assert.match(markup,/보정 전후를 직접 들어보세요/)
+ assert.match(markup,/같은 노래로 직접 들어보세요/)
  assert.doesNotMatch(markup,/wistia-ba-eyebrow|전후 차이를 직접|같은 녹음, 다른 완성도/)
  assert.doesNotMatch(app,/같은 녹음본의 보정 전후를 직접|WISTIA · 웨딩 축가 전문 스튜디오|<span class="arc-kicker">Q & A|<strong>한 소절씩 나누어 녹음<\/strong>|<p>후기 페이백 최대 6만원<\/p>/)
  const reviews=app.slice(app.indexOf('function soloReviewCarousel('),app.indexOf('function ',app.indexOf('function soloReviewCarousel(')+10))
@@ -30,7 +30,7 @@ await test('Shared comparisons and inquiry headings contain no repeated copy',()
  assert.ok(existsSync(root+'assets/img/kakao-talk.png'))
 })
 let playwright,executable,skip=false
-try{playwright=createRequire(import.meta.url)('playwright');executable=process.env.WISTIA_BROWSER_EXECUTABLE||(existsSync('/usr/bin/chromium')?'/usr/bin/chromium':playwright.chromium.executablePath());if(!existsSync(executable))skip='Chromium is not installed'}catch(error){if(error.code!=='MODULE_NOT_FOUND')throw error;skip='Playwright is not installed'}
+try{playwright=createRequire(import.meta.url)('playwright');executable=process.env.WISTIA_BROWSER_EXECUTABLE||playwright.chromium.executablePath();if(!existsSync(executable))skip='Chromium is not installed'}catch(error){if(error.code!=='MODULE_NOT_FOUND')throw error;skip='Playwright is not installed'}
 await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip,timeout:300000},async()=>{
  const probe=createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{cwd:root,env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})

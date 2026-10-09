@@ -8,9 +8,11 @@
  }
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
- function duration(key){return key==='solo'?60:key==='duo'?120:key==='undecided'?1:180}
+ function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
+ function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).filter(hour=>hour*60+minutes<=23*60).map(hour=>({value:hour+':00',label:hour+'~'+(hour+minutes/60)+'시',minutes}))}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
+  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
   const start=Date.parse(date+'T'+time+':00+09:00'),end=start+minutes*60000
   if(!Number.isFinite(start))return true
   const endDay=new Date(end-1+9*3600000).toISOString().slice(0,10)
@@ -22,9 +24,9 @@
   const start=Date.parse(date+'T00:00:00+09:00'),end=start+86400000
   let covered=start
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
-  return Array.from({length:10},(_,i)=>String(13+i)+':00').every(time=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
+  return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
- const rules={validDate,validRange,today,isOperatingDay,duration,slotBlocked,dayClosed,operatingDays}
+ const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,dayClosed,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
@@ -124,6 +126,12 @@
  function mount(form,key='solo'){
   activeForm=form||null;activeKey=key
   if(!activeForm){generation++;return}
+  const time=activeForm.querySelector('#contact-time')
+  if(time?.tagName==='SELECT'&&time.dataset.productKey!==key){
+   const previous=time.dataset.productKey&&time.dataset.productKey!==key?'':time.value,slots=timeWindows(key)
+   time.innerHTML='<option value="">미정</option>'+slots.map(slot=>'<option value="'+slot.value+'">'+slot.label+'</option>').join('')
+   time.dataset.productKey=key;time.value=slots.some(slot=>slot.value===previous)?previous:''
+  }
   global.WistiaContact?.mountCalendars?.(activeForm)
   return check()
  }

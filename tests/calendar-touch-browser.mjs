@@ -6,7 +6,7 @@ const {chromium,webkit,devices}=createRequire(import.meta.url)('playwright')
 const base=process.argv[2]||process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',measurements=[]
 const blocks=[9,18,25].map(d=>({start:`2026-10-${String(d-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(d).padStart(2,'0')}T15:00Z`})).concat({start:'2026-10-11T07:30Z',end:'2026-10-11T09:30Z'})
 for(const engine of [chromium,webkit]){
- const name=engine.name(),executablePath=name==='chromium'?(process.env.WISTIA_BROWSER_EXECUTABLE||'/usr/bin/chromium'):engine.executablePath()
+ const name=engine.name(),executablePath=name==='chromium'?(process.env.WISTIA_BROWSER_EXECUTABLE||engine.executablePath()):engine.executablePath()
  if(!existsSync(executablePath)){console.log(`SKIP ${name}: browser executable is not installed`);measurements.push({engine:name,skipped:true,reason:'Browser executable not installed'});continue}
  const browser=await engine.launch({executablePath,headless:true,...(name==='chromium'?{args:['--no-sandbox']}:{})})
  try{
@@ -49,7 +49,8 @@ for(const engine of [chromium,webkit]){
     const label=page.locator(`[data-contact-date-mode="${key}"][value="date"]`).locator('..'),calendar=page.locator('#calendar-'+key),input=page.locator('#contact-'+key)
     await place(label)
     await stable(label,()=>tap(label),key+' open');assert.equal(await calendar.isVisible(),true)
-    await stable(label,()=>tap(label),key+' repeated open');assert.equal(await calendar.isVisible(),true)
+    await stable(label,()=>tap(label),key+' toggle closed');assert.equal(await calendar.isVisible(),false)
+    await stable(label,()=>tap(label),key+' toggle open');assert.equal(await calendar.isVisible(),true)
     const date=calendar.locator('[data-calendar-day="2026-10-11"]');await place(date)
     await stable(label,()=>tap(date),key+' select');assert.equal(await input.inputValue(),'2026-10-11');assert.equal(await calendar.isVisible(),true)
     assert.match(await date.getAttribute('class'),/is-selected/);assert.match(await calendar.locator('[data-calendar-selection]').innerText(),/선택한 날짜: 10월 11일 \(일\)/)
@@ -82,4 +83,4 @@ for(const engine of [chromium,webkit]){
   }
  }finally{await browser.close()}
 }
-mkdirSync('work',{recursive:true});writeFileSync('work/9d-touch-measurements.json',JSON.stringify(measurements,null,2))
+mkdirSync('work',{recursive:true});writeFileSync('work/10-touch-measurements.json',JSON.stringify(measurements,null,2))
