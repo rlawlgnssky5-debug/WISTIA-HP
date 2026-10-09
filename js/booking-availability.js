@@ -9,7 +9,7 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
- function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).filter(hour=>hour*60+minutes<=23*60).map(hour=>({value:hour+':00',label:hour+'~'+(hour+minutes/60)+'시',minutes}))}
+ function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).map(hour=>({value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}))}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true

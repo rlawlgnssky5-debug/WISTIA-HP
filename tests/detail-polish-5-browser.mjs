@@ -69,7 +69,7 @@ try{
   await page.evaluate(()=>{window.copy5=''})
   await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.copy5.startsWith('[위스티아 상담 요청]'))
   const full=await page.evaluate(()=>window.copy5)
-  assert.match(full,/예상 금액 : 220,000원/);assert.match(full,/페이백 합계 : −40,000원/);assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15~16시/);assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
+  assert.match(full,/예상 금액 : 220,000원/);assert.match(full,/페이백 합계 : −40,000원/);assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 오후 3시~오후 4시 \(1시간\)/);assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
   if(width===390)writeFileSync('work/5-copy-examples.json',JSON.stringify({plain,full},null,2))
   await page.unrouteAll({behavior:'wait'})
   await page.close()

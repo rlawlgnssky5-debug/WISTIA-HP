@@ -177,3 +177,7 @@ html #app#app#app#app .calendar-time-grid{grid-template-columns:minmax(0,1fr)!im
 html #app#app#app#app .contact-calendar .calendar-weekdays>.calendar-sunday,
 html #app#app#app#app .contact-calendar .calendar-day.calendar-red-day:not(.is-selected):not(:disabled)>span{color:#9c5a54!important}
 html #app#app#app#app .contact-calendar .calendar-day.calendar-red-day:disabled>span{color:#b9a09a!important}
+
+/* A valid interval includes later hours that cannot themselves start a session. */
+html #app#app#app#app .calendar-time-grid button.is-covered,
+html #app#app#app#app .calendar-time-grid button.is-covered>small{background:#302d27!important;color:#fffcf5!important;border-color:#302d27!important}
