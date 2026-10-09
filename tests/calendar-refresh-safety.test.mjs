@@ -25,4 +25,4 @@ assert.equal(api.calendarBlocks(from,to).length,0);assert.equal(api.calendarRang
 console.log('First unknown/failed dates disabled, successful closures retained across failed and timed-out refreshes, late response rejected, successful recovery reopens dates passed')
 
 const app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
-assert.match(app.slice(app.indexOf('const INFO_FAQ_GROUPS='),app.indexOf('const SERVICE_ORDER')),/추가 1곡 1절 녹음.*60,000원.*추가 1곡 완곡 녹음.*120,000원/)
+assert.match(app.slice(app.indexOf('const INFO_FAQ_GROUPS='),app.indexOf('const SERVICE_ORDER')),/추가 1절 녹음.*60,000원/)

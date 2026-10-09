@@ -32,7 +32,7 @@ assert.equal(node('#quotePayback').textContent,'3만원')
 assert.equal(node('#quoteEffective').textContent,'380,000원')
 assert.equal(node('#eventDiscountTotal').textContent,'페이백 3만원')
 assert.equal(node('#quoteRegular').hidden,true)
-assert.match(node('#bookingSummary').innerHTML,/추가 1곡 1절 녹음<\/dt><dd class="plus">\+60,000원/)
+assert.match(node('#bookingSummary').innerHTML,/추가 1절 녹음<\/dt><dd class="plus">\+60,000원/)
 assert.match(node('#bookingSummary').innerHTML,/결제 예상 금액<\/dt><dd>410,000원/)
 assert.doesNotMatch(node('#bookingSummary').innerHTML,/price-formula/)
 assert.doesNotMatch(node('#bookingSummary').innerHTML,/메이킹|−70,000/)
@@ -51,7 +51,7 @@ for(const key of ['lyrics-video']){
  const src=markup.match(/src="([^"]+)"/)[1]
  assert.ok(existsSync(new URL('../'+src,import.meta.url)))
 }
-assert.doesNotMatch(context.renderProductOption({key:'extra-verse',label:'추가 1곡 1절 녹음',detail:'설명',price:60000}),/img|option-photo/)
+assert.doesNotMatch(context.renderProductOption({key:'extra-verse',label:'추가 1절 녹음',detail:'설명',price:60000}),/img|option-photo/)
 set({key:'solo',options:['rush']})
 assert.equal(node('#mobilePrice').textContent,'12만원','an old rush selection does not add a removed fee')
 assert.equal(node('#quoteOptions').textContent,'0원')

@@ -18,7 +18,7 @@ for(const key of ['solo','duo','duet-film']){
  assert.equal((base.match(/<option value=/g)||[]).length,2)
 }
 assert.doesNotMatch(app,/entrance-(bride|groom)-v2\.webp/,'retired image files remain preserved but unreferenced')
-assert.doesNotMatch(scope.renderProductOption({key:'extra-verse',label:'추가 1곡 1절 녹음',price:60000}),/option-photo|<img/)
+assert.doesNotMatch(scope.renderProductOption({key:'extra-verse',label:'추가 1절 녹음',price:60000}),/option-photo|<img/)
 const window={};runInNewContext(read('js/contact-form.js'),{window})
 for(const mode of [{},{embedded:true},{integrated:true}])assert.doesNotMatch(window.WistiaContact.render(null,mode),/<option[^>]*>상담 후 결정|고민\s*중/)
 assert.match(window.WistiaContact.submit(),/작성한 내용으로 카카오톡 문의하기/)

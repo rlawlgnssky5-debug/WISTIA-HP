@@ -9,7 +9,7 @@ import {fileURLToPath} from 'node:url'
 let skipReason=false,executable
 try{
  const {chromium}=createRequire(import.meta.url)('playwright')
- executable=process.env.WISTIA_BROWSER_EXECUTABLE||(existsSync('/usr/bin/chromium')?'/usr/bin/chromium':chromium.executablePath())
+ executable=process.env.WISTIA_BROWSER_EXECUTABLE||chromium.executablePath()
  if(!existsSync(executable))skipReason='브라우저가 설치되지 않아 브라우저 회귀 테스트를 건너뜁니다'
 }catch(error){if(error.code!=='MODULE_NOT_FOUND')throw error;skipReason='Playwright가 없어 브라우저 회귀 테스트를 건너뜁니다'}
 await test('문의 달력 및 고정 바 PC/모바일 브라우저 회귀',{skip:skipReason},async()=>{

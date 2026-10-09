@@ -3,7 +3,7 @@ import {createRequire} from 'node:module'
 import {writeFileSync,mkdirSync} from 'node:fs'
 mkdirSync('work',{recursive:true})
 const {chromium}=createRequire(import.meta.url)('playwright')
-const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']})
+const browser=await chromium.launch({executablePath:process.env.WISTIA_BROWSER_EXECUTABLE||chromium.executablePath(),args:['--no-sandbox']})
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',measurements=[]
 try{
  for(const width of [1280,390]){

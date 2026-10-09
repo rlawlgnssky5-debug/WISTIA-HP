@@ -29,14 +29,14 @@ assert.equal(form.dataset.scheduleState,'closed');assert.match(time.validationMe
 time.value='16:00';api.changed(date);await flush();assert.equal(form.dataset.scheduleState,'ready')
 api.mount(form,'duo');await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,true,'full product duration, not just start time, must fit')
-assert.equal(time.options.find(option=>option.value==='22:00').disabled,false,'DUET at 22:00 ends exactly at midnight')
+assert.equal(time.options.find(option=>option.value==='22:00').disabled,true,'DUET cannot extend beyond 23:00')
 assert.equal(requests.length,1,'duration changes reuse known closures')
 const reopen=api.refresh();requests.at(-1).resolve(payload(date.value));await reopen
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
 const offline=api.refresh();requests.at(-1).reject(Error('unconfigured'));await offline
 assert.equal(form.dataset.scheduleState,'unavailable');assert.equal(status.hidden,false);assert.match(status.textContent,/카카오톡 확인 필요/)
 assert.equal(date.validationMessage,'');assert.equal(time.validationMessage,'','offline permits wish inquiry, not a false availability promise')
-assert.equal(time.options.find(option=>option.value==='22:00').disabled,false,'midnight boundary remains consistent when Notion is offline')
+assert.equal(time.options.find(option=>option.value==='22:00').disabled,true,'closing-hour boundary remains consistent when Notion is offline')
 date.value='2027-10-14';api.changed(date);const stale=requests.at(-1)
 date.value='2027-10-15';api.changed(date);const fresh=requests.at(-1)
 assert.equal(stale.options.signal.aborted,true)
