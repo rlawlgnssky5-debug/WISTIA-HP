@@ -30,7 +30,7 @@ try{
    await page.keyboard.press('Escape');assert.equal(await calendar.isVisible(),true)
    if(key==='bookingDate'){
     await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
-    assert.equal(await page.locator('[data-calendar-time="16:30"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="18:30"]').isDisabled(),false)
+    assert.equal(await page.locator('[data-calendar-time="17:00"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="19:00"]').isDisabled(),false)
    }
    await calendar.locator('[data-calendar-close]').tap();assert.equal(await calendar.isVisible(),false)
    assert.match(await page.locator(`[data-calendar-summary="${key}"]`).innerText(),/선택한 날짜:/)

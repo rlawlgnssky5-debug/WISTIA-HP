@@ -22,7 +22,7 @@
   const start=Date.parse(date+'T00:00:00+09:00'),end=start+86400000
   let covered=start
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
-  return Array.from({length:21},(_,i)=>String(13+Math.floor(i/2)).padStart(2,'0')+':'+(i%2?'30':'00')).every(time=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
+  return Array.from({length:10},(_,i)=>String(13+i)+':00').every(time=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
  const rules={validDate,validRange,today,isOperatingDay,duration,slotBlocked,dayClosed,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules

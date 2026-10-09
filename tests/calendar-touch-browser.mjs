@@ -28,8 +28,22 @@ for(const engine of [chromium,webkit]){
    const place=async locator=>{await locator.evaluate(n=>window.testScroll(window.scrollY+n.getBoundingClientRect().top-300));await page.waitForTimeout(70)}
    const position=async label=>label.evaluate(n=>({top:n.getBoundingClientRect().top,scrollY:window.scrollY}))
    const stable=async(label,action,stage)=>{const before=await position(label);await action();const after=await position(label);assert.ok(Math.abs(before.top-after.top)<=1&&Math.abs(before.scrollY-after.scrollY)<=1,`${name} ${width} ${stage}: ${JSON.stringify({before,after})}`);measurements.push({engine:name,width,kakao,stage,before,after})}
+   const timeGuidance=async(undecided,stage)=>{
+    assert.equal(await page.locator('[data-calendar-times] button:visible').count(),0,'no time buttons before a date')
+    const hint=page.locator('[data-time-date-hint]');await place(hint)
+    assert.equal(await hint.isVisible(),true)
+    assert.equal(await hint.innerText(),undecided?'날짜가 정해지면 카카오톡으로 시간을 같이 맞춰 드릴게요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요')
+    const metrics=await hint.evaluate(n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,fontSize:parseFloat(getComputedStyle(n).fontSize),viewport:innerHeight}})
+    assert.ok(metrics.top>=0&&metrics.bottom<=metrics.viewport&&metrics.fontSize>=14,JSON.stringify(metrics))
+    measurements.push({engine:name,width,kakao,stage,...metrics,visibleTimeButtons:0})
+   }
    assert.equal(await page.locator('[data-calendar-times] button:not(:disabled)').count(),0)
-   assert.equal(await page.locator('[data-time-date-hint]').isVisible(),true)
+   assert.equal(await page.locator('[data-calendar-times] button[data-calendar-time$=":30"]').count(),0)
+   await timeGuidance(false,'initial time guidance')
+   // The initially checked unknown radio also responds to an explicit tap.
+   const initialUnknown=page.locator('[data-contact-date-mode="bookingDate"][value="unknown"]').locator('..')
+   await place(initialUnknown);await stable(initialUnknown,()=>tap(initialUnknown),'initial undecided')
+   await timeGuidance(true,'explicit initial undecided guidance')
    for(const key of ['eventDate','bookingDate']){
     const label=page.locator(`[data-contact-date-mode="${key}"][value="date"]`).locator('..'),calendar=page.locator('#calendar-'+key),input=page.locator('#contact-'+key)
     await place(label)
@@ -43,10 +57,13 @@ for(const engine of [chromium,webkit]){
     await page.evaluate(()=>window.testScroll(window.scrollY+80));assert.equal(await calendar.isVisible(),true)
     await page.keyboard.press('Escape');assert.equal(await calendar.isVisible(),true)
     if(key==='bookingDate'){
+     assert.equal(await page.locator('[data-time-date-hint]').isVisible(),false)
+     assert.equal(await page.locator('[data-calendar-times] button:visible').count(),11)
+     assert.equal(await page.locator('[data-calendar-times] button[data-calendar-time$=":30"]').count(),0)
      await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
      for(const d of [9,18,25]){const closed=calendar.locator(`[data-calendar-day="2026-10-${String(d).padStart(2,'0')}"]`);assert.equal(await closed.isDisabled(),true);assert.match(await closed.innerText(),/마감/)}
      for(const d of [5,6,7,12,13,14]){const closed=calendar.locator(`[data-calendar-day="2026-10-${String(d).padStart(2,'0')}"]`);assert.equal(await closed.isDisabled(),true);assert.doesNotMatch(await closed.innerText(),/마감/)}
-     assert.equal(await page.locator('[data-calendar-time="16:30"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="18:30"]').isDisabled(),false)
+     assert.equal(await page.locator('[data-calendar-time="17:00"]').isDisabled(),true);assert.equal(await page.locator('[data-calendar-time="19:00"]').isDisabled(),false)
     }
     const close=calendar.locator('[data-calendar-close]');await place(label);await stable(label,()=>tap(close),key+' close');assert.equal(await calendar.isVisible(),false)
     assert.match(await page.locator(`[data-calendar-summary="${key}"]`).innerText(),/선택한 날짜: 10월 11일 \(일\)/)
@@ -56,6 +73,7 @@ for(const engine of [chromium,webkit]){
     await tap(close)
    }
    assert.equal(await page.locator('[data-calendar-times] button:not(:disabled)').count(),0);assert.equal(await page.locator('#contact-time').inputValue(),'')
+   await timeGuidance(true,'undecided time guidance')
    assert.deepEqual(await page.evaluate(()=>window.calendarScrollCalls),[],'no application scrolling/focus jumps during touch flow')
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
    assert.deepEqual(errors,[])
@@ -63,4 +81,4 @@ for(const engine of [chromium,webkit]){
   }
  }finally{await browser.close()}
 }
-mkdirSync('work',{recursive:true});writeFileSync('work/7-touch-measurements.json',JSON.stringify(measurements,null,2))
+mkdirSync('work',{recursive:true});writeFileSync('work/9b-touch-measurements.json',JSON.stringify(measurements,null,2))

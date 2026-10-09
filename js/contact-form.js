@@ -9,7 +9,7 @@
  const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- const timeOptions=Array.from({length:21},(_,index)=>{const hour=13+Math.floor(index/2),minute=index%2?'30':'00';return '<option value="'+hour+':'+minute+'">'+hour+'시'+(minute==='30'?' 30분':'')+'</option>'}).join('')
+ const timeOptions=Array.from({length:10},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">'+hour+'시</option>'}).join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  function parseDate(value){
@@ -105,6 +105,7 @@
    const date=(input.value>=calendarToday()?parseDate(input.value):null)||parseDate(calendarToday()),trigger=form.querySelector('[data-calendar-trigger="'+key+'"]')
    const mode=form.querySelector('[data-contact-date-mode="'+key+'"][value="date"]')
    state={calendar,key,input,trigger,mode,year:date.getUTCFullYear(),month:date.getUTCMonth()};calendarStates.set(calendar,state)
+   if(key==='bookingDate')form.querySelector('[data-contact-date-mode="bookingDate"][value="unknown"]').addEventListener('click',()=>{form.dataset.bookingDateUndecided='true';syncTimeChoices(form)})
    mode.closest('label').addEventListener('click',event=>{
     if(event.target===mode){openDateCalendar(state);return}
     // Native label forwarding focuses the hidden radio and can scroll the page.
@@ -146,8 +147,10 @@
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate')
   if(!list||!time||!date)return
   const known=!date.disabled&&!!parseDate(date.value)
-  list.hidden=false;time.closest('label').hidden=true;time.disabled=!known
-  form.querySelector('[data-time-date-hint]').hidden=known
+  list.hidden=!known;time.closest('label').hidden=true;time.disabled=!known
+  const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known
+  hint.textContent=form.dataset.bookingDateUndecided==='true'?'날짜가 정해지면 카카오톡으로 시간을 같이 맞춰 드릴게요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요'
+  form.querySelector('[data-time-help]').hidden=!known
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.calendarTime:null
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
   list.innerHTML=[...time.options].map(option=>'<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'" data-calendar-time="'+option.value+'"'+(!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(known&&option.disabled?'<small>'+closedLabel+'</small>':'')+'</button>').join('')
@@ -165,7 +168,7 @@
  function dateField(key,label){
   return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label data-calendar-trigger="'+key+'" aria-expanded="false" aria-controls="calendar-'+key+'"><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<p class="contact-date-summary" data-calendar-summary="'+key+'" aria-live="polite" hidden></p>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
- function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><p data-time-date-hint>날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
+ function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><p data-time-date-hint role="status" aria-live="polite">날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><em data-time-help hidden>13시~23시 · 희망 시작 시간을 선택해 주세요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -177,7 +180,7 @@
  }
  function update(target){
   const form=target.closest('#contactInquiryForm');if(!form)return
-  if(target.dataset.contactDateMode){const key=target.dataset.contactDateMode,panel=form.querySelector('[data-contact-date-panel="'+key+'"]'),input=panel.querySelector('input'),known=target.value==='date';panel.hidden=!known;input.disabled=!known;if(!known){closeCalendar(calendarStates.get(panel.querySelector('[data-calendar]')));input.value='';if(key==='bookingDate')form.querySelector('#contact-time').value='';input.setCustomValidity('');input.removeAttribute('aria-invalid');panel.querySelector('.contact-input-error').hidden=true}}
+  if(target.dataset.contactDateMode){const key=target.dataset.contactDateMode;if(key==='bookingDate'&&target.value==='unknown')form.dataset.bookingDateUndecided='true';const panel=form.querySelector('[data-contact-date-panel="'+key+'"]'),input=panel.querySelector('input'),known=target.value==='date';panel.hidden=!known;input.disabled=!known;if(!known){closeCalendar(calendarStates.get(panel.querySelector('[data-calendar]')));input.value='';if(key==='bookingDate')form.querySelector('#contact-time').value='';input.setCustomValidity('');input.removeAttribute('aria-invalid');panel.querySelector('.contact-input-error').hidden=true}}
   const event=form.querySelector('#contact-eventDate')
   if(event&&!event.disabled){const invalid=event.value&&!selectableDate(event.value,'eventDate');event.setCustomValidity(invalid?'오늘 이후의 날짜를 선택해 주세요':'')}
   const booking=form.querySelector('#contact-bookingDate'),dateError=form.querySelector('[data-contact-date-error="bookingDate"]')

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),app=read('js/app.js'),build='20261009-detail-polish-9'
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),app=read('js/app.js'),build='20261009-detail-polish-9b'
 assert.doesNotMatch(app,/<strong>첫 소절과 다음 소절<\/strong>|<span class="mas-key-caption">편안한 음역|<p class="quote-note">|<strong>본식에 맞는 비율을 함께 결정합니다<\/strong>/)
 assert.match(app,/<strong>녹음 구간 연결 예시<\/strong>/)
 const home=app.split('\n').find(line=>line.includes('id="homeExpert"'))

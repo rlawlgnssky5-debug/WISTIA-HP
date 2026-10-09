@@ -39,7 +39,7 @@ const eventDate=input(),bookingDate=input(),start=input(),end=input(),dateError=
 const eventPanel={hidden:true,querySelector:selector=>selector==='input'?eventDate:eventError}
 const bookingPanel={hidden:true,querySelector:selector=>selector==='input'?bookingDate:dateError}
 const nodes={'[data-contact-date-panel="eventDate"]':eventPanel,'[data-contact-date-panel="bookingDate"]':bookingPanel,'#contact-bookingDate':bookingDate,'[data-contact-date-error="bookingDate"]':dateError,'#contact-time':start,'#contact-time-end':end,'[data-contact-time-error]':timeError}
-const form={querySelector:selector=>nodes[selector]}
+const form={dataset:{},querySelector:selector=>nodes[selector]}
 const target=(key,value)=>({dataset:key?{contactDateMode:key}:{},value,closest:()=>form})
 api.update(target('eventDate','date'));assert.equal(eventPanel.hidden,false);assert.equal(eventDate.disabled,false)
 api.update(target('bookingDate','date'));bookingDate.value='2026-10-05';api.update(target());assert.equal(bookingDate.validityMessage,'');assert.equal(dateError.hidden,true)
@@ -65,6 +65,6 @@ assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
 assert.match(css,/input:focus-visible/)
 assert.match(css,/font-size:16px/)
 const page=read('contact.html')
-assert.match(page,/contact-form.js\?v=20261009-detail-polish-9/)
+assert.match(page,/contact-form.js\?v=20261009-detail-polish-9b/)
 assert.match(page,/noindex,\s*follow/)
 console.log('Five contact fields without names, single start time, dropdown, clipboard text, preserved draft and no server transmission passed')

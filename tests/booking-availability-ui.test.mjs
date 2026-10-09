@@ -5,7 +5,7 @@ const source=readFileSync(new URL('../js/booking-availability.js',import.meta.ur
 const requests=[],events={}
 const control=value=>({value,disabled:false,validationMessage:'',dataset:{},setCustomValidity(message){this.validationMessage=message},setAttribute(){},removeAttribute(){}})
 const date=control(''),time=control('17:00'),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
-time.options=['','16:00','16:30','17:00','18:00','19:00','23:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
+time.options=['','16:00','17:00','18:00','19:00','22:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
 Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
 const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
 date.closest=()=>form
@@ -23,20 +23,20 @@ assert.equal(form.dataset.scheduleState,'loading');assert.equal(status.hidden,tr
 const booked=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10:00:00Z'}]
 requests.at(-1).resolve(payload(date.value,booked));await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
-assert.equal(time.options.find(option=>option.value==='16:30').disabled,true)
+assert.equal(time.options.find(option=>option.value==='17:00').disabled,true)
 assert.equal(time.options.find(option=>option.value==='19:00').disabled,false)
 assert.equal(form.dataset.scheduleState,'closed');assert.match(time.validationMessage,/마감/)
 time.value='16:00';api.changed(date);await flush();assert.equal(form.dataset.scheduleState,'ready')
 api.mount(form,'duo');await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,true,'full product duration, not just start time, must fit')
-assert.equal(time.options.find(option=>option.value==='23:00').disabled,true,'Sunday cannot extend into Monday')
+assert.equal(time.options.find(option=>option.value==='22:00').disabled,false,'DUET at 22:00 ends exactly at midnight')
 assert.equal(requests.length,1,'duration changes reuse known closures')
 const reopen=api.refresh();requests.at(-1).resolve(payload(date.value));await reopen
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
 const offline=api.refresh();requests.at(-1).reject(Error('unconfigured'));await offline
 assert.equal(form.dataset.scheduleState,'unavailable');assert.equal(status.hidden,false);assert.match(status.textContent,/카카오톡 확인 필요/)
 assert.equal(date.validationMessage,'');assert.equal(time.validationMessage,'','offline permits wish inquiry, not a false availability promise')
-assert.equal(time.options.find(option=>option.value==='23:00').disabled,true,'known operating-day constraints apply even when Notion is offline')
+assert.equal(time.options.find(option=>option.value==='22:00').disabled,false,'midnight boundary remains consistent when Notion is offline')
 date.value='2027-10-14';api.changed(date);const stale=requests.at(-1)
 date.value='2027-10-15';api.changed(date);const fresh=requests.at(-1)
 assert.equal(stale.options.signal.aborted,true)
@@ -60,7 +60,7 @@ function harness(clock=Date){
 function makeForm(){
  const date=control(''),time=control(''),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
  date.disabled=true
- time.options=['','14:30','15:30','16:00','16:30','17:00','18:30','19:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
+ time.options=['','14:00','15:00','16:00','17:00','18:00','19:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
  Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
  const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
  date.closest=time.closest=()=>form
@@ -78,7 +78,7 @@ const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10
  assert.equal(requests.length,1,'the only in-flight response is shared, not dropped')
  requests[0].resolve(payload(day,booking));await flush();await flush()
  assert.equal(f.form.dataset.scheduleState,'ready')
- assert.equal(f.opt('16:30').disabled,true);assert.match(f.opt('16:30').textContent,/마감/)
+ assert.equal(f.opt('17:00').disabled,true);assert.match(f.opt('17:00').textContent,/마감/)
  assert.equal(f.opt('16:00').disabled,false);assert.equal(f.opt('19:00').disabled,false)
 }
 { // (a') first date entry whose request never answers: timeout fallback, never "available"
@@ -100,13 +100,13 @@ const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10
  assert.equal(solo.form.dataset.scheduleState,'loading');assert.equal(requests.length,1,'switching products reuses the in-flight date request')
  requests[0].resolve(payload(day,booking));await flush();await flush()
  assert.equal(solo.form.dataset.scheduleState,'ready')
- assert.equal(solo.opt('16:30').disabled,true);assert.equal(solo.opt('16:00').disabled,false,'SOLO uses 60 minutes')
+ assert.equal(solo.opt('17:00').disabled,true);assert.equal(solo.opt('16:00').disabled,false,'SOLO uses 60 minutes')
  // (b') switching back again renders immediately from the known closures for the new duration
  const story2=makeForm();api.mount(story2.form,'duet-film');story2.date.disabled=false;story2.date.value=day;api.changed(story2.date)
  assert.equal(story2.form.dataset.scheduleState,'ready');assert.equal(requests.length,1)
- assert.equal(story2.opt('14:30').disabled,true);assert.equal(story2.opt('19:00').disabled,false,'story blocks 180-minute overlaps')
+ assert.equal(story2.opt('15:00').disabled,true);assert.equal(story2.opt('19:00').disabled,false,'story blocks 180-minute overlaps')
  const solo2=makeForm();api.mount(solo2.form,'solo');solo2.date.disabled=false;solo2.date.value=day;api.mount(solo2.form,'solo')
- assert.equal(solo2.form.dataset.scheduleState,'ready');assert.equal(solo2.opt('16:00').disabled,false);assert.equal(solo2.opt('16:30').disabled,true)
+ assert.equal(solo2.form.dataset.scheduleState,'ready');assert.equal(solo2.opt('16:00').disabled,false);assert.equal(solo2.opt('17:00').disabled,true)
  // copy refresh: always a fresh request even with a cached schedule, and a failure shows the Kakao fallback
  const copy=api.refresh();assert.equal(requests.length,2,'schedule is re-fetched right before copying');assert.equal(solo2.form.dataset.scheduleState,'loading')
  requests[1].reject(Error('notion down'));await copy
