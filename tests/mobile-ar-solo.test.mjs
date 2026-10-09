@@ -93,7 +93,7 @@ assert.match(desktop,/<li class="mas-rush-notice">/,'the same notice is present 
 assert.doesNotMatch(html.slice(html.indexOf('<li class="mas-rush-notice">'),html.indexOf('</ul></section><section class="arc-section mas-location"')),/<input|data-option=|type="checkbox"|href=/,'rush notice is read-only')
 assert.doesNotMatch(html,/mas-notice-options/)
 assert.match(html,/가사 영상 제작 필요하신가요\?/)
-assert.match(html,/같은 녹음본의 보정 전후를 직접 들어보세요/)
+assert.match(html,/보정 전후를 직접 들어보세요/)
 assert.doesNotMatch(html,/보정·믹싱의 마법, 티 나지 않게 자연스럽게/)
 assert.match(source,/준비부터 완성까지, 필요한 작업에 집중합니다/)
 assert.doesNotMatch(html,/본식 전 재생·리허설 확인|mas-venue-note/)

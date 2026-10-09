@@ -82,7 +82,7 @@
  }
  function mount(root,icon){
   if(!root||typeof icon!=='function')return
-  const titles=all(root,'h2,h3,h4,.info-page-intro>h1,.calculator-intro>h1,.contact-intro>h1')
+  const titles=all(root,'h2,h3,h4,.wistia-ba-copy>h1,.info-page-intro>h1,.calculator-intro>h1,.contact-intro>h1')
   for(const title of titles){
    if(title.closest(skipTitles)||title.id==='quoteService'||title.hasAttribute('data-process-title')||title.dataset.svgTitleMounted||!title.textContent.trim())continue
    // Existing title SVGs are already explicit icons, never append a second one

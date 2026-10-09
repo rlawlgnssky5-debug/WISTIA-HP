@@ -123,3 +123,8 @@ html #app#app#app#app .detail-recording-option-list article{min-width:0;backgrou
 @media(max-width:600px){html #app#app#app#app .detail-recording-option-list{grid-template-columns:1fr}}
 html #app#app#app#app .detail-recording-options :is(h2.svg-section-title,h3.svg-item-title){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important}
 html #app#app#app#app .detail-recording-options .svg-title-icon{margin:0!important}
+
+/* Keep the source label accessible without repeating the step heading on screen. */
+html #app#app#app#app #bookingSource .contact-field > .sr-only{position:absolute!important;display:block!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+/* The standalone comparison uses the same unbroken title as embedded comparisons. */
+html #app#app#app#app .before-after-page .vocal-comparison-title{white-space:nowrap!important;font-size:clamp(20px,5.4vw,36px)!important;letter-spacing:-.04em!important;line-height:1.4!important}
