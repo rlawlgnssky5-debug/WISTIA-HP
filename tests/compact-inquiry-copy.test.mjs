@@ -25,8 +25,8 @@ AR 축가 SOLO (1인·1시간)
 유입 경로 : 선택 안 함
 
 ※ 예약 가능 여부는 상담에서 확정돼요`)
-const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:30',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'1절 녹음 추가',amount:60000}],paybacks:[{label:'블로그 리뷰',amount:30000},{label:'인스타그램 후기',amount:10000}],paybackTotal:40000}})
-assert.match(full,/추가 옵션 :\n· 가사 영상 \(\+40,000원\)\n· 1절 녹음 추가 \(\+60,000원\)/)
+const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:30',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'추가 1곡 1절 녹음',amount:60000}],paybacks:[{label:'블로그 리뷰',amount:30000},{label:'인스타그램 후기',amount:10000}],paybackTotal:40000}})
+assert.match(full,/추가 옵션 :\n· 가사 영상 \(\+40,000원\)\n· 추가 1곡 1절 녹음 \(\+60,000원\)/)
 assert.match(full,/예상 금액 : 220,000원\n기본 120,000원 \+ 옵션 100,000원/)
 assert.match(full,/후기 페이백 :\n· 블로그 리뷰 \(−30,000원\)\n· 인스타 후기 \(−10,000원\)\n페이백 합계 : −40,000원/)
 assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15시 30분/)

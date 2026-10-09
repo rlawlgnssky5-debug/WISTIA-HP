@@ -27,7 +27,7 @@ try{
     for(const day of ['09','18','25']){const cell=calendar.locator(`[data-calendar-day="2026-10-${day}"]`);assert.equal(await cell.isDisabled(),true);assert.match(await cell.innerText(),/마감/);assert.match(await cell.getAttribute('aria-label'),/마감/)}
     for(const day of ['01','02','03','04','05','06','07','12','13','14']){const cell=calendar.locator(`[data-calendar-day="2026-10-${day}"]`);assert.equal(await cell.isDisabled(),true);assert.equal(await cell.innerText(),String(Number(day)))}
    }
-   await calendar.locator('[data-calendar-day="2026-10-11"]').click();assert.equal(await calendar.isVisible(),true);await calendar.locator('[data-calendar-close]').click();assert.equal(await trigger.getAttribute('aria-expanded'),'false');assert.match(await trigger.innerText(),/2026년 10월 11일 \(일\)/);assert.match(await trigger.innerText(),/변경/)
+   await calendar.locator('[data-calendar-day="2026-10-11"]').click();assert.equal(await calendar.isVisible(),true);await calendar.locator('[data-calendar-close]').click();assert.equal(await trigger.getAttribute('aria-expanded'),'false');assert.match(await page.locator(`[data-calendar-summary="${key}"]`).innerText(),/선택한 날짜: 10월 11일 \(일\)/)
    let time=null
    if(key==='bookingDate'){
     await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
@@ -41,15 +41,15 @@ try{
     const lastTime=page.locator('[data-calendar-time="23:00"]');await lastTime.scrollIntoViewIfNeeded();assert.ok(await lastTime.evaluate(n=>n.getBoundingClientRect().bottom<document.querySelector('.inquiry-actions').getBoundingClientRect().top))
     const closed=page.locator('[data-calendar-time="16:30"]');assert.match(await closed.innerText(),/마감/);assert.ok(await closed.evaluate(n=>n.scrollWidth<=n.clientWidth))
    }
-   await trigger.click();await calendar.waitFor({state:'visible'});await calendar.locator('[data-calendar-close]').click();assert.equal(await calendar.isVisible(),false);assert.equal(await trigger.evaluate(n=>n===document.activeElement),true)
+   await trigger.click();await calendar.waitFor({state:'visible'});await calendar.locator('[data-calendar-close]').click();assert.equal(await calendar.isVisible(),false);assert.equal(await mode.evaluate(n=>n===document.activeElement),true)
    await trigger.click();await calendar.waitFor({state:'visible'});await page.locator(`[data-contact-date-mode="${key}"][value="unknown"]`).check();assert.equal(await calendar.isVisible(),false);assert.equal(await page.locator(`#contact-${key}`).isDisabled(),true)
    await mode.check();await calendar.waitFor({state:'visible'});await calendar.locator('[data-calendar-year]').selectOption('2027');await calendar.locator('[data-calendar-month]').selectOption('4')
-   const last=calendar.locator('[data-calendar-day="2027-05-31"]');await last.scrollIntoViewIfNeeded()
+   const last=calendar.locator('[data-calendar-day="2027-05-31"]');await last.evaluate(n=>window.scrollTo({top:window.scrollY+n.getBoundingClientRect().top-innerHeight/2,behavior:'instant'}))
    const lastRow=await page.evaluate(key=>{const n=document.querySelector('#calendar-'+key+' [data-calendar-day="2027-05-31"]'),r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,barTop:document.querySelector('.inquiry-actions').getBoundingClientRect().top,overflow:document.documentElement.scrollWidth-innerWidth,calendarHeight:document.querySelector('#calendar-'+key).getBoundingClientRect().height}},key)
    assert.equal(lastRow.overflow,0);assert.ok(lastRow.top>=0&&lastRow.bottom<lastRow.barTop,JSON.stringify(lastRow))
    await calendar.screenshot({path:`work/5-${width}-${key}.png`})
-   await calendar.locator('[data-calendar-close]').click();results.push({width,key,controls,time,lastRow,openToggle:true,selectionCloses:true,summaryChange:true,closeButton:true,unknownCloses:true})
-   console.log(`${width}px ${key}: open/toggle/select/auto-close/change/close/unknown, year-month text and last row passed`)
+   await calendar.locator('[data-calendar-close]').click();results.push({width,key,controls,time,lastRow,openToggle:true,selectionStaysOpen:true,summaryChange:true,closeButton:true,unknownCloses:true})
+   console.log(`${width}px ${key}: open/reopen/select-stays-open/change/explicit-close/unknown, year-month text and last row passed`)
   }
   await page.locator('[data-contact-date-mode="eventDate"][value="unknown"]').check()
   await page.locator('[data-calendar-trigger="bookingDate"]').click();const bookingCalendar=page.locator('#calendar-bookingDate');await bookingCalendar.locator('[data-calendar-year]').selectOption('2026');await bookingCalendar.locator('[data-calendar-month]').selectOption('9');await bookingCalendar.locator('[data-calendar-day="2026-10-11"]').click();await bookingCalendar.locator('[data-calendar-close]').click()

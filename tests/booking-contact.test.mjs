@@ -8,7 +8,7 @@ runInNewContext(read('js/contact-form.js'),context)
 const api=context.window.WistiaContact
 const markup=api.render()
 const keys=['source','service','eventDate','bookingDate','time']
-assert.equal((markup.match(/class="contact-field(?: |")/g)||[]).length,5)
+assert.equal((markup.match(/class="contact-field(?: |")/g)||[]).length,6)
 assert.doesNotMatch(markup,/contact-name|name="name"|성함/)
 for(const key of keys){
  assert.match(markup,new RegExp('for="contact-'+key+'"'))
@@ -65,6 +65,6 @@ assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
 assert.match(css,/input:focus-visible/)
 assert.match(css,/font-size:16px/)
 const page=read('contact.html')
-assert.match(page,/contact-form.js\?v=20261009-contact-calendar-11/)
+assert.match(page,/contact-form.js\?v=20261009-contact-calendar-12/)
 assert.match(page,/noindex,\s*follow/)
 console.log('Five contact fields without names, single start time, dropdown, clipboard text, preserved draft and no server transmission passed')

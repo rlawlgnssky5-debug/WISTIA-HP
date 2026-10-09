@@ -52,9 +52,9 @@ assert.match(detail,/<details class="mas-event-disclosure"><summary>/,'native di
 assert.match(detail,/참여 혜택 최대 6만원/)
 assert.equal((detailGroups[0][2].match(/<li>/g)||[]).length,4)
 assert.doesNotMatch(detail,/<input|<form|data-event=/,'detail disclosure cannot change the inquiry selection')
-const gift='assets/img/studio-3d/gift-benefits-yellow-v1.webp'
+const gift='assets/img/interface/gift-icon.svg'
 assert.ok(detail.includes('<span class="mas-event-gift" aria-hidden="true"><img src="/'+gift+'" alt="" width="48" height="48"'),'the yellow 3D gift is decorative, not duplicated accessible content')
-assert.doesNotMatch(detail,/studio-icon-gift|🎁|gift\.svg/,'the selected gift is not replaced by an emoji or flat drawing')
+assert.doesNotMatch(detail,/studio-icon-gift|🎁/,'the selected gift is not replaced by an emoji or flat drawing')
 
 runInNewContext('let selectedEvents=new Set()',scope)
 for(const keys of [[],['weekday','blog'],events.map(event=>event.key)]){
@@ -115,7 +115,9 @@ for(const [path,digest] of [
 ])assert.equal(hash(bytes(path)),digest,path+' is preserved byte-for-byte')
 assert.match(finish,/\.mas-event-price strong,\.quote-effective,\.quote-effective strong\)\{color:#C62828!important/,'effective price remains red')
 
-const giftBytes=bytes(gift),manifest=JSON.parse(read(gift.replace('.webp','.json')))
+const rasterGift='assets/img/studio-3d/gift-benefits-yellow-v1.webp'
+assert.match(read(gift),/<svg[^>]*viewBox="0 0 256 256"/)
+const giftBytes=bytes(rasterGift),manifest=JSON.parse(read(rasterGift.replace('.webp','.json')))
 assert.equal(giftBytes.subarray(0,4).toString(),'RIFF')
 assert.equal(giftBytes.subarray(8,16).toString(),'WEBPVP8X')
 assert.equal(giftBytes.readUInt32LE(4)+8,giftBytes.length)
@@ -123,7 +125,7 @@ assert.ok(giftBytes[20]&0x10,'transparency is preserved in the generated WebP')
 assert.equal(giftBytes.readUIntLE(24,3)+1,256)
 assert.equal(giftBytes.readUIntLE(27,3)+1,256)
 assert.ok(giftBytes.length<25000,'the gift stays compact enough for a small UI image')
-assert.equal(manifest.output,gift)
+assert.equal(manifest.output,rasterGift)
 assert.equal(manifest.transparent,true)
 assert.match(manifest.mode,/built-in image_gen/)
 assert.match(manifest.prompt,/3D/)
@@ -137,7 +139,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261009-contact-calendar-11/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261009-contact-calendar-12/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
 console.log('Yellow gift, four paybacks, 48 calculations, selection preservation, protected assets and caches passed')

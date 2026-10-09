@@ -5,6 +5,7 @@ import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const app=read('js/app.js'),css=read('css/detail-point-system.css')
 const scope={
+ EXTRA_RECORDING_OPTIONS:[],
  PRODUCTS:{solo:{normal:120000,resultVideo:'assets/video/groom-wedding-song-ar.mp4'},duo:{normal:160000,resultVideo:'assets/video/duo-wedding-song-ar.mp4'}},
  AR_DETAIL_CONTENT:{solo:{poster:'assets/img/ar-detail/solo-live-proof.jpg'},'duet-film':{poster:'story.jpg',videoLabel:'스토리'}},
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
@@ -27,12 +28,12 @@ for(const key of ['solo','duo']){
  assert.deepEqual(labels(html),['POINT 01','POINT 02','POINT 03','POINT 04','POINT 05'])
  assert.ok(html.includes('src="'+data.src+'"'))
  assert.ok(html.includes('poster="'+data.poster+'"'))
- assert.match(html,/가사 영상 추가 옵션 · \+40,000원/)
+ assert.match(html,/가사 영상 추가 옵션 · 1곡 기준 · \+40,000원/)
  for(const path of [data.src,data.poster])assert.ok(existsSync(new URL('../'+path,import.meta.url)),path)
 }
 const story=scope.filmCommerceDetail({videoUrl:'https://www.youtube.com/embed/aSKrlQwmnHI',faq:[]},'duet-film')
 assert.deepEqual(labels(story),['POINT 01','POINT 02','POINT 03','POINT 04'])
-assert.match(story,/영상에 담길 목소리도<br>자연스럽게 완성합니다/)
+assert.match(story,/보컬 보정 비포 애프터/)
 assert.doesNotMatch(story,/목소리를 완성하는 작업|노래는 한 소절씩|arRatioExperience|POINT 05/)
 assert.equal((story.match(/id="wistiaBeforeAfterTitle"/g)||[]).length,1)
 assert.match(story,/350,000/)
@@ -56,5 +57,5 @@ assert.match(css,/prefers-reduced-motion:no-preference/)
 assert.match(css,/data-studio-motion="on"/)
 assert.match(css,/prefers-reduced-motion:reduce/)
 assert.match(css,/folder-cue-nudge 2\.8s ease-in-out 3/)
-assert.match(app,/studio-folder-art studio-folder-3d" aria-hidden="true"><img src="assets\/img\/studio-3d\/folder\.webp" alt=""/)
+assert.match(app,/studio-folder-art studio-folder-3d" aria-hidden="true"><img src="assets\/img\/interface\/folder-icon\.svg" alt=""/)
 console.log('AR and story POINT order, product-specific video swaps, fees and restrained folder cues passed')

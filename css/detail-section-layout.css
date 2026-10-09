@@ -111,3 +111,15 @@ html #app#app#app#app .ar-commerce-detail .mas-location::after{content:none!impo
  html #app#app#app#app .ar-commerce-detail{padding-bottom:112px!important}
  html #app#app#app#app .ar-commerce-detail .mas-map-links{scroll-margin-bottom:160px}
 }
+
+/* A restrained, consistent POINT badge; keep its high contrast and center axis. */
+html #app#app#app#app :is(.ar-commerce-detail .detail-point-label,.ar-commerce-detail .price-reason-label,.we-home .home-point-layout .we-section-tag){min-height:31px!important;padding:7px 14px!important;font-size:10px!important;letter-spacing:.056em!important;border-radius:4px!important}
+html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .detail-point-number{font-size:15px!important}
+html #app#app#app#app .vocal-comparison-title .svg-section-text{white-space:nowrap!important;font-size:clamp(20px,5.4vw,36px)!important;letter-spacing:-.04em!important;line-height:1.4!important}
+html #app#app#app#app .detail-recording-options{box-sizing:border-box;width:100%;max-width:900px;margin:0 auto;padding:56px 24px;text-align:center;background:#F5F4F0}
+html #app#app#app#app .detail-recording-options :is(h2,h3,p){text-align:center;margin-inline:auto}
+html #app#app#app#app .detail-recording-option-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:800px;margin:24px auto 0}
+html #app#app#app#app .detail-recording-option-list article{min-width:0;background:#FFFCF5;border:1px solid #d8d5cd;border-radius:8px;padding:24px 16px}
+@media(max-width:600px){html #app#app#app#app .detail-recording-option-list{grid-template-columns:1fr}}
+html #app#app#app#app .detail-recording-options :is(h2.svg-section-title,h3.svg-item-title){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important}
+html #app#app#app#app .detail-recording-options .svg-title-icon{margin:0!important}

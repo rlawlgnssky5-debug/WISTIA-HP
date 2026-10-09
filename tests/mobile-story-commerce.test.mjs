@@ -4,7 +4,7 @@ import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const source=read('js/app.js'),css=read('css/mobile-ar-solo.css')
-const scope={
+const scope={EXTRA_RECORDING_OPTIONS:[],
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,shortWon:n=>(n/10000)+'만원',
  arExpertStory:()=>'<section><header><h2>영상·사운드 제작</h2></header></section>',
  soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2>실제 고객 후기</h2><p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p></header></section>',

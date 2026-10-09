@@ -6,7 +6,7 @@
   ['bookingDate','녹음 방문일 (스튜디오 예약일)','희망 날짜 / 예약 가능 여부는 상담에서 확인'],
   ['time','희망 시간','13시부터 ~ 23시까지']
  ]
- const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart'])
+ const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
  const timeOptions=Array.from({length:21},(_,index)=>{const hour=13+Math.floor(index/2),minute=index%2?'30':'00';return '<option value="'+hour+':'+minute+'">'+hour+'시'+(minute==='30'?' 30분':'')+'</option>'}).join('')
@@ -54,7 +54,7 @@
  }
  function closeCalendar(state){
   if(!state)return
-  state.calendar.hidden=true;state.trigger.setAttribute('aria-expanded','false')
+  state.calendar.hidden=true;state.trigger.setAttribute('aria-expanded','false');paintCalendar(state)
  }
  function positionCalendar(state){
   state.calendar.style.width='100%';state.calendar.style.left='';state.calendar.style.top=''
@@ -67,7 +67,7 @@
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
   calendar.querySelector('[data-calendar-selection]').textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
-  if(state.trigger){state.trigger.querySelector('[data-calendar-display]').textContent=displayDate(input.value);state.trigger.querySelector('[data-calendar-action]').textContent=input.value?'변경':'달력 열기'}
+  const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
   grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
@@ -105,9 +105,6 @@
    const date=(input.value>=calendarToday()?parseDate(input.value):null)||parseDate(calendarToday()),trigger=form.querySelector('[data-calendar-trigger="'+key+'"]')
    const mode=form.querySelector('[data-contact-date-mode="'+key+'"][value="date"]')
    state={calendar,key,input,trigger,mode,year:date.getUTCFullYear(),month:date.getUTCMonth()};calendarStates.set(calendar,state)
-   trigger.addEventListener('click',()=>openDateCalendar(state))
-   // Keep touch focus on the control until its click toggles the calendar.
-   mode.closest('label').addEventListener('pointerdown',event=>{if(event.isPrimary&&event.button===0)event.preventDefault()})
    mode.closest('label').addEventListener('click',event=>{
     if(event.target===mode){openDateCalendar(state);return}
     // Native label forwarding focuses the hidden radio and can scroll the page.
@@ -116,7 +113,7 @@
    })
    calendar.addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button||button.disabled)return
-    if(button.hasAttribute('data-calendar-close')){closeCalendar(state);state.trigger.focus({preventScroll:true});return}
+    if(button.hasAttribute('data-calendar-close')){closeCalendar(state);state.mode.focus({preventScroll:true});return}
     if(button.hasAttribute('data-calendar-move')){changeMonth(state,Number(button.dataset.calendarMove));return}
     const value=button.dataset.calendarDay
     if(value&&selectableBookingDate(value,key)){
@@ -133,7 +130,7 @@
    calendar.addEventListener('keydown',event=>{
     const value=event.target.dataset.calendarDay;if(!value)return
     const moves={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}
-    if(event.key==='PageUp'||event.key==='PageDown'){event.preventDefault();changeMonth(state,(event.key==='PageUp'?-1:1)*(event.shiftKey?12:1));calendar.querySelector('.calendar-day[tabindex="0"]')?.focus();return}
+    if(event.key==='PageUp'||event.key==='PageDown'){event.preventDefault();changeMonth(state,(event.key==='PageUp'?-1:1)*(event.shiftKey?12:1));calendar.querySelector('.calendar-day[tabindex="0"]')?.focus({preventScroll:true});return}
     const amount=moves[event.key];if(!amount)return
     event.preventDefault();const date=parseDate(value);date.setUTCDate(date.getUTCDate()+amount)
     for(let i=0;i<42&&!selectableBookingDate(isoDate(date),key);i++){if(isoDate(date)<calendarToday())return;date.setUTCDate(date.getUTCDate()+Math.sign(amount))}
@@ -149,25 +146,26 @@
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate')
   if(!list||!time||!date)return
   const known=!date.disabled&&!!parseDate(date.value)
-  list.hidden=!known;time.closest('label').hidden=known
+  list.hidden=false;time.closest('label').hidden=true;time.disabled=!known
+  form.querySelector('[data-time-date-hint]').hidden=known
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.calendarTime:null
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
-  list.innerHTML=[...time.options].map(option=>'<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'" data-calendar-time="'+option.value+'"'+(option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(option.disabled?'<small>'+closedLabel+'</small>':'')+'</button>').join('')
+  list.innerHTML=[...time.options].map(option=>'<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'" data-calendar-time="'+option.value+'"'+(!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(known&&option.disabled?'<small>'+closedLabel+'</small>':'')+'</button>').join('')
   if(!list.dataset.mounted){
    list.dataset.mounted='true'
    list.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;time.value=button.dataset.calendarTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimeChoices(form)})
    list.addEventListener('keydown',event=>{
     if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return
     const buttons=[...list.querySelectorAll('button:not(:disabled)')],index=buttons.indexOf(event.target);if(index<0)return
-    event.preventDefault();const columns=global.getComputedStyle(list).gridTemplateColumns.split(' ').length,amount={ArrowLeft:-1,ArrowRight:1,ArrowUp:-columns,ArrowDown:columns}[event.key];buttons[(index+amount+buttons.length)%buttons.length]?.focus()
+    event.preventDefault();const columns=global.getComputedStyle(list).gridTemplateColumns.split(' ').length,amount={ArrowLeft:-1,ArrowRight:1,ArrowUp:-columns,ArrowDown:columns}[event.key];buttons[(index+amount+buttons.length)%buttons.length]?.focus({preventScroll:true})
    })
   }
-  if(focused!==null)list.querySelector('[data-calendar-time="'+focused+'"]')?.focus()
+  if(focused!==null)list.querySelector('[data-calendar-time="'+focused+'"]')?.focus({preventScroll:true})
  }
  function dateField(key,label){
-  return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<button type="button" class="calendar-trigger" data-calendar-trigger="'+key+'" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendar-'+key+'"><span data-calendar-display>날짜를 선택해 주세요</span><span data-calendar-action>달력 열기</span>'+calendarIcon('next')+'</button>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
+  return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label data-calendar-trigger="'+key+'" aria-expanded="false" aria-controls="calendar-'+key+'"><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<p class="contact-date-summary" data-calendar-summary="'+key+'" aria-live="polite" hidden></p>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
- function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
+ function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="희망 시작 시간" hidden></div><p data-time-date-hint>날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><em>13시~23시 · 희망 시작 시간을 선택해 주세요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -192,7 +190,7 @@
   const ordered=integrated?['source','eventDate','bookingDate','time'].map(key=>fields.find(field=>field[0]===key)):fields
   const renderedInputs=ordered.map(([key,label,hint])=>{
    if(key==='eventDate'||key==='bookingDate')return dateField(key,label)
-   if(key==='time')return timeField()
+   if(key==='time')return timeField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" placeholder="예) 둘이 같이 와요, 키를 낮추고 싶어요 등 편하게 적어 주세요"></textarea></label>'
    const id='contact-'+key
    let input
    if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음','축가 스토리 필름'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
@@ -262,7 +260,9 @@
   if(info.paybacks.length){lines.push('후기 페이백 :');info.paybacks.forEach(p=>lines.push('· '+shortLabel(p.label)+' (−'+money(p.amount)+')'));lines.push('페이백 합계 : −'+money(info.paybackTotal))}else lines.push('후기 페이백 : 없음')
   const date=key=>{const parsed=values[key+'Mode']==='unknown'?null:parseDate(values[key]);if(!parsed)return '미정';return (String(parsed.getUTCFullYear())!==calendarToday().slice(0,4)?parsed.getUTCFullYear()+'년 ':'')+(parsed.getUTCMonth()+1)+'월 '+parsed.getUTCDate()+'일 ('+weekdays[parsed.getUTCDay()]+')'}
   const time=/^(\d{1,2}):(\d{2})$/.exec(values.timeStart||'')
-  lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'희망 시간 : '+(time?Number(time[1])+'시'+(Number(time[2])?' '+Number(time[2])+'분':''):'미정'),'━━━━━━━━━━━━','유입 경로 : '+(String(values.source||'').trim()||'선택 안 함'),'','※ 예약 가능 여부는 상담에서 확정돼요')
+  lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'희망 시간 : '+(time?Number(time[1])+'시'+(Number(time[2])?' '+Number(time[2])+'분':''):'미정'),'━━━━━━━━━━━━')
+  const notes=String(values.specialNotes||'').trim();if(notes)lines.push('특이사항',notes,'━━━━━━━━━━━━')
+  lines.push('유입 경로 : '+(String(values.source||'').trim()||'선택 안 함'),'','※ 예약 가능 여부는 상담에서 확정돼요')
   return lines.join('\n')
  }
  global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}

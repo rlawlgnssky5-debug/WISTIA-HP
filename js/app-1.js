@@ -410,18 +410,21 @@ const BASE_FILM_FORMAT = {
 const FILM_REVISION_NOTICE = {key:"extra-revision",label:"추가 수정 안내",detail:"기본 수정 3회까지 무료이며 4회차부터는 1회당 10,000원입니다",notice:true}
 const PRODUCT_OPTIONS = {
   wedding:[
-    {key:"extra-verse",label:"1절 녹음 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-verse",label:"추가 1곡 1절 녹음",durationLabel:"녹음 30분 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-full",label:"추가 1곡 완곡 녹음",durationLabel:"녹음 1시간 추가",detail:"다른 곡 한 곡을 처음부터 끝까지 추가로 녹음해요. 녹음·튠·믹스 포함",price:120000},
     {key:"rush",label:"3일 이내 빠른 작업",detail:"빠른 작업을 원하실 경우 선택해 주세요",price:30000},
     FILM_REVISION_NOTICE
   ],
   "duet-film":[
-    {key:"extra-verse",label:"1절 녹음 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-verse",label:"추가 1곡 1절 녹음",durationLabel:"녹음 30분 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-full",label:"추가 1곡 완곡 녹음",durationLabel:"녹음 1시간 추가",detail:"다른 곡 한 곡을 처음부터 끝까지 추가로 녹음해요. 녹음·튠·믹스 포함",price:120000},
     {key:"extra-shoot",label:"추가 촬영",detail:"기본 구성 외 촬영이 필요한 경우 상담으로 확인합니다"},
     {key:"extra-material",label:"사진·영상 자료 추가 구성",detail:"보유 자료를 더 활용하고 싶을 때 선택합니다"},
     FILM_REVISION_NOTICE
   ],
   "solo-film":[
-    {key:"extra-verse",label:"1절 녹음 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-verse",label:"추가 1곡 1절 녹음",durationLabel:"녹음 30분 추가",detail:"다른 곡 1절(입장곡 등)을 추가로 녹음해요. 녹음·튠·믹스 포함",price:60000},
+    {key:"extra-full",label:"추가 1곡 완곡 녹음",durationLabel:"녹음 1시간 추가",detail:"다른 곡 한 곡을 처음부터 끝까지 추가로 녹음해요. 녹음·튠·믹스 포함",price:120000},
     FILM_REVISION_NOTICE
   ],
   proposal:[
