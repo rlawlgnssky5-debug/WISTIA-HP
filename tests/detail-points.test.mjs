@@ -33,7 +33,7 @@ for(const key of ['solo','duo']){
 }
 const story=scope.filmCommerceDetail({videoUrl:'https://www.youtube.com/embed/aSKrlQwmnHI',faq:[]},'duet-film')
 assert.deepEqual(labels(story),['POINT 01','POINT 02','POINT 03','POINT 04'])
-assert.match(story,/보컬 보정 비포 애프터/)
+assert.match(story,/노래를 다듬은 전후 비교/)
 assert.doesNotMatch(story,/목소리를 완성하는 작업|노래는 한 소절씩|arRatioExperience|POINT 05/)
 assert.equal((story.match(/id="wistiaBeforeAfterTitle"/g)||[]).length,1)
 assert.match(story,/350,000/)

@@ -14,7 +14,7 @@ await test('Shared comparisons and inquiry headings contain no repeated copy',()
  scope.renderBeforeAfterPage()
  const markup=scope.app.innerHTML
  assert.equal((markup.match(/<h[12]\b/g)||[]).length,1)
- assert.match(markup,/<h1[^>]*class="vocal-comparison-title"[^>]*>보컬 보정 비포 애프터<\/h1>/)
+ assert.match(markup,/<h1[^>]*class="vocal-comparison-title"[^>]*>노래를 다듬은 전후 비교<\/h1>/)
  assert.equal((markup.match(/같은 녹음본/g)||[]).length,1)
  assert.match(markup,/보정 전후를 직접 들어보세요/)
  assert.doesNotMatch(markup,/wistia-ba-eyebrow|전후 차이를 직접|같은 녹음, 다른 완성도/)
@@ -31,7 +31,7 @@ await test('Shared comparisons and inquiry headings contain no repeated copy',()
 })
 let playwright,executable,skip=false
 try{playwright=createRequire(import.meta.url)('playwright');executable=process.env.WISTIA_BROWSER_EXECUTABLE||(existsSync('/usr/bin/chromium')?'/usr/bin/chromium':playwright.chromium.executablePath());if(!existsSync(executable))skip='Chromium is not installed'}catch(error){if(error.code!=='MODULE_NOT_FOUND')throw error;skip='Playwright is not installed'}
-await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip,timeout:240000},async()=>{
+await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip,timeout:300000},async()=>{
  const probe=createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{cwd:root,env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  let browser
@@ -43,11 +43,11 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    const page=await browser.newPage({viewport:{width,height:844},hasTouch:width<600,isMobile:width<600})
    await page.route('https://**/*',route=>route.abort())
    await page.route('**/api/availability?*',route=>{const q=new URL(route.request().url()).searchParams;return route.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks:[]}})})
-   for(const path of ['/before-after','/','/detail/solo','/detail/duo','/detail/duet-film','/info/location','/ar/self','/event/solo','/event/duo','/event/duet-film']){
+   for(const path of ['/before-after','/','/detail/solo','/detail/duo','/detail/duet-film','/info/location','/info/about','/events','/contact','/ar/friend','/ar/self','/event/solo','/event/duo','/event/duet-film']){
     await page.goto(`http://127.0.0.1:${port}${path}`,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor({state:'visible'});await page.evaluate(()=>document.fonts.ready)
     if(path==='/before-after'){
      assert.equal(await page.locator('#app h1,#app h2').count(),1)
-     assert.equal(await page.locator('#comparisonPageTitle').innerText(),'보컬 보정 비포 애프터')
+     assert.equal(await page.locator('#comparisonPageTitle').innerText(),'노래를 다듬은 전후 비교')
      assert.equal((await page.locator('.info-page-comparison').innerText()).match(/같은 녹음본/g).length,1)
      const centers=await page.evaluate(()=>{
       const center=n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}
@@ -64,6 +64,13 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     if(path==='/'){
      assert.equal(await page.locator('.we-meta').innerText(),'WISTIA')
      assert.equal(await page.locator('.we-review-wrap [data-solo-kicker]').count(),0)
+     assert.equal(await page.locator('.we-review-wrap [data-solo-sub]').innerText(),'카카오톡으로 받은 후기 원문 그대로예요')
+     const gaps=await page.evaluate(()=>['.we-cases','.we-review-wrap','#homeSound'].map(selector=>{const s=document.querySelector(selector);return {selector,gap:s.querySelector('.svg-title-icon').getBoundingClientRect().top-s.querySelector('.we-section-tag').getBoundingClientRect().bottom}}))
+     for(const {gap} of gaps)assert.ok(Math.abs(gap-20)<=1,'every home POINT intro has the same 20px badge/icon gap')
+     const videoTitle=page.locator('.home-cases-title .svg-section-text')
+     assert.equal(await videoTitle.locator('br').count(),0)
+     assert.equal(await videoTitle.innerText(),'말보다 먼저, 목소리가 전한 마음')
+     results.push({width,path,pointBadgeIconGaps:gaps})
      const processTitle=page.locator('#homeExpert>details>summary .process-folder-label>strong')
      assert.equal(await processTitle.innerText(),'녹음부터 완성까지')
      assert.equal(await processTitle.evaluate(n=>n.getBoundingClientRect().height<=parseFloat(getComputedStyle(n).lineHeight)+1),true,'home process title is one line')
@@ -77,8 +84,40 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
      const offsets=await page.locator('.detail-point-label').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().width).map(n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}))
      for(const offset of offsets)assert.ok(Math.abs(offset)<=1,`${path} POINT center ${offset}`)
     }
+    if(path==='/info/location')assert.doesNotMatch(await page.locator('#app').innerText(),/지하철 안내|주차 안내|위스티아 · 경기도 부천|위스티아는 경기도 부천에 있습니다/)
+    if(path==='/info/about'){
+     assert.equal(await page.locator('#specialistTitle').innerText(),'함께 완성하는 전문가들')
+     assert.doesNotMatch(await page.locator('.wistia-specialists header').innerText(),/각 분야의 전문가/)
+    }
+    if(path==='/ar/self'||path==='/ar/friend'){
+     const headings=page.locator('.service-list').locator('..').locator('.section-heading')
+     assert.equal(await headings.innerText(),'녹음 인원 선택')
+    }
+    if(path==='/'||path.startsWith('/detail/')){
+     assert.equal(await page.locator('#soloReviewTitle').innerText(),'직접 남겨 주신 이야기')
+     if(path==='/'){
+      assert.match(await page.locator('#homeSound .we-section-tag').innerText(),/POINT 05 · 보컬 보정/)
+      assert.doesNotMatch(await page.locator('.we-cases-guide').innerText(),/실제 제작 영상/)
+     }
+    }
+    for(const n of await page.locator('.single-line-heading .svg-section-text').evaluateAll(nodes=>nodes.map(n=>({height:n.getBoundingClientRect().height,lineHeight:parseFloat(getComputedStyle(n).lineHeight),width:n.getBoundingClientRect().width,scrollWidth:n.scrollWidth})))){assert.ok(n.height<=n.lineHeight+1,'short heading is one line');assert.ok(n.scrollWidth<=n.width+1,'short heading fits')}
+    if(path==='/events'||path==='/contact'||path.startsWith('/event/')||path.startsWith('/detail/')){
+     const card=page.locator('.benefit-kind-card[data-benefit-type="payback"]').first()
+     assert.equal(await card.locator('.benefit-kind-timing').count(),0)
+     const cardText=await card.textContent();assert.match(cardText,/참여 조건 충족 확인 후 돌려드리는 금액이며/);assert.match(cardText,/결제 금액에서 미리 차감하지 않습니다/)
+    }
     if(path==='/ar/self')assert.equal((await page.locator('.ratio-guide').innerText()).match(/결정합니다/g).length,1)
     if(path==='/info/location')assert.equal((await page.locator('#app').innerText()).match(/300m/g).length,1)
+    if(path.startsWith('/event/')||path==='/contact'){
+     const hint=page.locator('[data-time-date-hint]')
+     for(const undecided of [false,true]){
+      if(undecided)await page.locator('[data-contact-date-mode="bookingDate"][value="unknown"]').locator('..').click()
+      assert.equal(await hint.isVisible(),true)
+      const gap=await hint.evaluate(n=>n.getBoundingClientRect().top-n.closest('fieldset').querySelector('legend').getBoundingClientRect().bottom)
+      assert.ok(Math.abs(gap-16)<=1,'initial/undecided time hint starts below its floating legend')
+      results.push({width,path,timeGuidanceLegendGap:gap,undecided})
+     }
+    }
     if(path.startsWith('/event/')){
      const label=page.locator('#bookingSource .sr-only'),style=await label.evaluate(n=>({width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,position:getComputedStyle(n).position,clip:getComputedStyle(n).clipPath}))
      assert.deepEqual(style,{width:1,height:1,position:'absolute',clip:'inset(50%)'})
@@ -95,7 +134,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    await page.close()
   }
   mkdirSync(root+'work',{recursive:true})
-  writeFileSync(root+'work/8-browser-results.json',JSON.stringify(results,null,2))
-  console.log('8: 30 page/viewport combinations passed; comparison center axes within 1px, icons above title, single-column player; comparisons remain one line, labels clipped, POINT centers within 1px, SVG loaded, no horizontal overflow')
+  writeFileSync(root+'work/9d-browser-results.json',JSON.stringify(results,null,2))
+  console.log('9: 42 page/viewport combinations passed; comparison center axes within 1px, icons above title, single-column player; comparisons remain one line, labels clipped, POINT centers within 1px, SVG loaded, no horizontal overflow')
  }finally{await browser?.close();server.kill()}
 })

@@ -2,10 +2,10 @@
 import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
 const {chromium}=createRequire(import.meta.url)('playwright')
-const browser=await chromium.launch({executablePath:process.env.LAYOUT_BROWSER||'/usr/bin/chromium',headless:true,args:['--no-sandbox']})
-const base=process.argv[2]||'http://127.0.0.1:4175'
+const browser=await chromium.launch({...(process.env.WISTIA_BROWSER_EXECUTABLE?{executablePath:process.env.WISTIA_BROWSER_EXECUTABLE}:{}),headless:true,args:['--no-sandbox']})
+const base=process.argv[2]||process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175'
 try{
- for(const width of [320,390,1440]){
+ for(const width of [320,360,390,1280]){
   const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage(),errors=[]
   page.on('pageerror',error=>errors.push(error.message))
   await page.clock.install({time:new Date('2026-10-08T03:00:00Z')})
@@ -70,7 +70,7 @@ try{
   await calendar.locator('[data-calendar-day="2026-10-16"]').click()
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   const times=page.locator('[data-calendar-times]');assert.equal(await times.isVisible(),true)
-  const blocked=times.locator('[data-calendar-time="14:30"]');assert.equal(await blocked.isDisabled(),true);assert.match(await blocked.innerText(),/마감/)
+  const blocked=times.locator('[data-calendar-time="15:00"]');assert.equal(await blocked.isDisabled(),true);assert.match(await blocked.innerText(),/마감/)
   await times.locator('[data-calendar-time="13:00"]').click()
   assert.equal(await page.locator('#contact-time').inputValue(),'13:00')
   assert.equal(await times.locator('[data-calendar-time="13:00"]').getAttribute('aria-checked'),'true')
@@ -88,7 +88,7 @@ try{
   assert.equal(await page.locator('[data-calendar-day="2026-10-10"]').isDisabled(),true,'DUET has no possible starts')
   assert.equal(rangeRequests,1,'product switch reuses month data')
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
-  assert.equal(await page.locator('[data-calendar-time="13:30"]').isDisabled(),true,'DUET duration closes overlapping starts')
+  assert.equal(await page.locator('[data-calendar-time="14:00"]').isDisabled(),true,'DUET duration closes overlapping starts')
   await page.evaluate(()=>{window.calendarCopied='';navigator.clipboard.writeText=async text=>{window.calendarCopied=text}})
   const before=requests;await page.locator('.contact-submit').click()
   await page.waitForFunction(()=>window.calendarCopied.includes('방문 희망일'))
@@ -107,7 +107,10 @@ try{
   await page.locator('[data-contact-date-mode="bookingDate"][value="unknown"]').check()
   assert.equal(await calendar.isVisible(),false)
   assert.equal(await page.locator('#contact-bookingDate').isDisabled(),true)
-  assert.equal(await times.isVisible(),true)
+  assert.equal(await times.isVisible(),false)
+  assert.equal(await times.locator('button:visible').count(),0)
+  assert.equal(await page.locator('[data-time-date-hint]').isVisible(),true)
+  assert.equal(await page.locator('[data-time-date-hint]').innerText(),'날짜가 정해지면 카카오톡으로 시간을 같이 맞춰 드릴게요')
   assert.equal(await page.locator('#contact-time').isVisible(),false)
   assert.equal(await times.locator('button:not(:disabled)').count(),0)
   assert.equal(errors.length,0,errors.join('\n'))

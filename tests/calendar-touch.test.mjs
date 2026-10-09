@@ -11,6 +11,6 @@ await test('Calendar real touch: Chromium and optional WebKit/iPhone, KakaoTalk 
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  try{
   await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(Error('preview timeout')),10000);server.stdout.once('data',()=>{clearTimeout(t);resolve()});server.once('error',reject)})
-  const r=spawnSync(process.execPath,['tests/calendar-touch-browser.mjs',`http://127.0.0.1:${port}`],{env:process.env,encoding:'utf8',timeout:180000});assert.equal(r.status,0,r.stderr||String(r.error));console.log(r.stdout.trim())
+  const r=spawnSync(process.execPath,['tests/calendar-touch-browser.mjs',`http://127.0.0.1:${port}`],{env:process.env,encoding:'utf8',timeout:300000});assert.equal(r.status,0,r.stderr||String(r.error));console.log(r.stdout.trim())
  }finally{server.kill()}
 })

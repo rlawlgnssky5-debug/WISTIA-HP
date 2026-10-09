@@ -21,9 +21,11 @@ try{
   const calendar=page.locator('#calendar-bookingDate')
   await page.waitForFunction(()=>!!window.WistiaBooking)
   while(!pending.length)await page.waitForTimeout(20)
-  assert.equal(await calendar.locator('[data-calendar-day="2026-10-09"]').isDisabled(),false,'pending range does not invent closures')
+  assert.equal(await calendar.locator('[data-calendar-day="2026-10-09"]').isDisabled(),true,'pending range remains disabled until availability is verified')
+  assert.doesNotMatch(await calendar.locator('[data-calendar-day="2026-10-09"]').innerText(),/마감/,'pending range does not invent Notion closures')
+  assert.match(await calendar.locator('[data-calendar-day="2026-10-09"]').getAttribute('aria-label'),/확인 중/)
   pending.shift()()
-  await page.waitForFunction(()=>document.querySelector('#calendar-bookingDate [data-calendar-day="2026-10-09"]').disabled)
+  await page.waitForFunction(()=>document.querySelector('#calendar-bookingDate [data-calendar-day="2026-10-09"]').textContent.includes('마감'))
   assert.match(await calendar.locator('[data-calendar-day="2026-10-09"]').innerText(),/마감/,'late UTC full-day response repaints event/solo')
   for(const day of ['12','13','14']){const cell=calendar.locator(`[data-calendar-day="2026-10-${day}"]`);assert.equal(await cell.isDisabled(),true);assert.equal(await cell.innerText(),String(Number(day)))}
   assert.equal(await page.locator('#contact-bookingDate-hint').count(),0)

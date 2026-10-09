@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),app=read('js/app.js')
+assert.match(app,/POINT 05 · 보컬 보정/)
+assert.doesNotMatch(app,/POINT 05 · 비포 애프터|보컬 보정 비포 애프터/)
+assert.match(app,/class="vocal-comparison-title"[^>]*>노래를 다듬은 전후 비교/)
+assert.match(app,/<h2 class="single-line-heading home-cases-title">말보다 먼저, 목소리가 전한 마음<\/h2>/)
+assert.match(app,/data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요/)
+assert.match(read('css/booking-availability.css'),/\[data-time-date-hint\]\{[^}]*clear:both/)
+assert.match(read('js/svg-interface.js'),/노래를 다듬은/)
+const calendarTest=read('tests/contact-calendar-browser.mjs')
+assert.doesNotMatch(calendarTest,/\/usr\/bin\/chromium|process\.env\.LAYOUT_BROWSER/)
+assert.match(calendarTest,/await times\.isVisible\(\),false/)
+assert.equal(JSON.parse(read('wistia-config.json')).build,'20261009-detail-polish-9d')
+console.log('9d: distinct one-line POINT copy, cleared guidance, SVG mapping, portable browser default and current build passed')

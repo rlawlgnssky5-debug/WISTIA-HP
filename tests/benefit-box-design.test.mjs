@@ -32,11 +32,11 @@ assert.deepEqual(events,[
 const checkGroups=html=>{
  const groups=[...html.matchAll(/<section class="[^"]*benefit-kind-card" data-benefit-type="(discount|payback)"[^>]*>([\s\S]*?)<\/section>/g)]
  assert.deepEqual(groups.map(match=>match[1]),['payback'],'two separate boxes in payment order')
- for(const [index,type,title,maximum,timing] of [[0,'payback','후기 페이백','6만원','조건 확인 후 지급']]){
+ for(const [index,type,title,maximum,timing] of [[0,'payback','후기 페이백','6만원','']]){
   const group=groups[index][2]
   assert.match(group,new RegExp('<h[24]>'+title+'</h[24]>'))
   assert.ok(group.includes('class="benefit-kind-limit">최대 '+maximum+'</strong>'))
-  assert.ok(group.includes('class="benefit-kind-timing">'+timing+'</span>'))
+  assert.doesNotMatch(group,/benefit-kind-timing|조건 확인 후 지급/)
   for(const event of events){
    assert.equal(group.includes(event.label),event.type===type,event.key+' is only in its correct box')
    assert.equal(group.includes(event.detail),event.type===type,event.key+' keeps its full condition')
@@ -139,7 +139,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261009-detail-polish-8/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261009-detail-polish-9d/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
 console.log('Yellow gift, four paybacks, 48 calculations, selection preservation, protected assets and caches passed')

@@ -160,7 +160,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve))
  }
  const document={createElement(tag){return new Element(tag,this)},createTextNode(value){return new TextNode(value,this)}}
  const root=document.createElement('main'),records=[]
- for(const [titleText,name] of [['상품 소개','package'],['실제 고객 후기','chat'],['왜 저렴한가요?','receipt'],['제작 과정','workflow'],['후기 페이백','refund'],['AR 비율을 골라보세요','mix'],['위스티아의 장점','shield'],['두 사람의 인터뷰','microphone'],['서로에게 전하는 편지','letter'],['부천에서 만나요','pin']]){
+ for(const [titleText,name] of [['상품 소개','package'],['직접 남겨 주신 이야기','chat'],['왜 저렴한가요?','receipt'],['제작 과정','workflow'],['후기 페이백','refund'],['AR 비율을 골라보세요','mix'],['위스티아의 장점','shield'],['두 사람의 인터뷰','microphone'],['서로에게 전하는 편지','letter'],['부천에서 만나요','pin']]){
   const header=document.createElement('header'),kicker=document.createElement('p'),title=document.createElement('h2'),description=document.createElement('p')
   kicker.className='eyebrow';kicker.append(document.createTextNode('POINT 01'))
   const original=document.createTextNode(titleText);title.append(original)
@@ -218,7 +218,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve))
  assert.match(interfaceCss,/\.svg-section-description\{[\s\S]*?margin-left:var\(--svg-title-indent,46px\)!important/)
  assert.match(interfaceCss,/\.svg-info-icon(?:>|,)[\s\S]*?width:18px!important;height:18px!important/,'metadata uses small SVGs without consuming the definition column')
  assert.match(interfaceCss,/\.mas-information dl>div dd :is\(small,span\)\{\s*min-width:0!important;max-width:100%!important;white-space:normal!important;\s*word-break:keep-all!important;overflow-wrap:anywhere!important/,'metadata definitions wrap instead of clipping on narrow screens')
- assert.match(index,/js\/svg-interface.js\?v=20261009-detail-polish-8/)
+ assert.match(index,/js\/svg-interface.js\?v=20261009-detail-polish-9d/)
  assert.match(index,/css\/svg-interface.css\?v=20261007-svg-interface-1/)
  assert.ok(index.indexOf('js/svg-interface.js')<index.indexOf('js/app.js'))
 }

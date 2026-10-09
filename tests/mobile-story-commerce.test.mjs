@@ -7,7 +7,7 @@ const source=read('js/app.js'),css=read('css/mobile-ar-solo.css')
 const scope={EXTRA_RECORDING_OPTIONS:[],
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,shortWon:n=>(n/10000)+'만원',
  arExpertStory:()=>'<section><header><h2>영상·사운드 제작</h2></header></section>',
- soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2>실제 고객 후기</h2><p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p></header></section>',
+ soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2>실제 고객 후기</h2><p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p></header></section>',
  footer:()=>'<footer><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></footer>',
  faq:items=>'<div class="faq-list">'+items.map(([q,a])=>'<details><summary>'+q+'</summary><p>'+a+'</p></details>').join('')+'</div>',
  detailStudioSteps:()=>Array.from({length:7},(_,i)=>({id:i+1,title:'단계',description:'제작 설명'}))
