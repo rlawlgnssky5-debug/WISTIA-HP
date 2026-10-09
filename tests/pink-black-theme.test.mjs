@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const index=read('index.html'),css=read('css/pink-black-theme.css')
-assert.match(index,/<html data-build="20261009-detail-polish-9b" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
+assert.match(index,/<html data-build="20261009-detail-polish-9d" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
 assert.ok(sheets.includes('css/pink-black-theme.css?v=20261005-pink-black-preview-1'))
@@ -18,8 +18,8 @@ assert.deepEqual(sheets.slice(-13),[
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261009-detail-polish-9b',
- 'css/detail-section-layout.css?v=20261009-detail-polish-9b'
+ 'css/booking-availability.css?v=20261009-detail-polish-9d',
+ 'css/detail-section-layout.css?v=20261009-detail-polish-9d'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

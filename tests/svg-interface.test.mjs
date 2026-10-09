@@ -218,7 +218,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve))
  assert.match(interfaceCss,/\.svg-section-description\{[\s\S]*?margin-left:var\(--svg-title-indent,46px\)!important/)
  assert.match(interfaceCss,/\.svg-info-icon(?:>|,)[\s\S]*?width:18px!important;height:18px!important/,'metadata uses small SVGs without consuming the definition column')
  assert.match(interfaceCss,/\.mas-information dl>div dd :is\(small,span\)\{\s*min-width:0!important;max-width:100%!important;white-space:normal!important;\s*word-break:keep-all!important;overflow-wrap:anywhere!important/,'metadata definitions wrap instead of clipping on narrow screens')
- assert.match(index,/js\/svg-interface.js\?v=20261009-detail-polish-9b/)
+ assert.match(index,/js\/svg-interface.js\?v=20261009-detail-polish-9d/)
  assert.match(index,/css\/svg-interface.css\?v=20261007-svg-interface-1/)
  assert.ok(index.indexOf('js/svg-interface.js')<index.indexOf('js/app.js'))
 }

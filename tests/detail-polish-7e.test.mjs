@@ -14,7 +14,7 @@ await test('Shared comparisons and inquiry headings contain no repeated copy',()
  scope.renderBeforeAfterPage()
  const markup=scope.app.innerHTML
  assert.equal((markup.match(/<h[12]\b/g)||[]).length,1)
- assert.match(markup,/<h1[^>]*class="vocal-comparison-title"[^>]*>보컬 보정 비포 애프터<\/h1>/)
+ assert.match(markup,/<h1[^>]*class="vocal-comparison-title"[^>]*>노래를 다듬은 전후 비교<\/h1>/)
  assert.equal((markup.match(/같은 녹음본/g)||[]).length,1)
  assert.match(markup,/보정 전후를 직접 들어보세요/)
  assert.doesNotMatch(markup,/wistia-ba-eyebrow|전후 차이를 직접|같은 녹음, 다른 완성도/)
@@ -47,7 +47,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     await page.goto(`http://127.0.0.1:${port}${path}`,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor({state:'visible'});await page.evaluate(()=>document.fonts.ready)
     if(path==='/before-after'){
      assert.equal(await page.locator('#app h1,#app h2').count(),1)
-     assert.equal(await page.locator('#comparisonPageTitle').innerText(),'보컬 보정 비포 애프터')
+     assert.equal(await page.locator('#comparisonPageTitle').innerText(),'노래를 다듬은 전후 비교')
      assert.equal((await page.locator('.info-page-comparison').innerText()).match(/같은 녹음본/g).length,1)
      const centers=await page.evaluate(()=>{
       const center=n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}
@@ -64,6 +64,13 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     if(path==='/'){
      assert.equal(await page.locator('.we-meta').innerText(),'WISTIA')
      assert.equal(await page.locator('.we-review-wrap [data-solo-kicker]').count(),0)
+     assert.equal(await page.locator('.we-review-wrap [data-solo-sub]').innerText(),'카카오톡으로 받은 후기 원문 그대로예요')
+     const gaps=await page.evaluate(()=>['.we-cases','.we-review-wrap','#homeSound'].map(selector=>{const s=document.querySelector(selector);return {selector,gap:s.querySelector('.svg-title-icon').getBoundingClientRect().top-s.querySelector('.we-section-tag').getBoundingClientRect().bottom}}))
+     for(const {gap} of gaps)assert.ok(Math.abs(gap-20)<=1,'every home POINT intro has the same 20px badge/icon gap')
+     const videoTitle=page.locator('.home-cases-title .svg-section-text')
+     assert.equal(await videoTitle.locator('br').count(),0)
+     assert.equal(await videoTitle.innerText(),'말보다 먼저, 목소리가 전한 마음')
+     results.push({width,path,pointBadgeIconGaps:gaps})
      const processTitle=page.locator('#homeExpert>details>summary .process-folder-label>strong')
      assert.equal(await processTitle.innerText(),'녹음부터 완성까지')
      assert.equal(await processTitle.evaluate(n=>n.getBoundingClientRect().height<=parseFloat(getComputedStyle(n).lineHeight)+1),true,'home process title is one line')
@@ -89,7 +96,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     if(path==='/'||path.startsWith('/detail/')){
      assert.equal(await page.locator('#soloReviewTitle').innerText(),'직접 남겨 주신 이야기')
      if(path==='/'){
-      assert.match(await page.locator('#homeSound .we-section-tag').innerText(),/POINT 05 · 비포 애프터/)
+      assert.match(await page.locator('#homeSound .we-section-tag').innerText(),/POINT 05 · 보컬 보정/)
       assert.doesNotMatch(await page.locator('.we-cases-guide').innerText(),/실제 제작 영상/)
      }
     }
@@ -101,6 +108,16 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     }
     if(path==='/ar/self')assert.equal((await page.locator('.ratio-guide').innerText()).match(/결정합니다/g).length,1)
     if(path==='/info/location')assert.equal((await page.locator('#app').innerText()).match(/300m/g).length,1)
+    if(path.startsWith('/event/')||path==='/contact'){
+     const hint=page.locator('[data-time-date-hint]')
+     for(const undecided of [false,true]){
+      if(undecided)await page.locator('[data-contact-date-mode="bookingDate"][value="unknown"]').locator('..').click()
+      assert.equal(await hint.isVisible(),true)
+      const gap=await hint.evaluate(n=>n.getBoundingClientRect().top-n.closest('fieldset').querySelector('legend').getBoundingClientRect().bottom)
+      assert.ok(Math.abs(gap-16)<=1,'initial/undecided time hint starts below its floating legend')
+      results.push({width,path,timeGuidanceLegendGap:gap,undecided})
+     }
+    }
     if(path.startsWith('/event/')){
      const label=page.locator('#bookingSource .sr-only'),style=await label.evaluate(n=>({width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,position:getComputedStyle(n).position,clip:getComputedStyle(n).clipPath}))
      assert.deepEqual(style,{width:1,height:1,position:'absolute',clip:'inset(50%)'})
@@ -117,7 +134,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    await page.close()
   }
   mkdirSync(root+'work',{recursive:true})
-  writeFileSync(root+'work/9-browser-results.json',JSON.stringify(results,null,2))
+  writeFileSync(root+'work/9d-browser-results.json',JSON.stringify(results,null,2))
   console.log('9: 42 page/viewport combinations passed; comparison center axes within 1px, icons above title, single-column player; comparisons remain one line, labels clipped, POINT centers within 1px, SVG loaded, no horizontal overflow')
  }finally{await browser?.close();server.kill()}
 })

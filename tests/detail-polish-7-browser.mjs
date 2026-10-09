@@ -35,7 +35,7 @@ try{
    if(path==='/'){
     const comparison=page.locator('#homeSound');assert.equal(await comparison.locator('h2').count(),1);assert.equal(await comparison.locator('.wistia-ba-copy').count(),0)
     const title=await comparison.locator('.svg-section-text').evaluate(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,width:r.width,height:r.height,lineHeight:parseFloat(getComputedStyle(n).lineHeight),scrollWidth:n.scrollWidth,clientWidth:n.clientWidth}})
-    assert.equal(title.text,'보컬 보정 비포 애프터');assert.ok(title.height<=title.lineHeight+1);assert.ok(title.scrollWidth<=title.clientWidth)
+    assert.equal(title.text,'노래를 다듬은 전후 비교');assert.ok(title.height<=title.lineHeight+1);assert.ok(title.scrollWidth<=title.clientWidth)
     assert.equal(await comparison.locator('.bap-player').count(),1)
     await comparison.scrollIntoViewIfNeeded();await page.screenshot({path:`work/7-home-sound-${width}.png`})
    }

@@ -71,7 +71,7 @@ html #app#app#app#app .we-home .detail-point-number{font-size:23px!important;fon
 html #app#app#app#app .we-home .home-point-layout .review-carousel-head{display:flex!important;flex-direction:column!important;align-items:center!important;gap:20px!important}
 html #app#app#app#app .we-home .home-point-layout .review-carousel-head>header{width:100%!important;text-align:center!important}
 html #app#app#app#app .we-home .home-point-layout .review-carousel-controls{margin-inline:auto!important;justify-content:center!important}
-html #app#app#app#app .we-home .home-point-layout .solo-review-carousel{box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin:0 auto!important;padding-inline:0!important}
+html #app#app#app#app .we-home .home-point-layout .solo-review-carousel{box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin:0 auto!important;padding:0!important}
 html #app#app#app#app .we-home .home-point-layout .review-captures{box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:auto!important}
 html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .wistia-ba-layout{display:flex!important;flex-direction:column!important;align-items:center!important;width:100%!important;max-width:100%!important;margin-inline:auto!important;padding-inline:0!important;gap:28px!important}
 html #app#app#app#app :is(.ar-commerce-detail,.we-home .home-point-layout) .wistia-ba-copy{width:100%!important;max-width:100%!important;text-align:center!important;margin-inline:auto!important}
@@ -140,3 +140,6 @@ html #app#app#app#app .before-after-page .bap-player{width:100%!important;max-wi
 /* Short replacement headings stay on one line without altering POINT badges or axes. */
 html #app#app#app#app .single-line-heading .svg-section-text{white-space:nowrap!important}
 @media(max-width:600px){html #app#app#app#app .single-line-heading .svg-section-text{font-size:clamp(20px,5vw,26px)!important;letter-spacing:-.04em!important;line-height:1.4!important}}
+
+/* Long home video headline stays unbroken within a 360px POINT column. */
+@media(max-width:600px){html #app#app#app#app .home-cases-title .svg-section-text{font-size:clamp(18px,4.8vw,26px)!important}}

@@ -33,9 +33,10 @@ for(const engine of [chromium,webkit]){
     const hint=page.locator('[data-time-date-hint]');await place(hint)
     assert.equal(await hint.isVisible(),true)
     assert.equal(await hint.innerText(),undecided?'날짜가 정해지면 카카오톡으로 시간을 같이 맞춰 드릴게요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요')
-    const metrics=await hint.evaluate(n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,fontSize:parseFloat(getComputedStyle(n).fontSize),viewport:innerHeight}})
+    const metrics=await hint.evaluate(n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,fontSize:parseFloat(getComputedStyle(n).fontSize),viewport:innerHeight,legendBottom:n.closest('fieldset').querySelector('legend').getBoundingClientRect().bottom}})
     assert.ok(metrics.top>=0&&metrics.bottom<=metrics.viewport&&metrics.fontSize>=14,JSON.stringify(metrics))
-    measurements.push({engine:name,width,kakao,stage,...metrics,visibleTimeButtons:0})
+    assert.ok(metrics.top-metrics.legendBottom>=15&&metrics.top-metrics.legendBottom<=17,'time guidance clears its floating legend with the shared 16px field gap')
+    measurements.push({engine:name,width,kakao,stage,...metrics,legendGap:metrics.top-metrics.legendBottom,visibleTimeButtons:0})
    }
    assert.equal(await page.locator('[data-calendar-times] button:not(:disabled)').count(),0)
    assert.equal(await page.locator('[data-calendar-times] button[data-calendar-time$=":30"]').count(),0)
@@ -81,4 +82,4 @@ for(const engine of [chromium,webkit]){
   }
  }finally{await browser.close()}
 }
-mkdirSync('work',{recursive:true});writeFileSync('work/9b-touch-measurements.json',JSON.stringify(measurements,null,2))
+mkdirSync('work',{recursive:true});writeFileSync('work/9d-touch-measurements.json',JSON.stringify(measurements,null,2))

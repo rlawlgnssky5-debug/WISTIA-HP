@@ -165,7 +165,7 @@ html #app#app#app#app .single-song-note{width:100%!important;max-width:800px!imp
 #app .contact-date-toggle label{touch-action:manipulation}
 html #app#app#app#app .single-song-note span{display:block;white-space:nowrap}
 html #app#app#app#app .contact-notes-field textarea{box-sizing:border-box;width:100%;min-height:112px;resize:vertical;border:1px solid #d8d5cd;border-radius:8px;background:#FFFCF5;color:#252421;padding:12px;font:inherit;line-height:1.6}
-html #app#app#app#app [data-time-date-hint]{display:block;margin:12px 0;padding:16px;border:1px solid #e6dfd0;border-radius:8px;background:#faf5e9;color:#514b40;font-size:16px;line-height:1.65;text-align:center}
+html #app#app#app#app [data-time-date-hint]{display:block;clear:both;margin:0 0 12px;padding:16px;border:1px solid #e6dfd0;border-radius:8px;background:#faf5e9;color:#514b40;font-size:16px;line-height:1.65;text-align:center}
 html #app#app#app#app :is([data-time-date-hint],[data-time-help],.calendar-time-grid)[hidden]{display:none!important}
 html #app#app#app#app .calendar-time-grid button:disabled{cursor:default}
 html #app#app#app#app .contact-date-summary{margin:10px 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;font-size:13px!important;line-height:1.6!important;color:#252421!important;cursor:default}

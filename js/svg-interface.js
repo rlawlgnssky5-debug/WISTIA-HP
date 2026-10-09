@@ -22,7 +22,7 @@
   if(/가격|저렴|금액|합리적/.test(text))return 'receipt'
   if(/혜택|이벤트|선물/.test(text))return 'gift'
   if(/일정|예약일|일정 작성/.test(text))return 'calendar'
-  if(/보정|보컬|음정|박자|키 조절|음역|노래를 잘/.test(text))return 'tune'
+  if(/보정|보컬|음정|박자|키 조절|음역|노래를 잘|노래를 다듬은/.test(text))return 'tune'
   if(/진행|순서|과정|어떻게|준비부터|녹음부터/.test(text))return 'workflow'
   if(/전달|파일|검수|최종/.test(text))return 'file'
   if(/시간|기간|납기/.test(text))return 'clock'

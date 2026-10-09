@@ -10,7 +10,7 @@ const scope={EXTRA_RECORDING_OPTIONS:[],
  AR_DETAIL_CONTENT:{solo:{poster:'assets/img/ar-detail/solo-live-proof.jpg'}},
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
  EVENTS:[['payback',30000],['payback',10000],['payback',10000],['payback',10000]].map(([type,discount])=>({type,label:'참여 혜택',discount,detail:'승인된 조건'})),shortWon:n=>(n/10000)+'만원',
- soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2 id="soloReviewTitle">실제 고객 후기</h2><p data-solo-sub>직접 보내주신 카카오톡 후기 원문입니다</p></header></section>',
+ soloReviewCarousel:()=>'<section id="reviews"><header><span data-solo-kicker>고객 후기</span><h2 id="soloReviewTitle">실제 고객 후기</h2><p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p></header></section>',
  productPackageOverview:()=>'<div>기본 구성</div>',productComparisonSection:()=>'<section>장점</section>',arExpertStory:()=>'<section>엔지니어</section>',
  faq:items=>items.map(([q,a])=>'<details><summary>'+q+'</summary><p>'+a+'</p></details>').join(''),footer:()=>'<footer></footer>',
  arCdRatioSection:()=>'<section id="arRatioExperience"><p class="wistia-ar__eyebrow">AR RATIO EXPERIENCE</p><h2>AR 비율</h2></section>',
@@ -84,7 +84,7 @@ assert.doesNotMatch(html,/<nav class="arc-tabs"/)
 assert.doesNotMatch(desktop,/<nav class="arc-tabs"/)
 assert.doesNotMatch(html,/가사 영상 옵션 견적 뽑기/)
 assert.doesNotMatch(desktop,/가사 영상 옵션 견적 뽑기/)
-assert.doesNotMatch(html,/<span data-solo-kicker>고객 후기|직접 보내주신 카카오톡 후기 원문입니다/)
+assert.doesNotMatch(html,/<span data-solo-kicker>고객 후기|카카오톡으로 받은 후기 원문 그대로예요/)
 assert.match(html,/<section class="arc-section arc-notices mas-notices">/)
 assert.match(html,/<strong>납기<\/strong><div><b>최대 7일 이내<\/b><small>녹음 후/)
 for(const term of ['3회까지 무료','4회차부터 회당 1만원'])assert.ok(html.includes(term),term)
