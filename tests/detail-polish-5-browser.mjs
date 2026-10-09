@@ -9,7 +9,7 @@ const blocks=[9,18,25].map(day=>({start:`2026-10-${String(day-1).padStart(2,'0')
 try{
  for(const width of [360,390,1280]){
   const page=await browser.newPage({viewport:{width,height:844}});await page.clock.install({time:new Date('2026-10-08T03:00Z')});await page.route('https://**/*',r=>r.abort())
-  await page.route('**/api/availability?*',async r=>{const q=new URL(r.request().url()).searchParams;if(q.has('from'))await page.waitForTimeout(100);await r.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks}})})
+  await page.route('**/api/availability?*',async r=>{const q=new URL(r.request().url()).searchParams;if(q.has('from'))await new Promise(resolve=>setTimeout(resolve,100));await r.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks}})})
   await page.goto(base+'/event/solo',{waitUntil:'domcontentloaded'})
   await page.locator('#consultForm .consultation-step').first().waitFor({state:'visible'})
   const order=await page.locator('#consultForm .consultation-step').evaluateAll(nodes=>nodes.map(n=>({number:n.querySelector('.booking-step').textContent,title:n.querySelector('h2').textContent})))
@@ -68,6 +68,7 @@ try{
   const full=await page.evaluate(()=>window.copy5)
   assert.match(full,/예상 금액 : 220,000원/);assert.match(full,/페이백 합계 : −40,000원/);assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/희망 시간 : 15시 30분/);assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
   if(width===390)writeFileSync('work/5-copy-examples.json',JSON.stringify({plain,full},null,2))
+  await page.unrouteAll({behavior:'wait'})
   await page.close()
  }
-}finally{await browser.close();writeFileSync('work/5-calendar-measurements.json',JSON.stringify(results,null,2))}
+}finally{for(const context of browser.contexts())for(const page of context.pages())await page.unrouteAll({behavior:'wait'});await browser.close();writeFileSync('work/5-calendar-measurements.json',JSON.stringify(results,null,2))}

@@ -43,24 +43,41 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    const page=await browser.newPage({viewport:{width,height:844},hasTouch:width<600,isMobile:width<600})
    await page.route('https://**/*',route=>route.abort())
    await page.route('**/api/availability?*',route=>{const q=new URL(route.request().url()).searchParams;return route.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks:[]}})})
-   for(const path of ['/before-after','/','/detail/solo','/detail/duo','/detail/duet-film','/info/location','/event/solo','/event/duo','/event/duet-film']){
+   for(const path of ['/before-after','/','/detail/solo','/detail/duo','/detail/duet-film','/info/location','/ar/self','/event/solo','/event/duo','/event/duet-film']){
     await page.goto(`http://127.0.0.1:${port}${path}`,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor({state:'visible'});await page.evaluate(()=>document.fonts.ready)
     if(path==='/before-after'){
      assert.equal(await page.locator('#app h1,#app h2').count(),1)
      assert.equal(await page.locator('#comparisonPageTitle').innerText(),'보컬 보정 비포 애프터')
      assert.equal((await page.locator('.info-page-comparison').innerText()).match(/같은 녹음본/g).length,1)
+     const centers=await page.evaluate(()=>{
+      const center=n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}
+      const title=document.querySelector('#comparisonPageTitle'),icon=title.querySelector('.svg-title-icon'),text=title.querySelector('.svg-section-text'),description=document.querySelector('.wistia-ba-copy>p'),player=document.querySelector('.bap-player')
+      return {title:center(title),icon:center(icon),text:center(text),description:center(description),player:center(player),iconBottom:icon.getBoundingClientRect().bottom,textTop:text.getBoundingClientRect().top,headerBottom:title.parentElement.getBoundingClientRect().bottom,playerTop:player.getBoundingClientRect().top}
+     })
+     for(const part of ['title','icon','text','description','player'])assert.ok(Math.abs(centers[part])<=1,`${width} comparison ${part} center: ${centers[part]}`)
+     assert.ok(centers.iconBottom<=centers.textTop,'comparison icon sits above the title')
+     assert.ok(centers.headerBottom<=centers.playerTop,'comparison player sits below the heading')
+     results.push({width,path,comparisonCenters:centers})
     }
     const titles=await page.locator('.vocal-comparison-title .svg-section-text').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect(),style=getComputedStyle(n);return {text:n.textContent,height:r.height,lineHeight:parseFloat(style.lineHeight),scrollWidth:n.scrollWidth,width:r.width}}))
     for(const title of titles){assert.ok(title.height<=title.lineHeight+1,`${width} ${path} title must be one line`);assert.ok(title.scrollWidth<=title.width+1,`${width} ${path} title must fit`)}
     if(path==='/'){
      assert.equal(await page.locator('.we-meta').innerText(),'WISTIA')
      assert.equal(await page.locator('.we-review-wrap [data-solo-kicker]').count(),0)
+     const processTitle=page.locator('#homeExpert>details>summary .process-folder-label>strong')
+     assert.equal(await processTitle.innerText(),'녹음부터 완성까지')
+     assert.equal(await processTitle.evaluate(n=>n.getBoundingClientRect().height<=parseFloat(getComputedStyle(n).lineHeight)+1),true,'home process title is one line')
     }
     if(path.startsWith('/detail/')){
-     assert.doesNotMatch(await page.locator('#app').innerText(),/Q & A|한 소절씩 나누어 녹음/)
+     assert.doesNotMatch(await page.locator('#app').innerText(),/Q & A|한 소절씩 나누어 녹음|첫 소절과 다음 소절|편안한 음역, 더 자연스러운 노래/)
+     if(path!=='/detail/duet-film'){
+      const cardTitle=page.locator('.mas-cut-heading strong');assert.equal(await cardTitle.innerText(),'녹음 구간 연결 예시')
+      assert.equal(await cardTitle.evaluate(n=>n.getBoundingClientRect().height<=parseFloat(getComputedStyle(n).lineHeight)+1),true,'recording card title is one line')
+     }
      const offsets=await page.locator('.detail-point-label').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().width).map(n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}))
      for(const offset of offsets)assert.ok(Math.abs(offset)<=1,`${path} POINT center ${offset}`)
     }
+    if(path==='/ar/self')assert.equal((await page.locator('.ratio-guide').innerText()).match(/결정합니다/g).length,1)
     if(path==='/info/location')assert.equal((await page.locator('#app').innerText()).match(/300m/g).length,1)
     if(path.startsWith('/event/')){
      const label=page.locator('#bookingSource .sr-only'),style=await label.evaluate(n=>({width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,position:getComputedStyle(n).position,clip:getComputedStyle(n).clipPath}))
@@ -68,6 +85,8 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
      assert.equal(await page.locator('#contact-source').getAttribute('name'),'source')
      assert.doesNotMatch(await page.locator('.consultation-gifts').innerText(),/후기 페이백 최대 6만원/)
      assert.match(await page.locator('.benefit-kind-limit').innerText(),/최대 6만원/)
+     assert.equal(await page.locator('.booking-price-sidebar .quote-note').count(),0)
+     assert.equal((await page.locator('.consultation-gifts').innerText()).match(/미리 차감하지 않습니다/g).length,1)
     }
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,`${path} ${width} horizontal overflow`)
     const icon=page.locator('#floatingKakaoChat img');assert.match(await icon.getAttribute('src'),/interface\/kakao-talk.svg/);assert.equal(await icon.evaluate(n=>n.complete&&n.naturalWidth>0),true)
@@ -76,7 +95,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    await page.close()
   }
   mkdirSync(root+'work',{recursive:true})
-  writeFileSync(root+'work/7e-browser-results.json',JSON.stringify(results,null,2))
-  console.log('7e: 27 page/viewport combinations passed; comparisons remain one line, labels clipped, POINT centers within 1px, SVG loaded, no horizontal overflow')
+  writeFileSync(root+'work/8-browser-results.json',JSON.stringify(results,null,2))
+  console.log('8: 30 page/viewport combinations passed; comparison center axes within 1px, icons above title, single-column player; comparisons remain one line, labels clipped, POINT centers within 1px, SVG loaded, no horizontal overflow')
  }finally{await browser?.close();server.kill()}
 })

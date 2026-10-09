@@ -139,7 +139,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261009-contact-calendar-12/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261009-detail-polish-8/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
 console.log('Yellow gift, four paybacks, 48 calculations, selection preservation, protected assets and caches passed')
