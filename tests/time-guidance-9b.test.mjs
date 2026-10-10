@@ -6,7 +6,7 @@ const source=readFileSync(new URL('../js/contact-form.js',import.meta.url),'utf8
 runInNewContext(source,{window,Date,Intl})
 const html=window.WistiaContact.render(null,{integrated:true})
 const field=html.match(/<fieldset class="contact-field contact-time-field">([\s\S]*?)<\/fieldset>/)[1]
-assert.match(field,/^<legend>희망 시간<\/legend><p data-time-date-hint/)
+assert.match(field,/^<legend>방문 희망 시간<\/legend><p data-time-date-hint/)
 const values=[...field.matchAll(/<option value="([^"]*)"/g)].map(m=>m[1])
 assert.deepEqual(values,['',...Array.from({length:20},(_,i)=>`${13+Math.floor(i/2)}:${i%2?'30':'00'}`)])
 assert.match(field,/:30|30분/)
@@ -18,5 +18,5 @@ assert.equal(rules.dayClosed('2026-10-11','solo',blocks,Date.parse('2026-10-08T0
 const partial=[{start:'2026-10-11T16:30:00+09:00',end:'2026-10-11T18:30:00+09:00'}]
 for(const [time,blocked] of [['15:00',false],['16:00',true],['17:00',true],['18:00',true],['19:00',false],['19:30',false]])assert.equal(rules.slotBlocked('2026-10-11',time,60,partial),blocked)
 const message=window.WistiaContact.text({bookingDateMode:'date',bookingDate:'2027-10-10',timeStart:'15:00'})
-assert.match(message,/희망 시간 : 오후 3시~오후 4시 \(1시간\)\n/);assert.doesNotMatch(message,/30분/)
+assert.match(message,/방문 희망 시간 : 오후 3시~오후 4시 \(1시간\)\n/);assert.doesNotMatch(message,/30분/)
 console.log('Time guidance order, whole-hour options, precise interval overlap, hourly-only closed day and Kakao whole-hour summary passed')

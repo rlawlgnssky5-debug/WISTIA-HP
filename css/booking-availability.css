@@ -187,3 +187,26 @@ html #app#app#app#app .calendar-time-grid button{white-space:nowrap!important;mi
 html #app#app#app#app .calendar-time-grid button[aria-disabled="true"]:not(.is-covered){opacity:.42;cursor:pointer;background:#f5f4f0!important;color:#66645f!important;border-color:#dddcd8!important}
 
 html #app#app#app#app .calendar-time-grid button.is-covered{opacity:1!important}
+
+/* One recording start per row; five rows plus the next choice invite scrolling. */
+html #app#app#app#app .calendar-time-grid{
+ grid-template-columns:minmax(0,1fr)!important;
+ width:100%!important;max-width:none!important;max-height:304px;
+ gap:8px!important;overflow-y:auto;overflow-x:hidden;
+ -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+ touch-action:pan-y;overflow-anchor:none;scrollbar-gutter:stable;
+}
+html #app#app#app#app .calendar-time-grid button{
+ width:100%!important;height:48px;min-height:48px!important;
+ flex-wrap:nowrap;touch-action:pan-y;
+}
+
+/* A sibling overlay leaves native wheel and touch hit-testing on the list. */
+html #app#app#app#app .contact-time-scroll-wrap{position:relative;isolation:isolate}
+html #app#app#app#app .contact-time-scroll-wrap[hidden]{display:none!important}
+html #app#app#app#app .contact-time-scroll-wrap::after{
+ content:"";position:absolute;z-index:1;inset:auto 0 0;height:28px;
+ background:linear-gradient(to bottom,rgba(245,244,240,0),#F5F4F0);
+ pointer-events:none;opacity:0;transition:opacity .15s ease;
+}
+html #app#app#app#app .contact-time-scroll-wrap.has-more-times::after{opacity:1}

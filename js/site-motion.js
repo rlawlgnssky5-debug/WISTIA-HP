@@ -127,7 +127,7 @@
    if(limited())return
    let lenis,tick
    if(context.conditions.desktop&&Lenis){
-    lenis=new Lenis({duration:.8,smoothWheel:true,syncTouch:false,prevent:node=>Boolean(node.closest('#mainMenu,dialog,.we-carousel,input,select,textarea,.bap-player,.wistia-ar'))})
+    lenis=new Lenis({duration:.8,smoothWheel:true,syncTouch:false,prevent:node=>Boolean(node.closest('#mainMenu,dialog,.we-carousel,input,select,textarea,.bap-player,.wistia-ar,[data-calendar-times]'))})
     lenis.on('scroll',ScrollTrigger.update);tick=time=>lenis.raf(time*1000);gsap.ticker.add(tick)
    }
    document.querySelectorAll('.we-heading,.we-craft-grid,.we-location,.arc-point>header,.we-process li,.wistia-specialist-grid article,.wistia-location-details article,.arc-process li,.we-service .we-meta,.we-service h3').forEach(el=>{
