@@ -2,23 +2,25 @@ import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const index=read('index.html'),css=read('css/dusty-wedding-theme.css')
-assert.match(index,/<html data-build="20261010-detail-polish-11b" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
+assert.match(index,/<html data-build="20261010-detail-polish-12d" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-13),[
+assert.deepEqual(sheets.slice(-15),[
  'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
  'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
- 'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
+ 'css/monochrome-maru-theme.css?v=20261010-detail-polish-12d',
  'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
- 'css/noir-minimal.css?v=20261006-noir-minimal-1',
+ 'css/noir-minimal.css?v=20261010-detail-polish-12d',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
  'css/luxury-finish.css?v=20261006-reviews-five-1',
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261010-detail-polish-11b',
- 'css/detail-section-layout.css?v=20261010-detail-polish-11b'
+ 'css/booking-availability.css?v=20261010-detail-polish-12d',
+ 'css/detail-section-layout.css?v=20261010-detail-polish-12d',
+ 'css/heading-font.css?v=20261010-detail-polish-12d',
+ 'css/kakao-inquiry.css?v=20261010-detail-polish-12d'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)

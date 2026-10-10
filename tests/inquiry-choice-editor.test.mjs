@@ -47,7 +47,7 @@ listeners.submit({preventDefault(){}});assert.equal(submissions,1);assert.equal(
 state.showKakaoInquiryDialog('/event/duo')
 assert.match(shown.html,/href="\/event\/duo" data-close>문의 양식 작성할게요!/)
 assert.match(shown.html,/href="https:\/\/pf.kakao.com\/_GbExjX\/chat" target="_blank" rel="noopener noreferrer" data-close>바로 상담할래요!/)
-assert.match(app,/el.id==='floatingKakaoChat'\|\|el.matches\('\.mas-bottom > a'\)/)
+assert.match(app,/el.id==='floatingKakaoChat'\|\|el.matches\('\.product-inquiry > a'\)/)
 assert.match(read('css/inquiry-choice-editor.css'),/max-height:calc\(100dvh/)
 assert.match(read('index.html'),/inquiry-choice-editor\.css\?v=20261005-inquiry-choice-editor-1/)
 console.log('Inquiry choice, editable missing fields, state labels, escaping, constraints, whitespace and native resubmit passed')

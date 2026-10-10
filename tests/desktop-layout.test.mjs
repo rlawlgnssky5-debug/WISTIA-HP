@@ -1,7 +1,6 @@
 import assert from "node:assert/strict"
-import { spawnSync } from "node:child_process"
-import { existsSync, mkdtempSync, rmSync } from "node:fs"
-import { tmpdir } from "node:os"
+import {createRequire} from "node:module"
+import {existsSync,readFileSync} from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 
@@ -17,35 +16,23 @@ const browser = [
 
 assert.ok(browser, "Edge, Chrome 또는 LAYOUT_BROWSER 환경 변수가 필요합니다")
 
-function measureFixture(filename, width, height) {
-  const profile = mkdtempSync(resolve(tmpdir(), "wistia-layout-"))
-
-  try {
-    const fixture = pathToFileURL(resolve(here, filename)).href
-    const run = spawnSync(browser, [
-      "--headless=new",
-      "--disable-gpu",
-      "--no-sandbox",
-      "--allow-file-access-from-files",
-      `--user-data-dir=${profile}`,
-      `--window-size=${width},${height}`,
-      "--dump-dom",
-      fixture
-    ], { encoding: "utf8" })
-
-    assert.equal(run.status, 0, run.stderr)
-    const match = run.stdout.match(/<pre id="result">([^<]+)<\/pre>/)
-    assert.ok(match, "브라우저에서 레이아웃 측정 결과를 읽을 수 있어야 합니다")
-    return JSON.parse(match[1].replaceAll("&quot;", '"'))
-  } finally {
-    rmSync(profile, { recursive: true, force: true })
-  }
+const {chromium}=createRequire(import.meta.url)('playwright')
+async function measureFixture(filename,width,height){
+ const instance=await chromium.launch({headless:true,executablePath:browser,args:['--no-sandbox','--allow-file-access-from-files']})
+ try{
+  const page=await instance.newPage({viewport:{width,height}})
+  await page.route('https://**/*',r=>r.abort())
+  await page.route('http://127.0.0.1/**',r=>{const path=resolve(here,'..','.'+new URL(r.request().url()).pathname);return r.fulfill({body:readFileSync(path),contentType:path.endsWith('.css')?'text/css':'text/html'})})
+  await page.goto('http://127.0.0.1/tests/'+filename,{waitUntil:'load'})
+  const result=await page.locator('#result').innerText()
+  return JSON.parse(result)
+ }finally{await instance.close()}
 }
 
 const measureLayout = (width, height) => measureFixture("desktop-layout.fixture.html", width, height)
 
 {
-  const layout = measureLayout(1572, 900)
+  const layout = await measureLayout(1572, 900)
   assert.ok(
     Math.abs((layout.heroShell.left + layout.heroShell.right) / 2 - layout.viewport / 2) <= 1,
     "데스크톱 히어로 카드가 화면 중앙에 놓여야 합니다"
@@ -61,7 +48,7 @@ const measureLayout = (width, height) => measureFixture("desktop-layout.fixture.
 }
 
 {
-  const layout = measureLayout(390, 844)
+  const layout = await measureLayout(390, 844)
   assert.ok(
     Math.abs(layout.heroShell.left) <= 1 && Math.abs(layout.heroShell.right - layout.viewport) <= 1,
     `모바일 히어로 사진은 화면 너비를 온전히 사용해야 합니다 (현재 ${layout.heroShell.left}px / ${layout.viewport - layout.heroShell.right}px)`
@@ -73,7 +60,7 @@ const measureLayout = (width, height) => measureFixture("desktop-layout.fixture.
 }
 
 {
-  const layout = measureFixture("song-picker-layout.fixture.html", 1200, 900)
+  const layout = await measureFixture("song-picker-layout.fixture.html", 1200, 900)
   assert.equal(layout.cards.length, 2, "축가 선택 카드는 두 개여야 합니다")
   assert.deepEqual(layout.cards.map(card => card.href), ["#/detail/solo", "#/detail/duo"], "각 축가 카드는 해당 상세 페이지로 연결되어야 합니다")
   assert.ok(
@@ -84,7 +71,7 @@ const measureLayout = (width, height) => measureFixture("desktop-layout.fixture.
 }
 
 {
-  const layout = measureFixture("song-picker-layout.fixture.html", 390, 844)
+  const layout = await measureFixture("song-picker-layout.fixture.html", 390, 844)
   assert.ok(layout.cards[1].top > layout.cards[0].top + layout.cards[0].height, "모바일 축가 선택 카드는 한 열로 쌓여야 합니다")
   assert.ok(layout.cards.every(card => Math.abs(card.width - layout.contentWidth) <= 1), "모바일 축가 선택 카드는 콘텐츠 너비를 채워야 합니다")
 }

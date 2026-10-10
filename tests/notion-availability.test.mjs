@@ -9,11 +9,11 @@ assert.equal(rules.validDate('2028-02-29'),true)
 for(const [date,open] of [['2026-10-08',true],['2026-10-09',true],['2026-10-10',true],['2026-10-11',true],['2026-10-12',false],['2026-10-13',false],['2026-10-14',false]])assert.equal(rules.isOperatingDay(date),open)
 assert.deepEqual(['solo','duo','duet-film'].map(rules.duration),[60,120,180])
 const block=interval({start:'2026-10-11T17:00:00+09:00',end:'2026-10-11T19:00:00+09:00'})
-assert.deepEqual(block,{start:'2026-10-11T08:00:00.000Z',end:'2026-10-11T10:00:00.000Z'})
-assert.equal(rules.slotBlocked('2026-10-11','16:00',60,[block]),false,'adjacent SOLO ends exactly at reservation start')
+assert.deepEqual(block,{start:'2026-10-11T07:30:00.000Z',end:'2026-10-11T10:30:00.000Z'})
+assert.equal(rules.slotBlocked('2026-10-11','15:00',60,[block]),false,'one-hour gap permits preparation and cleanup')
 assert.equal(rules.slotBlocked('2026-10-11','16:00',120,[block]),true,'DUET overlaps an existing reservation')
 assert.equal(rules.slotBlocked('2026-10-11','16:30',60,[block]),true)
-assert.equal(rules.slotBlocked('2026-10-11','19:00',60,[block]),false,'end is exclusive')
+assert.equal(rules.slotBlocked('2026-10-11','20:00',60,[block]),false,'one-hour gap after an existing booking')
 assert.equal(rules.slotBlocked('2026-10-11','23:00',120,[]),true,'Sunday booking cannot extend into Monday closure')
 assert.deepEqual(interval({start:'2026-10-09',end:'2026-10-11'}),{start:'2026-10-08T15:00:00.000Z',end:'2026-10-11T15:00:00.000Z'})
 assert.deepEqual(interval({start:'2026-10-11T17:00:00+09:00'}),interval({start:'2026-10-11'}),'missing timed end closes the day rather than guessing')
@@ -41,7 +41,7 @@ const fetcher=async(url,options)=>{
  return {ok:true,json:async()=>({results:[booking({start:'2026-10-11T20:00:00+09:00',end:'2026-10-11T21:00:00+09:00'})],has_more:false,next_cursor:null})}
 }
 const result=await availability('2026-10-11',{env,fetcher})
-assert.equal(result.blocks.length,2)
+assert.equal(result.blocks.length,1)
 assert.equal(calls.length,3,'existing ledger schema and pagination fetched without a second table')
 assert.doesNotMatch(JSON.stringify(result),/PRIVATE|TEST_ONLY|9675|eac81|987654|사유|클라이언트|이메일|입금/)
 await assert.rejects(availability('2026-10-11',{env:{},fetcher}))
@@ -65,7 +65,7 @@ await assert.rejects(availabilityRange('2026-10-01','2026-10-31',{env,fetcher:as
 for(const query of [{from:'2026-10-01'},{to:'2026-10-31'},{from:'2026-10-01',to:'2026-11-12'},{date:'2026-10-09',from:'2026-10-01',to:'2026-10-31'}]){const response=respond();await handler({method:'GET',query},response);assert.equal(response.code,400)}
 const full=extractBlocks([booking({start:'2026-10-09'})])
 for(const key of ['solo','duo','duet-film','undecided'])assert.equal(rules.dayClosed('2026-10-09',key,full,0),true,'date-only closure applies to every product')
-const onlySolo=[{start:'2026-10-10T14:00:00+09:00',end:'2026-10-11T00:00:00+09:00'}]
+const onlySolo=[{start:'2026-10-10T14:30:00+09:00',end:'2026-10-11T00:00:00+09:00'}]
 assert.equal(rules.dayClosed('2026-10-10','solo',onlySolo,0),false)
 assert.equal(rules.dayClosed('2026-10-10','duo',onlySolo,0),true)
 assert.equal(rules.dayClosed('2026-10-10','duet-film',onlySolo,0),true)

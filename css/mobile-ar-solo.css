@@ -10,7 +10,7 @@
  body:has(#app .mobile-ar-solo) #floatingKakao,body:has(#app .mobile-ar-solo) #soloDesktopCta{display:none!important}
  body:has(.mobile-ar-solo) #siteHeader{background:#fff!important;box-shadow:none;border-bottom:1px solid #edf0f2}
  body:has(.mobile-ar-solo) .header-inner{min-height:56px;height:56px;padding-inline:16px}
- #app .mobile-ar-solo{--mas-ink:#202b34;--mas-muted:#687784;color:var(--mas-ink);background:#fff;padding-bottom:calc(88px + env(safe-area-inset-bottom));overflow:clip}
+ #app .mobile-ar-solo{--mas-ink:#202b34;--mas-muted:#687784;color:var(--mas-ink);background:#fff;padding-bottom:0;overflow:clip}
  #app .mobile-ar-solo *{box-sizing:border-box;min-width:0}
  #app .mobile-ar-solo h1,#app .mobile-ar-solo h2,#app .mobile-ar-solo h3{color:var(--mas-ink);word-break:keep-all;text-wrap:balance}
  #app .mobile-ar-solo a,#app .mobile-ar-solo button{-webkit-tap-highlight-color:transparent}
@@ -346,7 +346,7 @@
  #app .mobile-story-film .mas-story-chapters figure{margin:0;aspect-ratio:16/9;overflow:hidden;border-radius:6px}
  #app .mobile-story-film .mas-story-chapters img{display:block;width:100%;height:100%;object-fit:cover}
  #app .mobile-story-film .mas-story-chapters li>div{padding:10px 0 0;text-align:left}
- #app .mobile-story-film .mas-story-chapters li span{font-family:Georgia,serif;font-size:12px;color:#8697a1}
+ #app .mobile-story-film .mas-story-chapters li span{font-family:var(--font-heading);font-size:12px;color:#8697a1}
  #app .mobile-story-film .mas-story-chapters h3{font-size:15px!important;line-height:1.45;text-align:left!important;margin:5px 0}
  #app .mobile-story-film .mas-story-chapters li p{font-size:12px!important;line-height:1.65!important;text-align:left!important;margin:0}
  #app .mobile-story-film .ar-expert-panel-sub{white-space:normal}
@@ -365,7 +365,7 @@
 /* Wider canvas only: same sections, copy, controls and order as the approved mobile page. */
 @media (min-width:769px){
  body:has(.mobile-ar-solo) .header-inner{height:72px;min-height:72px;padding-inline:24px}
- #app .mobile-ar-solo{max-width:1120px;margin-inline:auto;padding-bottom:108px}
+ #app .mobile-ar-solo{max-width:1120px;margin-inline:auto;padding-bottom:0}
  #app .mobile-ar-solo .mas-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:40px;padding:32px 40px 40px}
  #app .mobile-ar-solo .mas-intro .mas-gallery{align-self:start}
  #app .mobile-ar-solo .mas-intro .mas-gallery-caption{padding-top:0;font-size:13px}
