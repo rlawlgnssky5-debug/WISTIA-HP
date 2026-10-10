@@ -177,7 +177,7 @@
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   list.innerHTML=[...time.options].map(option=>{
    const hour=Number(option.value.slice(0,2)),covered=validSelection&&!!option.value&&hour>=start&&hour<start+minutes/60
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(covered?'<small>선택 구간</small>':known&&option.disabled?'<small>'+closedLabel+'</small>':'')+'</button>'
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
   if(!list.dataset.mounted){
    list.dataset.mounted='true'

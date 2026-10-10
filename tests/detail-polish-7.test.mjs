@@ -37,7 +37,7 @@ const playerScope={studioIcon:()=>'<svg></svg>'};runInNewContext(app.slice(app.i
 const compact=playerScope.wistiaBeforeAfterSection(true)
 assert.doesNotMatch(compact,/wistia-ba-copy|노래를 잘 못해도 괜찮습니다|구간별 녹음, 자연스러운 보정/)
 assert.match(compact,/bap-player|같은 녹음본/);assert.match(compact,/before\.mp3/);assert.match(compact,/after\.mp3/)
-const version='20261010-detail-polish-11'
+const version='20261010-detail-polish-11b'
 assert.equal(JSON.parse(read('wistia-config.json')).build,version)
 for(const path of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(n=>n.endsWith('.html')).map(n=>'event/'+n)])assert.match(read(path),new RegExp('<html data-build="'+version+'"'))
 // Exercise no-store build checks: untouched reloads, edited and offline pages retain their state.
