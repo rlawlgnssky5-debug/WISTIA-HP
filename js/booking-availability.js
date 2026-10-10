@@ -9,7 +9,7 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
- function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).filter(hour=>hour*60+minutes<=23*60).map(hour=>({value:hour+':00',label:hour+'~'+(hour+minutes/60)+'시',minutes}))}
+ function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).map(hour=>({value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}))}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
@@ -34,6 +34,7 @@
  // the only in-flight response) and always settle within timeoutMs.
  const timeoutMs=8000,cacheMs=30000,cache=new Map(),inflight=new Map()
  const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Set(),dateFailures=new Set()
+ const selectedDates=new WeakMap()
  let activeForm=null,activeKey='solo',generation=0
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
  const fallbackMessage='카카오톡 확인 필요 · 일정 자동 확인이 연결되지 않았거나 잠시 지연되고 있습니다 · 희망 일정으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
@@ -56,14 +57,21 @@
  function sync(){global.WistiaContact?.syncSubmitState(activeForm);global.WistiaContact?.syncTimeChoices?.(activeForm)}
  function message(text,state){const ui=controls();if(!ui)return;ui.status.textContent=text;ui.status.hidden=state!=='unavailable';ui.status.dataset.state=state;activeForm.dataset.scheduleState=state;sync()}
  function openList(text){const list=activeForm?.querySelector('[data-booking-open-times]');if(list){list.textContent=text;list.hidden=!text}}
- function resetTimes(disabled=false){const ui=controls();if(!ui)return;[...ui.time.options].forEach(option=>{option.dataset.originalLabel??=option.textContent;option.disabled=disabled&&!!option.value;option.textContent=option.dataset.originalLabel});ui.time.setCustomValidity('')}
+ function resetTimes(disabled=false){const ui=controls();if(!ui)return;[...ui.time.options].forEach(option=>{option.dataset.originalLabel??=option.textContent;option.disabled=disabled&&!!option.value;option.dataset.disabledReason='';option.textContent=option.dataset.originalLabel});ui.time.setCustomValidity('')}
  function dateError(text){const ui=controls();if(!ui)return;ui.date.setCustomValidity(text);ui.error.textContent=text;ui.error.hidden=!text;if(text)ui.date.setAttribute('aria-invalid','true');else ui.date.removeAttribute('aria-invalid')}
  function restrictTimes(blocks){
   const ui=controls();if(!ui)return
   resetTimes()
   const minutes=duration(activeKey)
-  for(const option of ui.time.options){if(!option.value)continue;option.disabled=Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()||slotBlocked(ui.date.value,option.value,minutes,blocks);if(option.disabled)option.textContent=option.dataset.originalLabel+' · 마감'}
-  ui.time.setCustomValidity(ui.time.selectedOptions[0]?.disabled?'선택한 시간은 마감되었습니다, 다른 시간을 선택해 주세요':'')
+  for(const option of ui.time.options){
+   if(!option.value)continue
+   const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
+   const reason=clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'booking':''
+   option.dataset.disabledReason=reason;option.disabled=!!reason
+   if(reason==='booking')option.textContent=option.dataset.originalLabel+' · 마감'
+  }
+  if(ui.time.selectedOptions[0]?.disabled)ui.time.value=''
+  ui.time.setCustomValidity('')
  }
  function apply(blocks){
   const ui=controls();if(!ui)return
@@ -108,6 +116,9 @@
   const ui=controls();if(!ui)return
   ui.date.min=today()
   const date=ui.date.disabled?'':ui.date.value,token=++generation
+  // Reset before rendering/loading so drafts and copied summaries cannot retain another day's time.
+  if(selectedDates.has(activeForm)&&selectedDates.get(activeForm)!==date)ui.time.value=''
+  selectedDates.set(activeForm,date)
   openList('');dateError('');resetTimes()
   if(!date){message('목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
   if(!validDate(date)||date<today()){dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}

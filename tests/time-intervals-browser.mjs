@@ -1,14 +1,17 @@
 import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
-import {mkdirSync,writeFileSync} from 'node:fs'
-const {chromium}=createRequire(import.meta.url)('playwright')
+import {existsSync,mkdirSync,writeFileSync} from 'node:fs'
+const {chromium,webkit,devices}=createRequire(import.meta.url)('playwright')
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4175',results=[],holidayResults=[]
-const browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.WISTIA_BROWSER_EXECUTABLE?{executablePath:process.env.WISTIA_BROWSER_EXECUTABLE}:{})})
+for(const engine of [chromium,webkit]){
+ const engineName=engine.name(),executable=engineName==='chromium'?(process.env.WISTIA_BROWSER_EXECUTABLE||engine.executablePath()):engine.executablePath()
+ if(!existsSync(executable)){console.log(`SKIP ${engineName}: browser executable not installed`);continue}
+ const browser=await engine.launch({headless:true,executablePath:executable,...(engineName==='chromium'?{args:['--no-sandbox']}:{})})
 try{
  for(const width of [360,390,1280]){
-  const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:width<600}),page=await context.newPage()
+  const context=await browser.newContext({...(engineName==='webkit'?devices['iPhone 13']:{}),viewport:{width,height:844},hasTouch:true,isMobile:width<600}),page=await context.newPage()
   await page.clock.install({time:new Date('2026-10-08T03:00Z')});await page.route('https://**/*',r=>r.abort())
-  const blocks=[9,18,25].map(d=>({start:`2026-10-${String(d-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(d).padStart(2,'0')}T15:00Z`})).concat({start:'2026-10-11T07:30Z',end:'2026-10-11T09:30Z'})
+  let blocks=[9,18,25].map(d=>({start:`2026-10-${String(d-1).padStart(2,'0')}T15:00Z`,end:`2026-10-${String(d).padStart(2,'0')}T15:00Z`})).concat({start:'2026-10-11T07:30Z',end:'2026-10-11T09:30Z'})
   await page.route('**/api/availability?*',r=>{const q=new URL(r.request().url()).searchParams;return r.fulfill({json:{ok:true,from:q.get('from'),to:q.get('to'),date:q.get('date'),blocks}})})
   await page.goto(base+'/event/solo',{waitUntil:'domcontentloaded'});await page.locator('[data-time-date-hint]').waitFor();await page.evaluate(()=>document.fonts.ready)
   assert.equal(await page.locator('[data-calendar-times] button:visible').count(),0)
@@ -42,21 +45,55 @@ try{
   await page.locator('#calendar-bookingDate [data-calendar-day="2026-10-11"]').click();await holidayCheck('bookingDate',true)
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   const times=page.locator('[data-calendar-times]')
+  const tap=async locator=>{await locator.evaluate(n=>window.scrollTo(0,window.scrollY+n.getBoundingClientRect().top-250));await page.waitForTimeout(80);const box=await locator.boundingBox();await page.touchscreen.tap(box.x+box.width/2,box.y+box.height/2);await page.waitForTimeout(80)}
+  const selected=async(start,hours)=>{
+   await tap(times.locator(`[data-calendar-time="${start}:00"]`))
+   assert.equal(await page.locator('#contact-time').inputValue(),`${start}:00`)
+   assert.deepEqual(await times.locator('.is-covered').evaluateAll(nodes=>nodes.map(n=>n.dataset.calendarTime)),Array.from({length:hours},(_,i)=>`${start+i}:00`))
+   assert.equal(await times.locator('[aria-checked="true"]').count(),1,'only the chosen start is an accessible radio selection')
+   const colours=await times.locator('.is-covered').evaluateAll(nodes=>nodes.map(n=>({bg:getComputedStyle(n).backgroundColor,fg:getComputedStyle(n).color})))
+   assert.ok(colours.every(c=>c.bg==='rgb(48, 45, 39)'&&c.fg==='rgb(255, 252, 245)'),JSON.stringify(colours))
+   const draft=await page.evaluate(()=>WistiaContact.snapshot(document.querySelector('#contactInquiryForm')))
+   assert.equal(draft.time,`오후 ${start-12}시~오후 ${start+hours-12}시 (${hours}시간)`,'draft contains the full displayed range')
+   await page.evaluate(draft=>WistiaContact.restore(document.querySelector('#contactInquiryForm'),draft),draft)
+   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+   assert.equal(await times.locator('.is-covered').count(),hours,'stored start restores the entire range')
+  }
+
   const check=async(hours,count,last)=>{
    const labels=await times.locator('button').evaluateAll(nodes=>nodes.map(n=>n.childNodes[0].textContent))
    assert.equal(labels[0],'미정');assert.equal(labels.length,count+1)
-   assert.equal(labels[1],`13~${13+hours}시`);assert.equal(labels.at(-1),last)
-   for(const label of labels.slice(1)){const [start,end]=label.replace('시','').split('~').map(Number);assert.equal(end-start,hours);assert.ok(end<=23)}
+   assert.equal(labels[1],'오후 1시');assert.equal(labels.at(-1),last)
+   assert.deepEqual(labels.slice(1),Array.from({length:10},(_,i)=>`오후 ${i+1}시`))
+   for(let h=24-hours;h<=22;h++){const button=times.locator(`[data-calendar-time="${h}:00"]`);assert.equal(await button.isDisabled(),true);assert.equal(await button.locator('small').count(),0,'closing-hour limit is muted without a booking label')}
    const rows=await times.evaluate(n=>({columns:getComputedStyle(n).gridTemplateColumns.split(' ').length,rows:[...n.children].map(b=>{const r=b.getBoundingClientRect();return {top:r.top,left:r.left,width:r.width}})}))
    assert.equal(rows.columns,1);for(let i=1;i<rows.rows.length;i++){assert.ok(rows.rows[i].top>rows.rows[i-1].top);assert.equal(rows.rows[i].left,rows.rows[0].left)}
-   results.push({width,hours,count,first:labels[1],last:labels.at(-1),columns:rows.columns})
+   results.push({engine:engineName,width,hours,count,first:labels[1],last:labels.at(-1),columns:rows.columns})
   }
   console.log(`${width}px: source restoration and both calendar holiday colours passed`)
-  await check(1,10,'22~23시')
+  await check(1,10,'오후 10시')
   for(const time of ['16:00','17:00','18:00'])assert.equal(await times.locator(`[data-calendar-time="${time}"]`).isDisabled(),true)
-  await times.locator('[data-calendar-time="19:00"]').click()
+  await selected(19,1)
+  await tap(page.locator('#calendar-bookingDate [data-calendar-day="2026-10-16"]'))
+  assert.equal(await page.locator('#contact-time').inputValue(),'','changing date resets immediately')
+  await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  assert.equal(await times.locator('[aria-checked="true"]').getAttribute('data-calendar-time'),'')
+  assert.equal(await times.locator('.is-covered').count(),0)
+  const cleared=await page.evaluate(()=>{const values=WistiaContact.snapshot(document.querySelector('#contactInquiryForm'));return {values,text:WistiaContact.text(values)}})
+  assert.equal(cleared.values.timeStart,'');assert.equal(cleared.values.time,'미정');assert.match(cleared.text,/희망 시간 : 미정/)
+  await tap(page.locator('#calendar-bookingDate [data-calendar-day="2026-10-11"]'))
+  await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
+  assert.match(await times.locator('[data-calendar-time="17:00"]').innerText(),/마감/)
+  await selected(19,1)
+  const previous=blocks;blocks=blocks.concat({start:'2026-10-11T10:00Z',end:'2026-10-11T11:00Z'})
+  await page.evaluate(()=>WistiaBooking.refresh())
+  assert.equal(await page.locator('#contact-time').inputValue(),'','a newly blocked start resets after refresh')
+  assert.equal(await times.locator('[aria-checked="true"]').getAttribute('data-calendar-time'),'')
+  const refreshed=await page.evaluate(()=>{const values=WistiaContact.snapshot(document.querySelector('#contactInquiryForm'));return {values,text:WistiaContact.text(values)}})
+  assert.equal(refreshed.values.timeStart,'');assert.match(refreshed.text,/희망 시간 : 미정/)
+  blocks=previous;await page.evaluate(()=>WistiaBooking.refresh());await selected(19,1)
   await page.evaluate(()=>{window.intervalCopy='';navigator.clipboard.writeText=async s=>window.intervalCopy=s})
-  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 19~20시'))
+  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 오후 7시~오후 8시 (1시간)'))
   assert.doesNotMatch(await page.evaluate(()=>window.intervalCopy),/유입 경로/)
   await source.selectOption('메타 광고')
   await page.keyboard.press('Escape')
@@ -64,22 +101,32 @@ try{
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   assert.equal(await page.locator('#contact-bookingDate').inputValue(),'2026-10-11')
   assert.equal(await page.locator('#contact-time').inputValue(),'','product change clears selected time')
-  await check(2,9,'21~23시')
-  assert.equal(await times.locator('[data-calendar-time="22:00"]').count(),0)
+  await check(2,10,'오후 10시')
+  assert.equal(await times.locator('[data-calendar-time="22:00"]').isDisabled(),true)
   for(const time of ['15:00','16:00','17:00','18:00'])assert.equal(await times.locator(`[data-calendar-time="${time}"]`).isDisabled(),true)
   assert.equal(await times.locator('[data-calendar-time="14:00"]').isDisabled(),false)
-  await times.locator('[data-calendar-time="19:00"]').click()
+  await selected(19,2)
   await page.locator('input[data-option="extra-verse"]').check()
   assert.match(await page.locator('input[data-option="extra-verse"]').locator('..').innerText(),/추가 1절 녹음/)
   assert.equal(await page.locator('input[data-option="extra-full"]').count(),0)
-  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 19~21시'))
+  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 오후 7시~오후 9시 (2시간)'))
   const copied=await page.evaluate(()=>window.intervalCopy);assert.match(copied,/추가 1절 녹음 \(\+60,000원\)/);assert.match(copied,/예상 금액 : 220,000원/);assert.doesNotMatch(copied,/완곡 녹음/);assert.match(copied,/유입 경로 : 메타 광고/)
   await page.keyboard.press('Escape')
   assert.equal(await page.evaluate(()=>WistiaQuote.preview({key:'solo',options:['extra-full']}).finalPrice),120000,'removed stored option is ignored')
   await page.locator('#bookingService').selectOption('duet-film')
   await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready')
   assert.equal(await page.locator('#contact-time').inputValue(),'')
-  await check(3,8,'20~23시')
+  await check(3,10,'오후 10시')
+  await selected(13,3)
+  for(const h of [14,15,16,17,18,21,22])assert.equal(await times.locator(`[data-calendar-time="${h}:00"]`).isDisabled(),true)
+  await selected(20,3)
+  mkdirSync('work/11',{recursive:true});await page.locator('.contact-time-field').screenshot({path:`work/11/time-${engineName}-${width}.png`})
+  for(const h of [21,22])assert.equal(await times.locator(`[data-calendar-time="${h}:00"]`).isDisabled(),true,'covered terminal cells remain unavailable as starts')
+  await page.evaluate(()=>window.intervalCopy='')
+  await page.locator('.contact-submit').click();await page.waitForFunction(()=>window.intervalCopy.includes('희망 시간 : 오후 8시~오후 11시 (3시간)'))
+  await page.keyboard.press('Escape')
+  await tap(times.locator('[data-calendar-time=""]'));assert.equal(await times.locator('.is-covered').count(),0)
+  assert.equal(await page.locator('#contact-time').inputValue(),'')
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
   for(const path of ['/','/detail/solo','/detail/duo','/detail/duet-film']){
    await page.goto(base+path,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor();await page.evaluate(()=>document.fonts.ready)
@@ -90,6 +137,7 @@ try{
   await context.close();console.log(`${width}px: 1h/2h/3h intervals, closing hour, overlap, reset, one column, Kakao ranges and removed option section passed`)
  }
 }finally{await browser.close()}
-mkdirSync('work',{recursive:true});writeFileSync('work/10-interval-layout.json',JSON.stringify(results,null,2))
+}
+mkdirSync('work/11',{recursive:true});writeFileSync('work/11/start-time-layout.json',JSON.stringify(results,null,2))
 
-writeFileSync('work/10-holiday-colours.json',JSON.stringify(holidayResults,null,2))
+writeFileSync('work/11/holiday-colours.json',JSON.stringify(holidayResults,null,2))

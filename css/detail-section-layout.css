@@ -136,3 +136,45 @@ html #app#app#app#app .single-line-heading .svg-section-text{white-space:nowrap!
 
 /* Long home video headline stays unbroken within a 360px POINT column. */
 @media(max-width:600px){html #app#app#app#app .home-cases-title .svg-section-text{font-size:clamp(18px,4.8vw,26px)!important}}
+
+/* Standalone directions: warm cards, a readable address, and one consistent icon set. */
+html #app#app#app#app .info-page-location{padding-block:48px 64px!important}
+html #app#app#app#app .info-page-location .info-page-intro{max-width:900px!important;margin:0 auto 28px!important;text-align:center!important}
+html #app#app#app#app .info-page-location .info-page-intro{padding-bottom:0!important}
+html #app#app#app#app .info-page-location .info-page-intro h1{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;width:100%!important;gap:16px!important;text-align:center!important}
+html #app#app#app#app .info-page-location .info-page-intro h1 .svg-title-icon{margin:0!important;width:28px!important;height:28px!important;color:#79614f!important}
+html #app#app#app#app .info-page-location .info-page-intro h1 .studio-icon{width:28px!important;height:28px!important}
+html #app#app#app#app .info-page-location .info-page-intro .svg-section-text{white-space:nowrap!important}
+html #app#app#app#app .info-page-location .info-page-intro p{width:100%!important;text-align:center!important;margin:16px auto 0!important;line-height:1.8!important;color:#706055!important}
+html #app#app#app#app .info-page-location .wistia-location{padding-top:0!important;gap:24px!important}
+html #app#app#app#app .info-page-location .wistia-location-address{box-sizing:border-box!important;padding:28px 32px 32px!important;border:1px solid #dfd4c7!important;border-radius:18px!important;background:#faf6ee!important;box-shadow:none!important}
+html #app#app#app#app .info-page-location .location-line-icon{display:flex!important;justify-content:center!important;margin:0 0 16px!important;color:#79614f!important}
+html #app#app#app#app .info-page-location :is(.location-line-icon,.wistia-location-details h3)>.studio-icon{width:28px!important;height:28px!important;flex:none!important;color:#79614f!important}
+html #app#app#app#app .info-page-location .location-address-row{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-width:0!important}
+html #app#app#app#app .info-page-location .location-address-row .studio-address{display:block!important;width:auto!important;margin:0!important;white-space:nowrap!important;flex:0 1 auto!important;font-size:clamp(14px,4vw,24px)!important;font-weight:650!important;line-height:1.5!important;letter-spacing:-.03em!important;color:#493b32!important}
+html #app#app#app#app .info-page-location .location-address-copy{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:none!important;width:36px!important;height:36px!important;padding:8px!important;border:1px solid #ded0bf!important;border-radius:8px!important;background:#f3eadd!important;color:#79614f!important;touch-action:manipulation}
+html #app#app#app#app .info-page-location .location-address-copy .studio-icon{width:18px!important;height:18px!important}
+html #app#app#app#app .info-page-location .location-address-copy:focus-visible{outline:2px solid #79614f;outline-offset:3px}
+html #app#app#app#app .info-page-location .location-copy-status{min-height:22px!important;margin:8px 0 0!important;font-size:13px!important;line-height:22px!important;color:#79614f!important}
+html #app#app#app#app .info-page-location .wistia-location-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;margin:20px 0 0!important}
+html #app#app#app#app .info-page-location .wistia-location-links a{justify-content:center!important;min-height:50px!important;box-sizing:border-box!important;padding:12px!important;gap:8px!important;border:1px solid #ded0bf!important;border-radius:10px!important;background:#fffdf8!important;color:#594739!important;box-shadow:none!important;font-size:14px!important;line-height:1.5!important;white-space:nowrap!important}
+html #app#app#app#app .info-page-location .wistia-location-links a:hover{background:#f3eadd!important}
+html #app#app#app#app .info-page-location .wistia-location-links .studio-icon{width:16px!important;height:16px!important;flex:none!important}
+html #app#app#app#app .info-page-location>.wistia-location>.wistia-directions-map{margin:0!important;border:1px solid #dfd4c7!important;border-radius:18px!important;overflow:hidden!important;background:#faf6ee!important}
+html #app#app#app#app .info-page-location .wistia-directions-map figcaption{padding:14px 20px!important;color:#706055!important;line-height:1.7!important}
+html #app#app#app#app .info-page-location .wistia-location-details{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;border:0!important;align-items:stretch!important}
+html #app#app#app#app .info-page-location .wistia-location-details article{padding:28px!important;border:1px solid #dfd4c7!important;border-radius:18px!important;background:#faf6ee!important}
+html #app#app#app#app .info-page-location .wistia-location-details h3{display:flex!important;flex-direction:column!important;align-items:center!important;gap:16px!important;margin:0 0 16px!important;font-size:20px!important;line-height:1.5!important;color:#493b32!important}
+html #app#app#app#app .info-page-location .wistia-location-details h3 span{white-space:nowrap!important}
+html #app#app#app#app .info-page-location .wistia-location-details p{margin:0!important;line-height:1.9!important;color:#706055!important;word-break:keep-all!important;font-size:15px!important}
+@media(max-width:600px){
+ html #app#app#app#app .info-page-location{padding-block:32px 48px!important}
+ html #app#app#app#app .info-page-location .info-page-intro{margin-bottom:24px!important}
+ html #app#app#app#app .info-page-location .wistia-location-address{padding:24px 12px!important}
+ html #app#app#app#app .info-page-location .location-address-row{gap:6px!important}
+ html #app#app#app#app .info-page-location .location-address-copy{width:32px!important;height:36px!important;padding:6px!important}
+ html #app#app#app#app .info-page-location .wistia-location-links{gap:8px!important}
+ html #app#app#app#app .info-page-location .wistia-location-links a{padding-inline:8px!important;font-size:12px!important;gap:6px!important}
+ html #app#app#app#app .info-page-location .wistia-location-details{grid-template-columns:minmax(0,1fr)!important}
+ html #app#app#app#app .info-page-location .wistia-location-details article{padding:24px!important}
+}

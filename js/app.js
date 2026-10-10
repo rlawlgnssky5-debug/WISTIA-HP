@@ -556,6 +556,8 @@ const STUDIO_ICON_PATHS={
  external:'<path d="M9 5H4v15h15v-5M13 4h7v7m0-7L10 14"/>',
  drag:'<path d="M3 12h18M7 8l-4 4 4 4m10-8 4 4-4 4M10 6h4m-4 12h4"/>',
  speaker:'<path d="M3 9h4l5-4v14l-5-4H3V9Zm13-1a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+ train:'<rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 10h14M12 3v7M8 21l2-3m6 3-2-3"/><circle cx="8.5" cy="14" r=".75"/><circle cx="15.5" cy="14" r=".75"/>',
+ car:'<path d="m4 10 2-6h12l2 6M3 10h18v8H3zM5 18v3m14-3v3M6 14h2m8 0h2"/>',
  copy:'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M5 16H3V3h13v2"/>'
 }
 function studioIcon(name){return '<svg class="studio-icon" data-icon="'+(STUDIO_ICON_PATHS[name]?name:'check')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false">'+(STUDIO_ICON_PATHS[name]||STUDIO_ICON_PATHS.check)+'</svg>'}
@@ -909,11 +911,11 @@ function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><p class="info-section-kicker">WEDDING VOCAL · FILM STUDIO</p><h2>말로 다 전하지 못한 마음을<br>직접 부른 노래와 영상에 담습니다</h2><p>한 곡의 노래가 한 편의 영상이 되기까지, 목소리에 담긴 마음이 장면까지 자연스럽게 이어지도록 녹음부터 음원 작업, 촬영과 편집을 함께합니다</p></div><figure>'+img("assets/img/wedding/04-recording-making.webp","위스티아 웨딩 보컬 녹음 현장",true)+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><h2 id="specialistTitle" class="single-line-heading">함께 완성하는 전문가들</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-no-people/03.svg","1대1 보컬 디렉팅",true)+'<p>현장</p><h3>편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-no-people/06.svg","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3>내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉와 〈불후의 명곡〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article><article><span>03</span>'+img("assets/img/wedding/03-lipsync-mv.webp","웨딩 영상 촬영과 편집",true)+'<p>영상</p><h3>노래의 감정이 장면까지 이어지도록</h3><small>7년 경력 영상 편집 디자이너가 이야기와 예식 분위기에 맞춰 촬영본을 한 편의 작품으로 엮습니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
  const address="경기도 부천시 석천로170번길 19, 2층"
- const locationContent='<div class="wistia-location"><div class="wistia-location-address"><h2 class="studio-address"><span class="studio-address-city">경기도 부천시</span><span class="studio-address-street">석천로170번길 19</span><span class="studio-address-floor">2층</span></h2><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 <span aria-hidden="true">↗</span></a></div></div><div class="wistia-location-details"><article><h3>지하철로 오실 때</h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><h3>차량으로 오실 때</h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
+ const locationContent='<div class="wistia-location"><div class="wistia-location-address"><span class="location-line-icon" aria-hidden="true">'+studioIcon('pin')+'</span><div class="location-address-row"><h2 class="studio-address" data-svg-title="off">'+address+'</h2><button class="location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">'+studioIcon('copy')+'</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 '+studioIcon('external')+'</a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 '+studioIcon('external')+'</a></div></div><div class="wistia-location-details"><article><h3>'+studioIcon('train')+'<span>지하철로 오실 때</span></h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><h3>'+studioIcon('car')+'<span>차량으로 오실 때</span></h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
  const directionsMap='<figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</a><figcaption>지도 이미지를 누르면 크게 볼 수 있습니다</figcaption></figure>'
  const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원·영상 제작','선택한 상품에 맞춰 목소리와 장면을 완성합니다'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a><a href="/detail/duet-film">축가 스토리 필름 알아보기 →</a></div></div>'
- const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent.replace('<div class="wistia-location">','<div class="wistia-location">'+directionsMap):aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
+ const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent.replace('<div class="wistia-location-details">',directionsMap+'<div class="wistia-location-details">'):aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
  app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1><p>'+page.description+'</p></header>'+content+'</section>'+footer()
 }
 function renderEventsPage(){
@@ -1590,6 +1592,22 @@ function playInlineVideo(button){
  const track=button.closest('[data-case-carousel]');if(track){track.dataset.casePlaying='true';const restore=button.cloneNode(true),stop=document.createElement('button');stop.type='button';stop.className='we-case-stop';stop.textContent='영상 닫기';stop.setAttribute('aria-label','영상 닫고 쇼케이스 이어 보기');stop.addEventListener('click',()=>{frame.replaceWith(restore);if(!track.querySelector('iframe'))delete track.dataset.casePlaying;restore.focus({preventScroll:true})});frame.append(stop)}
  button.replaceWith(frame)
 }
+async function copyLocationAddress(button){
+ const text=button.dataset.copyAddress,status=button.closest('.wistia-location-address').querySelector('[data-address-copy-status]')
+ if(button.disabled)return
+ button.disabled=true;let copied=false
+ try{await navigator.clipboard.writeText(text);copied=true}catch{
+  // A readonly, explicitly selected textarea supports iOS and in-app clipboard restrictions.
+  const active=document.activeElement,selection=window.getSelection(),ranges=selection?[...Array(selection.rangeCount)].map((_,i)=>selection.getRangeAt(i).cloneRange()):[]
+  const area=document.createElement('textarea');area.value=text;area.readOnly=true;area.setAttribute('aria-label','복사할 주소');area.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0;font-size:16px'
+  document.body.append(area)
+  try{area.focus({preventScroll:true});area.select();area.setSelectionRange(0,text.length);copied=document.execCommand('copy')}catch{}finally{area.remove();if(active?.isConnected)active.focus({preventScroll:true});if(selection){selection.removeAllRanges();ranges.forEach(range=>selection.addRange(range))}}
+ }
+ button.disabled=false;clearTimeout(button.addressCopyTimer)
+ status.textContent=copied?'복사됐어요':'주소를 길게 눌러 복사해 주세요'
+ button.addressCopyTimer=setTimeout(()=>{status.textContent=''},2500)
+ return copied
+}
 async function copyConsultationAndShowDialog(customText){
  const text=typeof customText==='string'?customText:consultationText();let copied=false
  try{await navigator.clipboard.writeText(text);copied=true}catch{
@@ -1810,6 +1828,7 @@ document.addEventListener("click",e=>{
  if(document.body.classList.contains('menu-open')&&!e.target.closest('#mainMenu,#menuToggle')){document.body.classList.remove('menu-open');const toggle=document.querySelector('#menuToggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','메뉴 열기');e.preventDefault();return}
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
  if(el.id==='floatingKakaoChat'||el.matches('.mas-bottom > a')){e.preventDefault();showKakaoInquiryDialog(el.id==='floatingKakaoChat'?'/contact':el.getAttribute('href'));return}
+ if(el.hasAttribute('data-copy-address')){copyLocationAddress(el);return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
  if(el.hasAttribute('data-booking-refresh')){window.WistiaBooking?.refresh();return}
  if(el.matches(".skip-link")){e.preventDefault();app.focus();return}

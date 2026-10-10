@@ -17,7 +17,7 @@ export function assertInquiryWithoutName(source){
  assert.doesNotMatch(copied,/성함|이름|과거 초안/,'legacy name values never enter copied inquiry text')
  assert.match(copied,/예식일 : 미정/)
  assert.match(copied,/방문 희망일 : 미정/)
- assert.match(copied,/희망 시간 : 15~16시/)
+ assert.match(copied,/희망 시간 : 오후 3시~오후 4시 \(1시간\)/)
  assert.match(copied,/예상 금액 : 120,000원/)
  const legacyName={name:'name',value:'현재 값',required:true,willValidate:true,validity:{valid:true}}
  assert.equal(api.validationEditor([{control:legacyName,label:'성함',message:'입력해 주세요'}]),'','a stale name cannot reappear in the validation popup editor')

@@ -18,5 +18,5 @@ assert.equal(rules.dayClosed('2026-10-11','solo',blocks,Date.parse('2026-10-08T0
 const partial=[{start:'2026-10-11T16:30:00+09:00',end:'2026-10-11T18:30:00+09:00'}]
 for(const [time,blocked] of [['15:00',false],['16:00',true],['17:00',true],['18:00',true],['19:00',false]])assert.equal(rules.slotBlocked('2026-10-11',time,60,partial),blocked)
 const message=window.WistiaContact.text({bookingDateMode:'date',bookingDate:'2027-10-10',timeStart:'15:00'})
-assert.match(message,/희망 시간 : 15~16시\n/);assert.doesNotMatch(message,/30분/)
+assert.match(message,/희망 시간 : 오후 3시~오후 4시 \(1시간\)\n/);assert.doesNotMatch(message,/30분/)
 console.log('Time guidance order, whole-hour options, precise interval overlap, hourly-only closed day and Kakao whole-hour summary passed')

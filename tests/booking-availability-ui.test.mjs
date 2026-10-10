@@ -25,7 +25,7 @@ requests.at(-1).resolve(payload(date.value,booked));await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
 assert.equal(time.options.find(option=>option.value==='17:00').disabled,true)
 assert.equal(time.options.find(option=>option.value==='19:00').disabled,false)
-assert.equal(form.dataset.scheduleState,'closed');assert.match(time.validationMessage,/마감/)
+assert.equal(form.dataset.scheduleState,'ready');assert.equal(time.value,'');assert.equal(time.validationMessage,'')
 time.value='16:00';api.changed(date);await flush();assert.equal(form.dataset.scheduleState,'ready')
 api.mount(form,'duo');await flush()
 assert.equal(time.options.find(option=>option.value==='16:00').disabled,true,'full product duration, not just start time, must fit')
@@ -158,4 +158,25 @@ console.log('Booking UI: closed weekdays, unknown dates, duration overlap, refre
  requests[1].resolve({ok:true,json:async()=>({ok:true,from,to,blocks:[]})});await fresh
  assert.equal(api.calendarBlocks(from,to).length,0,'only successful newer results reopen dates')
  assert.equal(api.calendarRangeFailed(from,to),false)
+}
+
+// A new date clears the previous start immediately, including while its response is pending.
+{
+ const {api,requests}=harness(),f=makeForm()
+ api.mount(f.form,'solo');f.date.disabled=false;f.date.value=day;api.changed(f.date)
+ requests[0].resolve(payload(day));await flush()
+ f.time.value='17:00';api.changed(f.time);await flush()
+ assert.equal(f.time.value,'17:00','same-date changes retain a valid start')
+ f.date.value='2027-10-14';api.changed(f.date)
+ assert.equal(f.time.value,'','date change resets before the query resolves')
+ requests[1].resolve(payload(f.date.value,[{start:'2027-10-14T08:00Z',end:'2027-10-14T10:00Z'}]));await flush()
+ assert.equal(f.time.value,'');assert.equal(f.time.selectedOptions[0].disabled,false)
+ // A freshly discovered booking also clears an otherwise unchanged date's selection.
+ f.time.value='19:00';const refresh=api.refresh()
+ requests[2].resolve(payload(f.date.value,[{start:'2027-10-14T10:00Z',end:'2027-10-14T11:00Z'}]));await refresh
+ assert.equal(f.time.value,'');assert.equal(f.opt('19:00').dataset.disabledReason,'booking')
+ // Closing-hour limits never claim that a customer has booked the time.
+ api.mount(f.form,'duet-film');await flush()
+ assert.equal(f.opt('19:00').dataset.disabledReason,'booking')
+ console.log('Date changes and newly blocked starts reset to undecided; booking reasons preserved')
 }
