@@ -12,7 +12,7 @@ assert.match(index,/pretendardvariable-dynamic-subset.min.css/)
 assert.doesNotMatch(index,/maru-buri.css|href="css\/olive-mustard-cream.css|studio-editorial.css/)
 assert.ok(index.lastIndexOf('noir-minimal.css')>index.lastIndexOf('approved-home-thumbnails.css'))
 for(const hex of ['#FF82B2','#7657D5','#F7F1FF','#372455'])assert.ok(css.includes(hex))
-assert.match(css,/--font-heading:"Pretendard Variable","Pretendard",sans-serif/)
+assert.match(read('css/heading-font.css'),/--font-heading:"MaruBuri",serif/)
 assert.match(css,/--font-body:"Pretendard Variable","Pretendard",sans-serif/)
 assert.match(css,/font-weight:750!important;letter-spacing:-\.045em!important/)
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|line-height|position|display|transform|gap|grid-template-columns|animation|transition|z-index|overflow|filter|object-fit)\s*:/i,'palette/type must not replace the approved layout, media or motion')
@@ -28,12 +28,12 @@ for(const route of ['detail/solo','detail/duo','detail/duet-film','event/solo','
  const page=read(route+'.html')
  assert.match(page,/data-wistia-palette="noir-minimal"/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)
- assert.match(page,/noir-minimal.css\?v=20261006-noir-minimal-1/)
+ assert.match(page,/noir-minimal.css\?v=20261010-detail-polish-12d/)
  assert.doesNotMatch(page,/href="[^"]*olive-mustard-cream.css|maru-buri.css/)
 }
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
 assertPreservedAppLogic(read('js/app.js')) // Latest approved graphic renderers supersede the palette-only whole-file lock
 assertInquiryWithoutName(read('js/contact-form.js')) // Name removal supersedes the earlier whole-file inquiry lock
-assert.equal(hash(read('privacy.html').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908')
+assert.equal(hash(read('privacy.html').replace('<body class="privacy-page">','<body>').replace(/^  <a class="floating-kakao-pill".*\n/m,'').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908')
 console.log('Pink/purple/lavender, modern sans type, legible roles, all pages and unchanged app/media/inquiry/legal content passed')
 assert.doesNotMatch(index,/href="css\/pink-purple-lavender.css/,'archived bright palette is not active')

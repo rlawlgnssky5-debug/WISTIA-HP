@@ -128,7 +128,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
      assert.equal((await page.locator('.consultation-gifts').innerText()).match(/미리 차감하지 않습니다/g).length,1)
     }
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,`${path} ${width} horizontal overflow`)
-    const icon=page.locator('#floatingKakaoChat img');assert.match(await icon.getAttribute('src'),/interface\/kakao-talk.svg/);assert.equal(await icon.evaluate(n=>n.complete&&n.naturalWidth>0),true)
+    assert.equal(await page.locator('#floatingKakaoChat .kakao-bubble path').count(),1)
     results.push({width,path,titles,horizontalOverflow:0})
    }
    await page.close()

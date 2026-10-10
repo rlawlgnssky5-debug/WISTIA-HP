@@ -22,9 +22,9 @@ date.value='2027-10-10';api.changed(date)
 assert.equal(form.dataset.scheduleState,'loading');assert.equal(status.hidden,true);assert.match(date.validationMessage,/확인/)
 const booked=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10:00:00Z'}]
 requests.at(-1).resolve(payload(date.value,booked));await flush()
-assert.equal(time.options.find(option=>option.value==='16:00').disabled,false)
+assert.equal(time.options.find(option=>option.value==='16:00').disabled,true)
 assert.equal(time.options.find(option=>option.value==='17:00').disabled,true)
-assert.equal(time.options.find(option=>option.value==='19:00').disabled,false)
+assert.equal(time.options.find(option=>option.value==='19:00').disabled,true)
 assert.equal(form.dataset.scheduleState,'ready');assert.equal(time.value,'');assert.equal(time.validationMessage,'')
 time.value='16:00';api.changed(date);await flush();assert.equal(form.dataset.scheduleState,'ready')
 api.mount(form,'duo');await flush()
@@ -60,7 +60,7 @@ function harness(clock=Date){
 function makeForm(){
  const date=control(''),time=control(''),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
  date.disabled=true
- time.options=['','14:00','15:00','16:00','17:00','18:00','19:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
+ time.options=['',...Array.from({length:20},(_,i)=>`${13+Math.floor(i/2)}:${i%2?'30':'00'}`)].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
  Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
  const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
  date.closest=time.closest=()=>form
@@ -79,7 +79,7 @@ const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10
  requests[0].resolve(payload(day,booking));await flush();await flush()
  assert.equal(f.form.dataset.scheduleState,'ready')
  assert.equal(f.opt('17:00').disabled,true);assert.match(f.opt('17:00').textContent,/마감/)
- assert.equal(f.opt('16:00').disabled,false);assert.equal(f.opt('19:00').disabled,false)
+ assert.equal(f.opt('16:00').disabled,true);assert.equal(f.opt('19:00').disabled,true)
 }
 { // (a') first date entry whose request never answers: timeout fallback, never "available"
  const {api,requests,fire}=harness(),f=makeForm()
@@ -100,13 +100,13 @@ const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10
  assert.equal(solo.form.dataset.scheduleState,'loading');assert.equal(requests.length,1,'switching products reuses the in-flight date request')
  requests[0].resolve(payload(day,booking));await flush();await flush()
  assert.equal(solo.form.dataset.scheduleState,'ready')
- assert.equal(solo.opt('17:00').disabled,true);assert.equal(solo.opt('16:00').disabled,false,'SOLO uses 60 minutes')
+ assert.equal(solo.opt('17:00').disabled,true);assert.equal(solo.opt('16:00').disabled,true,'SOLO uses 60 minutes')
  // (b') switching back again renders immediately from the known closures for the new duration
  const story2=makeForm();api.mount(story2.form,'duet-film');story2.date.disabled=false;story2.date.value=day;api.changed(story2.date)
  assert.equal(story2.form.dataset.scheduleState,'ready');assert.equal(requests.length,1)
- assert.equal(story2.opt('15:00').disabled,true);assert.equal(story2.opt('19:00').disabled,false,'story blocks 180-minute overlaps')
+ assert.equal(story2.opt('15:00').disabled,true);assert.equal(story2.opt('19:00').disabled,true,'story blocks 180-minute overlaps')
  const solo2=makeForm();api.mount(solo2.form,'solo');solo2.date.disabled=false;solo2.date.value=day;api.mount(solo2.form,'solo')
- assert.equal(solo2.form.dataset.scheduleState,'ready');assert.equal(solo2.opt('16:00').disabled,false);assert.equal(solo2.opt('17:00').disabled,true)
+ assert.equal(solo2.form.dataset.scheduleState,'ready');assert.equal(solo2.opt('16:00').disabled,true);assert.equal(solo2.opt('17:00').disabled,true)
  // copy refresh: always a fresh request even with a cached schedule, and a failure shows the Kakao fallback
  const copy=api.refresh();assert.equal(requests.length,2,'schedule is re-fetched right before copying');assert.equal(solo2.form.dataset.scheduleState,'loading')
  requests[1].reject(Error('notion down'));await copy

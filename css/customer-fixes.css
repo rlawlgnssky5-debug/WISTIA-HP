@@ -214,7 +214,7 @@ body[data-page="event"] .booking-static-bar .button{
 .wedding-film-use header>p:last-child{margin:0;color:#68777a;line-height:1.65}
 .wedding-film-use-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .wedding-film-use-grid article{min-width:0;padding:24px;border:1px solid #d7dfe0;border-radius:16px;background:#f5f7f7}
-.wedding-film-use-grid span{font-family:Georgia,serif;font-size:11px;letter-spacing:.1em;color:#738487}
+.wedding-film-use-grid span{font-family:var(--font-heading);font-size:11px;letter-spacing:.1em;color:#738487}
 .wedding-film-use-grid h3{margin:18px 0 9px;font-size:21px}
 .wedding-film-use-grid p{margin:0;color:#627177;font-size:13px;line-height:1.65;word-break:keep-all}
 @media(max-width:540px){.wedding-film-use-grid{grid-template-columns:1fr}.wedding-film-use-grid article{padding:20px}}
@@ -282,7 +282,7 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 .wps-accordion summary{display:grid;grid-template-columns:46px minmax(0,1fr) 28px;align-items:center;gap:10px;min-height:68px;padding:12px 20px;cursor:pointer;list-style:none}
 .wps-accordion summary::-webkit-details-marker{display:none}
 .wps-accordion summary strong{font-size:clamp(15px,2vw,19px);font-weight:600;word-break:keep-all}
-.wps-accordion-num{color:#acc0c7;font-family:Georgia,serif;font-size:15px}
+.wps-accordion-num{color:#acc0c7;font-family:var(--font-heading);font-size:15px}
 .wps-accordion-plus{font-size:25px;font-weight:300;text-align:right}
 .wps-accordion details[open] .wps-accordion-plus{transform:rotate(45deg)}
 .wps-accordion-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:0 20px 24px}
@@ -298,7 +298,7 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 /* Product composition and booking guidance */
 .solo-detail-scope .package-overview{padding:clamp(58px,7vw,96px) 0;background:#f3f5f5;color:#243035}
 .solo-detail-scope .package-overview>.shell,.solo-detail-scope .booking-guide.shell{width:min(100% - 2*var(--solo-page-gutter,24px),1120px);max-width:1120px;margin-inline:auto;padding-inline:0}
-.package-overview-eyebrow{margin:0 0 12px;color:#7d9299;font-family:Georgia,serif;font-size:12px;letter-spacing:.16em}
+.package-overview-eyebrow{margin:0 0 12px;color:#7d9299;font-family:var(--font-heading);font-size:12px;letter-spacing:.16em}
 .package-overview h2{margin:0 0 25px;font-size:clamp(25px,4vw,40px);line-height:1.25;letter-spacing:-.05em}
 .package-overview-description{max-width:900px;margin:20px 0 0;color:#607278;font-size:15px;line-height:1.8;word-break:keep-all}
 .solo-detail-scope .booking-guide{padding-block:clamp(54px,7vw,88px);background:#fff}
@@ -312,7 +312,7 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 /* Reference composition: compact horizontal feature tiles, not a photo-led package card */
 .package-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .package-feature{display:flex;min-width:0;min-height:150px;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:18px 10px;border:1px solid #e1e6e8;border-radius:20px;background:#eaedf0;text-align:center;color:#26353b}
-.package-feature-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:14px;background:#f7f8f9;color:#566f84;font-size:26px;line-height:1;font-family:Georgia,serif}
+.package-feature-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:14px;background:#f7f8f9;color:#566f84;font-size:26px;line-height:1;font-family:var(--font-heading)}
 .package-feature strong{font-size:clamp(12px,1.3vw,15px);font-weight:650;line-height:1.45;word-break:keep-all}
 .package-overview-description{margin-top:25px}
 .package-making-option{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:24px;padding:22px 25px;border:1px solid #cbd8dc;border-radius:17px;background:#fff;color:#24353b;text-decoration:none}
@@ -351,7 +351,7 @@ body[data-page="event"] .booking-follow-total .button{position:relative;z-index:
 .wistia-advantages header p{max-width:360px;margin:0;color:#66777d;font-size:15px;line-height:1.6;word-break:keep-all}
 .wistia-advantages ol{margin:0;padding:0;list-style:none;border-top:1px solid #cbd4d7}
 .wistia-advantages li{display:grid;grid-template-columns:80px minmax(0,1fr);gap:24px;padding:27px 0;border-bottom:1px solid #cbd4d7}
-.wistia-advantage-number{color:#8999a0;font:italic 26px/1 Georgia,serif}
+.wistia-advantage-number{color:#8999a0;font:italic 26px/1 var(--font-heading)}
 .wistia-advantages li small{display:block;color:#617b85;font-size:12px;letter-spacing:.06em}
 .wistia-advantages li h3{margin:6px 0 9px;font-size:clamp(20px,2.5vw,27px);font-weight:620;letter-spacing:-.045em;word-break:keep-all}
 .wistia-advantages li p{margin:0;color:#65767d;font-size:15px;line-height:1.7;word-break:keep-all}

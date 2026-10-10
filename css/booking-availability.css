@@ -98,10 +98,10 @@ html #siteHeader .wordmark>span{display:flex!important;align-items:center!import
 }
 html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!important}
 @media(max-width:430px){
- html #app#app#app#app .inquiry-actions{grid-template-columns:minmax(0,1fr)!important;gap:6px!important;padding-block:8px calc(12px + env(safe-area-inset-bottom))!important}
+ html #app#app#app#app .inquiry-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;padding-block:8px calc(12px + env(safe-area-inset-bottom))!important}
  html #app#app#app#app .inquiry-actions .inquiry-direct{min-height:36px!important;font-size:12px!important;padding-block:6px!important}
  html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important}
- body[data-page="event"] #app{padding-bottom:132px!important}
+ body[data-page="event"] #app{padding-bottom:0!important}
 }
 @media(max-width:430px){
  html #app#app#app#app :is(.calendar-grid,.calendar-weekdays){grid-template-columns:repeat(7,minmax(0,1fr))!important}
@@ -111,8 +111,8 @@ html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!impor
 /* Keep the booking controls on the card axis, with room to scroll above the CTA. */
 html #app#app#app#app :is(.calendar-inline,.calendar-time-grid){width:100%!important;max-width:520px!important;margin-inline:auto!important}
 html #app#app#app#app [data-calendar-range-status]{font-size:12px;line-height:1.7;color:#66645f;text-align:center}
-html{scroll-padding-bottom:160px}
-body[data-page="event"] #app{padding-bottom:160px!important}
+html{scroll-padding-bottom:24px}
+body[data-page="event"] #app{padding-bottom:0!important}
 html #app#app#app#app .consultation-flow :is(.calendar-day,.calendar-time-grid button,.option-photo){scroll-margin-block:24px 160px}
 @media(max-width:430px){
  html #app#app#app#app .calendar-popup{position:relative!important;left:auto!important;top:auto!important;width:100%!important;margin-top:12px!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;z-index:auto!important}
@@ -121,8 +121,7 @@ html #app#app#app#app [data-calendar-range-status][hidden]{display:none!importan
 
 /* Desktop actions share the inquiry container axis, including its summary column. */
 @media(min-width:901px){
- html #app#app#app#app .consultation-flow .inquiry-actions{left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:min(calc(100% - 48px),1100px)!important;max-width:1100px!important}
- html #app#app#app#app .consultation-flow #contactInquiryForm{padding-bottom:160px!important}
+ html #app#app#app#app .consultation-flow #contactInquiryForm{padding-bottom:0!important}
 }
 
 /* Both dates use the same in-card disclosure and legible native month controls. */
@@ -148,7 +147,7 @@ html #app#app#app#app .contact-time-field{scroll-margin-block:80px 160px}
 /* Phone wish-time choices, including undecided and closed times, share two columns. */
 @media(max-width:430px){
  html #app#app#app#app .calendar-time-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- html #app#app#app#app .calendar-time-grid button{min-width:0!important;white-space:normal!important;overflow-wrap:anywhere!important}
+ html #app#app#app#app .calendar-time-grid button{min-width:0!important;white-space:nowrap!important;overflow-wrap:normal!important}
 }
 
 @media(max-width:350px){
@@ -171,7 +170,7 @@ html #app#app#app#app .calendar-time-grid button:disabled{cursor:default}
 html #app#app#app#app .contact-date-summary{margin:10px 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;font-size:13px!important;line-height:1.6!important;color:#252421!important;cursor:default}
 
 /* Every booking choice represents one complete recording interval. */
-html #app#app#app#app .calendar-time-grid{grid-template-columns:minmax(0,1fr)!important}
+html #app#app#app#app .calendar-time-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 
 /* Sunday/public-holiday colour never changes booking eligibility or selected contrast. */
 html #app#app#app#app .contact-calendar .calendar-weekdays>.calendar-sunday,
@@ -181,3 +180,10 @@ html #app#app#app#app .contact-calendar .calendar-day.calendar-red-day:disabled>
 /* A valid interval includes later hours that cannot themselves start a session. */
 html #app#app#app#app .calendar-time-grid button.is-covered,
 html #app#app#app#app .calendar-time-grid button.is-covered>small{background:#302d27!important;color:#fffcf5!important;border-color:#302d27!important}
+
+/* Undecided occupies the full row; each following row pairs :00 and :30. */
+html #app#app#app#app .calendar-time-grid button[data-calendar-time=""]{grid-column:1/-1}
+html #app#app#app#app .calendar-time-grid button{white-space:nowrap!important;min-width:0!important;padding-inline:4px!important;font-size:clamp(12px,3.4vw,15px)!important}
+html #app#app#app#app .calendar-time-grid button[aria-disabled="true"]:not(.is-covered){opacity:.42;cursor:pointer;background:#f5f4f0!important;color:#66645f!important;border-color:#dddcd8!important}
+
+html #app#app#app#app .calendar-time-grid button.is-covered{opacity:1!important}

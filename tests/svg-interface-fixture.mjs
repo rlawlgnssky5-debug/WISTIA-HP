@@ -7,12 +7,11 @@ export function assertContactBusinessPreserved(source){
  const start=source.indexOf(' function submitIcon('),end=source.indexOf(' function validationEditor('),copy=source.indexOf(' function text(')
  assert.ok(start>=0&&end>start&&copy>end,'the SVG submit UI and explicitly revised copy formatter and calendar have independent boundaries')
  // Date/time controls and their validation are intentionally revised for Notion.
- // Round 11 revises start-hour labels and the range formatter; start values stay HH:00 for restoration.
+ // Round 12 revises half-hour choices, range formatting and invalid-selection snapshots; dedicated behavior tests cover them.
  // Protect fields/draft logic from deployed 10b2079; render baseline is explicitly revised for the user-requested source-first section order (5th pass).
  for(const [a,b,digest] of [
-  ['(function(global){',' // Calendar display uses KST dates;','8a5ea1a05652b80de1c5b78f0a96632f26d50c260832ab94bf44a63ae178949e'],
   [' function render(',' function submitIcon(','fd308b63b32deb88ebafc173a4dd52a8269b00e0b34a2a392f9cbb892e6e87f7'],
-  [' function validationEditor(',' function restore(','25c8eca4c616230fc2d71f52ddcf9d131015b5deb4f399387fe860ee617fb084'],
+  [' function validationEditor(',' function snapshot(','287ee6c7f3a043eceffb437f2e11b1c4a0495c4a8e1d4359acaa23ba6eb0c9a5'],
   [' function restore(',' function text(','ca71503dc2a2ae3330fc985fe207b382497f1759ce4101a687d070ec74cda0dd']
  ]){
   const i=source.indexOf(a),j=source.indexOf(b,i+a.length)

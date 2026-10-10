@@ -9,9 +9,9 @@
  const sourceChoices=['인스타','스레드','메타 광고','카페','블로그','지인 추천']
  const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
- function formatTimeRange(value,minutes=60){const match=/^(\d{2}):00$/.exec(value||'');const hour=match?Number(match[1]):0,end=hour+minutes/60;return hour>=13&&end<=23?'오후 '+(hour-12)+'시~오후 '+(end-12)+'시 ('+(minutes/60)+'시간)':'미정'}
+ function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>'오후 '+(Math.floor(clock/60)-12)+'시'+(clock%60?' 30분':'');return start>=13*60&&end<=23*60?label(start)+'~'+label(end)+' ('+(minutes/60)+'시간)':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- const timeOptions=Array.from({length:10},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">'+'오후 '+(hour-12)+'시</option>'}).join('')
+ const timeOptions=Array.from({length:20},(_,index)=>{const hour=13+Math.floor(index/2),half=index%2;return '<option value="'+hour+':'+(half?'30':'00')+'">오후 '+(hour-12)+'시'+(half?' 30분':'')+'</option>'}).join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  // Verified 2026-10-09: KASI calendar data and the 2026 Labour/Constitution Day update.
@@ -164,7 +164,7 @@
  }
  function syncTimeChoices(form){
   if(!form?.querySelector)return
-  const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate')
+  const list=form.querySelector('[data-calendar-times]'),time=form.querySelector?.('#contact-time'),date=form.querySelector?.('#contact-bookingDate')
   if(!list||!time||!date)return
   const known=!date.disabled&&!!parseDate(date.value)
   list.hidden=!known;time.closest('label').hidden=true;time.disabled=!known
@@ -173,15 +173,15 @@
   form.querySelector('[data-time-help]').hidden=!known
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.calendarTime:null
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
-  const start=Number(time.value.slice(0,2)),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
+  const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3)),start=clock(time.value),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   list.innerHTML=[...time.options].map(option=>{
-   const hour=Number(option.value.slice(0,2)),covered=validSelection&&!!option.value&&hour>=start&&hour<start+minutes/60
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
+   const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
   if(!list.dataset.mounted){
    list.dataset.mounted='true'
-   list.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;time.value=button.dataset.calendarTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimeChoices(form)})
+   list.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-time-unavailable')){const help=form.querySelector('[data-time-help]');help.textContent='이 상품은 '+(global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())/60||1)+'시간이 필요해서 이 시간엔 시작할 수 없어요';help.hidden=false;return}form.querySelector('[data-time-help]').textContent='시작 시간을 고르시면 상품 시간만큼 함께 선택돼요';time.value=button.dataset.calendarTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimeChoices(form)})
    list.addEventListener('keydown',event=>{
     if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return
     const buttons=[...list.querySelectorAll('button:not(:disabled)')],index=buttons.indexOf(event.target);if(index<0)return
@@ -265,6 +265,9 @@
  function snapshot(form){
   if(!form)return null
   const values=Object.fromEntries([...new FormData(form)].filter(([key])=>snapshotKeys.has(key)))
+  const time=form.querySelector?.('#contact-time'),date=form.querySelector?.('#contact-bookingDate')
+  if(time&&(time.disabled||date?.disabled||!date?.value||(form.dataset.scheduleState!=='loading'&&time.selectedOptions[0]?.disabled))){time.value='';values.timeStart=''}
+  values.timeStart??=''
   // Keep the canonical start for existing drafts and availability checks, plus the displayed range.
   values.time=formatTimeRange(values.timeStart,global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60)
   return values

@@ -7,22 +7,24 @@ assert.doesNotMatch(index,/hangeul_static\/css\/maru-buri.css/)
 assert.match(index,/pretendardvariable-dynamic-subset.min.css/)
 assert.doesNotMatch(index,/fonts.googleapis.com\/css2\?family=Noto/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-11),[
- 'css/monochrome-maru-theme.css?v=20261005-monochrome-maru-1',
+assert.deepEqual(sheets.slice(-13),[
+ 'css/monochrome-maru-theme.css?v=20261010-detail-polish-12d',
  'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
- 'css/noir-minimal.css?v=20261006-noir-minimal-1',
+ 'css/noir-minimal.css?v=20261010-detail-polish-12d',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
  'css/luxury-finish.css?v=20261006-reviews-five-1',
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
  'css/svg-interface.css?v=20261007-svg-interface-1',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261010-detail-polish-11b',
- 'css/detail-section-layout.css?v=20261010-detail-polish-11b'
+ 'css/booking-availability.css?v=20261010-detail-polish-12d',
+ 'css/detail-section-layout.css?v=20261010-detail-polish-12d',
+ 'css/heading-font.css?v=20261010-detail-polish-12d',
+ 'css/kakao-inquiry.css?v=20261010-detail-polish-12d'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)
-assert.match(css,/--font-heading:"MaruBuri",serif/)
+assert.match(read('css/heading-font.css'),/--font-heading:"MaruBuri",serif/)
 assert.match(css,/--font-body:"Pretendard Variable","Pretendard",sans-serif/)
 assert.match(css,/h1,h2,h3,h4,h5,h6/)
 assert.match(css,/button,input,select,textarea/)
@@ -38,7 +40,7 @@ assert.match(css,/\.info-process \.booking-guide article/)
 assert.doesNotMatch(css,/filter:|img\s*\{/,'actual media and brand mark must not be recoloured')
 for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/solo','event/duo','event/duet-film','info/location','info/about','info/faq','info/process','events']){
  const page=read(route+'.html')
- assert.match(page,/monochrome-maru-theme.css\?v=20261005-monochrome-maru-1/)
+ assert.match(page,/monochrome-maru-theme.css\?v=20261010-detail-polish-12d/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)
 }
 assert.match(read('js/contact-form.js'),/작성한 내용으로 카카오톡 문의하기/)

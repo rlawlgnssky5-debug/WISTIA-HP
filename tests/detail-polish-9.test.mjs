@@ -9,6 +9,6 @@ assert.match(app,/POINT 05 · 보컬 보정/);assert.doesNotMatch(app,/실제 �
 assert.match(app,/<h2 id="specialistTitle" class="single-line-heading">함께 완성하는 전문가들<\/h2>/)
 assert.doesNotMatch(app,/<span>01 \/ SUBWAY<\/span>|<span>02 \/ PARKING<\/span>|<span>WISTIA STUDIO · BUCHEON<\/span>|<p class="info-section-kicker">ONE TEAM, THREE SPECIALISTS<\/p>/)
 assert.doesNotMatch(app,/heading\("녹음 인원 선택","한 사람 또는 두 사람"/)
-assert.equal(JSON.parse(read('wistia-config.json')).build,'20261010-detail-polish-11b')
+assert.equal(JSON.parse(read('wistia-config.json')).build,'20261010-detail-polish-12d')
 assert.match(read('js/svg-interface.js'),/리뷰\|직접 남겨 주신 이야기/)
 console.log('Round 9: single payback sentence, distinct POINT copy, single location/people/expert headings, SVG mapping, current build and historical browser expectations passed')

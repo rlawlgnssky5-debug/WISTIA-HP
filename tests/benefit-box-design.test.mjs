@@ -111,7 +111,6 @@ for(let index=0;index<reviewHashes.length;index++){
 for(const [path,digest] of [
  ['assets/img/song-options/lyric-video-v2.webp','ca947d5ef39db38f9e296be8d378f222fad426c55406750693de237616c9414b'],
  ['assets/img/ar-detail/broadcast-typography-wistia-v2.png','af7f610506d96dab20753b836fa6a01c97a10948ea16d3deb4464cca2883d929'],
- ['assets/img/studio-graphics/broadcast.svg','e59ec317eb091527adb6b7553e94bc0e563ad8e9efe5a4e7fff09a57241e270e']
 ])assert.equal(hash(bytes(path)),digest,path+' is preserved byte-for-byte')
 assert.match(finish,/\.mas-event-price strong,\.quote-effective,\.quote-effective strong\)\{color:#C62828!important/,'effective price remains red')
 
@@ -139,7 +138,7 @@ assert.match(css,/@media\(min-width:769px\)[\s\S]*grid-template-columns:repeat\(
 assert.match(css,/@media\(max-width:360px\)[\s\S]*\.benefit-kind-grid>\.benefit-kind-card\{padding:18px 14px!important\}/)
 for(const path of ['index.html','events.html','contact.html','detail/solo.html','detail/duo.html','detail/duet-film.html','event/solo.html','event/duo.html','event/duet-film.html']){
  const html=read(path)
- assert.match(html,/js\/app.js\?v=20261010-detail-polish-11b/,path+' loads the current renderer')
+ assert.match(html,/js\/app.js\?v=20261010-detail-polish-12d/,path+' loads the current renderer')
  assert.match(html,/css\/detail-consistency.css\?v=20261006-benefit-boxes-1/,path+' loads the separated boxes styles')
 }
 console.log('Yellow gift, four paybacks, 48 calculations, selection preservation, protected assets and caches passed')

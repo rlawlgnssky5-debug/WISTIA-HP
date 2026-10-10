@@ -14,7 +14,7 @@ const block=selector=>{
 
 // Keep the archived broadcast vector and genuine lyric example byte-for-byte
 // The newest request restores the original 3D broadcast PNG, not the archived SVG mapping
-assert.equal(digest('assets/img/studio-graphics/broadcast.svg'),'e59ec317eb091527adb6b7553e94bc0e563ad8e9efe5a4e7fff09a57241e270e')
+assert.match(read('assets/img/studio-graphics/broadcast.svg'),/싱어게인2/);assert.doesNotMatch(read('assets/img/studio-graphics/broadcast.svg'),/불후의 명곡|IMMORTAL SONGS/)
 assert.equal(digest('assets/img/song-options/lyric-video-v2.webp'),'ca947d5ef39db38f9e296be8d378f222fad426c55406750693de237616c9414b')
 assert.doesNotMatch(css,/@import|font-family:|url\(|grayscale\(/)
 

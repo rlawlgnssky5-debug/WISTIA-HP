@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="320" viewBox="0 0 960 320" role="img" aria-labelledby="title desc">
-<title id="title">방송 음악 작업 참여</title><desc id="desc">싱어게인2와 불후의 명곡을 위스티아의 절제된 타이포그래피로 표시한 그래픽</desc>
-<rect width="960" height="320" fill="#252421"/><path d="M32 70h896M32 254h896M480 100v130" stroke="#85827C"/>
+<title id="title">방송 음악 작업 참여</title><desc id="desc">싱어게인2를 위스티아의 절제된 타이포그래피로 표시한 그래픽</desc>
+<rect width="960" height="320" fill="#252421"/><path d="M32 70h896M32 254h896" stroke="#85827C"/>
 <text x="32" y="42" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="12" letter-spacing="3">WISTIA / SOUND ENGINEERING</text><text x="928" y="42" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="12" letter-spacing="3" text-anchor="end">BROADCAST MUSIC WORK</text>
-<g fill="#F5F4F0" font-family="Pretendard,Arial,sans-serif" font-size="48" font-weight="500" text-anchor="middle"><text x="244" y="174">싱어게인2</text><text x="708" y="174">불후의 명곡</text></g>
-<text x="244" y="213" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="11" text-anchor="middle" letter-spacing="3">SING AGAIN 2</text><text x="708" y="213" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="11" text-anchor="middle" letter-spacing="3">IMMORTAL SONGS</text>
+<g fill="#F5F4F0" font-family="Pretendard,Arial,sans-serif" font-size="48" font-weight="500" text-anchor="middle"><text x="480" y="174">싱어게인2</text></g>
+<text x="480" y="213" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="11" text-anchor="middle" letter-spacing="3">SING AGAIN 2</text>
 <text x="32" y="289" fill="#DDDCD8" font-family="Arial,sans-serif" font-size="11" letter-spacing="3">VOICE / MIXING / MASTERING</text>
 </svg>

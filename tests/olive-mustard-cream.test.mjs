@@ -24,12 +24,12 @@ for(const pair of [['4B5234','F2EBD9'],['59613F','F2EBD9'],['FFFDF4','667044'],[
 assert.ok(contrast('87916B','FFFDF4')>=3,'rest waveform must be visible')
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/location','info/about','info/faq','info/process','events','before-after','find/role','find/service','find/people','privacy']){
  assert.match(read(route+'.html'),/data-wistia-palette="noir-minimal"/)
- assert.match(read(route+'.html'),/noir-minimal.css\?v=20261006-noir-minimal-1/)
+ assert.match(read(route+'.html'),/noir-minimal.css\?v=20261010-detail-polish-12d/)
 }
 // Palette-only baseline at bb14a1f, normalized for Windows/Git line endings
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
 assertPreservedAppLogic(read('js/app.js')) // Latest approved graphic renderers supersede the palette-only whole-file lock
 assertInquiryWithoutName(read('js/contact-form.js')) // Name removal supersedes the earlier whole-file inquiry lock
-assert.equal(hash(read('privacy.html').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908','legal content is unchanged')
+assert.equal(hash(read('privacy.html').replace('<body class="privacy-page">','<body>').replace(/^  <a class="floating-kakao-pill".*\n/m,'').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908','legal content is unchanged')
 console.log('Archived olive palette, active successor, readable roles and unchanged geometry/media/app/legal content passed')
 assert.doesNotMatch(index,/href="css\/olive-mustard-cream.css/,'the archived palette must not load alongside its successor')

@@ -37,7 +37,7 @@ mobile=false
 assert.equal(scope.arCommerceDetail(scope.PRODUCTS.solo),html,'SOLO PC and mobile markup match')
 assert.equal(scope.arCommerceDetail(scope.PRODUCTS.duo,'duo'),duetMobile,'DUET PC and mobile markup match')
 assert.match(desktop,/mobile-ar-solo/)
-assert.match(desktop,/mas-bottom/)
+assert.match(desktop,/product-inquiry/)
 for(const id of ['arcProductTitle','arcDetails','arcRecording','arcKey','reviews','arcFaq','arcProcess','wistiaBeforeAfter','wistiaBeforeAfterTitle','arRatioExperience'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id)
 assert.equal((html.match(/<h1 /g)||[]).length,1)
 assert.deepEqual([...html.matchAll(/detail-point-label"[^>]*>(POINT \d{2})</g)].map(m=>m[1]),['POINT 01','POINT 02','POINT 03','POINT 04','POINT 05'])

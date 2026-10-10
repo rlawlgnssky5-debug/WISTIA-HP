@@ -72,7 +72,7 @@ html[data-wistia-palette="noir-minimal"] :is(.top,.wrap section,.wrap th,.wrap t
 /* Modern sans typography: no layout replacement, no extra font dependency */
 html[data-wistia-typography="pretendard-noir"],
 html[data-wistia-typography="pretendard-noir"] body{
- --font-heading:"Pretendard Variable","Pretendard",sans-serif;
+
  --font-body:"Pretendard Variable","Pretendard",sans-serif;
  --serif:var(--font-heading);--sans:var(--font-body);
  font-family:var(--font-body)!important;

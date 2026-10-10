@@ -9,13 +9,15 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
- function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>13+i).map(hour=>({value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}))}
+ function timeWindows(key){const minutes=duration(key);return Array.from({length:20},(_,i)=>{const clock=13*60+i*30,hour=Math.floor(clock/60),half=clock%60;return {value:hour+':'+(half?'30':'00'),label:'오후 '+(hour-12)+'시'+(half?' 30분':''),minutes}})}
+ // Server blocks already include each existing reservation's 30-minute buffers.
+ function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
-  const start=Date.parse(date+'T'+time+':00+09:00'),end=start+minutes*60000
+  const start=Date.parse(date+'T'+time+':00+09:00')-30*60000,end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
-  const endDay=new Date(end-1+9*3600000).toISOString().slice(0,10)
+  const endDay=new Date(end-30*60000-1+9*3600000).toISOString().slice(0,10)
   if(!isOperatingDay(date)||!isOperatingDay(endDay))return true
   return blocks.some(block=>start<Date.parse(block.end)&&end>Date.parse(block.start))
  }
@@ -26,7 +28,7 @@
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
   return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
- const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,dayClosed,operatingDays}
+ const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
@@ -66,7 +68,7 @@
   for(const option of ui.time.options){
    if(!option.value)continue
    const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
-   const reason=clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'booking':''
+   const reason=cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
    option.dataset.disabledReason=reason;option.disabled=!!reason
    if(reason==='booking')option.textContent=option.dataset.originalLabel+' · 마감'
   }
@@ -120,9 +122,9 @@
   if(selectedDates.has(activeForm)&&selectedDates.get(activeForm)!==date)ui.time.value=''
   selectedDates.set(activeForm,date)
   openList('');dateError('');resetTimes()
-  if(!date){message('목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
-  if(!validDate(date)||date<today()){dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
-  if(!isOperatingDay(date)){dateError('월·화·수는 마감입니다, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 마감 · 목·금·토·일 운영','closed');return}
+  if(!date){ui.time.value='';message('목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
+  if(!validDate(date)||date<today()){ui.time.value='';dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
+  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화·수는 마감입니다, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 마감 · 목·금·토·일 운영','closed');return}
   const hit=!force&&cache.get(date)
   if(hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
   // While checking, no time can be chosen as confirmed-available and the form cannot be copied.

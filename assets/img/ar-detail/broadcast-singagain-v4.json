@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-10",
+  "tool": "built-in imagegen",
+  "intent": "Remove retired program title and center remaining title",
+  "source": "assets/img/ar-detail/broadcast-typography-noir-v3.webp",
+  "earlierSource": "assets/img/ar-detail/broadcast-typography-wistia-v2.png",
+  "path": "assets/img/ar-detail/broadcast-singagain-v4.webp",
+  "generated": "exec-3f026e29-f406-48a1-be7c-efd9289ab89a.png",
+  "prompt": "Edit the existing broadcast-credit banner: keep only the existing 싱어게인2 title, its recognizable letter shapes and diagonal line motif. Remove the other title and central divider, center the remaining title on the same 3:1 ivory background, retain matte charcoal/silver relief and soft shadows. No other words, people, logos or props.",
+  "conversion": "WebP quality 94, proportional 1600px resize; no content editing after imagegen"
+}

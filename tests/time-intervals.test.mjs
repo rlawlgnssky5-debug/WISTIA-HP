@@ -7,9 +7,9 @@ import {spawn,spawnSync} from 'node:child_process'
 import {createServer} from 'node:net'
 const require=createRequire(import.meta.url),rules=require('../js/booking-availability.js'),read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 await test('Complete recording intervals share duration, overlap and closing-hour rules',()=>{
- for(const [key,minutes,last,count]of [['solo',60,'오후 10시',10],['duo',120,'오후 10시',10],['duet-film',180,'오후 10시',10],['solo-film',180,'오후 10시',10],['unknown',60,'오후 10시',10]]){const slots=rules.timeWindows(key);assert.equal(rules.duration(key),minutes);assert.equal(slots.length,count);assert.equal(slots.at(-1).label,last)}
+ for(const [key,minutes,last,count]of [['solo',60,'오후 10시 30분',20],['duo',120,'오후 10시 30분',20],['duet-film',180,'오후 10시 30분',20],['solo-film',180,'오후 10시 30분',20],['unknown',60,'오후 10시 30분',20]]){const slots=rules.timeWindows(key);assert.equal(rules.duration(key),minutes);assert.equal(slots.length,count);assert.equal(slots.at(-1).label,last)}
  const blocks=[{start:'2026-10-11T16:30:00+09:00',end:'2026-10-11T18:30:00+09:00'}]
- for(const [start,blocked]of [['14:00',false],['15:00',true],['18:00',true],['19:00',false]])assert.equal(rules.slotBlocked('2026-10-11',start,120,blocks),blocked)
+ for(const [start,blocked]of [['14:00',false],['15:00',true],['18:00',true],['19:00',false],['19:30',false]])assert.equal(rules.slotBlocked('2026-10-11',start,120,blocks),blocked)
  assert.equal(rules.slotBlocked('2026-10-11','22:00',120,[]),true)
  assert.equal(rules.slotBlocked('2026-10-11','21:00',120,[]),false)
  const window={};runInNewContext(read('js/contact-form.js'),{window,Date,Intl})
