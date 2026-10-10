@@ -5,7 +5,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 const index=read('index.html'),app=read('js/app.js'),css=read('css/inquiry-actions.css')
 assert.doesNotMatch(index,/id="floatingPrice"|src="js\/quick-estimate/)
 assert.doesNotMatch(app,/data-quick-estimate|WistiaQuickEstimate|floatingPrice/)
-assert.match(index,/inquiry-actions\.css\?v=20261010-detail-polish-12d/)
+assert.match(index,/inquiry-actions\.css\?v=20261011-detail-polish-13/)
 assert.ok(index.indexOf('css/inquiry-actions.css')<index.indexOf('</head>'))
 const ctx={window:{}}
 runInNewContext(read('js/contact-form.js'),ctx)

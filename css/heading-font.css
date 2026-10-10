@@ -10,3 +10,9 @@ html[data-wistia-typography] #app#app#app#app :is(.we-hero-copy,.detail-one-line
 @media(max-width:430px){
  html[data-wistia-typography] #app#app#app#app :is(.info-page-intro h1,.booking-head h1,.mas-intro h1,.picker h1){font-size:clamp(19px,5.5vw,25px)!important;white-space:nowrap!important}
 }
+
+/* MaruBuri's wider letters still fit each intended AR title line on phones. */
+@media(max-width:430px){
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle{font-size:clamp(19px,5.5vw,23px)!important}
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle>.solo-type-line{white-space:nowrap!important}
+}

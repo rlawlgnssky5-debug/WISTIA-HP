@@ -4,7 +4,7 @@
   ['service','희망 서비스',''],
   ['eventDate','결혼식 날짜 (예식일)','예: 2026년 11월 15일 또는 미정'],
   ['bookingDate','녹음 방문일 (스튜디오 예약일)','희망 날짜 / 예약 가능 여부는 상담에서 확인'],
-  ['time','희망 시간','시작 시간을 고르시면 상품 시간만큼 함께 선택돼요']
+  ['time','방문 희망 시간','시작 시간을 고르시면 상품 시간만큼 함께 선택돼요']
  ]
  const sourceChoices=['인스타','스레드','메타 광고','카페','블로그','지인 추천']
  const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
@@ -167,6 +167,8 @@
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector?.('#contact-time'),date=form.querySelector?.('#contact-bookingDate')
   if(!list||!time||!date)return
   const known=!date.disabled&&!!parseDate(date.value)
+  const dateChanged=list.dataset.bookingDate!==date.value,scrollTop=list.scrollTop
+  list.dataset.bookingDate=date.value
   list.hidden=!known;time.closest('label').hidden=true;time.disabled=!known
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known
   hint.textContent=form.dataset.bookingDateUndecided==='true'?'날짜가 정해지면 카카오톡으로 시간을 같이 맞춰 드릴게요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요'
@@ -177,15 +179,16 @@
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   list.innerHTML=[...time.options].map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.dataset.originalLabel||option.textContent)+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?Number(option.value.slice(0,2))+'시'+(option.value.endsWith(':30')?' 30분':''):'미정')+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
+  list.scrollTop=dateChanged?0:scrollTop
   if(!list.dataset.mounted){
    list.dataset.mounted='true'
    list.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-time-unavailable')){const help=form.querySelector('[data-time-help]');help.textContent='이 상품은 '+(global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())/60||1)+'시간이 필요해서 이 시간엔 시작할 수 없어요';help.hidden=false;return}form.querySelector('[data-time-help]').textContent='시작 시간을 고르시면 상품 시간만큼 함께 선택돼요';time.value=button.dataset.calendarTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimeChoices(form)})
    list.addEventListener('keydown',event=>{
     if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return
     const buttons=[...list.querySelectorAll('button:not(:disabled)')],index=buttons.indexOf(event.target);if(index<0)return
-    event.preventDefault();const columns=global.getComputedStyle(list).gridTemplateColumns.split(' ').length,amount={ArrowLeft:-1,ArrowRight:1,ArrowUp:-columns,ArrowDown:columns}[event.key];buttons[(index+amount+buttons.length)%buttons.length]?.focus({preventScroll:true})
+    event.preventDefault();const columns=global.getComputedStyle(list).gridTemplateColumns.split(' ').length,amount={ArrowLeft:-1,ArrowRight:1,ArrowUp:-columns,ArrowDown:columns}[event.key];const next=buttons[(index+amount+buttons.length)%buttons.length];if(!next)return;next.focus({preventScroll:true});const box=list.getBoundingClientRect(),target=next.getBoundingClientRect();if(target.top<box.top)list.scrollTop-=box.top-target.top;else if(target.bottom>box.bottom)list.scrollTop+=target.bottom-box.bottom
    })
   }
   if(focused!==null)list.querySelector('[data-calendar-time="'+focused+'"]')?.focus({preventScroll:true})
@@ -193,7 +196,7 @@
  function dateField(key,label){
   return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label data-calendar-trigger="'+key+'" aria-expanded="false" aria-controls="calendar-'+key+'"><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<p class="contact-date-summary" data-calendar-summary="'+key+'" aria-live="polite" hidden></p>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
- function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>희망 시간</legend><p data-time-date-hint role="status" aria-live="polite">날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="방문 시작 시간" hidden></div><em data-time-help hidden>시작 시간을 고르시면 상품 시간만큼 함께 선택돼요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
+ function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>방문 희망 시간</legend><p data-time-date-hint role="status" aria-live="polite">날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">방문 희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="방문 시작 시간" hidden></div><em data-time-help hidden>시작 시간을 고르시면 상품 시간만큼 함께 선택돼요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -253,7 +256,7 @@
  function syncReview(){
   const form=document.querySelector('#contactInquiryForm'),review=document.querySelector('#contactReview');if(!form)return;syncSubmitState(form);if(!review)return
   const values=snapshot(form),date=key=>values[key+'Mode']==='date'&&values[key]?formatDate(values[key]):'미정'
-  const rows=[['결혼식 날짜 (예식일)',date('eventDate')],['녹음 방문일 (스튜디오 예약일)',date('bookingDate')],['희망 시간',formatTimeRange(values.timeStart,global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60)],['유입 경로',values.source||'선택 안 함']]
+  const rows=[['결혼식 날짜 (예식일)',date('eventDate')],['녹음 방문일 (스튜디오 예약일)',date('bookingDate')],['방문 희망 시간',formatTimeRange(values.timeStart,global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60)],['유입 경로',values.source||'선택 안 함']]
   review.innerHTML=rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escape(value)+'</dd></div>').join('')
  }
  function syncQuote(quote){
@@ -297,7 +300,7 @@
   if(info.paybacks.length){lines.push('후기 페이백 :');info.paybacks.forEach(p=>lines.push('· '+shortLabel(p.label)+' (−'+money(p.amount)+')'));lines.push('페이백 합계 : −'+money(info.paybackTotal))}else lines.push('후기 페이백 : 없음')
   const date=key=>{const parsed=values[key+'Mode']==='unknown'?null:parseDate(values[key]);if(!parsed)return '미정';return (String(parsed.getUTCFullYear())!==calendarToday().slice(0,4)?parsed.getUTCFullYear()+'년 ':'')+(parsed.getUTCMonth()+1)+'월 '+parsed.getUTCDate()+'일 ('+weekdays[parsed.getUTCDay()]+')'}
   const minutes=info.bookingMinutes||global.WistiaBooking?.duration?.(info.productKey||global.WistiaBooking?.calendarKey?.())||(/DUET/.test(info.product)?120:/필름/.test(info.product)?180:60)
-  lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'희망 시간 : '+formatTimeRange(values.timeStart,minutes),'━━━━━━━━━━━━')
+  lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'방문 희망 시간 : '+formatTimeRange(values.timeStart,minutes),'━━━━━━━━━━━━')
   const notes=String(values.specialNotes||'').trim();if(notes)lines.push('특이사항',notes,'━━━━━━━━━━━━')
   const source=String(values.source||'').trim()
   if(sourceChoices.includes(source))lines.push('유입 경로 : '+source)

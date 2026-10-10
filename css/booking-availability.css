@@ -187,3 +187,16 @@ html #app#app#app#app .calendar-time-grid button{white-space:nowrap!important;mi
 html #app#app#app#app .calendar-time-grid button[aria-disabled="true"]:not(.is-covered){opacity:.42;cursor:pointer;background:#f5f4f0!important;color:#66645f!important;border-color:#dddcd8!important}
 
 html #app#app#app#app .calendar-time-grid button.is-covered{opacity:1!important}
+
+/* One recording start per row; five rows plus the next choice invite scrolling. */
+html #app#app#app#app .calendar-time-grid{
+ grid-template-columns:minmax(0,1fr)!important;
+ width:100%!important;max-width:none!important;max-height:304px;
+ gap:8px!important;overflow-y:auto;overflow-x:hidden;
+ -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+ touch-action:pan-y;overflow-anchor:none;scrollbar-gutter:stable;
+}
+html #app#app#app#app .calendar-time-grid button{
+ width:100%!important;height:48px;min-height:48px!important;
+ flex-wrap:nowrap;touch-action:pan-y;
+}

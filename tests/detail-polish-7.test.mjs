@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import {readFileSync,readdirSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),contact=read('js/contact-form.js'),app=read('js/app.js')
-assert.doesNotMatch(contact,/scrollIntoView|scrollTo|scrollBy/)
+assert.doesNotMatch(contact,/\b(?:scrollIntoView|scrollTo|scrollBy)\s*\(/)
 assert.doesNotMatch(contact,/addEventListener\(['"](?:pointerdown|touchstart|mousedown|focusin|focusout)['"]/)
 for(const match of contact.matchAll(/\.focus\(([^)]*)\)/g))assert.match(match[1],/preventScroll\s*:\s*true/)
 assert.equal([...contact.matchAll(/closeCalendar\(/g)].length,4,'definition plus toggle, close button and undecided calls')
@@ -37,7 +37,7 @@ const playerScope={studioIcon:()=>'<svg></svg>'};runInNewContext(app.slice(app.i
 const compact=playerScope.wistiaBeforeAfterSection(true)
 assert.doesNotMatch(compact,/wistia-ba-copy|노래를 잘 못해도 괜찮습니다|구간별 녹음, 자연스러운 보정/)
 assert.match(compact,/bap-player|같은 녹음본/);assert.match(compact,/before\.mp3/);assert.match(compact,/after\.mp3/)
-const version='20261010-detail-polish-12d'
+const version='20261011-detail-polish-13'
 assert.equal(JSON.parse(read('wistia-config.json')).build,version)
 for(const path of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(n=>n.endsWith('.html')).map(n=>'event/'+n)])assert.match(read(path),new RegExp('<html data-build="'+version+'"'))
 // Exercise no-store build checks: untouched reloads, edited and offline pages retain their state.

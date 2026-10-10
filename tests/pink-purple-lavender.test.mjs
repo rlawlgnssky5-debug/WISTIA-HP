@@ -28,7 +28,7 @@ for(const route of ['detail/solo','detail/duo','detail/duet-film','event/solo','
  const page=read(route+'.html')
  assert.match(page,/data-wistia-palette="noir-minimal"/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)
- assert.match(page,/noir-minimal.css\?v=20261010-detail-polish-12d/)
+ assert.match(page,/noir-minimal.css\?v=20261011-detail-polish-13/)
  assert.doesNotMatch(page,/href="[^"]*olive-mustard-cream.css|maru-buri.css/)
 }
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
