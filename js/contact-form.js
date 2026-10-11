@@ -178,9 +178,10 @@
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
   const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3)),start=clock(time.value),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
+  const clockLabel=minute=>Math.floor(minute/60)+'시'+(minute%60?' '+minute%60+'분':'')
   list.innerHTML=[...time.options].map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?Number(option.value.slice(0,2))+'시'+(option.value.endsWith(':30')?' 30분':''):'미정')+(covered?'<small>선택 구간</small>':known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute)+(covered&&time.value===option.value?' 방문 · '+clockLabel(start+minutes)+'까지':''):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
   list.scrollTop=dateChanged?0:scrollTop
   const syncFade=()=>list.closest('[data-time-scroll-wrap]').classList.toggle('has-more-times',list.scrollHeight-list.clientHeight-list.scrollTop>2)

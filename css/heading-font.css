@@ -21,3 +21,16 @@ html[data-wistia-typography] #app#app#app#app :is(.we-hero-copy,.detail-one-line
  html[data-wistia-typography] #app#app#app#app #wistiaArTitle .svg-section-text{min-width:0;overflow-wrap:normal!important}
  html[data-wistia-typography] #app#app#app#app #wistiaArTitle .ar-copy-emphasis-text{white-space:nowrap!important;font-size:inherit!important}
 }
+
+/* Only these requested headings retain one line per explicit break on phones. */
+@media(max-width:600px){
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,.about-specialist-title,body.is-event-inquiry #sourceTitle){white-space:nowrap!important;-webkit-text-size-adjust:none;text-size-adjust:none}
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,.about-specialist-title,body.is-event-inquiry #sourceTitle) .svg-section-text{white-space:nowrap!important;overflow-wrap:normal!important;font-size:inherit!important}
+ html[data-wistia-typography] #app#app#app#app .about-story-title{font-size:clamp(16px,4.7vw,25px)!important;grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title{font-size:clamp(13px,4vw,20px)!important;grid-template-columns:20px minmax(0,1fr)!important;gap:6px!important}
+ html[data-wistia-typography] body.is-event-inquiry #app#app#app#app #sourceTitle{font-size:clamp(16px,4.7vw,25px)!important;grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,body.is-event-inquiry #sourceTitle) .svg-title-icon,
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,body.is-event-inquiry #sourceTitle) .svg-title-icon>.studio-icon{width:24px!important;height:24px!important;margin-top:2px!important}
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon,
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon>.studio-icon{width:20px!important;height:20px!important;margin-top:2px!important}
+}
