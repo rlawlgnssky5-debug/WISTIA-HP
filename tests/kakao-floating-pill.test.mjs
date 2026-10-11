@@ -7,7 +7,7 @@ import {createServer} from 'node:net'
 const require=createRequire(import.meta.url)
 let playwright,executable,skip=false
 try{playwright=require('playwright');executable=process.env.WISTIA_BROWSER_EXECUTABLE||['/usr/bin/chromium',playwright.chromium.executablePath()].find(existsSync);if(!executable)skip='Chromium not installed'}catch{skip='Playwright not installed'}
-await test('Every public route has exactly one compact yellow floating pill, ordinary body CTAs and clear footer',{skip,timeout:180000},async()=>{
+await test('Public routes retain one compact yellow pill except event inquiry, ordinary body CTAs and clear footer',{skip,timeout:180000},async()=>{
  const probe=createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  let browser
@@ -22,7 +22,8 @@ await test('Every public route has exactly one compact yellow floating pill, ord
    for(const path of paths){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     if(path!='/privacy')await page.locator('#app h1').first().waitFor()
-    await page.locator('#floatingKakaoChat').waitFor()
+    const eventInquiry=await page.locator('body').evaluate(n=>n.classList.contains('is-event-inquiry'))
+    await page.locator('#floatingKakaoChat').waitFor({state:eventInquiry?'hidden':'visible'})
     const check=await page.evaluate(()=>{
      const dock=document.querySelector('#floatingKakaoChat'),s=getComputedStyle(dock),r=dock.getBoundingClientRect()
      const follows=n=>{for(let p=n;p&&p!==document.body;p=p.parentElement)if(['fixed','sticky'].includes(getComputedStyle(p).position))return true;return false}
@@ -30,6 +31,9 @@ await test('Every public route has exactly one compact yellow floating pill, ord
      const links=[...document.querySelectorAll('a[href*="pf.kakao.com"],[data-kakao-inquiry],.contact-submit')].filter(visible)
      return {following:links.filter(follows).map(n=>n.id||n.className),height:r.height,width:r.width,right:innerWidth-r.right,bottom:innerHeight-r.bottom,bg:s.backgroundColor,color:s.color,radius:s.borderRadius,svg:dock.querySelectorAll('svg path').length,old:document.querySelectorAll('#floatingKakao,#soloDesktopCta,.mas-bottom').length,overflow:document.documentElement.scrollWidth-innerWidth,body:links.filter(n=>n!==dock).length,position:s.position,before:getComputedStyle(dock,'::before').display,after:getComputedStyle(dock,'::after').display}
     })
+    assert.equal(check.old,0);assert.equal(check.overflow,0,path+' '+width)
+    if(path!='/privacy')assert.ok(check.body>0,path+' ordinary CTA preserved')
+    if(eventInquiry){assert.deepEqual(check.following,[],path+' '+width);assert.equal(check.height,0);continue}
     assert.deepEqual(check.following,['floatingKakaoChat'],path+' '+width)
     assert.equal(check.old,0);assert.equal(check.height,48);assert.ok(check.width<220&&check.width>130)
     assert.equal(check.right,16);assert.equal(check.bottom,16);assert.equal(check.bg,'rgb(254, 229, 0)');assert.equal(check.color,'rgb(25, 25, 25)');assert.equal(check.radius,'999px');assert.equal(check.svg,1);assert.equal(check.position,'fixed');assert.equal(check.before,'none');assert.equal(check.after,'none');assert.equal(check.overflow,0,path+' '+width)
