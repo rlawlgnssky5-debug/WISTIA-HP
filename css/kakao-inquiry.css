@@ -14,3 +14,12 @@ body:is(.menu-open,.modal-open) #floatingKakaoChat{visibility:hidden;pointer-eve
 
 body.privacy-page{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
 html #floatingKakaoChat.floating-kakao-pill::before,html #floatingKakaoChat.floating-kakao-pill::after{display:none!important;content:none!important}
+
+/* Event inquiry has its own final CTA; keep the floating pill on other routes. */
+html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{display:none!important}
+@media(max-width:540px){
+ html body.is-event-inquiry #app#app#app#app#app .contact-submit{font-size:clamp(10px,3vw,12px)!important;white-space:nowrap!important}
+ html body.is-event-inquiry #app#app#app#app#app .contact-submit [data-submit-label]{font-size:inherit!important;line-height:1.5!important;white-space:nowrap!important;flex-wrap:nowrap!important;gap:4px!important}
+ html body.is-event-inquiry #app#app#app#app#app .contact-submit .svg-submit-icon{width:16px!important;height:16px!important;flex:0 0 16px!important;margin:0!important}
+ html body.is-event-inquiry #app#app#app#app#app .contact-submit .svg-submit-icon>.studio-icon{width:16px!important;height:16px!important}
+}
