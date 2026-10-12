@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/detail/solo-film/:path*", "destination": "/detail/duet-film", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/detail/:product/:variant", "destination": "/detail/:product" },

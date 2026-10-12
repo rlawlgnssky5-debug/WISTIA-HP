@@ -708,7 +708,7 @@ const WISTIA_ADVANTAGES=[
  ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"]
 ]
 function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="we-section-tag price-reason-label">가격 안내</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead"><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div>'+'</section>'}
-function wistiaAdvantagesSection(){const description=WISTIA_ADVANTAGES.map(([category,title,copy],index)=>String(index+1).padStart(2,'0')+' '+category+' / '+title+' / '+copy).join(' · ');return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><picture class="advantages-illustration"><source media="(max-width:700px)" srcset="assets/img/studio-illustrations/advantages-mobile.svg"><img src="assets/img/studio-illustrations/advantages-desktop.svg" alt="'+escapeHtml(description)+'" loading="lazy"></picture></div></section>'+detailPriceReason()}
+function wistiaAdvantagesSection(){const description=WISTIA_ADVANTAGES.map(([category,title,copy],index)=>String(index+1).padStart(2,'0')+' '+category+' / '+title+' / '+copy).join(' · ');return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><picture class="advantages-illustration"><source media="(max-width:700px)" srcset="assets/img/studio-illustrations/advantages-mobile.svg?v=20261013-detail-polish-16d"><img src="assets/img/studio-illustrations/advantages-desktop.svg?v=20261013-detail-polish-16d" alt="'+escapeHtml(description)+'" loading="lazy"></picture></div></section>'+detailPriceReason()}
 function productComparisonSection(){return wistiaAdvantagesSection()}
 function prepareArHookVideo(){document.querySelectorAll(".ar-hook-media video").forEach(video=>{const button=video.closest('.ar-hook-media')?.querySelector("[data-ar-video-toggle]");if(!button)return;const update=()=>{const playing=!video.paused&&!video.ended;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",update);update()})}
 const arVideoFeedbackTimers=new WeakMap()
@@ -1170,7 +1170,7 @@ function mobileArDesignIcon(name){
  return studioIcon(name==='record'?'microphone':name)
 }
 function mobileArCutPoster(){
- return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg?v=20261013-detail-polish-16c" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
+ return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg?v=20261013-detail-polish-16d" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
 }
 function mobileArProcess(key="solo"){
  const steps=detailStudioSteps(key)
@@ -1219,7 +1219,7 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
  details=details.replace(/<a class="arc-button[^\"]*" href="\/event\/(?:solo|duo)" data-ar-price-link>가사 영상 옵션 견적 뽑기<\/a>/,'')
  details=details.replace(/<figure class="arc-recording-poster"[\s\S]*?<\/figure>/,mobileArCutPoster())
  details=details.replace('<p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p>','')
-details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
+details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16d" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
  details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
@@ -1744,6 +1744,11 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")
  if(routePath()==='/section/homeProcess')history.replaceState(history.state,"",'/info/process'+location.search)
+ // The retired making-film detail now leads to the current story-film product.
+ if(/^\/detail\/solo-film(?:\/|$)/.test(routePath())){
+  closeDialog();
+  history.replaceState(history.state,"","/detail/duet-film"+location.search);
+ }
  if(/^\/(detail|event|choose)\/(wedding|proposal|solo-film)(?:\/|$)/.test(routePath())){
   closeDialog();
   history.replaceState(history.state,"","/"+location.search);
