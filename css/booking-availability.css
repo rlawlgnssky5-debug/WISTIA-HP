@@ -212,3 +212,5 @@ html #app#app#app#app .contact-time-scroll-wrap::after{
 html #app#app#app#app .contact-time-scroll-wrap.has-more-times::after{opacity:1}
 
 html #app#app#app#app .contact-time-field [data-time-help]{white-space:nowrap;font-size:clamp(10px,2.9vw,13px)}
+
+html #app#app#app#app .contact-time-field [data-time-help].has-time-selection{font-size:16px!important;font-weight:600!important;color:#191919!important;font-style:normal!important;line-height:1.5!important}

@@ -82,14 +82,10 @@ html[data-wistia-theme] #app#app :is(.booking-calculator,.booking-extra,.solo-re
 html[data-wistia-theme] #app#app .footer-social i{background:var(--brand-gray)!important}
 html[data-wistia-theme] #app#app .mas-variant{background:var(--brand-gray)!important}
 html[data-wistia-theme] #app#app .mas-variant.is-selected{background:rgba(255,79,154,.12)!important;border-color:var(--brand-pink)!important}
-html[data-wistia-theme] #app#app .mas-cut-clips>div{background:rgba(255,79,154,.12)!important}
-html[data-wistia-theme] #app#app .mas-cut-clips>div:last-child{background:rgba(255,79,154,.25)!important}
-html[data-wistia-theme] #app#app .mas-cut-seam svg,html[data-wistia-theme] #app#app .mas-cut-poster span{background:var(--brand-gray)!important}
 html[data-wistia-theme] #app#app .mas-cut-poster svg{color:var(--brand-black)!important}
 html[data-wistia-theme] #app#app .mas-cut-poster svg [stroke]:not([stroke="none"]){stroke:var(--brand-black)!important}
 html[data-wistia-theme] #app#app .mas-story-chapters em{background:var(--brand-pink)!important}
 html[data-wistia-theme] #app#app .mas-cut-poster{background:var(--brand-gray)!important}
-html[data-wistia-theme] #app#app .mas-joined-clip{background:linear-gradient(90deg,rgba(255,79,154,.12) 50%,rgba(255,79,154,.25) 50%)!important}
 html[data-wistia-theme] #app#app :is(.wistia-location-address,.wistia-about-story figure img,.info-process .we-process li,.process-folder-art i,.process-folder-art b){background:var(--brand-gray)!important;box-shadow:0 4px 0 rgba(23,23,23,.08)!important}
 html[data-wistia-theme] #app#app .process-folder-art:before{background:var(--brand-pink)!important}
 html[data-wistia-theme] #app#app :is(.mas-event-disclosure,.mas-video-surface,.ar-expert-broadcast,.wistia-events,.wistia-events-intro,.wistia-event-card,.wistia-events-note){background:var(--brand-gray)!important;box-shadow:none!important}

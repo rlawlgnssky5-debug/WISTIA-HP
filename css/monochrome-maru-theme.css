@@ -46,14 +46,6 @@ html[data-wistia-theme="monochrome"] #app#app .mas-selection .mas-variant i{bord
 html[data-wistia-theme="monochrome"] #app#app :is(.wistia-ar,.wistia-ba-section){--ba-before:var(--mono-black);--ba-after:var(--mono-black);--ba-surface:var(--mono-white);--ba-soft:var(--mono-gray);--ba-wave-before:var(--mono-black);--ba-wave-after:var(--mono-black);--ba-wave-rest:var(--mono-gray)}
 html[data-wistia-theme="monochrome"] #app#app :is(.bap-tab.active[data-mode="after"],.bap-badge.mode-after,.wistia-ar__label){background:var(--mono-gray)!important;color:var(--mono-black)!important}
 html[data-wistia-theme="monochrome"] #app#app .wistia-ar__ratio-field{background:linear-gradient(90deg,var(--mono-black) 0,var(--mono-black) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--mono-gray) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--mono-gray) 100%)!important}
-/* Two different clips must stay distinct, including their joined halves. */
-html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div{background:var(--mono-black)!important;color:var(--mono-white)!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div *{color:inherit!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-cut-clips>div:last-child{background:var(--mono-gray)!important;color:var(--mono-black)!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--mono-black) 50%,var(--mono-gray) 50%)!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div,html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div *{color:var(--mono-white)!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div:last-child,html[data-wistia-theme="monochrome"] #app#app .mas-joined-clip>div:last-child *{color:var(--mono-black)!important}
-html[data-wistia-theme="monochrome"] #app#app .mas-cut-seam svg{background:var(--mono-white)!important}
 html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow div[style*="background"]{background:var(--mono-gray)!important}
 html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow div[style*="#dcebe4"]{background:var(--mono-white)!important}
 html[data-wistia-theme="monochrome"] #app#app .arc-recording-flow svg stop{stop-color:var(--mono-gray)!important}

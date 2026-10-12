@@ -2,26 +2,26 @@ import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
 const index=read('index.html'),css=read('css/pink-black-theme.css')
-assert.match(index,/<html data-build="20261013-detail-polish-16" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
+assert.match(index,/<html data-build="20261013-detail-polish-16b" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
 assert.ok(sheets.includes('css/pink-black-theme.css?v=20261005-pink-black-preview-1'))
 assert.deepEqual(sheets.slice(-15),[
  'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
  'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
- 'css/monochrome-maru-theme.css?v=20261013-detail-polish-16',
+ 'css/monochrome-maru-theme.css?v=20261013-detail-polish-16b',
  'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
  'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
- 'css/noir-minimal.css?v=20261013-detail-polish-16',
+ 'css/noir-minimal.css?v=20261013-detail-polish-16b',
  'css/studio-graphics.css?v=20261006-studio-graphics-1',
  'css/luxury-finish.css?v=20261006-reviews-five-1',
  'css/detail-consistency.css?v=20261006-benefit-boxes-1',
- 'css/svg-interface.css?v=20261007-svg-interface-1',
+ 'css/svg-interface.css?v=20261013-detail-polish-16b',
  'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261013-detail-polish-16',
- 'css/detail-section-layout.css?v=20261013-detail-polish-16',
- 'css/heading-font.css?v=20261013-detail-polish-16',
- 'css/kakao-inquiry.css?v=20261013-detail-polish-16'
+ 'css/booking-availability.css?v=20261013-detail-polish-16b',
+ 'css/detail-section-layout.css?v=20261013-detail-polish-16b',
+ 'css/heading-font.css?v=20261013-detail-polish-16b',
+ 'css/kakao-inquiry.css?v=20261013-detail-polish-16b'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

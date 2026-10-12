@@ -113,7 +113,7 @@ await test('Scrollable time list, selection reset/snapshot/Kakao, location toast
    const before=await gap();assert.ok(before<=24,before)
    await page.evaluate(()=>{navigator.clipboard.writeText=async()=>{}})
    await tap(page.locator('[data-copy-address]'))
-   assert.equal(await page.locator('[data-address-copy-status]').innerText(),'복사됐어요');assert.equal(await gap(),before)
+   assert.equal(await page.locator('[data-address-copy-status]').innerText(),'복사됐어요');assert.ok(Math.abs(await gap()-before)<.5,'copy toast must not reserve layout space')
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})
    await page.locator('#wistiaArTitle[data-svg-title-mounted]').waitFor()

@@ -4,7 +4,7 @@ import {runInNewContext} from 'node:vm'
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 const motion=read('js/site-motion.js'),app=read('js/app.js'),css=read('css/studio-depth.css')
 assert.match(app,/function studioSculpture/)
-assert.match(app,/studio-address-street/)
+assert.match(app,/class="studio-address" data-svg-title="off"/)
 assert.match(css,/transform-style:preserve-3d/)
 assert.match(css,/body:not\(\[data-page=event\]\):not\(\.menu-open\):not\(\.modal-open\) #floatingKakao/)
 assert.doesNotMatch(motion,/querySelectorAll\('button\[data-studio-motion\]'\)/)

@@ -65,7 +65,7 @@
     for(const section of group.children)if(section.matches('section')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
    }
    for(const section of scope.children){
-    if(section.matches('section,.arc-engineer,.arc-reviews')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
+    if(section.matches('section,.arc-engineer,.arc-reviews')&&!section.matches('.mas-selection')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
    }
   }
   for(const section of all(root,'.we-home .we-section,.we-home .we-review-wrap')){

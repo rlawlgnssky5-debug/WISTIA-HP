@@ -17,14 +17,13 @@ assert.doesNotMatch(css,/url\(|@import|floatingKakao|#fee500|#FEE500/,'original 
 assert.match(css,/\.we-hero\.we-hero-thumbnails\{background:var\(--palette-olive\)/)
 assert.match(css,/\.we-section-tag[^\n]*|detail-point-label/)
 assert.match(css,/--ba-wave-rest:var\(--palette-wave\)/)
-assert.match(css,/\.mas-joined-clip\{background:linear-gradient\(90deg,var\(--palette-olive\) 50%,var\(--palette-soft\) 50%\)/)
 const lum=h=>{const c=h.match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return c[0]*.2126+c[1]*.7152+c[2]*.0722}
 const contrast=(a,b)=>(Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05)
 for(const pair of [['4B5234','F2EBD9'],['59613F','F2EBD9'],['FFFDF4','667044'],['30361F','E7B928'],['4B5234','EEDCA6'],['4B5234','E6E3CD']])assert.ok(contrast(...pair)>=4.5,pair.join(' / '))
 assert.ok(contrast('87916B','FFFDF4')>=3,'rest waveform must be visible')
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/location','info/about','info/faq','info/process','events','before-after','find/role','find/service','find/people','privacy']){
  assert.match(read(route+'.html'),/data-wistia-palette="noir-minimal"/)
- assert.match(read(route+'.html'),/noir-minimal.css\?v=20261013-detail-polish-16/)
+ assert.match(read(route+'.html'),/noir-minimal.css\?v=20261013-detail-polish-16b/)
 }
 // Palette-only baseline at bb14a1f, normalized for Windows/Git line endings
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')

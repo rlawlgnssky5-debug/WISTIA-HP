@@ -52,11 +52,6 @@ html[data-wistia-palette] #app#app :is(input,select,textarea,button,a,summary):f
 html[data-wistia-palette] #mediaDialog#mediaDialog :focus-visible{outline-color:var(--palette-ink)!important}
 /* Preserve visible sound states, clip halves and waveform contrast */
 html[data-wistia-palette] #app#app :is(.wistia-ba-section,.wistia-ar){--ba-wave-before:var(--palette-ink);--ba-wave-after:var(--palette-olive);--ba-wave-rest:var(--palette-wave);--ba-before:var(--palette-olive);--ba-after:var(--palette-olive)}
-html[data-wistia-palette] #app#app .mas-cut-clips>div{background:var(--palette-olive)!important;color:var(--palette-paper)!important}
-html[data-wistia-palette] #app#app .mas-cut-clips>div:last-child{background:var(--palette-soft)!important;color:var(--palette-ink)!important}
-html[data-wistia-palette] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--palette-olive) 50%,var(--palette-soft) 50%)!important}
-html[data-wistia-palette] #app#app .mas-joined-clip>div{color:var(--palette-paper)!important}
-html[data-wistia-palette] #app#app .mas-joined-clip>div:last-child{color:var(--palette-ink)!important}
 html[data-wistia-palette] #app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-olive)!important;border-color:var(--palette-ink)!important}
 html[data-wistia-palette] #app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-olive)!important}
 /* Menu and modal chrome, without recolouring the Kakao mark or any media */
