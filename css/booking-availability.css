@@ -178,8 +178,8 @@ html #app#app#app#app .contact-calendar .calendar-day.calendar-red-day:not(.is-s
 html #app#app#app#app .contact-calendar .calendar-day.calendar-red-day:disabled>span{color:#b9a09a!important}
 
 /* A valid interval includes later hours that cannot themselves start a session. */
-html #app#app#app#app .calendar-time-grid button.is-covered,
-html #app#app#app#app .calendar-time-grid button.is-covered>small{background:#302d27!important;color:#fffcf5!important;border-color:#302d27!important}
+html #app#app#app#app .calendar-time-grid button.is-covered[aria-checked="true"]{background:#302d27!important;color:#fffcf5!important;border-color:#302d27!important}
+html #app#app#app#app .calendar-time-grid button.is-covered[aria-checked="false"]{background:#ebe8e0!important;color:#302d27!important;border-color:#c9c3b6!important}
 
 /* Undecided occupies the full row; each following row pairs :00 and :30. */
 html #app#app#app#app .calendar-time-grid button[data-calendar-time=""]{grid-column:1/-1}

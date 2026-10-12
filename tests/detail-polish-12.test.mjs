@@ -102,7 +102,7 @@ await test('Scrollable time list, selection reset/snapshot/Kakao, location toast
    await page.locator('#bookingService').selectOption('duet-film')
    await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready');await assertCleared()
    await tap(slot('20:00'));assert.equal(await times.locator('.is-covered').count(),6)
-   const colors=await times.locator('.is-covered').evaluateAll(ns=>ns.map(n=>getComputedStyle(n).backgroundColor));assert.equal(new Set(colors).size,1)
+   const colors=await times.locator('.is-covered').evaluateAll(ns=>ns.map(n=>getComputedStyle(n).backgroundColor));assert.equal(new Set(colors).size,2);assert.equal(colors[0],'rgb(48, 45, 39)')
    await tap(slot('20:30'));assert.equal(await page.locator('#contact-time').inputValue(),'20:00');assert.match(await page.locator('[data-time-help]').innerText(),/3시간/)
    await page.goto(`http://127.0.0.1:${port}/info/location`,{waitUntil:'domcontentloaded'})
    if(fontFixture)await page.evaluate(async()=>{await document.fonts.load('500 24px MaruBuri','오시는 길');await document.fonts.ready})
