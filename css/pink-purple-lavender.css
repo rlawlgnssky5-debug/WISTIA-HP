@@ -52,11 +52,6 @@ html[data-wistia-palette="pink-purple-lavender"] #app#app :is(input,select,texta
 html[data-wistia-palette="pink-purple-lavender"] #mediaDialog#mediaDialog :focus-visible{outline-color:var(--palette-ink)!important}
 /* Preserve visible sound states, clip halves and waveform contrast */
 html[data-wistia-palette="pink-purple-lavender"] #app#app :is(.wistia-ba-section,.wistia-ar){--ba-wave-before:var(--palette-ink);--ba-wave-after:var(--palette-purple);--ba-wave-rest:var(--palette-wave);--ba-before:var(--palette-purple);--ba-after:var(--palette-purple)}
-html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-cut-clips>div{background:var(--palette-purple)!important;color:var(--palette-paper)!important}
-html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-cut-clips>div:last-child{background:var(--palette-soft)!important;color:var(--palette-ink)!important}
-html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--palette-purple) 50%,var(--palette-soft) 50%)!important}
-html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip>div{color:var(--palette-paper)!important}
-html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-joined-clip>div:last-child{color:var(--palette-ink)!important}
 html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-purple)!important;border-color:var(--palette-ink)!important}
 html[data-wistia-palette="pink-purple-lavender"] #app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-purple)!important}
 /* Menu and modal chrome, without recolouring the Kakao mark or any media */

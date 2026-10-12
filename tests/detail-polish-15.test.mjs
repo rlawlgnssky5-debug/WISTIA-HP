@@ -37,7 +37,7 @@ await test('Requested titles fit mobile and enlarged text; only the recording st
     }
    }
    await page.goto(`http://127.0.0.1:${port}/info/about`,{waitUntil:'domcontentloaded'})
-   await checkTitle('.about-story-title',2)
+   await checkTitle('.about-story-title',1)
    // Measure both specialist headings independently (their article order is stable).
    for(const child of [2,3])await checkTitle('.wistia-specialist-grid article:nth-child('+child+') .about-specialist-title',1)
    for(const [product,hours] of [['solo',1],['duo',2],['duet-film',3]]){
@@ -51,13 +51,16 @@ await test('Requested titles fit mobile and enlarged text; only the recording st
      const value=half?'13:30':'13:00',start=half?'13시 30분':'13시',end=(13+hours)+'시'+(half?' 30분':'')
      await times.locator('[data-calendar-time="'+value+'"]').tap()
      const cells=await times.locator('.is-covered').evaluateAll(ns=>ns.map(n=>({checked:n.getAttribute('aria-checked'),text:n.textContent,bg:getComputedStyle(n).backgroundColor,fg:getComputedStyle(n).color,overflow:n.scrollWidth-n.clientWidth})))
-     assert.equal(cells.length,hours*2);assert.equal(cells[0].checked,'true');assert.equal(cells[0].text,start+' 방문 · '+end+'까지');assert.equal(cells[0].bg,'rgb(48, 45, 39)')
+     assert.equal(cells.length,hours*2);assert.equal(cells[0].checked,'true');assert.equal(cells[0].text,start);assert.equal(await page.locator('[data-time-help]').innerText(),start+'~'+end);assert.equal(cells[0].bg,'rgb(48, 45, 39)');const resultStyle=await page.locator('[data-time-help]').evaluate(n=>({size:parseFloat(getComputedStyle(n).fontSize),weight:getComputedStyle(n).fontWeight,color:getComputedStyle(n).color}));assert.ok(resultStyle.size>=16);assert.equal(resultStyle.weight,'600');assert.equal(resultStyle.color,'rgb(25, 25, 25)')
      for(const cell of cells.slice(1)){assert.equal(cell.checked,'false');assert.equal(cell.bg,'rgb(235, 232, 224)');assert.match(cell.text,/^\d+시(?: 30분)?$/)}
      assert.ok(cells.every(c=>c.overflow<=1));assert.doesNotMatch(await times.innerText(),/선택 구간/)
      assert.equal(await page.locator('#contact-time').inputValue(),value)
      const snapshot=await page.evaluate(()=>WistiaContact.snapshot(document.querySelector('#contactInquiryForm')))
      assert.equal(snapshot.timeStart,value);assert.equal(snapshot.time,'오후 1시'+(half?' 30분':'')+'~오후 '+(1+hours)+'시'+(half?' 30분':'')+' ('+hours+'시간)')
     }
+    await times.locator('[data-calendar-time=""]').tap()
+    assert.equal(await page.locator('[data-time-help]').innerText(),'시작 시간을 고르시면 상품 시간만큼 함께 선택돼요')
+    assert.equal(await page.locator('#contact-time').inputValue(),'');assert.equal(await page.locator('[data-time-help]').evaluate(n=>n.classList.contains('has-time-selection')),false)
    }
    await context.close()
   }

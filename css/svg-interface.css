@@ -42,7 +42,7 @@ html[data-wistia-palette="noir-minimal"] #app#app#app .svg-section-kicker{
 }
 html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-copy{min-width:0!important;text-align:left!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .svg-item-description{
- text-align:left!important;margin-left:34px!important;margin-right:0!important;max-width:none!important;word-break:keep-all;overflow-wrap:anywhere;
+ text-align:left!important;margin-left:var(--svg-item-indent,34px)!important;margin-right:0!important;max-width:none!important;word-break:keep-all;overflow-wrap:anywhere;
 }
 /* Whole home sections use one content edge, even when reviews span the viewport */
 html[data-wistia-palette="noir-minimal"] #app#app#app .we-home{--svg-home-gutter:48px;--svg-home-width:1152px}

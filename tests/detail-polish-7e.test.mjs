@@ -78,8 +78,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     if(path.startsWith('/detail/')){
      assert.doesNotMatch(await page.locator('#app').innerText(),/Q & A|한 소절씩 나누어 녹음|첫 소절과 다음 소절|편안한 음역, 더 자연스러운 노래/)
      if(path!=='/detail/duet-film'){
-      const cardTitle=page.locator('.mas-cut-heading strong');assert.equal(await cardTitle.innerText(),'녹음 구간 연결 예시')
-      assert.equal(await cardTitle.evaluate(n=>n.getBoundingClientRect().height<=parseFloat(getComputedStyle(n).lineHeight)+1),true,'recording card title is one line')
+      await page.locator('.recording-join-illustration').waitFor();assert.match(await page.locator('.recording-join-illustration').getAttribute('alt'),/녹음 구간 연결 예시/)
      }
      const offsets=await page.locator('.detail-point-label').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().width).map(n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}))
      for(const offset of offsets)assert.ok(Math.abs(offset)<=1,`${path} POINT center ${offset}`)

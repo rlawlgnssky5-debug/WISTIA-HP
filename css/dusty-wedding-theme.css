@@ -67,14 +67,7 @@ html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #a
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .wistia-ar__ratio-field{background:linear-gradient(90deg,var(--dusty-pink) 0,var(--dusty-pink) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--warm-ivory) calc(19px + (100% - 38px)*var(--wistia-ratio-progress)/100),var(--warm-ivory) 100%)!important;box-shadow:none!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .wistia-ar__ratio-input::-webkit-slider-thumb{background:var(--warm-brown)!important;box-shadow:none!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .wistia-ar__ratio-input::-moz-range-thumb{background:var(--warm-brown)!important;box-shadow:none!important}
-/* The cut/join diagram needs two distinct clips, then the same two halves joined. */
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-cut-clips>div{background:var(--dusty-pink)!important;color:var(--deep-brown)!important}
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-cut-clips>div:last-child{background:var(--warm-beige)!important;color:var(--warm-brown)!important}
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-joined-clip{background:linear-gradient(90deg,var(--dusty-pink) 50%,var(--warm-beige) 50%)!important}
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-joined-clip>div{color:var(--deep-brown)!important}
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-joined-clip>div:last-child{color:var(--warm-brown)!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-cut-poster{background:var(--warm-ivory)!important}
-html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-cut-seam{border-left-color:var(--warm-brown)!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app :is(.wistia-events,.wistia-events-intro,.wistia-location-address){background:var(--warm-beige)!important;box-shadow:none!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .wistia-event-card{background:var(--warm-ivory)!important;border-color:transparent!important;border-radius:24px}
 /* Modal actions remain clearly distinct and touch targets are not reduced. */

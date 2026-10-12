@@ -27,7 +27,6 @@ html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .sto
 html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-copy :is(h3,p){text-align:left!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-folder .story-process-card .story-process-number{margin:0 0 9px!important;background:none!important;border-radius:0!important;box-shadow:none!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-cut-poster{border-radius:4px!important;padding:24px!important}
-html[data-wistia-palette="noir-minimal"] #app#app#app .mas-cut-poster :is(.mas-cut-clips>div,.mas-joined-clip){border-radius:2px!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare>div{border:1px solid #D5D3CD;border-radius:2px!important;background:#F5F4F0!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare .studio-key-art{width:100%;height:84px;max-width:180px;color:#252421!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-key-compare .studio-key-art rect{fill:currentColor!important}

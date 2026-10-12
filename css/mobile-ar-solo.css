@@ -238,22 +238,6 @@
  #app .mobile-ar-solo .mas-venue-note p{font-size:12px!important;line-height:1.7!important;text-align:left!important;margin:5px 0 0!important;color:#586873}
  /* The cut seam and connected clips explain editing without repetitive photos. */
  #app .mobile-ar-solo .mas-cut-poster{margin:26px 0 0;padding:22px 16px;background:linear-gradient(135deg,#eef3f7,#fafcfd);border-radius:12px}
- #app .mobile-ar-solo :is(.mas-cut-heading,.mas-join-heading){display:flex;align-items:center;gap:8px;text-align:left;font-size:14px;color:#2e4659}
- #app .mobile-ar-solo :is(.mas-cut-heading,.mas-join-heading)>svg{width:23px;height:23px;flex:none}
- #app .mobile-ar-solo .mas-cut-clips{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);align-items:center;margin:16px 0 24px}
- #app .mobile-ar-solo .mas-cut-clips>div{padding:10px 8px;border-radius:6px;background:#dbe6ef;color:#466783;min-width:0}
- #app .mobile-ar-solo .mas-cut-clips>div:last-child{background:#dcebe4;color:#436d5a}
- #app .mobile-ar-solo .mas-cut-clips b{font-size:11px;display:block;text-align:left}
- #app .mobile-ar-solo .mas-cut-clips>div>svg{width:100%;height:32px;display:block;margin-top:8px}
- #app .mobile-ar-solo .mas-cut-seam{height:68px;border-left:2px dashed #8398a9;position:relative;margin-left:14px}
- #app .mobile-ar-solo .mas-cut-seam>svg{position:absolute;top:22px;left:-13px;width:24px;height:24px;background:#f2f6f9;color:#344d60}
- #app .mobile-ar-solo .mas-join-heading{color:#304d42}
- #app .mobile-ar-solo .mas-joined-clip{display:flex;align-items:center;margin-top:14px;border-radius:6px;overflow:hidden;background:linear-gradient(90deg,#dbe6ef 50%,#dcebe4 50%);padding:8px}
- #app .mobile-ar-solo .mas-joined-clip>div{flex:1;min-width:0;color:#466783}
- #app .mobile-ar-solo .mas-joined-clip>div:last-child{color:#436d5a}
- #app .mobile-ar-solo .mas-joined-clip>div>svg{width:100%;height:35px;display:block}
- #app .mobile-ar-solo .mas-joined-clip>span{width:28px;flex:none;height:28px;padding:4px;border-radius:50%;background:#fff;color:#3f6857}
- #app .mobile-ar-solo .mas-joined-clip>span>svg{width:20px;height:20px;display:block}
  #app .mobile-ar-solo .mas-cut-poster figcaption{margin:14px 0 0;font-size:11px;color:#536774}
  #app .mobile-ar-solo .mas-key-editorial h2{font-size:21px!important;font-weight:650;letter-spacing:-.045em;white-space:nowrap}
  #app .mobile-ar-solo .mas-key-note{margin:24px 0 0;padding:24px 12px 22px;background:linear-gradient(145deg,#f4f6f6,#fdfdfc);text-align:center}

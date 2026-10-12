@@ -65,7 +65,7 @@
     for(const section of group.children)if(section.matches('section')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
    }
    for(const section of scope.children){
-    if(section.matches('section,.arc-engineer,.arc-reviews')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
+    if(section.matches('section,.arc-engineer,.arc-reviews')&&!section.matches('.mas-selection')&&section.querySelector('h2'))section.classList.add('detail-section-layout')
    }
   }
   for(const section of all(root,'.we-home .we-section,.we-home .we-review-wrap')){
@@ -126,7 +126,25 @@
    label.dataset.svgInfoMounted='true'
   }
   detailLayout(root)
+  alignTitles(root)
+  root.ownerDocument?.fonts?.ready.then(()=>{if(root.isConnected)alignTitles(root)})
  }
+ function alignTitles(root){
+  if(typeof global.getComputedStyle!=='function')return
+  for(const title of all(root,'.svg-section-title,.svg-item-title')){
+   const icon=title.querySelector(':scope > .svg-title-icon'),text=title.querySelector(':scope > .svg-section-text'),style=global.getComputedStyle(title)
+   if(!icon||!text||style.display!=='grid')continue
+   const size=parseFloat(global.getComputedStyle(icon).height)||icon.getBoundingClientRect().height,gap=parseFloat(style.columnGap)||0,line=parseFloat(global.getComputedStyle(text).lineHeight)
+   title.dataset.titleAligned='true'
+   const walker=title.ownerDocument.createTreeWalker(text,4)
+   let node,first
+   while((node=walker.nextNode())){if(!node.textContent.trim())continue;const range=title.ownerDocument.createRange();range.selectNodeContents(node);first=range.getClientRects()[0];if(first)break}
+   const offset=first?first.top+first.height/2-text.getBoundingClientRect().top-size/2:((Number.isFinite(line)?line:parseFloat(style.fontSize)*1.4)-size)/2
+   title.style.setProperty('--svg-icon-offset',offset+'px')
+   title.parentElement.style.setProperty(title.classList.contains('svg-item-title')?'--svg-item-indent':'--svg-title-indent',size+gap+'px')
+  }
+ }
+ global.addEventListener?.('resize',()=>global.requestAnimationFrame(()=>alignTitles(global.document.querySelector('#app')||global.document)))
  function replaceGlyphs(node,icon){
   const value=node.nodeValue
   glyphPattern.lastIndex=0

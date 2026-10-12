@@ -8,7 +8,7 @@ const manifest=JSON.parse(read('assets/img/studio-3d/manifest.json'))
 const expected=['consultation','recording','directing','folder','balance','vocal-editing','mixing','delivery','film-editing','sound-review','bride-entrance','groom-entrance','vinyl','key-shift']
 assert.equal(manifest.method,'built-in image_gen')
 assert.deepEqual(manifest.assets.map(x=>x.name).sort(),expected.sort())
-assert.deepEqual(readdirSync(new URL('../assets/img/studio-3d/',import.meta.url)).filter(x=>x.endsWith('.webp')).sort(),[...manifest.assets.map(art=>art.output.split('/').at(-1)),'gift-benefits-yellow-v1.webp'].sort(),'the fourteen approved studio objects are preserved, with only the separately approved yellow gift added')
+assert.deepEqual(readdirSync(new URL('../assets/img/studio-3d/',import.meta.url)).filter(x=>x.endsWith('.webp')).sort(),[...manifest.assets.map(art=>art.output.split('/').at(-1)),'gift-benefits-yellow-v1.webp','key-shift-caption.webp'].sort(),'the fourteen approved studio objects are preserved, with the approved yellow gift and caption composite added')
 let bytes=0
 for(const art of manifest.assets){
  const data=read(art.output);bytes+=data.length
@@ -20,7 +20,7 @@ for(const art of manifest.assets){
  assert.equal(art.transparent,['folder','vinyl'].includes(art.name))
 }
 assert.ok(bytes<750000)
-assert.match(source,/class="mas-key-3d" src="assets\/img\/studio-3d\/key-shift.webp"/)
+assert.match(source,/class="mas-key-caption-image" src="assets\/img\/studio-3d\/key-shift-caption\.webp\?v=20261013-detail-polish-16d"/)
 assert.match(source,/studio-folder-3d/)
 assert.match(source,/assets\/img\/studio-3d\/vinyl.webp/)
 assert.match(css,/\.studio-folder-3d img/)

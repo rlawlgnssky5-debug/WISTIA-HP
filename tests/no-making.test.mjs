@@ -6,7 +6,7 @@ const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 const app=read('js/app.js'),quick=read('js/quick-estimate.js')
 const routeGuard=app.slice(app.indexOf('function route('),app.indexOf(' const previousScrollY=preserveScroll?'))+'}'
 for(const [path,expected] of [
- ['/detail/solo-film','/'],['/detail/solo-film/duo','/'],
+ ['/detail/solo-film','/detail/duet-film'],['/detail/solo-film/duo','/detail/duet-film'],
  ['/event/solo-film','/'],['/event/solo-film/making','/'],['/choose/solo-film','/'],
  ['/detail/duet-film/making','/detail/duet-film'],
  ['/event/duet-film/making','/event/duet-film'],
