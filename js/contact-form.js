@@ -179,9 +179,11 @@
   const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3)),start=clock(time.value),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   const clockLabel=minute=>Math.floor(minute/60)+'시'+(minute%60?' '+minute%60+'분':'')
+  const help=form.querySelector('[data-time-help]')
+  help.textContent=validSelection?clockLabel(start)+' 방문 · '+clockLabel(start+minutes)+'까지':'시작 시간을 고르시면 상품 시간만큼 함께 선택돼요'
   list.innerHTML=[...time.options].map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute)+(covered&&time.value===option.value?' 방문 · '+clockLabel(start+minutes)+'까지':''):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
   list.scrollTop=dateChanged?0:scrollTop
   const syncFade=()=>list.closest('[data-time-scroll-wrap]').classList.toggle('has-more-times',list.scrollHeight-list.clientHeight-list.scrollTop>2)

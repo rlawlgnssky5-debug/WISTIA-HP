@@ -24,7 +24,7 @@ for(const pair of [['4B5234','F2EBD9'],['59613F','F2EBD9'],['FFFDF4','667044'],[
 assert.ok(contrast('87916B','FFFDF4')>=3,'rest waveform must be visible')
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/location','info/about','info/faq','info/process','events','before-after','find/role','find/service','find/people','privacy']){
  assert.match(read(route+'.html'),/data-wistia-palette="noir-minimal"/)
- assert.match(read(route+'.html'),/noir-minimal.css\?v=20261012-detail-polish-15/)
+ assert.match(read(route+'.html'),/noir-minimal.css\?v=20261013-detail-polish-16/)
 }
 // Palette-only baseline at bb14a1f, normalized for Windows/Git line endings
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')

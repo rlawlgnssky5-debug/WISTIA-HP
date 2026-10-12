@@ -87,7 +87,7 @@ await test('Scrollable time list, selection reset/snapshot/Kakao, location toast
    await tap(slot('15:30'));assert.match(await page.locator('[data-time-help]').innerText(),/이 상품은 1시간이 필요해서 이 시간엔 시작할 수 없어요/)
    await tap(slot('13:30'));assert.equal(await times.locator('.is-covered').count(),2)
    const saved=()=>page.evaluate(()=>{const f=document.querySelector('#contactInquiryForm'),values=WistiaContact.snapshot(f);return {select:f.querySelector('#contact-time').value,values,text:WistiaContact.text(values)}})
-   const assertCleared=async()=>{const result=await saved();assert.equal(result.select,'');assert.equal(result.values.timeStart,'');assert.equal(result.values.time,'미정');assert.match(result.text,/방문 희망 시간 : 미정/)}
+   const assertCleared=async()=>{assert.equal(await page.locator('[data-time-help]').innerText(),'시작 시간을 고르시면 상품 시간만큼 함께 선택돼요');const result=await saved();assert.equal(result.select,'');assert.equal(result.values.timeStart,'');assert.equal(result.values.time,'미정');assert.match(result.text,/방문 희망 시간 : 미정/)}
    await times.evaluate(n=>{n.scrollTop=n.scrollHeight});assert.ok(await times.evaluate(n=>n.scrollTop)>0)
    await tap(page.locator('#calendar-bookingDate [data-calendar-day="2026-10-16"]'))
    await page.waitForFunction(()=>document.querySelector('#contactInquiryForm').dataset.scheduleState==='ready');await assertCleared()

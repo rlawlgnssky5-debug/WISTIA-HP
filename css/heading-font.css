@@ -34,3 +34,20 @@ html[data-wistia-typography] #app#app#app#app :is(.we-hero-copy,.detail-one-line
  html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon,
  html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon>.studio-icon{width:20px!important;height:20px!important;margin-top:2px!important}
 }
+
+/* About headings share one rail, while desktop specialist columns stay intact. */
+html #app#app#app#app#app .info-page-about{--about-rail:21px}
+html #app#app#app#app#app .info-page-about .svg-section-heading{padding-left:var(--about-rail)!important;box-sizing:border-box}
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title){grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title) .svg-title-icon,
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title) .svg-title-icon>.studio-icon{width:24px!important;height:24px!important}
+html #app#app#app#app#app .info-page-about .svg-item-copy>small{display:block;margin-left:var(--svg-item-indent,32px)!important}
+html #app#app#app#app#app .info-page-about #specialistTitle .svg-section-text{font-size:inherit!important;line-height:inherit!important}
+@media(max-width:600px){
+ html #app#app#app#app#app .info-page-about{--about-rail:19px}
+ html #app#app#app#app#app .info-page-about #specialistTitle{font-size:clamp(20px,5vw,26px)!important}
+}
+/* The icon is centered on the first text line, including multi-line titles. */
+html #app#app#app#app#app#app [data-title-aligned]>.svg-title-icon{margin-top:var(--svg-icon-offset,0px)!important}
+html #app#app#app#app#app#app [data-title-aligned]>.svg-title-icon>.studio-icon{margin:0!important}
+html #app#app#app#app#app .consultation-step-heading.svg-section-heading>.svg-section-description{margin-left:var(--svg-title-indent,46px)!important}
