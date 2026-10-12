@@ -1170,7 +1170,7 @@ function mobileArDesignIcon(name){
  return studioIcon(name==='record'?'microphone':name)
 }
 function mobileArCutPoster(){
- return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
+ return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg?v=20261013-detail-polish-16c" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
 }
 function mobileArProcess(key="solo"){
  const steps=detailStudioSteps(key)
