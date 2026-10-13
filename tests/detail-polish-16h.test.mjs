@@ -24,7 +24,7 @@ await test('16i solo and duo details share the image layout',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j3/)
+ assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j4/)
  assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j/)
  assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j/)
@@ -32,8 +32,8 @@ await test('16i solo and duo details share the image layout',()=>{
  assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
  const solo=read('detail/solo.html'),duo=read('detail/duo.html')
- assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j2/)
- assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j2/)
+ assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j4/)
+ assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j4/)
 })
 
 let chromium,executable,skip=false
@@ -88,6 +88,12 @@ await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:42000
      faq:document.querySelectorAll('.solo-faq details').length,
      map:document.querySelector('.solo-map-links')?.innerHTML||'',
      footer:document.querySelector('.solo-footer')?.innerHTML||'',
+     cta:(()=>{
+      const node=document.querySelector('.solo-footer-inquiry')
+      if(!node)return null
+      const s=getComputedStyle(node),r=node.getBoundingClientRect(),img=node.parentElement.querySelector('.solo-shot-img').getBoundingClientRect()
+      return {text:node.innerText.replace(/\s+/g,' ').trim(),bg:s.backgroundColor,color:s.color,fs:parseFloat(s.fontSize),href:node.getAttribute('href'),h:Math.round(r.height),covers:r.left<=img.left+img.width*0.07&&r.right>=img.left+img.width*0.93&&r.top<=img.top+img.height*0.085&&r.bottom>=img.top+img.height*0.175,fixed:['fixed','sticky'].includes(s.position)}
+     })(),
      intro:document.querySelector('.mas-intro .solo-shot-img')?.getAttribute('src')||'',
      pc:document.querySelector('.mas-intro source')?.getAttribute('srcset')||'',
      info:document.querySelector('.mas-information-poster .solo-shot-img')?.getAttribute('src')||'',
@@ -113,7 +119,18 @@ await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:42000
    assert.ok(Math.abs(layout.cards[0].top-layout.cards[1].top)<3)
    assert.match(layout.map,/map\.naver\.com\/p\/search\//)
    assert.match(layout.map,/map\.kakao\.com\/link\/search\//)
-   assert.match(layout.footer,new RegExp('href="/event/'+product+'"'))
+   assert.match(layout.footer,new RegExp('class="solo-footer-inquiry" href="/event/'+product+'"'))
+   assert.match(layout.footer,/문의양식 작성하기/)
+   assert.doesNotMatch(layout.footer,/카카오톡 문의/)
+   assert.doesNotMatch(layout.footer,/data-kakao-inquiry/)
+   assert.equal(layout.cta.text,'문의양식 작성하기')
+   assert.equal(layout.cta.bg,'rgb(196, 128, 140)')
+   assert.equal(layout.cta.color,'rgb(255, 255, 255)')
+   assert.equal(layout.cta.href,'/event/'+product)
+   assert.ok(layout.cta.fs>=14,product+' '+width+' footer label size')
+   assert.ok(layout.cta.h>=32,product+' '+width+' footer button height')
+   assert.equal(layout.cta.covers,true,product+' '+width+' footer button covers the painted label')
+   assert.equal(layout.cta.fixed,false)
    assert.equal(layout.shared,true,product+' shared section images')
    assert.equal(layout.platter,false)
    assert.equal(layout.table,false)

@@ -6,7 +6,13 @@ import {spawn} from 'node:child_process'
 import {createServer} from 'node:net'
 const require=createRequire(import.meta.url)
 let playwright,executable,skip=false
-try{playwright=require('playwright');executable=process.env.WISTIA_BROWSER_EXECUTABLE||['/usr/bin/chromium',playwright.chromium.executablePath()].find(existsSync);if(!executable)skip='Chromium not installed'}catch{skip='Playwright not installed'}
+try{playwright=require('playwright')}catch{
+ try{playwright=createRequire('/tmp/pw/node_modules/playwright-core/package.json')('playwright-core')}catch{skip='Playwright not installed'}
+}
+if(!skip){
+ executable=process.env.WISTIA_BROWSER_EXECUTABLE||['/usr/bin/chromium','/opt/google/chrome/chrome','/usr/bin/google-chrome',typeof playwright.chromium.executablePath==='function'?playwright.chromium.executablePath():''].filter(Boolean).find(existsSync)
+ if(!executable)skip='Chromium not installed'
+}
 await test('Public routes retain one compact yellow pill except event inquiry, ordinary body CTAs and clear footer',{skip,timeout:180000},async()=>{
  const probe=createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
@@ -22,6 +28,19 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
    for(const path of paths){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     if(path!='/privacy')await page.locator('#app h1').first().waitFor()
+    if(path==='/detail/solo'||path==='/detail/duo'){
+     const form=await page.locator('.solo-footer-inquiry').evaluate(node=>{
+      const s=getComputedStyle(node),pill=document.querySelector('#floatingKakaoChat'),ps=getComputedStyle(pill)
+      return {text:node.innerText.replace(/\s+/g,' ').trim(),href:node.getAttribute('href'),kakao:node.hasAttribute('data-kakao-inquiry'),pillText:pill?.innerText.replace(/\s+/g,' ').trim(),pillDisplay:ps.display,pillHref:pill?.getAttribute('href')||''}
+     })
+     assert.equal(form.text,'문의양식 작성하기',path)
+     assert.equal(form.href,path==='/detail/solo'?'/event/solo':'/event/duo')
+     assert.equal(form.kakao,false)
+     assert.equal(form.pillText,'카카오톡 문의')
+     assert.equal(form.pillDisplay,'none')
+     assert.match(form.pillHref,/pf\.kakao\.com/)
+     continue
+    }
     const eventInquiry=await page.locator('body').evaluate(n=>n.classList.contains('is-event-inquiry'))
     await page.locator('#floatingKakaoChat').waitFor({state:eventInquiry?'hidden':'visible'})
     const check=await page.evaluate(()=>{
@@ -42,11 +61,16 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
     const clearance=await page.evaluate(()=>({footer:document.querySelector('footer')?.getBoundingClientRect().bottom,pill:document.querySelector('#floatingKakaoChat').getBoundingClientRect().top}))
     if(clearance.footer)assert.ok(clearance.footer<=clearance.pill,path+' '+width+' footer must stay clear '+JSON.stringify(clearance))
    }
-   await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})
+   await page.goto(`http://127.0.0.1:${port}/contact`,{waitUntil:'domcontentloaded'})
    await page.locator('#floatingKakaoChat').click();await page.locator('#mediaDialog[open] .consult-copy-dialog').waitFor()
    assert.equal(await page.locator('#floatingKakaoChat').evaluate(n=>n.inert),true)
    await page.locator('#mediaDialog .dialog-close').click();assert.equal(await page.locator('#floatingKakaoChat').evaluate(n=>n.inert),false)
-   await page.locator('.product-inquiry a').click();assert.equal(await page.locator('#mediaDialog a[href="/event/solo"]').count(),1)
+   await page.goto(`http://127.0.0.1:${port}/detail/duet-film`,{waitUntil:'domcontentloaded'})
+   await page.locator('.product-inquiry a').click();assert.equal(await page.locator('#mediaDialog a[href="/event/duet-film"]').count(),1)
+   await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})
+   await page.locator('.solo-footer-inquiry').click()
+   await page.waitForURL(/\/event\/solo$/)
+   assert.equal(await page.locator('#mediaDialog[open]').count(),0)
    await context.close()
   }
  }finally{await browser?.close();server.kill()}

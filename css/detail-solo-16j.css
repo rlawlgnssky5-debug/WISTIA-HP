@@ -162,9 +162,20 @@ html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir
  display:block;height:100%;background:transparent!important;color:transparent!important;border:0!important;box-shadow:none!important;font-size:0;
 }
 
-/* Footer */
+/* Footer. The shared .footer grid would put the picture in one of two columns. */
+html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer{
+ display:block!important;gap:0!important;grid-template-columns:none!important;
+}
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer-inquiry{
- position:absolute;left:6%;top:8%;width:88%;height:10%;z-index:2;background:transparent!important;color:transparent!important;border:0!important;box-shadow:none!important;font-size:0;
+ position:absolute;left:5.8%;top:7.9%;width:88.6%;height:10.4%;z-index:3;display:flex!important;align-items:center;justify-content:center;gap:.45em;
+ min-height:0!important;margin:0!important;padding:0 12px!important;box-sizing:border-box;border:0!important;border-radius:999px;
+ background:#C4808C!important;color:#fff!important;box-shadow:none!important;font-family:Pretendard,Pretendard Variable,sans-serif;font-size:15px;font-weight:600;line-height:1;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;
+}
+html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer-inquiry svg{
+ display:block!important;width:1.15em;height:1.15em;flex:0 0 auto;color:#fff!important;
+}
+html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer-inquiry span{
+ color:#fff!important;background:transparent!important;font-size:inherit;font-weight:inherit;line-height:1;
 }
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer .footer-brand{
  position:absolute;left:40%;top:28%;width:20%;height:16%;z-index:2;background:transparent!important;color:transparent!important;font-size:0;
@@ -201,7 +212,7 @@ html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-p4-stop > *{
  display:none!important;
 }
-html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot :is(.solo-footer-inquiry,.footer-brand,.footer-social a,.solo-map-zoom,.mas-event-disclosure>summary) :is(img,svg,i){
+html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot :is(.footer-brand,.footer-social a,.solo-map-zoom,.mas-event-disclosure>summary) :is(img,svg,i){
  display:none!important;
 }
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-faq summary{
