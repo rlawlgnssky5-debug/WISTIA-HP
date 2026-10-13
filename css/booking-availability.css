@@ -98,9 +98,8 @@ html #siteHeader .wordmark>span{display:flex!important;align-items:center!import
 }
 html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!important}
 @media(max-width:430px){
- html #app#app#app#app .inquiry-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;padding-block:8px calc(12px + env(safe-area-inset-bottom))!important}
- html #app#app#app#app .inquiry-actions .inquiry-direct{min-height:36px!important;font-size:12px!important;padding-block:6px!important}
- html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important}
+ html #app#app#app#app .inquiry-actions{grid-template-columns:1fr!important;gap:0!important;padding-block:0 calc(12px + env(safe-area-inset-bottom))!important}
+ html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important;width:100%!important}
  body[data-page="event"] #app{padding-bottom:0!important}
 }
 @media(max-width:430px){
