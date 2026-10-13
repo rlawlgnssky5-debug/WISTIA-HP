@@ -22,14 +22,14 @@
 
 ## 2026-10-14 — DUET 상세도 같은 이미지 히트 레이아웃
 
-- `/detail/duo`는 SOLO와 같은 섹션 순서와 투명 히트 영역을 쓴다, 상단은 `assets/16j/duo/top_A.png`·`top_A_pc.png`, 상품정보는 `assets/16j/duo/info_v5.png`다, 후기·POINT 04·FAQ·지도·푸터와 05–09·예약 안내 포스터는 SOLO와 같은 이미지다
+- `/detail/duo`는 SOLO와 같은 섹션 순서와 투명 히트 영역을 쓴다, 상단은 `assets/16j/duo/top_A.png`·`top_A_pc.png`, 상품정보는 `assets/16j/duo/info_v5.png`다, 후기·POINT 04·FAQ·지도·푸터는 `assets/detail-solo-16j/`의 같은 이미지이고 05–09·예약 안내 포스터는 그대로다
 - DUET 카드가 선택된 상태이고 SOLO 카드는 `/detail/solo`로 간다, 갤러리는 `assets/video/duo-wedding-song-ar.mp4`와 `duet-live-proof-v2.jpg`에서 시작한다, 푸터 문의는 `/event/duo`다, `여기 눌러보세요!`는 SOLO 로즈 플레이어에만 있다
-- 16j 시트는 SOLO·DUET 상세에만 적용하고 혜택가는 그 두 화면에서 로즈 `#C4808C`다, 다른 화면의 `#C62828`은 유지한다, `js/app.js`와 `css/detail-solo-16j.css` 캐시는 `20261014-detail-polish-16j2`다
+- 16j 시트는 SOLO·DUET 상세에만 적용하고 혜택가는 그 두 화면에서 로즈 `#C4808C`다, 다른 화면의 `#C62828`은 유지한다, `js/app.js` 캐시는 `20261014-detail-polish-16j3`이고 `css/detail-solo-16j.css` 캐시는 `20261014-detail-polish-16j2`다
 - 360/375/390/1280에서 SOLO·DUET 모두 가로 넘침 0, 비율 재생·정지·FAQ·후기 확대·지도 확대를 확인했다, 기록은 `tests/detail-polish-16h.test.mjs`다
 
 ## 2026-10-14 — SOLO 상세 로즈 톤 16j
 
-- `/detail/solo`의 상단·상품정보·후기·POINT 04·FAQ·오시는 길·푸터는 커밋된 `assets/16j/` 이미지를 전체 너비로 보여주고, 슬라이더·인원·이벤트·비율 재생·정지·후기 확대·FAQ·지도·푸터 링크는 그 위의 투명 영역이다, 05–09와 예약 안내 포스터는 그대로다
+- `/detail/solo`의 상단·상품정보·후기·POINT 04·FAQ·오시는 길·푸터는 커밋된 `assets/detail-solo-16j/` 이미지를 전체 너비로 보여주고, 슬라이더·인원·이벤트·비율 재생·정지·후기 확대·FAQ·지도·푸터 링크는 그 위의 투명 영역이다, 05–09와 예약 안내 포스터는 그대로다
 - 상단 캡션은 main `73864e1`의 흰 글씨 하단 고정을 유지한다, PC 상단은 `top_A_pc`이고 나머지 여섯 장은 블러시 `#F6E6E6` 가운데 최대 480px이다
 - FAQ는 실제 `<details>`이고 첫 문항이 열린다, POINT 04는 기존 `[data-solo-audio]`를 읽고 비율 버튼이 재생하며 정지 버튼이 있다
 - HTML `?v=` 캐시는 `20261014-detail-polish-16j`다, 전역 `data-build`는 `20261013-detail-polish-16f`를 유지한다

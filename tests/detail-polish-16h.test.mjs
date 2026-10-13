@@ -9,10 +9,10 @@ const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
 await test('16i solo and duo details share the image layout',()=>{
  const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')
- assert.match(app,/function soloPoint04Section\(\)[\s\S]*assets\/16j\/point04_ui_390\.png/)
+ assert.match(app,/function soloPoint04Section\(\)[\s\S]*assets\/detail-solo-16j\/point04_ui_390\.png/)
  assert.match(app,/data-solo-ratio[\s\S]*solo-p4-stop[\s\S]*data-solo-audio/)
  assert.doesNotMatch(app.slice(app.indexOf('function soloPoint04Section'),app.indexOf('function soloReviewGrid')),/point04-mix\.webp|wistia-ar__disc-stage|wistia-ar__play/)
- assert.match(app,/'assets\/16j\/duo\/':'assets\/16j\/'/)
+ assert.match(app,/'assets\/16j\/duo\/':'assets\/detail-solo-16j\/'/)
  assert.match(app,/shot\+'top_A_pc\.png"/)
  assert.match(app,/shot\+'top_A\.png"/)
  assert.match(app,/shot\+'info_v5\.png"/)
@@ -24,7 +24,7 @@ await test('16i solo and duo details share the image layout',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j2/)
+ assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j3/)
  assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j/)
  assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j/)
@@ -97,7 +97,7 @@ await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:42000
      tryHint:!!document.querySelector('.bap-try'),
      platter:!!document.querySelector('.wistia-ar__platter'),
      table:!!document.querySelector('.mas-information dl'),
-     shared:['reviews6_390.png','point04_ui_390.png','faq_B.png','map_C3.png','footer_A.png'].every(name=>html.includes(name))
+     shared:['reviews6_390.png','point04_ui_390.png','faq_B.png','map_C3.png','footer_A.png'].every(name=>html.includes('assets/detail-solo-16j/'+name))
     }
    })
    assert.equal(layout.page,0,product+' '+width+' page overflow')
@@ -126,13 +126,13 @@ await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:42000
     assert.equal(layout.tryHint,false)
     if(width>=901)assert.match(layout.pc,/assets\/16j\/duo\/top_A_pc\.png/)
    }else{
-    assert.match(layout.intro,/^assets\/16j\/top_A\.png$/)
-    assert.match(layout.info,/^assets\/16j\/info_v5\.png$/)
+    assert.match(layout.intro,/^assets\/detail-solo-16j\/top_A\.png$/)
+    assert.match(layout.info,/^assets\/detail-solo-16j\/info_v5\.png$/)
     assert.match(layout.video,/groom-wedding-song-ar\.mp4/)
     assert.match(layout.selected,/SOLO/)
     assert.equal(layout.openHref,'/detail/duo')
     assert.equal(layout.tryHint,true)
-    if(width>=901)assert.match(layout.pc,/^assets\/16j\/top_A_pc\.png$/)
+    if(width>=901)assert.match(layout.pc,/^assets\/detail-solo-16j\/top_A_pc\.png$/)
    }
    assert.match(layout.footer,/href="\/privacy"/)
    assert.match(layout.footer,/aidoc\.kr\/support/)
