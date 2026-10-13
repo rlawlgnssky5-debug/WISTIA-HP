@@ -62,9 +62,21 @@
   return cells
  }
  const calendarIcon=direction=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="'+(direction==='prev'?'m14 6-6 6 6 6':'m10 6 6 6-6 6')+'"/></svg>'
+ function calendarCloseButton(key){
+  if(key==='eventDate')return '<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><span>× 닫기</span></button>'
+  return '<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span>닫기</span></button>'
+ }
+ function syncEventDateClose(calendar,value){
+  if(calendar.dataset.calendar!=='eventDate')return
+  const close=calendar.querySelector('[data-calendar-close]');if(!close)return
+  const chosen=!!value
+  close.classList.toggle('is-confirm',chosen)
+  close.setAttribute('aria-label',chosen?'선택한 날짜 확인':'달력 닫기')
+  close.querySelector('span').textContent=chosen?'확인':'× 닫기'
+ }
  function calendarMarkup(key,label){
   const booking=key==='bookingDate'
-  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="dialog" aria-label="'+label+' 달력" hidden'+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span>닫기</span></button>'+'</div>'+ (booking?'<p data-calendar-range-status role="status" aria-live="polite" hidden>카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다</p>':'')+'<div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map((day,index)=>'<span'+(index===0?' class="calendar-sunday"':'')+'>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div>'+'</div>'
+  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="dialog" aria-label="'+label+' 달력" hidden'+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+calendarCloseButton(key)+'</div>'+ (booking?'<p data-calendar-range-status role="status" aria-live="polite" hidden>카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다</p>':'')+'<div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map((day,index)=>'<span'+(index===0?' class="calendar-sunday"':'')+'>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div>'+'</div>'
  }
  const calendarStates=new WeakMap()
  function openDateCalendar(state){
@@ -89,6 +101,7 @@
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
   calendar.querySelector('[data-calendar-selection]').textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
+  syncEventDateClose(calendar,input.value)
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
