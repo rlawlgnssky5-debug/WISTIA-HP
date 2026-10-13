@@ -1112,6 +1112,22 @@ function arRecordingPoster(){
 function detailPosterImage(src,alt,width,height){
  return '<img class="detail-poster-image" src="'+src+'" alt="'+escapeHtml(alt)+'" width="'+width+'" height="'+height+'" loading="lazy" decoding="async">'
 }
+function soloPoint04Section(){
+ const tones=[30,50,70,100].map(value=>'<button type="button" class="wistia-ar__tone" data-ar-tone="'+value+'" aria-pressed="'+(value===70)+'" aria-label="AR '+value+'%"><span class="wistia-ar__sr">'+value+'%</span></button>').join('')
+ const playIcon='<span class="wistia-ar__play-icon" aria-hidden="true"></span>'
+ return '<section class="arc-point arc-point-ratio arc-point-ratio-poster" aria-label="본식 AR 비율 체험">'+
+  '<section class="wistia-ar wistia-ar--poster" id="arRatioExperience" data-wistia-ar-ratio data-tone="70" data-audio-30="'+ratioSource('30')+'" data-audio-50="'+ratioSource('50')+'" data-audio-70="'+ratioSource('70')+'" data-audio-100="'+ratioSource('100')+'" aria-labelledby="wistiaArTitle">'+
+  '<h2 id="wistiaArTitle" class="wistia-ar__sr">내 목소리에 맞게 AR 비율을 골라보세요</h2>'+
+  '<div class="arc-ratio-frame">'+
+  detailPosterImage('assets/detail/point04-mix.webp?v=16h','POINT 04 내 목소리에 맞게 AR 비율을 골라보세요. 같은 녹음을 30, 50, 70, 100 비율로 라이브와 AR을 비교합니다',1080,2912)+
+  '<div class="wistia-ar__disc-stage" tabindex="0" role="button" aria-label="턴테이블 재생" aria-pressed="false"></div>'+
+  '<div class="wistia-ar__tones" role="group" aria-label="AR 비율 선택">'+tones+'</div>'+
+  '</div>'+
+  '<div class="wistia-ar__dock">'+
+  '<div class="wistia-ar__player" aria-label="AR 미리듣기 플레이어"><button class="wistia-ar__play" type="button" aria-label="재생" aria-pressed="false">'+playIcon+'<span class="wistia-ar__play-label">재생</span></button><span class="wistia-ar__time"><span data-current-time>0:00</span></span><input class="wistia-ar__seek" aria-label="재생 위치" type="range" min="0" max="32" step="0.1" value="0"><span class="wistia-ar__time wistia-ar__time--total"><span data-duration>0:00</span></span><button class="wistia-ar__volume" type="button" aria-label="음소거" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="wistia-ar__vol-body" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/><path class="wistia-ar__vol-wave" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8"/><path class="wistia-ar__vol-mute" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button><p class="wistia-ar__error" role="status" hidden>음원을 불러오지 못했습니다</p></div>'+
+  '<div class="wistia-ar__ratio" aria-label="AR 비율 조절"><span class="wistia-ar__mood" data-ratio-mood>균형 있게</span><output class="wistia-ar__ratio-current">70%</output><input class="wistia-ar__ratio-input" type="range" min="30" max="100" step="1" value="70" aria-label="AR 비율" aria-valuetext="70%"><div class="wistia-ar__ratio-marks" aria-hidden="true"><span data-value="30">30%</span><span data-value="50">50%</span><span data-value="70">70%</span><span data-value="100">100%</span></div></div>'+
+  '</div></section></section>'
+}
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
  const duet=key==='duo'
@@ -1161,7 +1177,7 @@ function arCommerceDetail(p,key="solo"){
  arRecordingPoster()+
  keySection+
  tuningSection+
- '<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>'+
+ (key==='solo'?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">가사 영상 추가 옵션 · 1곡 기준 · +40,000원</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
  '<div class="arc-advantages">'+productComparisonSection('solo')+'</div>'+
@@ -1237,7 +1253,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  '<section class="mas-intro" aria-labelledby="arcProductTitle"><div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="'+(duet?1:0)+'"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="SOLO 영상 보기" aria-pressed="'+(!duet)+'"></button><button type="button" data-mobile-video-slide="1" aria-label="DUET 영상 보기" aria-pressed="'+duet+'"></button></div></div></div>'+
  '<div class="mas-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p><p class="mas-event-price"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'+mobileDetailEvents()+'</div></section>'+
  '<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle">인원 선택</h2>'+variants+'</section>'+
- '<section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>'+
+ (key==='solo'?'<section class="mas-information mas-information-poster" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="wistia-ar__sr">상품정보</h2>'+detailPosterImage('assets/detail/info-product.webp?v=16h','상품정보. 인원·곡수 1인 1곡, 녹음시간 1시간, 제작 기간 최대 7일. 맞춤 키 조절·음원 편집·보컬 디렉팅, 정밀 음정·박자 보정·믹싱·마스터링, 본식 재생용 AR 최종 마스터 음원',1080,1110)+'</section>':'<section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>')+
  '<div class="arc-reviews">'+mobileReviews+'</div>'+
  '<span id="arcDetails" hidden></span>'+details+
  '<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section></div>'

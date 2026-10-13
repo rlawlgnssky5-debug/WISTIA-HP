@@ -22,7 +22,7 @@ assert.deepEqual(sheets.slice(-16),[
  'css/detail-section-layout.css?v=20261013-detail-polish-16f',
  'css/heading-font.css?v=20261013-detail-polish-16f',
  'css/kakao-inquiry.css?v=20261013-detail-polish-16f',
- 'css/detail-point-16f.css?v=20261013-detail-polish-16g'
+ 'css/detail-point-16f.css?v=20261013-detail-polish-16h'
 ])
 for(const color of ['#FF4F9A','#171717','#F5F5F5'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/[{;]\s*(?:width|height|min-width|min-height|max-width|max-height|padding|margin|font-size|font-family|position|display|transform|gap|grid-template-columns)\s*:/i,'palette must not change layout or typography')

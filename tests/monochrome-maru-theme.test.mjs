@@ -21,7 +21,7 @@ assert.deepEqual(sheets.slice(-14),[
  'css/detail-section-layout.css?v=20261013-detail-polish-16f',
  'css/heading-font.css?v=20261013-detail-polish-16f',
  'css/kakao-inquiry.css?v=20261013-detail-polish-16f',
- 'css/detail-point-16f.css?v=20261013-detail-polish-16g'
+ 'css/detail-point-16f.css?v=20261013-detail-polish-16h'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)
