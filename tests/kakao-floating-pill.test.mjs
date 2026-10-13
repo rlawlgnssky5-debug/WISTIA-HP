@@ -33,7 +33,7 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
       const s=getComputedStyle(node),pill=document.querySelector('#floatingKakaoChat'),ps=getComputedStyle(pill)
       return {text:node.innerText.replace(/\s+/g,' ').trim(),href:node.getAttribute('href'),kakao:node.hasAttribute('data-kakao-inquiry'),pillText:pill?.innerText.replace(/\s+/g,' ').trim(),pillDisplay:ps.display,pillHref:pill?.getAttribute('href')||''}
      })
-     assert.equal(form.text,'문의양식 작성하기',path)
+     assert.equal(form.text,'문의양식 작성',path)
      assert.equal(form.href,path==='/detail/solo'?'/event/solo':'/event/duo')
      assert.equal(form.kakao,false)
      assert.equal(form.pillText,'카카오톡 문의')
