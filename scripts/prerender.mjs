@@ -23,6 +23,9 @@ function page(path, data, options={}) {
   if (options.robots) {
     html = html.replace(/(<meta name="theme-color" content="[^"]+">)/, `$1\n  <meta name="robots" content="${escapeHtml(options.robots)}">`)
   }
+  if (path === '/detail/solo' && !html.includes('css/detail-solo-16j.css')) {
+    html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261014-detail-polish-16j">\n</head>')
+  }
   const target = resolve(root, path.slice(1) + '.html')
   mkdirSync(dirname(target), {recursive:true})
   writeFileSync(target, html)

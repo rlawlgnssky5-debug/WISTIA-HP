@@ -164,5 +164,5 @@ assert.doesNotMatch(home,/font-size:|padding:|aspect-ratio:|grid-template-column
 assert.match(css,/mas-information dl>div\{display:grid;grid-template-columns:82px 1fr/)
 assert.match(css,/\.mas-information dl>div\{grid-template-columns:minmax\(0,1fr\);gap:4px/)
 assert.doesNotMatch(css,/mas-information dl>div\{grid-template-columns:1fr|mas-price\{flex-direction:column|mas-variant i\{position:absolute/)
-assert.match(shell,/mobile-studio-home\.css\?v=20261003-alignment-only-1/)
+assert.match(shell,/mobile-studio-home\.css\?v=20261014-detail-polish-16j/)
 console.log('SOLO and DUET mobile design, square videos, cut/join diagram, typography asset, notices, directions and existing actions passed')

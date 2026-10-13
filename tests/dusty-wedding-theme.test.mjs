@@ -5,23 +5,24 @@ const index=read('index.html'),css=read('css/dusty-wedding-theme.css')
 assert.match(index,/<html data-build="20261013-detail-polish-16f" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
 assert.match(index,/<meta name="theme-color" content="#F5F4F0">/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-16),[
- 'css/dusty-wedding-theme.css?v=20261005-monochrome-maru-1',
- 'css/inquiry-choice-editor.css?v=20261005-inquiry-choice-editor-1',
- 'css/monochrome-maru-theme.css?v=20261013-detail-polish-16f',
- 'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
- 'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
- 'css/noir-minimal.css?v=20261013-detail-polish-16f',
- 'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-reviews-five-1',
- 'css/detail-consistency.css?v=20261006-benefit-boxes-1',
- 'css/svg-interface.css?v=20261013-detail-polish-16f',
- 'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261013-detail-polish-16g',
- 'css/detail-section-layout.css?v=20261013-detail-polish-16f',
- 'css/heading-font.css?v=20261013-detail-polish-16f',
- 'css/kakao-inquiry.css?v=20261013-detail-polish-16f',
- 'css/detail-point-16f.css?v=20261013-detail-polish-16h'
+assert.deepEqual(sheets.slice(-17),[
+ 'css/dusty-wedding-theme.css?v=20261014-detail-polish-16j',
+ 'css/inquiry-choice-editor.css?v=20261014-detail-polish-16j',
+ 'css/monochrome-maru-theme.css?v=20261014-detail-polish-16j',
+ 'css/functional-card-clarity.css?v=20261014-detail-polish-16j',
+ 'css/approved-home-thumbnails.css?v=20261014-detail-polish-16j',
+ 'css/noir-minimal.css?v=20261014-detail-polish-16j',
+ 'css/studio-graphics.css?v=20261014-detail-polish-16j',
+ 'css/luxury-finish.css?v=20261014-detail-polish-16j',
+ 'css/detail-consistency.css?v=20261014-detail-polish-16j',
+ 'css/svg-interface.css?v=20261014-detail-polish-16j',
+ 'css/svg-player-controls.css?v=20261014-detail-polish-16j',
+ 'css/booking-availability.css?v=20261014-detail-polish-16j',
+ 'css/detail-section-layout.css?v=20261014-detail-polish-16j',
+ 'css/heading-font.css?v=20261014-detail-polish-16j',
+ 'css/kakao-inquiry.css?v=20261014-detail-polish-16j',
+ 'css/detail-point-16f.css?v=20261014-detail-polish-16j',
+ 'css/detail-point-16i.css?v=20261014-detail-polish-16j'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)

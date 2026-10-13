@@ -1121,7 +1121,7 @@ function soloPoint04Section(){
   '<h2 class="solo-p4-title" data-svg-title="off">이제는 <b>딱 맞는 비율</b>로 섞어요</h2>'+
   '<p class="solo-p4-hint">👇 <b>비율을 누르면</b> 바로 재생돼요</p>'+
   '<div class="solo-p4-ratios"><p class="solo-p4-pointer" aria-hidden="true">여기 눌러보세요! 👇</p><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
-  '<div class="solo-p4-card" hidden>'+
+  '<div class="solo-p4-card">'+
   '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i>재생 중 · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
   '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="정지"><span aria-hidden="true"></span>정지</button></div>'+
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
@@ -1151,20 +1151,22 @@ function soloChatFaq(){
   ['본식에서는 어떻게 사용하나요?','예식장에 본식용 AR 음원을 미리 전달하고 재생하며 직접 노래하시면 됩니다<br>담당자와 파일 재생 및 리허설 시간을 사전에 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
  ]
- return '<section class="arc-section arc-faq solo-faq" id="arcFaq"><h2 data-svg-title="off">자주 묻는 질문</h2><div class="solo-faq-list">'+questions.map(([q,a])=>'<details><summary><span>'+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer"><p>'+a+'</p></div></details>').join('')+'</div></section>'
+ return '<section class="arc-section arc-faq solo-faq" id="arcFaq"><p class="solo-faq-eyebrow">FAQ</p><h2 data-svg-title="off"><span>자주 묻는 질문을</span><b>확인해 보세요</b></h2><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>'+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></section>'
 }
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=16i','예약 전에 확인하세요. 납기 최대 7일, 수정 3회까지 무료, 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
-  '<section class="arc-section solo-map" data-solo-map aria-labelledby="soloMapTitle"><h2 id="soloMapTitle" data-svg-title="off">오시는 길</h2>'+
-  '<button type="button" class="solo-map-zoom" data-map-zoom aria-label="지도 크게 보기"><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도" width="1443" height="1041" loading="lazy" decoding="async"></button>'+
-  '<address>'+address+'</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl>'+
-  '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="https://map.kakao.com/link/search/'+encoded+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+
+  '<section class="arc-section solo-map" data-solo-map aria-labelledby="soloMapTitle"><p class="solo-map-eyebrow">HOW TO COME</p><h2 id="soloMapTitle" data-svg-title="off"><span>오시는 길</span></h2>'+
+  '<button type="button" class="solo-map-zoom" data-map-zoom aria-label="지도 크게 보기"><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도" width="1443" height="1041" loading="lazy" decoding="async"><span class="solo-map-search" aria-hidden="true"></span></button>'+
+  '<p class="solo-map-caption">지도 이미지를 누르면 크게 볼 수 있습니다</p>'+
+  '<div class="solo-map-route"><div class="solo-map-stop"><i class="solo-map-train" aria-hidden="true"></i><div><b>부천시청역 1번 출구</b></div></div><p class="solo-map-walk"><i aria-hidden="true"></i><span>도보 약 300m</span></p><div class="solo-map-stop"><i class="solo-map-pin" aria-hidden="true"></i><div><b>위스티아 스튜디오</b><span>'+address+'</span></div></div></div>'+
+  '<div class="solo-map-park"><i aria-hidden="true">P</i><div><b>스튜디오 바로 옆 공영주차장</b><span>주차 요금 별도 · 주차비 지원 불가</span></div></div>'+
+  '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도 ↗</a><a href="https://map.kakao.com/link/search/'+encoded+'" target="_blank" rel="noopener noreferrer">카카오맵 ↗</a></div>'+
   '<dialog class="solo-map-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도"></dialog></section>'
 }
 function soloFooter(){
- const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao',kakao()]]
- return '<footer class="footer solo-footer" data-svg-title="off"><a class="solo-footer-inquiry" data-kakao-inquiry href="/event/solo">카카오톡 문의</a><a class="footer-brand" href="/">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small><a href="/privacy">개인정보처리방침</a><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a></div></footer>'
+ const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
+ return '<footer class="footer solo-footer" data-svg-title="off"><a class="solo-footer-inquiry" data-kakao-inquiry href="/event/solo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C6.9 4 2.8 7.2 2.8 11.2c0 2.6 1.7 4.8 4.4 6.1L6.3 21l4.2-2.6 1.5.1c5.1 0 9.2-3.2 9.2-7.3S17.1 4 12 4Z"></path></svg>카카오톡 문의</a><a class="footer-brand" href="/">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-legal"><a href="/privacy">개인정보처리방침</a><span aria-hidden="true">|</span><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a><span aria-hidden="true">|</span><span>웨딩 · 목소리 · 영상</span></div><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'

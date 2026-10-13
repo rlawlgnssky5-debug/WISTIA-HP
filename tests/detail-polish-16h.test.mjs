@@ -21,13 +21,16 @@ await test('16i solo detail is real UI and duo keeps the shared player',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261013-detail-polish-16i/)
- assert.match(index,/js\/booking-availability\.js\?v=20261013-detail-polish-16i/)
- assert.match(index,/css\/detail-point-16i\.css\?v=20261014-hotfix-16i-caption/)
- assert.match(index,/js\/ar-ratio-cd\.js\?v=20261013-detail-polish-16h/)
- assert.match(index,/css\/detail-point-16f\.css\?v=20261013-detail-polish-16h/)
- assert.match(index,/css\/booking-availability\.css\?v=20261013-detail-polish-16g/)
+ assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j/)
+ assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j/)
+ assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j/)
+ assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j/)
+ assert.match(index,/css\/detail-point-16f\.css\?v=20261014-detail-polish-16j/)
+ assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
+ const solo=read('detail/solo.html'),duo=read('detail/duo.html')
+ assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j/)
+ assert.doesNotMatch(duo,/detail-solo-16j\.css/)
 })
 
 let chromium,executable,skip=false
@@ -74,7 +77,7 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
     return {
      page:document.documentElement.scrollWidth-innerWidth,
      posters,
-     cards:[selected,open].map(node=>{const r=node.getBoundingClientRect();const style=getComputedStyle(node);return {h:Math.round(r.height),transform:style.transform,scale:style.scale,bg:style.backgroundColor}}),
+     cards:[selected,open].map(node=>{const r=node.getBoundingClientRect();const style=getComputedStyle(node);return {h:Math.round(r.height),top:Math.round(r.top),transform:style.transform,scale:style.scale,bg:style.backgroundColor}}),
      benefit:benefit.color,
      faq:document.querySelectorAll('.solo-faq details').length,
      map:document.querySelector('.solo-map-links')?.innerHTML||'',
@@ -83,16 +86,17 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    })
    assert.equal(layout.page,0,width+' page overflow')
    assert.equal(layout.faq,6)
-   assert.equal(layout.benefit,'rgb(198, 40, 40)')
+   assert.equal(layout.benefit,'rgb(196, 128, 140)')
    for(const poster of layout.posters){
     assert.ok(poster.w<=860,JSON.stringify(poster))
     assert.notEqual(poster.fit,'cover',poster.src)
     assert.ok(Math.abs(poster.w/poster.h-poster.natural[0]/poster.natural[1])<0.03,JSON.stringify(poster))
    }
    assert.equal(layout.cards[0].h,layout.cards[1].h)
-   assert.equal(layout.cards[0].h,108)
-   assert.equal(layout.cards[0].bg,'rgb(255, 255, 255)')
-   assert.equal(layout.cards[1].bg,'rgb(164, 83, 106)')
+   assert.ok(layout.cards[0].h>108)
+   assert.ok(Math.abs(layout.cards[0].top-layout.cards[1].top)<3)
+   assert.equal(layout.cards[0].bg,'rgb(255, 247, 248)')
+   assert.equal(layout.cards[1].bg,'rgb(255, 255, 255)')
    assert.match(layout.map,/map\.naver\.com\/p\/search\//)
    assert.match(layout.map,/map\.kakao\.com\/link\/search\//)
    assert.match(layout.footer,/href="\/event\/solo"/)
@@ -107,10 +111,11 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    assert.equal(Math.round(during.height),Math.round(before.height))
    assert.equal(Math.round(during.width),Math.round(before.width))
    const faq=page.locator('.solo-faq details').first()
-   await faq.locator('summary').click()
    assert.equal(await faq.evaluate(node=>node.open),true)
    await faq.locator('summary').click()
    assert.equal(await faq.evaluate(node=>node.open),false)
+   await faq.locator('summary').click()
+   assert.equal(await faq.evaluate(node=>node.open),true)
    await page.locator('[data-solo-ratio="50"]').click()
    await page.waitForFunction(()=>{
     const button=document.querySelector('[data-solo-ratio="50"]')

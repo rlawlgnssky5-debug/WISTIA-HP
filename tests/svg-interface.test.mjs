@@ -66,7 +66,7 @@ assert.match(controlCss,/\.bap-switch\{\s*position:static!important/,'the switch
 assert.match(controlCss,/::-webkit-slider-thumb\{[^}]*border:2px solid #625D54!important/,'the native ratio handle has a visible boundary')
 assert.match(controlCss,/touch-action:pan-y/,'native ranges retain vertical page scrolling')
 assert.match(controlCss,/:focus-visible/,'keyboard users see the active control')
-assert.match(index,/css\/svg-player-controls.css\?v=20261007-svg-interface-1/)
+assert.match(index,/css\/svg-player-controls.css\?v=20261014-detail-polish-16j/)
 
 function element(){
  const classes=new Set()
@@ -218,8 +218,8 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve))
  assert.match(interfaceCss,/\.svg-section-description\{[\s\S]*?margin-left:var\(--svg-title-indent,46px\)!important/)
  assert.match(interfaceCss,/\.svg-info-icon(?:>|,)[\s\S]*?width:18px!important;height:18px!important/,'metadata uses small SVGs without consuming the definition column')
  assert.match(interfaceCss,/\.mas-information dl>div dd :is\(small,span\)\{\s*min-width:0!important;max-width:100%!important;white-space:normal!important;\s*word-break:keep-all!important;overflow-wrap:anywhere!important/,'metadata definitions wrap instead of clipping on narrow screens')
- assert.match(index,/js\/svg-interface.js\?v=20261013-detail-polish-16f/)
- assert.match(index,/css\/svg-interface.css\?v=20261013-detail-polish-16f/)
+ assert.match(index,/js\/svg-interface.js\?v=20261014-detail-polish-16j/)
+ assert.match(index,/css\/svg-interface.css\?v=20261014-detail-polish-16j/)
  assert.ok(index.indexOf('js/svg-interface.js')<index.indexOf('js/app.js'))
 }
 

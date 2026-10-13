@@ -16,9 +16,9 @@ assert.equal(homeCases[3][2],'AQ9Z1flOUPo')
 assert.match(home,/String\(cases.length\)\.padStart\(2,'0'\)/)
 assert.match(app,/window\.WistiaMotion\?\.destroy\(\)/)
 assert.match(app,/window\.WistiaMotion\?\.mount\(\)/)
-assert.match(index,/site-motion\.js\?v=20261013-detail-polish-16f/)
-assert.match(index,/meta-pixel\.js\?v=20261002-tracking-resilience-1/)
-assert.match(index,/analytics\.js\?v=20260929-path-1/)
+assert.match(index,/site-motion\.js\?v=20261014-detail-polish-16j/)
+assert.match(index,/meta-pixel\.js\?v=20261014-detail-polish-16j/)
+assert.match(index,/analytics\.js\?v=20261014-detail-polish-16j/)
 const protectedHashes={
  'js/analytics.js':'1ec4639227c94696a245a9b938a0281e53c646e71e9f32dc6031282064fbd273'
 }
