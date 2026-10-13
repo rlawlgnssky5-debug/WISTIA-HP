@@ -29,13 +29,22 @@ await test('Unified addresses, responsive SVG illustrations, composite photo and
      assert.equal(m.text,'경기도 부천시 석천로170번길 19, 2층');assert.equal(m.children,0);assert.equal(m.lines,1);assert.ok(m.inside,JSON.stringify(m));assert.match(m.font,/Pretendard/);assert.doesNotMatch(m.font,/MaruBuri|Georgia/)
     }
     if(path.startsWith('/detail/')){
-     const graphic=page.locator('.recording-join-illustration');await graphic.scrollIntoViewIfNeeded();await graphic.evaluate(n=>n.decode())
-     assert.ok(await graphic.evaluate(n=>n.naturalWidth>0));assert.equal(await page.locator('.mas-cut-clips,.mas-joined-clip').count(),0)
-     assert.equal(await page.locator('.mas-cut-poster figcaption').innerText(),'어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다')
+     const poster=page.locator('#arcRecording .detail-poster-image');await poster.scrollIntoViewIfNeeded();await poster.evaluate(n=>n.decode())
+     const posterBox=await poster.evaluate(n=>{const b=n.getBoundingClientRect(),s=getComputedStyle(n);return {width:b.width,natural:n.naturalWidth,height:n.naturalHeight,fit:s.objectFit,src:n.currentSrc}})
+     assert.equal(posterBox.natural,860);assert.equal(posterBox.height,2236);assert.match(posterBox.src,/point01-recording\.webp\?v=16f/);assert.notEqual(posterBox.fit,'cover');assert.ok(posterBox.width<=860.5)
+     assert.equal(await page.locator('.recording-join-illustration,.mas-cut-poster,.mas-cut-clips,.mas-joined-clip').count(),0)
      const advantages=page.locator('.advantages-illustration img');await advantages.scrollIntoViewIfNeeded();await advantages.evaluate(n=>n.decode())
      assert.match(await advantages.evaluate(n=>n.currentSrc),width<=700?/advantages-mobile/:/advantages-desktop/)
      const alt=await advantages.getAttribute('alt');for(const word of ['구간별 녹음 + 1:1 디렉팅','음정·박자 수작업 보정','상담 시 안내드린 금액 그대로','당일 추가 비용은 없습니다'])assert.ok(alt.includes(word))
-     const photo=page.locator('.mas-key-caption-image');await photo.scrollIntoViewIfNeeded();await photo.evaluate(n=>n.decode());assert.match(await photo.getAttribute('alt'),/노래의 감정은 그대로, 내 목소리에 맞게/);assert.equal(await page.locator('#arcKey .mas-key-note,#arcKey figcaption').count(),0)
+     if(path==='/detail/duo'){
+      const photo=page.locator('.mas-key-caption-image');await photo.scrollIntoViewIfNeeded();await photo.evaluate(n=>n.decode());assert.match(await photo.getAttribute('alt'),/노래의 감정은 그대로, 내 목소리에 맞게/);assert.equal(await page.locator('#arcKey .mas-key-note,#arcKey figcaption').count(),0)
+     }else{
+      const keyPoster=page.locator('#arcKey .detail-poster-image');await keyPoster.scrollIntoViewIfNeeded();await keyPoster.evaluate(n=>n.decode())
+      assert.equal(await keyPoster.evaluate(n=>n.naturalWidth),860);assert.equal(await keyPoster.evaluate(n=>n.naturalHeight),1840)
+      assert.match(await keyPoster.getAttribute('src'),/point02-key\.webp\?v=16f/)
+      assert.equal(await page.locator('.mas-key-caption-image,#arcTuning .detail-point-label,#wistiaBeforeAfterTitle').count(),0)
+      assert.equal(await page.locator('.arc-point-tuning-rose .bap-play').count(),1)
+     }
     }
    }
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})

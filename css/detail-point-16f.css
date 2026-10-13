@@ -1,0 +1,63 @@
+/* Solo POINT 01–03 posters stay full-bleed inside an 860px column. Rose POINT 03 only. */
+html #app#app#app#app .ar-commerce-detail :is(.arc-point-recording,.arc-point-poster,.arc-point-tuning-rose){
+ margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose{background:#f9eeee!important}
+html #app#app#app#app .ar-commerce-detail .detail-poster-image{
+ display:block!important;width:100%!important;max-width:860px!important;height:auto!important;margin:0 auto!important;
+ object-fit:unset!important;object-position:center!important;border-radius:0!important;background:transparent!important;
+}
+
+/* The solo comparison card sits between the two POINT 03 graphics. Other players stay unchanged. */
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .wistia-ba-section{
+ box-sizing:border-box!important;width:100%!important;max-width:860px!important;margin:0 auto!important;padding:8px 22px 14px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .wistia-ba-layout{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;gap:0!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose :is(.bap-player,.bap-body){
+ background:#ffffff!important;color:#7d3a4f!important;border:0!important;box-shadow:0 18px 40px rgba(125,58,79,.1)!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-player{box-sizing:border-box!important;width:100%!important;max-width:none!important;margin:0!important;border-radius:28px!important;overflow:hidden!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-body{padding:22px 22px 18px!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-badge{display:none!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose #wistiaBeforeAfter{
+ --ba-wave-before:#c98996;--ba-wave-after:#7d3a4f;--ba-wave-rest:#f3d5dc;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin:0 0 8px!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-play{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+ min-width:92px!important;width:auto!important;height:44px!important;min-height:44px!important;padding:0 16px!important;
+ border:0!important;border-radius:14px!important;background:#c56b7e!important;color:#ffffff!important;box-shadow:none!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-play:hover{background:#b35d70!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-time{margin-left:auto!important;color:#8d6a74!important;font-size:14px!important;font-weight:650!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-wave{display:block!important;width:100%!important;height:72px!important;margin:6px 0 16px!important;background:transparent!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tabs{
+ display:grid!important;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)!important;align-items:center!important;gap:10px!important;margin:0!important;padding:0!important;background:transparent!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:4px!important;
+ min-height:72px!important;padding:14px 16px!important;border:1px solid #e3b7c2!important;border-radius:16px!important;
+ background:#ffffff!important;color:#7d3a4f!important;box-shadow:none!important;text-align:left!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab.active[data-mode]{
+ background:#7d3a4f!important;border-color:#7d3a4f!important;color:#ffffff!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab :is(strong,small){color:inherit!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-switch{
+ position:static!important;inset:auto!important;transform:none!important;align-self:center!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ width:48px!important;height:48px!important;min-width:48px!important;padding:0!important;
+ border:1px solid #e3b7c2!important;border-radius:50%!important;background:#ffffff!important;color:#7d3a4f!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-switch .studio-icon{width:22px!important;height:22px!important;color:inherit!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter :is(.bap-tab,.bap-switch):hover{border-color:#e3b7c2!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab.active[data-mode]:hover{border-color:#7d3a4f!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter :is(.bap-tab,.bap-switch,.bap-play):focus-visible{outline:2px solid #7d3a4f!important;outline-offset:3px!important}
+@media(max-width:480px){
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .wistia-ba-section{padding:8px 16px 12px!important}
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-body{padding:18px 14px 14px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tabs{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab{min-height:68px!important;padding:12px 10px!important}
+ html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-switch{width:44px!important;height:44px!important;min-width:44px!important}
+}
