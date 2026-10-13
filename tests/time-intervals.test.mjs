@@ -8,10 +8,13 @@ import {createServer} from 'node:net'
 const require=createRequire(import.meta.url),rules=require('../js/booking-availability.js'),read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 await test('Complete recording intervals share duration, overlap and closing-hour rules',()=>{
  for(const [key,minutes,last,count]of [['solo',60,'오후 10시 30분',20],['duo',120,'오후 10시 30분',20],['duet-film',180,'오후 10시 30분',20],['solo-film',180,'오후 10시 30분',20],['unknown',60,'오후 10시 30분',20]]){const slots=rules.timeWindows(key);assert.equal(rules.duration(key),minutes);assert.equal(slots.length,count);assert.equal(slots.at(-1).label,last)}
- const blocks=[{start:'2026-10-11T16:30:00+09:00',end:'2026-10-11T18:30:00+09:00'}]
- for(const [start,blocked]of [['14:00',false],['15:00',true],['18:00',true],['19:00',false],['19:30',false]])assert.equal(rules.slotBlocked('2026-10-11',start,120,blocks),blocked)
- assert.equal(rules.slotBlocked('2026-10-11','22:00',120,[]),true)
- assert.equal(rules.slotBlocked('2026-10-11','21:00',120,[]),false)
+ const blocks=[{start:'2026-10-10T16:30:00+09:00',end:'2026-10-10T18:30:00+09:00'}]
+ for(const [start,blocked]of [['14:00',false],['15:00',true],['18:00',true],['19:00',false],['19:30',false]])assert.equal(rules.slotBlocked('2026-10-10',start,120,blocks),blocked)
+ assert.equal(rules.slotBlocked('2026-10-10','22:00',120,[]),true)
+ assert.equal(rules.slotBlocked('2026-10-10','21:00',120,[]),false)
+ assert.equal(rules.slotBlocked('2026-10-11','17:30',60,[]),false,'Sunday before 18:00 follows the usual rules')
+ assert.equal(rules.slotBlocked('2026-10-11','18:00',60,[]),true,'Sunday from 18:00 is always closed')
+ assert.equal(rules.dayClosed('2026-10-11','solo',[],0),false,'Sunday morning stays bookable')
  const window={};runInNewContext(read('js/contact-form.js'),{window,Date,Intl})
  const api=window.WistiaContact
  for(const minutes of [60,120,180])assert.match(api.text({timeStart:'13:00'},{details:{product:'상품',bookingMinutes:minutes,base:120000,total:120000,options:[],paybacks:[],paybackTotal:0}}),new RegExp('희망 시간 : 오후 1시~오후 '+(1+minutes/60)+'시 \\('+(minutes/60)+'시간\\)'))

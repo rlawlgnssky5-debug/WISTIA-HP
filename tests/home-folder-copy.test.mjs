@@ -8,7 +8,7 @@ const story=source.split('\n').find(line=>line.includes('return \'<section class
 assert.match(ba,/<p data-solo-sub>같은 노래로 직접 들어보세요<\/p>/)
 assert.match(ba,/보정 전과 후는 <u class="wistia-emphasis-underline">같은 녹음본<\/u>입니다/)
 assert.doesNotMatch(ba,/보컬 소스는/)
-assert.match(ba,/wistiaBeforeAfterSection\(compact=false\)/)
+assert.match(ba,/wistiaBeforeAfterSection\(compact=false,tryHint=false\)/)
 assert.match(source,/wistiaBeforeAfterSection\(true\)/)
 assert.match(source,/<u class="wistia-emphasis-underline">서울이 아닌 부천<\/u>에서 운영해 가격 부담을 낮췄습니다/)
 assert.match(home,/<details class="story-process-folder home-process-folder" open>/)

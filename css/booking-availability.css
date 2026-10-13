@@ -214,3 +214,18 @@ html #app#app#app#app .contact-time-scroll-wrap.has-more-times::after{opacity:1}
 html #app#app#app#app .contact-time-field [data-time-help]{white-space:nowrap;font-size:clamp(10px,2.9vw,13px)}
 
 html #app#app#app#app .contact-time-field [data-time-help].has-time-selection{font-size:16px!important;font-weight:600!important;color:#191919!important;font-style:normal!important;line-height:1.5!important}
+
+/* Past dates keep the cell outline but fade until the form is barely visible. Closed days stay solid, with 마감. */
+html #app#app#app#app .contact-calendar .calendar-day.is-past{opacity:.15!important}
+
+/* Exactly one remaining team. Charcoal point ink, never the benefit red or the grey 마감. */
+html #app#app#app#app .contact-calendar .calendar-day.has-one-team:not(.is-selected)>small.one-team,
+html #app#app#app#app .calendar-time-grid button:not(:disabled):not([aria-checked="true"])>small.one-team{
+ color:#252421!important;font-weight:650!important;letter-spacing:-.04em;white-space:nowrap
+}
+html #app#app#app#app .contact-calendar .calendar-day>small.one-team{
+ display:block;max-width:100%;font-size:8px!important;line-height:1!important
+}
+@media(max-width:430px){
+ html #app#app#app#app .contact-calendar .calendar-day.has-one-team{height:auto!important;min-height:34px!important}
+}

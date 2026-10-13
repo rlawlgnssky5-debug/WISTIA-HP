@@ -10,12 +10,15 @@ await test('Half-hour availability keeps one-hour gaps and distinguishes occupie
  const blocks=[interval({start:'2026-10-11T17:00:00+09:00',end:'2026-10-11T19:00:00+09:00'})]
  assert.equal(rules.timeWindows('solo').length,20)
  assert.equal(rules.timeWindows('duo')[1].label,'오후 1시 30분')
- for(const [time,blocked] of [['14:30',false],['15:00',false],['15:30',true],['19:30',true],['20:00',false]])assert.equal(rules.slotBlocked('2026-10-11',time,60,blocks),blocked,time)
+ for(const [time,blocked] of [['14:30',false],['15:00',false],['15:30',true],['19:30',true]])assert.equal(rules.slotBlocked('2026-10-11',time,60,blocks),blocked,time)
+ assert.equal(rules.slotBlocked('2026-10-11','20:00',60,blocks),true,'Sunday from 18:00 is closed')
+ assert.equal(rules.slotBlocked('2026-10-10','20:00',60,[interval({start:'2026-10-10T17:00:00+09:00',end:'2026-10-10T19:00:00+09:00'})]),false,'one-hour gap on Saturday')
  for(const [time,booked] of [['16:00',false],['16:30',true],['19:00',true],['19:30',false]])assert.equal(rules.cellBooked('2026-10-11',time,blocks),booked,time)
- assert.equal(rules.slotBlocked('2026-10-11','20:00',180,[]),false,'recording may end at 23:00; cleanup is internal')
- assert.equal(rules.slotBlocked('2026-10-11','20:30',180,[]),true)
- const nextDay=[interval({start:'2026-10-12T00:00:00+09:00',end:'2026-10-12T01:00:00+09:00'})]
- assert.equal(rules.slotBlocked('2026-10-11','22:00',60,nextDay),false,'exclusive buffer endpoints')
+ assert.equal(rules.slotBlocked('2026-10-10','20:00',180,[]),false,'recording may end at 23:00; cleanup is internal')
+ assert.equal(rules.slotBlocked('2026-10-11','20:00',180,[]),true,'Sunday 20:00 cannot start')
+ assert.equal(rules.slotBlocked('2026-10-10','20:30',180,[]),true)
+ const nextDay=[interval({start:'2026-10-11T00:00:00+09:00',end:'2026-10-11T01:00:00+09:00'})]
+ assert.equal(rules.slotBlocked('2026-10-10','22:00',60,nextDay),false,'exclusive buffer endpoints')
  const font=readFileSync(new URL('../css/heading-font.css',import.meta.url),'utf8')
  assert.equal((font.match(/font-display:swap/g)||[]).length,3)
  assert.equal((font.match(/https:\/\/cdn.jsdelivr.net\/gh\/fonts-archive\/MaruBuri@/g)||[]).length,3)

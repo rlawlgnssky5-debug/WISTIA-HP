@@ -61,3 +61,26 @@ html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wi
  html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-tab{min-height:68px!important;padding:12px 10px!important}
  html[data-wistia-palette="noir-minimal"] #app#app#app .arc-point-tuning-rose #wistiaBeforeAfter .bap-switch{width:44px!important;height:44px!important;min-width:44px!important}
 }
+
+/* Solo rose player only: a quiet cue beside play. It does not receive clicks. */
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls:has(.bap-try){justify-content:flex-start!important}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try{
+ display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;margin:0!important;padding:0!important;pointer-events:none!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try span{
+ display:inline-flex!important;align-items:center!important;gap:6px!important;max-width:100%!important;
+ padding:4px 9px!important;border:1px solid #e3b7c2!important;border-radius:999px!important;
+ background:#fff7f4!important;color:#7d3a4f!important;font-size:12px!important;font-weight:650!important;
+ line-height:1.2!important;letter-spacing:-.03em!important;white-space:nowrap!important;
+ box-shadow:0 4px 10px rgba(125,58,79,.08)!important;
+}
+html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try span::before{
+ content:""!important;width:0!important;height:0!important;border-style:solid!important;
+ border-width:4px 5px 4px 0!important;border-color:transparent #c56b7e transparent transparent!important;
+}
+@media(max-width:400px){
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls:has(.bap-try){gap:6px!important}
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls:has(.bap-try) .bap-play{min-width:72px!important;padding:0 10px!important;gap:6px!important}
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try span{font-size:11px!important;padding:3px 7px!important;gap:4px!important}
+ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls:has(.bap-try) .bap-time{font-size:12px!important}
+}
