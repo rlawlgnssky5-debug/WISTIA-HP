@@ -1112,6 +1112,61 @@ function arRecordingPoster(){
 function detailPosterImage(src,alt,width,height){
  return '<img class="detail-poster-image" src="'+src+'" alt="'+escapeHtml(alt)+'" width="'+width+'" height="'+height+'" loading="lazy" decoding="async">'
 }
+function soloPoint04Section(){
+ const labels={30:'라이브 중심',50:'반반 균형',70:'든든하게',100:'완벽하게'}
+ const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio" data-solo-ratio="'+value+'" aria-pressed="false"><span class="solo-p4-eq" aria-hidden="true"><i></i><i></i><i></i></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
+ return '<section class="arc-point arc-point-ratio solo-p4" id="soloPoint04" aria-label="본식 AR 비율 체험">'+
+  detailPosterImage('assets/detail/point04-top.webp?v=16i','턴테이블 위에 올려진 레코드와 톤암. 재생은 아래 비율 버튼으로 시작합니다',1080,1135)+
+  '<div class="solo-p4-panel">'+
+  '<h2 class="solo-p4-title" data-svg-title="off">이제는 <b>딱 맞는 비율</b>로 섞어요</h2>'+
+  '<p class="solo-p4-hint">👇 <b>비율을 누르면</b> 바로 재생돼요</p>'+
+  '<div class="solo-p4-ratios"><p class="solo-p4-pointer" aria-hidden="true">여기 눌러보세요! 👇</p><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
+  '<div class="solo-p4-card" hidden>'+
+  '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i>재생 중 · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
+  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="정지"><span aria-hidden="true"></span>정지</button></div>'+
+  '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
+  '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
+  '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
+  '<audio data-solo-audio preload="none"></audio>'+
+  '</div></div>'+
+  detailPosterImage('assets/detail/point04-bot.webp?v=16i','레코드 가장자리의 장식 프레임',1080,252)+
+  '</section>'
+}
+function soloReviewGrid(){
+ const cards=[
+  {src:'assets/detail/review-n4.webp?v=16i',quote:'노래 왜이렇게 잘하냐고\n칭찬 일색이었습니다!',pos:'center 28%',fit:'cover',w:906,h:1419},
+  {src:'assets/detail/review-n6.webp?v=16i',quote:'노래 정말 잘하는것처럼\n만들어주셨네요!!!',pos:'center',fit:'contain',w:1314,h:1006},
+  {src:'assets/detail/review-n1.webp?v=16i',quote:'결과물이 너무너무\n맘에 들어서요',pos:'center 90%',fit:'cover',w:872,h:1424},
+  {src:'assets/detail/review-n2.webp?v=16i',quote:'노래실력을 자연스럽게\n커버해주셨네요',pos:'center 45%',fit:'cover',w:866,h:1375}
+ ]
+ const items=cards.map((card,i)=>'<article class="solo-review-card"><button type="button" class="solo-review-thumb" data-review-full="'+card.src+'" aria-label="후기 '+(i+1)+' 원문 크게 보기" style="--thumb-fit:'+card.fit+';--thumb-pos:'+card.pos+'"><img src="'+card.src+'" alt="" width="'+card.w+'" height="'+card.h+'" loading="lazy" decoding="async"><span class="solo-review-zoom" aria-hidden="true"></span></button><p class="solo-review-num">'+String(i+1).padStart(2,'0')+'</p><p class="solo-review-quote">'+escapeHtml(card.quote).replace(/\n/g,'<br>')+'</p></article>').join('')
+ return '<section class="solo-review-grid" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle"><p class="solo-review-eyebrow">REAL REVIEWS</p><h2 id="soloReviewTitle" data-svg-title="off">직접 남겨 주신 이야기</h2><div class="solo-review-cards">'+items+'</div><p class="solo-review-more"><span>더 많은 후기는 인스타그램에서 확인할 수 있어요</span></p><dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img alt="카카오톡 후기 원문"></dialog></section>'
+}
+function soloChatFaq(){
+ const questions=[
+  ['노래를 잘 못해도 괜찮을까요?','괜찮습니다, 한 곡을 처음부터 끝까지 완벽하게 부르실 필요는 없습니다<br>구간별 녹음과 1:1 디렉팅으로 완성하고 음정·박자는 수작업으로 다듬습니다'],
+  ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
+  ['원곡의 키가 너무 높은데 괜찮을까요?','예약 상담 때 원하는 곡과 MR을 먼저 보내주세요<br>목소리에 맞는 키와 녹음 방향을 함께 확인합니다'],
+  ['완성 음원은 언제 받을 수 있나요?','녹음과 필요한 자료 전달이 모두 끝난 뒤 최대 7일 이내에 전달합니다<br>본식 일정이 가까우면 예약 전에 제작 가능 일정을 먼저 확인해 주세요'],
+  ['본식에서는 어떻게 사용하나요?','예식장에 본식용 AR 음원을 미리 전달하고 재생하며 직접 노래하시면 됩니다<br>담당자와 파일 재생 및 리허설 시간을 사전에 확인해 주세요'],
+  ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
+ ]
+ return '<section class="arc-section arc-faq solo-faq" id="arcFaq"><h2 data-svg-title="off">자주 묻는 질문</h2><div class="solo-faq-list">'+questions.map(([q,a])=>'<details><summary><span>'+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer"><p>'+a+'</p></div></details>').join('')+'</div></section>'
+}
+function soloNoticeAndMap(){
+ const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
+ return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=16i','예약 전에 확인하세요. 납기 최대 7일, 수정 3회까지 무료, 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
+  '<section class="arc-section solo-map" data-solo-map aria-labelledby="soloMapTitle"><h2 id="soloMapTitle" data-svg-title="off">오시는 길</h2>'+
+  '<button type="button" class="solo-map-zoom" data-map-zoom aria-label="지도 크게 보기"><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도" width="1443" height="1041" loading="lazy" decoding="async"></button>'+
+  '<address>'+address+'</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl>'+
+  '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="https://map.kakao.com/link/search/'+encoded+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+
+  '<dialog class="solo-map-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도"></dialog></section>'
+}
+function soloFooter(){
+ const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao',kakao()]]
+ return '<footer class="footer solo-footer" data-svg-title="off"><a class="solo-footer-inquiry" data-kakao-inquiry href="/event/solo">카카오톡 문의</a><a class="footer-brand" href="/">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small><a href="/privacy">개인정보처리방침</a><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a></div></footer>'
+}
+function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
  const duet=key==='duo'
@@ -1161,7 +1216,7 @@ function arCommerceDetail(p,key="solo"){
  arRecordingPoster()+
  keySection+
  tuningSection+
- '<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>'+
+ (key==='solo'?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">가사 영상 추가 옵션 · 1곡 기준 · +40,000원</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
  '<div class="arc-advantages">'+productComparisonSection('solo')+'</div>'+
@@ -1229,18 +1284,28 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
  details=details.replace(/<figure class="arc-recording-poster"[\s\S]*?<\/figure>/,mobileArCutPoster())
  details=details.replace('<p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p>','')
 details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16f" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
- details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
- details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
+ if(key==='solo'){
+  details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'<section class="arc-section arc-lyrics solo-lyric-poster">'+detailPosterImage('assets/detail/lyric-d.webp?v=16i','가사 영상 추가 옵션. 두 분의 사진과 영상에 노래 가사가 함께 나옵니다. 1곡 기준 4만원',780,1109)+'</section>')
+  details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,soloPosterStack(detailPosterImage('assets/detail/point-adv.webp?v=16i','위스티아의 장점. 구간별 녹음, 수작업 보정, 믹싱과 마스터링, 부천 스튜디오',860,1446)+detailPosterImage('assets/detail/point-price.webp?v=16i','왜 저렴한가요. 경기도 부천에서 운영해 서울보다 조금 더 합리적인 가격으로 진행합니다',860,1600))+'<div class="arc-engineer">')
+  details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,soloPosterStack(detailPosterImage('assets/detail/cred-a2.webp?v=16i','방송 음악 작업 참여. 싱어게인2 사운드 작업',860,1012))+'<section class="arc-section arc-process"')
+  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,'<section class="arc-section arc-process solo-process-poster" id="arcProcess">'+detailPosterImage('assets/detail/point05-c3.webp?v=16i','진행 순서. 상담, 방문 녹음, 보정, 음원 전달',860,2518)+'</section>')
+  details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
+  details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap())
+  details=details.replace(/<footer class="footer shell">[\s\S]*?<\/footer>/,soloFooter())
+ }else{
+  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
+  details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
+ }
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  // Section 01 follows the supplied compact commerce reference without invented sales metrics.
  '<section class="mas-intro" aria-labelledby="arcProductTitle"><div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="'+(duet?1:0)+'"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="SOLO 영상 보기" aria-pressed="'+(!duet)+'"></button><button type="button" data-mobile-video-slide="1" aria-label="DUET 영상 보기" aria-pressed="'+duet+'"></button></div></div></div>'+
  '<div class="mas-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p><p class="mas-event-price"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'+mobileDetailEvents()+'</div></section>'+
- '<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle">인원 선택</h2>'+variants+'</section>'+
- '<section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>'+
- '<div class="arc-reviews">'+mobileReviews+'</div>'+
+ '<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle"'+(key==='solo'?' data-svg-title="off"':'')+'>인원 선택</h2>'+variants+'</section>'+
+ (key==='solo'?'<section class="mas-information mas-information-poster" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="wistia-ar__sr">상품정보</h2>'+detailPosterImage('assets/detail/info-product.webp?v=16h','상품정보. 인원·곡수 1인 1곡, 녹음시간 1시간, 제작 기간 최대 7일. 맞춤 키 조절·음원 편집·보컬 디렉팅, 정밀 음정·박자 보정·믹싱·마스터링, 본식 재생용 AR 최종 마스터 음원',1080,1110)+'</section>':'<section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>')+
+ '<div class="arc-reviews">'+(key==='solo'?soloReviewGrid():mobileReviews)+'</div>'+
  '<span id="arcDetails" hidden></span>'+details+
- '<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section></div>'
+ (key==='solo'?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 function initMobileArGallery(){document.querySelectorAll('[data-mobile-gallery]').forEach(gallery=>{const track=gallery.querySelector('.mas-gallery-track'),slides=[...gallery.querySelectorAll('.mas-gallery-slide')],dots=[...gallery.querySelectorAll('[data-mobile-video-slide]')];if(!track||slides.length<2)return;let current=Number(gallery.dataset.mobileGalleryStart)||0;const select=(index,smooth=true)=>{current=Math.max(0,Math.min(slides.length-1,index));track.scrollTo({left:current*track.clientWidth,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===current)));slides.forEach((slide,i)=>{slide.classList.toggle('is-current',i===current);if(i!==current)slide.querySelector('video')?.pause()})};dots.forEach(dot=>dot.addEventListener('click',()=>select(Number(dot.dataset.mobileVideoSlide))));let scrollTimer=0;track.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>select(Math.round(track.scrollLeft/Math.max(track.clientWidth,1)),false),80)},{passive:true});requestAnimationFrame(()=>select(current,false))})}
 function initArCommerceDetail(){
@@ -1635,7 +1700,7 @@ function header(){
  siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>'+studioIcon('arrow')+'</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA</span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
  siteHeader.insertAdjacentHTML("afterend",navigationMenu())
 }
-let arCdRatioInstance=null,beforeAfterInstance=null,homeHighlightInstance=null
+let arCdRatioInstance=null,beforeAfterInstance=null,homeHighlightInstance=null,soloPoint04Cleanup=null
 function initScrollMediaPlayback(){
  if(document.querySelector('.we-home,.ar-commerce-detail'))return null
  const sections=[
@@ -1749,6 +1814,50 @@ function cleanHashRoute(){
 function normalizeInternalLinks(){
  document.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute("href",link.getAttribute("href").slice(1)));
 }
+function initSoloDialog(dialog){
+ if(!dialog)return
+ dialog.querySelector('[data-solo-dialog-close]')?.addEventListener('click',()=>dialog.close())
+ dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close()})
+}
+function initSoloPoint04(){
+ soloPoint04Cleanup?.();soloPoint04Cleanup=null
+ const root=document.querySelector('#soloPoint04')
+ if(!root)return
+ const audio=root.querySelector('[data-solo-audio]'),card=root.querySelector('.solo-p4-card'),buttons=[...root.querySelectorAll('[data-solo-ratio]')]
+ const seek=root.querySelector('.solo-p4-seek'),stop=root.querySelector('.solo-p4-stop'),mix=root.querySelector('[data-solo-mix]')
+ const current=root.querySelector('[data-solo-current]'),durationEl=root.querySelector('[data-solo-duration]')
+ const liveBar=root.querySelector('[data-solo-live]'),arBar=root.querySelector('[data-solo-ar]')
+ const liveLabel=root.querySelector('[data-solo-live-label]'),arLabel=root.querySelector('[data-solo-ar-label]'),error=root.querySelector('.solo-p4-error')
+ const fmt=seconds=>{if(!Number.isFinite(seconds)||seconds<0)return '0:00';const t=Math.floor(seconds);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')}
+ const paint=ratio=>{const ar=Number(ratio)||0,live=Math.max(0,100-ar);if(liveBar)liveBar.style.flexGrow=String(live||0.001);if(arBar)arBar.style.flexGrow=String(ar||0.001);if(liveLabel)liveLabel.textContent='현장 라이브 보컬 '+live;if(arLabel)arLabel.textContent='미리 녹음한 AR 보컬 '+ar;if(mix)mix.textContent='AR '+ar+'%'}
+ const onTime=()=>{if(current)current.textContent=fmt(audio.currentTime);if(seek&&document.activeElement!==seek){seek.max=String(Number.isFinite(audio.duration)?audio.duration:0);seek.value=String(audio.currentTime||0)}}
+ const onMeta=()=>{if(durationEl)durationEl.textContent=fmt(audio.duration);if(seek)seek.max=String(Number.isFinite(audio.duration)?audio.duration:0)}
+ const onEnded=()=>buttons.forEach(button=>button.classList.remove('is-playing'))
+ audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded)
+ buttons.forEach(button=>button.addEventListener('click',()=>{
+  const ratio=button.dataset.soloRatio
+  buttons.forEach(item=>{const on=item===button;item.classList.toggle('is-on',on);item.classList.toggle('is-playing',on);item.setAttribute('aria-pressed',String(on))})
+  paint(ratio);card.hidden=false;if(error)error.hidden=true
+  audio.src=ratioSource(ratio);audio.currentTime=0
+  window.wistiaClaimPlayback?.(audio)
+  const pending=audio.play();if(pending)pending.catch(()=>{if(error)error.hidden=false})
+ }))
+ seek?.addEventListener('input',()=>{audio.currentTime=Number(seek.value)||0;onTime()})
+ stop?.addEventListener('click',()=>{audio.pause();audio.currentTime=0;onTime();buttons.forEach(button=>button.classList.remove('is-playing'))})
+ soloPoint04Cleanup=()=>{audio.pause();audio.removeAttribute('src');audio.load();audio.removeEventListener('timeupdate',onTime);audio.removeEventListener('loadedmetadata',onMeta);audio.removeEventListener('ended',onEnded)}
+}
+function initSoloReviewLightbox(){
+ const root=document.querySelector('[data-solo-reviews]');if(!root)return
+ const dialog=root.querySelector('dialog'),image=dialog?.querySelector('img');if(!dialog||!image)return
+ root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{image.src=button.dataset.reviewFull;image.alt=button.getAttribute('aria-label')||'후기 원문';dialog.showModal()}))
+ initSoloDialog(dialog)
+}
+function initSoloMapZoom(){
+ const root=document.querySelector('[data-solo-map]');if(!root)return
+ const dialog=root.querySelector('dialog');if(!dialog)return
+ root.querySelector('[data-map-zoom]')?.addEventListener('click',()=>dialog.showModal())
+ initSoloDialog(dialog)
+}
 function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")
@@ -1767,7 +1876,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  }
  const previousScrollY=preserveScroll?window.scrollY:0
  const previousAnchorTop=scrollAnchor?document.querySelector(scrollAnchor)?.getBoundingClientRect().top:null
- closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;homeHighlightInstance?.destroy();homeHighlightInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
+ closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;soloPoint04Cleanup?.();soloPoint04Cleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;homeHighlightInstance?.destroy();homeHighlightInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
  const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const reuseArPriceForm=reuseEventForm&&event&&["solo","duo"].includes(key)&&["solo","duo"].includes(currentEventProduct)&&Boolean(app.querySelector("#consultForm"));
  const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
@@ -1790,6 +1899,9 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  initSoloPersonTabs();
  initSoloArRatio();
  arCdRatioInstance=window.initArCdRatio?.()||null
+ initSoloPoint04()
+ initSoloReviewLightbox()
+ initSoloMapZoom()
  beforeAfterInstance=window.initWistiaBeforeAfter?.()||null
  homeHighlightInstance=window.initWistiaHomeHighlight?.()||null
  initSoloProcessSlider();

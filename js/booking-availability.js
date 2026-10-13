@@ -31,19 +31,22 @@
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
   return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
- // One studio timeline. A remaining team is one start slotBlocked still allows.
- // The next team cannot begin until this session and both 30-minute buffers have passed.
- function teamsRemaining(date,key,blocks,now=Date.now()){
-  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
-  const minutes=duration(key)
-  let count=0,next=0
-  for(const {value:time} of timeWindows(key)){
-   const start=Date.parse(date+'T'+time+':00+09:00')
-   if(!Number.isFinite(start)||start<now||start<next||slotBlocked(date,time,minutes,blocks))continue
-   count++;next=start+(minutes+60)*60000
-  }
-  return count
+// One studio timeline. Pack the earliest starts this product can still use.
+// Count session minutes only. slotBlocked already keeps the 30-minute buffers
+// against existing reservations, and that buffer is not added again here.
+// Three hours of bookable session time is one team: 3h → 1, 6h → 2, 9h → 3.
+function teamsRemaining(date,key,blocks,now=Date.now()){
+ if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
+ const minutes=duration(key)
+ let bookable=0,next=0
+ for(const {value:time} of timeWindows(key)){
+  const start=Date.parse(date+'T'+time+':00+09:00')
+  if(!Number.isFinite(start)||start<now||start<next||slotBlocked(date,time,minutes,blocks))continue
+  bookable+=minutes
+  next=start+minutes*60000
  }
+ return Math.floor(bookable/180)
+}
  const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,teamsRemaining,sundayEvening,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return

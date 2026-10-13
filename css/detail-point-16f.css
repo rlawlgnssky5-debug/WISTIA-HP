@@ -84,3 +84,38 @@ html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try span::
  html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-try span{font-size:11px!important;padding:3px 7px!important;gap:4px!important}
  html #app#app#app#app .ar-commerce-detail .arc-point-tuning-rose .bap-controls:has(.bap-try) .bap-time{font-size:12px!important}
 }
+
+/* Solo POINT 04 poster. The graphic is the layout; the vinyl and four columns stay clickable. */
+html #app#app#app#app .wistia-ar--poster{background:transparent!important;overflow:visible!important;padding:0!important;color:#7d3a4f}
+html #app#app#app#app .wistia-ar--poster .arc-ratio-frame{position:relative;width:100%;max-width:860px;margin:0 auto}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__disc-stage{
+ position:absolute!important;left:50%!important;top:30.2%!important;z-index:2;width:54%!important;max-width:none!important;
+ height:auto!important;aspect-ratio:1!important;margin:0!important;transform:translate(-50%,-50%)!important;
+ border-radius:50%!important;background:transparent!important;cursor:pointer
+}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__disc-stage:focus-visible{outline:2px solid #7d3a4f!important;outline-offset:4px}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__tones{
+ position:absolute;left:6.5%;right:6.5%;top:61.5%;z-index:2;height:24%;
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.2%
+}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__tone{
+ appearance:none;margin:0;padding:0;border:0;border-radius:18px;background:transparent;cursor:pointer
+}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__tone.is-active{box-shadow:inset 0 0 0 2px rgba(125,58,79,.55);background:rgba(255,247,244,.16)}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__tone:focus-visible{outline:2px solid #7d3a4f;outline-offset:3px}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__sr,
+html #app#app#app#app .mas-information-poster .wistia-ar__sr{
+ position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;
+ overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+html #app#app#app#app .wistia-ar--poster .wistia-ar__dock{
+ box-sizing:border-box;width:100%;max-width:860px;margin:0 auto;padding:8px 18px 18px;background:#f9eeee
+}
+html #app#app#app#app .wistia-ar--poster :is(.wistia-ar__player,.wistia-ar__ratio){width:min(100%,640px)!important;max-width:640px!important;margin:10px auto!important}
+html #app#app#app#app .mas-information-poster{
+ margin:0!important;padding:0!important;background:transparent!important;text-align:center!important;border:0!important
+}
+html #app#app#app#app .mas-information-poster .detail-poster-image{
+ display:block!important;width:100%!important;max-width:860px!important;height:auto!important;margin:0 auto!important;
+ object-fit:unset!important;object-position:center!important
+}

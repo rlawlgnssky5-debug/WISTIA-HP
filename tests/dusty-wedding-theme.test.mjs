@@ -21,7 +21,7 @@ assert.deepEqual(sheets.slice(-16),[
  'css/detail-section-layout.css?v=20261013-detail-polish-16f',
  'css/heading-font.css?v=20261013-detail-polish-16f',
  'css/kakao-inquiry.css?v=20261013-detail-polish-16f',
- 'css/detail-point-16f.css?v=20261013-detail-polish-16g'
+ 'css/detail-point-16f.css?v=20261013-detail-polish-16h'
 ])
 for(const hex of ['#EFA8B8','#EFE3D5','#7B625B','#FBF8F4','#3C302C'])assert.ok(css.includes(hex))
 assert.match(css,/\.we-home \.we-service\{[^\n]*border-radius:28px;box-shadow:none!important/)
