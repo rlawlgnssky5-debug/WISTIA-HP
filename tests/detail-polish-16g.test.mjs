@@ -135,14 +135,15 @@ await test('16g calendar at 360/375/390/1280 shows one team, Sunday evening and 
      return {text:node.textContent,disabled:node.disabled,label:label?.textContent||'',color:label?getComputedStyle(label).color:'',overflow:node.scrollWidth-node.clientWidth}
     })
     const open=await slot(time)
-    assert.equal(open.disabled,false,path+' '+time);assert.equal(open.label,dateTeams);if(dateTeams)assert.equal(open.color,'rgb(37, 36, 33)');assert.ok(open.overflow<=1,JSON.stringify(open))
+    assert.equal(open.disabled,false,path+' '+time);assert.equal(open.label,'');assert.match(open.text,/시/);assert.doesNotMatch(open.text,/팀 남음/);assert.ok(open.overflow<=1,JSON.stringify(open))
     const closedSlot=await slot('18:00')
     if(date==='2026-10-11')assert.match(closedSlot.text,/마감/)
     await page.locator('#calendar-bookingDate [data-calendar-day="2026-10-11"]').click()
     await page.waitForFunction(()=>document.querySelector('#contactInquiryForm')?.dataset.scheduleState==='ready')
     const early=await slot('17:30'),late=await slot('18:00')
-    assert.equal(early.disabled,false,product+' Sunday 17:30');assert.equal(early.label,sundayTeams);assert.doesNotMatch(early.text,/마감/)
-    assert.equal(late.disabled,true,product+' Sunday 18:00');assert.match(late.text,/마감/);assert.doesNotMatch(late.text,/1팀/)
+    assert.equal(early.disabled,false,product+' Sunday 17:30');assert.equal(early.label,'');assert.match(early.text,/17시 30분/);assert.doesNotMatch(early.text,/팀 남음|마감/)
+    assert.equal(late.disabled,true,product+' Sunday 18:00');assert.match(late.text,/마감/);assert.doesNotMatch(late.text,/팀 남음/)
+    assert.doesNotMatch(await page.locator('[data-calendar-times]').innerText(),/팀 남음/)
     if(product==='solo'){
      await page.locator('#calendar-bookingDate [data-calendar-day="2026-10-10"]').click()
      await page.waitForFunction(()=>document.querySelector('#contactInquiryForm')?.dataset.scheduleState==='ready'&&document.querySelector('[data-calendar-time="13:00"]'))
