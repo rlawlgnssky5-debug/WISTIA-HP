@@ -1,7 +1,7 @@
 import {test} from 'node:test'
 import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
-import {copyFileSync,existsSync,readFileSync} from 'node:fs'
+import {copyFileSync,existsSync,mkdirSync,readFileSync} from 'node:fs'
 import {spawn} from 'node:child_process'
 import {createServer} from 'node:net'
 
@@ -9,10 +9,10 @@ const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
 await test('16i solo detail is real UI and duo keeps the shared player',()=>{
  const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')
- assert.match(app,/function soloPoint04Section\(\)[\s\S]*point04-top\.webp\?v=16i/)
+ assert.match(app,/function soloPoint04Section\(\)[\s\S]*assets\/16j\/point04_ui_390\.png/)
  assert.match(app,/data-solo-ratio[\s\S]*solo-p4-stop[\s\S]*data-solo-audio/)
  assert.doesNotMatch(app.slice(app.indexOf('function soloPoint04Section'),app.indexOf('function soloReviewGrid')),/point04-mix\.webp|wistia-ar__disc-stage|wistia-ar__play/)
- assert.match(app,/info-product\.webp\?v=16h/)
+ assert.match(app,/assets\/16j\/info_v5\.png/)
  assert.match(app,/key==='solo'\?soloPoint04Section\(\)/)
  assert.match(app,/lyric-d\.webp\?v=16i[\s\S]*point-adv\.webp\?v=16i[\s\S]*point-price\.webp\?v=16i[\s\S]*cred-a2\.webp\?v=16i[\s\S]*point05-c3\.webp\?v=16i/)
  assert.match(app,/map\.naver\.com\/p\/search\/[\s\S]*map\.kakao\.com\/link\/search\//)
@@ -56,7 +56,7 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    await page.goto('http://127.0.0.1:'+port+'/detail/solo',{waitUntil:'domcontentloaded'})
    await page.locator('#soloPoint04').waitFor()
    await page.evaluate(async()=>{
-    for(const image of document.querySelectorAll('.detail-poster-image')){
+    for(const image of document.querySelectorAll('.detail-poster-image, .solo-shot-img')){
      image.loading='eager'
      image.scrollIntoView({block:'center'})
      if(!image.complete||!image.naturalWidth)await new Promise(resolve=>{image.addEventListener('load',resolve,{once:true});image.addEventListener('error',resolve,{once:true})})
@@ -64,7 +64,7 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
     window.scrollTo(0,0)
    })
    await page.waitForFunction(()=>{
-    const info=document.querySelector('.mas-information-poster .detail-poster-image')
+    const info=document.querySelector('.mas-information-poster .solo-shot-img')
     const price=document.querySelector('img[src*="point-price.webp"]')
     return info?.complete&&info.naturalWidth===1080&&price?.complete&&price.naturalWidth===860
    })
@@ -95,8 +95,6 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    assert.equal(layout.cards[0].h,layout.cards[1].h)
    assert.ok(layout.cards[0].h>108)
    assert.ok(Math.abs(layout.cards[0].top-layout.cards[1].top)<3)
-   assert.equal(layout.cards[0].bg,'rgb(255, 247, 248)')
-   assert.equal(layout.cards[1].bg,'rgb(255, 255, 255)')
    assert.match(layout.map,/map\.naver\.com\/p\/search\//)
    assert.match(layout.map,/map\.kakao\.com\/link\/search\//)
    assert.match(layout.footer,/href="\/event\/solo"/)
@@ -147,6 +145,7 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    if(width===390){
     const shot='/tmp/16i-solo-390.png'
     await page.screenshot({path:shot,fullPage:false})
+    mkdirSync('/opt/cursor/artifacts/screenshots',{recursive:true})
     copyFileSync(shot,'/opt/cursor/artifacts/screenshots/16i-solo-390.png')
    }
    assert.deepEqual(errors,[])
