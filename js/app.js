@@ -1957,7 +1957,7 @@ cleanHashRoute();
 document.addEventListener("click",e=>{
  if(document.body.classList.contains('menu-open')&&!e.target.closest('#mainMenu,#menuToggle')){document.body.classList.remove('menu-open');const toggle=document.querySelector('#menuToggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','메뉴 열기');e.preventDefault();return}
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
- if(el.id==='floatingKakaoChat'||el.matches('.product-inquiry > a')){e.preventDefault();showKakaoInquiryDialog(el.id==='floatingKakaoChat'?'/contact':el.getAttribute('href'));return}
+ if(el.matches('.product-inquiry > a')){e.preventDefault();showKakaoInquiryDialog(el.getAttribute('href'));return}
  if(el.hasAttribute('data-copy-address')){copyLocationAddress(el);return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
  if(el.hasAttribute('data-booking-refresh')){window.WistiaBooking?.refresh();return}

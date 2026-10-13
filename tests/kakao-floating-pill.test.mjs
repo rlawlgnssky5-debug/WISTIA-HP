@@ -38,7 +38,7 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
      assert.equal(form.kakao,false)
      assert.equal(form.pillText,'카카오톡 문의')
      assert.equal(form.pillDisplay,'none')
-     assert.match(form.pillHref,/pf\.kakao\.com/)
+     assert.equal(form.pillHref,'https://pf.kakao.com/_GbExjX/chat')
      continue
     }
     const eventInquiry=await page.locator('body').evaluate(n=>n.classList.contains('is-event-inquiry'))
@@ -48,10 +48,13 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
      const follows=n=>{for(let p=n;p&&p!==document.body;p=p.parentElement)if(['fixed','sticky'].includes(getComputedStyle(p).position))return true;return false}
      const visible=n=>n.getBoundingClientRect().height>0&&getComputedStyle(n).visibility!=='hidden'
      const links=[...document.querySelectorAll('a[href*="pf.kakao.com"],[data-kakao-inquiry],.contact-submit')].filter(visible)
-     return {following:links.filter(follows).map(n=>n.id||n.className),height:r.height,width:r.width,right:innerWidth-r.right,bottom:innerHeight-r.bottom,bg:s.backgroundColor,color:s.color,radius:s.borderRadius,svg:dock.querySelectorAll('svg path').length,old:document.querySelectorAll('#floatingKakao,#soloDesktopCta,.mas-bottom').length,overflow:document.documentElement.scrollWidth-innerWidth,body:links.filter(n=>n!==dock).length,position:s.position,before:getComputedStyle(dock,'::before').display,after:getComputedStyle(dock,'::after').display}
+     return {following:links.filter(follows).map(n=>n.id||n.className),height:r.height,width:r.width,right:innerWidth-r.right,bottom:innerHeight-r.bottom,bg:s.backgroundColor,color:s.color,radius:s.borderRadius,svg:dock.querySelectorAll('svg path').length,old:document.querySelectorAll('#floatingKakao,#soloDesktopCta,.mas-bottom').length,overflow:document.documentElement.scrollWidth-innerWidth,body:links.filter(n=>n!==dock).length,position:s.position,before:getComputedStyle(dock,'::before').display,after:getComputedStyle(dock,'::after').display,pillHref:dock.getAttribute('href'),pillTarget:dock.target,pillRel:dock.rel}
     })
     assert.equal(check.old,0);assert.equal(check.overflow,0,path+' '+width)
     if(path!='/privacy')assert.ok(check.body>0,path+' ordinary CTA preserved')
+    assert.equal(check.pillHref,'https://pf.kakao.com/_GbExjX/chat',path+' '+width)
+    assert.equal(check.pillTarget,'_blank',path)
+    assert.match(check.pillRel,/noopener/,path)
     if(eventInquiry){assert.deepEqual(check.following,[],path+' '+width);assert.equal(check.height,0);continue}
     assert.deepEqual(check.following,['floatingKakaoChat'],path+' '+width)
     assert.equal(check.old,0);assert.equal(check.height,48);assert.ok(check.width<220&&check.width>130)
@@ -61,10 +64,18 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
     const clearance=await page.evaluate(()=>({footer:document.querySelector('footer')?.getBoundingClientRect().bottom,pill:document.querySelector('#floatingKakaoChat').getBoundingClientRect().top}))
     if(clearance.footer)assert.ok(clearance.footer<=clearance.pill,path+' '+width+' footer must stay clear '+JSON.stringify(clearance))
    }
-   await page.goto(`http://127.0.0.1:${port}/contact`,{waitUntil:'domcontentloaded'})
-   await page.locator('#floatingKakaoChat').click();await page.locator('#mediaDialog[open] .consult-copy-dialog').waitFor()
-   assert.equal(await page.locator('#floatingKakaoChat').evaluate(n=>n.inert),true)
-   await page.locator('#mediaDialog .dialog-close').click();assert.equal(await page.locator('#floatingKakaoChat').evaluate(n=>n.inert),false)
+   if(width===390){
+    await context.route('https://pf.kakao.com/_GbExjX/chat',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>kakao-chat</title>'}))
+    for(const path of ['/','/contact','/privacy','/detail/duet-film','/events','/info/location']){
+     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
+     const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('#floatingKakaoChat').click()])
+     await popup.waitForLoadState('domcontentloaded')
+     assert.equal(popup.url(),'https://pf.kakao.com/_GbExjX/chat',path)
+     assert.equal(await page.locator('#mediaDialog[open]').count(),0,path+' must not open the inquiry chooser')
+     assert.equal(new URL(page.url()).pathname,path)
+     await popup.close()
+    }
+   }
    await page.goto(`http://127.0.0.1:${port}/detail/duet-film`,{waitUntil:'domcontentloaded'})
    await page.locator('.product-inquiry a').click();assert.equal(await page.locator('#mediaDialog a[href="/event/duet-film"]').count(),1)
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})
