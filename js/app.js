@@ -1106,8 +1106,8 @@ return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail film-co
 }
 // Conversion helpers are reused unchanged, consultation first goes to the calculator
 function arRecordingPoster(){
- const wave='<svg viewBox="0 0 140 28" aria-hidden="true"><path d="M2 14h4m4-4v8m5-13v18m5-22v26m5-19v12m5-17v22m5-14v6m5-13v20m5-16v12m5-20v28m5-22v16m5-13v10m5-8v6m5-12v18m5-16v14m5-19v24m5-20v16m5-13v10m5-8v6m5-12v18m5-15v12m5-8v4m5-7v10m5-8v6m5-5v4m5-2h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
- return '<section class="arc-point arc-point-recording" id="arcRecording"><header><span class="arc-kicker detail-point-label">POINT 01</span><h2>한 곡을 한 번에?<br><mark>한 소절씩 녹음하세요</mark></h2><p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p></header><figure class="arc-recording-poster" aria-label="한 소절씩 녹음하고 연결하는 과정 안내"><div class="arc-recording-photos"><div>'+img('assets/img/process-no-people/02.svg','마이크 앞에서 한 소절씩 녹음하는 장면')+'<span>한 소절씩 녹음</span></div><div>'+img('assets/img/process-no-people/06.svg','녹음 파형과 구간이 표시된 음원 작업 프로그램 화면')+'<span>프로그램에서 구간 확인</span></div></div><ol class="arc-recording-flow"><li><b>01 · 첫 소절</b>'+wave+'</li><li><b>02 · 다음 소절</b>'+wave+'</li><li><b>03 · 자연스럽게 연결</b>'+wave.replace('<path','<defs><linearGradient id="arJoinedWave"><stop offset="0%" stop-color="#506f88"/><stop offset="49%" stop-color="#506f88"/><stop offset="51%" stop-color="#638779"/><stop offset="100%" stop-color="#638779"/></linearGradient></defs><path').replace('stroke="currentColor"','stroke="url(#arJoinedWave)"')+'</li></ol><figcaption>녹음 → 듣고 디렉팅 → 다음 구간 녹음<br>구간별 녹음 방식을 설명하는 이미지입니다</figcaption></figure></section>'
+ const alt='POINT 01 한 소절씩 녹음하는 장면, 어려운 구간을 나누어 녹음하고 1:1 실시간 디렉팅으로 차근차근 맞춰가는 과정 안내'
+ return '<section class="arc-point arc-point-recording" id="arcRecording"><img src="assets/detail/point01-recording.webp" alt="'+escapeHtml(alt)+'" width="100%" style="display:block;width:100%;max-width:860px;height:auto;margin:0 auto;object-fit:contain" loading="lazy" decoding="async"></section>'
 }
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
