@@ -55,7 +55,8 @@
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
-   cells+='<button type="button" class="calendar-day'+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(notionClosed?' · 마감':past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':'')+'</button>'
+   const oneTeam=key==='bookingDate'&&!past&&!weekdayClosed&&!notionClosed&&Array.isArray(blocks)&&global.WistiaBooking?.teamsRemaining?.(value,product,blocks)===1
+   cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(oneTeam?' has-one-team':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(notionClosed?' · 마감':oneTeam?' · 1팀 남음':past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':oneTeam?'<small class="one-team">1팀 남음</small>':'')+'</button>'
   }
   return cells
  }
@@ -177,6 +178,9 @@
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.calendarTime:null
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
   const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3)),start=clock(time.value),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
+  const monthDate=parseDate(date.value),monthFrom=monthDate&&isoDate(new Date(Date.UTC(monthDate.getUTCFullYear(),monthDate.getUTCMonth(),1))),monthTo=monthDate&&isoDate(new Date(Date.UTC(monthDate.getUTCFullYear(),monthDate.getUTCMonth()+1,0)))
+  const monthBlocks=monthFrom&&global.WistiaBooking?.calendarBlocks?.(monthFrom,monthTo)
+  const oneTeam=known&&Array.isArray(monthBlocks)&&global.WistiaBooking?.teamsRemaining?.(date.value,global.WistiaBooking.calendarKey?.()||'solo',monthBlocks)===1
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   const clockLabel=minute=>Math.floor(minute/60)+'시'+(minute%60?' '+minute%60+'분':'')
   const help=form.querySelector('[data-time-help]')
@@ -184,7 +188,9 @@
   help.textContent=validSelection?clockLabel(start)+'~'+clockLabel(start+minutes):'시작 시간을 고르시면 상품 시간만큼 함께 선택돼요'
   list.innerHTML=[...time.options].map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||option.dataset.disabledReason==='booking')?'<small>'+closedLabel+'</small>':'')+'</button>'
+   const closedReason=option.dataset.disabledReason==='booking'||option.dataset.disabledReason==='sunday'
+   const scarce=oneTeam&&!!option.value&&!option.disabled&&!explain
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+(scarce?' aria-label="'+escape(clockLabel(minute))+' · 1팀 남음"':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||closedReason)?'<small>'+closedLabel+'</small>':scarce?'<small class="one-team">1팀 남음</small>':'')+'</button>'
   }).join('')
   list.scrollTop=dateChanged?0:scrollTop
   const syncFade=()=>list.closest('[data-time-scroll-wrap]').classList.toggle('has-more-times',list.scrollHeight-list.clientHeight-list.scrollTop>2)

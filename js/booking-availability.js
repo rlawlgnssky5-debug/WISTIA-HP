@@ -12,9 +12,12 @@
  function timeWindows(key){const minutes=duration(key);return Array.from({length:20},(_,i)=>{const clock=13*60+i*30,hour=Math.floor(clock/60),half=clock%60;return {value:hour+':'+(half?'30':'00'),label:'오후 '+(hour-12)+'시'+(half?' 30분':''),minutes}})}
  // Server blocks already include each existing reservation's 30-minute buffers.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
+ // Sunday stays open. Only starts at 18:00 or later are always closed; earlier starts follow the usual rules.
+ function sundayEvening(date,time){return validDate(date)&&/^\d{2}:\d{2}$/.test(time)&&new Date(date+'T12:00:00Z').getUTCDay()===0&&Number(time.slice(0,2))*60+Number(time.slice(3))>=18*60}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
+  if(sundayEvening(date,time))return true
   const start=Date.parse(date+'T'+time+':00+09:00')-30*60000,end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
   const endDay=new Date(end-30*60000-1+9*3600000).toISOString().slice(0,10)
@@ -28,7 +31,20 @@
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
   return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
- const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,operatingDays}
+ // One studio timeline. A remaining team is one start slotBlocked still allows.
+ // The next team cannot begin until this session and both 30-minute buffers have passed.
+ function teamsRemaining(date,key,blocks,now=Date.now()){
+  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
+  const minutes=duration(key)
+  let count=0,next=0
+  for(const {value:time} of timeWindows(key)){
+   const start=Date.parse(date+'T'+time+':00+09:00')
+   if(!Number.isFinite(start)||start<now||start<next||slotBlocked(date,time,minutes,blocks))continue
+   count++;next=start+(minutes+60)*60000
+  }
+  return count
+ }
+ const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,teamsRemaining,sundayEvening,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
@@ -68,9 +84,9 @@
   for(const option of ui.time.options){
    if(!option.value)continue
    const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
-   const reason=cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
+   const reason=sundayEvening(ui.date.value,option.value)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
    option.dataset.disabledReason=reason;option.disabled=!!reason
-   if(reason==='booking')option.textContent=option.dataset.originalLabel+' · 마감'
+   if(reason==='booking'||reason==='sunday')option.textContent=option.dataset.originalLabel+' · 마감'
   }
   if(ui.time.selectedOptions[0]?.disabled)ui.time.value=''
   ui.time.setCustomValidity('')
