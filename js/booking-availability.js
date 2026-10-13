@@ -32,8 +32,9 @@
   return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
 // One studio timeline. Pack the earliest starts this product can still use.
-// Each start occupies the session plus the 60 minutes of prep already in slotBlocked.
-// Three hours of that bookable time is one team: 3h → 1, 6h → 2, 9h → 3.
+// Count session minutes only. slotBlocked already keeps the 30-minute buffers
+// against existing reservations, and that buffer is not added again here.
+// Three hours of bookable session time is one team: 3h → 1, 6h → 2, 9h → 3.
 function teamsRemaining(date,key,blocks,now=Date.now()){
  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
  const minutes=duration(key)
@@ -41,8 +42,8 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  for(const {value:time} of timeWindows(key)){
   const start=Date.parse(date+'T'+time+':00+09:00')
   if(!Number.isFinite(start)||start<now||start<next||slotBlocked(date,time,minutes,blocks))continue
-  bookable+=minutes+60
-  next=start+(minutes+60)*60000
+  bookable+=minutes
+  next=start+minutes*60000
  }
  return Math.floor(bookable/180)
 }

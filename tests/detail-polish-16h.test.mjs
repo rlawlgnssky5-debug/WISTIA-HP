@@ -7,23 +7,27 @@ import {createServer} from 'node:net'
 
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
-await test('16h solo posters keep a live ratio player and duo stays on the table',()=>{
- const app=read('js/app.js'),css=read('css/detail-point-16f.css'),index=read('index.html')
- assert.match(app,/function soloPoint04Section\(\)[\s\S]*point04-mix\.webp\?v=16h/)
- assert.match(app,/const tones=\[30,50,70,100\]\.map\(value=>'<button type="button" class="wistia-ar__tone" data-ar-tone="'\+value\+'"/)
- assert.match(app,/wistia-ar__disc-stage[\s\S]*wistia-ar__play[\s\S]*wistia-ar__seek[\s\S]*wistia-ar__volume[\s\S]*wistia-ar__ratio-input/)
- assert.match(app,/key==='solo'\?soloPoint04Section\(\)/)
+await test('16i solo detail is real UI and duo keeps the shared player',()=>{
+ const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')
+ assert.match(app,/function soloPoint04Section\(\)[\s\S]*point04-top\.webp\?v=16i/)
+ assert.match(app,/data-solo-ratio[\s\S]*solo-p4-stop[\s\S]*data-solo-audio/)
+ assert.doesNotMatch(app.slice(app.indexOf('function soloPoint04Section'),app.indexOf('function soloReviewGrid')),/point04-mix\.webp|wistia-ar__disc-stage|wistia-ar__play/)
  assert.match(app,/info-product\.webp\?v=16h/)
- assert.match(app,/key==='solo'\?'<section class="mas-information mas-information-poster"/)
- assert.match(css,/\.wistia-ar--poster[\s\S]*padding:0!important/)
- assert.match(css,/\.mas-information-poster \.detail-poster-image[\s\S]*object-fit:unset!important/)
+ assert.match(app,/key==='solo'\?soloPoint04Section\(\)/)
+ assert.match(app,/lyric-d\.webp\?v=16i[\s\S]*point-adv\.webp\?v=16i[\s\S]*point-price\.webp\?v=16i[\s\S]*cred-a2\.webp\?v=16i[\s\S]*point05-c3\.webp\?v=16i/)
+ assert.match(app,/map\.naver\.com\/p\/search\/[\s\S]*map\.kakao\.com\/link\/search\//)
+ assert.match(app,/assets\/img\/song-options\/lyric-video-v2\.webp/)
+ assert.match(booking,/bookable\+=minutes[\s\S]*next=start\+minutes\*60000[\s\S]*Math\.floor\(bookable\/180\)/)
+ assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
+ assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
+ assert.match(css,/#C62828/)
+ assert.match(index,/js\/app\.js\?v=20261013-detail-polish-16i/)
+ assert.match(index,/js\/booking-availability\.js\?v=20261013-detail-polish-16i/)
+ assert.match(index,/css\/detail-point-16i\.css\?v=20261013-detail-polish-16i/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261013-detail-polish-16h/)
  assert.match(index,/css\/detail-point-16f\.css\?v=20261013-detail-polish-16h/)
  assert.match(index,/css\/booking-availability\.css\?v=20261013-detail-polish-16g/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
- const ratio=read('js/ar-ratio-cd.js')
- assert.match(ratio,/\[data-ar-tone\][\s\S]*setValue\(Number\(button\.dataset\.arTone\),true\)/)
- assert.match(ratio,/if\(autoPlay&&!isPlaying&&!pendingPlay\)start\(\)/)
 })
 
 let chromium,executable,skip=false
@@ -33,7 +37,7 @@ try{
  if(!executable)skip='Chrome not installed'
 }catch{skip='playwright-core not installed'}
 
-await test('16h solo ratio buttons play and product info stays uncropped at 360/375/390/1280',{skip,timeout:180000},async()=>{
+await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/375/390/1280',{skip,timeout:240000},async()=>{
  const probe=createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  let browser
@@ -47,107 +51,127 @@ await test('16h solo ratio buttons play and product info stays uncropped at 360/
    page.on('pageerror',error=>errors.push(error.message))
    await page.route('https://**/*',route=>route.abort())
    await page.goto('http://127.0.0.1:'+port+'/detail/solo',{waitUntil:'domcontentloaded'})
-   const poster=page.locator('.wistia-ar--poster')
-   await poster.waitFor()
-   await page.locator('.wistia-ar--poster .detail-poster-image').scrollIntoViewIfNeeded()
-   await page.locator('.mas-information-poster .detail-poster-image').scrollIntoViewIfNeeded()
+   await page.locator('#soloPoint04').waitFor()
+   await page.evaluate(async()=>{
+    for(const image of document.querySelectorAll('.detail-poster-image')){
+     image.loading='eager'
+     image.scrollIntoView({block:'center'})
+     if(!image.complete||!image.naturalWidth)await new Promise(resolve=>{image.addEventListener('load',resolve,{once:true});image.addEventListener('error',resolve,{once:true})})
+    }
+    window.scrollTo(0,0)
+   })
    await page.waitForFunction(()=>{
-    const mix=document.querySelector('.wistia-ar--poster .detail-poster-image')
     const info=document.querySelector('.mas-information-poster .detail-poster-image')
-    return mix?.complete&&mix.naturalWidth===1080&&info?.complete&&info.naturalWidth===1080
+    const price=document.querySelector('img[src*="point-price.webp"]')
+    return info?.complete&&info.naturalWidth===1080&&price?.complete&&price.naturalWidth===860
    })
    const layout=await page.evaluate(()=>{
-    const root=document.querySelector('.wistia-ar--poster')
-    const image=root.querySelector('.detail-poster-image')
-    const info=document.querySelector('.mas-information-poster .detail-poster-image')
-    const frame=root.querySelector('.arc-ratio-frame').getBoundingClientRect()
-    const disc=root.querySelector('.wistia-ar__disc-stage').getBoundingClientRect()
-    const tones=root.querySelector('.wistia-ar__tones').getBoundingClientRect()
-    const imageBox=image.getBoundingClientRect()
-    const infoStyle=getComputedStyle(info)
-    const inside=(box)=>box.top>=imageBox.top-2&&box.bottom<=imageBox.bottom+2&&box.left>=imageBox.left-2&&box.right<=imageBox.right+2
+    const box=node=>{const r=node.getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height),fit:getComputedStyle(node).objectFit}}
+    const posters=[...document.querySelectorAll('.mobile-ar-solo[data-ar-product="solo"] .detail-poster-image')].map(node=>({src:node.getAttribute('src'),...box(node),natural:[node.naturalWidth,node.naturalHeight]}))
+    const selected=document.querySelector('.mas-variant.is-selected')
+    const open=document.querySelector('.mas-variant:not(.is-selected)')
+    const benefit=getComputedStyle(document.querySelector('.mas-event-price strong'))
     return {
-     src:image.currentSrc||image.src,
-     natural:[image.naturalWidth,image.naturalHeight],
-     rendered:[Math.round(imageBox.width),Math.round(imageBox.height)],
-     fit:getComputedStyle(image).objectFit,
-     infoSrc:info.currentSrc||info.src,
-     infoNatural:[info.naturalWidth,info.naturalHeight],
-     infoRendered:[Math.round(info.getBoundingClientRect().width),Math.round(info.getBoundingClientRect().height)],
-     infoFit:infoStyle.objectFit,
-     infoDisplay:infoStyle.display,
-     ratio:Math.abs(imageBox.width/imageBox.height-1080/2912),
-     infoRatio:Math.abs(info.getBoundingClientRect().width/info.getBoundingClientRect().height-1080/1110),
-     discInside:inside(disc)&&disc.width>40,
-     tonesInside:inside(tones)&&tones.width>frame.width*.7,
-     playSvg:!!root.querySelector('.wistia-ar__play-icon svg'),
-     page:document.documentElement.scrollWidth-innerWidth
+     page:document.documentElement.scrollWidth-innerWidth,
+     posters,
+     cards:[selected,open].map(node=>{const r=node.getBoundingClientRect();const style=getComputedStyle(node);return {h:Math.round(r.height),transform:style.transform,scale:style.scale,bg:style.backgroundColor}}),
+     benefit:benefit.color,
+     faq:document.querySelectorAll('.solo-faq details').length,
+     map:document.querySelector('.solo-map-links')?.innerHTML||'',
+     footer:document.querySelector('.solo-footer')?.innerHTML||''
     }
    })
-   assert.match(layout.src,/point04-mix\.webp\?v=16h/)
-   assert.deepEqual(layout.natural,[1080,2912])
-   assert.ok(layout.rendered[0]<=860,JSON.stringify(layout))
-   assert.notEqual(layout.fit,'cover')
-   assert.ok(layout.ratio<0.02,JSON.stringify(layout))
-   assert.match(layout.infoSrc,/info-product\.webp\?v=16h/)
-   assert.deepEqual(layout.infoNatural,[1080,1110])
-   assert.ok(layout.infoRendered[0]<=860,JSON.stringify(layout))
-   assert.equal(layout.infoDisplay,'block')
-   assert.notEqual(layout.infoFit,'cover')
-   assert.ok(layout.infoRatio<0.02,JSON.stringify(layout))
-   assert.equal(layout.discInside,true,JSON.stringify(layout))
-   assert.equal(layout.tonesInside,true,JSON.stringify(layout))
-   assert.equal(layout.playSvg,true)
    assert.equal(layout.page,0,width+' page overflow')
-   const root=page.locator('#arRatioExperience')
-   for(const tone of [30,50,70,100]){
-    await page.locator('[data-ar-tone="'+tone+'"]').click()
-    await page.waitForFunction(value=>{
-     const node=document.querySelector('#arRatioExperience')
-     const button=node?.querySelector('[data-ar-tone="'+value+'"]')
-     return node?.dataset.tone===String(value)&&button?.getAttribute('aria-pressed')==='true'&&button.classList.contains('is-active')&&node.classList.contains('is-playing')&&Number(node.querySelector('.wistia-ar__seek')?.value)>0.2
-    },tone,{timeout:15000})
+   assert.equal(layout.faq,6)
+   assert.equal(layout.benefit,'rgb(198, 40, 40)')
+   for(const poster of layout.posters){
+    assert.ok(poster.w<=860,JSON.stringify(poster))
+    assert.notEqual(poster.fit,'cover',poster.src)
+    assert.ok(Math.abs(poster.w/poster.h-poster.natural[0]/poster.natural[1])<0.03,JSON.stringify(poster))
    }
-   await page.locator('.wistia-ar--poster .wistia-ar__play').click()
-   await page.waitForFunction(()=>!document.querySelector('#arRatioExperience')?.classList.contains('is-playing'))
-   await page.locator('.wistia-ar--poster .wistia-ar__disc-stage').click()
+   assert.equal(layout.cards[0].h,layout.cards[1].h)
+   assert.equal(layout.cards[0].h,108)
+   assert.equal(layout.cards[0].bg,'rgb(255, 255, 255)')
+   assert.equal(layout.cards[1].bg,'rgb(164, 83, 106)')
+   assert.match(layout.map,/map\.naver\.com\/p\/search\//)
+   assert.match(layout.map,/map\.kakao\.com\/link\/search\//)
+   assert.match(layout.footer,/href="\/event\/solo"/)
+   assert.match(layout.footer,/href="\/privacy"/)
+   assert.match(layout.footer,/aidoc\.kr\/support/)
+   const selected=page.locator('.mas-variant.is-selected')
+   const before=await selected.boundingBox()
+   await selected.hover()
+   await page.mouse.down()
+   const during=await selected.boundingBox()
+   await page.mouse.up()
+   assert.equal(Math.round(during.height),Math.round(before.height))
+   assert.equal(Math.round(during.width),Math.round(before.width))
+   const faq=page.locator('.solo-faq details').first()
+   await faq.locator('summary').click()
+   assert.equal(await faq.evaluate(node=>node.open),true)
+   await faq.locator('summary').click()
+   assert.equal(await faq.evaluate(node=>node.open),false)
+   await page.locator('[data-solo-ratio="50"]').click()
    await page.waitForFunction(()=>{
-    const node=document.querySelector('#arRatioExperience')
-    return node?.classList.contains('is-playing')&&node.querySelector('.wistia-ar__disc-stage')?.getAttribute('aria-pressed')==='true'&&Number(node.querySelector('.wistia-ar__seek')?.value)>0.2
+    const button=document.querySelector('[data-solo-ratio="50"]')
+    const audio=document.querySelector('[data-solo-audio]')
+    return button?.classList.contains('is-playing')&&button.getAttribute('aria-pressed')==='true'&&audio&&!audio.paused&&audio.currentTime>0.2
+   },null,{timeout:15000})
+   await page.locator('.solo-p4-stop').click()
+   await page.waitForFunction(()=>{
+    const audio=document.querySelector('[data-solo-audio]')
+    return audio?.paused&&audio.currentTime===0&&!document.querySelector('[data-solo-ratio="50"]')?.classList.contains('is-playing')&&document.querySelector('[data-solo-ratio="50"]')?.classList.contains('is-on')
    })
-   await page.locator('.wistia-ar--poster .wistia-ar__seek').evaluate(node=>{node.value='8';node.dispatchEvent(new Event('input',{bubbles:true}))})
-   await page.waitForFunction(()=>Math.abs(Number(document.querySelector('#arRatioExperience .wistia-ar__seek')?.value)-8)<1.2)
-   await page.locator('.wistia-ar--poster .wistia-ar__volume').click()
-   assert.equal(await page.locator('.wistia-ar--poster .wistia-ar__volume').getAttribute('aria-pressed'),'true')
+   await page.locator('[data-solo-ratio="70"]').click()
+   await page.waitForFunction(()=>Number(document.querySelector('[data-solo-audio]')?.currentTime)>0.2)
+   await page.locator('.solo-p4-seek').evaluate(node=>{node.value='4';node.dispatchEvent(new Event('input',{bubbles:true}))})
+   await page.waitForFunction(()=>Math.abs(Number(document.querySelector('[data-solo-audio]')?.currentTime)-4)<1.2)
+   await page.locator('[data-review-full]').first().click()
+   await page.waitForFunction(()=>document.querySelector('.solo-review-dialog')?.open===true)
+   const review=await page.locator('.solo-review-dialog img').evaluate(node=>({src:node.currentSrc||node.src,fit:getComputedStyle(node).objectFit}))
+   assert.match(review.src,/review-n4\.webp\?v=16i/)
+   assert.equal(review.fit,'contain')
+   await page.locator('.solo-review-dialog [data-solo-dialog-close]').click()
+   await page.locator('[data-map-zoom]').click()
+   await page.waitForFunction(()=>document.querySelector('.solo-map-dialog')?.open===true)
+   const mapFit=await page.locator('.solo-map-dialog img').evaluate(node=>getComputedStyle(node).objectFit)
+   assert.equal(mapFit,'contain')
+   await page.locator('.solo-map-dialog [data-solo-dialog-close]').click()
+   const after=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)
+   assert.equal(after,0,width+' overflow after interaction')
    if(width===390){
-    const shot='/tmp/16h-point04-390.png'
-    await root.screenshot({path:shot})
-    copyFileSync(shot,'/opt/cursor/artifacts/screenshots/16h-point04-390.png')
-    const info='/tmp/16h-info-390.png'
-    await page.locator('.mas-information-poster').screenshot({path:info})
-    copyFileSync(info,'/opt/cursor/artifacts/screenshots/16h-info-390.png')
+    const shot='/tmp/16i-solo-390.png'
+    await page.screenshot({path:shot,fullPage:false})
+    copyFileSync(shot,'/opt/cursor/artifacts/screenshots/16i-solo-390.png')
    }
    assert.deepEqual(errors,[])
    await context.close()
-   console.log(width+'px solo ratio playback and product poster passed')
+   console.log(width+'px solo 16i interactions passed')
   }
   const quiet=await browser.newContext({viewport:{width:390,height:900}})
   const duo=await quiet.newPage()
   await duo.route('https://**/*',route=>route.abort())
   await duo.goto('http://127.0.0.1:'+port+'/detail/duo',{waitUntil:'domcontentloaded'})
   await duo.waitForSelector('#arRatioExperience')
-  const duoState=await duo.evaluate(()=>({
-   mix:document.body.innerHTML.includes('point04-mix.webp'),
-   info:document.body.innerHTML.includes('info-product.webp'),
-   platter:!!document.querySelector('.wistia-ar__platter'),
-   table:!!document.querySelector('.mas-information dl'),
-   poster:document.querySelectorAll('.wistia-ar--poster,.mas-information-poster').length
-  }))
-  assert.equal(duoState.mix,false)
+  const duoState=await duo.evaluate(()=>{
+   const html=document.body.innerHTML
+   return {
+    soloPlayer:!!document.querySelector('#soloPoint04'),
+    posters:['point-price.webp','point-adv.webp','cred-a2.webp','lyric-d.webp','point05-c3.webp','notice-c.webp','map-rose.webp'].filter(name=>html.includes(name)),
+    info:html.includes('info-product.webp'),
+    platter:!!document.querySelector('.wistia-ar__platter'),
+    table:!!document.querySelector('.mas-information dl'),
+    lyric:html.includes('lyric-video-v2.webp'),
+    footer:!!document.querySelector('.solo-footer')
+   }
+  })
+  assert.equal(duoState.soloPlayer,false)
+  assert.deepEqual(duoState.posters,[])
   assert.equal(duoState.info,false)
   assert.equal(duoState.platter,true)
   assert.equal(duoState.table,true)
-  assert.equal(duoState.poster,0)
+  assert.equal(duoState.lyric,true)
+  assert.equal(duoState.footer,false)
   await quiet.close()
  }finally{await browser?.close();server.kill()}
 })
