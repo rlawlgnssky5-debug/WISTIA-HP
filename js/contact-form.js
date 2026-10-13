@@ -7,7 +7,8 @@
   ['time','방문 희망 시간','시작 시간을 고르시면 상품 시간만큼 함께 선택돼요']
  ]
  const sourceChoices=['인스타','스레드','메타 광고','카페','블로그','지인 추천']
- const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
+ const discoveryChoices=['지인·가족 추천','웨딩플래너·웨딩홀 소개','네이버 검색','인스타그램·유튜브','블로그·카페 후기','기타']
+ const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes','discovery'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>'오후 '+(Math.floor(clock/60)-12)+'시'+(clock%60?' 30분':'');return start>=13*60&&end<=23*60?label(start)+'~'+label(end)+' ('+(minutes/60)+'시간)':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
@@ -222,6 +223,7 @@
   return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label data-calendar-trigger="'+key+'" aria-expanded="false" aria-controls="calendar-'+key+'"><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<p class="contact-date-summary" data-calendar-summary="'+key+'" aria-live="polite" hidden></p>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
  function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>방문 희망 시간</legend><p data-time-date-hint role="status" aria-live="polite">날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">방문 희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="contact-time-scroll-wrap" data-time-scroll-wrap hidden><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="방문 시작 시간" data-lenis-prevent hidden></div></div><em data-time-help hidden>시작 시간을 고르시면 상품 시간만큼 함께 선택돼요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
+ function discoveryField(){return '<fieldset class="contact-field contact-discovery-field"><legend>처음에 위스티아를 어디서 보고 오셨나요? (선택)</legend><div class="contact-date-toggle contact-discovery" role="radiogroup" aria-label="처음에 위스티아를 어디서 보고 오셨나요?">'+discoveryChoices.map(value=>'<label><input type="radio" name="discovery" value="'+value+'"><span>'+value+'</span></label>').join('')+'</div></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -246,7 +248,7 @@
   const ordered=integrated?['source','eventDate','bookingDate','time'].map(key=>fields.find(field=>field[0]===key)):fields
   const renderedInputs=ordered.map(([key,label,hint])=>{
    if(key==='eventDate'||key==='bookingDate')return dateField(key,label)
-   if(key==='time')return timeField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
+   if(key==='time')return timeField()+discoveryField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
    const id='contact-'+key
    let input
    if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음','축가 스토리 필름'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
@@ -327,6 +329,8 @@
   const minutes=info.bookingMinutes||global.WistiaBooking?.duration?.(info.productKey||global.WistiaBooking?.calendarKey?.())||(/DUET/.test(info.product)?120:/필름/.test(info.product)?180:60)
   lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'방문 희망 시간 : '+formatTimeRange(values.timeStart,minutes),'━━━━━━━━━━━━')
   const notes=String(values.specialNotes||'').trim();if(notes)lines.push('특이사항',notes,'━━━━━━━━━━━━')
+  const discovery=String(values.discovery||'').trim()
+  if(discoveryChoices.includes(discovery))lines.push('처음 본 곳 : '+discovery)
   const source=String(values.source||'').trim()
   if(sourceChoices.includes(source))lines.push('유입 경로 : '+source)
   lines.push('','※ 예약 가능 여부는 상담에서 확정돼요')

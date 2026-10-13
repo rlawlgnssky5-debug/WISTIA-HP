@@ -21,7 +21,7 @@ assert.deepEqual(sheets.slice(-17),[
  'css/booking-availability.css?v=20261014-detail-polish-16j10',
  'css/detail-section-layout.css?v=20261014-detail-polish-16j',
  'css/heading-font.css?v=20261014-detail-polish-16j',
- 'css/kakao-inquiry.css?v=20261014-detail-polish-16j10',
+ 'css/kakao-inquiry.css?v=20261014-detail-polish-16j11',
  'css/detail-point-16f.css?v=20261014-detail-polish-16j',
  'css/detail-point-16i.css?v=20261014-detail-polish-16j'
 ])
