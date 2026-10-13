@@ -1161,9 +1161,9 @@ function soloNoticeAndMap(){
   '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="https://map.kakao.com/link/search/'+encoded+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+
   '<dialog class="solo-map-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img src="assets/detail/map-rose.webp?v=16i" alt="위스티아 스튜디오 위치 지도"></dialog></section>'
 }
-function soloFooter(){
+function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return '<footer class="footer solo-footer solo-shot solo-shot-narrow" data-svg-title="off"><img class="solo-shot-img" src="assets/16j/footer_A.png" alt="WISTIA 푸터. 카카오톡 문의, 채널, 개인정보처리방침, 고객지원" width="860" height="974" loading="lazy" decoding="async"><a class="solo-footer-inquiry" data-kakao-inquiry href="/event/solo">카카오톡 문의</a><a class="footer-brand" href="/"><span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan solo-seo">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-legal"><a href="/privacy">개인정보처리방침</a><span aria-hidden="true">|</span><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a><span aria-hidden="true">|</span><span>웨딩 · 목소리 · 영상</span></div><div class="footer-bottom solo-seo"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'
+ return '<footer class="footer solo-footer solo-shot solo-shot-narrow" data-svg-title="off"><img class="solo-shot-img" src="assets/16j/footer_A.png" alt="WISTIA 푸터. 카카오톡 문의, 채널, 개인정보처리방침, 고객지원" width="860" height="974" loading="lazy" decoding="async"><a class="solo-footer-inquiry" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a><a class="footer-brand" href="/"><span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan solo-seo">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-legal"><a href="/privacy">개인정보처리방침</a><span aria-hidden="true">|</span><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a><span aria-hidden="true">|</span><span>웨딩 · 목소리 · 영상</span></div><div class="footer-bottom solo-seo"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
@@ -1199,11 +1199,12 @@ function arCommerceDetail(p,key="solo"){
   ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
  ]
  const customerVideo=arCustomerVideoData(key)
- const keySection=key==='solo'
+ const imageLayout=['solo','duo'].includes(key)
+ const keySection=imageLayout
   ?'<section class="arc-point arc-point-poster" id="arcKey">'+detailPosterImage('assets/detail/point02-key.webp?v=16f','POINT 02 원곡이 높다면? 내 목소리에 맞춥니다. 음원 편집과 키 조절은 추가금 없이 무료, 원하는 곡과 MR을 먼저 보내주시면 편한 키와 녹음 방향을 상담에서 확인합니다',860,1840)+'</section>'
   :point('02','원곡이 높다면?<br><mark>내 목소리에 맞춥니다</mark>','원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 상담에서 확인합니다','assets/img/process-no-people/03.svg','목소리에 맞는 키와 녹음 방향을 상담하는 과정 예시')
- const tuningSection=key==='solo'
-  ?'<section class="arc-point arc-point-tuning arc-point-tuning-rose" id="arcTuning" aria-label="보컬 보정 전후 듣기">'+detailPosterImage('assets/detail/point03-top.webp?v=16f','POINT 03 음정·박자가 흔들려도 자연스럽게 다듬어 드려요. 내 목소리 그대로, 어색한 부분만 음정·박자·호흡을 섬세하게 보정합니다',860,575)+wistiaBeforeAfterSection(true,true)+detailPosterImage('assets/detail/point03-bottom.webp?v=16f','POINT 03 이렇게 다듬어요. 보컬 보정은 음정·박자·호흡과 잡음을 정리하고, 믹싱·마스터링으로 본식 음원을 완성합니다',860,1472)+'</section>'
+ const tuningSection=imageLayout
+  ?'<section class="arc-point arc-point-tuning arc-point-tuning-rose" id="arcTuning" aria-label="보컬 보정 전후 듣기">'+detailPosterImage('assets/detail/point03-top.webp?v=16f','POINT 03 음정·박자가 흔들려도 자연스럽게 다듬어 드려요. 내 목소리 그대로, 어색한 부분만 음정·박자·호흡을 섬세하게 보정합니다',860,575)+wistiaBeforeAfterSection(true,key==='solo')+detailPosterImage('assets/detail/point03-bottom.webp?v=16f','POINT 03 이렇게 다듬어요. 보컬 보정은 음정·박자·호흡과 잡음을 정리하고, 믹싱·마스터링으로 본식 음원을 완성합니다',860,1472)+'</section>'
   :'<section class="arc-point arc-point-tuning" aria-label="보컬 보정 전후 듣기">'+detailPointSection(wistiaBeforeAfterSection(),'03')+'</section>'
  const media='<div class="arc-product-media ar-hook-media"><img class="ar-hook-fallback" src="'+customerVideo.poster+'" alt="'+customerVideo.label+'" fetchpriority="high"><video loop playsinline preload="metadata" poster="'+customerVideo.poster+'" aria-label="'+customerVideo.label+'"><source src="'+customerVideo.src+'" type="video/mp4"></video><button class="ar-hook-video-control" type="button" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play">▶</span><span class="ar-icon-pause">Ⅱ</span></button><span class="arc-media-note">고객님이 직접 보내주신 본식 영상</span></div>'
  const desktopHtml='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail" data-ar-product="'+key+'">'+
@@ -1215,7 +1216,7 @@ function arCommerceDetail(p,key="solo"){
  arRecordingPoster()+
  keySection+
  tuningSection+
- (key==='solo'?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
+ (['solo','duo'].includes(key)?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">가사 영상 추가 옵션 · 1곡 기준 · +40,000원</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
  '<div class="arc-advantages">'+productComparisonSection('solo')+'</div>'+
@@ -1283,14 +1284,14 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
  details=details.replace(/<figure class="arc-recording-poster"[\s\S]*?<\/figure>/,mobileArCutPoster())
  details=details.replace('<p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p>','')
 details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16f" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
- if(key==='solo'){
+ if(key==='solo'||key==='duo'){
   details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'<section class="arc-section arc-lyrics solo-lyric-poster">'+detailPosterImage('assets/detail/lyric-d.webp?v=16i','가사 영상 추가 옵션. 두 분의 사진과 영상에 노래 가사가 함께 나옵니다. 1곡 기준 4만원',780,1109)+'</section>')
   details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,soloPosterStack(detailPosterImage('assets/detail/point-adv.webp?v=16i','위스티아의 장점. 구간별 녹음, 수작업 보정, 믹싱과 마스터링, 부천 스튜디오',860,1446)+detailPosterImage('assets/detail/point-price.webp?v=16i','왜 저렴한가요. 경기도 부천에서 운영해 서울보다 조금 더 합리적인 가격으로 진행합니다',860,1600))+'<div class="arc-engineer">')
   details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,soloPosterStack(detailPosterImage('assets/detail/cred-a2.webp?v=16i','방송 음악 작업 참여. 싱어게인2 사운드 작업',860,1012))+'<section class="arc-section arc-process"')
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,'<section class="arc-section arc-process solo-process-poster" id="arcProcess">'+detailPosterImage('assets/detail/point05-c3.webp?v=16i','진행 순서. 상담, 방문 녹음, 보정, 음원 전달',860,2518)+'</section>')
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap())
-  details=details.replace(/<footer class="footer shell">[\s\S]*?<\/footer>/,soloFooter())
+  details=details.replace(/<footer class="footer shell">[\s\S]*?<\/footer>/,soloFooter(key))
  }else{
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
@@ -1298,18 +1299,19 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
  const gallery='<div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="'+(duet?1:0)+'"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="SOLO 영상 보기" aria-pressed="'+(!duet)+'"></button><button type="button" data-mobile-video-slide="1" aria-label="DUET 영상 보기" aria-pressed="'+duet+'"></button></div></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p><p class="mas-event-price"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'
- const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="'+(key==='solo'?'solo-seo':'')+'" data-svg-title="off">인원 선택</h2>'+variants+'</section>'
- const intro=key==='solo'
-  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="assets/16j/top_A_pc.png"><img class="solo-shot-img" src="assets/16j/top_A.png" alt="'+escapeHtml('AR 축가 사전녹음 SOLO. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
+ const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="'+((key==='solo'||key==='duo')?'solo-seo':'')+'" data-svg-title="off">인원 선택</h2>'+variants+'</section>'
+ const shot=key==='duo'?'assets/16j/duo/':'assets/16j/'
+ const intro=(key==='solo'||key==='duo')
+  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png"><img class="solo-shot-img" src="'+shot+'top_A.png" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
- const information=key==='solo'
-  ?'<section class="mas-information mas-information-poster solo-shot solo-shot-narrow" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="solo-seo">상품정보</h2><img class="solo-shot-img" src="assets/16j/info_v5.png" alt="'+escapeHtml('상품정보. 1인 1곡, 녹음 '+hours+'시간, 기본 '+p.normal.toLocaleString('ko-KR')+'원, 녹음 후 최대 7일')+'" width="1080" height="1110" decoding="async"><p class="solo-seo">1인 · 1곡 · '+hours+'시간 · 녹음 후 최대 7일 이내</p></section>'
+ const information=(key==='solo'||key==='duo')
+  ?'<section class="mas-information mas-information-poster solo-shot solo-shot-narrow" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="solo-seo">상품정보</h2><img class="solo-shot-img" src="'+shot+'info_v5.png" alt="'+escapeHtml('상품정보. '+people+'인 1곡, 녹음 '+hours+'시간, 기본 '+p.normal.toLocaleString('ko-KR')+'원, 녹음 후 최대 7일')+'" width="1080" height="1110" decoding="async"><p class="solo-seo">'+people+'인 · 1곡 · '+hours+'시간 · 녹음 후 최대 7일 이내</p></section>'
   :'<section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>'
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+information+
- '<div class="arc-reviews">'+(key==='solo'?soloReviewGrid():mobileReviews)+'</div>'+
+ '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
  '<span id="arcDetails" hidden></span>'+details+
- (key==='solo'?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
+ ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 function initMobileArGallery(){document.querySelectorAll('[data-mobile-gallery]').forEach(gallery=>{const track=gallery.querySelector('.mas-gallery-track'),slides=[...gallery.querySelectorAll('.mas-gallery-slide')],dots=[...gallery.querySelectorAll('[data-mobile-video-slide]')];if(!track||slides.length<2)return;let current=Number(gallery.dataset.mobileGalleryStart)||0;const select=(index,smooth=true)=>{current=Math.max(0,Math.min(slides.length-1,index));track.scrollTo({left:current*track.clientWidth,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===current)));slides.forEach((slide,i)=>{slide.classList.toggle('is-current',i===current);if(i!==current)slide.querySelector('video')?.pause()})};dots.forEach(dot=>dot.addEventListener('click',()=>select(Number(dot.dataset.mobileVideoSlide))));let scrollTimer=0;track.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>select(Math.round(track.scrollLeft/Math.max(track.clientWidth,1)),false),80)},{passive:true});requestAnimationFrame(()=>select(current,false))})}
 function initArCommerceDetail(){

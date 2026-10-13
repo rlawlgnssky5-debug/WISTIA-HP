@@ -7,13 +7,16 @@ import {createServer} from 'node:net'
 
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
-await test('16i solo detail is real UI and duo keeps the shared player',()=>{
+await test('16i solo and duo details share the image layout',()=>{
  const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')
  assert.match(app,/function soloPoint04Section\(\)[\s\S]*assets\/16j\/point04_ui_390\.png/)
  assert.match(app,/data-solo-ratio[\s\S]*solo-p4-stop[\s\S]*data-solo-audio/)
  assert.doesNotMatch(app.slice(app.indexOf('function soloPoint04Section'),app.indexOf('function soloReviewGrid')),/point04-mix\.webp|wistia-ar__disc-stage|wistia-ar__play/)
- assert.match(app,/assets\/16j\/info_v5\.png/)
- assert.match(app,/key==='solo'\?soloPoint04Section\(\)/)
+ assert.match(app,/'assets\/16j\/duo\/':'assets\/16j\/'/)
+ assert.match(app,/shot\+'top_A_pc\.png"/)
+ assert.match(app,/shot\+'top_A\.png"/)
+ assert.match(app,/shot\+'info_v5\.png"/)
+ assert.match(app,/\['solo','duo'\]\.includes\(key\)\?soloPoint04Section\(\)/)
  assert.match(app,/lyric-d\.webp\?v=16i[\s\S]*point-adv\.webp\?v=16i[\s\S]*point-price\.webp\?v=16i[\s\S]*cred-a2\.webp\?v=16i[\s\S]*point05-c3\.webp\?v=16i/)
  assert.match(app,/map\.naver\.com\/p\/search\/[\s\S]*map\.kakao\.com\/link\/search\//)
  assert.match(app,/assets\/img\/song-options\/lyric-video-v2\.webp/)
@@ -21,7 +24,7 @@ await test('16i solo detail is real UI and duo keeps the shared player',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j/)
+ assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j2/)
  assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j/)
  assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j/)
@@ -29,8 +32,8 @@ await test('16i solo detail is real UI and duo keeps the shared player',()=>{
  assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
  const solo=read('detail/solo.html'),duo=read('detail/duo.html')
- assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j/)
- assert.doesNotMatch(duo,/detail-solo-16j\.css/)
+ assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j2/)
+ assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j2/)
 })
 
 let chromium,executable,skip=false
@@ -40,21 +43,23 @@ try{
  if(!executable)skip='Chrome not installed'
 }catch{skip='playwright-core not installed'}
 
-await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/375/390/1280',{skip,timeout:240000},async()=>{
+await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:420000},async()=>{
  const probe=createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  let browser
  try{
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('preview timeout')),10000);server.stdout.once('data',()=>{clearTimeout(timer);resolve()});server.once('error',reject)})
   browser=await chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required']})
+  for(const product of ['solo','duo']){
   for(const width of [360,375,390,1280]){
    const context=await browser.newContext({viewport:{width,height:900},deviceScaleFactor:1})
    const page=await context.newPage()
    const errors=[]
    page.on('pageerror',error=>errors.push(error.message))
    await page.route('https://**/*',route=>route.abort())
-   await page.goto('http://127.0.0.1:'+port+'/detail/solo',{waitUntil:'domcontentloaded'})
+   await page.goto('http://127.0.0.1:'+port+'/detail/'+product,{waitUntil:'domcontentloaded'})
    await page.locator('#soloPoint04').waitFor()
+   await page.locator('.mas-gallery-slide.is-current video source').waitFor({state:'attached'})
    await page.evaluate(async()=>{
     for(const image of document.querySelectorAll('.detail-poster-image, .solo-shot-img')){
      image.loading='eager'
@@ -70,10 +75,11 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    })
    const layout=await page.evaluate(()=>{
     const box=node=>{const r=node.getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height),fit:getComputedStyle(node).objectFit}}
-    const posters=[...document.querySelectorAll('.mobile-ar-solo[data-ar-product="solo"] .detail-poster-image')].map(node=>({src:node.getAttribute('src'),...box(node),natural:[node.naturalWidth,node.naturalHeight]}))
+    const posters=[...document.querySelectorAll('.mobile-ar-solo .detail-poster-image')].map(node=>({src:node.getAttribute('src'),...box(node),natural:[node.naturalWidth,node.naturalHeight]}))
     const selected=document.querySelector('.mas-variant.is-selected')
     const open=document.querySelector('.mas-variant:not(.is-selected)')
     const benefit=getComputedStyle(document.querySelector('.mas-event-price strong'))
+    const html=document.body.innerHTML
     return {
      page:document.documentElement.scrollWidth-innerWidth,
      posters,
@@ -81,10 +87,20 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
      benefit:benefit.color,
      faq:document.querySelectorAll('.solo-faq details').length,
      map:document.querySelector('.solo-map-links')?.innerHTML||'',
-     footer:document.querySelector('.solo-footer')?.innerHTML||''
+     footer:document.querySelector('.solo-footer')?.innerHTML||'',
+     intro:document.querySelector('.mas-intro .solo-shot-img')?.getAttribute('src')||'',
+     pc:document.querySelector('.mas-intro source')?.getAttribute('srcset')||'',
+     info:document.querySelector('.mas-information-poster .solo-shot-img')?.getAttribute('src')||'',
+     video:document.querySelector('.mas-gallery-slide.is-current video source')?.getAttribute('src')||'',
+     selected:selected?.textContent||'',
+     openHref:open?.getAttribute('href')||'',
+     tryHint:!!document.querySelector('.bap-try'),
+     platter:!!document.querySelector('.wistia-ar__platter'),
+     table:!!document.querySelector('.mas-information dl'),
+     shared:['reviews6_390.png','point04_ui_390.png','faq_B.png','map_C3.png','footer_A.png'].every(name=>html.includes(name))
     }
    })
-   assert.equal(layout.page,0,width+' page overflow')
+   assert.equal(layout.page,0,product+' '+width+' page overflow')
    assert.equal(layout.faq,6)
    assert.equal(layout.benefit,'rgb(196, 128, 140)')
    for(const poster of layout.posters){
@@ -97,7 +113,27 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    assert.ok(Math.abs(layout.cards[0].top-layout.cards[1].top)<3)
    assert.match(layout.map,/map\.naver\.com\/p\/search\//)
    assert.match(layout.map,/map\.kakao\.com\/link\/search\//)
-   assert.match(layout.footer,/href="\/event\/solo"/)
+   assert.match(layout.footer,new RegExp('href="/event/'+product+'"'))
+   assert.equal(layout.shared,true,product+' shared section images')
+   assert.equal(layout.platter,false)
+   assert.equal(layout.table,false)
+   if(product==='duo'){
+    assert.match(layout.intro,/assets\/16j\/duo\/top_A\.png/)
+    assert.match(layout.info,/assets\/16j\/duo\/info_v5\.png/)
+    assert.match(layout.video,/duo-wedding-song-ar\.mp4/)
+    assert.match(layout.selected,/DUET/)
+    assert.equal(layout.openHref,'/detail/solo')
+    assert.equal(layout.tryHint,false)
+    if(width>=901)assert.match(layout.pc,/assets\/16j\/duo\/top_A_pc\.png/)
+   }else{
+    assert.match(layout.intro,/^assets\/16j\/top_A\.png$/)
+    assert.match(layout.info,/^assets\/16j\/info_v5\.png$/)
+    assert.match(layout.video,/groom-wedding-song-ar\.mp4/)
+    assert.match(layout.selected,/SOLO/)
+    assert.equal(layout.openHref,'/detail/duo')
+    assert.equal(layout.tryHint,true)
+    if(width>=901)assert.match(layout.pc,/^assets\/16j\/top_A_pc\.png$/)
+   }
    assert.match(layout.footer,/href="\/privacy"/)
    assert.match(layout.footer,/aidoc\.kr\/support/)
    const selected=page.locator('.mas-variant.is-selected')
@@ -143,39 +179,15 @@ await test('16i solo player, FAQ, map, footer, reviews and fixed cards at 360/37
    const after=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)
    assert.equal(after,0,width+' overflow after interaction')
    if(width===390){
-    const shot='/tmp/16i-solo-390.png'
+    const shot='/tmp/16j-'+product+'-390.png'
     await page.screenshot({path:shot,fullPage:false})
     mkdirSync('/opt/cursor/artifacts/screenshots',{recursive:true})
-    copyFileSync(shot,'/opt/cursor/artifacts/screenshots/16i-solo-390.png')
+    copyFileSync(shot,'/opt/cursor/artifacts/screenshots/16j-'+product+'-390.png')
    }
    assert.deepEqual(errors,[])
    await context.close()
-   console.log(width+'px solo 16i interactions passed')
+   console.log(width+'px '+product+' 16j interactions passed')
   }
-  const quiet=await browser.newContext({viewport:{width:390,height:900}})
-  const duo=await quiet.newPage()
-  await duo.route('https://**/*',route=>route.abort())
-  await duo.goto('http://127.0.0.1:'+port+'/detail/duo',{waitUntil:'domcontentloaded'})
-  await duo.waitForSelector('#arRatioExperience')
-  const duoState=await duo.evaluate(()=>{
-   const html=document.body.innerHTML
-   return {
-    soloPlayer:!!document.querySelector('#soloPoint04'),
-    posters:['point-price.webp','point-adv.webp','cred-a2.webp','lyric-d.webp','point05-c3.webp','notice-c.webp','map-rose.webp'].filter(name=>html.includes(name)),
-    info:html.includes('info-product.webp'),
-    platter:!!document.querySelector('.wistia-ar__platter'),
-    table:!!document.querySelector('.mas-information dl'),
-    lyric:html.includes('lyric-video-v2.webp'),
-    footer:!!document.querySelector('.solo-footer')
-   }
-  })
-  assert.equal(duoState.soloPlayer,false)
-  assert.deepEqual(duoState.posters,[])
-  assert.equal(duoState.info,false)
-  assert.equal(duoState.platter,true)
-  assert.equal(duoState.table,true)
-  assert.equal(duoState.lyric,true)
-  assert.equal(duoState.footer,false)
-  await quiet.close()
+  }
  }finally{await browser?.close();server.kill()}
 })
