@@ -7,7 +7,7 @@ import {createServer} from 'node:net'
 
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
-await test('16i solo and duo details share the image layout',()=>{
+await test('16j12 solo and duo details share the approved layout',()=>{
  const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')
  assert.match(app,/function soloPoint04Section\(\)[\s\S]*assets\/detail-solo-16j\/point04_ui_390\.png/)
  assert.match(app,/data-solo-ratio[\s\S]*solo-p4-stop[\s\S]*data-solo-audio/)
@@ -24,16 +24,16 @@ await test('16i solo and duo details share the image layout',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j6/)
- assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j/)
- assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j/)
- assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j/)
- assert.match(index,/css\/detail-point-16f\.css\?v=20261014-detail-polish-16j/)
- assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j/)
+ assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/css\/detail-point-16f\.css\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j12/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
  const solo=read('detail/solo.html'),duo=read('detail/duo.html')
- assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j4/)
- assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j4/)
+ assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
+ assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
 })
 
 let chromium,executable,skip=false
@@ -43,7 +43,7 @@ try{
  if(!executable)skip='Chrome not installed'
 }catch{skip='playwright-core not installed'}
 
-await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:420000},async()=>{
+await test('16j12 live controls and layout at 360/375/390/1280',{skip,timeout:420000},async()=>{
  const probe=createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve))
  const server=spawn(process.execPath,['scripts/local-preview.mjs'],{env:{...process.env,WISTIA_PREVIEW_PORT:String(port)},stdio:['ignore','pipe','pipe']})
  let browser
@@ -103,10 +103,15 @@ await test('16i solo and duo image hits at 360/375/390/1280',{skip,timeout:42000
      tryHint:!!document.querySelector('.bap-try'),
      platter:!!document.querySelector('.wistia-ar__platter'),
      table:!!document.querySelector('.mas-information dl'),
-     shared:['reviews6_390.png','point04_ui_390.png','faq_B.png','map_C3.png','footer_A.png'].every(name=>html.includes('assets/detail-solo-16j/'+name))
+     shared:['reviews6_390.png','point04_ui_390.png','map_C3.png','footer_A.png'].every(name=>html.includes('assets/detail-solo-16j/'+name))
     }
    })
    assert.equal(layout.page,0,product+' '+width+' page overflow')
+   const geometry=await page.evaluate(()=>({top:document.querySelector('.solo-shot-top .solo-shot-img').getBoundingClientRect().width,sections:[...document.querySelectorAll('.solo-shot-narrow')].map(n=>n.getBoundingClientRect().width),fab:getComputedStyle(document.querySelector('#floatingKakaoChat')).display,answer:document.querySelector('.solo-faq details[open] .solo-faq-answer').getBoundingClientRect().height}))
+   assert.ok(Math.abs(geometry.top-width)<2,'top uses full design width')
+   assert.ok(geometry.sections.every(w=>Math.abs(w-Math.min(width,480))<2),'one centered 480px column')
+   assert.notEqual(geometry.fab,'none')
+   assert.ok(geometry.answer>60,'open answer is visible')
    assert.equal(layout.faq,6)
    assert.equal(layout.benefit,'rgb(196, 128, 140)')
    for(const poster of layout.posters){

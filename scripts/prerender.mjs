@@ -6,7 +6,7 @@ const require = createRequire(import.meta.url)
 const seo = require('../js/seo-meta.js')
 const root = resolve(import.meta.dirname, '..')
 const template = readFileSync(resolve(root, 'index.html'), 'utf8')
-const origin = 'https://www.wistiastudio.com'
+const origin = 'https://wistiastudio.com'
 const products = ['solo', 'duo', 'solo-film', 'wedding', 'proposal', 'duet-film']
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
@@ -26,6 +26,7 @@ function page(path, data, options={}) {
   if ((path === '/detail/solo' || path === '/detail/duo') && !html.includes('css/detail-solo-16j.css')) {
     html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261014-detail-polish-16j4">\n</head>')
   }
+  if (options.robots && /^\/(detail|event)\/(duet-film|solo-film|wedding|proposal)$/.test(path)) html=html.replace('</head>', '<meta http-equiv="refresh" content="0;url=/">\n</head>')
   const target = resolve(root, path.slice(1) + '.html')
   mkdirSync(dirname(target), {recursive:true})
   writeFileSync(target, html)
@@ -33,7 +34,7 @@ function page(path, data, options={}) {
 }
 
 for (const product of products) {
-  const retired = ['wedding', 'proposal', 'solo-film'].includes(product)
+  const retired = ['wedding', 'proposal', 'solo-film', 'duet-film'].includes(product)
   page(`/detail/${product}`, retired ? seo.home : seo.detail[product], retired ? {robots:'noindex, follow'} : {})
   page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
 }

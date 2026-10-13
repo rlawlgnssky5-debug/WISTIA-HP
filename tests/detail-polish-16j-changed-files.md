@@ -1,0 +1,48 @@
+# 16j12 changed files
+
+No git staging, commit, push, merge or deployment was performed
+
+- `ar/friend.html`
+- `ar/self.html`
+- `before-after.html`
+- `contact.html`
+- `css/detail-solo-16j.css`
+- `css/intro-16j.css`
+- `detail/duet-film.html`
+- `detail/duo.html`
+- `detail/proposal.html`
+- `detail/solo-film.html`
+- `detail/solo.html`
+- `detail/wedding.html`
+- `event/duet-film.html`
+- `event/duo.html`
+- `event/proposal.html`
+- `event/solo-film.html`
+- `event/solo.html`
+- `event/wedding.html`
+- `events.html`
+- `film.html`
+- `find/people.html`
+- `find/role.html`
+- `find/service.html`
+- `index.html`
+- `info/about.html`
+- `info/faq.html`
+- `info/location.html`
+- `info/process.html`
+- `js/app.js`
+- `js/intro-16j.js`
+- `js/seo-meta.js`
+- `scripts/prerender.mjs`
+- `section/homeCases.html`
+- `section/homeLocation.html`
+- `section/homeProcess.html`
+- `section/homeServices.html`
+- `sitemap.xml`
+- `song.html`
+- `tests/detail-polish-16h.test.mjs`
+- `tests/detail-polish-16j-changed-files.md`
+- `tests/detail-polish-16j-local-qa.md`
+- `tests/detail-polish-16j-qa.test.mjs`
+- `tests/mobile-ar-solo.test.mjs`
+- `vercel.json`

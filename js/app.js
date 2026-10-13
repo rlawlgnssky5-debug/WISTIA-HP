@@ -359,9 +359,6 @@ const NAVIGATION_GROUPS = [
  {label:"직접 부른다면",items:[
   {title:"AR 축가 사전녹음",href:"#/detail/solo"}
  ]},
- {label:"영상으로 상영한다면",items:[
-  {title:"축가 스토리 필름",href:"#/detail/duet-film"}
- ]},
  {label:"목소리의 변화",items:[
   {title:"보컬 보정 전 후 비교 보기",href:"#/before-after"}
  ]},
@@ -373,7 +370,7 @@ const NAVIGATION_GROUPS = [
  ]}
 ]
 const INFO_PAGES = {
- about:{eyebrow:"위스티아 소개",title:"위스티아는 어떤 곳인가요?",description:"위스티아는 경기도 부천에 위치한 웨딩 축가 전문 스튜디오입니다 AR 축가 사전녹음과 축가 스토리 필름으로 본식에서 전할 노래를 함께 준비합니다"},
+ about:{eyebrow:"위스티아 소개",title:"위스티아는 어떤 곳인가요?",description:"위스티아는 경기도 부천에 위치한 웨딩 축가 전문 스튜디오입니다 AR 축가 사전녹음으로 본식에서 전할 노래를 함께 준비합니다"},
  process:{eyebrow:"준비부터 전달까지",title:"진행 안내",description:"상담과 예약부터 녹음, 제작과 완성본 전달까지 네 단계로 준비합니다"},
  location:{eyebrow:"방문 안내",title:"오시는 길",description:"녹음과 촬영을 위해 방문하실 때 아래 주소를 확인해 주세요"},
  faq:{eyebrow:"",title:"자주 묻는 질문",description:"방문부터 녹음·영상 제작과 수정까지, 자주 궁금해하시는 내용을 모았습니다"}
@@ -391,7 +388,7 @@ const INFO_FAQ_GROUPS=[
   ["녹음이나 촬영이 길어지면 추가금이 있나요?","아니요 당일 녹음이나 촬영이 예상보다 길어지더라도 별도의 현장 추가금은 받지 않습니다"]
  ]},
  {title:"제작 및 수정 안내",items:[
-  ["결과물은 언제 받을 수 있나요?","녹음과 촬영이 끝나고 제작에 필요한 자료를 모두 전달해 주신 날을 기준으로, 음원은 최대 7일 이내, 영상은 최대 14일 이내 전달합니다 정확한 일정은 상담에서 안내드립니다"],
+  ["결과물은 언제 받을 수 있나요?","녹음과 촬영이 끝나고 제작에 필요한 자료를 모두 전달해 주신 날을 기준으로, 음원은 최대 7일 이내 전달합니다 정확한 일정은 상담에서 안내드립니다"],
   ["수정도 가능한가요?","네, 수정은 3회까지 무료로 진행합니다 4회차부터는 회당 10,000원의 추가 비용이 발생합니다"]
  ]},
  {title:"영상 상품 안내",items:[
@@ -405,7 +402,7 @@ const INFO_FAQ_GROUPS=[
   ["AR을 사용하면 티가 나지 않을까요?","미리 녹음한 목소리와 현장에서 직접 부르는 목소리가 자연스럽게 어우러지도록 비율을 조정합니다 녹음 당일 AR과 함께 직접 불러보는 리허설도 진행합니다"]
  ]}
 ]
-const SERVICE_ORDER = ["duet-film","solo","duo"]
+const SERVICE_ORDER = ["solo","duo"]
 const SERVICE_META = {
   wedding:{type:"OUR STORY",label:"듀엣 식전 스토리 필름",use:"식전 또는 축가 순서",who:"참여 인원 상담 후 결정",result:"이야기가 있는 영상 + 완성 음원",short:"우리의 노래와 이야기를 담는 웨딩 영상",image:"assets/img/wedding/02-interview.webp"},
   "duet-film":{type:"OUR DUET",label:"듀엣 축가 영상",use:"본식 축가 순서",who:"신랑신부 두 사람",result:"본식에서 바로 상영하는 듀엣 축가 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"우리 둘의 노래로 채우는 축가 시간",image:"assets/img/song-film/duet-video-cover.jpg"},
@@ -538,6 +535,7 @@ const STUDIO_ICON_PATHS={
  workflow:'<rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M12 6h6v6M6 12v6h6m-3-3 3 3-3 3"/>',
  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2m6 0h2m-10 3h2m6 0h2"/>',
  help:'<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4M12 16.5h.01"/>',
+ stop:'<rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/>',
  plus:'<path d="M12 5v14M5 12h14"/>',
  minus:'<path d="M5 12h14"/>',
  tag:'<path d="M3 3h8l10 10-8 8L3 11V3Z"/><circle cx="7.5" cy="7.5" r="1"/>',
@@ -602,7 +600,7 @@ function packageItem(item){return ({
  })[item]||item}
 function footerIcon(type){const icons={instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg>',youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 7.1a2.8 2.8 0 0 0-2-2C16.6 4.6 12 4.6 12 4.6s-4.6 0-6.3.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 3.2 12a29 29 0 0 0 .5 4.9 2.8 2.8 0 0 0 2 2c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-4.9 29 29 0 0 0-.5-4.9Z"></path><path d="m10 15.3 5.2-3.3L10 8.7v6.6Z" fill="currentColor" stroke="none"></path></svg>',kakao:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C6.9 4 2.8 7.2 2.8 11.2c0 2.6 1.7 4.8 4.4 6.1L6.3 21l4.2-2.6 1.5.1c5.1 0 9.2-3.2 9.2-7.3S17.1 4 12 4Z"></path></svg>'};return icons[type]||''}
 function footer(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><div class="footer-message"><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small><a href="/privacy">개인정보처리방침</a><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a><span>웨딩 · 목소리 · 영상</span></div></footer>'}
-function serviceRows(keys){return keys.map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="#/detail/'+key+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
+function serviceRows(keys){return keys.filter(key=>["solo","duo"].includes(key)).map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="#/detail/'+key+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
 function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image"><img src="'+escapeHtml(src)+'" alt="실제 고객 카카오톡 후기 '+(i+1)+'" loading="eager" decoding="async"></span></figure>'}
 function homeReviews(){
  const featured=[
@@ -886,7 +884,7 @@ function detailDecisionSection(key,purpose=""){
  const dayLabel=key==="proposal"?"프로포즈 날짜가":"예식일이"
  return '<section class="detail-decision shell" aria-labelledby="detailDecisionTitle"><div class="detail-decision-copy"><p class="detail-decision-kicker">예약을 생각하고 있다면</p><h2 id="detailDecisionTitle">'+dayLabel+' 가까워지고,<br>준비할 시간은 짧아집니다.</h2><p>녹음과 제작, 수정과 최종 전달까지 여유롭게 준비할 수 있도록 지금 구성과 가격을 확인해 보세요.</p></div><div class="detail-decision-action"><div class="detail-decision-benefit">'+detailPriceDisplay(key,purpose)+'<p>카카오톡 상담 시 <strong>1만원 추가 할인</strong></p><small>추가 옵션·이벤트 혜택은 가격 계산기에서 확인해 주세요.</small></div><a class="detail-decision-cta" href="'+eventHref+'">가격 확인하고 예약 상담하기 <span aria-hidden="true">↗</span></a><p>제작 가능 일정과 최종 금액은 상담에서 확인합니다.</p></div></section>'
 }
-function renderHome(requested="role"){
+function renderLegacyHome(requested="role"){
  if(requested==="role"){renderWeddingHome();return}
  const stage=requested==="people"&&finderChoice.moment?"people":requested==="service"&&finderChoice.role==="couple"?"service":"role"
  if(stage==="role"){renderWeddingHome();return} // Unselected finder entry uses the approved home
@@ -913,10 +911,10 @@ function renderInfoPage(key){
  const address="경기도 부천시 석천로170번길 19, 2층"
  const locationContent='<div class="wistia-location"><div class="wistia-location-address"><span class="location-line-icon" aria-hidden="true">'+studioIcon('pin')+'</span><div class="location-address-row"><h2 class="studio-address" data-svg-title="off">'+address+'</h2><button class="location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">'+studioIcon('copy')+'</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 '+studioIcon('external')+'</a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 '+studioIcon('external')+'</a></div></div><div class="wistia-location-details"><article><h3>'+studioIcon('train')+'<span>지하철로 오실 때</span></h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><h3>'+studioIcon('car')+'<span>차량으로 오실 때</span></h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
  const directionsMap='<figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</a><figcaption>지도 이미지를 누르면 크게 볼 수 있습니다</figcaption></figure>'
- const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
- const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원·영상 제작','선택한 상품에 맞춰 목소리와 장면을 완성합니다'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a><a href="/detail/duet-film">축가 스토리 필름 알아보기 →</a></div></div>'
+ const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.filter(group=>group.title!=="영상 상품 안내").sort((a,b)=>(b.title==="AR 축가 안내")-(a.title==="AR 축가 안내")).map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
+ const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원·영상 제작','선택한 상품에 맞춰 목소리와 장면을 완성합니다'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent.replace('<div class="wistia-location-details">',directionsMap+'<div class="wistia-location-details">'):aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
- const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>과 <strong>축가 스토리 필름</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+page.description+'</p>'
+ const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+page.description+'</p>'
  app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1>'+introduction+'</header>'+content+'</section>'+footer()
 }
 function renderEventsPage(){
@@ -964,7 +962,7 @@ function updateHomeFinder(){
  result.innerHTML='<span class="eyebrow">YOUR SELECTION</span><h2>선택하신 조건</h2>'+picked+(key?'<h3>'+PRODUCTS[key].title+'</h3><p>상품 구성과 가격을 확인해 보세요</p><a class="finder-next" href="#/event/'+key+'">가격 확인하기 <span aria-hidden="true">↗</span></a>':'<p>선택하신 조건에 맞는 상품은 상담을 통해 안내해 드립니다</p><a class="finder-next" href="'+kakao()+'" target="_blank" rel="noopener noreferrer">카카오톡으로 문의하기 <span aria-hidden="true">↗</span></a>')
 }
 function renderPicker(kind){
- const song=kind==="song";const keys=song?["solo","duo"]:["duet-film"];
+ const song=kind==="song";const keys=["solo","duo"];
  app.innerHTML='<section class="shell section picker">'+label(song?"VOICE RECORDING":"WEDDING SONG FILM")+'<h1>'+(song?"현장에서는 편안하게<br>목소리는 미리 준비하세요":"축가 시간에 상영하는<br>우리의 뮤직비디오")+'</h1><p class="lead">'+(song?"미리 녹음한 목소리가 함께 흐르는 AR로 본식의 긴장을 덜어보세요":"하객 앞에서 직접 부르지 않아도, 직접 부른 노래로 마음을 전합니다")+'</p><div class="picker-grid">'+keys.map((k,i)=>{const p=PRODUCTS[k],m=SERVICE_META[k],href="#/detail/"+k;return '<article>'+label(m.type)+(m.image?'<a class="picker-photo" href="'+href+'" aria-label="'+p.title+' 상품 알아보기">'+img(m.image,p.title+' 안내 이미지')+'</a>':'<div class="type-art" aria-hidden="true">'+(k==="duet-film"?"DUET":"SOLO")+'</div>')+'<h2>'+p.title+'</h2><p>'+m.short+'</p><dl><div><dt>노래하는 사람</dt><dd>'+m.who+'</dd></div><div><dt>받는 결과물</dt><dd>'+m.result+'</dd></div></dl>'+cta("상품 알아보기",href)+'</article>'}).join("")+'</div></section>'+footer()
 }
 function compositionMedia(scene,index){const media=scene[2];if(!media)return "";if(Array.isArray(media))return '<div class="scene-image scene-pair">'+media.map((src,i)=>img(src,scene[0]+" 실제 영상 장면 "+(i+1))).join("")+'</div>';if(media.includes("-scenes.png"))return '<div class="scene-image scene-sprite" role="img" aria-label="'+escapeHtml(scene[0]+' 연출 이미지')+'" style="--scene-image:url(\'/'+media+'\');--scene-position:'+index*25+'%"></div>';return '<div class="scene-image">'+img(media.replace(".png",".webp"),scene[0]+" 실제 영상 장면")+'</div>'}
@@ -1114,21 +1112,21 @@ function detailPosterImage(src,alt,width,height){
 }
 function soloPoint04Section(){
  const labels={30:'라이브 중심',50:'반반 균형',70:'든든하게',100:'완벽하게'}
- const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio" data-solo-ratio="'+value+'" aria-pressed="false"><span class="solo-p4-eq" aria-hidden="true"><i></i><i></i><i></i></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
+ const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio'+(value===50?' is-on':'')+'" data-solo-ratio="'+value+'" aria-pressed="'+(value===50)+'"><span class="solo-p4-eq" aria-hidden="true"><i></i><i></i><i></i></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
  return '<section class="arc-point arc-point-ratio solo-p4 solo-shot solo-shot-narrow" id="soloPoint04" aria-label="본식 AR 비율 체험" data-svg-title="off">'+
-  '<img class="solo-shot-img" src="assets/detail-solo-16j/point04_ui_390.png" alt="본식 AR 비율 체험. 30, 50, 70, 100 퍼센트 중 하나를 누르면 해당 비율로 재생되고 정지로 멈춥니다" width="1170" height="2526" loading="lazy" decoding="async">'+
+  '<div class="solo-p4-art"><img class="solo-shot-img" src="assets/detail-solo-16j/point04_ui_390.png" alt="본식 AR 비율 체험. 30, 50, 70, 100 퍼센트 중 하나를 누르면 해당 비율로 재생되고 정지로 멈춥니다" width="1170" height="2526" loading="lazy" decoding="async"></div>'+
   '<div class="solo-p4-panel">'+
-  '<h2 class="solo-p4-title solo-seo">이제는 딱 맞는 비율로 섞어요</h2>'+
-  '<p class="solo-p4-hint solo-seo">비율을 누르면 바로 재생돼요</p>'+
+  '<h2 class="solo-p4-title">이제는 딱 맞는 비율로 섞어요</h2>'+
+  '<p class="solo-p4-hint">비율을 누르면 바로 재생돼요</p><p class="solo-p4-pointer">여기 눌러보세요! '+studioIcon('down')+'</p>'+
   '<div class="solo-p4-ratios"><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
   '<div class="solo-p4-card">'+
-  '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i>재생 중 · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
-  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="정지"><span aria-hidden="true"></span>정지</button></div>'+
+  '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i><span data-solo-state>재생 대기</span> · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
+  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="정지"><span aria-hidden="true">'+studioIcon('stop')+'</span>정지</button></div>'+
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
   '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
   '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
   '<audio data-solo-audio preload="none"></audio>'+
-  '</div></div></section>'
+  '</div><div class="solo-p4-closing">떨림은 덜고, 진심은 그대로<br><strong>내게 맞는 비율</strong>로 무대에 서세요<small>같은 곡을 비율별로 미리 들어보고 고를 수 있어요</small></div></div></section>'
 }
 function soloReviewGrid(){
  const cards=[
@@ -1149,7 +1147,7 @@ function soloChatFaq(){
   ['본식에서는 어떻게 사용하나요?','예식장에 본식용 AR 음원을 미리 전달하고 재생하며 직접 노래하시면 됩니다<br>담당자와 파일 재생 및 리허설 시간을 사전에 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
  ]
- return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow" id="arcFaq" data-svg-title="off"><h2 class="solo-seo">자주 묻는 질문을 확인해 보세요</h2><img class="solo-shot-img" src="assets/detail-solo-16j/faq_B.png" alt="자주 묻는 질문. 첫 질문은 펼쳐져 있고 나머지를 누르면 답이 열립니다" width="860" height="1378" loading="lazy" decoding="async"><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>'+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></section>'
+ return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow" id="arcFaq" data-svg-title="off"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true">'+studioIcon('plus')+'</i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></section>'
 }
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
@@ -1299,7 +1297,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
  const gallery='<div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="'+(duet?1:0)+'"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="SOLO 영상 보기" aria-pressed="'+(!duet)+'"></button><button type="button" data-mobile-video-slide="1" aria-label="DUET 영상 보기" aria-pressed="'+duet+'"></button></div></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p><p class="mas-event-price"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'
- const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="'+((key==='solo'||key==='duo')?'solo-seo':'')+'" data-svg-title="off">인원 선택</h2>'+variants+'</section>'
+ const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
  const intro=(key==='solo'||key==='duo')
   ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png"><img class="solo-shot-img" src="'+shot+'top_A.png" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
@@ -1524,7 +1522,7 @@ function renderProductOption(o){
 }
 function bookingBaseSection(key){
  const service=["solo","duo"].includes(key)?"solo":key
- const services=[["solo","AR 축가 사전녹음"],["duet-film","축가 스토리 필름"]]
+ const services=[["solo","AR 축가 사전녹음"]]
  const serviceSelect='<label class="booking-product-select" for="bookingService"><span class="sr-only">상품</span><select id="bookingService" name="quoteProduct" data-product-select>'+services.map(([value,label])=>'<option value="'+value+'"'+(service===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
  const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>SOLO(1인)</strong><small>1곡 기준 · 1시간</small></span><b>12만원</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>DUET(2인)</strong><small>1곡 기준 · 2시간</small></span><b>16만원</b></label></div></div>':bookingFilmFormatSection(key)
  const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준</p>':''
@@ -1600,15 +1598,15 @@ function updatePrice(){
 // The question dialog shares the existing calculator, never a second price table
 function quoteState(){return {key:currentEventProduct,purpose:currentEventPurpose,format:selectedFilmFormat,people:selectedFilmPeople,options:[...selectedOptions],events:[...selectedEvents]}}
 function setQuoteState(state){
- currentEventProduct=["solo","duo","duet-film"].includes(state.key)?state.key:"solo";currentEventPurpose=state.purpose==="making"?"":state.purpose||"";selectedFilmFormat="live";selectedFilmPeople=state.people||1
+ currentEventProduct=["solo","duo"].includes(state.key)?state.key:"solo";currentEventPurpose=state.purpose==="making"?"":state.purpose||"";selectedFilmFormat="live";selectedFilmPeople=state.people||1
  selectedOptions=new Set((state.options||[]).filter(key=>eventProductOptions(currentEventProduct,currentEventPurpose).some(option=>option.key===key)));selectedEvents=new Set(state.events||[]);optionQuantities={};chosenOption=""
 }
 window.WistiaQuote={
  options:key=>eventProductOptions(key).map(item=>({...item})),events:()=>EVENTS.map(item=>({...item})),
- context:()=>{const key=routePath().split('/')[2];return {key:["solo","duo","duet-film"].includes(key)?key:"solo",format:"live",...(document.body.dataset.page==="event"&&["solo","duo","duet-film"].includes(currentEventProduct)?quoteState():{})}},
+ context:()=>{const key=routePath().split('/')[2];return {key:["solo","duo"].includes(key)?key:"solo",format:"live",...(document.body.dataset.page==="event"&&["solo","duo"].includes(currentEventProduct)?quoteState():{})}},
  preview:state=>{const previous=quoteState(),quantities=optionQuantities,option=chosenOption;try{setQuoteState(state);return calculate()}finally{setQuoteState(previous);optionQuantities=quantities;chosenOption=option}},
  apply:state=>{
-  const key=["solo","duo","duet-film"].includes(state.key)?state.key:"solo",purpose="",path="/event/"+key
+  const key=["solo","duo"].includes(state.key)?state.key:"solo",purpose="",path="/event/"+key
   if(path!==routePath())history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",path+location.search)
   route();setQuoteState({...state,key,purpose});renderEvent(key,purpose);normalizeInternalLinks()
  },consult:()=>jumpToInquiry(),
@@ -1698,7 +1696,7 @@ async function copyConsultationAndShowDialog(customText){
  if(copied){showDialog('<span class="consult-copy-mark" aria-hidden="true">✓</span><h2>상담양식이 복사되었습니다</h2><p>카카오톡에 붙여넣기 해주세요!</p>'+kakaoLink,"consult-copy-dialog")}
  else{showDialog('<h2>상담양식을 자동으로 복사하지 못했습니다</h2><p>아래 내용을 직접 복사한 뒤 카카오톡에 붙여넣어 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'+kakaoLink,"consult-copy-dialog")}
 }
-function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo'],['축가 스토리 필름','/detail/duet-film']]},{label:'목소리와 이야기',items:[['축가 사례','/section/homeCases'],['보컬 보정 전후 비교','/before-after'],['진행 안내','/info/process']]},{label:'위스티아',items:[['위스티아는 어떤 곳인가요?','/info/about'],['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
+function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'목소리와 이야기',items:[['축가 사례','/section/homeCases'],['보컬 보정 전후 비교','/before-after'],['진행 안내','/info/process']]},{label:'위스티아',items:[['위스티아는 어떤 곳인가요?','/info/about'],['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
@@ -1799,7 +1797,7 @@ function initMetaEngagementTracking(pagePath,pricePage){
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 function setPageMeta({title,description,image,robots=""}){
  document.title=title;
- const url="https://www.wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
+ const url="https://wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
  const shareImage=image||"https://www.wistiastudio.com/assets/img/og/wistia-og.png";
  const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":url,"meta[property='og:image']":shareImage,"meta[name='twitter:image']":shareImage};
  Object.entries(values).forEach(([selector,value])=>{const tag=document.querySelector(selector);if(tag)tag.content=value});
@@ -1838,19 +1836,20 @@ function initSoloPoint04(){
  const paint=ratio=>{const ar=Number(ratio)||0,live=Math.max(0,100-ar);if(liveBar)liveBar.style.flexGrow=String(live||0.001);if(arBar)arBar.style.flexGrow=String(ar||0.001);if(liveLabel)liveLabel.textContent='현장 라이브 보컬 '+live;if(arLabel)arLabel.textContent='미리 녹음한 AR 보컬 '+ar;if(mix)mix.textContent='AR '+ar+'%'}
  const onTime=()=>{if(current)current.textContent=fmt(audio.currentTime);if(seek&&document.activeElement!==seek){seek.max=String(Number.isFinite(audio.duration)?audio.duration:0);seek.value=String(audio.currentTime||0)}}
  const onMeta=()=>{if(durationEl)durationEl.textContent=fmt(audio.duration);if(seek)seek.max=String(Number.isFinite(audio.duration)?audio.duration:0)}
- const onEnded=()=>buttons.forEach(button=>button.classList.remove('is-playing'))
- audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded)
+ const state=root.querySelector('[data-solo-state]');const onState=()=>{if(state)state.textContent=audio.paused?'정지':'재생 중';buttons.forEach(button=>button.classList.toggle('is-playing',!audio.paused&&button.classList.contains('is-on')))};const onEnded=onState
+ audio.addEventListener('play',onState);audio.addEventListener('pause',onState)
+ audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded);paint(50)
  buttons.forEach(button=>button.addEventListener('click',()=>{
   const ratio=button.dataset.soloRatio
   buttons.forEach(item=>{const on=item===button;item.classList.toggle('is-on',on);item.classList.toggle('is-playing',on);item.setAttribute('aria-pressed',String(on))})
-  paint(ratio);card.hidden=false;if(error)error.hidden=true
+  paint(ratio);card.hidden=false;if(error)error.hidden=true;if(state)state.textContent='불러오는 중';if(current)current.textContent='0:00';if(durationEl)durationEl.textContent='0:00';if(state)state.textContent='불러오는 중';if(current)current.textContent='0:00';if(durationEl)durationEl.textContent='0:00'
   audio.src=ratioSource(ratio);audio.currentTime=0
   window.wistiaClaimPlayback?.(audio)
-  const pending=audio.play();if(pending)pending.catch(()=>{if(error)error.hidden=false})
+  const pending=audio.play();if(pending)pending.catch(()=>{if(error)error.hidden=false;if(state)state.textContent='재생 오류';buttons.forEach(button=>button.classList.remove('is-playing'))})
  }))
  seek?.addEventListener('input',()=>{audio.currentTime=Number(seek.value)||0;onTime()})
  stop?.addEventListener('click',()=>{audio.pause();audio.currentTime=0;onTime();buttons.forEach(button=>button.classList.remove('is-playing'))})
- soloPoint04Cleanup=()=>{audio.pause();audio.removeAttribute('src');audio.load();audio.removeEventListener('timeupdate',onTime);audio.removeEventListener('loadedmetadata',onMeta);audio.removeEventListener('ended',onEnded)}
+ soloPoint04Cleanup=()=>{audio.pause();audio.removeAttribute('src');audio.load();audio.removeEventListener('timeupdate',onTime);audio.removeEventListener('loadedmetadata',onMeta);audio.removeEventListener('ended',onEnded);audio.removeEventListener('play',onState);audio.removeEventListener('pause',onState)}
 }
 function initSoloReviewLightbox(){
  const root=document.querySelector('[data-solo-reviews]');if(!root)return
@@ -1867,11 +1866,12 @@ function initSoloMapZoom(){
 function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")
+ if(/^\/(detail|event|choose)\/duet-film(?:\/|$)/.test(routePath())||/^\/(film|find|section)(?:\/|$)/.test(routePath())){history.replaceState(history.state,"","/"+location.search)}
  if(routePath()==='/section/homeProcess')history.replaceState(history.state,"",'/info/process'+location.search)
  // The retired making-film detail now leads to the current story-film product.
  if(/^\/detail\/solo-film(?:\/|$)/.test(routePath())){
   closeDialog();
-  history.replaceState(history.state,"","/detail/duet-film"+location.search);
+  history.replaceState(history.state,"","/"+location.search);
  }
  if(/^\/(detail|event|choose)\/(wedding|proposal|solo-film)(?:\/|$)/.test(routePath())){
   closeDialog();
@@ -1883,13 +1883,13 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  const previousScrollY=preserveScroll?window.scrollY:0
  const previousAnchorTop=scrollAnchor?document.querySelector(scrollAnchor)?.getBoundingClientRect().top:null
  closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;soloPoint04Cleanup?.();soloPoint04Cleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;homeHighlightInstance?.destroy();homeHighlightInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
- const home=!type||type==="section"||type==="find";const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
+ const home=!type||type==="section"||type==="find";const rootSolo=!type;const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const reuseArPriceForm=reuseEventForm&&event&&["solo","duo"].includes(key)&&["solo","duo"].includes(currentEventProduct)&&Boolean(app.querySelector("#consultForm"));
- const nextHasRatio=Boolean(ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
- const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=home?"home":type==="contact"?"event":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("is-solo-detail",unifiedDetail);document.body.classList.toggle("is-ar-detail",arDetail);document.body.classList.toggle("is-event-inquiry",Boolean(event));
+ const nextHasRatio=Boolean(rootSolo||ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
+ const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=rootSolo?"detail":home?"home":type==="contact"?"event":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("is-solo-detail",unifiedDetail||rootSolo);document.body.classList.toggle("is-ar-detail",arDetail||rootSolo);document.body.classList.toggle("is-event-inquiry",Boolean(event));
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
- if(home)renderHome(type==="find"?key:"role");else if(type==="contact")renderContactPage();else if(type==="before-after")renderBeforeAfterPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ if(home)renderDetail("solo");else if(type==="contact")renderContactPage();else if(type==="before-after")renderBeforeAfterPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  window.WistiaGuide?.destroy?.()
  document.querySelector('#guideLayer')?.remove()
  prepareSvgPlayerControls()
@@ -1920,7 +1920,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  const orphan=window.WISTIA_SEO.noindex?.[path];
  const recognized=home||validDetail||Boolean(ar)||Boolean(event)||eventsPage||Boolean(info)||type==="song"||type==="film"||type==="before-after"||type==="contact";
  const noindex=Boolean(orphan)||path==="/before-after"||path==="/find"||path.startsWith("/find/")||path.startsWith("/choose/")||!recognized;
- const pageMeta=orphan||(home?SEO_HOME:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:info&&key==="location"?window.WISTIA_SEO?.location||{title:fallbackTitle,description:INFO_PAGES.location.description}:{title:fallbackTitle,description:SEO_HOME.description});
+ const pageMeta=orphan||(home?SEO_DETAIL.solo:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:info&&key==="location"?window.WISTIA_SEO?.location||{title:fallbackTitle,description:INFO_PAGES.location.description}:{title:fallbackTitle,description:SEO_HOME.description});
  setPageMeta({...pageMeta,robots:noindex?"noindex, follow":""});
  window.wistiaMeta?.trackPageView();
  if(detail){
