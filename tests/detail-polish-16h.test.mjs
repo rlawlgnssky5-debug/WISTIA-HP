@@ -23,7 +23,7 @@ await test('16i solo detail is real UI and duo keeps the shared player',()=>{
  assert.match(css,/#C62828/)
  assert.match(index,/js\/app\.js\?v=20261013-detail-polish-16i/)
  assert.match(index,/js\/booking-availability\.js\?v=20261013-detail-polish-16i/)
- assert.match(index,/css\/detail-point-16i\.css\?v=20261013-detail-polish-16i/)
+ assert.match(index,/css\/detail-point-16i\.css\?v=20261014-hotfix-16i-caption/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261013-detail-polish-16h/)
  assert.match(index,/css\/detail-point-16f\.css\?v=20261013-detail-polish-16h/)
  assert.match(index,/css\/booking-availability\.css\?v=20261013-detail-polish-16g/)

@@ -11,8 +11,8 @@ html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir
 /* Top: caption and pill dots sit on the video. Cards keep one height. */
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .mobile-ar-solo[data-ar-product="solo"] .mas-gallery{position:relative}
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .mobile-ar-solo[data-ar-product="solo"] .mas-gallery-caption{
- position:absolute;left:14px;bottom:14px;z-index:3;max-width:calc(100% - 132px);margin:0;padding:0;
- color:#fff;font-size:13px;line-height:1.45;text-align:left;text-shadow:0 1px 6px #3a2a2ccc;pointer-events:none;
+ position:absolute;top:auto;right:auto;left:14px;bottom:14px;z-index:3;width:auto;max-width:calc(100% - 132px);margin:0;padding:0;
+ background:none!important;border-radius:0;color:#fff!important;font-size:13px;line-height:1.45;text-align:left;text-shadow:0 1px 6px #3a2a2ccc;pointer-events:none;
 }
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .mobile-ar-solo[data-ar-product="solo"] .mas-format-badge{display:none!important}
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .mobile-ar-solo[data-ar-product="solo"] .mas-gallery-tools{
