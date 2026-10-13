@@ -78,7 +78,9 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
     if(path.startsWith('/detail/')){
      assert.doesNotMatch(await page.locator('#app').innerText(),/Q & A|한 소절씩 나누어 녹음|첫 소절과 다음 소절|편안한 음역, 더 자연스러운 노래/)
      if(path!=='/detail/duet-film'){
-      await page.locator('.recording-join-illustration').waitFor();assert.match(await page.locator('.recording-join-illustration').getAttribute('alt'),/녹음 구간 연결 예시/)
+      await page.locator('#arcRecording .detail-poster-image').waitFor();assert.match(await page.locator('#arcRecording .detail-poster-image').getAttribute('src'),/point01-recording\.webp\?v=16f/)
+      assert.equal(await page.locator('#arcRecording .detail-poster-image').getAttribute('width'),'860')
+      assert.equal(await page.locator('#arcRecording .detail-poster-image').getAttribute('height'),'2236')
      }
      const offsets=await page.locator('.detail-point-label').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().width).map(n=>{const r=n.getBoundingClientRect();return r.x+r.width/2-innerWidth/2}))
      for(const offset of offsets)assert.ok(Math.abs(offset)<=1,`${path} POINT center ${offset}`)

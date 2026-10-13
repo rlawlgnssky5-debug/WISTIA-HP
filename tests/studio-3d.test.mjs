@@ -20,7 +20,7 @@ for(const art of manifest.assets){
  assert.equal(art.transparent,['folder','vinyl'].includes(art.name))
 }
 assert.ok(bytes<750000)
-assert.match(source,/class="mas-key-caption-image" src="assets\/img\/studio-3d\/key-shift-caption\.webp\?v=20261013-detail-polish-16d"/)
+assert.match(source,/class="mas-key-caption-image" src="assets\/img\/studio-3d\/key-shift-caption\.webp\?v=20261013-detail-polish-16f"/)
 assert.match(source,/studio-folder-3d/)
 assert.match(source,/assets\/img\/studio-3d\/vinyl.webp/)
 assert.match(css,/\.studio-folder-3d img/)

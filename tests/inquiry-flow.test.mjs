@@ -56,7 +56,8 @@ assert.ok(home.indexOf('id="homeCases"')<home.indexOf('we-review-wrap'))
 assert.ok(home.indexOf('we-review-wrap')<home.indexOf('id="homeSound"'))
 assert.doesNotMatch(home,/4단계로 준비하는|id="homeProcess"/)
 assert.match(source,/POINT 02|POINT '\+number/)
-assert.match(source,/linearGradient id="arJoinedWave"/)
+assert.match(source,/point01-recording\.webp\?v=16f/)
+assert.match(source,/detailPosterImage\('assets\/detail\/point01-recording\.webp\?v=16f',alt,860,2236\)/)
 assert.match(css,/arc-recording-flow li:nth-child\(2\)/)
 context.FormData=class {constructor(form){this.entries=form.data}[Symbol.iterator](){return this.entries[Symbol.iterator]()}}
 const draftForm={elements:[],data:[['name','검수'],['source','메타 광고'],['service','AR 축가 사전녹음'],['quoteProduct','solo'],['arDuration','on'],['eventDateMode','unknown'],['timeStart','17:00']]}

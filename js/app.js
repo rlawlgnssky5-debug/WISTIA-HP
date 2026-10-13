@@ -708,7 +708,7 @@ const WISTIA_ADVANTAGES=[
  ["추가 비용","상담 시 안내드린 금액 그대로","녹음·촬영 시간이 길어져도 당일 추가 비용은 없습니다"]
 ]
 function detailPriceReason(){return '<section class="arc-section detail-price-reason" aria-labelledby="detailPriceReasonTitle"><div class="shell"><header><span class="we-section-tag price-reason-label">가격 안내</span><h2 id="detailPriceReasonTitle">왜 저렴한가요?</h2></header><p class="price-reason-lead"><u class="wistia-emphasis-underline">서울이 아닌 부천</u>에서 운영해 가격 부담을 낮췄습니다</p><p>보컬 디렉팅·수작업 보정·믹싱·마스터링은 기본 구성에 포함합니다</p></div>'+'</section>'}
-function wistiaAdvantagesSection(){const description=WISTIA_ADVANTAGES.map(([category,title,copy],index)=>String(index+1).padStart(2,'0')+' '+category+' / '+title+' / '+copy).join(' · ');return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><picture class="advantages-illustration"><source media="(max-width:700px)" srcset="assets/img/studio-illustrations/advantages-mobile.svg?v=20261013-detail-polish-16d"><img src="assets/img/studio-illustrations/advantages-desktop.svg?v=20261013-detail-polish-16d" alt="'+escapeHtml(description)+'" loading="lazy"></picture></div></section>'+detailPriceReason()}
+function wistiaAdvantagesSection(){const description=WISTIA_ADVANTAGES.map(([category,title,copy],index)=>String(index+1).padStart(2,'0')+' '+category+' / '+title+' / '+copy).join(' · ');return '<section class="wistia-advantages section" aria-labelledby="wistiaAdvantagesTitle"><div class="shell"><header><h2 id="wistiaAdvantagesTitle">위스티아의 장점</h2><p>한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다</p></header><picture class="advantages-illustration"><source media="(max-width:700px)" srcset="assets/img/studio-illustrations/advantages-mobile.svg?v=20261013-detail-polish-16f"><img src="assets/img/studio-illustrations/advantages-desktop.svg?v=20261013-detail-polish-16f" alt="'+escapeHtml(description)+'" loading="lazy"></picture></div></section>'+detailPriceReason()}
 function productComparisonSection(){return wistiaAdvantagesSection()}
 function prepareArHookVideo(){document.querySelectorAll(".ar-hook-media video").forEach(video=>{const button=video.closest('.ar-hook-media')?.querySelector("[data-ar-video-toggle]");if(!button)return;const update=()=>{const playing=!video.paused&&!video.ended;video.classList.toggle("is-playing",playing);button.classList.toggle("is-playing",playing);button.setAttribute("aria-label",playing?"영상 일시정지":"영상 재생")};video.addEventListener("playing",update);video.addEventListener("pause",update);video.addEventListener("ended",update);video.addEventListener("waiting",update);update()})}
 const arVideoFeedbackTimers=new WeakMap()
@@ -1107,7 +1107,10 @@ return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail film-co
 // Conversion helpers are reused unchanged, consultation first goes to the calculator
 function arRecordingPoster(){
  const alt='POINT 01 한 소절씩 녹음하는 장면, 어려운 구간을 나누어 녹음하고 1:1 실시간 디렉팅으로 차근차근 맞춰가는 과정 안내'
- return '<section class="arc-point arc-point-recording" id="arcRecording"><img src="assets/detail/point01-recording.webp" alt="'+escapeHtml(alt)+'" width="100%" style="display:block;width:100%;max-width:860px;height:auto;margin:0 auto;object-fit:contain" loading="lazy" decoding="async"></section>'
+ return '<section class="arc-point arc-point-recording" id="arcRecording">'+detailPosterImage('assets/detail/point01-recording.webp?v=16f',alt,860,2236)+'</section>'
+}
+function detailPosterImage(src,alt,width,height){
+ return '<img class="detail-poster-image" src="'+src+'" alt="'+escapeHtml(alt)+'" width="'+width+'" height="'+height+'" loading="lazy" decoding="async">'
 }
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
@@ -1142,6 +1145,12 @@ function arCommerceDetail(p,key="solo"){
   ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
  ]
  const customerVideo=arCustomerVideoData(key)
+ const keySection=key==='solo'
+  ?'<section class="arc-point arc-point-poster" id="arcKey">'+detailPosterImage('assets/detail/point02-key.webp?v=16f','POINT 02 원곡이 높다면? 내 목소리에 맞춥니다. 음원 편집과 키 조절은 추가금 없이 무료, 원하는 곡과 MR을 먼저 보내주시면 편한 키와 녹음 방향을 상담에서 확인합니다',860,1840)+'</section>'
+  :point('02','원곡이 높다면?<br><mark>내 목소리에 맞춥니다</mark>','원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 상담에서 확인합니다','assets/img/process-no-people/03.svg','목소리에 맞는 키와 녹음 방향을 상담하는 과정 예시')
+ const tuningSection=key==='solo'
+  ?'<section class="arc-point arc-point-tuning arc-point-tuning-rose" id="arcTuning" aria-label="보컬 보정 전후 듣기">'+detailPosterImage('assets/detail/point03-top.webp?v=16f','POINT 03 음정·박자가 흔들려도 자연스럽게 다듬어 드려요. 내 목소리 그대로, 어색한 부분만 음정·박자·호흡을 섬세하게 보정합니다',860,575)+wistiaBeforeAfterSection(true)+detailPosterImage('assets/detail/point03-bottom.webp?v=16f','POINT 03 이렇게 다듬어요. 보컬 보정은 음정·박자·호흡과 잡음을 정리하고, 믹싱·마스터링으로 본식 음원을 완성합니다',860,1472)+'</section>'
+  :'<section class="arc-point arc-point-tuning" aria-label="보컬 보정 전후 듣기">'+detailPointSection(wistiaBeforeAfterSection(),'03')+'</section>'
  const media='<div class="arc-product-media ar-hook-media"><img class="ar-hook-fallback" src="'+customerVideo.poster+'" alt="'+customerVideo.label+'" fetchpriority="high"><video loop playsinline preload="metadata" poster="'+customerVideo.poster+'" aria-label="'+customerVideo.label+'"><source src="'+customerVideo.src+'" type="video/mp4"></video><button class="ar-hook-video-control" type="button" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play">▶</span><span class="ar-icon-pause">Ⅱ</span></button><span class="arc-media-note">고객님이 직접 보내주신 본식 영상</span></div>'
  const desktopHtml='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail" data-ar-product="'+key+'">'+
  '<section class="arc-product" aria-labelledby="arcProductTitle">'+media+'<div class="arc-summary"><p class="arc-kicker">WISTIA · 경기도 부천</p><h1 id="arcProductTitle">위스티아 AR 축가<br><span data-ar-format>'+(key==='duo'?'DUET(2인)':'SOLO(1인)')+'</span> · <span data-ar-hours>'+hours+'</span>시간</h1><p class="arc-hook">축가, 직접 부르세요!<br>목소리는 미리 준비하세요</p><div class="arc-price" data-price-block><span>1곡 기준 · 기본 가격</span><strong><span data-ar-price>'+amount+'</span><small>원</small></strong></div><div class="arc-options" role="group" aria-label="녹음 시간 선택"><button type="button" data-ar-time="solo" aria-pressed="'+(key==='solo')+'"><b>SOLO(1인)</b><span>1시간 · 12만원</span></button><button type="button" data-ar-time="duo" aria-pressed="'+(key==='duo')+'"><b>DUET(2인)</b><span>2시간 · 16만원</span></button></div><p class="arc-included">보컬 디렉팅 · 음정·박자 보정<br>믹싱·마스터링 포함</p><div class="arc-actions">'+action('가격·옵션 확인')+action('카카오톡 상담',true)+'</div><p class="arc-online-note">사이트 결제 없이 상담으로 일정과 구성을 확인합니다</p></div></section>'+
@@ -1150,8 +1159,8 @@ function arCommerceDetail(p,key="solo"){
  '<section class="arc-empathy arc-section" id="arcEmpathy"><span class="arc-kicker">축가가 걱정되신다면</span><h2>노래 실력보다<br><mark>내 목소리가 먼저입니다</mark></h2><p>떨려서 음정이 흔들릴까 봐, 가사를 놓칠까 봐<br>혼자 걱정하지 마세요</p><div class="arc-emphasis">미리 녹음한 내 목소리가<br>본식에서 함께합니다</div><p>내 목소리가 담긴 AR을 재생하며 직접 부르는 축가<br>마음은 직접 전하고, 목소리는 미리 준비합니다</p></section>'+
  '<div class="arc-reviews">'+soloReviewCarousel().replace('카카오톡으로 받은 후기 원문 그대로예요','녹음·영상 상품의 카카오톡 후기 원문 그대로예요')+'</div>'+
  arRecordingPoster()+
- point('02','원곡이 높다면?<br><mark>내 목소리에 맞춥니다</mark>','원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 상담에서 확인합니다','assets/img/process-no-people/03.svg','목소리에 맞는 키와 녹음 방향을 상담하는 과정 예시')+
- '<section class="arc-point arc-point-tuning" aria-label="보컬 보정 전후 듣기">'+detailPointSection(wistiaBeforeAfterSection(),'03')+'</section>'+
+ keySection+
+ tuningSection+
  '<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>'+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">가사 영상 추가 옵션 · 1곡 기준 · +40,000원</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
@@ -1170,7 +1179,7 @@ function mobileArDesignIcon(name){
  return studioIcon(name==='record'?'microphone':name)
 }
 function mobileArCutPoster(){
- return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg?v=20261013-detail-polish-16d" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
+ return '<figure class="mas-cut-poster mas-svg-illustration"><img class="recording-join-illustration" src="assets/img/studio-illustrations/recording-join.svg?v=20261013-detail-polish-16f" alt="녹음 구간 연결 예시: 첫 소절과 다음 소절의 좋은 구간을 이어 붙여요" width="360" height="300" loading="lazy"><figcaption class="ar-essential-line"><span class="ar-line-full">어려운 구간은 나누어 녹음하고 1:1 디렉팅으로 차근차근 맞춰갑니다</span></figcaption></figure>'
 }
 function mobileArProcess(key="solo"){
  const steps=detailStudioSteps(key)
@@ -1219,7 +1228,7 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
  details=details.replace(/<a class="arc-button[^\"]*" href="\/event\/(?:solo|duo)" data-ar-price-link>가사 영상 옵션 견적 뽑기<\/a>/,'')
  details=details.replace(/<figure class="arc-recording-poster"[\s\S]*?<\/figure>/,mobileArCutPoster())
  details=details.replace('<p>어려운 구간은 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다</p>','')
-details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16d" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
+details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16f" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
  details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')

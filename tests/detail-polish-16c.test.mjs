@@ -47,9 +47,9 @@ await test('16c: actual body font stays readable, diagram retains intrinsic rati
     }))
     assert.equal(new Set(titles.map(n=>n.size)).size,1,JSON.stringify(titles));assert.ok(titles.every(n=>n.weight==='600'&&n.inside&&n.rows===n.expected),product+' '+width+' '+JSON.stringify(titles));assert.equal(new Set(titles.map(n=>n.line)).size,1)
     if(product!=='duet-film'){
-     const diagram=page.locator('.recording-join-illustration');await diagram.scrollIntoViewIfNeeded();await diagram.evaluate(n=>n.decode())
-     const m=await diagram.evaluate(n=>{const s=getComputedStyle(n),b=n.getBoundingClientRect();return {width:b.width,height:b.height,fit:s.objectFit,ratio:s.aspectRatio,minLabel:19*b.width/360}})
-     assert.ok(Math.abs(m.width/m.height-360/300)<.01,JSON.stringify(m));assert.equal(m.fit,'contain');assert.equal(m.ratio,'auto');assert.ok(m.width<=800&&m.minLabel>=13,JSON.stringify(m))
+     const poster=page.locator('#arcRecording .detail-poster-image');await poster.scrollIntoViewIfNeeded();await poster.evaluate(n=>n.decode())
+     const m=await poster.evaluate(n=>{const s=getComputedStyle(n),b=n.getBoundingClientRect();return {width:b.width,height:b.height,fit:s.objectFit,ratio:n.naturalWidth/n.naturalHeight,display:s.display}})
+     assert.ok(Math.abs(m.width/m.height-860/2236)<.02,JSON.stringify(m));assert.notEqual(m.fit,'cover');assert.equal(m.display,'block');assert.ok(m.width<=860.5,JSON.stringify(m))
     }
    }
    await context.close()
