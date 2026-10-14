@@ -59,7 +59,7 @@
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
    const teams=key==='bookingDate'&&!past&&!weekdayClosed&&!notionClosed&&Array.isArray(blocks)?Number(global.WistiaBooking?.teamsRemaining?.(value,product,blocks))||0:0
    const teamLabel=scarceTeamLabel(teams)
-   cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(teamLabel?' has-one-team':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(notionClosed?' · 마감':teamLabel?' · '+teamLabel:past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':teamLabel?'<small class="one-team">'+teamLabel+'</small>':'')+'</button>'
+   cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(teamLabel?' has-one-team':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed&&!past?' · 마감':teamLabel?' · '+teamLabel:past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(closed&&!past?'<small>마감</small>':teamLabel?'<small class="one-team">'+teamLabel+'</small>':'')+'</button>'
   }
   return cells
  }
@@ -69,7 +69,6 @@
   return '<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span>닫기</span></button>'
  }
  function syncEventDateClose(calendar,value){
-  if(calendar.dataset.calendar!=='eventDate')return
   const close=calendar.querySelector('[data-calendar-close]');if(!close)return
   const chosen=!!value
   close.classList.toggle('is-confirm',chosen)
@@ -158,6 +157,7 @@
     if(value&&selectableBookingDate(value,key)){
      input.value=value;paintCalendar(state)
      input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))
+     if(key==='bookingDate'&&form.dataset.wizard)closeCalendar(state)
     }
    })
    calendar.addEventListener('change',event=>{
@@ -181,6 +181,7 @@
   syncTimeChoices(form)
  }
  function syncTimeChoices(form){
+  if(form?.dataset.wizard&&global.WistiaWizard)return global.WistiaWizard.syncTimes(form)
   if(!form?.querySelector)return
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector?.('#contact-time'),date=form.querySelector?.('#contact-bookingDate')
   if(!list||!time||!date)return
@@ -337,5 +338,5 @@
   lines.push('','※ 예약 가능 여부는 상담에서 확정돼요')
   return lines.join('\n')
  }
- global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
+ global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,dateField,timeField,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
 })(window)

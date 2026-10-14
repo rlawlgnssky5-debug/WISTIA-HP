@@ -37,13 +37,11 @@
 // Three hours of bookable session time is one team: 3h → 1, 6h → 2, 9h → 3.
 function teamsRemaining(date,key,blocks,now=Date.now()){
  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
- const minutes=duration(key)
- let bookable=0,next=0
+ let bookable=0
  for(const {value:time} of timeWindows(key)){
   const start=Date.parse(date+'T'+time+':00+09:00')
-  if(!Number.isFinite(start)||start<now||start<next||slotBlocked(date,time,minutes,blocks))continue
-  bookable+=minutes
-  next=start+minutes*60000
+  if(!Number.isFinite(start)||start<now||slotBlocked(date,time,30,blocks))continue
+  bookable+=30
  }
  return Math.floor(bookable/180)
 }
