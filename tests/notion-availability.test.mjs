@@ -29,7 +29,7 @@ assert.equal(rules.slotBlocked('2026-10-11','13:00',60,extractBlocks([booking({s
 assert.deepEqual(extractBlocks([booking({start:'2026-10-11'},'취소')]),[],'existing cancellation field releases the reservation')
 const cross=interval({start:'2026-10-10T23:30:00+09:00',end:'2026-10-11T01:00:00+09:00'})
 assert.equal(rules.slotBlocked('2026-10-10','23:00',120,mergeBlocks([cross],'2026-10-10')),true,'next-day overlap retained')
-const env={NOTION_BOOKING_TOKEN:'TEST_ONLY_TOKEN',NOTION_BOOKING_DATA_SOURCE_ID:'9675b5f6-7b45-8268-9d4d-87bee91ae79a'}
+const env={NOTION_BOOKING_TOKEN:'TEST_ONLY_TOKEN',NOTION_BOOKING_DATA_SOURCE_ID:'9675b5f6-7b45-8268-9d4d-87bee91ae79a',NOTION_CALENDAR_DB_ID:'off'}
 const calls=[]
 const fetcher=async(url,options)=>{
  calls.push({url,options})
