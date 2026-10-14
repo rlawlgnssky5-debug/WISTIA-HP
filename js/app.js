@@ -1121,7 +1121,7 @@ function soloPoint04Section(){
   '<div class="solo-p4-ratios"><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
   '<div class="solo-p4-card">'+
   '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i><span data-solo-state>재생 대기</span> · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
-  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="정지"><span aria-hidden="true">'+studioIcon('stop')+'</span>정지</button></div>'+
+  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="재생"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2 1v10l9-5Z" fill="currentColor"/></svg><span>재생</span></button></div>'+
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
   '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
   '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
@@ -1265,7 +1265,8 @@ return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
- const galleryVideos=['solo','duo'].map((galleryKey,index)=>{const item=arCustomerVideoData(galleryKey);return '<div class="mas-gallery-slide" id="masVideoSlide'+index+'"><div class="arc-product-media ar-hook-media mas-video-surface"><img class="ar-hook-fallback" src="'+item.poster+'" alt="'+item.label+'" '+(galleryKey===key?'fetchpriority="high"':'loading="lazy"')+'><video loop playsinline preload="metadata" poster="'+item.poster+'" aria-label="'+item.label+'"><source src="'+item.src+'" type="video/mp4"></video><button class="ar-hook-video-control" type="button" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true">'+studioIcon('play')+'</span><span class="ar-icon-pause" aria-hidden="true">'+studioIcon('pause')+'</span></button></div></div>'}).join('')
+ const galleryOrder=duet?['duo','solo']:['solo','duo']
+ const galleryVideos=galleryOrder.map((galleryKey,index)=>{const item=arCustomerVideoData(galleryKey);return '<div class="mas-gallery-slide" id="masVideoSlide'+index+'"><div class="arc-product-media ar-hook-media mas-video-surface"><img class="ar-hook-fallback" src="'+item.poster+'" alt="'+item.label+'" '+(galleryKey===key?'fetchpriority="high"':'loading="lazy"')+'><video loop playsinline preload="metadata" poster="'+item.poster+'" aria-label="'+item.label+'"><source src="'+item.src+'" type="video/mp4"></video><button class="ar-hook-video-control" type="button" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play" aria-hidden="true">'+studioIcon('play')+'</span><span class="ar-icon-pause" aria-hidden="true">'+studioIcon('pause')+'</span></button></div></div>'}).join('')
  const info=[['상품','AR 축가 사전녹음'],['인원 · 곡수',people+'인 · 1곡'],['녹음시간',hours+'시간 <small>안내·연습·부가 시간 포함</small>'],['포함 작업','녹음 · 보컬 디렉팅 · 음정·박자 보정 · 믹싱 · 마스터링'],['전달 파일','본식용 AR · 완성 음원'],['제작 기간','녹음 후 최대 7일 이내']]
  const variants=['solo','duo'].map(option=>{
   const selected=option===key,isDuet=option==='duo',label=(isDuet?'DUET · 2인':'SOLO · 1인')
@@ -1295,12 +1296,12 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  }
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
- const gallery='<div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="'+(duet?1:0)+'"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="SOLO 영상 보기" aria-pressed="'+(!duet)+'"></button><button type="button" data-mobile-video-slide="1" aria-label="DUET 영상 보기" aria-pressed="'+duet+'"></button></div></div></div>'
+ const gallery='<div class="mas-gallery" aria-label="AR 축가 본식 영상" data-mobile-gallery data-mobile-gallery-start="0"><p class="mas-gallery-caption">위스티아와 함께 준비한 실제 본식 축가</p><div class="mas-gallery-viewport"><div class="mas-gallery-track">'+galleryVideos+'</div></div><div class="mas-gallery-tools"><span class="mas-format-badge">'+format+' · '+people+'인</span><div class="mas-gallery-dots" role="group" aria-label="본식 영상 선택"><button type="button" data-mobile-video-slide="0" aria-label="'+(duet?'DUET':'SOLO')+' 영상 보기" aria-pressed="true"></button><button type="button" data-mobile-video-slide="1" aria-label="'+(duet?'SOLO':'DUET')+' 영상 보기" aria-pressed="false"></button></div></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p><p class="mas-event-price"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
  const intro=(key==='solo'||key==='duo')
-  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j14"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j14" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
+  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j15"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j15" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
  const information=(key==='solo'||key==='duo')
   ?'<section class="mas-information mas-information-poster solo-shot solo-shot-narrow" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="solo-seo">상품정보</h2><img class="solo-shot-img" src="'+shot+'info_v5.png" alt="'+escapeHtml('상품정보. '+people+'인 1곡, 녹음 '+hours+'시간, 기본 '+p.normal.toLocaleString('ko-KR')+'원, 녹음 후 최대 7일')+'" width="1080" height="1110" decoding="async"><p class="solo-seo">'+people+'인 · 1곡 · '+hours+'시간 · 녹음 후 최대 7일 이내</p></section>'
@@ -1834,10 +1835,14 @@ function initCompactKakao(){
   frame=0
   const scope=document.querySelector('.mobile-ar-solo')
   if(!scope){button.classList.remove('is-content-overlap');button.removeAttribute('tabindex');return}
-  const hit=button.getBoundingClientRect(),top=scope.querySelector('.solo-shot-top'),regions=[]
-  if(top){const box=top.getBoundingClientRect(),pc=innerWidth>900;regions.push({left:box.left+box.width*(pc ? .54 : 0),right:box.right,top:box.top+box.height*(pc ? .37 : .61),bottom:box.bottom})}
-  scope.querySelectorAll('#soloPoint04,.solo-footer-inquiry,.mas-event-content').forEach(el=>{if(el.getClientRects().length)regions.push(el.getBoundingClientRect())})
-  const overlap=regions.some(box=>hit.left<box.right&&hit.right>box.left&&hit.top<box.bottom+8&&hit.bottom>box.top-8)
+  const hit=button.getBoundingClientRect(),top=scope.querySelector('.solo-shot-top')
+  const topVisible=top&&top.getBoundingClientRect().bottom>0
+  const protectedRegions=[...scope.querySelectorAll('#arcFaq,#soloPoint04,.solo-footer,.mas-selection,.mas-event-content')]
+  const overlap=topVisible||protectedRegions.some(el=>{
+   if(!el.getClientRects().length)return false
+   const box=el.getBoundingClientRect()
+   return box.top<innerHeight&&box.bottom>innerHeight-120&&box.left<hit.right&&box.right>hit.left
+  })
   button.classList.toggle('is-content-overlap',overlap)
   if(overlap)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
  }
@@ -1861,9 +1866,9 @@ function initSoloPoint04(){
  const paint=ratio=>{const ar=Number(ratio)||0,live=Math.max(0,100-ar);if(liveBar)liveBar.style.flexGrow=String(live||0.001);if(arBar)arBar.style.flexGrow=String(ar||0.001);if(liveLabel)liveLabel.textContent='현장 라이브 보컬 '+live;if(arLabel)arLabel.textContent='미리 녹음한 AR 보컬 '+ar;if(mix)mix.textContent='AR '+ar+'%'}
  const onTime=()=>{if(current)current.textContent=fmt(audio.currentTime);if(seek){seek.max=String(Number.isFinite(audio.duration)?audio.duration:0);seek.value=String(audio.currentTime||0)}if(seek)seek.style.setProperty('--progress',((audio.currentTime||0)/(audio.duration||1)*100)+'%')}
  const onMeta=()=>{if(durationEl)durationEl.textContent=fmt(audio.duration);if(seek)seek.max=String(Number.isFinite(audio.duration)?audio.duration:0)}
- const state=root.querySelector('[data-solo-state]');const onState=()=>{if(state)state.textContent=audio.paused?'재생 대기':'재생 중';buttons.forEach(button=>button.classList.toggle('is-playing',!audio.paused&&button.classList.contains('is-on')))};const onEnded=onState
+ const state=root.querySelector('[data-solo-state]');const onState=()=>{if(state)state.textContent=audio.paused?'재생 대기':'재생 중';if(stop){stop.setAttribute('aria-label',audio.paused?'재생':'정지');stop.innerHTML='<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">'+(audio.paused?'<path d="M2 1v10l9-5Z" fill="currentColor"/>':'<rect width="12" height="12" rx="2" fill="currentColor"/>')+'</svg><span>'+(audio.paused?'재생':'정지')+'</span>'}buttons.forEach(button=>button.classList.toggle('is-playing',!audio.paused&&button.classList.contains('is-on')))};const onEnded=onState
  audio.addEventListener('play',onState);audio.addEventListener('pause',onState)
- audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded);paint(50)
+ audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded);paint(50);onState()
  buttons.forEach(button=>button.addEventListener('click',()=>{
   const ratio=button.dataset.soloRatio
   buttons.forEach(item=>{const on=item===button;item.classList.toggle('is-on',on);item.classList.toggle('is-playing',on);item.setAttribute('aria-pressed',String(on))})
@@ -1873,7 +1878,7 @@ function initSoloPoint04(){
   const pending=audio.play();if(pending)pending.catch(()=>{if(error)error.hidden=false;if(state)state.textContent='재생 오류';buttons.forEach(button=>button.classList.remove('is-playing'))})
  }))
  seek?.addEventListener('input',()=>{audio.currentTime=Number(seek.value)||0;onTime()})
- stop?.addEventListener('click',()=>{audio.pause();audio.currentTime=0;onTime();buttons.forEach(button=>button.classList.remove('is-playing'))})
+ stop?.addEventListener('click',()=>{if(audio.paused){if(error)error.hidden=true;window.wistiaClaimPlayback?.(audio);const pending=audio.play();if(pending)pending.catch(()=>{onState();if(error)error.hidden=false;if(state)state.textContent='재생 오류'})}else{audio.pause();audio.currentTime=0;onTime();buttons.forEach(button=>button.classList.remove('is-playing'))}})
  soloPoint04Cleanup=()=>{audio.pause();audio.removeAttribute('src');audio.load();audio.removeEventListener('timeupdate',onTime);audio.removeEventListener('loadedmetadata',onMeta);audio.removeEventListener('ended',onEnded);audio.removeEventListener('play',onState);audio.removeEventListener('pause',onState)}
 }
 function initSoloReviewLightbox(){
