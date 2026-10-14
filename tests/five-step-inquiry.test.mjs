@@ -50,6 +50,14 @@ const ruleContext={window:{document:{querySelector:()=>extra?{}:null}},module:{e
 runInNewContext(read('js/booking-availability.js').split(' if(!global.document)return')[0]+'\n})(window)',ruleContext)
 const rules=ruleContext.module.exports
 assert.equal(rules.duration('solo'),60)
+assert.deepEqual(Array.from(rules.timeWindows('solo'),slot=>slot.value),Array.from({length:10},(_,i)=>(13+i)+':00'))
+assert.doesNotMatch(context.window.WistiaContact.timeField(),/value="\d{2}:30"/)
+const list={closest:()=>({})},time={value:'13:00',options:[{value:''},{value:'13:00'},{value:'13:30'},{value:'17:00',disabled:true},{value:'22:00'},{value:'22:30',disabled:true}],closest:()=>({})}
+const controls={'[data-calendar-times]':list,'#contact-time':time,'#contact-bookingDate':{value:'2026-10-22'},'[data-time-date-hint]':{},'[data-time-help]':{},'[data-wf-duration]':{}}
+wizard.syncTimes({values:{people:'0'},dataset:{scheduleState:'ready'},querySelector:selector=>controls[selector]})
+assert.match(list.innerHTML,/data-wf-time="13:00"/)
+assert.match(list.innerHTML,/data-wf-time="22:00"/)
+assert.doesNotMatch(list.innerHTML,/13:30|17:00|22:30|예약 불가| disabled/)
 extra=true
 assert.equal(rules.duration('solo'),90)
 assert.equal(rules.duration('duo'),150)

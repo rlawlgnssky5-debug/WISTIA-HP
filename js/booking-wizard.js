@@ -84,7 +84,7 @@
   list.hidden=!known||loading;list.closest('[data-time-scroll-wrap]').hidden=!known||loading;time.closest('label').hidden=true;time.disabled=!known
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요';form.querySelector('[data-time-help]').hidden=true
   form.querySelector('[data-wf-duration]').textContent=minutes/60+'시간 진행'
-  list.innerHTML=[...time.options].filter(o=>o.value).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(time.value===o.value)+'"'+(o.disabled?' disabled':'')+'><strong>'+o.value+'</strong>'+(o.disabled?'<em>예약 불가</em>':'')+'</button>').join('')
+  list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')&&!o.disabled).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(time.value===o.value)+'"><strong>'+o.value+'</strong></button>').join('')
   update(form)
  }
  function syncEventDropdowns(form){

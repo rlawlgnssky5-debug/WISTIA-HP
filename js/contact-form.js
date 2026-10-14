@@ -12,7 +12,7 @@
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>'오후 '+(Math.floor(clock/60)-12)+'시'+(clock%60?' 30분':'');return start>=13*60&&end<=23*60?label(start)+'~'+label(end)+' ('+(minutes/60)+'시간)':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- const timeOptions=Array.from({length:20},(_,index)=>{const hour=13+Math.floor(index/2),half=index%2;return '<option value="'+hour+':'+(half?'30':'00')+'">오후 '+(hour-12)+'시'+(half?' 30분':'')+'</option>'}).join('')
+ const timeOptions=Array.from({length:10},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">오후 '+(hour-12)+'시</option>'}).join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  // Verified 2026-10-09: KASI calendar data and the 2026 Labour/Constitution Day update.
