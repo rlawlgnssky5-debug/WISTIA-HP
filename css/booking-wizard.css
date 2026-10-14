@@ -19,7 +19,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard *,html
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard [hidden]{display:none!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard h1{font-size:26px!important;margin:0 0 24px!important;color:#4A3238!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard h2{font-size:22px!important;line-height:1.5!important;margin:8px 0 24px!important;color:#4A3238!important;}
-html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard form{padding:0!important;background:transparent!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard form{padding:0 0 calc(100px + env(safe-area-inset-bottom,0px))!important;background:transparent!important;scroll-padding-bottom:110px;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-step{min-height:200px;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important;list-style:none!important;margin:0!important;padding:0!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress li{text-align:center;color:#987e85;min-width:0;}
@@ -78,7 +78,8 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-be
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-payment{padding:16px!important;border-radius:10px!important;background:#f6e6e6!important;font-size:15px!important;line-height:1.7!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-total{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:12px!important;border-top:1px solid #e5ced3!important;margin:28px 0 18px!important;padding-top:20px!important;font-size:16px!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-total strong{font-size:26px!important;color:#A65A6C!important;}
-html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav{display:grid!important;grid-template-columns:1fr 2fr!important;gap:10px!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav{position:fixed!important;left:50%!important;bottom:0!important;transform:translateX(-50%)!important;width:min(100%,760px)!important;z-index:100!important;display:grid!important;grid-template-columns:1fr 2fr!important;gap:10px!important;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px))!important;background:#FBF3F2!important;border-top:1px solid #E5CED3!important;box-shadow:0 -6px 22px #4a32380a!important;}
+@media(min-width:901px){html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav{padding-inline:40px!important;}}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav button{min-width:0!important;min-height:54px!important;padding:12px!important;font:600 16px/1.5 Pretendard,sans-serif!important;border:1px solid #A65A6C!important;border-radius:12px!important;background:#A65A6C!important;color:white!important;cursor:pointer!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav [data-wf-prev]{background:transparent!important;color:#A65A6C!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav button:disabled{opacity:.35!important;}

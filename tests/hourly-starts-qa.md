@@ -6,3 +6,6 @@
 - 잔여 팀 계산은 기존 30분 단위 자유 시간 합계를 유지하며 정각 선택지와 분리
 - five-step-inquiry, booking-six-steps-capacity, booking-availability-ui, notion-personal-busy 검사 통과
 - 로컬 실제 10월 24일 SOLO 시작 목록 13:00~22:00 정각 10개 확인
+- 정각 선택 운영 배포 f0f870e Vercel success 및 공개 런타임 3개 내용 일치 확인
+- 운영 실제 10월 22일 예약에 따라 13·14·15·16·17·22시만 노출 확인
+- 후속 요청으로 이전/다음/금액을 화면 하단 고정, 콘텐츠 가림 방지 하단 여백과 기기 안전영역 적용
