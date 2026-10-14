@@ -26,7 +26,8 @@
  function protections(src){
   if(/top_A_pc\.png/.test(src))return [[.055,.04,.455,.89]]
   if(/point01-recording\.webp/.test(src))return [[.09,.58,.82,.38]]
-  if(/map_C3\.png/.test(src))return [[.04,.28,.92,.44]]
+  // Protect each complete foreground panel, never cut a panel at a shared boundary.
+  if(/map_C3\.png/.test(src))return [[.058,.155,.884,.327],[.058,.525,.884,.25],[.058,.788,.884,.09],[.058,.9,.432,.054],[.512,.9,.432,.054]]
   if(/point04_ui_390\.png/.test(src))return [[0,.20,1,.29]]
   return []
  }

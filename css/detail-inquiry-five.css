@@ -1,4 +1,19 @@
 /* 2026-10-15: approved image restoration and compact five-step inquiry */
+@media(min-width:1280px){
+html body:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])),html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])){background:#F3EFED!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]){box-shadow:0 0 44px #79404f1f!important;outline:1px solid #DCCACE!important}
+}
+@media(min-width:901px){
+html body:has(.wistia-wizard),html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app:has(.wistia-wizard){background:#F3EFED!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{box-shadow:0 12px 44px #79404f1f!important;border:1px solid #E3CDD3!important}
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .mas-gallery-tools{justify-content:flex-end!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard textarea::placeholder{color:#9B8188!important;opacity:1!important;font-weight:400!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .mas-format-badge{display:none!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer-inquiry{position:fixed!important;top:auto!important;left:50%!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;transform:translateX(-50%)!important;width:min(calc(100% - 32px),760px)!important;height:54px!important;z-index:90!important;font-size:17px!important;border-radius:999px!important;box-shadow:0 4px 20px #79404f30!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-footer-inquiry svg{width:22px!important;height:22px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]){padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))!important}
+html body:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])) #floatingKakaoChat.floating-kakao-pill{bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .bap-try>span{display:inline!important;position:static!important;background:transparent!important;color:#fff!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;font:inherit!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .bap-try>span::before,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .bap-try>span::after{content:none!important;display:none!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-p4-seek{width:100%!important;min-width:0!important;max-width:none!important;height:8px!important}
@@ -60,7 +75,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option+.wf-option{padding-top:28px!important;border-top:1px solid #D9A5B2!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option-description{margin:14px 4px 0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-rush>p{font:400 12px/1.7 Pretendard,sans-serif!important;color:#8A6F75!important;margin:10px 0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-recording-range{font:400 13px/1.7 Pretendard,sans-serif!important;color:#9B8188!important;margin:14px 0 0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-recording-range{font:400 13px/1.7 Pretendard,sans-serif!important;color:#9B8188!important;margin:0 0 16px!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-recording-range.has-selection{color:#79404F!important;font-weight:600!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .calendar-time-grid{max-height:none!important;overflow:visible!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-final-total :is(dt,dd){font-size:18px!important;font-weight:750!important;color:#79404F!important}

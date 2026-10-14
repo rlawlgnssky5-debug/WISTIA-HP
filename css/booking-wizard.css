@@ -84,6 +84,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-na
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav [data-wf-prev]{background:transparent!important;color:#A65A6C!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav button:disabled{opacity:.35!important;}
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav .wf-submit{font-size:14px!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard [data-wf-amount]{font-variant-numeric:tabular-nums!important;display:inline-block;min-width:6.5em;text-align:center;}
 @media(min-width:901px){html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{padding:48px 40px 72px!important;margin-block:32px!important;border-radius:24px!important;}html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress small{display:block;font-size:10px;line-height:1.5;margin-top:8px;}html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .calendar-time-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}}
 
 html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .contact-field,html body #app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .contact-date-picker{background:transparent!important;box-shadow:none!important;border:0!important;border-image:none!important;border-radius:0!important;outline:0!important;}

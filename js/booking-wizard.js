@@ -23,9 +23,9 @@
   const sections=[
    pair('people',['<b>SOLO(1인)</b><small>1곡 기준·1시간</small><strong>12만원</strong>','<b>DUET(2인)</b><small>1곡 기준·2시간</small><strong>16만원</strong>'],key==='duo'?'1':'0','people')+discoveryField(),
    eventDateField(),
-   bookingDateField()+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend>')+'<p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>'+error('timeStart')+'<fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','3일 이내 받기',30000)+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
+   bookingDateField()+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>')+error('timeStart')+'<fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','3일 이내 받기',30000)+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
    '<fieldset class="wf-option"><legend class="sr-only">가사 영상 옵션</legend>'+checkRow('lyricVideo','① 가사 영상 추가',40000)+'<img class="wf-lyric-example" src="/assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy"></fieldset><fieldset class="wf-option"><legend class="sr-only">1절 녹음 옵션</legend>'+checkRow('extraVerse','② 1절 녹음 추가',60000)+'<p class="wf-option-description">신부·신랑 입장곡처럼 다른 곡을 1절만 더 녹음할 수 있어요. 녹음·튠·믹스를 각각 30분씩 진행해요.</p></fieldset>',
-   '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000"></textarea></label><dl data-wf-review></dl><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다 <a href="/privacy">개인정보처리방침</a></p>'
+   '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><dl data-wf-review></dl><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다 <a href="/privacy">개인정보처리방침</a></p>'
   ]
   return '<section class="wistia-wizard"><h1>문의양식 작성</h1><form id="contactInquiryForm" data-wizard="true" data-booking-calendar-opened="true" novalidate><ol class="wf-progress" aria-label="문의 단계">'+steps.map((title,index)=>'<li data-wf-progress="'+index+'"><button type="button" data-wf-goto="'+index+'" aria-label="'+(index+1)+'단계 '+title+'"><span>'+(index+1)+'</span><small>'+title+'</small></button></li>').join('')+'</ol><p class="wf-step-label" aria-live="polite" data-wf-step-label></p>'+sections.map((body,index)=>'<section class="wf-step" data-wf-step="'+index+'"'+(index?' hidden':'')+'><h2 tabindex="-1">'+titles[index]+'</h2>'+body+'</section>').join('')+'<div class="wf-nav"><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 카카오톡 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
  }
@@ -44,10 +44,32 @@
   return [['인원',v.people==='1'?'DUET(2인) · 1곡 · 2시간':'SOLO(1인) · 1곡 · 1시간'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,v.people,v.extraVerse)],['빠른 작업',v.rush==='1'?'3일 이내 받기 +30,000원':'선택 안 함'],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
  }
  function text(form){const notes=String(values(form).specialNotes||'').trim();return ['[위스티아 상담 요청]','특이사항 : '+(notes||'없음'),'',...rows(form).map(([label,value])=>label+' : '+value),'','결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요'].join('\n')}
+ function updateAmount(button,total,state){
+  if(state.priceTarget===total)return
+  state.priceTarget=total
+  button.setAttribute('aria-label','다음 단계 · '+money(total))
+  let amount=button.querySelector('[data-wf-amount]')
+  if(!amount){button.innerHTML='다음 단계 · <span data-wf-amount aria-hidden="true"></span>';amount=button.querySelector('[data-wf-amount]')}
+  if(state.priceFrame)global.cancelAnimationFrame?.(state.priceFrame)
+  const from=Number.isFinite(state.priceShown)?state.priceShown:total
+  const reduced=global.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  if(from===total||reduced||!global.requestAnimationFrame){state.priceShown=total;amount.textContent=money(total);return}
+  let began
+  const tick=now=>{
+   if(!amount.isConnected)return
+   began??=now
+   const progress=Math.min(1,(now-began)/380),eased=1-Math.pow(1-progress,3)
+   state.priceShown=Math.round((from+(total-from)*eased)/100)*100
+   amount.textContent=money(progress===1?total:state.priceShown)
+   if(progress<1)state.priceFrame=global.requestAnimationFrame(tick)
+   else{state.priceShown=total;state.priceFrame=0}
+  }
+  state.priceFrame=global.requestAnimationFrame(tick)
+ }
  function update(form){
   const state=states.get(form);if(!state)return
   const q=quote(form)
-  form.querySelector('[data-wf-next]').textContent='다음 단계 · '+money(q.total)
+  updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
   form.querySelector('[data-wf-review]').innerHTML=rows(form).map(([label,value])=>'<div'+(label==='총 금액'?' class="wf-final-total"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('')
   form.querySelectorAll('[data-wf-step]').forEach(section=>section.hidden=Number(section.dataset.wfStep)!==state.step)
   form.querySelectorAll('[data-wf-progress]').forEach(li=>{const index=Number(li.dataset.wfProgress),active=index===state.step,done=index<state.step;li.classList.toggle('is-current',active);li.classList.toggle('is-complete',done);const button=li.querySelector('button');button.querySelector('span').innerHTML=done?icon('check'):String(index+1);if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')})

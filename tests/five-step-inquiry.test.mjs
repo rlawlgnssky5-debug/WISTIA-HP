@@ -23,6 +23,8 @@ assert.match(html,/data-calendar-immediate="true"/)
 assert.doesNotMatch(html,/aria-label="녹음 날짜 달력" hidden/)
 assert.match(html,/name="eventDateUnknown"/)
 assert.match(html,/data-booking-calendar-opened="true"/)
+assert.ok(html.indexOf('data-wf-recording-range')<html.indexOf('data-calendar-times'))
+assert.match(html,/placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"/)
 const expected=['인원','결혼식 날짜','녹음 날짜','녹음 시간','빠른 작업','추가 옵션','처음 본 곳','총 금액']
 let cases=0
 for(const people of ['0','1'])for(const lyricVideo of ['0','1'])for(const extraVerse of ['0','1'])for(const rush of ['0','1']){

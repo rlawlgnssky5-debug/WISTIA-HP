@@ -12,4 +12,7 @@ assert.deepEqual(pixels,original,'original colors are untouched')
 const protectedMask=backgroundMask(pixels,width,height,[[0,0,.25,.25]])
 assert.equal(protectedMask[0],0,'media protection keeps even background-colored media pixels')
 assert.equal(protectedMask[19],1,'unprotected edge background still blends into the page')
+// A pale full panel must remain protected below the former 72% cut line as well
+const panelMask=backgroundMask(pixels,width,height,[[.058,.525,.884,.25]])
+assert.equal(panelMask[15*width+10],0,'lower panel edge is not partially recolored')
 console.log('Outside-only background mask, isolated white foreground, protected media and unchanged original colors passed')
