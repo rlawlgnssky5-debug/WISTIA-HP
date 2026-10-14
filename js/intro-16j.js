@@ -1,13 +1,10 @@
-/* A brief introduction on a fresh visit, using only existing real photographs */
+/* Approved intro crop preserves the original real photos and typography. */
 (() => {
  if(!['/','/detail/solo','/detail/duo'].includes(location.pathname))return
  const intro=document.createElement('div')
  intro.className='wistia-intro';intro.setAttribute('aria-hidden','true')
- intro.innerHTML='<div class="intro-brand"><img src="assets/img/wistia-logo-transparent.webp" alt=""><span>WISTIA</span></div><div class="intro-composition"><div class="intro-photos"><img src="assets/img/wedding/04-recording-making.webp" alt=""><img src="assets/img/ar-detail/duet-live-proof-v2.jpg" alt=""><img src="assets/img/ar-detail/solo-live-proof.jpg" alt=""></div><div class="intro-copy"><p>목소리로 전하는 결혼식</p><h2>웨딩 축가<br><strong>전문</strong> 스튜디오</h2><small>BUCHEON STUDIO</small></div></div>'
- // Reuse the exact SOLO customer poster, even if its asset name changes
- const soloPoster=document.querySelector('.mas-gallery-slide img')
- if(soloPoster)intro.querySelector('.intro-photos img:last-child').src=soloPoster.src
+ intro.innerHTML='<div class="intro-brand"><img src="assets/img/wistia-logo-transparent.webp" alt=""><span>WISTIA</span></div><div class="intro-composition"><picture><source media="(min-width:901px)" srcset="assets/detail-solo-16j/intro_A_1280-splash.webp?v=16j14"><img src="assets/detail-solo-16j/intro_A_390-splash.webp?v=16j14" alt="" fetchpriority="high"></picture><small class="intro-pc-caption">BUCHEON STUDIO</small></div>'
  document.body.append(intro)
- const close=()=>{intro.classList.add('is-leaving');setTimeout(()=>intro.remove(),350)}
- setTimeout(close,1500)
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches
+ setTimeout(()=>{intro.classList.add('is-leaving');setTimeout(()=>intro.remove(),reduced?0:300)},1600)
 })()

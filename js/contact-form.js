@@ -86,6 +86,7 @@
   state.mode.checked=true;state.calendar.closest('[data-contact-date-panel]').hidden=false;state.input.disabled=false
   const date=(state.input.value>=calendarToday()?parseDate(state.input.value):null)||parseDate(calendarToday());state.year=date.getUTCFullYear();state.month=date.getUTCMonth()
   state.calendar.hidden=false;state.trigger.setAttribute('aria-expanded','true');paintCalendar(state);positionCalendar(state)
+  if(state.key==='bookingDate'){state.input.form.dataset.bookingCalendarOpened='true';global.WistiaBooking?.changed(state.input)}
  }
  function toggleCalendar(state){if(state.calendar.hidden)openDateCalendar(state);else closeCalendar(state)}
  function closeCalendar(state){
@@ -110,7 +111,7 @@
   grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
   if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다':'일정을 확인하고 있습니다'}
-  if(key==='bookingDate'&&booking?.loadRange){
+  if(key==='bookingDate'&&!calendar.hidden&&booking?.loadRange){
    const id=from+':'+to
    if(state.rangeId!==id){state.rangeId=id;booking.loadRange(from,to).catch(()=>{}).finally(()=>{if(state.rangeId===id&&calendar.isConnected)paintCalendar(state)})}
   }
@@ -135,7 +136,7 @@
    const key=calendar.dataset.calendar,input=form.querySelector('#contact-'+key)
    let state=calendarStates.get(calendar)
    if(state){
-    if(fresh&&key==='bookingDate'&&global.WistiaBooking?.loadRange){const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0)));global.WistiaBooking.loadRange(from,to,true).catch(()=>{}).finally(()=>{if(calendar.isConnected)paintCalendar(state)})}
+    if(fresh&&!calendar.hidden&&key==='bookingDate'&&global.WistiaBooking?.loadRange){const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0)));global.WistiaBooking.loadRange(from,to,true).catch(()=>{}).finally(()=>{if(calendar.isConnected)paintCalendar(state)})}
     if(key==='bookingDate'&&!fresh)state.rangeId=null
     paintCalendar(state);return
    }

@@ -142,6 +142,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   selectedDates.set(activeForm,date)
   openList('');dateError('');resetTimes()
   if(!date){ui.time.value='';message('목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
+  if(!force&&activeForm.dataset.bookingCalendarOpened!=='true'){message('달력을 열어 예약 가능 시간을 확인해 주세요','unknown');return}
   if(!validDate(date)||date<today()){ui.time.value='';dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
   if(!isOperatingDay(date)){ui.time.value='';dateError('월·화·수는 마감입니다, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 마감 · 목·금·토·일 운영','closed');return}
   const hit=!force&&cache.get(date)
@@ -169,5 +170,5 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  }
  function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm)return check()}
  global.WistiaBooking={...rules,mount,changed,refresh:()=>{global.WistiaContact?.mountCalendars?.(activeForm,true);return check(true)},loadRange,calendarBlocks,calendarRangeFailed,calendarKey:()=>activeKey,timeoutMs}
- global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden&&activeForm?.isConnected){global.WistiaContact?.mountCalendars?.(activeForm,true);check(true)}})
+ global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden&&activeForm?.isConnected&&activeForm.dataset.bookingCalendarOpened==='true'){global.WistiaContact?.mountCalendars?.(activeForm,true);check(true)}})
 })(typeof window==='object'?window:globalThis)

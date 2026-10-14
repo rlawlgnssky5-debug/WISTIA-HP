@@ -1112,12 +1112,12 @@ function detailPosterImage(src,alt,width,height){
 }
 function soloPoint04Section(){
  const labels={30:'라이브 중심',50:'반반 균형',70:'든든하게',100:'완벽하게'}
- const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio'+(value===50?' is-on':'')+'" data-solo-ratio="'+value+'" aria-pressed="'+(value===50)+'"><span class="solo-p4-eq" aria-hidden="true"><i></i><i></i><i></i></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
+ const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio'+(value===50?' is-on':'')+'" data-solo-ratio="'+value+'" aria-pressed="'+(value===50)+'"><span class="solo-p4-eq" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" focusable="false"><rect x="1" y="7" width="3" height="8" rx="1.5"/><rect x="6" y="2" width="3" height="13" rx="1.5"/><rect x="11" y="5" width="3" height="10" rx="1.5"/></svg></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
  return '<section class="arc-point arc-point-ratio solo-p4 solo-shot solo-shot-narrow" id="soloPoint04" aria-label="본식 AR 비율 체험" data-svg-title="off">'+
   '<div class="solo-p4-art"><img class="solo-shot-img" src="assets/detail-solo-16j/point04_ui_390.png" alt="본식 AR 비율 체험. 30, 50, 70, 100 퍼센트 중 하나를 누르면 해당 비율로 재생되고 정지로 멈춥니다" width="1170" height="2526" loading="lazy" decoding="async"></div>'+
   '<div class="solo-p4-panel">'+
-  '<h2 class="solo-p4-title">이제는 딱 맞는 비율로 섞어요</h2>'+
-  '<p class="solo-p4-hint">비율을 누르면 바로 재생돼요</p><p class="solo-p4-pointer">여기 눌러보세요! '+studioIcon('down')+'</p>'+
+  '<h2 class="solo-p4-title">이제는 <strong>딱 맞는 비율</strong>로 섞어요</h2>'+
+  '<p class="solo-p4-hint">👇 <strong>비율을 누르면</strong> 바로 재생돼요</p><p class="solo-p4-pointer">여기 눌러보세요! 👇</p>'+
   '<div class="solo-p4-ratios"><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
   '<div class="solo-p4-card">'+
   '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i><span data-solo-state>재생 대기</span> · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
@@ -1125,7 +1125,7 @@ function soloPoint04Section(){
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
   '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
   '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
-  '<audio data-solo-audio preload="none"></audio>'+
+  '<audio data-solo-audio preload="metadata" src="'+ratioSource(50)+'"></audio>'+
   '</div><div class="solo-p4-closing">떨림은 덜고, 진심은 그대로<br><strong>내게 맞는 비율</strong>로 무대에 서세요<small>같은 곡을 비율별로 미리 들어보고 고를 수 있어요</small></div></div></section>'
 }
 function soloReviewGrid(){
@@ -1300,7 +1300,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
  const intro=(key==='solo'||key==='duo')
-  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png"><img class="solo-shot-img" src="'+shot+'top_A.png" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
+  ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j14"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j14" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
  const information=(key==='solo'||key==='duo')
   ?'<section class="mas-information mas-information-poster solo-shot solo-shot-narrow" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle" class="solo-seo">상품정보</h2><img class="solo-shot-img" src="'+shot+'info_v5.png" alt="'+escapeHtml('상품정보. '+people+'인 1곡, 녹음 '+hours+'시간, 기본 '+p.normal.toLocaleString('ko-KR')+'원, 녹음 후 최대 7일')+'" width="1080" height="1110" decoding="async"><p class="solo-seo">'+people+'인 · 1곡 · '+hours+'시간 · 녹음 후 최대 7일 이내</p></section>'
@@ -1823,6 +1823,31 @@ function initSoloDialog(dialog){
  dialog.querySelector('[data-solo-dialog-close]')?.addEventListener('click',()=>dialog.close())
  dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close()})
 }
+
+// Keep the floating chat target away from the painted prices and working controls.
+function initCompactKakao(){
+ const button=document.querySelector('#floatingKakaoChat')
+ if(!button)return
+ if(window.wistiaCompactKakaoCleanup)window.wistiaCompactKakaoCleanup()
+ let frame=0
+ const paint=()=>{
+  frame=0
+  const scope=document.querySelector('.mobile-ar-solo')
+  if(!scope){button.classList.remove('is-content-overlap');button.removeAttribute('tabindex');return}
+  const hit=button.getBoundingClientRect(),top=scope.querySelector('.solo-shot-top'),regions=[]
+  if(top){const box=top.getBoundingClientRect(),pc=innerWidth>900;regions.push({left:box.left+box.width*(pc ? .54 : 0),right:box.right,top:box.top+box.height*(pc ? .37 : .61),bottom:box.bottom})}
+  scope.querySelectorAll('#soloPoint04,.solo-footer-inquiry,.mas-event-content').forEach(el=>{if(el.getClientRects().length)regions.push(el.getBoundingClientRect())})
+  const overlap=regions.some(box=>hit.left<box.right&&hit.right>box.left&&hit.top<box.bottom+8&&hit.bottom>box.top-8)
+  button.classList.toggle('is-content-overlap',overlap)
+  if(overlap)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
+ }
+ const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint)}
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule)
+ const observer=new ResizeObserver(schedule);observer.observe(document.querySelector('#app'))
+ window.wistiaCompactKakaoCleanup=()=>{removeEventListener('scroll',schedule);removeEventListener('resize',schedule);observer.disconnect();cancelAnimationFrame(frame)}
+ schedule()
+}
+
 function initSoloPoint04(){
  soloPoint04Cleanup?.();soloPoint04Cleanup=null
  const root=document.querySelector('#soloPoint04')
@@ -1834,15 +1859,15 @@ function initSoloPoint04(){
  const liveLabel=root.querySelector('[data-solo-live-label]'),arLabel=root.querySelector('[data-solo-ar-label]'),error=root.querySelector('.solo-p4-error')
  const fmt=seconds=>{if(!Number.isFinite(seconds)||seconds<0)return '0:00';const t=Math.floor(seconds);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')}
  const paint=ratio=>{const ar=Number(ratio)||0,live=Math.max(0,100-ar);if(liveBar)liveBar.style.flexGrow=String(live||0.001);if(arBar)arBar.style.flexGrow=String(ar||0.001);if(liveLabel)liveLabel.textContent='현장 라이브 보컬 '+live;if(arLabel)arLabel.textContent='미리 녹음한 AR 보컬 '+ar;if(mix)mix.textContent='AR '+ar+'%'}
- const onTime=()=>{if(current)current.textContent=fmt(audio.currentTime);if(seek&&document.activeElement!==seek){seek.max=String(Number.isFinite(audio.duration)?audio.duration:0);seek.value=String(audio.currentTime||0)}}
+ const onTime=()=>{if(current)current.textContent=fmt(audio.currentTime);if(seek){seek.max=String(Number.isFinite(audio.duration)?audio.duration:0);seek.value=String(audio.currentTime||0)}if(seek)seek.style.setProperty('--progress',((audio.currentTime||0)/(audio.duration||1)*100)+'%')}
  const onMeta=()=>{if(durationEl)durationEl.textContent=fmt(audio.duration);if(seek)seek.max=String(Number.isFinite(audio.duration)?audio.duration:0)}
- const state=root.querySelector('[data-solo-state]');const onState=()=>{if(state)state.textContent=audio.paused?'정지':'재생 중';buttons.forEach(button=>button.classList.toggle('is-playing',!audio.paused&&button.classList.contains('is-on')))};const onEnded=onState
+ const state=root.querySelector('[data-solo-state]');const onState=()=>{if(state)state.textContent=audio.paused?'재생 대기':'재생 중';buttons.forEach(button=>button.classList.toggle('is-playing',!audio.paused&&button.classList.contains('is-on')))};const onEnded=onState
  audio.addEventListener('play',onState);audio.addEventListener('pause',onState)
  audio.addEventListener('timeupdate',onTime);audio.addEventListener('loadedmetadata',onMeta);audio.addEventListener('ended',onEnded);paint(50)
  buttons.forEach(button=>button.addEventListener('click',()=>{
   const ratio=button.dataset.soloRatio
   buttons.forEach(item=>{const on=item===button;item.classList.toggle('is-on',on);item.classList.toggle('is-playing',on);item.setAttribute('aria-pressed',String(on))})
-  paint(ratio);card.hidden=false;if(error)error.hidden=true;if(state)state.textContent='불러오는 중';if(current)current.textContent='0:00';if(durationEl)durationEl.textContent='0:00';if(state)state.textContent='불러오는 중';if(current)current.textContent='0:00';if(durationEl)durationEl.textContent='0:00'
+  paint(ratio);card.hidden=false;if(error)error.hidden=true;if(state)state.textContent='불러오는 중';if(current)current.textContent='0:00';if(durationEl)durationEl.textContent='0:00';seek.style.setProperty('--progress','0%')
   audio.src=ratioSource(ratio);audio.currentTime=0
   window.wistiaClaimPlayback?.(audio)
   const pending=audio.play();if(pending)pending.catch(()=>{if(error)error.hidden=false;if(state)state.textContent='재생 오류';buttons.forEach(button=>button.classList.remove('is-playing'))})
@@ -1906,6 +1931,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  initSoloArRatio();
  arCdRatioInstance=window.initArCdRatio?.()||null
  initSoloPoint04()
+ initCompactKakao()
  initSoloReviewLightbox()
  initSoloMapZoom()
  beforeAfterInstance=window.initWistiaBeforeAfter?.()||null
