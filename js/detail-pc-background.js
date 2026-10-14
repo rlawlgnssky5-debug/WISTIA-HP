@@ -27,6 +27,7 @@
   if(/top_A_pc\.png/.test(src))return [[.055,.04,.455,.89]]
   if(/point01-recording\.webp/.test(src))return [[.09,.58,.82,.38]]
   if(/map_C3\.png/.test(src))return [[.04,.28,.92,.44]]
+  if(/point04_ui_390\.png/.test(src))return [[0,.20,1,.29]]
   return []
  }
  function mount(root){
@@ -54,7 +55,7 @@
     entry.src=src;entry.canvas=work;position(entry)
    }catch{entry.canvas=null}
   }
-  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame>.solo-shot-img,.solo-p4-art>.solo-shot-img,.solo-map>.solo-shot-img,.solo-footer>.solo-shot-img')
+  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame>.solo-shot-img,.solo-approved-info,.solo-approved-faq,.solo-p4-art>.solo-shot-img,.solo-map>.solo-shot-img,.solo-footer>.solo-shot-img')
   images.forEach(image=>{const entry={image};entries.push(entry);entry.load=()=>paint(entry);image.addEventListener('load',entry.load);observer.observe(image);paint(entry)})
   const change=()=>entries.forEach(paint);media.addEventListener('change',change)
   cleanup=()=>{observer.disconnect();media.removeEventListener('change',change);entries.forEach(e=>{e.image.removeEventListener('load',e.load);e.canvas?.remove()})}

@@ -56,6 +56,7 @@
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
+   if(isoDate(new Date(Date.UTC(year,month,day)))<today){cells+='<span class="calendar-empty" aria-hidden="true"></span>';continue}
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
    const teams=key==='bookingDate'&&!past&&!weekdayClosed&&!notionClosed&&Array.isArray(blocks)?Number(global.WistiaBooking?.teamsRemaining?.(value,product,blocks))||0:0
    const teamLabel=scarceTeamLabel(teams)
@@ -91,6 +92,7 @@
  function toggleCalendar(state){if(state.calendar.hidden)openDateCalendar(state);else closeCalendar(state)}
  function closeCalendar(state){
   if(!state)return
+  if(state.calendar.dataset.calendarImmediate)return
   state.calendar.hidden=true;state.trigger.setAttribute('aria-expanded','false');paintCalendar(state)
  }
  function positionCalendar(state){
@@ -104,7 +106,7 @@
   yearSelect.value=String(state.year);monthSelect.value=String(state.month)
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
-  calendar.querySelector('[data-calendar-selection]').textContent=selected?'선택한 날짜: '+displayDate(selected).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
+  calendar.querySelector('[data-calendar-selection]').textContent=selected?'선택한 날짜: '+displayDate(selected).replace(/^\d+년 /,''):''
   syncEventDateClose(calendar,selected)
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
@@ -161,7 +163,7 @@
     if(button.hasAttribute('data-calendar-move')){changeMonth(state,Number(button.dataset.calendarMove));return}
     const value=button.dataset.calendarDay
     if(value&&selectableBookingDate(value,key)){
-     if(key==='bookingDate'&&form.dataset.wizard){state.pendingDate=value;paintCalendar(state);return}
+     if(key==='bookingDate'&&form.dataset.wizard&&!calendar.dataset.calendarImmediate){state.pendingDate=value;paintCalendar(state);return}
      input.value=value;paintCalendar(state)
      input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))
     }

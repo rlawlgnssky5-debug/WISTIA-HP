@@ -8,7 +8,7 @@
  }
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
- function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
+ function duration(key){const base=key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60;return base+(global.document?.querySelector?.('[data-wizard] [name="extraVerse"]:checked')?30:0)}
  function timeWindows(key){const minutes=duration(key);return Array.from({length:20},(_,i)=>{const clock=13*60+i*30,hour=Math.floor(clock/60),half=clock%60;return {value:hour+':'+(half?'30':'00'),label:'오후 '+(hour-12)+'시'+(half?' 30분':''),minutes}})}
  // Server blocks already include each existing reservation's 30-minute buffers.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}

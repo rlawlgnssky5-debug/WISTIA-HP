@@ -1121,7 +1121,7 @@ function soloPoint04Section(){
   '<div class="solo-p4-ratios"><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
   '<div class="solo-p4-card">'+
   '<div class="solo-p4-status"><span><i class="solo-p4-dot" aria-hidden="true"></i><span data-solo-state>재생 대기</span> · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
-  '<p class="solo-p4-pointer">여기 눌러보세요! 👇</p><div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="재생"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2 1v10l9-5Z" fill="currentColor"/></svg><span>재생</span></button></div>'+
+  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="재생"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2 1v10l9-5Z" fill="currentColor"/></svg><span>재생</span></button><p class="solo-p4-pointer">여기 눌러보세요!</p></div>'+
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
   '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
   '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
@@ -1149,7 +1149,7 @@ function soloChatFaq(){
   ['본식에서는 어떻게 사용하나요?','예식장에 본식용 AR 음원을 미리 전달하고 재생하며 직접 노래하시면 됩니다<br>담당자와 파일 재생 및 리허설 시간을 사전에 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
  ]
- return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow" id="arcFaq" data-svg-title="off"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true">'+studioIcon('plus')+'</i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></section>'
+ return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow" id="arcFaq" data-svg-title="off"><img class="solo-approved-faq solo-shot-img" src="assets/detail-solo-16j/faq_B.png" alt="자주 묻는 질문" loading="lazy"><div class="solo-faq-html" hidden><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true">'+studioIcon('plus')+'</i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
@@ -1307,7 +1307,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const intro=(key==='solo'||key==='duo')
   ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j15"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j15" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
- const information='<section class="mas-information wistia-live-info" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl>'+pcProductInformation(info,p.normal)+'</section>'
+ const information='<section class="mas-information wistia-live-info" aria-label="상품정보"><img class="solo-approved-info solo-shot-img" src="'+shot+'info_v5.png" alt="'+format+' '+people+'인 상품정보" loading="lazy"><div class="solo-info-html" hidden><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl>'+pcProductInformation(info,p.normal)+'</div></section>'
  details=details.replace('</section><div class="solo-poster-stack">',pcLyricVideo()+'</section><div class="solo-poster-stack">')
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+information+
