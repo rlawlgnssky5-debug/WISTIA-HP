@@ -69,6 +69,8 @@
  function update(form){
   const state=states.get(form);if(!state)return
   const q=quote(form)
+  const durationLabel=form.querySelector('[data-wf-location-duration]')
+  if(durationLabel)durationLabel.textContent='1곡 · '+((q.v.people==='1'?120:60)+(q.v.extraVerse==='1'?30:0))/60+'시간'
   updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
   form.querySelector('[data-wf-review]').innerHTML=rows(form).map(([label,value])=>'<div'+(label==='총 금액'?' class="wf-final-total"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('')
   form.querySelectorAll('[data-wf-step]').forEach(section=>section.hidden=Number(section.dataset.wfStep)!==state.step)
@@ -125,6 +127,7 @@
  }
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[]};states.set(form,state)
+  form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 녹음 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 2층</small></div><span data-wf-location-duration>1곡 · 1시간</span></aside>')
   syncEventDropdowns(form)
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target

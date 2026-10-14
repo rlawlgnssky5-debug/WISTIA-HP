@@ -15,4 +15,7 @@ assert.equal(protectedMask[19],1,'unprotected edge background still blends into 
 // A pale full panel must remain protected below the former 72% cut line as well
 const panelMask=backgroundMask(pixels,width,height,[[.058,.525,.884,.25]])
 assert.equal(panelMask[15*width+10],0,'lower panel edge is not partially recolored')
+const roundedMask=backgroundMask(pixels,width,height,[[0,0,.25,.25,.1]])
+assert.equal(roundedMask[0],1,'outside of rounded panel corners blends instead of leaving a rectangular edge')
+assert.equal(roundedMask[2*width+2],0,'rounded panel interior remains protected')
 console.log('Outside-only background mask, isolated white foreground, protected media and unchanged original colors passed')

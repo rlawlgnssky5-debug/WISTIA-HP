@@ -6,10 +6,10 @@
   const count=width*height,mask=new Uint8Array(count),queue=new Int32Array(count)
   const corners=[0,width-1,(height-1)*width,count-1].map(i=>Array.from(pixels.slice(i*4,i*4+3))).filter(c=>Math.min(...c)>=225)
   if(!corners.length)return mask
-  const rectangles=protectedRects.map(([x,y,w,h])=>[x*width,y*height,(x+w)*width,(y+h)*height])
+  const rectangles=protectedRects.map(([x,y,w,h,radius=0])=>[x*width,y*height,(x+w)*width,(y+h)*height,radius*width])
   function allowed(i){
    const x=i%width,y=Math.floor(i/width)
-   if(rectangles.some(([l,t,r,b])=>x>=l&&x<r&&y>=t&&y<b))return false
+   if(rectangles.some(([l,t,r,b,radius])=>{if(x<l||x>=r||y<t||y>=b)return false;const dx=Math.max(l+radius-x,0,x-(r-radius)),dy=Math.max(t+radius-y,0,y-(b-radius));return dx*dx+dy*dy<=radius*radius}))return false
    const p=i*4
    return pixels[p+3]>0&&Math.min(pixels[p],pixels[p+1],pixels[p+2])>=225&&corners.some(c=>Math.abs(c[0]-pixels[p])<=18&&Math.abs(c[1]-pixels[p+1])<=18&&Math.abs(c[2]-pixels[p+2])<=18)
   }
@@ -27,7 +27,7 @@
   if(/top_A_pc\.png/.test(src))return [[.055,.04,.455,.89]]
   if(/point01-recording\.webp/.test(src))return [[.09,.58,.82,.38]]
   // Protect each complete foreground panel, never cut a panel at a shared boundary.
-  if(/map_C3\.png/.test(src))return [[.058,.155,.884,.327],[.058,.525,.884,.25],[.058,.788,.884,.09],[.058,.9,.432,.054],[.512,.9,.432,.054]]
+  if(/map_C3\.png/.test(src))return [[.058,.155,.884,.327,.035],[.058,.525,.884,.25,.047],[.058,.788,.884,.09,.035],[.058,.9,.432,.054,.045],[.512,.9,.432,.054,.045]]
   if(/point04_ui_390\.png/.test(src))return [[0,.20,1,.29]]
   return []
  }
