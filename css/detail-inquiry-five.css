@@ -1,4 +1,9 @@
 /* 2026-10-15: approved image restoration and compact five-step inquiry */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice>span{display:grid!important;grid-template-columns:18px max-content!important;justify-content:center!important;align-content:center!important;gap:3px 6px!important;height:auto!important;min-height:90px!important;padding:10px 8px!important;border-radius:10px!important;font-size:14px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice svg{width:18px!important;height:18px!important;grid-column:1!important;grid-row:1!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice b{grid-column:2!important;grid-row:1!important;font-size:14px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice small{grid-column:1/-1!important;font-size:12px!important;line-height:1.4!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice strong{grid-column:1/-1!important;font-size:18px!important;line-height:1.4!important}
 @media(min-width:1280px){
 html body:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])),html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])){background:#F3EFED!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]){box-shadow:0 0 44px #79404f1f!important;outline:1px solid #DCCACE!important}
