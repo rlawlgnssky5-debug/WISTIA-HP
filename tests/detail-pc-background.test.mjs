@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict'
+import {createRequire} from 'node:module'
+const {backgroundMask}=createRequire(import.meta.url)('../js/detail-pc-background.js')
+const width=20,height=20,pixels=new Uint8ClampedArray(width*height*4)
+for(let i=0;i<width*height;i++)pixels.set([251,243,242,255],i*4)
+for(let y=5;y<15;y++)for(let x=5;x<15;x++)pixels.set([140,80,96,255],(y*width+x)*4)
+for(let y=6;y<14;y++)for(let x=6;x<14;x++)pixels.set([255,255,255,255],(y*width+x)*4)
+const original=pixels.slice(),mask=backgroundMask(pixels,width,height)
+assert.equal(mask.reduce((a,b)=>a+b,0),300,'only connected outside background')
+assert.equal(mask[10*width+10],0,'white foreground enclosed by a rose shape remains visible')
+assert.deepEqual(pixels,original,'original colors are untouched')
+const protectedMask=backgroundMask(pixels,width,height,[[0,0,.25,.25]])
+assert.equal(protectedMask[0],0,'media protection keeps even background-colored media pixels')
+assert.equal(protectedMask[19],1,'unprotected edge background still blends into the page')
+console.log('Outside-only background mask, isolated white foreground, protected media and unchanged original colors passed')

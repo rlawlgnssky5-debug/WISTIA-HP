@@ -22,7 +22,9 @@ const cells=calendar.cells(2026,9,'bookingDate','2026-10-16','2026-10-08',[])
 assert.equal((cells.match(/data-calendar-day=/g)||[]).length,31)
 for(const date of ['2026-10-01','2026-10-02','2026-10-03','2026-10-04','2026-10-05','2026-10-06','2026-10-07','2026-10-12','2026-10-13','2026-10-14']){
  const cell=cells.match(new RegExp('<button[^>]*data-calendar-day="'+date+'"[^>]*>.*?</button>'))[0]
- assert.match(cell,/ disabled/);assert.doesNotMatch(cell,/<small>/)
+ assert.match(cell,/ disabled/)
+ if(date<'2026-10-08')assert.doesNotMatch(cell,/<small>/)
+ else assert.match(cell,/<small>마감<\/small>/)
 }
 assert.match(cells,/is-selected" data-calendar-day="2026-10-16"[^>]*aria-label="2026년 10월 16일 \(금\)"[^>]*aria-pressed="true"/)
 assert.match(cells,/is-today" data-calendar-day="2026-10-08"[^>]*aria-current="date"/)
@@ -47,7 +49,10 @@ assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/방문
 assert.match(api.text({bookingDateMode:'date',bookingDate:'2026-10-16'}),/\(금\)/)
 for(const page of ['index.html','contact.html',...readdirSync(new URL('../event/',import.meta.url)).filter(x=>x.endsWith('.html')).map(x=>'event/'+x)]){
  const html=read(page)
- for(const asset of ['js/contact-form.js','js/booking-availability.js'])assert.ok(html.includes(asset+'?v=20261014-detail-polish-16j'),page+' '+asset)
+ for(const asset of ['js/contact-form.js','js/booking-availability.js']){
+  const expected=read('index.html').match(new RegExp(asset.replaceAll('.','\\.')+'\\?v=[^"\\s]+'))[0]
+  assert.ok(html.includes(expected),page+' '+asset)
+ }
  assert.ok(html.includes('css/booking-availability.css?v=20261014-detail-polish-16j'),page+' booking css')
 }
 assert.match(read('api/availability.js'),/module.exports/,'CommonJS endpoint stays intact')

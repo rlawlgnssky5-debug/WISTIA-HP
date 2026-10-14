@@ -1136,7 +1136,9 @@ function soloReviewGrid(){
   ['d','assets/detail/review-n2.webp?v=16i','후기 4 원문 크게 보기']
  ]
  const items=cards.map(([hit,src,label])=>'<button type="button" class="solo-review-thumb solo-hit-'+hit+'" data-review-full="'+src+'" aria-label="'+label+'"></button>').join('')
- return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390.png" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="1962" loading="lazy" decoding="async">'+items+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img alt="카카오톡 후기 원문"></dialog></section>'
+ const quotes=['“노래 왜 이렇게 잘하냐고 칭찬 일색이었습니다!”','“노래 정말 잘하는것처럼 만들어주셨네요!!”','“결과물이 너무너무 맘에 들어요”','“노래실력을 자연스럽게 커버해주셨네요”']
+ const pc='<div class="pc-review-layout"><header><p>REAL REVIEWS</p><h2>직접 남겨 주신 이야기</h2></header><div class="pc-review-cards">'+cards.map(([,src,label],index)=>'<button type="button" class="pc-review-card" data-review-full="'+src+'" aria-label="'+label+'"><span>'+String(index+1).padStart(2,'0')+'</span><h3>'+quotes[index]+'</h3><img src="'+src+'" alt="'+label+'" loading="lazy"></button>').join('')+'</div><p class="pc-review-more">더 많은 후기는 인스타그램에서 확인할 수 있어요</p></div>'
+ return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390.png" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="1962" loading="lazy" decoding="async">'+items+pc+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img alt="카카오톡 후기 원문"></dialog></section>'
 }
 function soloChatFaq(){
  const questions=[
@@ -1164,6 +1166,11 @@ function soloFooter(key='solo'){
  return '<footer class="footer solo-footer solo-shot solo-shot-narrow" data-svg-title="off"><img class="solo-shot-img" src="assets/detail-solo-16j/footer_A.png" alt="WISTIA 푸터. 문의양식 작성, 채널, 개인정보처리방침, 고객지원" width="860" height="974" loading="lazy" decoding="async"><a class="solo-footer-inquiry" href="/event/'+key+'"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.2c-4.6 0-8.2 2.9-8.2 6.6 0 2.3 1.5 4.3 3.8 5.5l-.6 2.4c-.1.4.2.5.4.3l2.8-1.8c.6.1 1.2.2 1.8.2 4.6 0 8.2-2.9 8.2-6.6S16.6 4.2 12 4.2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="8.6" cy="10.8" r=".85" fill="currentColor" stroke="none"/><circle cx="12" cy="10.8" r=".85" fill="currentColor" stroke="none"/><circle cx="15.4" cy="10.8" r=".85" fill="currentColor" stroke="none"/></svg><span>문의양식 작성</span></a><a class="footer-brand" href="/"><span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><p class="mas-footer-slogan solo-seo">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</p><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-legal"><a href="/privacy">개인정보처리방침</a><span aria-hidden="true">|</span><a href="https://aidoc.kr/support/" target="_blank" rel="noopener noreferrer">고객지원</a><span aria-hidden="true">|</span><span>웨딩 · 목소리 · 영상</span></div><div class="footer-bottom solo-seo"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
+function pcProductInformation(info,price){
+ const row=(label,value)=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>'
+ return '<div class="pc-product-card"><dl class="pc-product-strip">'+[info[1],info[2],info[5]].map(([label,value])=>row(label,value)).join('')+'</dl><dl class="pc-product-notes">'+[info[0],info[3],info[4],['가격',price.toLocaleString('ko-KR')+'원']].map(([label,value])=>row(label,value)).join('')+'</dl></div>'
+}
+function pcLyricVideo(){return '<div class="pc-lyric-layout" data-svg-title="off"><span class="pc-lyric-point">POINT 05</span><h2>가사 영상 제작<br><strong>필요하신가요?</strong></h2><p>사진·영상과 함께 노래 가사가 나옵니다</p><img src="assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy"><p>가사 영상 추가 옵션 · 1곡 기준</p><strong class="pc-lyric-price">+40,000원</strong></div>'}
 const AR_CUSTOMER_DUET_POSTER='assets/img/ar-detail/duet-live-proof-v2.jpg'
 function arCustomerVideoData(key){
  const duet=key==='duo'
@@ -1300,7 +1307,8 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const intro=(key==='solo'||key==='duo')
   ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j15"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j15" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
- const information='<section class="mas-information wistia-live-info" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section>'
+ const information='<section class="mas-information wistia-live-info" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl>'+pcProductInformation(info,p.normal)+'</section>'
+ details=details.replace('</section><div class="solo-poster-stack">',pcLyricVideo()+'</section><div class="solo-poster-stack">')
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+information+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
@@ -1976,6 +1984,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  if(!reuseArPriceForm)app.focus({preventScroll:true});
  normalizeInternalLinks();
  normalizeInquiryLinks();window.WistiaSvgUI?.mountChrome(document,studioIcon);mountInquiryObserver()
+ window.WistiaPCBackground?.mount(app)
  window.WistiaMotion?.mount()
  document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.pathname===routePath())a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
 }

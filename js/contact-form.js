@@ -82,6 +82,7 @@
  const calendarStates=new WeakMap()
  function openDateCalendar(state){
   if(!state.calendar.hidden)return
+  state.pendingDate=undefined
   state.mode.checked=true;state.calendar.closest('[data-contact-date-panel]').hidden=false;state.input.disabled=false
   const date=(state.input.value>=calendarToday()?parseDate(state.input.value):null)||parseDate(calendarToday());state.year=date.getUTCFullYear();state.month=date.getUTCMonth()
   state.calendar.hidden=false;state.trigger.setAttribute('aria-expanded','true');paintCalendar(state);positionCalendar(state)
@@ -97,19 +98,20 @@
  }
  function paintCalendar(state,focusValue){
   const {calendar,input,key}=state,today=calendarToday(),yearSelect=calendar.querySelector('[data-calendar-year]'),monthSelect=calendar.querySelector('[data-calendar-month]')
+  const selected=key==='bookingDate'&&input.form.dataset.wizard?(state.pendingDate??input.value):input.value
   const minYear=Number(today.slice(0,4)),maxYear=Math.max(minYear+15,state.year)
   yearSelect.innerHTML=Array.from({length:maxYear-minYear+1},(_,i)=>'<option value="'+(minYear+i)+'">'+(minYear+i)+'년</option>').join('')
   yearSelect.value=String(state.year);monthSelect.value=String(state.month)
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
-  calendar.querySelector('[data-calendar-selection]').textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
-  syncEventDateClose(calendar,input.value)
+  calendar.querySelector('[data-calendar-selection]').textContent=selected?'선택한 날짜: '+displayDate(selected).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
+  syncEventDateClose(calendar,selected)
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
-  grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
+  grid.innerHTML=calendarCells(state.year,state.month,key,selected,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
-  if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다':'일정을 확인하고 있습니다'}
+  if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다':'예약 가능한 날짜를 불러오고 있어요'}
   if(key==='bookingDate'&&!calendar.hidden&&booking?.loadRange){
    const id=from+':'+to
    if(state.rangeId!==id){state.rangeId=id;booking.loadRange(from,to).catch(()=>{}).finally(()=>{if(state.rangeId===id&&calendar.isConnected)paintCalendar(state)})}
@@ -149,15 +151,19 @@
     event.preventDefault();const changed=!mode.checked;toggleCalendar(state)
     if(changed)mode.dispatchEvent(new Event('change',{bubbles:true}))
    })
+   trigger.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCalendar(state)}})
    calendar.addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button||button.disabled)return
-    if(button.hasAttribute('data-calendar-close')){closeCalendar(state);state.mode.focus({preventScroll:true});return}
+    if(button.hasAttribute('data-calendar-close')){
+     if(key==='bookingDate'&&form.dataset.wizard&&state.pendingDate){input.value=state.pendingDate;state.pendingDate=undefined;input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))}
+     closeCalendar(state);state.trigger.focus({preventScroll:true});return
+    }
     if(button.hasAttribute('data-calendar-move')){changeMonth(state,Number(button.dataset.calendarMove));return}
     const value=button.dataset.calendarDay
     if(value&&selectableBookingDate(value,key)){
+     if(key==='bookingDate'&&form.dataset.wizard){state.pendingDate=value;paintCalendar(state);return}
      input.value=value;paintCalendar(state)
      input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))
-     if(key==='bookingDate'&&form.dataset.wizard)closeCalendar(state)
     }
    })
    calendar.addEventListener('change',event=>{
