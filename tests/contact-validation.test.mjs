@@ -58,5 +58,5 @@ const mobileSidebar=flowCss.match(/@media\(max-width:900px\)\{\s*(?:\/\*[\s\S]*?
 assert.ok(mobileSidebar,'mobile quote card rule must be covered')
 assert.match(mobileSidebar,/pointer-events:auto/,'copy button and privacy link must receive mouse/touch input')
 assert.doesNotMatch(mobileSidebar,/pointer-events:none/)
-assert.match(read('index.html'),/consultation-flow.css\?v=20261004-inquiry-pointer-fix-1/)
+assert.match(read('index.html'),/consultation-flow.css\?v=20261014-detail-polish-16j/)
 console.log('No name gate, service/date validation popup, optional dates, preserved draft, safe direct Kakao link and copy guard passed')

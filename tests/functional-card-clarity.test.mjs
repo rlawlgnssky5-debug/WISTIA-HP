@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 const css=read('css/functional-card-clarity.css')
-assert.match(read('index.html'),/functional-card-clarity.css\?v=20261005-detail-comments14-1/)
+assert.match(read('index.html'),/functional-card-clarity.css\?v=20261014-detail-polish-16j/)
 assert.match(css,/\.bap-player\{\s*background:var\(--mono-gray\)/)
 assert.match(css,/\.bap-wave\{\s*background:var\(--mono-white\)!important;border:0!important;border-radius:16px/)
 assert.match(css,/\.bap-tab\{\s*background:var\(--mono-white\)/)

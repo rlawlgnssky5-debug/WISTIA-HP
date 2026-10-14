@@ -5,7 +5,7 @@ const {chromium} = require(process.env.WISTIA_NODE_MODULES + '/playwright')
   const browser = await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'})
   try {
     const page = await browser.newPage({viewport:{width:1440,height:900}})
-    await page.goto('http://127.0.0.1:4173/?v=115#/detail/wedding')
+    await page.goto('http://127.0.0.1:4173/?v=20261014-detail-polish-16j')
     assert.equal(await page.locator('#heroEditorLaunch').count(),1)
     await page.locator('#heroEditorLaunch').click()
     await page.locator('#heroEditorCanvas').waitFor()

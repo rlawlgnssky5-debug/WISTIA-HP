@@ -7,7 +7,8 @@
   ['time','방문 희망 시간','시작 시간을 고르시면 상품 시간만큼 함께 선택돼요']
  ]
  const sourceChoices=['인스타','스레드','메타 광고','카페','블로그','지인 추천']
- const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes'])
+ const discoveryChoices=['지인·가족 추천','웨딩플래너·웨딩홀 소개','네이버 검색','인스타그램·유튜브','블로그·카페 후기','기타']
+ const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes','discovery'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>'오후 '+(Math.floor(clock/60)-12)+'시'+(clock%60?' 30분':'');return start>=13*60&&end<=23*60?label(start)+'~'+label(end)+' ('+(minutes/60)+'시간)':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
@@ -43,6 +44,7 @@
  }
  function displayDate(value){const date=parseDate(value);return date?date.getUTCFullYear()+'년 '+(date.getUTCMonth()+1)+'월 '+date.getUTCDate()+'일 ('+weekdays[date.getUTCDay()]+')':'날짜를 선택해 주세요'}
  function isoDate(date){return date.toISOString().slice(0,10)}
+ function scarceTeamLabel(count){return count===1||count===2?count+'팀 남음':''}
  function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||[0,4,5,6].includes(date.getUTCDay()))}
  function selectableBookingDate(value,key){
   if(!selectableDate(value,key))return false
@@ -56,15 +58,27 @@
   for(let day=1;day<=count;day++){
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
    const teams=key==='bookingDate'&&!past&&!weekdayClosed&&!notionClosed&&Array.isArray(blocks)?Number(global.WistiaBooking?.teamsRemaining?.(value,product,blocks))||0:0
-   const teamLabel=teams>=1?teams+'팀 남음':''
+   const teamLabel=scarceTeamLabel(teams)
    cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(teamLabel?' has-one-team':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(notionClosed?' · 마감':teamLabel?' · '+teamLabel:past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed?'<small>마감</small>':teamLabel?'<small class="one-team">'+teamLabel+'</small>':'')+'</button>'
   }
   return cells
  }
  const calendarIcon=direction=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="'+(direction==='prev'?'m14 6-6 6 6 6':'m10 6 6 6-6 6')+'"/></svg>'
+ function calendarCloseButton(key){
+  if(key==='eventDate')return '<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><span>× 닫기</span></button>'
+  return '<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span>닫기</span></button>'
+ }
+ function syncEventDateClose(calendar,value){
+  if(calendar.dataset.calendar!=='eventDate')return
+  const close=calendar.querySelector('[data-calendar-close]');if(!close)return
+  const chosen=!!value
+  close.classList.toggle('is-confirm',chosen)
+  close.setAttribute('aria-label',chosen?'선택한 날짜 확인':'달력 닫기')
+  close.querySelector('span').textContent=chosen?'확인':'× 닫기'
+ }
  function calendarMarkup(key,label){
   const booking=key==='bookingDate'
-  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="dialog" aria-label="'+label+' 달력" hidden'+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+'<button type="button" class="calendar-close" data-calendar-close aria-label="달력 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span>닫기</span></button>'+'</div>'+ (booking?'<p data-calendar-range-status role="status" aria-live="polite" hidden>카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다</p>':'')+'<div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map((day,index)=>'<span'+(index===0?' class="calendar-sunday"':'')+'>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div>'+'</div>'
+  return '<div class="contact-calendar'+(booking?' calendar-inline':' calendar-popup')+'" id="calendar-'+key+'" data-calendar="'+key+'" role="dialog" aria-label="'+label+' 달력" hidden'+'><div class="calendar-caption"><strong>날짜 선택</strong><span data-calendar-selection aria-live="polite">날짜를 선택해 주세요</span>'+calendarCloseButton(key)+'</div>'+ (booking?'<p data-calendar-range-status role="status" aria-live="polite" hidden>카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다</p>':'')+'<div class="calendar-navigation"><button type="button" data-calendar-move="-1" aria-label="이전 달">'+calendarIcon('prev')+'</button><div class="calendar-month-selects"><label><span class="sr-only">연도 선택</span><select data-calendar-year aria-label="연도 선택"></select></label><label><span class="sr-only">월 선택</span><select data-calendar-month aria-label="월 선택">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">'+(i+1)+'월</option>').join('')+'</select></label></div><button type="button" data-calendar-move="1" aria-label="다음 달">'+calendarIcon('next')+'</button></div><p class="calendar-month-announcement sr-only" data-calendar-month-label aria-live="polite"></p>'+'<div class="calendar-weekdays" aria-hidden="true">'+weekdays.map((day,index)=>'<span'+(index===0?' class="calendar-sunday"':'')+'>'+day+'</span>').join('')+'</div><div class="calendar-grid" data-calendar-grid role="group" aria-label="날짜"></div><div class="calendar-legend"><span><i class="legend-unavailable"></i>마감/예약불가</span><span><i class="legend-today"></i>오늘</span><span><i class="legend-selected"></i>선택</span></div>'+'</div>'
  }
  const calendarStates=new WeakMap()
  function openDateCalendar(state){
@@ -72,6 +86,7 @@
   state.mode.checked=true;state.calendar.closest('[data-contact-date-panel]').hidden=false;state.input.disabled=false
   const date=(state.input.value>=calendarToday()?parseDate(state.input.value):null)||parseDate(calendarToday());state.year=date.getUTCFullYear();state.month=date.getUTCMonth()
   state.calendar.hidden=false;state.trigger.setAttribute('aria-expanded','true');paintCalendar(state);positionCalendar(state)
+  if(state.key==='bookingDate'){state.input.form.dataset.bookingCalendarOpened='true';global.WistiaBooking?.changed(state.input)}
  }
  function toggleCalendar(state){if(state.calendar.hidden)openDateCalendar(state);else closeCalendar(state)}
  function closeCalendar(state){
@@ -89,13 +104,14 @@
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
   calendar.querySelector('[data-calendar-selection]').textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'날짜를 선택해 주세요'
+  syncEventDateClose(calendar,input.value)
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
   grid.innerHTML=calendarCells(state.year,state.month,key,input.value,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
   if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다':'일정을 확인하고 있습니다'}
-  if(key==='bookingDate'&&booking?.loadRange){
+  if(key==='bookingDate'&&!calendar.hidden&&booking?.loadRange){
    const id=from+':'+to
    if(state.rangeId!==id){state.rangeId=id;booking.loadRange(from,to).catch(()=>{}).finally(()=>{if(state.rangeId===id&&calendar.isConnected)paintCalendar(state)})}
   }
@@ -120,7 +136,7 @@
    const key=calendar.dataset.calendar,input=form.querySelector('#contact-'+key)
    let state=calendarStates.get(calendar)
    if(state){
-    if(fresh&&key==='bookingDate'&&global.WistiaBooking?.loadRange){const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0)));global.WistiaBooking.loadRange(from,to,true).catch(()=>{}).finally(()=>{if(calendar.isConnected)paintCalendar(state)})}
+    if(fresh&&!calendar.hidden&&key==='bookingDate'&&global.WistiaBooking?.loadRange){const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0)));global.WistiaBooking.loadRange(from,to,true).catch(()=>{}).finally(()=>{if(calendar.isConnected)paintCalendar(state)})}
     if(key==='bookingDate'&&!fresh)state.rangeId=null
     paintCalendar(state);return
    }
@@ -179,10 +195,6 @@
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.calendarTime:null
   const closedLabel=form.dataset.scheduleState==='loading'?'확인 중':'마감'
   const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3)),start=clock(time.value),minutes=global.WistiaBooking?.duration(global.WistiaBooking?.calendarKey())||60
-  const monthDate=parseDate(date.value),monthFrom=monthDate&&isoDate(new Date(Date.UTC(monthDate.getUTCFullYear(),monthDate.getUTCMonth(),1))),monthTo=monthDate&&isoDate(new Date(Date.UTC(monthDate.getUTCFullYear(),monthDate.getUTCMonth()+1,0)))
-  const monthBlocks=monthFrom&&global.WistiaBooking?.calendarBlocks?.(monthFrom,monthTo)
-  const teamsLeft=known&&Array.isArray(monthBlocks)?Number(global.WistiaBooking?.teamsRemaining?.(date.value,global.WistiaBooking.calendarKey?.()||'solo',monthBlocks))||0:0
-  const teamLabel=teamsLeft>=1?teamsLeft+'팀 남음':''
   const validSelection=known&&!!time.value&&!time.selectedOptions[0]?.disabled
   const clockLabel=minute=>Math.floor(minute/60)+'시'+(minute%60?' '+minute%60+'분':'')
   const help=form.querySelector('[data-time-help]')
@@ -191,8 +203,7 @@
   list.innerHTML=[...time.options].map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
    const closedReason=option.dataset.disabledReason==='booking'||option.dataset.disabledReason==='sunday'
-   const scarce=!!teamLabel&&!!option.value&&!option.disabled&&!explain
-   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+(scarce?' aria-label="'+escape(clockLabel(minute))+' · '+teamLabel+'"':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||closedReason)?'<small>'+closedLabel+'</small>':scarce?'<small class="one-team">'+teamLabel+'</small>':'')+'</button>'
+   return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||closedReason)?'<small>'+closedLabel+'</small>':'')+'</button>'
   }).join('')
   list.scrollTop=dateChanged?0:scrollTop
   const syncFade=()=>list.closest('[data-time-scroll-wrap]').classList.toggle('has-more-times',list.scrollHeight-list.clientHeight-list.scrollTop>2)
@@ -213,6 +224,7 @@
   return '<fieldset class="contact-field contact-date-field contact-date-'+key+'"><legend>'+(key==='eventDate'?'① ':'② ')+label+'</legend><p class="contact-date-description">'+(key==='eventDate'?'결혼식이 열리는 날짜를 알려 주세요':'스튜디오에 방문해 녹음하실 희망 날짜를 골라 주세요')+'</p><div class="contact-date-toggle"><label data-calendar-trigger="'+key+'" aria-expanded="false" aria-controls="calendar-'+key+'"><input type="radio" name="'+key+'Mode" value="date" data-contact-date-mode="'+key+'"><span>날짜 선택</span></label><label><input type="radio" name="'+key+'Mode" value="unknown" data-contact-date-mode="'+key+'" checked><span>미정</span></label></div><div class="contact-date-picker" data-contact-date-panel="'+key+'" hidden><label class="sr-only" for="contact-'+key+'">'+label+' 날짜</label><input id="contact-'+key+'" name="'+key+'" type="text" hidden tabindex="-1" disabled data-calendar-value>'+ '<p class="contact-date-summary" data-calendar-summary="'+key+'" aria-live="polite" hidden></p>'+calendarMarkup(key,label)+'<small class="contact-input-error" data-contact-date-error="'+key+'" role="alert" hidden></small></div></fieldset>'
  }
  function timeField(){return '<fieldset class="contact-field contact-time-field"><legend>방문 희망 시간</legend><p data-time-date-hint role="status" aria-live="polite">날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요</p><div class="contact-time-selects"><label for="contact-time"><span class="sr-only">방문 희망 시간 선택</span><select id="contact-time" name="timeStart" aria-describedby="bookingAvailabilityStatus"><option value="">미정</option>'+timeOptions+'</select></label></div><div class="contact-time-scroll-wrap" data-time-scroll-wrap hidden><div class="calendar-time-grid" data-calendar-times role="radiogroup" aria-label="방문 시작 시간" data-lenis-prevent hidden></div></div><em data-time-help hidden>시작 시간을 고르시면 상품 시간만큼 함께 선택돼요</em><p id="bookingAvailabilityStatus" data-booking-status role="status" aria-live="polite" hidden></p></fieldset>'}
+ function discoveryField(){return '<fieldset class="contact-field contact-discovery-field"><legend>처음에 위스티아를 어디서 보고 오셨나요? (선택)</legend><div class="contact-date-toggle contact-discovery" role="radiogroup" aria-label="처음에 위스티아를 어디서 보고 오셨나요?">'+discoveryChoices.map(value=>'<label><input type="radio" name="discovery" value="'+value+'"><span>'+value+'</span></label>').join('')+'</div></fieldset>'}
  function validationIssues(form,{mark=true}={}){
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
@@ -237,7 +249,7 @@
   const ordered=integrated?['source','eventDate','bookingDate','time'].map(key=>fields.find(field=>field[0]===key)):fields
   const renderedInputs=ordered.map(([key,label,hint])=>{
    if(key==='eventDate'||key==='bookingDate')return dateField(key,label)
-   if(key==='time')return timeField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
+   if(key==='time')return timeField()+discoveryField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
    const id='contact-'+key
    let input
    if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음','축가 스토리 필름'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
@@ -250,7 +262,7 @@
   return '<section class="contact-page'+(embedded?' contact-embedded':' shell')+'" id="bookingInquiry" aria-labelledby="contact-title"><header class="contact-intro"><p class="contact-welcome">'+welcome+'</p><'+(embedded?'h2':'h1')+' id="contact-title">문의 양식 작성</'+(embedded?'h2':'h1')+'><p>작성한 내용으로 카카오톡 문의하기</p></header><form id="contactInquiryForm" novalidate class="contact-form"><p class="contact-form-heading">[ 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐅𝐨𝐫𝐦 ]</p><p class="contact-form-help">보내주신 내용을 확인한 후 빠르게 안내드리겠습니다 :)<br>일정이 미정이라면 비워 두셔도 괜찮습니다</p>'+inputs+'<aside class="contact-quote"'+(!quote?' hidden':'')+'><strong>선택한 구성도 함께 전달합니다</strong><p>'+escape(quote?.summary)+'</p><small>작성 내용과 함께 복사되며 최종 금액은 상담에서 확인합니다</small></aside>'+submit()+'</form></section>'
  }
  function submitIcon(name){return '<span class="svg-submit-icon" aria-hidden="true">'+(typeof global.studioIcon==='function'?global.studioIcon(name):'<svg class="studio-icon" data-icon="'+name+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">'+(name==='check'?'<path d="m5 12 4.5 4.5L19 7"/>':'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M5 16H3V3h13v2"/>')+'</svg>')+'</span>'}
- function submit(){return '<p class="contact-privacy-note">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다 <a href="/privacy">개인정보처리방침</a></p><aside class="inquiry-actions" aria-label="카카오톡 상담 방법"><a class="inquiry-direct" href="https://pf.kakao.com/_GbExjX/chat" target="_blank" rel="noopener noreferrer">양식 없이 일단 상담하기</a><button type="submit" class="button dark contact-submit" data-submit-state="incomplete" aria-label="작성한 내용으로 카카오톡 문의하기"><span data-submit-label>'+submitIcon('copy')+'작성한 내용으로 카카오톡 문의하기</span></button></aside>'}
+ function submit(){return '<p class="contact-privacy-note">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다 <a href="/privacy">개인정보처리방침</a></p><aside class="inquiry-actions" aria-label="카카오톡 상담 방법"><button type="submit" class="button dark contact-submit" data-submit-state="incomplete" aria-label="작성한 내용으로 카카오톡 문의하기"><span data-submit-label>'+submitIcon('copy')+'작성한 내용으로 카카오톡 문의하기</span></button></aside>'}
  function syncSubmitState(form=document.querySelector('#contactInquiryForm'),extraButton){
   if(!form)return
   const ready=validationIssues(form,{mark:false}).length===0,label='작성한 내용으로 카카오톡 문의하기'
@@ -318,6 +330,8 @@
   const minutes=info.bookingMinutes||global.WistiaBooking?.duration?.(info.productKey||global.WistiaBooking?.calendarKey?.())||(/DUET/.test(info.product)?120:/필름/.test(info.product)?180:60)
   lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'방문 희망 시간 : '+formatTimeRange(values.timeStart,minutes),'━━━━━━━━━━━━')
   const notes=String(values.specialNotes||'').trim();if(notes)lines.push('특이사항',notes,'━━━━━━━━━━━━')
+  const discovery=String(values.discovery||'').trim()
+  if(discoveryChoices.includes(discovery))lines.push('처음 본 곳 : '+discovery)
   const source=String(values.source||'').trim()
   if(sourceChoices.includes(source))lines.push('유입 경로 : '+source)
   lines.push('','※ 예약 가능 여부는 상담에서 확정돼요')

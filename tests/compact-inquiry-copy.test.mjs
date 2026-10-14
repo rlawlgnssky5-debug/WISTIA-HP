@@ -43,3 +43,15 @@ console.log('Exact compact Kakao template, real prices/options/paybacks, short d
 
 for(const source of ['', '기타', '카카오톡 채널', '선택 안 함'])assert.doesNotMatch(api.text({...values,source},{details}),/유입 경로/);
 for(const source of ['인스타','스레드','메타 광고','카페','블로그','지인 추천'])assert.ok(api.text({...values,source},{details}).includes('유입 경로 : '+source))
+assert.doesNotMatch(api.text(values,{details}),/처음 본 곳/)
+assert.doesNotMatch(api.text({...values,discovery:'카카오톡 채널'},{details}),/처음 본 곳/)
+const discovered=api.text({...values,discovery:'네이버 검색',source:'인스타',specialNotes:'둘이 같이 와요'},{details})
+assert.match(discovered,/특이사항\n둘이 같이 와요\n━━━━━━━━━━━━\n처음 본 곳 : 네이버 검색\n유입 경로 : 인스타/)
+assert.equal((discovered.match(/[📦💰📅]/gu)||[]).length,3)
+const choices=['지인·가족 추천','웨딩플래너·웨딩홀 소개','네이버 검색','인스타그램·유튜브','블로그·카페 후기','기타']
+for(const choice of choices)assert.ok(api.text({...values,discovery:choice},{details}).includes('처음 본 곳 : '+choice))
+const form=api.render(null,{integrated:true})
+assert.ok(form.indexOf('처음에 위스티아를 어디서 보고 오셨나요? (선택)')<form.indexOf('특이사항이나 궁금한 점'))
+assert.equal(form.match(/name="discovery"/g).length,6)
+assert.doesNotMatch(form,/name="discovery"[^>]*required/)
+assert.match(form,/class="contact-date-toggle contact-discovery"/)

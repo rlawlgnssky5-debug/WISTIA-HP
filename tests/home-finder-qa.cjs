@@ -7,7 +7,7 @@ const {chromium} = require(process.env.WISTIA_NODE_MODULES + '/playwright')
   for (const width of [390,1440]) {
    const page=await browser.newPage({viewport:{width,height:900}}),errors=[]
    page.on('pageerror',error=>errors.push(error.message))
-   await page.goto('http://127.0.0.1:4173/?v=126#/')
+   await page.goto('http://127.0.0.1:4173/?v=20261014-detail-polish-16j')
    assert.equal(await page.locator('input[name=finderRole]').count(),3)
    assert.match(await page.locator('.finder-home').innerText(),/사전 AR 축가.*식전 영상 \/ 축가 영상.*프로포즈/s)
    assert.equal(await page.locator('.finder-service-badge').count(),2)

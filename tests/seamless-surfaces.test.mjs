@@ -13,7 +13,7 @@ assert.doesNotMatch(css,/\.we-service:nth-child\(2\) figure\{grid-column:1\/-1/)
 assert.match(css,/#arRatioExperience\.wistia-ar[^}]*background:transparent!important/)
 assert.match(css,/--section-fade:linear-gradient/)
 assert.match(css,/\.we-service:focus-visible \.we-service-link\{outline:2px/)
-assert.match(index,/seamless-surfaces\.css\?v=20261002-portrait-fill-1/)
+assert.match(index,/seamless-surfaces\.css\?v=20261014-detail-polish-16j/)
 const poster=app.slice(app.indexOf('function arRecordingPoster('),app.indexOf('function arCommerceDetail('))
 const context={img:(src,alt)=>`<img src="${src}" alt="${alt}">`,escapeHtml:value=>value}
 runInNewContext(poster,context)

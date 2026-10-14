@@ -5,7 +5,7 @@ const source=readFileSync(new URL('../js/booking-availability.js',import.meta.ur
 const requests=[],events={}
 const control=value=>({value,disabled:false,validationMessage:'',dataset:{},setCustomValidity(message){this.validationMessage=message},setAttribute(){},removeAttribute(){}})
 const date=control(''),time=control('17:00'),status={textContent:'',dataset:{}},error={hidden:true,textContent:''},list={hidden:true,textContent:''}
-time.options=['','16:00','17:00','18:00','19:00','22:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
+time.options=['','13:00','16:00','17:00','18:00','19:00','22:00'].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
 Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
 const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
 date.closest=()=>form
@@ -15,6 +15,7 @@ const api=context.window.WistiaBooking,flush=()=>new Promise(resolve=>setTimeout
 const payload=(selected,blocks=[])=>({ok:true,json:async()=>({ok:true,date:selected,blocks})})
 api.mount(form,'solo');await flush()
 assert.equal(form.dataset.scheduleState,'unknown');assert.equal(status.hidden,true);assert.equal(requests.length,0)
+form.dataset.bookingCalendarOpened='true'
 date.value='2027-10-11';api.changed(date);await flush()
 assert.equal(form.dataset.scheduleState,'closed');assert.match(date.validationMessage,/월·화·수/)
 assert.equal(requests.length,0)
@@ -62,7 +63,7 @@ function makeForm(){
  date.disabled=true
  time.options=['',...Array.from({length:20},(_,i)=>`${13+Math.floor(i/2)}:${i%2?'30':'00'}`)].map(value=>({value,textContent:value||'미정',disabled:false,dataset:{}}))
  Object.defineProperty(time,'selectedOptions',{get:()=>time.options.filter(option=>option.value===time.value)})
- const form={dataset:{},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
+ const form={dataset:{bookingCalendarOpened:'true'},isConnected:true,querySelector(selector){return ({'#contact-bookingDate':date,'#contact-time':time,'[data-booking-status]':status,'[data-contact-date-error="bookingDate"]':error,'[data-booking-open-times]':list})[selector]}}
  date.closest=time.closest=()=>form
  return {form,date,time,status,list,opt:value=>time.options.find(option=>option.value===value)}
 }
@@ -89,7 +90,7 @@ const day='2027-10-10',booking=[{start:'2027-10-10T08:00:00Z',end:'2027-10-10T10
  assert.equal(requests[0].options.signal.aborted,true)
  assert.equal(f.form.dataset.scheduleState,'unavailable');assert.match(f.status.textContent,/카카오톡에서 가능 여부/)
  assert.equal(f.list.hidden,true,'fallback never lists times as available')
- assert.ok(f.time.options.every(option=>!/마감/.test(option.textContent)))
+ assert.ok(f.time.options.filter(option=>!option.value||option.value<'18:00').every(option=>!/마감/.test(option.textContent)))
  api.changed(f.date);assert.equal(requests.length,2,'a timed-out date is retried, not served from cache')
 }
 { // (b) product switch story → SOLO re-renders the form while the story request is still in flight

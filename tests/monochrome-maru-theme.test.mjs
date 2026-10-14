@@ -7,21 +7,22 @@ assert.doesNotMatch(index,/hangeul_static\/css\/maru-buri.css/)
 assert.match(index,/pretendardvariable-dynamic-subset.min.css/)
 assert.doesNotMatch(index,/fonts.googleapis.com\/css2\?family=Noto/)
 const sheets=[...index.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m=>m[1])
-assert.deepEqual(sheets.slice(-14),[
- 'css/monochrome-maru-theme.css?v=20261013-detail-polish-16f',
- 'css/functional-card-clarity.css?v=20261005-detail-comments14-1',
- 'css/approved-home-thumbnails.css?v=20261006-approved-home-thumbnails-1',
- 'css/noir-minimal.css?v=20261013-detail-polish-16f',
- 'css/studio-graphics.css?v=20261006-studio-graphics-1',
- 'css/luxury-finish.css?v=20261006-reviews-five-1',
- 'css/detail-consistency.css?v=20261006-benefit-boxes-1',
- 'css/svg-interface.css?v=20261013-detail-polish-16f',
- 'css/svg-player-controls.css?v=20261007-svg-interface-1',
- 'css/booking-availability.css?v=20261013-detail-polish-16g',
- 'css/detail-section-layout.css?v=20261013-detail-polish-16f',
- 'css/heading-font.css?v=20261013-detail-polish-16f',
- 'css/kakao-inquiry.css?v=20261013-detail-polish-16f',
- 'css/detail-point-16f.css?v=20261013-detail-polish-16h'
+assert.deepEqual(sheets.slice(-15),[
+ 'css/monochrome-maru-theme.css?v=20261014-detail-polish-16j',
+ 'css/functional-card-clarity.css?v=20261014-detail-polish-16j',
+ 'css/approved-home-thumbnails.css?v=20261014-detail-polish-16j',
+ 'css/noir-minimal.css?v=20261014-detail-polish-16j',
+ 'css/studio-graphics.css?v=20261014-detail-polish-16j',
+ 'css/luxury-finish.css?v=20261014-detail-polish-16j',
+ 'css/detail-consistency.css?v=20261014-detail-polish-16j',
+ 'css/svg-interface.css?v=20261014-detail-polish-16j',
+ 'css/svg-player-controls.css?v=20261014-detail-polish-16j',
+ 'css/booking-availability.css?v=20261014-detail-polish-16j10',
+ 'css/detail-section-layout.css?v=20261014-detail-polish-16j',
+ 'css/heading-font.css?v=20261014-detail-polish-16j',
+ 'css/kakao-inquiry.css?v=20261014-detail-polish-16j11',
+ 'css/detail-point-16f.css?v=20261014-detail-polish-16j',
+ 'css/detail-point-16i.css?v=20261014-detail-polish-16j'
 ])
 for(const color of ['#111111','#FFFFFF','#E8E8E8'])assert.ok(css.includes(color))
 assert.doesNotMatch(css,/#EFA8B8|#EFE3D5|#7B625B|#FF4F9A|#171717|#F5F5F5/)
@@ -38,7 +39,7 @@ assert.match(css,/\.info-process \.booking-guide article/)
 assert.doesNotMatch(css,/filter:|img\s*\{/,'actual media and brand mark must not be recoloured')
 for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/solo','event/duo','event/duet-film','info/location','info/about','info/faq','info/process','events']){
  const page=read(route+'.html')
- assert.match(page,/monochrome-maru-theme.css\?v=20261013-detail-polish-16f/)
+ assert.match(page,/monochrome-maru-theme.css\?v=20261014-detail-polish-16j/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)
 }
 assert.match(read('js/contact-form.js'),/작성한 내용으로 카카오톡 문의하기/)

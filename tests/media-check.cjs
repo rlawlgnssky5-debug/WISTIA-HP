@@ -4,7 +4,7 @@ const b=await chromium.launch({headless:true,executablePath:'C:\\Program Files (
 const p=await b.newPage({viewport:{width:1440,height:1000}})
 const failures=[]
 p.on('requestfailed',r=>failures.push({url:r.url(),error:r.failure().errorText}))
-await p.goto('http://127.0.0.1:4173/?v=60#/')
+await p.goto('http://127.0.0.1:4173/?v=20261014-detail-polish-16j')
 await p.locator('.situation-home').waitFor()
 await p.evaluate(()=>document.fonts.ready)
 console.log('fonts',await p.evaluate(()=>({body:getComputedStyle(document.body).fontFamily,loaded:[...document.fonts].map(x=>({family:x.family,status:x.status})).slice(0,12)})))

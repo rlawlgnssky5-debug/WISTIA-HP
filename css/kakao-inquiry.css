@@ -1,10 +1,8 @@
 /* Ordinary Kakao buttons: one compact floating pill instead of wide docks. */
-html #app#app#app#app#app .inquiry-actions{position:static!important;inset:auto!important;transform:none!important;width:100%!important;max-width:none!important;margin:24px 0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+html #app#app#app#app#app .inquiry-actions{position:static!important;inset:auto!important;transform:none!important;width:100%!important;max-width:none!important;margin:24px 0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;grid-template-columns:1fr!important;gap:0!important}
 html #app#app#app#app#app .product-inquiry{position:static;display:flex;justify-content:center;margin:0;padding:32px 20px;background:transparent;border:0}
 html body #app#app#app#app#app .ar-commerce-detail,html body #app#app#app#app#app #contactInquiryForm{padding-bottom:0!important}
 html body #app#app#app#app#app .footer{padding-bottom:32px!important}
-@media(max-width:540px){html #app#app#app#app#app .inquiry-actions{grid-template-columns:minmax(0,1fr)!important}}
-
 html body #app#app#app#app#app{padding-bottom:calc(80px + env(safe-area-inset-bottom))!important}
 html #floatingKakaoChat.floating-kakao-pill{position:fixed!important;z-index:80;right:16px!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;left:auto!important;display:inline-flex!important;align-items:center;justify-content:center;gap:8px;width:max-content!important;max-width:calc(100vw - 32px);height:48px!important;min-height:48px!important;margin:0;padding:0 18px!important;box-sizing:border-box;border:0!important;border-radius:999px!important;background:#FEE500!important;color:#191919!important;box-shadow:0 4px 16px #19191926!important;font-family:var(--font-body, Pretendard),sans-serif;font-size:14px!important;font-weight:650;line-height:1;white-space:nowrap;text-decoration:none!important;transform:none!important}
 html #floatingKakaoChat .kakao-bubble{width:24px;height:24px;flex:0 0 24px;fill:currentColor;stroke:none}
@@ -17,9 +15,16 @@ html #floatingKakaoChat.floating-kakao-pill::before,html #floatingKakaoChat.floa
 
 /* Event inquiry has its own final CTA; keep the floating pill on other routes. */
 html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{display:none!important}
+/* .button > span is 22px. Inherit the button size so the one-line label fits /contact. */
+html #app#app#app#app#app .inquiry-actions .contact-submit [data-submit-label]{font-size:inherit!important;line-height:1.5!important;white-space:nowrap!important;flex-wrap:nowrap!important;gap:6px!important}
+html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon{margin:0!important}
 @media(max-width:540px){
- html body.is-event-inquiry #app#app#app#app#app .contact-submit{font-size:clamp(10px,3vw,12px)!important;white-space:nowrap!important}
- html body.is-event-inquiry #app#app#app#app#app .contact-submit [data-submit-label]{font-size:inherit!important;line-height:1.5!important;white-space:nowrap!important;flex-wrap:nowrap!important;gap:4px!important}
- html body.is-event-inquiry #app#app#app#app#app .contact-submit .svg-submit-icon{width:16px!important;height:16px!important;flex:0 0 16px!important;margin:0!important}
- html body.is-event-inquiry #app#app#app#app#app .contact-submit .svg-submit-icon>.studio-icon{width:16px!important;height:16px!important}
+ html #app#app#app#app#app .inquiry-actions .contact-submit{font-size:14px!important;white-space:nowrap!important;padding-inline:10px!important}
+ html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon{width:16px!important;height:16px!important;flex:0 0 16px!important}
+ html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon>.studio-icon{width:16px!important;height:16px!important}
 }
+/* Optional discovery question: same 2-column date-toggle buttons, wrapping long labels. */
+html #app#app#app#app#app .contact-discovery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;clear:both}
+html #app#app#app#app#app .contact-discovery label{min-width:0!important}
+html #app#app#app#app#app .contact-discovery span{min-width:0!important;height:auto!important;min-height:48px!important;padding:10px 8px!important;white-space:normal!important;word-break:keep-all!important;text-align:center!important;line-height:1.35!important;font-size:13px!important}
+html #app#app#app#app#app .contact-discovery-field>legend{white-space:normal!important;word-break:keep-all!important}

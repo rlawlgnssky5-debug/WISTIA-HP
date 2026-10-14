@@ -98,9 +98,8 @@ html #siteHeader .wordmark>span{display:flex!important;align-items:center!import
 }
 html #app#app#app#app .contact-submit [data-submit-label]{flex-wrap:nowrap!important}
 @media(max-width:430px){
- html #app#app#app#app .inquiry-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;padding-block:8px calc(12px + env(safe-area-inset-bottom))!important}
- html #app#app#app#app .inquiry-actions .inquiry-direct{min-height:36px!important;font-size:12px!important;padding-block:6px!important}
- html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important}
+ html #app#app#app#app .inquiry-actions{grid-template-columns:1fr!important;gap:0!important;padding-block:0 calc(12px + env(safe-area-inset-bottom))!important}
+ html #app#app#app#app .inquiry-actions .contact-submit{min-height:48px!important;width:100%!important}
  body[data-page="event"] #app{padding-bottom:0!important}
 }
 @media(max-width:430px){
@@ -214,6 +213,25 @@ html #app#app#app#app .contact-time-scroll-wrap.has-more-times::after{opacity:1}
 html #app#app#app#app .contact-time-field [data-time-help]{white-space:nowrap;font-size:clamp(10px,2.9vw,13px)}
 
 html #app#app#app#app .contact-time-field [data-time-help].has-time-selection{font-size:16px!important;font-weight:600!important;color:#191919!important;font-style:normal!important;line-height:1.5!important}
+
+/* Wedding date: × 닫기 until a day is chosen, then the same control becomes the filled 확인 button. */
+html #app#app#app#app #calendar-eventDate .calendar-caption{position:relative}
+html #app#app#app#app #calendar-eventDate .calendar-caption strong{padding-right:88px!important}
+html #app#app#app#app #calendar-eventDate .calendar-close{
+ position:absolute!important;top:0!important;right:0!important;z-index:2;
+ width:auto!important;min-width:0!important;height:auto!important;min-height:36px!important;
+ flex:0 0 auto!important;flex-basis:auto!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ margin:0!important;padding:6px 12px!important;gap:0!important;
+ border:1px solid #b9b5ab!important;border-radius:4px!important;
+ background:#fffcf5!important;color:#252421!important;
+ font-size:14px!important;font-weight:600!important;line-height:1.2!important;white-space:nowrap!important;
+}
+html #app#app#app#app #calendar-eventDate .calendar-close span{color:inherit!important}
+html #app#app#app#app #calendar-eventDate .calendar-close.is-confirm{
+ background:#252421!important;color:#FFFFFF!important;border-color:#252421!important;
+}
+html #app#app#app#app #calendar-eventDate .calendar-close.is-confirm span{color:#FFFFFF!important}
 
 /* Past dates keep the cell outline but fade until the form is barely visible. Closed days stay solid, with 마감. */
 html #app#app#app#app .contact-calendar .calendar-day.is-past{opacity:.15!important}
