@@ -1,0 +1,21 @@
+/* Compact type hierarchy, not browser zoom; preserve native input zoom and touch targets. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-draft-note{margin:-10px 0 22px!important;color:#8A6F75!important;font:400 12px/1.6 Pretendard,sans-serif!important;word-break:keep-all!important}
+@media(max-width:900px){
+ html body:has(.wistia-wizard){-webkit-text-size-adjust:100%;text-size-adjust:100%}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{padding:24px 18px 64px!important;font-size:14px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard h1{font-size:22px!important;line-height:1.4!important;margin-bottom:18px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-step h2{font-size:18px!important;line-height:1.5!important;margin:8px 0 18px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-step h2 svg{width:20px!important;height:20px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard legend{font-size:14px!important;line-height:1.6!important;margin-bottom:12px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard fieldset{margin-block:20px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-time-view .contact-time-field{margin:0!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-pair .wf-choice strong{font-size:16px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard [data-wf-selected-date]{font-size:14px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .calendar-time-grid button strong{font-size:14px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard :is(.wf-option-guide,.contact-date-description,.wf-payment){font-size:13px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-field{font-size:14px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard :is(textarea,select){font-size:16px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav button{min-height:50px!important;font-size:14px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav .wf-submit{font-size:13px!important}
+ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-nav{padding-inline:18px!important}
+}

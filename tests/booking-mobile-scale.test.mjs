@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const css=read('css/booking-mobile-scale.css'),html=read('index.html'),wizard=read('js/booking-wizard.js')
+assert.match(css,/@media\(max-width:900px\)/)
+assert.match(css,/\.wistia-wizard h1\{font-size:22px/)
+assert.match(css,/\.wf-step h2\{font-size:18px/)
+assert.match(css,/:is\(textarea,select\)\{font-size:16px/)
+assert.match(css,/min-height:50px/)
+assert.match(css,/-webkit-text-size-adjust:100%/)
+assert.doesNotMatch(css,/zoom:|transform:scale|text-size-adjust:none/)
+assert.doesNotMatch(html,/user-scalable=no|maximum-scale=1/)
+assert.ok(html.indexOf('js/booking-draft.js')<html.indexOf('js/booking-wizard.js'))
+assert.match(wizard,/restoreDraft\(form,state,onPeople\);state.draftReady=true/)
+assert.match(wizard,/if\(state.step>2&&!validate\(form,2\)\)/)
+assert.match(wizard,/timeStart:form.querySelector\('#contact-time'\).value/)
+assert.match(wizard,/서버에 저장하거나 자동으로 전송하지 않습니다/)
+console.log('Mobile-only type reduction, native 16px inputs, touch targets, zoom preservation and draft lifecycle integration passed')
