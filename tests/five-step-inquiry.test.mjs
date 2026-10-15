@@ -18,6 +18,8 @@ assert.doesNotMatch(html,/곡 정보와 가사|추가 안 함|data-calendar-clos
 const sources=[...html.matchAll(/name="discovery" value="([^"]+)"/g)].map(m=>m[1])
 assert.deepEqual(sources,['인스타','스레드','광고','카페','블로그','지인 추천'])
 assert.ok(html.indexOf('가사영상 제작 추가 옵션')<html.indexOf('lyric-video-v2.webp'))
+assert.match(html,/완성 음원이 빨리 필요해요!<small class="wf-check-description">3일 이내 받기<\/small>/)
+assert.match(html,/스크린에 띄울 가사 영상도 필요해요!/)
 assert.doesNotMatch(html,/extraVerse|1절 녹음|60,000원/)
 assert.match(html,/선택하실 추가 옵션이 없으시면 바로 다음 단계로 넘어가셔도 됩니다!/)
 assert.match(html,/data-calendar-immediate="true"/)
