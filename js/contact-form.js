@@ -44,7 +44,6 @@
  }
  function displayDate(value){const date=parseDate(value);return date?date.getUTCFullYear()+'년 '+(date.getUTCMonth()+1)+'월 '+date.getUTCDate()+'일 ('+weekdays[date.getUTCDay()]+')':'날짜를 선택해 주세요'}
  function isoDate(date){return date.toISOString().slice(0,10)}
- function scarceTeamLabel(count){return count===1||count===2?count+'팀 남음':''}
  function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||[0,4,5,6].includes(date.getUTCDay()))}
  function selectableBookingDate(value,key){
   if(!selectableDate(value,key))return false
@@ -58,9 +57,7 @@
   for(let day=1;day<=count;day++){
    if(isoDate(new Date(Date.UTC(year,month,day)))<today){cells+='<span class="calendar-empty" aria-hidden="true"></span>';continue}
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
-   const teams=key==='bookingDate'&&!past&&!weekdayClosed&&!notionClosed&&Array.isArray(blocks)?Number(global.WistiaBooking?.teamsRemaining?.(value,product,blocks))||0:0
-   const teamLabel=scarceTeamLabel(teams)
-   cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(teamLabel?' has-one-team':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed&&!past?' · 마감':teamLabel?' · '+teamLabel:past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(closed&&!past?'<small>마감</small>':teamLabel?'<small class="one-team">'+teamLabel+'</small>':'')+'</button>'
+   cells+='<button type="button" class="calendar-day'+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'" tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(closed&&!past?' · 마감':past||weekdayClosed?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(closed&&!past?'<small>마감</small>':'')+'</button>'
   }
   return cells
  }
