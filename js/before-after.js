@@ -93,7 +93,7 @@
     async function decode(arrayBuffer){const Offline=global.OfflineAudioContext||global.webkitOfflineAudioContext;if(Offline)return new Offline(1,1,44100).decodeAudioData(arrayBuffer);const context=ensureContext();return context.decodeAudioData(arrayBuffer)}
     async function load(kind,src){
       try{const response=await fetch(src,{signal});if(!response.ok)throw new Error('HTTP '+response.status);const buffer=await decode(await response.arrayBuffer());if(destroyed)return;buffers[kind]=buffer;if(kind==='before')sharedPeaks=makePeaks(buffer);failures[kind]=false}
-      catch(error){if(error.name==='AbortError')return;failures[kind]=true;console.error('[WISTIA Before/After]',error)}
+      catch(error){if(destroyed||signal.aborted||error.name==='AbortError')return;failures[kind]=true;console.error('[WISTIA Before/After]',error)}
       if(kind===mode){playBtn.removeAttribute('aria-busy');errorEl.hidden=!failures[kind];if(pendingPlay&&audioCtx&&audioCtx.state==='running'){global.wistiaClaimPlayback?.('before-after');if(start(pausedAt)){pendingPlay=false;isPlaying=true}}sync()}
       if(buffers.before||buffers.after)root.classList.remove('is-loading')
     }
