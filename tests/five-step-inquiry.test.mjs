@@ -71,7 +71,9 @@ const controls={'[data-calendar-times]':list,'#contact-time':time,'#contact-book
 wizard.syncTimes({values:{people:'0'},dataset:{scheduleState:'ready'},querySelector:selector=>controls[selector]})
 assert.match(list.innerHTML,/data-wf-time="13:00"/)
 assert.match(list.innerHTML,/data-wf-time="22:00"/)
-assert.doesNotMatch(list.innerHTML,/13:30|17:00|22:30|예약 불가| disabled/)
+assert.doesNotMatch(list.innerHTML,/13:30|22:30|예약 불가/)
+assert.match(list.innerHTML,/data-wf-time="17:00" aria-pressed="false" class="is-closed" disabled aria-label="17:00 마감"><strong>17:00<\/strong><small>마감<\/small>/)
+assert.equal((list.innerHTML.match(/data-wf-time=/g)||[]).length,3,'closed hourly times stay visible without restoring half-hour starts')
 extra=true
 assert.equal(rules.duration('solo'),60)
 assert.equal(rules.duration('duo'),120)
