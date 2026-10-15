@@ -10,6 +10,12 @@ for(const product of ['solo','duo']){
  assert.match(html,/data-calendar-day="2026-10-22"[^>]+aria-label="2026년 10월 22일 \(목\)"/)
  assert.match(html,/data-calendar-day="2026-10-23"[^>]+disabled[^>]+aria-label="2026년 10월 23일 \(금\) · 마감"/)
  assert.match(html,/<small>마감<\/small>/)
+ for(const date of ['19','20','21']){
+  const cell=html.match(new RegExp('<button[^>]+data-calendar-day="2026-10-'+date+'"[\\s\\S]*?<\\/button>'))[0]
+  assert.match(cell,/disabled/)
+  assert.match(cell,/ · 휴무/)
+  assert.doesNotMatch(cell,/마감|<small>/)
+ }
 }
 assert.doesNotMatch(source,/팀 남음|scarceTeamLabel/)
 console.log('No visible or accessible remaining-team labels, preserved date closures and independent booking rules passed')

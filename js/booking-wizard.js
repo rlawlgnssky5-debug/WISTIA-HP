@@ -17,13 +17,13 @@
   return '<fieldset class="contact-field contact-date-field contact-date-eventDate"><legend class="sr-only">결혼식 일정 선택</legend><p class="contact-date-description">결혼식이 열리는 날짜를 알려 주세요</p><input type="hidden" name="eventDateMode" value="date"><input id="contact-eventDate" name="eventDate" type="hidden"><div class="wf-date-dropdowns"><label>년<select data-wf-date-part="year" aria-label="결혼식 연도"></select></label><label>월<select data-wf-date-part="month" aria-label="결혼식 월"></select></label><label>일<select data-wf-date-part="day" aria-label="결혼식 일"></select></label></div><p data-wf-event-label aria-live="polite" hidden></p><label class="wf-undecided"><input type="checkbox" name="eventDateUnknown">아직 미정이에요</label></fieldset>'+error('eventDate')
  }
  function bookingDateField(){
-  return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')+error('bookingDate')
+  return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')
  }
  function render(key,benefits){
   const sections=[
    pair('people',['<b>SOLO(1인)</b><small>1곡 기준·1시간</small><strong>12만원</strong>','<b>DUET(2인)</b><small>1곡 기준·2시간</small><strong>16만원</strong>'],key==='duo'?'1':'0','people')+discoveryField(),
    eventDateField(),
-   bookingDateField()+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>')+error('timeStart')+'<fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','완성 음원이 빨리 필요해요!',30000,'3일 이내 받기')+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
+   '<div class="wf-schedule"><div data-wf-date-view>'+bookingDateField()+'</div><div class="wf-time-view" data-wf-time-view hidden><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1" aria-live="polite"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 선택</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>')+error('timeStart')+'</div>'+error('bookingDate')+'</div><fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','완성 음원이 빨리 필요해요!',30000,'3일 이내 받기')+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
    '<p class="wf-option-guide">선택하실 추가 옵션이 없으시면 바로 다음 단계로 넘어가셔도 됩니다!</p><fieldset class="wf-option"><legend class="sr-only">가사영상 제작 추가 옵션</legend>'+checkRow('lyricVideo','스크린에 띄울 가사 영상도 필요해요!',40000)+'<img class="wf-lyric-example" src="/assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy"></fieldset>',
    '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><dl data-wf-review></dl><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다 <a href="/privacy">개인정보처리방침</a></p>'
   ]
@@ -118,6 +118,7 @@
    check('bookingDate',valid?(date.validationMessage||''):'녹음 날짜를 골라주세요')
    const time=form.querySelector('#contact-time')
    check('timeStart',valid&&(!v.timeStart||time.selectedOptions[0]?.disabled||form.dataset.scheduleState==='loading')?'시작 시간을 골라주세요':'')
+   if(!okay)syncSchedule(form,valid?'time':'date')
   }
   return okay
  }
@@ -126,6 +127,15 @@
   if(target>state.step)for(let step=0;step<target;step++)if(!validate(form,step)){state.step=step;update(form);form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}
   state.step=Math.max(0,Math.min(4,target));update(form);form.querySelector('[data-wf-step="'+state.step+'"] h2').focus()
  }
+ function syncSchedule(form,view){
+  const calendarView=form.querySelector('[data-wf-date-view]'),timeView=form.querySelector('[data-wf-time-view]')
+  if(!calendarView||!timeView)return
+  const date=form.querySelector('#contact-bookingDate'),known=!date.disabled&&global.WistiaContact.calendar.selectableDate(date.value,'bookingDate')
+  form.dataset.wfScheduleView=known?(view||form.dataset.wfScheduleView||'time'):'date'
+  const showTime=form.dataset.wfScheduleView==='time'
+  calendarView.hidden=showTime;timeView.hidden=!showTime
+  form.querySelector('[data-wf-selected-date]').textContent=known?global.WistiaContact.calendar.displayDate(date.value):''
+ }
  function syncTimes(form){
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate');if(!list||!time||!date)return
   const known=!date.disabled&&!!date.value,loading=form.dataset.scheduleState==='loading',minutes=values(form).people==='1'?120:60
@@ -133,6 +143,7 @@
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요';form.querySelector('[data-time-help]').hidden=true
   form.querySelector('[data-wf-duration]').textContent=minutes/60+'시간 진행'
   list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(o.disabled?'<small>마감</small>':'')+'</button>').join('')
+  syncSchedule(form)
   update(form)
  }
  function syncEventDropdowns(form){
@@ -159,7 +170,7 @@
    else if(el.name==='people'){const key=el.value==='1'?'duo':'solo';onPeople(key);global.WistiaBooking.mount(form,key)}
    else if(['bookingDateMode','bookingDate','timeStart'].includes(el.name))global.WistiaContact.update(el)
    if(el.name==='eventDateUnknown'){form.elements.eventDateMode.value=el.checked?'unknown':'date';form.querySelectorAll('[data-wf-date-part]').forEach(select=>select.disabled=el.checked);form.querySelector('.wf-date-dropdowns').classList.toggle('is-undecided',el.checked);if(el.checked)form.querySelector('[data-wf-event-label]').hidden=true;else syncEventDropdowns(form);mark(form,'eventDate','')}
-   if(el.name==='bookingDate')mark(form,'bookingDate','')
+   if(el.name==='bookingDate'){mark(form,'bookingDate','');mark(form,'timeStart','');syncSchedule(form,'time');form.querySelector('[data-wf-selected-date]').focus({preventScroll:true})}
    if(el.name==='timeStart')mark(form,'timeStart','')
    update(form)
   })
@@ -167,6 +178,7 @@
   form.addEventListener('click',event=>{
    const button=event.target.closest('button');if(!button)return
    if(button.disabled)return
+   if(button.hasAttribute('data-wf-change-date')){syncSchedule(form,'date');const selected=form.querySelector('.calendar-day.is-selected:not(:disabled)')||form.querySelector('.calendar-day:not(:disabled)');selected?.focus({preventScroll:true});return}
    if(button.dataset.wfTime){form.querySelector('#contact-time').value=button.dataset.wfTime;form.querySelector('#contact-time').dispatchEvent(new Event('change',{bubbles:true}));syncTimes(form)}
    if(button.hasAttribute('data-wf-goto'))navigate(form,Number(button.dataset.wfGoto))
    if(button.hasAttribute('data-wf-next'))navigate(form,state.step+1)
@@ -185,5 +197,5 @@
   })
   global.WistiaBooking.mount(form,values(form).people==='1'?'duo':'solo');update(form)
  }
- global.WistiaWizard={render,mount,syncTimes,text,quote,rows,range}
+ global.WistiaWizard={render,mount,syncTimes,syncSchedule,text,quote,rows,range}
 })(window)

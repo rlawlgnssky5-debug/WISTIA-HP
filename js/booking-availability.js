@@ -144,7 +144,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   if(!date){ui.time.value='';message('목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
   if(!force&&activeForm.dataset.bookingCalendarOpened!=='true'){message('달력을 열어 예약 가능 시간을 확인해 주세요','unknown');return}
   if(!validDate(date)||date<today()){ui.time.value='';dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
-  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화·수는 마감입니다, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 마감 · 목·금·토·일 운영','closed');return}
+  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화·수는 휴무예요, 목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화·수 휴무 · 목·금·토·일 운영','closed');return}
   const hit=!force&&cache.get(date)
   if(hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
   // While checking, no time can be chosen as confirmed-available and the form cannot be copied.
