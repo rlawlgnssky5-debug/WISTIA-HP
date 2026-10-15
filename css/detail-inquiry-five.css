@@ -77,14 +77,14 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-check-label{min-width:0!important;word-break:keep-all!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-check-row>strong{margin-left:auto!important;flex-shrink:0!important;font:650 14px/1.4 Pretendard,sans-serif!important;white-space:nowrap!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option{padding:0 0 28px!important;margin:22px 0 28px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option+.wf-option{padding-top:28px!important;border-top:1px solid #D9A5B2!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option-guide{font:400 14px/1.7 Pretendard,sans-serif!important;color:#8A6F75!important;margin:0 0 20px!important;word-break:keep-all!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-option-description{margin:14px 4px 0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-rush>p{font:400 12px/1.7 Pretendard,sans-serif!important;color:#8A6F75!important;margin:10px 0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-recording-range{font:400 13px/1.7 Pretendard,sans-serif!important;color:#9B8188!important;margin:0 0 16px!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-recording-range.has-selection{color:#79404F!important;font-weight:600!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .calendar-time-grid{max-height:none!important;overflow:visible!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-final-total :is(dt,dd){font-size:18px!important;font-weight:750!important;color:#79404F!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-final-total{border-bottom:0!important;border-top:1px solid #D9BFC5!important;margin-top:15px!important;padding-top:22px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-final-total{border-bottom:0!important;border-top:0!important;margin-top:0!important;padding-top:18px!important}
 @media(min-width:901px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-sources{grid-template-columns:repeat(6,minmax(0,1fr))!important}}
 
 @media(min-width:1280px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) :is(.pc-product-card,.pc-lyric-layout){display:none!important}
