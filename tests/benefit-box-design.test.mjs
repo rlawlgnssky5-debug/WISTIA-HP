@@ -24,7 +24,7 @@ runInNewContext(slice('function mobileDetailEvents(','function mobileDetailRevie
 const events=JSON.parse(runInNewContext('JSON.stringify(EVENTS)',scope))
 assert.deepEqual(events,[
  {key:'blog',type:'payback',label:'블로그 리뷰',discount:30000,detail:'일 방문자 100명 이상 · 안내 가이드에 따라 작성'},
- {key:'reaction',type:'payback',label:'현장 리액션 영상',discount:10000,detail:'본식 현장 촬영 파일 제공'},
+ {key:'reaction',type:'payback',label:'현장 리액션 영상',discount:20000,detail:'본식 현장 촬영 파일 제공'},
  {key:'cafe',type:'payback',label:'웨딩 카페 후기',discount:10000,detail:'300자 이상 · 관련 사진 4장 이상'},
  {key:'instagram',type:'payback',label:'인스타그램 후기',discount:10000,detail:'후기 50자 이상 · 사진 4장 이상 · BGM 추가 · 공식 계정 태그 · 공개 계정'},
 ],'the four review paybacks remain unchanged')
@@ -32,7 +32,7 @@ assert.deepEqual(events,[
 const checkGroups=html=>{
  const groups=[...html.matchAll(/<section class="[^"]*benefit-kind-card" data-benefit-type="(discount|payback)"[^>]*>([\s\S]*?)<\/section>/g)]
  assert.deepEqual(groups.map(match=>match[1]),['payback'],'two separate boxes in payment order')
- for(const [index,type,title,maximum,timing] of [[0,'payback','후기 페이백','6만원','']]){
+ for(const [index,type,title,maximum,timing] of [[0,'payback','후기 페이백','7만원','']]){
   const group=groups[index][2]
   assert.match(group,new RegExp('<h[24]>'+title+'</h[24]>'))
   assert.ok(group.includes('class="benefit-kind-limit">최대 '+maximum+'</strong>'))
@@ -49,7 +49,7 @@ const checkGroups=html=>{
 const detail=scope.mobileDetailEvents()
 const detailGroups=checkGroups(detail)
 assert.match(detail,/<details class="mas-event-disclosure"><summary>/,'native disclosure remains initially closed and keyboard operable')
-assert.match(detail,/참여 혜택 최대 6만원/)
+assert.match(detail,/참여 혜택 최대 7만원/)
 assert.equal((detailGroups[0][2].match(/<li>/g)||[]).length,4)
 assert.doesNotMatch(detail,/<input|<form|data-event=/,'detail disclosure cannot change the inquiry selection')
 const gift='assets/img/interface/gift-icon.svg'

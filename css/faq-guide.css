@@ -1,0 +1,22 @@
+/* Scoped FAQ guide: clear topic boundaries without changing approved detail posters. */
+html body #app#app#app#app .info-page-faq .faq-category-nav{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 36px}
+html body #app#app#app#app .info-page-faq .faq-category-nav a{display:flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid #d9b5bf;border-radius:24px;background:#fff8f8;color:#774c58;font-size:14px;line-height:1.5;text-decoration:none;word-break:keep-all}
+html body #app#app#app#app .info-page-faq .faq-category-nav a:is(:hover,:focus-visible){background:#f3dce2;outline:2px solid #ad6176;outline-offset:3px}
+html body #app#app#app#app .info-page-faq .info-faq-group{margin:0 0 32px;padding:28px;border:1px solid #e2c5cd;border-radius:20px;background:#fffafa;box-shadow:0 6px 20px #75445108}
+html body #app#app#app#app .info-page-faq .faq-group-heading{display:flex;align-items:flex-start;gap:14px;padding-bottom:20px;margin-bottom:8px;border-bottom:1px solid #ead4da}
+html body #app#app#app#app .info-page-faq .faq-group-number{display:flex;align-items:center;justify-content:center;flex:0 0 36px;height:36px;border-radius:50%;background:#ad6176;color:#fff;font-size:14px;font-weight:600}
+html body #app#app#app#app .info-page-faq .info-faq-group h2{margin:0!important;padding:2px 0 8px!important;background:transparent!important;color:#553e46!important;font-size:22px!important;line-height:1.4;scroll-margin-top:96px}
+html body #app#app#app#app .info-page-faq .faq-group-heading p{margin:0;color:#856d74;font-size:14px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
+html body #app#app#app#app .info-page-faq .faq-list{gap:0;border-top:0}
+html body #app#app#app#app .info-page-faq .faq-list details{margin:0;padding:20px 0;border:0;border-bottom:1px solid #eedfe3;border-radius:0;background:transparent}
+html body #app#app#app#app .info-page-faq .faq-list details:last-child{border-bottom:0}
+html body #app#app#app#app .info-page-faq .faq-list details:first-child{border-top:0!important}
+html body #app#app#app#app .info-page-faq .faq-list summary{font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+html body #app#app#app#app .info-page-faq .faq-list details>p{margin:16px 0 0;padding:18px;border-radius:12px;background:#f8edf0;color:#68535a;font-size:15px;line-height:1.9;word-break:keep-all;overflow-wrap:anywhere}
+@media(max-width:600px){
+ html body #app#app#app#app .info-page-faq .info-faq-group{padding:22px 18px;margin-bottom:24px}
+ html body #app#app#app#app .info-page-faq .info-faq-group h2{font-size:20px!important}
+ html body #app#app#app#app .info-page-faq .faq-category-nav{gap:8px}
+ html body #app#app#app#app .info-page-faq .faq-category-nav a{padding:9px 12px;font-size:13px}
+ html body #app#app#app#app .info-page-faq .faq-list details>p{padding:14px}
+}

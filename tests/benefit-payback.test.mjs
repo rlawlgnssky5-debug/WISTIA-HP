@@ -16,11 +16,11 @@ const cashback=['blog','reaction','cafe','instagram']
 for(const [key,base] of [['solo',120000],['duo',160000],['duet-film',350000]]){
  const only=preview(key,cashback)
  assert.equal(only.finalPrice,base,'cashback cannot lower payment')
- assert.equal(only.payback,60000)
+ assert.equal(only.payback,70000)
  const all=preview(key,[...cashback,'voice-photo-consent','weekday'])
  assert.equal(all.discount,0)
  assert.equal(all.finalPrice,base)
- assert.equal(all.effectivePrice,base-60000)
+ assert.equal(all.effectivePrice,base-70000)
 }
 assert.doesNotMatch(source,/syncWeekdayDiscount|key:'weekday'/,'the abolished weekday discount cannot return through stale choices')
 const footer=source.slice(source.indexOf('function footer('),source.indexOf('function footer(')+2500)

@@ -260,7 +260,7 @@ const PRODUCTS = {
 
 const EVENTS = [
   { key: "blog", type: "payback", label: "블로그 리뷰", discount: 30000, detail: "일 방문자 100명 이상 · 안내 가이드에 따라 작성" },
-  { key: "reaction", type: "payback", label: "현장 리액션 영상", discount: 10000, detail: "본식 현장 촬영 파일 제공" },
+  { key: "reaction", type: "payback", label: "현장 리액션 영상", discount: 20000, detail: "본식 현장 촬영 파일 제공" },
   { key: "cafe", type: "payback", label: "웨딩 카페 후기", discount: 10000, detail: "300자 이상 · 관련 사진 4장 이상" },
   { key: "instagram", type: "payback", label: "인스타그램 후기", discount: 10000, detail: "후기 50자 이상 · 사진 4장 이상 · BGM 추가 · 공식 계정 태그 · 공개 계정" },
 ]
@@ -363,7 +363,6 @@ const NAVIGATION_GROUPS = [
   {title:"보컬 보정 전 후 비교 보기",href:"#/before-after"}
  ]},
  {label:"위스티아",kind:"utility",items:[
-  {title:"위스티아는 어떤 곳인가요?",href:"#/info/about"},
   {title:"오시는 길",href:"#/info/location"},
   {title:"이벤트",href:"#/events"},
   {title:"자주 묻는 질문",href:"#/info/faq"}
@@ -373,26 +372,33 @@ const INFO_PAGES = {
  about:{eyebrow:"위스티아 소개",title:"위스티아는 어떤 곳인가요?",description:"위스티아는 경기도 부천에 위치한 웨딩 축가 전문 스튜디오입니다 AR 축가 사전녹음으로 본식에서 전할 노래를 함께 준비합니다"},
  process:{eyebrow:"준비부터 전달까지",title:"진행 안내",description:"상담과 예약부터 녹음, 제작과 완성본 전달까지 네 단계로 준비합니다"},
  location:{eyebrow:"방문 안내",title:"오시는 길",description:"녹음을 위해 방문하실 때 아래 주소를 확인해 주세요"},
- faq:{eyebrow:"",title:"자주 묻는 질문",description:"방문부터 녹음·음원 제작과 수정까지, 자주 궁금해하시는 내용을 모았습니다"}
+ faq:{eyebrow:"",title:"자주 묻는 질문",description:"처음 준비하는 축가, 궁금한 마음이 드는 건 자연스러운 일이에요 준비부터 본식까지 하나씩 편하게 확인해 보세요"}
 }
 const INFO_FAQ_GROUPS=[
- {title:"방문 안내",items:[
-  ["스튜디오는 어디에 있나요?","부천시청역 1번 출구에서 도보 약 300m 거리입니다 주소는 부천시 석천로170번길 19, 2층입니다"],
-  ["주차는 가능한가요?","스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 공영주차장 이용 요금은 별도로 발생하므로 주차비 지원은 어려운 점 참고해 주세요"]
+ {title:"녹음 전 준비",description:"곡을 고르는 순간부터 함께 준비해요",items:[
+  ["곡을 아직 정하지 못했는데 상담받아도 될까요?","물론이에요 마음에 두고 계신 노래나 전하고 싶은 분위기만 알려주셔도 좋아요 목소리와 음역에 맞는 곡을 함께 고민해 드릴게요"],
+  ["결혼식 며칠 전에 녹음하면 좋을까요?","음원은 녹음과 필요한 자료 전달이 끝난 뒤 최대 7일 이내에 보내드려요 완성본을 들어보고 수정하거나 본식 리허설을 할 시간까지 여유 있게 잡아 주세요 예식일을 알려주시면 준비 일정을 함께 살펴드릴게요 일정이 촉박하다면 먼저 상담해 주세요"],
+  ["곡의 키는 어떻게 정하면 될까요?","원키가 높거나 낮게 느껴져도 괜찮아요 녹음 전에 직접 불러보면서 목소리에 가장 편한 키를 함께 찾아드려요"],
+  ["녹음 전에 무엇을 준비하면 좋을까요?","진행할 곡의 MR과 원하는 키를 미리 보내 주세요 아직 키를 모르셔도 괜찮아요 듀엣이라면 파트 분배를, 그 밖에 원하는 곡 구성이나 분위기가 있다면 함께 알려주세요"]
  ]},
- {title:"녹음 안내",items:[
-  ["노래를 잘 못해도 괜찮나요?","물론입니다 한 곡을 처음부터 끝까지 부르는 대신 구간별로 나누어 녹음하고, 옆에서 1:1로 디렉팅해 드립니다 녹음 후에는 음정과 박자를 자연스럽게 보정합니다"],
-  ["곡의 키는 어떻게 정하나요?","원키가 어렵다면 목소리에 맞게 편한 키로 조정할 수 있습니다 녹음 전 직접 불러보며 가장 자연스럽게 부를 수 있는 키를 함께 정합니다"],
-  ["녹음 전에 무엇을 준비하면 되나요?","진행할 곡의 MR과 원하는 키를 미리 보내주시면 좋습니다 듀엣이라면 파트 분배도 알려주세요 원하는 곡 구성이나 분위기도 함께 알려주세요"],
-  ["녹음이 길어지면 추가금이 있나요?","아니요 당일 녹음이 예상보다 길어지더라도 별도의 현장 추가금은 받지 않습니다"]
+ {title:"녹음 당일",description:"처음이어도 편하게 부르실 수 있도록 도와드려요",items:[
+  ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","그럼요 처음부터 완벽하게 부르지 않으셔도 괜찮아요 한 구간씩 나누어 녹음하고 옆에서 1:1로 방향을 잡아드려요 녹음 후에는 원래 목소리와 감정을 살리면서 음정과 박자를 자연스럽게 다듬어요"],
+  ["녹음은 현장에서 어떻게 진행되나요?","먼저 곡과 키를 확인하고 편하게 연습한 뒤, 한 구간씩 나누어 녹음해요 필요한 부분은 다시 불러보며 함께 맞춰가요 녹음 당일 AR의 목소리 비율도 들어보고 리허설해 볼 수 있어요 SOLO는 1시간, DUET은 2시간이며 안내와 연습 시간을 포함해요"],
+  ["당일 녹음이 길어지면 추가금이 생기나요?","아니요 당일 녹음이 예상보다 길어져도 별도의 현장 추가금은 받지 않아요 부담 갖지 마시고 녹음에 집중해 주세요"]
  ]},
- {title:"제작 및 수정 안내",items:[
-  ["결과물은 언제 받을 수 있나요?","녹음이 끝나고 제작에 필요한 자료를 모두 전달해 주신 날을 기준으로, 음원은 최대 7일 이내 전달합니다 정확한 일정은 상담에서 안내드립니다"],
-  ["수정도 가능한가요?","네, 수정은 3회까지 무료로 진행합니다 4회차부터는 회당 10,000원의 추가 비용이 발생합니다"]
+ {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
+  ["AR 축가는 본식 현장에서 어떻게 하면 되나요?","AR은 미리 녹음한 내 목소리가 담긴 반주 음원이에요 예식장에서 AR을 재생하고, 그 위에 직접 노래하시면 돼요 본식 전에 예식장 담당자에게 음원을 전달하고 재생과 마이크 리허설이 가능한지 확인해 주세요 현장 음향에 따라 들리는 느낌은 달라질 수 있어요"],
+  ["AR에 들어가는 제 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어보고 AR에 맞춰 노래도 불러봐요 직접 부르는 목소리와 가장 편하게 어우러지는 비율을 함께 정해드려요"],
+  ["AR을 사용하면 어색하거나 티가 나지 않을까요?","걱정되실 수 있어요 미리 녹음한 목소리와 현장에서 부르는 목소리가 자연스럽게 어우러지도록 비율을 함께 맞춰요 녹음 당일 직접 리허설해 보면서 편하게 부를 수 있는 느낌을 찾아드려요"]
  ]},
- {title:"AR 축가 안내",items:[
-  ["AR 축가에서 내 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어보고 실제로 리허설도 해 본 뒤, 가장 편하고 자연스럽게 부를 수 있는 비율을 함께 결정합니다"],
-  ["AR을 사용하면 티가 나지 않을까요?","미리 녹음한 목소리와 현장에서 직접 부르는 목소리가 자연스럽게 어우러지도록 비율을 조정합니다 녹음 당일 AR과 함께 직접 불러보는 리허설도 진행합니다"]
+ {title:"완성본 전달과 수정",description:"완성된 음원을 받고 본식에 전달하는 방법이에요",items:[
+  ["완성된 음원은 언제 받을 수 있나요?","녹음이 끝나고 제작에 필요한 자료를 모두 보내주신 날을 기준으로 최대 7일 이내에 전달해 드려요 정확한 일정은 상담할 때 함께 안내해 드릴게요"],
+  ["완성본을 듣고 수정하고 싶은 부분이 있으면 어떡하나요?","편하게 말씀해 주세요 수정은 3회까지 무료로 진행해요 4회차부터는 회당 10,000원의 추가 비용이 있어요 원하시는 부분을 모아서 알려주시면 함께 확인하기 좋아요"],
+  ["예식장에는 어떤 파일을 전달하면 되나요?","전달받으신 본식용 AR 음원을 예식장 담당자에게 보내 주세요 예식장에서 사용하는 파일 형식과 재생 환경도 미리 확인해 알려주시면 좋아요 본식 전에 파일이 잘 재생되는지 꼭 확인해 주세요"]
+ ]},
+ {title:"스튜디오 방문",description:"오시는 길과 주차를 안내해 드려요",items:[
+  ["스튜디오는 어디에 있나요?","부천시청역 1번 출구에서 도보 약 300m 거리에 있어요 주소는 부천시 석천로170번길 19, 2층이에요 오시는 길이 헷갈리시면 편하게 연락 주세요"],
+  ["차를 가져가도 괜찮을까요?","네 스튜디오 바로 옆 공영주차장을 이용하실 수 있어요 주차 요금은 별도이며 주차비 지원은 어려운 점 양해 부탁드려요"]
  ]}
 ]
 const SERVICE_ORDER = ["solo","duo"]
@@ -467,14 +473,7 @@ const WORKS = [
  {id:"duet-film",category:"축가 영상",product:"duet-film",title:"위스티아 듀엣 웨딩 필름",description:"두 사람이 함께 부른 노래로 완성한 본식 축가 영상",image:"assets/img/song-film/duet-video-cover.jpg",video:PRODUCTS["duet-film"].videoUrl},
  {id:"proposal-film",category:"프로포즈",product:"proposal",title:"위스티아 프로포즈 필름",description:"직접 부른 노래와 고백을 담은 프로포즈 영상",image:"assets/img/proposal-video-cover.jpg",video:PRODUCTS.proposal.videoUrl}
 ]
-const GENERAL_FAQ = [
- ["노래를 잘 못해도 가능한가요","가능합니다 처음 녹음하는 분도 한 구간씩 편하게 부를 수 있도록 안내합니다 원래 목소리와 감정을 살리고 음정과 박자는 자연스럽게 다듬습니다"],
- ["AR은 무엇이고, 본식에서는 어떻게 사용하나요","AR은 미리 녹음한 목소리가 포함된 반주 음원입니다 예식장에서 AR을 틀고 그 위에 직접 노래합니다 목소리 비율과 재생 방법을 상담하고, 본식 전에 예식장 담당자와 음향 리허설을 확인해 주세요"],
- ["곡이나 키를 아직 정하지 못했어요","괜찮습니다 원하는 분위기와 음역을 확인해 곡과 편하게 부를 수 있는 키를 함께 정합니다"],
- ["녹음 시간과 음원 제작 기간은 얼마나 걸리나요","SOLO는 1시간, DUET은 2시간이며 안내와 연습 시간을 포함합니다 음원은 녹음과 필요한 자료 전달이 끝난 뒤 최대 7일 이내에 전달합니다"],
- ["수정은 몇 번 가능한가요","수정은 3회까지 무료로 진행합니다 4회차부터는 회당 10,000원의 추가 비용이 발생합니다"],
- ["예식장에는 어떤 파일을 전달하나요","본식용 AR 음원을 전달해 주세요 예식장의 지원 형식과 재생 환경을 먼저 확인해 알려주시면 준비에 도움이 됩니다"]
-]
+const GENERAL_FAQ = [INFO_FAQ_GROUPS[1].items[0],INFO_FAQ_GROUPS[2].items[0],INFO_FAQ_GROUPS[0].items[0],INFO_FAQ_GROUPS[0].items[1]]
 const PROCESS = [
  ["상담과 예약","사용 날짜와 어떤 순간을 준비하는지 알려주세요"],
  ["곡과 구성 결정","편한 키와 파트, 담고 싶은 이야기를 함께 정합니다"],
@@ -902,7 +901,7 @@ function renderInfoPage(key){
  const address="경기도 부천시 석천로170번길 19, 2층"
  const locationContent='<div class="wistia-location"><div class="wistia-location-address"><span class="location-line-icon" aria-hidden="true">'+studioIcon('pin')+'</span><div class="location-address-row"><h2 class="studio-address" data-svg-title="off">'+address+'</h2><button class="location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">'+studioIcon('copy')+'</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 '+studioIcon('external')+'</a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵에서 보기 '+studioIcon('external')+'</a></div></div><div class="wistia-location-details"><article><h3>'+studioIcon('train')+'<span>지하철로 오실 때</span></h3><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p></article><article><h3>'+studioIcon('car')+'<span>차량으로 오실 때</span></h3><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다</p></article></div></div>'
  const directionsMap='<figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</a><figcaption>지도 이미지를 누르면 크게 볼 수 있습니다</figcaption></figure>'
- const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.filter(group=>group.title!=="영상 상품 안내").sort((a,b)=>(b.title==="AR 축가 안내")-(a.title==="AR 축가 안내")).map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2>'+faq(group.items)+'</section>').join("")+'</div>'
+ const faqContent='<nav class="faq-category-nav" aria-label="질문 주제 바로가기">'+INFO_FAQ_GROUPS.map((group,index)=>'<a href="#infoFaqGroup'+index+'">'+group.title+'</a>').join('')+'</nav><div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><span class="faq-group-number" aria-hidden="true">'+String(index+1).padStart(2,'0')+'</span><div><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원·영상 제작','선택한 상품에 맞춰 목소리와 장면을 완성합니다'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent.replace('<div class="wistia-location-details">',directionsMap+'<div class="wistia-location-details">'):aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
  const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+page.description+'</p>'
@@ -1698,7 +1697,7 @@ async function copyConsultationAndShowDialog(customText){
  if(copied){showDialog('<span class="consult-copy-mark" aria-hidden="true">✓</span><h2>상담양식이 복사되었습니다</h2><p>카카오톡에 붙여넣기 해주세요!</p>'+kakaoLink,"consult-copy-dialog")}
  else{showDialog('<h2>상담양식을 자동으로 복사하지 못했습니다</h2><p>아래 내용을 직접 복사한 뒤 카카오톡에 붙여넣어 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'+kakaoLink,"consult-copy-dialog")}
 }
-function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'위스티아',items:[['위스티아는 어떤 곳인가요?','/info/about'],['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
+function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
@@ -1990,6 +1989,7 @@ cleanHashRoute();
 document.addEventListener("click",e=>{
  if(document.body.classList.contains('menu-open')&&!e.target.closest('#mainMenu,#menuToggle')){document.body.classList.remove('menu-open');const toggle=document.querySelector('#menuToggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','메뉴 열기');e.preventDefault();return}
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
+ if(el.matches('.faq-category-nav a')){e.preventDefault();const heading=document.getElementById(el.getAttribute('href').slice(1));if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})}return}
  if(el.matches('.product-inquiry > a')){e.preventDefault();showKakaoInquiryDialog(el.getAttribute('href'));return}
  if(el.hasAttribute('data-copy-address')){copyLocationAddress(el);return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
