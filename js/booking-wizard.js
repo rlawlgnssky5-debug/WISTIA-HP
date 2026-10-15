@@ -43,7 +43,30 @@
   const q=quote(form),v=q.v,date=key=>v[key+'Mode']==='unknown'?'미정':v[key]?v[key]+' ('+['일','월','화','수','목','금','토'][new Date(v[key]+'T12:00:00Z').getUTCDay()]+')':'미정'
   return [['인원',v.people==='1'?'DUET(2인) · 1곡 · 2시간':'SOLO(1인) · 1곡 · 1시간'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,v.people,v.extraVerse)],['빠른 작업',v.rush==='1'?'3일 이내 받기 +30,000원':'선택 안 함'],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
  }
- function text(form){const notes=String(values(form).specialNotes||'').trim();return ['[위스티아 상담 요청]','특이사항 : '+(notes||'없음'),'',...rows(form).map(([label,value])=>label+' : '+value),'','결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요'].join('\n')}
+ function text(form){
+  const q=quote(form),details=Object.fromEntries(rows(form)),date=value=>value.replace(/(\d{4})-(\d{2})-(\d{2})/,'$1.$2.$3')
+  const notes=String(q.v.specialNotes||'').trim().replace(/\r\n?/g,'\n').replace(/\n/g,'\n  ')
+  return [
+   '🎙️ 위스티아 | 신규 상담 신청','',
+   '📅 녹음 예약','',
+   '• 날짜 : '+date(details['녹음 날짜']),
+   '• 시간 : '+details['녹음 시간'].replace('~',' ~ '),
+   '• 구성 : '+details['인원'],
+   '• 결혼식 : '+date(details['결혼식 날짜']),'',
+   '🎵 추가 옵션','',
+   ...(q.options.length?q.options.map(([label,amount])=>'• '+label.replace(' 추가 옵션','')+' : +'+money(amount)):['• 추가 옵션 : 없음']),
+   '• 빠른 작업 : '+(q.v.rush==='1'?'3일 이내 받기 (+30,000원)':'미선택'),'',
+   '💰 결제 금액','',
+   '• 기본 상품 : '+money(q.base),
+   '• 추가 금액 : '+money(q.total-q.base),
+   '• 총 결제 금액 : '+money(q.total),'',
+   '💬 고객 정보','',
+   '• 유입 경로 : '+details['처음 본 곳'],
+   '• 특이사항 : '+(notes||'없음'),'',
+   '📌 결제 안내',
+   '카카오톡 맞춤 상담 후 결제를 진행해요'
+  ].join('\n')
+ }
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
   state.priceTarget=total
