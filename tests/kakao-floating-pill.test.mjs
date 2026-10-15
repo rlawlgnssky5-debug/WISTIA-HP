@@ -66,12 +66,19 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
    }
    if(width===390){
     await context.route('https://pf.kakao.com/_GbExjX/chat',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>kakao-chat</title>'}))
-    for(const path of ['/','/contact','/privacy','/detail/duet-film','/events','/info/location']){
+    for(const path of ['/','/privacy','/detail/duo','/events','/info/location']){
      await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
-     const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('#floatingKakaoChat').click()])
+     if(path!=='/privacy'){
+      await page.locator('.wistia-intro').waitFor({state:'detached'})
+      await page.locator('footer').scrollIntoViewIfNeeded()
+      await page.locator('#floatingKakaoChat').click()
+      await page.locator('#mediaDialog .consult-choice-dialog').waitFor({state:'visible'})
+      assert.equal(await page.locator('#mediaDialog .consult-choice-card').count(),2)
+     }
+     const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator(path==='/privacy'?'#floatingKakaoChat':'#mediaDialog .consult-choice-direct').click()])
      await popup.waitForLoadState('domcontentloaded')
      assert.equal(popup.url(),'https://pf.kakao.com/_GbExjX/chat',path)
-     assert.equal(await page.locator('#mediaDialog[open]').count(),0,path+' must not open the inquiry chooser')
+     assert.equal(await page.locator('#mediaDialog[open]').count(),0,path+' direct choice closes the chooser')
      assert.equal(new URL(page.url()).pathname,path)
      await popup.close()
     }

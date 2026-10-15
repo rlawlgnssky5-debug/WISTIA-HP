@@ -1,0 +1,21 @@
+html body #mediaDialog:has(.consult-choice-dialog){width:min(540px,calc(100% - 24px))!important;max-height:calc(100dvh - 32px)!important;margin:auto!important;padding:0!important;border:1px solid #ead4da!important;border-radius:24px!important;background:#fffafa!important;box-sizing:border-box!important;overflow:auto!important;box-shadow:0 24px 80px #4a323833!important}
+html body .consult-choice-dialog{position:relative!important;box-sizing:border-box!important;width:100%!important;padding:44px 28px 28px!important;text-align:left!important;color:#553e46!important}
+html body .consult-choice-dialog>.dialog-close{position:absolute!important;inset:12px 12px auto auto!important;display:grid!important;place-items:center!important;width:40px!important;height:40px!important;padding:10px!important;border:0!important;border-radius:50%!important;background:transparent!important;color:#68535a!important;cursor:pointer!important}
+html body .consult-choice-dialog>.dialog-close svg{width:20px!important;height:20px!important}
+html body .consult-choice-dialog .consult-choice-kicker{margin:0 0 12px!important;font:600 12px/1.5 Pretendard,sans-serif!important;letter-spacing:.08em!important;color:#A65A6C!important}
+html body .consult-choice-dialog h2{margin:0 0 14px!important;padding:0!important;font:700 25px/1.45 Pretendard,sans-serif!important;letter-spacing:-.035em!important;word-break:keep-all!important}
+html body .consult-choice-dialog .consult-choice-description{margin:0 0 26px!important;font:400 14px/1.8 Pretendard,sans-serif!important;color:#856d74!important;word-break:keep-all!important}
+html body .consult-choice-list{display:grid!important;gap:12px!important}
+html body .consult-choice-card{display:grid!important;grid-template-columns:36px minmax(0,1fr) 18px!important;align-items:center!important;gap:12px!important;min-height:100px!important;padding:20px 16px!important;border:1px solid #e2c5cd!important;border-radius:16px!important;background:#fff!important;color:#553e46!important;text-decoration:none!important;box-sizing:border-box!important;transition:box-shadow .16s ease,border-color .16s ease!important}
+html body .consult-choice-direct{border-color:#eee1a3!important;background:#fff7c7!important;color:#4d4326!important}
+html body .consult-choice-icon{display:grid!important;place-items:center!important;width:36px!important;height:36px!important;border-radius:50%!important;background:#f7e8ed!important;color:#A65A6C!important}
+html body .consult-choice-direct .consult-choice-icon{background:#FEE500!important;color:#191919!important}
+html body .consult-choice-icon svg{display:block!important;width:22px!important;height:22px!important;fill:none;stroke:currentColor;stroke-width:1.5}
+html body .consult-choice-arrow svg{display:block!important;width:18px!important;height:18px!important;color:inherit!important}
+html body .consult-choice-copy{display:grid!important;gap:8px!important;min-width:0!important}
+html body .consult-choice-copy strong{font:650 16px/1.6 Pretendard,sans-serif!important;color:inherit!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
+html body .consult-choice-copy small{font:400 12px/1.8 Pretendard,sans-serif!important;color:#856d74!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
+html body .consult-choice-card:hover{border-color:#A65A6C!important;box-shadow:0 4px 16px #79404f12!important}
+html body .consult-choice-dialog :is(a,button):focus-visible{outline:2px solid #A65A6C!important;outline-offset:3px!important}
+@media(max-width:400px){html body .consult-choice-dialog{padding:44px 18px 20px!important}html body .consult-choice-dialog h2{font-size:22px!important}html body .consult-choice-card{grid-template-columns:30px minmax(0,1fr) 16px!important;gap:10px!important;padding:16px 12px!important}html body .consult-choice-icon{width:30px!important;height:30px!important}html body .consult-choice-copy strong{font-size:15px!important}}
+@media(prefers-reduced-motion:reduce){html body .consult-choice-card{transition:none!important}}

@@ -1654,8 +1654,12 @@ function showContactValidationDialog(issues){
  // Closing the editor preserves its changes and returns to the original field
  lastDialogFocus=issues[0].control
 }
+function inquiryPathForPage(path=routePath()){
+ return path==='/'||path==='/detail/solo'?'/event/solo':path==='/detail/duo'?'/event/duo':'/contact'
+}
 function showKakaoInquiryDialog(formPath){
- showDialog('<h2>어떻게 상담할까요?</h2><p>편하신 방법을 선택해 주세요</p><a class="button dark consult-copy-action" href="'+escapeHtml(formPath)+'" data-close>문의 양식 작성할게요!</a><a class="button consult-copy-action consult-direct-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>바로 상담할래요!</a>',"consult-copy-dialog")
+ const choice=(kind,href,title,description,external=false)=>'<a class="consult-choice-card consult-choice-'+kind+'" href="'+escapeHtml(href)+'"'+(external?' target="_blank" rel="noopener noreferrer"':'')+' data-close><span class="consult-choice-icon" aria-hidden="true">'+(external?footerIcon('kakao'):studioIcon('file'))+'</span><span class="consult-choice-copy"><strong>'+title+'</strong><small>'+description+'</small></span><span class="consult-choice-arrow" aria-hidden="true">'+studioIcon('arrow')+'</span></a>'
+ showDialog('<p class="consult-choice-kicker">위스티아 상담</p><h2>어떤 상담이 편하신가요?</h2><p class="consult-choice-description">아직 정해진 게 없어도 괜찮아요<br>편하신 방법으로 이야기 나눠요</p><div class="consult-choice-list">'+choice('direct',kakao(),'일단 상담부터 받을래요!','궁금한 점을 카카오톡에서 편하게 물어보세요',true)+choice('form',formPath,'문의 양식 작성하고 상담받을래요!','인원과 일정을 미리 적어 주시면 상담에 도움이 돼요')+'</div>',"consult-choice-dialog")
  dialog.setAttribute('aria-label','카카오톡 문의 방법 선택')
 }
 function openVideo(id){
@@ -1990,6 +1994,7 @@ document.addEventListener("click",e=>{
  if(document.body.classList.contains('menu-open')&&!e.target.closest('#mainMenu,#menuToggle')){document.body.classList.remove('menu-open');const toggle=document.querySelector('#menuToggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','메뉴 열기');e.preventDefault();return}
  const eventSummary=e.target.closest('.solo-shot-top .mas-event-disclosure>summary');if(eventSummary){e.preventDefault();const content=eventSummary.parentElement.querySelector('.mas-event-content');showDialog('<h2>후기 페이백 안내</h2>'+content.innerHTML,'detail-events-dialog');dialog.setAttribute('aria-label','후기 페이백 안내');lastDialogFocus=eventSummary;return}
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
+ if(el.id==='floatingKakaoChat'){e.preventDefault();showKakaoInquiryDialog(inquiryPathForPage());return}
  if(el.tagName==='A'&&el.getAttribute('href')==='/privacy')return;
  if(el.matches('.faq-category-nav a')){e.preventDefault();const heading=document.getElementById(el.getAttribute('href').slice(1));if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})}return}
  if(el.matches('.product-inquiry > a')){e.preventDefault();showKakaoInquiryDialog(el.getAttribute('href'));return}
