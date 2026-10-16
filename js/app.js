@@ -1721,7 +1721,7 @@ function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
  const siteHeader=document.querySelector("#siteHeader")
- siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><button id="headerBack" class="back-button" aria-label="이전 페이지로 돌아가기" hidden>'+studioIcon('arrow')+'</button><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA</span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
+ siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent.webp","")+'<span>WISTIA</span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
  siteHeader.insertAdjacentHTML("afterend",navigationMenu())
 }
 let arCdRatioInstance=null,beforeAfterInstance=null,homeHighlightInstance=null,soloPoint04Cleanup=null
