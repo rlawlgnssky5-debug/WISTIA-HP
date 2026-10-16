@@ -1,0 +1,12 @@
+/* Korean wraps at word boundaries everywhere text is read */
+#app :is(p,li,dd,dt,summary,small,h1,h2,h3,h4,figcaption,blockquote,.faq-list p,.solo-faq-answer p){word-break:keep-all;overflow-wrap:break-word}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.faq-list,.info-faq,.solo-faq,.mas-notices,.mas-location,.ev2,.lc2,.wistia-events,.wistia-location,.mas-event-disclosure) :is(p,li,dd,summary,span,small,strong,b){word-break:keep-all!important;overflow-wrap:break-word!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .faq-list details>p{line-height:1.75!important}
+/* step 3 calendar header: clear gaps between arrows and selects */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-navigation{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-navigation>button{flex:none!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects{flex:1 1 auto!important;min-width:0!important;display:flex!important;justify-content:center!important;gap:8px!important;margin:0!important;padding:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects label{flex:0 1 auto!important;min-width:0!important;margin:0!important;padding:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects select[data-calendar-year]{width:104px!important;min-width:0!important;max-width:104px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects select[data-calendar-month]{width:80px!important;min-width:0!important;max-width:80px!important}
+@media(max-width:359px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects select[data-calendar-year]{width:96px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-month-selects select[data-calendar-month]{width:74px!important}}

@@ -572,7 +572,8 @@ function external(text,url,cls="text-link"){return '<a class="'+cls+'" href="'+e
 function priceBar(key,purpose=""){
  return ''
 }
-function faq(items){return '<div class="faq-list">'+items.map(([q,a])=>'<details><summary>'+q+'<span aria-hidden="true">+</span></summary><p>'+a+'</p></details>').join("")+'</div>'}
+function sentenceBreaks(text){return String(text).replace(/(요|니다)\s+(?=\S)/g,'$1<br>')}
+function faq(items){return '<div class="faq-list">'+items.map(([q,a])=>'<details><summary>'+q+'<span aria-hidden="true">+</span></summary><p>'+sentenceBreaks(a)+'</p></details>').join("")+'</div>'}
 function packageItem(item){return ({
  "녹음 및 1대1 디렉팅":"1:1 레코딩 · 보컬 디렉팅",
  "두 사람 녹음 및 1대1 디렉팅":"2인 레코딩 · 보컬 디렉팅",
@@ -905,7 +906,7 @@ function renderInfoPage(key){
  const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><span class="faq-group-number" aria-hidden="true">'+String(index+1).padStart(2,'0')+'</span><div><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원·영상 제작','선택한 상품에 맞춰 목소리와 장면을 완성합니다'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent:aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
- const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+page.description+'</p>'
+ const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+sentenceBreaks(page.description)+'</p>'
  app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1>'+introduction+'</header>'+content+'</section>'+footer()
 }
 function renderEventsPage(){
