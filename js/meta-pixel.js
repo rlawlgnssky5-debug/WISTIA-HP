@@ -111,7 +111,7 @@
     if (!link) return;
     const url = new URL(link.href, location.href);
     if (url.hostname !== "pf.kakao.com" || !url.pathname.endsWith("/chat")) return;
-    if (link.matches(".consult-copy-action")) trackContact();
+    if (link.matches(".contact-ok-action")) trackContact();
     else if (link.id === "floatingKakaoChat") trackFloatingKakaoClick();
   }, true);
 

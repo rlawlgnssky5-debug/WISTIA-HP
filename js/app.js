@@ -1712,11 +1712,9 @@ async function copyConsultationAndShowChoice(text){
   const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select()
   try{copied=document.execCommand("copy")}catch{}finally{area.remove()}
  }
- showKakaoInquiryDialog(inquiryPathForPage())
- const list=dialog.querySelector('.consult-choice-list');if(!list)return
- const note=document.createElement('div');note.className='consult-choice-copied'
- note.innerHTML=copied?'<strong>✓ 작성한 문의 내용이 복사되었어요</strong><small>카카오톡 채팅창에 붙여넣어 보내 주세요</small>':'<strong>문의 내용을 자동으로 복사하지 못했어요</strong><small>아래 내용을 직접 복사해 카카오톡에 붙여넣어 주세요</small><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'
- list.before(note)
+ const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인</a>'
+ showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카카오톡 채팅창에 붙여넣어 보내 주세요</p>'+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 직접 복사해 카카오톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+ok,'contact-ok-dialog')
+ dialog.setAttribute('aria-label','문의 내용 복사 완료')
 }
 function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음 · 1인','/detail/solo'],['AR 축가 사전녹음 · 2인','/detail/duo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
@@ -2020,6 +2018,7 @@ document.addEventListener("click",e=>{
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
  if(el.hasAttribute('data-booking-refresh')){window.WistiaBooking?.refresh();return}
  if(el.matches(".skip-link")){e.preventDefault();app.focus();return}
+ if(el.matches(".contact-ok-action")){e.preventDefault();const href=el.href;const opened=window.open(href,"_blank");if(opened)try{opened.opener=null}catch{};closeDialog();if(!opened)location.href=href;return}
  if(el.matches("[data-close]")){closeDialog();if(el.tagName==="BUTTON")return}
  if(el.id==="headerBack")goBack();
  if(el.id==="menuToggle"){const open=!document.body.classList.contains("menu-open");document.body.classList.toggle("menu-open",open);el.setAttribute("aria-expanded",String(open));el.setAttribute("aria-label",open?"메뉴 닫기":"메뉴 열기")}
