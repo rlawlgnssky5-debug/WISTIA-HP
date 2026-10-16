@@ -13,7 +13,7 @@
    people:input.people==='1'?'1':'0',discovery:sources.includes(input.discovery)?input.discovery:'',
    eventDateMode:input.eventDateMode==='unknown'?'unknown':'date',eventDate:date(input.eventDate),bookingDate:date(input.bookingDate),
    timeStart:/^(?:1[3-9]|2[0-2]):00$/.test(input.timeStart)?input.timeStart:'',
-   rush:input.rush==='1'?'1':'',lyricVideo:input.lyricVideo==='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
+   rush:input.rush==='1'?'1':'',lyricVideo:input.lyricVideo==='1'?'1':'',lyricNone:input.lyricNone==='1'&&input.lyricVideo!=='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
   },wedding:{year:/^\d{4}$/.test(parts.year)?String(parts.year):'',month:/^(?:[1-9]|1[0-2])$/.test(parts.month)?String(parts.month):'',day:/^(?:[1-9]|[12]\d|3[01])$/.test(parts.day)?String(parts.day):''}}
  }
  function read(key){
