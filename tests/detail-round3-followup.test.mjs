@@ -28,16 +28,8 @@ runInNewContext(source.slice(source.indexOf('function initCompactKakao(){'),sour
 scope={querySelector:()=>({getBoundingClientRect:()=>({bottom:topBottom})}),querySelectorAll:s=>{selectors=s;return regionBoxes.map(box=>({getClientRects:()=>[box],getBoundingClientRect:()=>box}))}}
 const paint=()=>{env.initCompactKakao();raf()}
 const visible=()=>!classes.has('is-content-overlap')
-topBottom=500;paint();assert.equal(visible(),false,'chat stays hidden until the top is passed')
-topBottom=-1;paint();assert.equal(visible(),true,'chat appears between protected sections')
-for(const region of ['#arcFaq','#soloPoint04','.solo-footer','.mas-selection','.mas-event-content']){
- regionBoxes=[{left:0,right:390,top:800,bottom:1200}];paint()
- assert.ok(selectors.split(',').includes(region))
- assert.equal(visible(),false,region+' hides chat in the bottom 120px')
- assert.equal(attrs.get('tabindex'),'-1')
-}
-regionBoxes=[{left:0,right:390,top:500,bottom:779}];paint();assert.equal(visible(),true,'region above the protected zone releases chat')
-regionBoxes=[{left:0,right:390,top:901,bottom:1200}];paint();assert.equal(visible(),true,'region below the viewport releases chat')
-regionBoxes=[{left:400,right:880,top:800,bottom:1200}];paint();assert.equal(visible(),true,'centered PC controls away from the chat do not collide')
+// 2026-10-17: the yellow chat stays visible and clickable everywhere
+topBottom=500;paint();assert.equal(visible(),true,'chat is visible over the top section')
+topBottom=-1;regionBoxes=[{left:0,right:390,top:800,bottom:1200}];paint();assert.equal(visible(),true,'protected regions no longer hide chat');assert.equal(attrs.has('tabindex'),false)
 scope=null;paint();assert.equal(visible(),true,'leaving detail pages restores chat');assert.equal(attrs.has('tabindex'),false)
 console.log('Round 3 follow-up passed: SOLO/DUET first photo, first dot, transport markup, chat protected regions and route reset')

@@ -1128,18 +1128,11 @@ function soloReviewGrid(){
  const items=cards.map(([hit,src,label])=>'<button type="button" class="solo-review-thumb solo-hit-'+hit+'" data-review-full="'+src+'" aria-label="'+label+'"></button>').join('')
  const quotes=['“노래 왜 이렇게 잘하냐고 칭찬 일색이었습니다!”','“노래 정말 잘하는것처럼 만들어주셨네요!!”','“결과물이 너무너무 맘에 들어요”','“노래실력을 자연스럽게 커버해주셨네요”']
  const pc='<div class="pc-review-layout"><header><p>REAL REVIEWS</p><h2>직접 남겨 주신 이야기</h2></header><div class="pc-review-cards">'+cards.map(([,src,label],index)=>'<button type="button" class="pc-review-card" data-review-full="'+src+'" aria-label="'+label+'"><span>'+String(index+1).padStart(2,'0')+'</span><h3>'+quotes[index]+'</h3><img src="'+src+'" alt="'+label+'" loading="lazy"></button>').join('')+'</div><p class="pc-review-more">더 많은 후기는 인스타그램에서 확인할 수 있어요</p></div>'
- return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390.png" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="1962" loading="lazy" decoding="async">'+items+pc+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button><img alt="카카오톡 후기 원문"></dialog></section>'
+ return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390.png" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="1962" loading="lazy" decoding="async">'+items+pc+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button></dialog></section>'
 }
 function soloChatFaq(){
- const questions=[
-  ['노래를 잘 못해도 괜찮을까요?','괜찮습니다, 한 곡을 처음부터 끝까지 완벽하게 부르실 필요는 없습니다<br>구간별 녹음과 1:1 디렉팅으로 완성하고 음정·박자는 수작업으로 다듬습니다'],
-  ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
-  ['원곡의 키가 너무 높은데 괜찮을까요?','예약 상담 때 원하는 곡과 MR을 먼저 보내주세요<br>목소리에 맞는 키와 녹음 방향을 함께 확인합니다'],
-  ['완성 음원은 언제 받을 수 있나요?','녹음과 필요한 자료 전달이 모두 끝난 뒤 최대 7일 이내에 전달합니다<br>본식 일정이 가까우면 예약 전에 제작 가능 일정을 먼저 확인해 주세요'],
-  ['본식에서는 어떻게 사용하나요?','예식장에 본식용 AR 음원을 미리 전달하고 재생하며 직접 노래하시면 됩니다<br>담당자와 파일 재생 및 리허설 시간을 사전에 확인해 주세요'],
-  ['녹음한 목소리의 비율도 고를 수 있나요?','가능합니다, 스튜디오에서 리허설과 AR 연습 방법을 안내합니다<br>직접 부르는 방식에 맞춰 함께 들어보고 목소리 비율을 결정합니다']
- ]
- return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow" id="arcFaq" data-svg-title="off"><img class="solo-approved-faq solo-shot-img" src="assets/detail-solo-16j/faq_B.png" alt="자주 묻는 질문" loading="lazy"><div class="solo-faq-html" hidden><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true">'+studioIcon('plus')+'</i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
+ const groups=typeof INFO_FAQ_GROUPS==='undefined'?[]:INFO_FAQ_GROUPS,order=[2,0,1,3,4].filter(i=>groups[i])
+ return '<section class="arc-section arc-faq solo-faq solo-faq-groups" id="arcFaq" aria-labelledby="soloFaqTitle" data-svg-title="off"><header class="solo-faq-heading"><p>FAQ</p><h2 id="soloFaqTitle">자주 묻는 질문</h2><span>처음 준비하는 축가, 궁금한 마음이 드는 건 자연스러운 일이에요</span></header>'+order.map((groupIndex,index)=>{const group=groups[groupIndex];return '<section class="solo-faq-group" data-svg-title="off" aria-labelledby="soloFaqGroup'+index+'"><header><span aria-hidden="true">'+String(index+1).padStart(2,'0')+'</span><div><h3 id="soloFaqGroup'+index+'">'+group.title+'</h3><p>'+group.description+'</p></div></header><div class="solo-faq-list">'+group.items.map(([q,a],itemIndex)=>'<details'+(index===0&&itemIndex===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer"><p>'+a+'</p></div></details>').join('')+'</div></section>'}).join('')+'<a class="solo-faq-more" href="/info/faq">자주 묻는 질문 전체 보기</a></section>'
 }
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
@@ -1297,7 +1290,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const intro=(key==='solo'||key==='duo')
   ?'<section class="mas-intro solo-shot solo-shot-top" aria-labelledby="arcProductTitle" data-svg-title="off"><picture class="solo-shot-frame"><source media="(min-width: 901px)" srcset="'+shot+'top_A_pc.png?v=16j15"><img class="solo-shot-img" src="'+shot+'top_A.png?v=16j15" alt="'+escapeHtml('AR 축가 사전녹음 '+format+'. 기본 '+p.normal.toLocaleString('ko-KR')+'원, 페이백 완료 후 혜택가 '+eventPrice.toLocaleString('ko-KR')+'원. 인원 선택과 이벤트 목록')+'" width="780" height="2074" fetchpriority="high" decoding="async"></picture>'+gallery+'<div class="mas-summary solo-seo">'+summary+'</div><p class="solo-live-benefit"><span>페이백 완료 후 혜택가</span><strong>'+eventPrice.toLocaleString('ko-KR')+'원</strong></p>'+mobileDetailEvents()+selection+'</section>'
   :'<section class="mas-intro" aria-labelledby="arcProductTitle">'+gallery+'<div class="mas-summary">'+summary+mobileDetailEvents()+'</div></section>'+selection
- const information='<section class="mas-information wistia-live-info" aria-label="상품정보"><img class="solo-approved-info solo-shot-img" src="'+shot+'info_v5.png" alt="'+format+' '+people+'인 상품정보" loading="lazy"><div class="solo-info-html" hidden><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl>'+pcProductInformation(info,p.normal)+'</div></section>'
+ const information='<section class="mas-information wistia-live-info" aria-label="상품정보"><img class="solo-approved-info solo-shot-img" src="'+shot+(key==='duo'?'info_v6.png':'info_v5.png')+'" alt="'+format+' '+people+'인 상품정보" loading="lazy"><div class="solo-info-html" hidden><h2 id="masInfoTitle">상품정보</h2><dl>'+info.concat([['가격',p.normal.toLocaleString('ko-KR')+'원']]).map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl>'+pcProductInformation(info,p.normal)+'</div></section>'
  details=details.replace('</section><div class="solo-poster-stack">',pcLyricVideo()+'</section><div class="solo-poster-stack">')
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+information+
@@ -1701,7 +1694,7 @@ async function copyConsultationAndShowDialog(customText){
  if(copied){showDialog('<span class="consult-copy-mark" aria-hidden="true">✓</span><h2>상담양식이 복사되었습니다</h2><p>카카오톡에 붙여넣기 해주세요!</p>'+kakaoLink,"consult-copy-dialog")}
  else{showDialog('<h2>상담양식을 자동으로 복사하지 못했습니다</h2><p>아래 내용을 직접 복사한 뒤 카카오톡에 붙여넣어 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'+kakaoLink,"consult-copy-dialog")}
 }
-function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
+function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음 · 1인','/detail/solo'],['AR 축가 사전녹음 · 2인','/detail/duo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
@@ -1838,7 +1831,7 @@ function initCompactKakao(){
  const paint=()=>{
   frame=0
   const scope=document.querySelector('.mobile-ar-solo')
-  if(!scope){button.classList.remove('is-content-overlap');button.removeAttribute('tabindex');return}
+  button.classList.remove('is-content-overlap');button.removeAttribute('tabindex');if(!scope||true)return
   const hit=button.getBoundingClientRect(),top=scope.querySelector('.solo-shot-top')
   const topVisible=top&&top.getBoundingClientRect().bottom>0
   const protectedRegions=[...scope.querySelectorAll('#arcFaq,#soloPoint04,.solo-footer,.mas-selection,.mas-event-content')]
@@ -1887,8 +1880,9 @@ function initSoloPoint04(){
 }
 function initSoloReviewLightbox(){
  const root=document.querySelector('[data-solo-reviews]');if(!root)return
- const dialog=root.querySelector('dialog'),image=dialog?.querySelector('img');if(!dialog||!image)return
- root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{image.src=button.dataset.reviewFull;image.alt=button.getAttribute('aria-label')||'후기 원문';dialog.showModal()}))
+ const dialog=root.querySelector('dialog');if(!dialog)return
+ const ensureImage=()=>dialog.querySelector('img')||dialog.appendChild(Object.assign(document.createElement('img'),{alt:'카카오톡 후기 원문'}))
+ root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{const image=ensureImage();image.src=button.dataset.reviewFull;image.alt=button.getAttribute('aria-label')||'후기 원문';dialog.showModal()}))
  initSoloDialog(dialog)
 }
 function initSoloMapZoom(){

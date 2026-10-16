@@ -100,7 +100,7 @@
   const selected=key==='bookingDate'&&input.form.dataset.wizard?(state.pendingDate??input.value):input.value
   const minYear=Number(today.slice(0,4)),maxYear=Math.max(minYear+15,state.year)
   yearSelect.innerHTML=Array.from({length:maxYear-minYear+1},(_,i)=>'<option value="'+(minYear+i)+'">'+(minYear+i)+'년</option>').join('')
-  yearSelect.value=String(state.year);monthSelect.value=String(state.month)
+  monthSelect.innerHTML=Array.from({length:12},(_,i)=>i).filter(i=>state.year!==minYear||i>=Number(today.slice(5,7))-1).map(i=>'<option value="'+i+'">'+(i+1)+'월</option>').join('');yearSelect.value=String(state.year);monthSelect.value=String(state.month)
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
   calendar.querySelector('[data-calendar-selection]').textContent=selected?'선택한 날짜: '+displayDate(selected).replace(/^\d+년 /,''):''
