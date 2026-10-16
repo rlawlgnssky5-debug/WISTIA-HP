@@ -43,7 +43,7 @@ for(const people of ['0','1'])for(const lyricVideo of ['0','1'])for(const extraV
  const text=wizard.text(form)
  assert.equal(text.split('총 결제 금액 : ').length,2)
  assert.match(text,/^🎙️ 위스티아 \| 신규 상담 신청\n\n📅 녹음 예약\n\n/)
- assert.match(text,/• 날짜 : 2026\.10\.22 \(목\)/)
+ assert.match(text,/• 날짜 : 2026-10-22 \(목\)/)
  assert.ok(text.includes('• 시간 : '+rows[3][1].replace('~',' ~ ')))
  assert.ok(text.includes('• 구성 : '+rows[0][1]))
  assert.ok(text.includes('• 총 결제 금액 : '+rows.at(-1)[1]))
