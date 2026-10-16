@@ -1123,12 +1123,14 @@ function soloReviewGrid(){
   ['a','assets/detail/review-n4.webp?v=16i','후기 1 원문 크게 보기'],
   ['b','assets/detail/review-n6.webp?v=16i','후기 2 원문 크게 보기'],
   ['c','assets/detail/review-n1.webp?v=16i','후기 3 원문 크게 보기'],
-  ['d','assets/detail/review-n2.webp?v=16i','후기 4 원문 크게 보기']
+  ['d','assets/detail/review-n2.webp?v=16i','후기 4 원문 크게 보기'],
+  ['e','assets/detail/review-n5.webp?v=review6','후기 5 원문 크게 보기'],
+  ['f','assets/detail/review-n7.webp?v=review6','후기 6 원문 크게 보기']
  ]
  const items=cards.map(([hit,src,label])=>'<button type="button" class="solo-review-thumb solo-hit-'+hit+'" data-review-full="'+src+'" aria-label="'+label+'"></button>').join('')
- const quotes=['“노래 왜 이렇게 잘하냐고 칭찬 일색이었습니다!”','“노래 정말 잘하는것처럼 만들어주셨네요!!”','“결과물이 너무너무 맘에 들어요”','“노래실력을 자연스럽게 커버해주셨네요”']
+ const quotes=['“노래 왜 이렇게 잘하냐고 칭찬 일색이었습니다!”','“노래 정말 잘하는것처럼 만들어주셨네요!!”','“결과물이 너무너무 맘에 들어요”','“노래실력을 자연스럽게 커버해주셨네요”','“수정 사항까지 빠르게 반영해 주셨어요”','“축가 녹음 안 했으면 큰일날 뻔했어요!”']
  const pc='<div class="pc-review-layout"><header><p>REAL REVIEWS</p><h2>직접 남겨 주신 이야기</h2></header><div class="pc-review-cards">'+cards.map(([,src,label],index)=>'<button type="button" class="pc-review-card" data-review-full="'+src+'" aria-label="'+label+'"><span>'+String(index+1).padStart(2,'0')+'</span><h3>'+quotes[index]+'</h3><img src="'+src+'" alt="'+label+'" loading="lazy"></button>').join('')+'</div><p class="pc-review-more">더 많은 후기는 인스타그램에서 확인할 수 있어요</p></div>'
- return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390.png" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="1962" loading="lazy" decoding="async">'+items+pc+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button></dialog></section>'
+ return '<section class="solo-review-grid solo-shot solo-shot-narrow" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" data-svg-title="off"><h2 id="soloReviewTitle" class="solo-seo">직접 남겨 주신 이야기</h2><img class="solo-shot-img" src="assets/detail-solo-16j/reviews6_390_v2.png?v=20261017-review6" alt="고객이 직접 남겨 주신 카카오톡 후기" width="1170" height="2632" loading="lazy" decoding="async">'+items+pc+'<dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button></dialog></section>'
 }
 function soloChatFaq(){
  const groups=typeof INFO_FAQ_GROUPS==='undefined'?[]:INFO_FAQ_GROUPS,order=[2,0,1,3,4].filter(i=>groups[i])
