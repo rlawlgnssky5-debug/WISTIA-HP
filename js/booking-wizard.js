@@ -24,7 +24,7 @@
    pair('people',['<b>SOLO(1인)</b><small>1곡 기준·1시간</small><strong>12만원</strong>','<b>DUET(2인)</b><small>1곡 기준·2시간</small><strong>16만원</strong>'],key==='duo'?'1':'0','people')+discoveryField(),
    eventDateField(),
    '<div class="wf-schedule"><div data-wf-date-view>'+bookingDateField()+'</div><div class="wf-time-view" data-wf-time-view hidden><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1" aria-live="polite"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 선택</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>')+error('timeStart')+'</div>'+error('bookingDate')+'</div><fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','완성 음원이 빨리 필요해요!',30000,'3일 이내 받기')+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
-   '<p class="wf-option-guide">선택하실 추가 옵션이 없으시면 바로 다음 단계로 넘어가셔도 됩니다!</p><fieldset class="wf-option"><legend class="sr-only">가사영상 제작 추가 옵션</legend>'+checkRow('lyricVideo','스크린에 띄울 가사 영상도 필요해요!',40000)+'<img class="wf-lyric-example" src="/assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy"></fieldset>',
+   '<p class="wf-option-guide">선택하실 추가 옵션이 없으시면 바로 다음 단계로 넘어가셔도 됩니다!</p><fieldset class="wf-option"><legend class="sr-only">가사영상 제작 추가 옵션</legend>'+checkRow('lyricVideo','스크린에 띄울 가사 영상도 필요해요!',40000)+'<img class="wf-lyric-example" src="/assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy">'+checkRow('lyricNone','필요 없어요!',0).replace(/<strong>[^<]*<\/strong>/,'')+'</fieldset>',
    '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><dl data-wf-review></dl><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다</p>'
   ]
   return '<section class="wistia-wizard"><h1>문의양식 작성</h1><p class="wf-draft-note" data-wf-draft-note>작성 내용은 이 브라우저에 7일간 임시 저장돼요</p><form id="contactInquiryForm" data-wizard="true" data-booking-calendar-opened="true" novalidate><ol class="wf-progress" aria-label="문의 단계">'+steps.map((title,index)=>'<li data-wf-progress="'+index+'"><button type="button" data-wf-goto="'+index+'" aria-label="'+(index+1)+'단계 '+title+'"><span>'+(index+1)+'</span><small>'+title+'</small></button></li>').join('')+'</ol><p class="wf-step-label" aria-live="polite" data-wf-step-label></p>'+sections.map((body,index)=>'<section class="wf-step" data-wf-step="'+index+'"'+(index?' hidden':'')+'><h2 tabindex="-1">'+titles[index]+'</h2>'+body+'</section>').join('')+'<div class="wf-nav"><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 카카오톡 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
@@ -124,7 +124,7 @@
  function restoreDraft(form,state,onPeople){
   const draft=global.WistiaBookingDraft?.read(state.draftKey);if(!draft)return
   const fields=draft.fields
-  for(const name of ['people','discovery','rush','lyricVideo','specialNotes']){
+  for(const name of ['people','discovery','rush','lyricVideo','lyricNone','specialNotes']){
    form.querySelectorAll('[name="'+name+'"]').forEach(control=>{
     if(control.type==='radio')control.checked=control.value===fields[name]
     else if(control.type==='checkbox')control.checked=fields[name]==='1'
@@ -204,6 +204,7 @@
   restoreDraft(form,state,onPeople);state.draftReady=true
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
+   if((el.name==='lyricVideo'||el.name==='lyricNone')&&el.checked){const other=form.querySelector('[name="'+(el.name==='lyricVideo'?'lyricNone':'lyricVideo')+'"]');if(other)other.checked=false}
    if(el.hasAttribute('data-wf-date-part'))syncEventDropdowns(form)
    else if(el.name==='people'){const key=el.value==='1'?'duo':'solo';onPeople(key);global.WistiaBooking.mount(form,key)}
    else if(['bookingDateMode','bookingDate','timeStart'].includes(el.name))global.WistiaContact.update(el)
