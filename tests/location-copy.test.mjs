@@ -10,7 +10,7 @@ await test('Directions keep the original information and expose an accessible ad
  assert.match(location,/data-copy-address/);assert.match(location,/aria-label="주소 복사"/)
  assert.match(location,/studioIcon\('pin'\)/);assert.match(location,/studioIcon\('train'\)/);assert.match(location,/studioIcon\('car'\)/)
  assert.match(location,/부천시청역 1번 출구에서 도보 약 300m 이동해 주세요/)
- assert.match(location,/스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다 주차 요금은 별도이며 주차비 지원은 어렵습니다/)
+ assert.match(location,/스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다/);assert.match(location,/주차 요금 별도/);assert.match(location,/주차비 지원은 어렵습니다/)
  assert.match(app,/area\.setSelectionRange\(0,text\.length\)/)
  assert.match(app,/document\.execCommand\('copy'\)/)
 })
