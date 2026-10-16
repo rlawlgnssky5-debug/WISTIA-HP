@@ -103,7 +103,7 @@ await test('16j12 live controls and layout at 360/375/390/1280',{skip,timeout:42
      tryHint:!!document.querySelector('.bap-try'),
      platter:!!document.querySelector('.wistia-ar__platter'),
      table:!!document.querySelector('.mas-information dl'),
-     shared:['reviews6_390.png','point04_ui_390.png','map_C3.png','footer_A.png'].every(name=>html.includes('assets/detail-solo-16j/'+name))
+     shared:['reviews6_390_v2.png','point04_ui_390.png','map_C3.png','footer_A.png'].every(name=>html.includes('assets/detail-solo-16j/'+name))
     }
    })
    assert.equal(layout.page,0,product+' '+width+' page overflow')
