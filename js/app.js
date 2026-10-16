@@ -1529,7 +1529,7 @@ function renderEvent(key,purpose=""){
  if(window.WistiaWizard){
   currentEventProduct=key==='duo'?'duo':'solo';currentEventPurpose='';inquiryUndecided=false
   app.innerHTML=window.WistiaWizard.render(currentEventProduct,EVENTS)+footer()
-  window.WistiaWizard.mount(app,{benefits:EVENTS,onPeople:next=>{currentEventProduct=next},onSubmit:copyConsultationAndShowDialog})
+  window.WistiaWizard.mount(app,{benefits:EVENTS,onPeople:next=>{currentEventProduct=next},onSubmit:copyConsultationAndShowChoice})
   return
  }
  inquiryUndecided=false
@@ -1693,6 +1693,18 @@ async function copyConsultationAndShowDialog(customText){
  const kakaoLink='<a class="button dark consult-copy-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인했습니다! 카카오톡으로 이동</a>'
  if(copied){showDialog('<span class="consult-copy-mark" aria-hidden="true">✓</span><h2>상담양식이 복사되었습니다</h2><p>카카오톡에 붙여넣기 해주세요!</p>'+kakaoLink,"consult-copy-dialog")}
  else{showDialog('<h2>상담양식을 자동으로 복사하지 못했습니다</h2><p>아래 내용을 직접 복사한 뒤 카카오톡에 붙여넣어 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'+kakaoLink,"consult-copy-dialog")}
+}
+async function copyConsultationAndShowChoice(text){
+ let copied=false
+ try{await navigator.clipboard.writeText(text);copied=true}catch{
+  const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select()
+  try{copied=document.execCommand("copy")}catch{}finally{area.remove()}
+ }
+ showKakaoInquiryDialog(inquiryPathForPage())
+ const list=dialog.querySelector('.consult-choice-list');if(!list)return
+ const note=document.createElement('div');note.className='consult-choice-copied'
+ note.innerHTML=copied?'<strong>✓ 작성한 문의 내용이 복사되었어요</strong><small>카카오톡 채팅창에 붙여넣어 보내 주세요</small>':'<strong>문의 내용을 자동으로 복사하지 못했어요</strong><small>아래 내용을 직접 복사해 카카오톡에 붙여넣어 주세요</small><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 상담양식">'+escapeHtml(text)+'</textarea>'
+ list.before(note)
 }
 function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음 · 1인','/detail/solo'],['AR 축가 사전녹음 · 2인','/detail/duo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
