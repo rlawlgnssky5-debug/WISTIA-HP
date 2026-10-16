@@ -179,7 +179,7 @@
   list.hidden=!known||loading;list.closest('[data-time-scroll-wrap]').hidden=!known||loading;time.closest('label').hidden=true;time.disabled=!known
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요';form.querySelector('[data-time-help]').hidden=true
   form.querySelector('[data-wf-duration]').textContent=minutes/60+'시간 진행'
-  list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(o.disabled?'<small>마감</small>':'')+'</button>').join('')
+  list.classList?.toggle('is-loading',loading);list.setAttribute?.('aria-busy',String(loading));list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>loading?'<button type="button" data-wf-time="'+o.value+'" class="is-loading" disabled aria-pressed="false"><strong>'+o.value+'</strong></button>':'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(o.disabled?'<small>마감</small>':'')+'</button>').join('')
   syncSchedule(form)
   update(form)
  }
