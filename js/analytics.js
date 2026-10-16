@@ -69,7 +69,7 @@
     if (control.matches("a[href]")) {
       const url = new URL(control.href, location.href);
       if (url.hostname === "pf.kakao.com" && url.pathname.endsWith("/chat")) {
-        if (control.matches(".consult-copy-action")) trackKakaoClick();
+        if ((control.matches(".consult-copy-action")||control.matches(".contact-ok-action"))) trackKakaoClick();
         else if (control.id === "floatingKakaoChat") trackFloatingKakaoClick();
         return;
       }
