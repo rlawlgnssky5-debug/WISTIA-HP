@@ -105,6 +105,7 @@
   form.querySelector('[type="submit"]').hidden=state.step!==4
   const recording=form.querySelector('[data-wf-recording-range]');recording.textContent=q.v.timeStart?'녹음 시간 · '+range(q.v.timeStart,q.v.people,q.v.extraVerse):'시작 시간을 고르면 녹음 시간이 나와요';recording.classList.toggle('has-selection',!!q.v.timeStart)
   persistDraft(form)
+  try{global.WistiaInquiryFunnel?.view(form)}catch{}
  }
  function persistDraft(form){
   const state=states.get(form);if(!state?.draftReady||!global.WistiaBookingDraft)return
@@ -142,13 +143,14 @@
   if(state.step>2&&(!date.value||!time.value))state.step=2
   onPeople(fields.people==='1'?'duo':'solo')
  }
- function mark(form,key,message){
+ function mark(form,key,message,number){
   const el=form.querySelector('[data-wf-error="'+key+'"]');el.textContent=message;el.hidden=!message
   form.elements[key]?.setAttribute?.('aria-invalid',String(!!message))
+  if(message)try{global.WistiaInquiryFunnel?.validation(form,key,number)}catch{}
  }
  function validate(form,step){
   const v=values(form);let okay=true
-  const check=(key,message)=>{mark(form,key,message);if(message)okay=false}
+  const check=(key,message)=>{mark(form,key,message,step+1);if(message)okay=false}
   if(step===1)check('eventDate',v.eventDateMode==='unknown'||global.WistiaContact.calendar.selectableDate(v.eventDate,'eventDate')?'':'결혼식 날짜를 골라주세요')
   if(step===2){
    const date=form.querySelector('#contact-bookingDate'),valid=v.bookingDateMode==='date'&&global.WistiaContact.calendar.selectableDate(v.bookingDate,'bookingDate')
@@ -239,5 +241,5 @@
    if(state.step>2&&!validate(form,2)){state.step=2;update(form)}
   });update(form)
  }
- global.WistiaWizard={render,mount,syncTimes,syncSchedule,text,quote,rows,range}
+ global.WistiaWizard={currentStep:form=>(states.get(form)?.step??0)+1,render,mount,syncTimes,syncSchedule,text,quote,rows,range}
 })(window)
