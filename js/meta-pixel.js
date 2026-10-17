@@ -19,7 +19,7 @@
   function trackCustomOnce(name, key, payload, sent) {
     if (localPreview || typeof window.fbq !== "function" || sent.has(key)) return false;
     try {
-      window.fbq("trackCustom", name, payload);
+      window.fbq("trackCustom", name, { ...payload, visitor_id: window.wistiaVisitorId() });
       sent.add(key);
       return true;
     } catch {
@@ -75,8 +75,16 @@
         } else if (typeof value !== "string" || value.length > 40) return false;
         payload[key] = value;
       }
+      if (["form_field_complete", "form_next", "inquiry_step_view"].includes(name)) {
+        const field = params.field_name;
+        const value = window.wistiaFieldValue?.(field, params.field_value);
+        if (value !== undefined) {
+          payload.field_name = field;
+          payload.field_value = value;
+        }
+      }
       if (typeof window.fbq !== "function") return false;
-      window.fbq("trackCustom", definition[0], payload);
+      window.fbq("trackCustom", definition[0], { ...payload, visitor_id: window.wistiaVisitorId() });
       return true;
     } catch { return false; }
   }
@@ -86,7 +94,10 @@
     const url = location.pathname + location.search + (location.hash || "");
     if (url === lastPageViewUrl) return false;
     try {
-      window.fbq("track", "PageView");
+      window.fbq("track", "PageView", { visitor_id: window.wistiaVisitorId() });
+      scrollDepthSent.clear();
+      timeOnPageSent.clear();
+      viewPriceSent.clear();
       lastPageViewUrl = url;
       lastViewContentKey = "";
       return true;
@@ -102,7 +113,7 @@
     const key = currentPagePath() + ":" + payload.content_ids.join(",");
     if (key === lastViewContentKey) return false;
     try {
-      window.fbq("track", "ViewContent", payload);
+      window.fbq("track", "ViewContent", { ...payload, visitor_id: window.wistiaVisitorId() });
       lastViewContentKey = key;
       return true;
     } catch {
@@ -115,8 +126,8 @@
     const eventId = crypto.randomUUID();
     if (typeof window.fbq === "function") {
       try {
-        window.fbq("track", "Contact", {}, { eventID: eventId });
-        window.fbq("trackCustom", "KakaoTalkClick", {}, { eventID: eventId });
+        window.fbq("track", "Contact", { visitor_id: window.wistiaVisitorId() }, { eventID: eventId });
+        window.fbq("trackCustom", "KakaoTalkClick", { visitor_id: window.wistiaVisitorId() }, { eventID: eventId });
       } catch {
         // A blocked browser pixel must not prevent the server event.
       }
@@ -134,7 +145,7 @@
   function trackFloatingKakaoClick() {
     if (localPreview || typeof window.fbq !== "function") return false;
     try {
-      window.fbq("trackCustom", "FloatingKakaoClick", { page_path: currentPagePath() });
+      window.fbq("trackCustom", "FloatingKakaoClick", { page_path: currentPagePath(), visitor_id: window.wistiaVisitorId() });
       return true;
     } catch {
       return false;
@@ -150,5 +161,11 @@
     else if (link.id === "floatingKakaoChat") trackFloatingKakaoClick();
   }, true);
 
-  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackFunnel, trackPageView, trackViewContent, trackContact, trackFloatingKakaoClick, trackScrollDepth, trackTimeOnPage, trackViewPrice });
+  function trackSectionView(payload) {
+    if (localPreview || typeof window.fbq !== "function") return false;
+    window.fbq("trackCustom", "SectionView", { ...payload, visitor_id: window.wistiaVisitorId() });
+    return true;
+  }
+
+  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackSectionView, trackFunnel, trackPageView, trackViewContent, trackContact, trackFloatingKakaoClick, trackScrollDepth, trackTimeOnPage, trackViewPrice });
 })();

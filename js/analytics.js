@@ -4,6 +4,7 @@
   let lastPageUrl = "";
   let routeCleanup = null;
   let activePath = "";
+  let lastPricePayload = null;
   const sentScroll = new Set();
   const sentTime = new Set();
   const sentPrice = new Set();
@@ -17,7 +18,7 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
     window.gtag("js", new Date());
-    window.gtag("config", measurementId, { send_page_view: false });
+    window.gtag("config", measurementId, { send_page_view: false, visitor_id: window.wistiaVisitorId() });
     const script = document.createElement("script");
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
@@ -26,7 +27,7 @@
 
   function send(name, parameters = {}) {
     if (localPreview || typeof window.gtag !== "function") return false;
-    window.gtag("event", name, { ...parameters, send_to: measurementId });
+    window.gtag("event", name, { ...parameters, visitor_id: window.wistiaVisitorId(), send_to: measurementId });
     return true;
   }
 
@@ -58,6 +59,14 @@
           if (typeof value !== "string" || !/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/.test(value)) return false;
         } else if (typeof value !== "string" || value.length > 40) return false;
         payload[key] = value;
+      }
+      if (["form_field_complete", "form_next", "inquiry_step_view"].includes(name)) {
+        const field = params.field_name;
+        const value = window.wistiaFieldValue?.(field, params.field_value);
+        if (value !== undefined) {
+          payload.field_name = field;
+          payload.field_value = value;
+        }
       }
       return send(name, { ...payload, ...(name === "form_abandon" ? { transport_type: "beacon" } : {}) });
     } catch { return false; }
@@ -139,6 +148,10 @@
     if (normalized === activePath) return;
     routeCleanup?.();
     activePath = normalized;
+    sentScroll.clear();
+    sentTime.clear();
+    sentPrice.clear();
+    lastPricePayload = pricePayload;
     trackPageView();
     const startedAt = Date.now();
     let maxScrollPercent = 0;
@@ -152,6 +165,7 @@
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    const initialScroll = window.setTimeout(onScroll, 0);
     const timers = [30, 60, 120].map(seconds => window.setTimeout(() => {
       const key = `${normalized}:${seconds}`;
       if (!sentTime.has(key) && send("time_on_page", { seconds, page_path: normalized })) sentTime.add(key);
@@ -169,18 +183,23 @@
       }, { threshold: 0.5 });
       observer.observe(priceBlock);
     }
+    const stopSections = window.wistiaTrackSections?.(normalized, send);
     let finished = false;
     routeCleanup = () => {
       if (finished) return;
       finished = true;
+      stopSections?.();
+      activePath = "";
       window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(initialScroll);
       timers.forEach(timer => window.clearTimeout(timer));
       observer?.disconnect();
       const seconds = Math.floor((Date.now() - startedAt) / 1000);
-      if (seconds > 0) send("page_dwell", { page_path: normalized, seconds, max_scroll_percent: maxScrollPercent });
+      if (seconds > 0) send("page_dwell", { page_path: normalized, seconds, max_scroll_percent: maxScrollPercent, transport_type: "beacon" });
     };
   }
 
+  window.addEventListener("pageshow", event => { if (event.persisted) startPageTracking(currentPagePath(), lastPricePayload); });
   window.addEventListener("pagehide", () => routeCleanup?.());
   window.wistiaAnalytics = { trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();
