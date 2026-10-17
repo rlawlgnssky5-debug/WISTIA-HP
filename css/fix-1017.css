@@ -35,3 +35,8 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo
 @media(max-width:900px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top .mas-selection{left:0!important;width:100%!important;right:0!important;bottom:0!important;height:auto!important;min-height:0!important;padding:14px 4% 0!important;column-gap:3%!important;box-sizing:border-box!important}
 }
+
+/* Keep mobile inquiry buttons behind the open navigation. */
+@media(max-width:900px){
+ body.menu-open :is(.we-home,.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])) .solo-footer-inquiry{visibility:hidden!important;pointer-events:none!important}
+}
