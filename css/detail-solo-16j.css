@@ -336,3 +336,11 @@ html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo[data-ar-product="duo"] .mas-gallery-dots button:is([aria-pressed="true"],[aria-pressed="false"])::after{left:7px!important;top:7px!important;width:16px!important;height:16px!important;border-width:3px!important;}
 html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo[data-ar-product="duo"] .mas-gallery-caption{left:20px!important;top:20px!important;font-size:20px!important;padding:12px 20px!important;}
 }
+
+/* hotfix1 (2026-10-17): mobile top gallery must cover the whole photo area of top_B.png (780x1436, photo ends at y=900),
+   otherwise the baked-in poster badge/dots show below the live gallery as a second strip. Show the live badge instead. */
+@media(max-width:900px){
+html body #app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot-top .mas-gallery{height:auto!important;aspect-ratio:780/900!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot-top .mas-gallery-tools{justify-content:space-between!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot-top .mas-format-badge{display:block!important}
+}
