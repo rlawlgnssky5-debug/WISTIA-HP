@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/dusty-wedding-theme.css'),app=read('js/app.js')
 assert.match(css,/\.mas-selection \.mas-variant\{padding:18px 16px!important;gap:12px/)
 assert.match(css,/\.mas-selection \.mas-variant>small\{flex:0 0 auto;white-space:nowrap;padding-inline:2px/)

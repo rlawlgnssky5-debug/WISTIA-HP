@@ -1,7 +1,8 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const source=read('js/app.js'),css=read('css/brand-detail-polish.css'),shell=read('index.html')
 const scope={img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">'}
 runInNewContext(source.slice(source.indexOf('function mobileStudioBrand('),source.indexOf('function mobileStoryFilmDetail(')),scope)

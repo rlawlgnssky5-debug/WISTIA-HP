@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync,existsSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const index=read('index.html'),css=read('css/question-cards-kakao.css')
 assert.ok(index.indexOf('css/question-cards-kakao.css')<index.indexOf('</head>'))
 assert.ok(index.indexOf('css/question-cards-kakao.css')>index.indexOf('css/inquiry-actions.css'))

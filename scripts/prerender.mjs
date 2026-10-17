@@ -1,11 +1,12 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { resolve, dirname } from 'node:path'
+import { expandBundledHtml, buildCssBundles } from './build-css-bundle.mjs'
 
 const require = createRequire(import.meta.url)
 const seo = require('../js/seo-meta.js')
 const root = resolve(import.meta.dirname, '..')
-const template = readFileSync(resolve(root, 'index.html'), 'utf8')
+const template = expandBundledHtml(readFileSync(resolve(root, 'index.html'), 'utf8'))
 const origin = 'https://wistiastudio.com'
 const products = ['solo', 'duo', 'solo-film', 'wedding', 'proposal', 'duet-film']
 
@@ -59,3 +60,4 @@ for (const stage of ['role','service','people']) {
   page(`/find/${stage}`, seo.home, {robots:'noindex, follow'})
 }
 for (const [path, data] of Object.entries(seo.noindex)) page(path, data, {robots:'noindex, follow'})
+buildCssBundles()

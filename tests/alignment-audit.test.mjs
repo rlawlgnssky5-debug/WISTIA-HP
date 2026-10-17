@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/alignment-audit.css')
 assert.match(css,/\.we-hero-grid\.we-hero-text\{grid-template-columns:minmax\(0,1fr\);text-align:center\}/)
 assert.match(css,/\.we-hero :is\(\.we-kicker,h1,\.we-lead\)\{text-align:center;margin-inline:auto\}/)

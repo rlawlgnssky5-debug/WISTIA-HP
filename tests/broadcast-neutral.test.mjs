@@ -1,3 +1,4 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync,existsSync} from 'node:fs'
 import {createHash} from 'node:crypto'
@@ -5,7 +6,7 @@ import {runInNewContext} from 'node:vm'
 import {assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertManualReviews} from './manual-reviews-fixture.mjs'
 
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 const digest=path=>createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex')
 const normalize=text=>text.replace(/\r\n/g,'\n')
 const textDigest=text=>createHash('sha256').update(normalize(text)).digest('hex')

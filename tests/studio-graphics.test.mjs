@@ -1,10 +1,11 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync,readdirSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 import {createHash} from 'node:crypto'
 import {graphicsFixture,assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertInquiryWithoutName} from './inquiry-without-name-fixture.mjs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const source=read('js/app.js'),css=read('css/studio-graphics.css'),index=read('index.html')
 const scope={escapeHtml:x=>x}
 runInNewContext(graphicsFixture(source)+source.split('\n').find(l=>l.startsWith('function img(')),scope)

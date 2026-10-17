@@ -1,9 +1,10 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertInquiryWithoutName} from './inquiry-without-name-fixture.mjs'
 import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/noir-minimal.css'),index=read('index.html')
 assert.match(index,/data-wistia-palette="noir-minimal"/)
 assert.match(index,/data-wistia-typography="pretendard-noir"/)

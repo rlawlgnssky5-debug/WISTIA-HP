@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const source=read('js/app.js'),index=read('index.html'),css=read('css/approved-home-thumbnails.css')
 const helper=source.split('function renderApprovedHomeThumbnails(){')[1].split('function renderWeddingHome(){')[0]
 const ids=['aSKrlQwmnHI','5ZuTmQWCRJk','AQ9Z1flOUPo']

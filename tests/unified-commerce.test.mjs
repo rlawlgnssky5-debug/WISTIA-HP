@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 const source=read('js/app.js'),css=read('css/mobile-ar-solo.css'),home=read('css/home-form-refresh.css')
 assert.match(source,/return \['solo','duo'\]\.includes\(key\)\?mobileArSoloDetail\(p,desktopHtml,key\):desktopHtml/)
 assert.match(source,/app.innerHTML=key==='duet-film'\?mobileStoryFilmDetail\(p\):filmCommerceDetail\(p,key,purpose\)/)
