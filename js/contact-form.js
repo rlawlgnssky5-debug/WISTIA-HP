@@ -235,7 +235,7 @@
   return [...form.elements].filter(control=>control.willValidate&&control.name!=='name').flatMap(control=>{
    const missing=control.required&&!String(control.value||'').trim(),invalid=missing||!control.validity.valid
    if(!invalid){if(mark)control.removeAttribute('aria-invalid');return []}
-   if(mark)control.setAttribute('aria-invalid','true')
+   if(mark){control.setAttribute('aria-invalid','true');try{global.WistiaInquiryFunnel?.validation(form,control.name||control.id)}catch{}}
    const label=fields.find(field=>field[0]===(control.name==='timeStart'?'time':control.name))?.[1]||'입력 내용'
    return [{control,label,message:missing?(control.tagName==='SELECT'?'선택해 주세요':'입력해 주세요'):(control.validationMessage||'입력 내용을 확인해 주세요')}]
   })

@@ -30,6 +30,39 @@
     return true;
   }
 
+  const funnelEvents = {
+    inquiry_open: ["InquiryOpen", ["button_location", "button_label"]],
+    inquiry_step_view: ["InquiryStepView", ["step", "step_total"]],
+    form_start: ["FormStart", ["step"]],
+    form_field_complete: ["FormFieldComplete", ["field_name", "step"]],
+    form_next: ["FormNext", ["from_step"]],
+    form_prev: ["FormPrev", ["from_step"]],
+    form_validation_error: ["FormValidationError", ["field_name", "step"]],
+    form_abandon: ["FormAbandon", ["last_step", "reason"]],
+    inquiry_submit_popup: ["InquirySubmitPopup", ["step"]]
+  };
+
+  function trackFunnel(name, params = {}) {
+    try {
+      const definition = funnelEvents[name];
+      if (localPreview || !definition) return false;
+      const pagePath = typeof params.page_path === "string" && params.page_path.startsWith("/") ? params.page_path.split(/[?#]/)[0] : currentPagePath();
+      const payload = { page_path: pagePath };
+      for (const key of definition[1]) {
+        const value = params[key];
+        if (["step", "step_total", "from_step", "last_step"].includes(key)) {
+          if (!Number.isInteger(value) || value < 1 || value > 100) return false;
+        } else if (key === "reason") {
+          if (!["close", "pagehide", "hidden"].includes(value)) return false;
+        } else if (key === "field_name") {
+          if (typeof value !== "string" || !/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/.test(value)) return false;
+        } else if (typeof value !== "string" || value.length > 40) return false;
+        payload[key] = value;
+      }
+      return send(name, { ...payload, ...(name === "form_abandon" ? { transport_type: "beacon" } : {}) });
+    } catch { return false; }
+  }
+
   function trackPageView() {
     const url = location.href;
     if (url === lastPageUrl) return false;
@@ -149,5 +182,5 @@
   }
 
   window.addEventListener("pagehide", () => routeCleanup?.());
-  window.wistiaAnalytics = { trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
+  window.wistiaAnalytics = { trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();
