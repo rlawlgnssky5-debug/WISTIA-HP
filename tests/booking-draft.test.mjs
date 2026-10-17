@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
+import {test} from 'node:test'
 const source=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')
 const store=new Map(),win={localStorage:{getItem:key=>store.get(key)||null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)}}
 runInNewContext(source,{window:win,Date,JSON})
@@ -35,3 +36,67 @@ Object.defineProperty(win,'localStorage',{get(){throw Error('blocked')}})
 assert.equal(api.read('solo'),null)
 assert.equal(api.save('solo',data),false)
 console.log('Browser-only allowlisted drafts, expiry, corrupt/blocked storage, partial dates, route isolation and personal-field exclusion passed')
+
+const lifetime=3*60*60*1000,prefix='wistia:inquiry-draft:v1:'
+function fixture(){
+ let now=Date.UTC(2026,9,17,4)
+ const storage=new Map([['wistia_vid','existing-visitor'],['unrelated','keep']])
+ const window={localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)}}
+ class Clock extends Date{static now(){return now}}
+ runInNewContext(source,{window,Date:Clock,JSON})
+ return {api:window.WistiaBookingDraft,storage,advance:ms=>{now+=ms},now:()=>now}
+}
+for(const age of [lifetime-1,lifetime])test('restores a draft aged '+age+'ms',()=>{
+ const f=fixture()
+ f.api.save('solo',data)
+ f.advance(age)
+ assert.equal(f.api.read('solo').fields.specialNotes,data.fields.specialNotes)
+ assert.ok(f.storage.has(prefix+'solo'))
+})
+test('clears only the expired draft after three hours',()=>{
+ const f=fixture()
+ f.api.save('solo',data)
+ f.advance(lifetime+1)
+ f.api.save('duo',data)
+ assert.equal(f.api.read('solo'),null)
+ assert.equal(f.storage.has(prefix+'solo'),false)
+ assert.ok(f.api.read('duo'))
+ assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
+ assert.equal(f.storage.get('unrelated'),'keep')
+})
+test('each save refreshes savedAt and starts a new three-hour lifetime',()=>{
+ const f=fixture()
+ f.api.save('solo',data)
+ const first=JSON.parse(f.storage.get(prefix+'solo')).savedAt
+ f.advance(lifetime-1)
+ f.api.save('solo',{...data,fields:{...data.fields,specialNotes:'latest input'}})
+ assert.equal(JSON.parse(f.storage.get(prefix+'solo')).savedAt,f.now())
+ assert.ok(f.now()>first)
+ f.advance(lifetime-1)
+ assert.equal(f.api.read('solo').fields.specialNotes,'latest input')
+ f.advance(2)
+ assert.equal(f.api.read('solo'),null)
+ assert.equal(f.storage.has(prefix+'solo'),false)
+ assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
+})
+for(const timestamp of ['missing','future','invalid'])test('removes drafts with '+timestamp+' savedAt',()=>{
+ const f=fixture()
+ f.api.save('solo',data)
+ const stored=JSON.parse(f.storage.get(prefix+'solo'))
+ if(timestamp==='missing')delete stored.savedAt
+ else stored.savedAt=timestamp==='future'?f.now()+1:'invalid'
+ f.storage.set(prefix+'solo',JSON.stringify(stored))
+ assert.equal(f.api.read('solo'),null)
+ assert.equal(f.storage.has(prefix+'solo'),false)
+ assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
+ assert.equal(f.storage.get('unrelated'),'keep')
+})
+test('wizard input/change handlers save drafts and both notes show three hours',()=>{
+ const wizard=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8').replace(/\r\n/g,'\n')
+ assert.match(wizard,/form\.addEventListener\('input',\(\)=>update\(form\)\)/)
+ assert.match(wizard,/form\.addEventListener\('change',event=>\{[\s\S]*?\n   update\(form\)\n  \}\)/)
+ assert.match(wizard,/function update\(form\)\{[\s\S]*?persistDraft\(form\)/)
+ assert.match(wizard,/WistiaBookingDraft\.save\(state\.draftKey,/)
+ assert.equal(wizard.split('작성 내용은 이 브라우저에 3시간 동안 임시 저장돼요').length-1,2)
+ assert.doesNotMatch(wizard,/7일간/)
+})

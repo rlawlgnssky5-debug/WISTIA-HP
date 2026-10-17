@@ -1,6 +1,6 @@
 (function(global){
  'use strict'
- const prefix='wistia:inquiry-draft:v1:',lifetime=7*24*60*60*1000
+ const prefix='wistia:inquiry-draft:v1:',lifetime=3*60*60*1000
  const sources=['인스타','스레드','광고','카페','블로그','지인 추천']
  const date=value=>{
   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return ''
@@ -19,7 +19,7 @@
  function read(key){
   try{
    const data=JSON.parse(global.localStorage.getItem(prefix+key))
-   if(data?.version!==1||!Number.isFinite(data.savedAt))return null
+   if(data?.version!==1||!Number.isFinite(data.savedAt)){global.localStorage.removeItem(prefix+key);return null}
    const age=Date.now()-data.savedAt
    if(age<0||age>lifetime){global.localStorage.removeItem(prefix+key);return null}
    return sanitize(data)
