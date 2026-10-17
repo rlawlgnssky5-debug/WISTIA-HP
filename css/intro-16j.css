@@ -1,10 +1,2 @@
-html body > .wistia-intro{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;z-index:10000;display:grid!important;place-items:center;background:linear-gradient(135deg,#f6e6e6,#fbf3f2)!important;pointer-events:none;opacity:1;transition:opacity .3s ease}
-html body > .wistia-intro.is-leaving{opacity:0}
-.wistia-intro .intro-composition{position:relative;width:min(100vw,1280px);margin:0;padding:0}
-.wistia-intro picture,.wistia-intro img{display:block;width:100%;height:auto;margin:0;padding:0}
-.wistia-intro picture{clip-path:inset(12% 0 0)}
-.wistia-intro .intro-brand{position:absolute;top:6%;left:0;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;color:#4A3238;font:600 15px/1 Pretendard,sans-serif;letter-spacing:6px}
-.wistia-intro .intro-brand img{width:25px;height:30px;object-fit:contain}
-.wistia-intro .intro-pc-caption{position:absolute;left:54.5%;top:69.8%;width:34%;padding:4px 0 8px;background:#faf0f0;color:#8A6F75;font:14px/1.4 Pretendard,sans-serif;letter-spacing:1.5px}
-@media(max-width:900px){.wistia-intro .intro-composition{width:min(100vw,calc(100dvh * 780 / 1000));max-width:600px}.wistia-intro .intro-pc-caption{display:none}}
-@media(prefers-reduced-motion:reduce){html body > .wistia-intro{transition:none}}
+/* Intro splash removed (hotfix1 2026-10-17). */
+html body > .wistia-intro{display:none!important}
