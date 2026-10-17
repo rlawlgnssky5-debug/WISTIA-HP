@@ -20,6 +20,7 @@ function trackers(hostname = "www.wistiastudio.com") {
   const document = { addEventListener() {}, head: { appendChild() {} }, createElement: () => ({}) };
   const location = { protocol: "https:", hostname, pathname: "/event/solo", search: "?phone=PRIVATE", href: `https://${hostname}/event/solo?phone=PRIVATE` };
   const context = { window, document, location };
+  runInNewContext(read("tracking-common.js"), context);
   runInNewContext(read("analytics.js"), context);
   runInNewContext(read("meta-pixel.js"), context);
   return { window, ga, meta };
@@ -32,8 +33,8 @@ for (const [name, [metaName, params]] of Object.entries(events)) {
   const ga = client.ga.at(-1), meta = client.meta.at(-1);
   assert.equal(ga[1], name);
   assert.equal(meta[1], metaName);
-  assert.deepEqual(JSON.parse(JSON.stringify(meta[2])), { page_path: "/event/solo", ...params });
-  assert.deepEqual(JSON.parse(JSON.stringify(ga[2])), { page_path: "/event/solo", ...params, ...(name === "form_abandon" ? { transport_type: "beacon" } : {}), send_to: "G-5E0XX7SE8T" });
+  assert.deepEqual(JSON.parse(JSON.stringify(meta[2])), { page_path: "/event/solo", ...params, visitor_id: client.window.wistiaVisitorId() });
+  assert.deepEqual(JSON.parse(JSON.stringify(ga[2])), { page_path: "/event/solo", ...params, visitor_id: client.window.wistiaVisitorId(), ...(name === "form_abandon" ? { transport_type: "beacon" } : {}), send_to: "G-5E0XX7SE8T" });
   assert.doesNotMatch(JSON.stringify([ga, meta]), /PRIVATE|01012345678/);
 }
 for (const tracker of [client.window.wistiaAnalytics, client.window.wistiaMeta]) {
@@ -70,6 +71,7 @@ function lifecycle() {
     addEventListener: (name, fn) => docListeners[name] = fn
   };
   class MutationObserver { constructor(fn) { observer = fn; } observe() {} }
+  runInNewContext(read("tracking-common.js"), { window });
   runInNewContext(read("inquiry-funnel.js"), { window, document, location: { pathname: "/event/solo", href: "https://example.com/event/solo", origin: "https://example.com" }, URL, MutationObserver, queueMicrotask: fn => tasks.push(fn), setTimeout: fn => tasks.push(fn), Date });
   const field = { name: "specialNotes", value: "PRIVATE TEXT", type: "textarea", validity: { valid: true }, closest: () => form, hasAttribute: () => false };
   const fire = (type, target = field, trusted = true) => { docListeners[type]({ target, isTrusted: trusted }); while (tasks.length) tasks.shift()(); };
@@ -124,5 +126,33 @@ for (const flow of [opening, closed, left, success]) {
   const ga = flow.calls.filter(call => !call[0].startsWith("meta:"));
   const meta = flow.calls.filter(call => call[0].startsWith("meta:")).map(([name, params]) => [name.slice(5), params]);
   assert.deepEqual(ga, meta);
+}
+const choices = lifecycle();
+for (const [name, value, expected, checked = true] of [["people", "1", "DUET"], ["discovery", "\uc2a4\ub808\ub4dc", "\uc2a4\ub808\ub4dc"], ["lyricVideo", "1", "lyric_video"], ["lyricNone", "1", "none"], ["rush", "1", "1"], ["timeStart", "13:00", "13:00"], ["timeStart", "", "unknown"]]) {
+  const control = { ...choices.field, name, value, checked, type: name === "timeStart" ? "select-one" : "radio" };
+  choices.fire("change", control);
+  assert.equal(choices.calls.filter(call => call[0] === "form_field_complete").at(-1)[1].field_value, expected);
+}
+choices.form.elements.people = { value: "1" }; // Real radio groups expose RadioNodeList.value.
+choices.view(1);
+const next = { disabled: false, closest: () => choices.form, matches: selector => selector === "[data-wf-next]" };
+choices.fire("click", { closest: () => next });
+assert.equal(choices.calls.find(call => call[0] === "form_next")[1].field_value, "DUET");
+client.window.gtag = (...args) => client.ga.push(args);
+client.window.fbq = (...args) => client.meta.push(args);
+for (const tracker of [client.window.wistiaAnalytics, client.window.wistiaMeta]) {
+  for (const [field_name, field_value] of [["people", "SOLO"], ["people", "DUET"], ["discovery", "\uc2a4\ub808\ub4dc"], ["lyricNone", "none"], ["lyricVideo", "lyric_video"], ["rush", "1"], ["eventDate", "2028-02-29"], ["eventDate", "unknown"], ["timeStart", "13:00"], ["timeStart", "unknown"]]) {
+    tracker.trackFunnel("form_field_complete", { field_name, field_value, step: 1 });
+    const call = tracker === client.window.wistiaAnalytics ? client.ga.at(-1) : client.meta.at(-1);
+    assert.equal(call[2].field_value, field_value);
+    assert.match(call[2].visitor_id, /^wv_[a-f0-9]{16,64}$/);
+  }
+  for (const [field_name, field_value] of [["specialNotes", "PRIVATE TEXT"], ["specialNotes", 12], ["phone", "01012345678"], ["discovery", "PRIVATE"], ["people", "PRIVATE"], ["eventDate", "2026-02-30"], ["timeStart", "25:00"]]) {
+    tracker.trackFunnel("form_field_complete", { field_name, field_value, step: 1, length: 12, value_length: 12 });
+    const call = tracker === client.window.wistiaAnalytics ? client.ga.at(-1) : client.meta.at(-1);
+    assert.equal(call[2].field_value, undefined);
+    assert.equal(call[2].length, undefined);
+    assert.equal(call[2].value_length, undefined);
+  }
 }
 console.log("Funnel event pairs, privacy allowlists, local guards, lifecycle deduplication and popup completion passed");

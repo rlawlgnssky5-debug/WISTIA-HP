@@ -13,6 +13,7 @@ function createClient(hostname = "www.wistiastudio.com", withPixel = true, exist
   const window = withPixel ? { fbq: (...args) => calls.push(args) } : {};
   if (existingTracker) window.wistiaMeta = existingTracker;
   const document = { addEventListener: (type, listener) => { if (type === "click") click = listener; } };
+  runInNewContext(readFileSync(new URL("../js/tracking-common.js", import.meta.url), "utf8"), { window, crypto: { randomUUID: () => "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee" } });
   runInNewContext(clientCode, { window, document, location, crypto: { randomUUID: () => "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee" }, fetch: (...args) => { requests.push(args); return Promise.resolve({ ok: true }); }, URL });
   return { window, location, calls, requests, click: link => click({ target: { closest: () => ({ id: "", matches: () => false, ...link }) } }) };
 }
@@ -30,7 +31,7 @@ assert.deepEqual(browser.calls.map(call => call[1]), ["PageView", "PageView"]);
 const soloView = { content_name: "AR 축가 사전녹음 · 1시간", content_ids: ["solo"], content_type: "product", value: 120000, currency: "KRW" };
 assert.equal(browser.window.wistiaMeta.trackViewContent(soloView), true);
 assert.equal(browser.window.wistiaMeta.trackViewContent(soloView), false);
-assert.deepEqual(browser.calls.at(-1), ["track", "ViewContent", soloView]);
+assert.deepEqual(JSON.parse(JSON.stringify(browser.calls.at(-1))), ["track", "ViewContent", { ...soloView, visitor_id: browser.window.wistiaVisitorId() }]);
 browser.location.pathname = "/";
 assert.equal(browser.window.wistiaMeta.trackPageView(), true);
 browser.location.pathname = "/detail/solo";
@@ -106,6 +107,8 @@ throwingPixel.window.fbq = (...args) => throwingPixel.calls.push(args);
 assert.equal(throwingPixel.window.wistiaMeta.trackPageView(), true, "failed PageView can be retried without breaking rendering");
 assert.equal(throwingPixel.window.wistiaMeta.trackPageView(), false, "successful retry is still deduplicated");
 
+for (const call of browser.calls) assert.match(call[2].visitor_id, /^wv_[a-f0-9]{16,64}$/);
+assert.equal(Object.keys(browser.calls.find(call => call[1] === "Contact")[2]).join(), "visitor_id");
 function createResponse() {
   return { statusCode: 200, setHeader() {}, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
 }

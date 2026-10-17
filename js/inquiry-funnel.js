@@ -16,7 +16,7 @@
     activeForm = form; lastStep = step(form); formPath = path();
     if (viewed.get(form) === lastStep) return;
     viewed.set(form, lastStep);
-    emit("inquiry_step_view", { step: lastStep, step_total: form.dataset.wizard ? 5 : 1 });
+    emit("inquiry_step_view", { step: lastStep, step_total: form.dataset.wizard ? 5 : 1, ...stepChoice(form, lastStep) });
   }
   function start(form) {
     view(form);
@@ -24,13 +24,33 @@
     started = true;
     emit("form_start", { step: step(form) });
   }
+  function choice(control, form) {
+    let name = control?.name, value;
+    if (name === "people") value = control.value === "0" ? "SOLO" : control.value === "1" ? "DUET" : undefined;
+    else if (name === "discovery") value = control.value;
+    else if (name === "lyricNone") value = control.checked ? "none" : undefined;
+    else if (name === "lyricVideo") value = control.checked ? "lyric_video" : "none";
+    else if (name === "rush") value = control.checked ? control.value : "none";
+    else if (name === "eventDateUnknown") { name = "eventDate"; value = control.checked ? "unknown" : form.elements.eventDate?.value; }
+    else if (name === "eventDate") value = form.elements.eventDateUnknown?.checked ? "unknown" : control.value;
+    else if (name === "timeStart") value = control.value || "unknown";
+    value = window.wistiaFieldValue?.(name, value);
+    return value === undefined ? {} : { field_name: name, field_value: value };
+  }
+  function stepChoice(form, number) {
+    const names = { 1: "people", 2: "eventDate", 3: "timeStart", 4: "lyricVideo" };
+    const control = form.elements?.[names[number]];
+    return control ? choice(control.name ? control : { name: names[number], value: control.value }, form) : {};
+  }
   function fieldComplete(control, form) {
     const name = control?.name || control?.id || ["event", "option", "filmPeople", "filmUpgrade", "filmMaking", "filmFormat", "songOption", "baseProduct", "productSelect"].find(key => Object.hasOwn(control?.dataset || {}, key));
-    if (!name || completed.has(name) || control.disabled || control.validity?.valid === false) return;
-    if (["checkbox", "radio"].includes(control.type) ? !control.checked : !String(control.value || "").trim()) return;
-    // Only schema identifiers are ever forwarded, never the control value.
-    completed.add(name);
-    emit("form_field_complete", { field_name: name, step: step(form) });
+    if (!name || control.disabled || control.validity?.valid === false) return;
+    const metadata = choice(control, form);
+    if (!metadata.field_value && (["checkbox", "radio"].includes(control.type) ? !control.checked : !String(control.value || "").trim())) return;
+    const key = name + ":" + (metadata.field_value || "filled");
+    if (completed.has(key)) return;
+    completed.add(key);
+    emit("form_field_complete", { field_name: name, step: step(form), ...metadata });
   }
   function validation(form, name, number = step(form)) {
     const key = name + ":" + number, now = Date.now();
@@ -75,7 +95,7 @@
     if (!form && control.id === "headerBack" && activeForm?.isConnected) emit("form_prev", { from_step: lastStep });
     if (form) {
       const number = step(form);
-      if (control.matches("[data-wf-next]")) emit("form_next", { from_step: number });
+      if (control.matches("[data-wf-next]")) emit("form_next", { from_step: number, ...stepChoice(form, number) });
       if (control.matches("[data-wf-prev]")) emit("form_prev", { from_step: number });
       if (event.isTrusted && control.matches("[data-calendar-day],[data-calendar-time],[data-wf-time]") && !control.hasAttribute("data-time-unavailable")) {
         gestures.add(form);
