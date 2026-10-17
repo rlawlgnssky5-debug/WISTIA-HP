@@ -376,10 +376,10 @@ const INFO_PAGES = {
 }
 const INFO_FAQ_GROUPS=[
  {title:"녹음 전 준비",description:"곡을 고르는 순간부터 함께 준비해요",items:[
-  ["스튜디오는 어디에 있나요?","<strong>부천시청역 1번 출구</strong>에서 도보 <strong>약 300m</strong>예요.<br>주소는 부천시 석천로170번길 19, 2층이에요."],
   ["곡을 아직 정하지 못했는데 상담받아도 될까요?","물론이에요 마음에 두고 계신 노래나 전하고 싶은 분위기만 알려주셔도 좋아요 목소리와 음역에 맞는 곡을 함께 고민해 드릴게요"],
-  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>한 달 전까지</strong> 녹음하시는 걸 추천드려요.<br>음원은 <strong>최대 7일 이내</strong>에 받아 보시고, 남은 기간에 수정과 리허설까지 여유 있게 하실 수 있어요."],
-  ["곡의 키는 어떻게 정하면 될까요?","원키가 높거나 낮아도 괜찮아요.<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요."]
+  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>2주 전까지</strong> 녹음하시는 걸 추천드려요.<br>음원은 <strong>최대 7일 이내</strong>에 받아 보시고, 남은 기간에 수정과 리허설까지 여유 있게 하실 수 있어요."],
+  ["곡의 키는 어떻게 정하면 될까요?","원키가 높거나 낮아도 괜찮아요.<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요."],
+  ["녹음 전에 무엇을 준비하면 좋을까요?","<strong>따로 준비하실 건 없어요!</strong><br>몸만 편하게 오시면 나머지는 저희가 다 준비해 드려요."]
  ]},
  {title:"녹음 당일",description:"처음이어도 편하게 부르실 수 있도록 도와드려요",items:[
   ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요.</strong><br>녹음 후에는 <strong>음정과 박자를 자연스럽게</strong> 다듬어 드려요."],
@@ -397,6 +397,7 @@ const INFO_FAQ_GROUPS=[
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달받으신 본식용 AR 음원을 예식장 담당자에게 보내 주세요 예식장에서 사용하는 파일 형식과 재생 환경도 미리 확인해 알려주시면 좋아요 본식 전에 파일이 잘 재생되는지 꼭 확인해 주세요"]
  ]},
  {title:"스튜디오 방문",description:"오시는 길과 주차를 안내해 드려요",items:[
+  ["스튜디오는 어디에 있나요?","<strong>부천시청역 1번 출구</strong>에서 도보 <strong>약 300m</strong>예요.<br>주소는 부천시 석천로170번길 19, 2층이에요."],
   ["차를 가져가도 괜찮을까요?","스튜디오 <strong>바로 옆 공영주차장</strong>을 이용하실 수 있어요.<br>주차 요금은 별도이고 주차비 지원은 어려워요."]
  ]}
 ]
@@ -472,7 +473,7 @@ const WORKS = [
  {id:"duet-film",category:"축가 영상",product:"duet-film",title:"위스티아 듀엣 웨딩 필름",description:"두 사람이 함께 부른 노래로 완성한 본식 축가 영상",image:"assets/img/song-film/duet-video-cover.jpg",video:PRODUCTS["duet-film"].videoUrl},
  {id:"proposal-film",category:"프로포즈",product:"proposal",title:"위스티아 프로포즈 필름",description:"직접 부른 노래와 고백을 담은 프로포즈 영상",image:"assets/img/proposal-video-cover.jpg",video:PRODUCTS.proposal.videoUrl}
 ]
-const GENERAL_FAQ = [INFO_FAQ_GROUPS[1].items[0],INFO_FAQ_GROUPS[2].items[0],INFO_FAQ_GROUPS[0].items[1],INFO_FAQ_GROUPS[0].items[2]]
+const GENERAL_FAQ = [INFO_FAQ_GROUPS[1].items[0],INFO_FAQ_GROUPS[2].items[0],INFO_FAQ_GROUPS[0].items[0],INFO_FAQ_GROUPS[0].items[1]]
 const PROCESS = [
  ["상담과 예약","사용 날짜와 어떤 순간을 준비하는지 알려주세요"],
  ["곡과 구성 결정","편한 키와 파트, 담고 싶은 이야기를 함께 정합니다"],
