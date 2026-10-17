@@ -15,7 +15,7 @@ for(const key of ['solo','duo']){
  assert.match(posters[0],key==='duo'?/duet-live-proof-v2.jpg/:/solo-live-proof.jpg/)
  assert.match(gallery,/data-mobile-gallery-start="0"/)
  assert.match(gallery,new RegExp('data-mobile-video-slide="0" aria-label="'+(key==='duo'?'DUET':'SOLO')+' 영상 보기" aria-pressed="true"'))
- assert.match(gallery,new RegExp('mas-format-badge">'+(key==='duo'?'DUET · 2인':'SOLO · 1인')))
+ assert.doesNotMatch(gallery,/mas-format-badge/)
  assert.match(html,/solo-p4-stop" aria-label="재생"><svg/)
 }
 // Exercise chat visibility with viewport geometry, including the last FAQ control.
