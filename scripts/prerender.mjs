@@ -14,6 +14,7 @@ function page(path, data, options={}) {
   if (!data?.title || !data?.description) throw new Error(`missing SEO copy for ${path}`)
   const url = origin + path
   let html = template
+    .replace(/  <link rel="preload" as="image" href="\/assets\/img\/ar-detail\/[^"]+" fetchpriority="high">\r?\n/g, '')
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(data.title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(">)/, `$1${escapeHtml(data.description)}$2`)
     .replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${escapeHtml(data.title)}$2`)
@@ -24,9 +25,14 @@ function page(path, data, options={}) {
     html = html.replace(/(<meta name="theme-color" content="[^"]+">)/, `$1\n  <meta name="robots" content="${escapeHtml(options.robots)}">`)
   }
   if ((path === '/detail/solo' || path === '/detail/duo') && !html.includes('css/detail-solo-16j.css')) {
-    html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261014-detail-polish-16j14">\n</head>')
+    html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261017-hotfix2">\n</head>')
   }
   if (options.robots && /^\/(detail|event)\/(duet-film|solo-film|wedding|proposal)$/.test(path)) html=html.replace('</head>', '<meta http-equiv="refresh" content="0;url=/">\n</head>')
+  const hero = /^\/(detail|event)\/(solo|duo|duet-film|solo-film|wedding|proposal)$/.test(path) || /^\/(film|find|section)(?:\/|$)/.test(path)
+  if (hero) {
+    const poster = /^\/(detail|event)\/duo$/.test(path) ? 'duet-live-proof-v2.jpg' : 'solo-live-proof.jpg'
+    html = html.replace('</head>', `  <link rel="preload" as="image" href="/assets/img/ar-detail/${poster}" fetchpriority="high">\n</head>`)
+  }
   const target = resolve(root, path.slice(1) + '.html')
   mkdirSync(dirname(target), {recursive:true})
   writeFileSync(target, html)
