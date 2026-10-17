@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/mobile-detail-safety.css')
 assert.match(css,/@media\(max-width:900px\)/)
 assert.match(css,/body\.is-solo-detail[^\n]*padding-top:64px!important/)

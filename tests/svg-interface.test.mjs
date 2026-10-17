@@ -1,3 +1,4 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
@@ -5,7 +6,7 @@ import {runInNewContext} from 'node:vm'
 import {graphicsFixture,assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertContactBusinessPreserved} from './svg-interface-fixture.mjs'
 
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 const app=read('js/app.js'),beforeAfter=read('js/before-after.js'),ratio=read('js/ar-ratio-cd.js')
 const index=read('index.html'),controlCss=read('css/svg-player-controls.css')
 const digest=text=>createHash('sha256').update(text.replace(/\r\n/g,'\n')).digest('hex')

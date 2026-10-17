@@ -1,7 +1,8 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync,readdirSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const read=readWithBundleSources
 const window={};runInNewContext(read('js/contact-form.js'),{window})
 const api=window.WistiaContact,calendar=api.calendar
 assert.equal(calendar.displayDate('2026-10-16'),'2026년 10월 16일 (금)')

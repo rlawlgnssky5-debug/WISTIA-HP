@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/monochrome-maru-theme.css'),index=read('index.html'),base=read('css/dusty-wedding-theme.css')
 assert.match(index,/data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir"/)
 assert.doesNotMatch(index,/hangeul_static\/css\/maru-buri.css/)

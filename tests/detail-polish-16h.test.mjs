@@ -1,3 +1,4 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import {test} from 'node:test'
 import assert from 'node:assert/strict'
 import {createRequire} from 'node:module'
@@ -5,7 +6,7 @@ import {copyFileSync,existsSync,mkdirSync,readFileSync} from 'node:fs'
 import {spawn} from 'node:child_process'
 import {createServer} from 'node:net'
 
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 
 await test('16j12 solo and duo details share the approved layout',()=>{
  const app=read('js/app.js'),css=read('css/detail-point-16i.css'),index=read('index.html'),booking=read('js/booking-availability.js')

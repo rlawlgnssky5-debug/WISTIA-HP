@@ -1,7 +1,8 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),app=read('js/app.js'),build='20261013-detail-polish-16f'
+const read=readWithBundleSources,app=read('js/app.js'),build='20261013-detail-polish-16f'
 assert.doesNotMatch(app,/<strong>첫 소절과 다음 소절<\/strong>|<span class="mas-key-caption">편안한 음역|<p class="quote-note">|<strong>본식에 맞는 비율을 함께 결정합니다<\/strong>/)
 assert.match(app,/recording-join\.svg/)
 const home=app.split('\n').find(line=>line.includes('id="homeExpert"'))

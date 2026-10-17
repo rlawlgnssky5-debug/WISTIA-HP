@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/vocal-player-responsive.css')
 assert.match(css,/@media\(max-width:900px\)[\s\S]*\.we-home #homeSound #wistiaBeforeAfter \.wistia-ba-layout\{grid-template-columns:minmax\(0,1fr\)/)
 assert.match(css,/bap-time\{white-space:nowrap;flex:0 0 auto/)

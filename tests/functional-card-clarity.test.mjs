@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const css=read('css/functional-card-clarity.css')
 assert.match(read('index.html'),/functional-card-clarity.css\?v=20261014-detail-polish-16j/)
 assert.match(css,/\.bap-player\{\s*background:var\(--mono-gray\)/)

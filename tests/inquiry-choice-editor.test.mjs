@@ -1,7 +1,8 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const state={window:{}}
 runInNewContext(read('js/contact-form.js'),state)
 const api=state.window.WistiaContact

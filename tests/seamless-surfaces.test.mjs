@@ -1,8 +1,9 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
 
-const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const read=readWithBundleSources
 const app=read('js/app.js'),css=read('css/seamless-surfaces.css'),index=read('index.html')
 const home=app.slice(app.indexOf('function renderWeddingHome('),app.indexOf('function renderHome('))
 assert.doesNotMatch(home,/we-hero-photo|making-male\.webp/)

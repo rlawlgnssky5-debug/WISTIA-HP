@@ -1,9 +1,10 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 import {runInNewContext} from 'node:vm'
 
-const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
+const read=readWithBundleSources
 const digest=path=>createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex')
 const css=read('css/luxury-finish.css'),consistency=read('css/detail-consistency.css'),app=read('js/app.js'),index=read('index.html')
 const block=selector=>{

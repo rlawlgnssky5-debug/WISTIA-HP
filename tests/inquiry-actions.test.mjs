@@ -1,7 +1,8 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const index=read('index.html'),app=read('js/app.js'),css=read('css/inquiry-actions.css')
 assert.doesNotMatch(index,/id="floatingPrice"|src="js\/quick-estimate/)
 assert.doesNotMatch(app,/data-quick-estimate|WistiaQuickEstimate|floatingPrice/)

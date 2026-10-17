@@ -1,6 +1,7 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const read=readWithBundleSources
 const app=read('js/app.js'), css=read('css/phone-capture-fixes.css')
 const home=app.slice(app.indexOf('function renderWeddingHome'),app.indexOf('function renderWeddingHome')+11000)
 assert.doesNotMatch(home,/we-hero-foot|나에게 맞는 축가 찾기|1곡 기준 · 1인 12만원|스토리형 · 2인 기본 35만원/)

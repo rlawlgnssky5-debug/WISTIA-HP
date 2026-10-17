@@ -1,8 +1,9 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {graphicsFixture} from './studio-graphics-fixture.mjs'
 import {readFileSync,existsSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8')
+const read=readWithBundleSources
 const source=read('js/app.js'),css=read('css/mobile-ar-solo.css'),home=read('css/mobile-studio-home.css'),shell=read('index.html')
 let mobile=false
 const scope={EXTRA_RECORDING_OPTIONS:[],

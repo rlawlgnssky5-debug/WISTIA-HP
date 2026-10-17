@@ -1,8 +1,9 @@
+import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
 const css=readFileSync(new URL('../css/home-form-refresh.css',import.meta.url),'utf8')
-const index=readFileSync(new URL('../index.html',import.meta.url),'utf8')
+const index=readWithBundleSources('index.html')
 const home=source.slice(source.indexOf('function renderWeddingHome('),source.indexOf('function renderWeddingHome(')+22000)
 for(const text of ['POINT 01</span>','POINT 02 · 가격 안내','POINT 03 · 실제 제작 영상','POINT 04 · 고객 후기','POINT 05 · 보컬 보정','POINT 06 · 제작 과정','POINT 07 · 자주 묻는 질문']) assert.ok(home.includes(text),text)
 assert.ok(source.includes('POINT 08 · 오시는 길'))
