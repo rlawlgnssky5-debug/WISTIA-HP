@@ -15,7 +15,7 @@ assert.equal((guide.match(/결정합니다/g)||[]).length,1)
 assert.equal(JSON.parse(read('wistia-config.json')).build,build)
 for(const page of ['index.html','before-after.html','detail/solo.html','event/solo.html']){
  const html=read(page);assert.match(html,new RegExp('<html data-build="'+build+'"'))
- for(const asset of ['js/app.js','js/svg-interface.js','js/contact-form.js','js/home-highlight.js','css/booking-availability.css','css/detail-section-layout.css','css/question-cards-kakao.css'])assert.ok(html.includes(asset+'?v='+(['js/app.js','js/contact-form.js','css/booking-availability.css','css/detail-section-layout.css'].includes(asset)?build:'20261013-detail-polish-16f')),page+' '+asset+' is cache-busted')
+ for(const asset of ['js/app.js','js/svg-interface.js','js/contact-form.js','js/home-highlight.js','css/booking-availability.css','css/detail-section-layout.css','css/question-cards-kakao.css'])assert.ok(html.includes(asset+'?v='+(asset==='js/app.js'?'20261019-promo30':['js/app.js','js/contact-form.js','css/booking-availability.css','css/detail-section-layout.css'].includes(asset)?build:'20261013-detail-polish-16f')),page+' '+asset+' is cache-busted')
  assert.match(html,/https:\/\/www.wistiastudio.com\/assets\/img\/og\/wistia-og.png/)
 }
 const browser=read('tests/detail-polish-5-browser.mjs')
