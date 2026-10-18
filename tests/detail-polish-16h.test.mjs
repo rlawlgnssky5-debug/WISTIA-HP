@@ -25,7 +25,7 @@ await test('16j12 solo and duo details share the approved layout',()=>{
  assert.doesNotMatch(booking.slice(booking.indexOf('function teamsRemaining'),booking.indexOf('function dayClosed')),/minutes\+60|60\*60000/)
  assert.match(css,/\.solo-p4-pointer[\s\S]*pointer-events:none/)
  assert.match(css,/#C62828/)
- assert.match(index,/js\/app\.js\?v=20261014-detail-polish-16j12/)
+ assert.match(index,/js\/app\.js\?v=20261019-promo30/)
  assert.match(index,/js\/booking-availability\.js\?v=20261014-detail-polish-16j12/)
  assert.match(index,/css\/detail-point-16i\.css\?v=20261014-detail-polish-16j12/)
  assert.match(index,/js\/ar-ratio-cd\.js\?v=20261014-detail-polish-16j12/)
