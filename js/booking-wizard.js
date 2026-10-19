@@ -30,7 +30,8 @@
   ]
   return '<section class="wistia-wizard"><h1>문의양식 작성</h1><p class="wf-draft-note" data-wf-draft-note>작성 내용은 이 브라우저에 3시간 동안 임시 저장돼요</p><form id="contactInquiryForm" data-wizard="true" data-booking-calendar-opened="true" novalidate><ol class="wf-progress" aria-label="문의 단계">'+steps.map((title,index)=>'<li data-wf-progress="'+index+'"><button type="button" data-wf-goto="'+index+'" aria-label="'+(index+1)+'단계 '+title+'"><span>'+(index+1)+'</span><small>'+title+'</small></button></li>').join('')+'</ol><p class="wf-step-label" aria-live="polite" data-wf-step-label></p>'+sections.map((body,index)=>'<section class="wf-step" data-wf-step="'+index+'"'+(index?' hidden':'')+'><h2 tabindex="-1">'+titles[index]+'</h2>'+body+'</section>').join('')+'<div class="wf-nav"><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 카카오톡 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
  }
- function values(form){return Object.fromEntries(new FormData(form))}
+ function values(form){const v=Object.fromEntries(new FormData(form));if(form.elements?.eventDateUnknown?.checked||v.eventDateUnknown)v.eventDateMode='unknown';return v}
+ const promo2026=v=>v.eventDateMode!=='unknown'&&/^2026-\d{2}-\d{2}$/.test(v.eventDate||'')
  function quote(form){
   const v=values(form),state=states.get(form),base=v.people==='1'?160000:120000
   const options=v.lyricVideo==='1'?[['가사영상 제작 추가 옵션',40000]]:[]
@@ -42,7 +43,7 @@
  function range(time,people){if(!time)return '미정';const start=clock(time);return clockText(start)+'~'+clockText(start+(people==='1'?120:60))}
  function rows(form){
   const q=quote(form),v=q.v,date=key=>v[key+'Mode']==='unknown'?'미정':v[key]?v[key]+' ('+['일','월','화','수','목','금','토'][new Date(v[key]+'T12:00:00Z').getUTCDay()]+')':'미정'
-  return [['인원',v.people==='1'?'DUET(2인) · 1곡 · 2시간':'SOLO(1인) · 1곡 · 1시간'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,v.people,v.extraVerse)],['빠른 작업',v.rush==='1'?'3일 이내 받기 +30,000원':'선택 안 함'],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
+  return [['인원',v.people==='1'?'DUET(2인) · 1곡 · 2시간':'SOLO(1인) · 1곡 · 1시간'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,v.people,v.extraVerse)],['빠른 작업',v.rush==='1'?'3일 이내 받기 +30,000원':'선택 안 함'],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],...(promo2026(v)?[['서비스','녹음 30분 무료 추가 (2026 예식 이벤트)']]:[]),['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
  }
  function text(form){
   const q=quote(form),details=Object.fromEntries(rows(form)),date=value=>value
@@ -57,6 +58,7 @@
    '🎵 추가 옵션','',
    ...(q.options.length?q.options.map(([label,amount])=>'• '+label+' : +'+money(amount)):['• 추가 옵션 : 없음']),
    '• 빠른 작업 : '+(q.v.rush==='1'?'3일 이내 받기 (+30,000원)':'미선택'),'',
+   ...(promo2026(q.v)?['🎁 서비스','','• 2026 예식 이벤트 : 녹음 30분 무료 추가 ('+(q.v.people==='1'?'2인 2시간 → 2시간 30분':'1인 1시간 → 1시간 30분')+')','']:[]),
    '💰 결제 금액','',
    '• 기본 상품 : '+money(q.base),
    '• 추가 금액 : '+money(q.total-q.base),
@@ -94,7 +96,7 @@
   const state=states.get(form);if(!state)return
   const q=quote(form)
   const promo=form.querySelector('[data-promo30-note]')
-  promo.hidden=form.elements.eventDateUnknown.checked||!/^2026-\d{2}-\d{2}$/.test(q.v.eventDate||'')
+  promo.hidden=!promo2026(q.v)
   const promoHours=q.v.people==='1'?'2':'1'
   promo.querySelector('[data-promo30-duration]').textContent='녹음 '+promoHours+'시간 → '+promoHours+'시간 30분 · 녹음 시간에만 적용돼요'
   const durationLabel=form.querySelector('[data-wf-location-duration]')

@@ -31,7 +31,7 @@ assert.match(html,/name="eventDateUnknown"/)
 assert.match(html,/data-booking-calendar-opened="true"/)
 assert.ok(html.indexOf('data-wf-recording-range')<html.indexOf('data-calendar-times'))
 assert.match(html,/placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"/)
-const expected=['인원','결혼식 날짜','녹음 날짜','녹음 시간','빠른 작업','추가 옵션','처음 본 곳','총 금액']
+const expected=['인원','결혼식 날짜','녹음 날짜','녹음 시간','빠른 작업','추가 옵션','서비스','처음 본 곳','총 금액']
 let cases=0
 for(const people of ['0','1'])for(const lyricVideo of ['0','1'])for(const extraVerse of ['0','1'])for(const rush of ['0','1']){
  const form={values:{people,...(lyricVideo==='1'?{lyricVideo}:{}),...(extraVerse==='1'?{extraVerse}:{}),...(rush==='1'?{rush}:{}),eventDate:'2026-10-24',bookingDate:'2026-10-22',timeStart:'13:00',discovery:'인스타',specialNotes:'검수용 메모'}}
