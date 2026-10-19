@@ -17,6 +17,9 @@ assert.doesNotMatch(html,/name="(?:payback|song|songLink|lyrics|name|phone|email
 assert.doesNotMatch(html,/곡 정보와 가사|추가 안 함|data-calendar-close/)
 const sources=[...html.matchAll(/name="discovery" value="([^"]+)"/g)].map(m=>m[1])
 assert.deepEqual(sources,['인스타','스레드','광고','카페','블로그','지인 추천'])
+const referral=html.match(/<label class="wf-choice"><input type="radio" name="discovery" value="지인 추천">([\s\S]*?)<\/label>/)[1]
+assert.equal(referral.replace(/<[^>]*>/g,''),'기타 (지인 추천 등)')
+assert.match(referral,/<span class="wf-source-main">기타<\/span> <small class="wf-source-sub">\(지인 추천 등\)<\/small>/)
 assert.ok(html.indexOf('가사영상 제작 추가 옵션')<html.indexOf('lyric-video-v2.webp'))
 assert.match(html,/완성 음원이 빨리 필요해요!<small class="wf-check-description">3일 이내 받기<\/small>/)
 assert.match(html,/스크린에 띄울 가사 영상도 필요해요!/)
