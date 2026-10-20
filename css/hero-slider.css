@@ -1,0 +1,17 @@
+/* Hero photo slider (replaces hero video). Keeps the existing .mas-gallery box size so everything below stays put. */
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-track{display:flex!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x pan-y;width:100%;height:100%}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-track::-webkit-scrollbar{display:none}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-slide{flex:0 0 100%!important;width:100%!important;height:100%!important;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;background:var(--hs-letterbox,#f9eded)!important}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-photo{display:block!important;position:static!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 38%!important;transform:none!important;opacity:1!important;visibility:visible!important;user-select:none;-webkit-user-drag:none}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .mas-gallery-viewport{position:relative}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-count{position:absolute;right:12px;bottom:12px;z-index:3;padding:3px 9px;border-radius:999px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;line-height:16px;font-weight:600;letter-spacing:.02em;pointer-events:none}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow{display:none;position:absolute;top:50%;z-index:3;width:36px;height:36px;margin-top:-18px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.85);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer;place-items:center}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow svg{width:18px;height:18px;fill:none;stroke:#333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-prev{left:10px}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-next{right:10px}
+@media (hover:hover) and (min-width:901px){html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow{display:grid}}
+/* Landscape slide (studio facility): show the whole original image, letterboxed on the page colour. */
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-landscape .hs-photo{object-fit:contain!important;object-position:50% 50%!important}
+html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-picture{display:block!important;width:100%!important;height:100%!important}
+/* Phones: follow the mobile-gutters style (rounded 8px like other images). */
+@media (max-width:600px){html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-track{border-radius:8px!important;clip-path:inset(0 round 8px)}}
