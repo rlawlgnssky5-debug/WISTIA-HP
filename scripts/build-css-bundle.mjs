@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(root, 'css/bundles.json')
-const version = '20261019-faqm'
+const version = '20261020-mobile-gutters-1'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }

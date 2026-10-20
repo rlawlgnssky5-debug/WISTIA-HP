@@ -1,0 +1,35 @@
+/* Mobile content gutters only; viewport-fixed controls remain untouched. */
+@media (max-width:600px){
+  /* Override the existing high-specificity theme without changing its palette/type. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.mobile-ar-solo,.info-page-faq){
+    width:92vw!important;
+    max-width:92vw!important;
+    margin-left:4vw!important;
+    margin-right:4vw!important;
+  }
+  /* The form already has an inset: replace it, rather than adding another layer. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{
+    padding-left:4vw!important;
+    padding-right:4vw!important;
+  }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(.solo-shot-img,.detail-poster-image,.ivory-studio-photo,.mas-video-surface,.ar-hook-fallback){
+    border-radius:8px!important;
+  }
+  /* Container-relative type must retain its pre-gutter size, not shrink 8%. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-title{font-size:calc(5.35cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-hint{font-size:calc(3.25cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-ratio b{font-size:calc(6.8cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-ratio b small{font-size:calc(3cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-ratio>span:last-child{font-size:calc(3cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-status{font-size:calc(3.15cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-status b{font-size:calc(3.25cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-stop{font-size:calc(3.4cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-legend{font-size:calc(2.7cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-closing{font-size:calc(3.5cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-p4-closing small{font-size:calc(2.4cqw / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-faq-live .solo-faq-heading p{font-size:calc(20 * 100cqw / 760 / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-faq-live .solo-faq-heading h2{font-size:calc(44 * 100cqw / 760 / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-faq-live .solo-faq-heading h2 strong{font-size:calc(48 * 100cqw / 760 / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-faq-live .solo-faq-list summary span{font-size:calc(26 * 100cqw / 760 / .92)!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-faq-live .solo-faq-answer p{font-size:calc(25 * 100cqw / 760 / .92)!important;}
+}

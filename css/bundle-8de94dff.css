@@ -1,0 +1,295 @@
+/* == css/noir-minimal.css == */
+/* Approved colour direction, 2026-10-06
+   Charcoal #252421 / off-white #F5F4F0 / stone #DDDCD8
+   Minimal modern/chic styling: retain content, genuine media and behaviour
+   The monochrome attribute remains a compatibility hook for the approved layout */
+html[data-wistia-palette="noir-minimal"],
+html[data-wistia-palette="noir-minimal"] body{
+ --palette-stone:#DDDCD8;--palette-charcoal:#252421;--palette-offwhite:#F5F4F0;
+ --palette-ink:#252421;--palette-on-stone:#252421;--palette-paper:#FFFFFF;
+ --palette-soft:#E9E8E4;--palette-selected:#D5D3CD;--palette-muted:#66645F;--palette-wave:#85827C;
+ --palette-line:rgba(37,36,33,.20);--palette-control:#8B8880;
+ --mono-black:var(--palette-ink);--mono-white:var(--palette-paper);--mono-gray:var(--palette-soft);
+ --dusty-pink:var(--palette-soft);--warm-beige:var(--palette-offwhite);--warm-brown:var(--palette-ink);--warm-ivory:var(--palette-paper);--deep-brown:var(--palette-ink);
+ --brand-pink:var(--palette-stone);--brand-black:var(--palette-ink);--brand-gray:var(--palette-offwhite);
+ --brand-muted:var(--palette-muted);--brand-line:var(--palette-line);
+ --ink:var(--palette-ink)!important;--muted:var(--palette-muted)!important;--line:var(--palette-line)!important;
+ --wash:var(--palette-offwhite)!important;--paper:var(--palette-paper)!important;--white:var(--palette-paper)!important;
+ --soft:var(--palette-soft)!important;--silver:var(--palette-muted)!important;
+ color:var(--palette-ink);background:var(--palette-offwhite)!important;accent-color:var(--palette-charcoal);
+}
+/* Off-white reading canvas, charcoal hero/actions, quiet stone accents */
+html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader{background:var(--palette-offwhite)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #menuToggle#menuToggle span{background:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app{background:var(--palette-offwhite)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero.we-hero-thumbnails{background:var(--palette-charcoal)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero.we-hero-thumbnails :is(.we-meta,.we-kicker,h1){color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero-thumbnail{background:var(--palette-offwhite);border-color:var(--palette-offwhite)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability .we-location{background:var(--palette-charcoal)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability .we-location :is(h2,p){color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-section-tag,.detail-point-label),
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home #homeServices .we-section-tag,
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability .we-location .we-section-tag{background:var(--palette-stone)!important;color:var(--palette-on-stone)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.arc-point,.wistia-ba-section) .wps-kicker{color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.mas-step-number,.mas-story-chapters em,.wistia-event-card-top strong){background:var(--palette-stone)!important;color:var(--palette-on-stone)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-service,.we-directions-copy,.we-craft-list details,.we-home-faq details,.faq-list details,.ar-expert-story,.ar-expert-panel,.story-process-card,.wistia-specialist-grid article,.wistia-advantages li,.detail-price-reason,.mas-key-note){background:var(--palette-soft)!important}
+/* Primary and secondary actions, including consultation dialogs */
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.button.dark,.arc-button.dark,.contact-submit,.mas-bottom>a,.we-service-link,.we-case-play,.mas-story-play,.bap-play,.wistia-ar__play),
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab.active,
+html[data-wistia-palette="noir-minimal"] #app#app#app .bap-tab.active[data-mode],
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button.dark{
+ background:var(--palette-charcoal)!important;color:var(--palette-paper)!important;
+}
+/* Do not fade the small source labels against the charcoal/paper tab surfaces */
+html[data-wistia-palette="noir-minimal"] #app#app#app #wistiaBeforeAfter .bap-tab small{opacity:1!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.contact-submit,.mas-bottom>a,.we-service-link,.bap-play,.wistia-ar__play,.bap-tab.active) *,
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button.dark *{color:inherit!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.inquiry-direct,.button:not(.dark),.arc-button:not(.dark),.wistia-location-links a),
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-directions-copy .wistia-location-links a,
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button:not(.dark){background:var(--palette-paper)!important;color:var(--palette-ink)!important;border-color:var(--palette-charcoal)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.mas-variant.is-selected,.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){background:var(--palette-selected)!important;color:var(--palette-ink)!important;box-shadow:inset 0 0 0 1px var(--palette-charcoal)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(input,select,textarea){accent-color:var(--palette-charcoal)!important;caret-color:var(--palette-ink)}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(input,select,textarea,button,a,summary):focus-visible,
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog :focus-visible{outline-color:var(--palette-ink)!important}
+/* Preserve visible sound states, clip halves and waveform contrast */
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.wistia-ba-section,.wistia-ar){--ba-wave-before:var(--palette-ink);--ba-wave-after:var(--palette-charcoal);--ba-wave-rest:var(--palette-wave);--ba-before:var(--palette-charcoal);--ba-after:var(--palette-charcoal)}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-charcoal)!important;border-color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-charcoal)!important}
+/* Menu and modal chrome, without recolouring the Kakao mark or any media */
+html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu{background:var(--palette-charcoal)!important;color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog{background:var(--palette-paper)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog::backdrop{background:rgba(37,36,33,.55)}
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li,.consult-validation-list){background:var(--palette-soft)!important;color:var(--palette-ink)!important}
+html[data-wistia-palette="noir-minimal"] ::selection{background:var(--palette-stone);color:var(--palette-on-stone)}
+/* Standalone privacy page: legal text stays unchanged, shared sans follows */
+html[data-wistia-palette="noir-minimal"] .wrap :is(p,li,td,th,.lead,.eyebrow,.meta){color:var(--palette-ink)}
+html[data-wistia-palette="noir-minimal"] :is(.top,.wrap section,.wrap th,.wrap td,body>footer){border-color:var(--palette-line)}
+/* Modern sans typography: no layout replacement, no extra font dependency */
+html[data-wistia-typography="pretendard-noir"],
+html[data-wistia-typography="pretendard-noir"] body{
+
+ --font-body:"Pretendard Variable","Pretendard",sans-serif;
+ --serif:var(--font-heading);--sans:var(--font-body);
+ font-family:var(--font-body)!important;
+}
+html[data-wistia-typography="pretendard-noir"] :is(#app,#siteHeader,#mainMenu,#mediaDialog),
+html[data-wistia-typography="pretendard-noir"] :is(#app,#siteHeader,#mainMenu,#mediaDialog) *,
+html[data-wistia-typography="pretendard-noir"] :is(.wrap,.top,body>footer),
+html[data-wistia-typography="pretendard-noir"] :is(.wrap,.top,body>footer) *{
+ font-family:var(--font-body)!important;
+}
+html[data-wistia-typography="pretendard-noir"] #app#app#app :is(h1,h2,h3,h4,h5,h6),
+html[data-wistia-typography="pretendard-noir"] .wrap :is(h1,h2,h3){
+ font-weight:550!important;letter-spacing:-.035em!important;
+}
+html[data-wistia-typography="pretendard-noir"] #app#app#app :is(h1,h2,h3,h4,h5,h6) *{
+ font-weight:inherit!important;letter-spacing:inherit!important;
+}
+html[data-wistia-typography="pretendard-noir"] #app#app#app .we-home .we-hero h1{
+ font-weight:500!important;letter-spacing:-.035em!important;
+}
+html[data-wistia-typography="pretendard-noir"] #siteHeader .wordmark>span,
+html[data-wistia-typography="pretendard-noir"] #app :is(.mas-brand b,.footer-brand b){
+ font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important;letter-spacing:.12em!important;
+}
+/* Restrained shapes and fine rules; keep content, touch targets and folders */
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero{
+ border-radius:4px!important;padding:40px 26px 44px;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero .we-meta{
+ font-size:10px!important;letter-spacing:.13em!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero-thumbnail{
+ border-width:2px!important;border-radius:0!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-service,.we-directions-copy,.ar-expert-story,.ar-expert-panel,.wistia-specialist-grid article,.wistia-advantages li,.detail-price-reason,.mas-key-note){
+ border:1px solid var(--palette-line)!important;border-radius:4px!important;box-shadow:none!important;background:var(--palette-paper)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-service figure{border-radius:2px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-affordability .we-location{border-radius:4px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-section-tag,.detail-point-label,.we-product-number,.mas-included span,.arc-free-edit,.arc-key-statement){
+ border-radius:2px!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.button,.arc-button,.contact-submit,.mas-bottom>a,.we-service-link,.we-case-play,.mas-story-play,.inquiry-direct,.wistia-location-links a,.bap-play,.bap-tab,.wistia-ar__play),
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button{
+ border-radius:4px!important;box-shadow:none!important;font-weight:550!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.button:not(.dark),.arc-button:not(.dark),.inquiry-direct,.wistia-location-links a),
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button:not(.dark){
+ border:1px solid var(--palette-line)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.mas-bottom,.inquiry-actions){
+ border-radius:0!important;border-top:1px solid var(--palette-line)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-craft-list,.we-home-faq,.faq-list) details{
+ background:transparent!important;border:0!important;border-top:1px solid var(--palette-line)!important;border-radius:0!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.we-craft-list,.we-home-faq,.faq-list) details>summary{border-radius:0!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.story-process-folder,.home-process-folder)>summary{
+ background:var(--palette-paper)!important;border:1px solid var(--palette-line)!important;border-radius:4px!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .story-process-card{
+ background:var(--palette-paper)!important;border:1px solid var(--palette-line)!important;border-radius:4px!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app .process-folder-label strong{font-weight:550!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.bap-player,.bap-body,.bap-tabs,.bap-badge,.mas-event-disclosure,.mas-event-list,.mas-event-content,.mas-variant,.calculator-intro,.consultation-step,.consultation-field-grid>.contact-field,.booking-price-card,.event-benefit-card,.consultation-gifts,.option-choice,.contact-date-toggle span,.booking-product-face){
+ border-radius:6px!important;box-shadow:none!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.calculator-intro,.consultation-step,.consultation-field-grid>.contact-field,.booking-price-card,.event-benefit-card,.consultation-gifts){
+ background:var(--palette-paper)!important;border:1px solid var(--palette-line)!important;
+}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.mas-variant.is-selected,.option-choice:has(input:checked),.event-benefit-card:has(input:checked),.contact-date-toggle input:checked+span,.booking-product-card input:checked+.booking-product-face){
+ box-shadow:inset 0 0 0 1px var(--palette-charcoal)!important;
+}
+html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu{border-radius:0!important}
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog{border-radius:8px!important}
+/* Controls and validation remain distinct from decorative hairline rules */
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(input:not([type=radio]):not([type=checkbox]):not([type=range]),select,textarea),
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog :is(input,select,textarea){border-color:var(--palette-control)!important;border-radius:4px!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app :is(.button:not(.dark),.arc-button:not(.dark),.inquiry-direct,.wistia-location-links a),
+html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button:not(.dark){border-color:var(--palette-control)!important}
+html[data-wistia-palette="noir-minimal"] #app#app#app .contact-field:has([aria-invalid="true"]){box-shadow:inset 4px 0 0 var(--palette-charcoal)!important}
+html[data-wistia-typography="pretendard-noir"] #siteHeader .wordmark small{font-size:8px!important;letter-spacing:.08em!important}
+html[data-wistia-typography="pretendard-noir"] .top .brand>span{font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important}
+@media(min-width:769px){
+ html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero{padding:52px 40px 56px}
+}
+/* == css/heading-font.css == */
+/* Three used heading weights; body and English wordmarks retain their families. */
+@font-face{font-family:MaruBuri;src:url("https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@977eeff68d1d40bcef341f09c1f56cce1903bb8a/MaruBuri-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:MaruBuri;src:url("https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@977eeff68d1d40bcef341f09c1f56cce1903bb8a/MaruBuri-SemiBold.woff2") format("woff2");font-weight:500 600;font-style:normal;font-display:swap}
+@font-face{font-family:MaruBuri;src:url("https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@977eeff68d1d40bcef341f09c1f56cce1903bb8a/MaruBuri-Bold.woff2") format("woff2");font-weight:650 900;font-style:normal;font-display:swap}
+:root{--font-heading:"MaruBuri",serif;--serif:var(--font-heading)}
+html[data-wistia-typography] :is(#app#app#app#app,#mediaDialog,.wrap) :is(h1,h2,h3,h4,h5,h6),
+html[data-wistia-typography] :is(#app#app#app#app,#mediaDialog,.wrap) :is(h1,h2,h3,h4,h5,h6) *,
+html[data-wistia-typography] #app#app#app#app :is(.we-hero-copy,.detail-one-line,.home-choice-prompt,.process-duration-line>strong,.process-duration-card>strong,.arc-key-statement,.contact-form-heading){font-family:var(--font-heading)!important}
+/* Preserve single-line mobile page titles within the existing content width. */
+@media(max-width:430px){
+ html[data-wistia-typography] #app#app#app#app :is(.info-page-intro h1,.booking-head h1,.mas-intro h1,.picker h1){font-size:clamp(19px,5.5vw,25px)!important;white-space:nowrap!important}
+}
+
+/* MaruBuri's wider letters still fit each intended AR title line on phones. */
+@media(max-width:430px){
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle{font-size:clamp(18px,5vw,21px)!important}
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle .solo-type-line{white-space:nowrap!important}
+}
+
+@media(max-width:430px){
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle .svg-section-text{min-width:0;overflow-wrap:normal!important}
+ html[data-wistia-typography] #app#app#app#app #wistiaArTitle .ar-copy-emphasis-text{white-space:nowrap!important;font-size:inherit!important}
+}
+
+/* Only these requested headings retain one line per explicit break on phones. */
+@media(max-width:600px){
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,.about-specialist-title,body.is-event-inquiry #sourceTitle){white-space:nowrap!important;-webkit-text-size-adjust:none;text-size-adjust:none}
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,.about-specialist-title,body.is-event-inquiry #sourceTitle) .svg-section-text{white-space:nowrap!important;overflow-wrap:normal!important;font-size:inherit!important}
+ html[data-wistia-typography] #app#app#app#app .about-story-title{font-size:clamp(16px,4.7vw,25px)!important;grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title{font-size:clamp(13px,4vw,20px)!important;grid-template-columns:20px minmax(0,1fr)!important;gap:6px!important}
+ html[data-wistia-typography] body.is-event-inquiry #app#app#app#app #sourceTitle{grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,body.is-event-inquiry #sourceTitle) .svg-title-icon,
+ html[data-wistia-typography] #app#app#app#app :is(.about-story-title,body.is-event-inquiry #sourceTitle) .svg-title-icon>.studio-icon{width:24px!important;height:24px!important;margin-top:2px!important}
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon,
+ html[data-wistia-typography] #app#app#app#app .about-specialist-title .svg-title-icon>.studio-icon{width:20px!important;height:20px!important;margin-top:2px!important}
+}
+
+/* About headings share one rail, while desktop specialist columns stay intact. */
+html #app#app#app#app#app .info-page-about{--about-rail:21px}
+html #app#app#app#app#app .info-page-about .svg-section-heading{padding-left:var(--about-rail)!important;box-sizing:border-box}
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title){grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important}
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title) .svg-title-icon,
+html #app#app#app#app#app .info-page-about :is(.svg-section-title,.svg-item-title) .svg-title-icon>.studio-icon{width:24px!important;height:24px!important}
+html #app#app#app#app#app .info-page-about .svg-item-copy>small{display:block;margin-left:var(--svg-item-indent,32px)!important}
+html #app#app#app#app#app .info-page-about #specialistTitle .svg-section-text{font-size:inherit!important;line-height:inherit!important}
+@media(max-width:600px){
+ html #app#app#app#app#app .info-page-about{--about-rail:19px}
+ html #app#app#app#app#app .info-page-about #specialistTitle{font-size:clamp(20px,5vw,26px)!important}
+}
+/* The icon is centered on the first text line, including multi-line titles. */
+html #app#app#app#app#app#app [data-title-aligned]>.svg-title-icon{margin-top:var(--svg-icon-offset,0px)!important}
+html #app#app#app#app#app#app [data-title-aligned]>.svg-title-icon>.studio-icon{margin:0!important}
+html #app#app#app#app#app .consultation-step-heading.svg-section-heading>.svg-section-description{margin-left:var(--svg-title-indent,46px)!important}
+
+/* The three specialist roles are one heading level; the section h2 stays separate. */
+html #app#app#app#app#app .info-page-about .about-specialist-title{font-size:clamp(13px,4vw,16px)!important;font-weight:600!important;line-height:1.4!important;white-space:nowrap!important}
+html #app#app#app#app#app .info-page-about .about-specialist-title .svg-section-text{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;white-space:nowrap!important}
+html #app#app#app#app#app .info-page-about .info-page-intro h1{font-size:clamp(18px,5vw,36px)!important;white-space:nowrap!important}
+html #app#app#app#app#app .info-page-about .info-page-intro h1 .svg-section-text{font-size:inherit!important;white-space:nowrap!important}
+
+html #app#app#app#app#app#app#app .info-page-about .about-specialist-title{font-size:clamp(13px,4vw,16px)!important;font-weight:600!important;line-height:1.4!important;white-space:nowrap!important}
+html #app#app#app#app#app#app#app .info-page-about .about-specialist-title .svg-section-text{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;white-space:nowrap!important}
+html #app#app#app#app#app .info-page-about .about-fixed-lines{white-space:nowrap!important;font-size:clamp(12px,3.4vw,16px)!important;-webkit-text-size-adjust:none;text-size-adjust:none}
+html #app#app#app#app#app .info-page-about .about-intro-services{font-size:clamp(11px,3.2vw,15px)!important}
+html #app#app#app#app#app .info-page-about .about-long-lines{font-size:clamp(10px,2.9vw,14px)!important}
+html #app#app#app#app#app .info-page-about .about-intro-services strong{display:inline!important;font-weight:650!important}
+
+/* A postal address is body copy, with no separately styled city/street/floor. */
+html[data-wistia-typography] #app#app#app#app#app#app .studio-address{display:block!important;font-family:var(--font-body,Pretendard),sans-serif!important;font-size:clamp(10px,3vw,18px)!important;font-weight:600!important;font-style:normal!important;line-height:1.5!important;color:#191919!important;white-space:nowrap!important;letter-spacing:-.03em!important}
+html #app#app#app#app#app#app .info-page-location .studio-address{font-size:clamp(9px,2.6vw,18px)!important}
+html #app#app#app#app#app#app .we-home .studio-address{text-align:center!important}
+
+html #app#app#app#app#app .mas-svg-illustration{padding:16px!important}
+html #app#app#app#app#app .recording-join-illustration{display:block;width:100%;height:auto;max-width:640px;margin-inline:auto}
+html #app#app#app#app#app .mas-svg-illustration figcaption{display:block!important;text-align:center!important;margin:16px 0 0!important}
+html #app#app#app#app#app .mas-svg-illustration .ar-line-full{display:block!important;white-space:normal!important;font-size:13px!important;line-height:1.7!important}
+html #app#app#app#app#app .advantages-illustration{display:block;width:100%;margin-top:24px}
+html #app#app#app#app#app .advantages-illustration img{display:block;width:100%;height:auto}
+
+html #app#app#app#app#app#app .mas-key-caption-image{display:block;width:100%!important;max-width:none!important;height:auto;object-fit:contain;border-radius:16px;margin:24px auto 0}
+html #app#app#app#app#app#app .mas-selection .mas-variant{box-sizing:border-box!important;width:100%!important;transform:none!important;scale:none!important;padding:18px 16px!important;border-width:1px!important}
+html #app#app#app#app#app#app .mas-selection .mas-variant i{box-sizing:border-box!important;width:20px!important;height:20px!important;flex:0 0 20px!important}
+
+/* Person selection retains the original full-width grid, outside POINT layouts. */
+html #app#app#app#app#app .ar-commerce-detail .mas-selection{text-align:left!important;justify-items:stretch!important;align-items:stretch!important}
+html #app#app#app#app#app .mas-selection h2.svg-section-title{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;gap:14px!important;align-items:start!important;text-align:left!important;white-space:nowrap!important}
+html #app#app#app#app#app .mas-selection h2 .svg-section-text{text-align:left!important;margin-inline:0!important}
+html #app#app#app#app#app .mas-selection h2>.svg-title-icon{align-self:start!important}
+@media(max-width:768px){html #app#app#app#app#app .mas-selection{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:20px}}
+html #app#app#app#app#app .mas-selection .mas-variant+.mas-variant{margin-top:0!important}
+
+/* 16c: preserve the illustration's intrinsic 360:300 ratio and the POINT media rail. */
+html #app#app#app#app#app#app#app .recording-join-illustration{width:100%!important;max-width:560px!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;margin-inline:auto!important}
+html #app#app#app#app#app#app#app .info-page-about .about-fixed-lines{font-size:clamp(13px,3.6vw,16px)!important;letter-spacing:-.025em!important}
+html #app#app#app#app#app#app#app .info-page-about .about-fixed-lines.about-long-lines{letter-spacing:-.055em!important}
+html[data-wistia-typography] #app#app#app#app#app#app#app .studio-address{font-size:clamp(13px,3.6vw,18px)!important}
+/* H2 section headings share one typography; explicit authored line breaks remain. */
+html #app#app#app#app#app#app#app .ar-commerce-detail h2{font-size:20px!important;font-weight:600!important;line-height:1.4!important;letter-spacing:-.04em!important;white-space:nowrap!important}
+html #app#app#app#app#app#app#app .ar-commerce-detail h2 :is(.svg-section-text,.solo-type-line,mark,strong,b,.ar-copy-emphasis,.ar-copy-emphasis-text){font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;white-space:nowrap!important}
+@media(min-width:769px){html #app#app#app#app#app#app#app .ar-commerce-detail h2{font-size:28px!important}}
+@media(max-width:359px){html #app#app#app#app#app#app#app .info-page-about .about-fixed-lines.about-long-lines{white-space:normal!important}}
+
+/* Primary home section headings share a single scale, including their SVG text wrappers. */
+html #app#app#app#app#app#app#app .we-home h2{font-size:clamp(20px,6.1vw,24px)!important;font-weight:600!important;line-height:1.4!important;letter-spacing:-.04em!important;white-space:nowrap!important}
+html #app#app#app#app#app#app#app .we-home h2 :is(.svg-section-text,.solo-type-line,strong,b,mark){font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;white-space:nowrap!important}
+@media(min-width:769px){html #app#app#app#app#app#app#app .we-home h2{font-size:36px!important}}
+/* == css/kakao-inquiry.css == */
+/* Ordinary Kakao buttons: one compact floating pill instead of wide docks. */
+html #app#app#app#app#app .inquiry-actions{position:static!important;inset:auto!important;transform:none!important;width:100%!important;max-width:none!important;margin:24px 0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;grid-template-columns:1fr!important;gap:0!important}
+html #app#app#app#app#app .product-inquiry{position:static;display:flex;justify-content:center;margin:0;padding:32px 20px;background:transparent;border:0}
+html body #app#app#app#app#app .ar-commerce-detail,html body #app#app#app#app#app #contactInquiryForm{padding-bottom:0!important}
+html body #app#app#app#app#app .footer{padding-bottom:32px!important}
+html body #app#app#app#app#app{padding-bottom:calc(80px + env(safe-area-inset-bottom))!important}
+html #floatingKakaoChat.floating-kakao-pill{position:fixed!important;z-index:80;right:16px!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;left:auto!important;display:inline-flex!important;align-items:center;justify-content:center;gap:8px;width:max-content!important;max-width:calc(100vw - 32px);height:48px!important;min-height:48px!important;margin:0;padding:0 18px!important;box-sizing:border-box;border:0!important;border-radius:999px!important;background:#FEE500!important;color:#191919!important;box-shadow:0 4px 16px #19191926!important;font-family:var(--font-body, Pretendard),sans-serif;font-size:14px!important;font-weight:650;line-height:1;white-space:nowrap;text-decoration:none!important;transform:none!important}
+html #floatingKakaoChat .kakao-bubble{width:24px;height:24px;flex:0 0 24px;fill:currentColor;stroke:none}
+html #floatingKakaoChat span{color:#191919!important}
+html #floatingKakaoChat:focus-visible{outline:2px solid #191919;outline-offset:4px}
+body:is(.menu-open,.modal-open) #floatingKakaoChat{visibility:hidden;pointer-events:none}
+
+body.privacy-page{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+html #floatingKakaoChat.floating-kakao-pill::before,html #floatingKakaoChat.floating-kakao-pill::after{display:none!important;content:none!important}
+
+/* Event inquiry has its own final CTA; keep the floating pill on other routes. */
+html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{display:none!important}
+/* .button > span is 22px. Inherit the button size so the one-line label fits /contact. */
+html #app#app#app#app#app .inquiry-actions .contact-submit [data-submit-label]{font-size:inherit!important;line-height:1.5!important;white-space:nowrap!important;flex-wrap:nowrap!important;gap:6px!important}
+html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon{margin:0!important}
+@media(max-width:540px){
+ html #app#app#app#app#app .inquiry-actions .contact-submit{font-size:14px!important;white-space:nowrap!important;padding-inline:10px!important}
+ html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon{width:16px!important;height:16px!important;flex:0 0 16px!important}
+ html #app#app#app#app#app .inquiry-actions .contact-submit .svg-submit-icon>.studio-icon{width:16px!important;height:16px!important}
+}
+/* Optional discovery question: same 2-column date-toggle buttons, wrapping long labels. */
+html #app#app#app#app#app .contact-discovery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;clear:both}
+html #app#app#app#app#app .contact-discovery label{min-width:0!important}
+html #app#app#app#app#app .contact-discovery span{min-width:0!important;height:auto!important;min-height:48px!important;padding:10px 8px!important;white-space:normal!important;word-break:keep-all!important;text-align:center!important;line-height:1.35!important;font-size:13px!important}
+html #app#app#app#app#app .contact-discovery-field>legend{white-space:normal!important;word-break:keep-all!important}
