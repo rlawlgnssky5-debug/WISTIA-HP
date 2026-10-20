@@ -20,20 +20,59 @@
   while(head<tail){const i=queue[head++],x=i%width;if(x)add(i-1);if(x<width-1)add(i+1);if(i>=width)add(i-width);if(i<count-width)add(i+width)}
   return mask
  }
- if(typeof module==='object'&&module.exports)module.exports={backgroundMask}
+ const sectionTones=[
+  ['.mas-intro','#F9F0EF'],
+  ['.mas-information','#F5F2EB'],
+  ['.arc-reviews','#F5ECEF'],
+  ['#arcRecording','#EFF3EF'],
+  ['#arcKey','#F5F1E9'],
+  ['#arcTuning','#F5EDF0'],
+  ['#soloPoint04','#EEF2F4'],
+  ['.solo-lyric-poster','#F2EFF5'],
+  ['[data-tone-poster="point-adv"]','#F1F3EC'],
+  ['[data-tone-poster="point-price"]','#F6EFE7'],
+  ['[data-tone-poster="cred-a2"]','#F0F2F4'],
+  ['#arcProcess','#F4EEEA'],
+  ['#arcFaq','#F3EFF3'],
+  ['.solo-notice','#F6F2EA'],
+  ['.solo-map','#EEF3F0']
+ ]
+ function numberSections(detail){
+  detail.querySelectorAll('.solo-poster-stack>.detail-poster-image').forEach(image=>{
+   const name=(image.getAttribute('src')||'').match(/\/(point-adv|point-price|cred-a2)\.webp/)
+   if(!name)return
+   const section=document.createElement('section');section.className='wistia-tone-poster';section.dataset.tonePoster=name[1]
+   image.before(section);section.append(image)
+  })
+  let number=0
+  sectionTones.forEach(([selector,color])=>{
+   const section=detail.querySelector(selector);if(!section)return
+   section.dataset.wistiaSection=String(++number).padStart(2,'0')
+   section.style.setProperty('--wistia-section-surface',color)
+   if(!section.querySelector(':scope>.wistia-section-number')){
+    const badge=document.createElement('span');badge.className='wistia-section-number';badge.setAttribute('aria-hidden','true');section.prepend(badge)
+   }
+   section.querySelector(':scope>.wistia-section-number').textContent=section.dataset.wistiaSection
+  })
+  detail.classList.add('wistia-section-tones')
+ }
+ if(typeof module==='object'&&module.exports)module.exports={backgroundMask,sectionTones}
  if(!global.document)return
  let cleanup=()=>{}
  function protections(src){
-  if(/top_A_pc\.png/.test(src))return [[.055,.04,.455,.89]]
+  if(/top_[AB]_pc\.png/.test(src))return [[.055,.04,.455,.89]]
   if(/point01-recording\.webp/.test(src))return [[.09,.58,.82,.38]]
   // Protect each complete foreground panel, never cut a panel at a shared boundary.
-  if(/map_C3\.png/.test(src))return [[.058,.155,.884,.327,.035],[.058,.525,.884,.25,.047],[.058,.788,.884,.09,.035],[.058,.9,.432,.054,.045],[.512,.9,.432,.054,.045]]
+  if(/map_C3(?:_v2)?\.png/.test(src))return [[.058,.155,.884,.327,.035],[.058,.525,.884,.25,.047],[.058,.788,.884,.09,.035],[.058,.9,.432,.054,.045],[.512,.9,.432,.054,.045]]
   if(/point04_ui_390\.png/.test(src))return [[0,.20,1,.29]]
   return []
  }
  function mount(root){
   cleanup()
   const detail=root.querySelector('.mobile-ar-solo:not(.mobile-story-film)');if(!detail)return
+  // Preserve the separate, unfinished ivory mockup and its original behavior
+  const themed=!document.documentElement.classList.contains('ivory-preview')
+  if(themed)numberSections(detail)
   const media=matchMedia('(min-width:1280px)'),entries=[],observer=new ResizeObserver(()=>entries.forEach(position))
   function position(entry){
    if(!entry.canvas)return
@@ -42,21 +81,23 @@
   }
   function paint(entry){
    const img=entry.image,src=img.currentSrc||img.src
-   if(!media.matches||!img.complete||!img.naturalWidth||getComputedStyle(img).display==='none')return
-   if(entry.src===src){position(entry);return}
+   if((!themed&&!media.matches)||!img.complete||!img.naturalWidth||getComputedStyle(img).display==='none')return
+   const surface=img.closest('[data-wistia-section]')?.style.getPropertyValue('--wistia-section-surface')||'#F6E6E6'
+   if(entry.src===src&&entry.surface===surface){position(entry);return}
    entry.canvas?.remove()
    try{
     const width=img.naturalWidth,height=img.naturalHeight,work=document.createElement('canvas');work.width=width;work.height=height
     const ctx=work.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0)
     const pixels=ctx.getImageData(0,0,width,height).data,mask=backgroundMask(pixels,width,height,protections(src))
     const overlay=ctx.createImageData(width,height);let removed=0
-    for(let i=0;i<mask.length;i++)if(mask[i]){const p=i*4;overlay.data[p]=246;overlay.data[p+1]=230;overlay.data[p+2]=230;overlay.data[p+3]=255;removed++}
+    const color=surface.match(/^#([\da-f]{6})$/i)?.[1]||'F6E6E6',rgb=[0,2,4].map(i=>parseInt(color.slice(i,i+2),16))
+    for(let i=0;i<mask.length;i++)if(mask[i]){const p=i*4;overlay.data[p]=rgb[0];overlay.data[p+1]=rgb[1];overlay.data[p+2]=rgb[2];overlay.data[p+3]=255;removed++}
     ctx.putImageData(overlay,0,0);work.className='pc-image-background';work.setAttribute('aria-hidden','true');work.dataset.backgroundPixels=String(removed)
     img.parentElement.classList.add('pc-background-host');img.parentElement.append(work)
-    entry.src=src;entry.canvas=work;position(entry)
+    entry.src=src;entry.surface=surface;entry.canvas=work;position(entry)
    }catch{entry.canvas=null}
   }
-  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame>.solo-shot-img,.solo-approved-info,.solo-approved-faq,.solo-p4-art>.solo-shot-img,.solo-map>.solo-shot-img,.solo-footer>.solo-shot-img')
+  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame .solo-shot-img,.solo-approved-info,.solo-approved-faq,.solo-review-grid>.solo-shot-img,.solo-p4-art>.solo-shot-img,.solo-map>.solo-shot-img,.solo-footer>.solo-shot-img')
   images.forEach(image=>{const entry={image};entries.push(entry);entry.load=()=>paint(entry);image.addEventListener('load',entry.load);observer.observe(image);paint(entry)})
   const change=()=>entries.forEach(paint);media.addEventListener('change',change)
   cleanup=()=>{observer.disconnect();media.removeEventListener('change',change);entries.forEach(e=>{e.image.removeEventListener('load',e.load);e.canvas?.remove()})}

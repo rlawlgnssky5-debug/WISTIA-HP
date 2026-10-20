@@ -1,0 +1,38 @@
+/* Section-only colors and unobtrusive numbering, original media stays intact */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones [data-wistia-section]{
+  position:relative!important;
+  background:var(--wistia-section-surface)!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .wistia-tone-poster{
+  display:block!important;width:100%!important;max-width:none!important;
+  margin:0!important;padding:0!important;border:0!important;
+  border-radius:0!important;box-shadow:none!important;
+}
+/* These are existing nested section surfaces, not cards, media or controls */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones [data-wistia-section] :is(.solo-review-grid,.rv5,.pc-review-layout,.solo-p4-panel,.solo-faq-html,.solo-selection-title){
+  background:var(--wistia-section-surface)!important;
+}
+/* Numbering stays out of hit testing and does not shift image-based controls */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .wistia-section-number{
+  position:absolute!important;inset:10px auto auto 12px!important;z-index:8!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:25px!important;min-width:25px!important;height:19px!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:4px!important;
+  background:var(--wistia-section-surface)!important;color:#7B666C!important;
+  font-family:"Pretendard Variable",Pretendard,sans-serif!important;
+  font-size:10px!important;font-weight:600!important;line-height:19px!important;
+  letter-spacing:.12em!important;font-variant-numeric:tabular-nums!important;
+  pointer-events:none!important;user-select:none!important;box-shadow:none!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones [data-wistia-section="01"] .mas-gallery-caption{top:38px!important;}
+/* Reuse the outside-connected background overlay at every viewport size */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .pc-background-host{position:relative!important;}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .pc-image-background{
+  display:block!important;position:absolute!important;pointer-events:none!important;
+  margin:0!important;padding:0!important;max-width:none!important;max-height:none!important;
+  border:0!important;box-sizing:content-box!important;transform:none!important;
+  filter:none!important;opacity:1!important;z-index:1!important;
+}
+@media(min-width:901px){
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .wistia-section-number{inset:14px auto auto 18px!important;font-size:11px!important;}
+}

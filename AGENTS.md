@@ -1,5 +1,13 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-10-21 — 섹션 색상·작은 번호 운영 배포 승인
+
+- 최신 사용자 배포 요청에 따라 origin/main 7ca9d4e 위에 승인된 섹션 색상·왼쪽 위 01~15 번호만 추가한다
+- 최신 5장 사진 슬라이더와 B5 후기, 상품·가격·예약·문의·분석 소스와 모든 원본 미디어를 보존한다, 별도 로컬 ivory-preview 시안은 포함하지 않는다
+- css/section-tones.css와 기존 js/detail-pc-background.js의 배경 마스크를 사용한다, 원본 사진에 필터를 적용하지 않으며 번호는 aria-hidden 및 pointer-events:none이다
+- 모든 공통 앱 진입 HTML에서 새 CSS와 배경 스크립트를 로드한다, CSS 번들을 재생성하고 캐시는 20261021-section-tones-1이다
+- tests/section-tones.test.mjs와 tests/section-tones-browser.cjs로 검수하며 증빙은 output/section-tones-20261021에 로컬 보관한다, 실제 문의를 전송하지 않는다
+
 ## 2026-10-15 — 승인 이미지 복원·5단계 문의 (최신 왕명)
 
 - 최신 원격 main a79f888(개인 노션 일정 마감 포함)을 fast-forward로 반영한 뒤 수정한다, 최상위 과거 앱을 배포하지 않는다
