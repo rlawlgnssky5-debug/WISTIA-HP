@@ -36,3 +36,27 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 @media(min-width:901px){
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .wistia-section-number{inset:14px auto auto 18px!important;font-size:11px!important;}
 }
+
+/* The shell carries no colour of its own now that every band comes from the
+   neutral section ramp, so the page frame stays white instead of rose. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones{background:#FFFFFF!important;}
+html body.is-solo-detail.is-ar-detail{background:#FFFFFF!important;}
+
+/* Bands the section ramp does not reach: the page frame, the hero gallery
+   placeholder, the footer shell and the poster stacks. Rose stays an accent
+   only, so nothing here is allowed to paint its own rose surface. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app:has(.wistia-section-tones),
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .mas-gallery-slide,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean .footer{
+  background:#FFFFFF!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .solo-poster-stack{
+  background:transparent!important;
+}
+/* Poster stacks sit between numbered bands, so they inherit whatever the
+   band underneath paints instead of introducing a fifth rose surface. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .solo-poster-stack>.detail-poster-image{
+  background:transparent!important;
+}

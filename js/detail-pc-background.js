@@ -20,22 +20,25 @@
   while(head<tail){const i=queue[head++],x=i%width;if(x)add(i-1);if(x<width-1)add(i+1);if(i>=width)add(i-width);if(i<count-width)add(i+width)}
   return mask
  }
+ // Neutral surface ramp: white and near-white greys only, so the rose accent
+ // stays the single colour on the page. Alternating bands keep the sections
+ // from reading as one continuous sheet.
  const sectionTones=[
-  ['.mas-intro','#F9F0EF'],
-  ['.mas-information','#F5F2EB'],
-  ['.arc-reviews','#F5ECEF'],
-  ['#arcRecording','#EFF3EF'],
-  ['#arcKey','#F5F1E9'],
-  ['#arcTuning','#F5EDF0'],
-  ['#soloPoint04','#EEF2F4'],
-  ['.solo-lyric-poster','#F2EFF5'],
-  ['[data-tone-poster="point-adv"]','#F1F3EC'],
-  ['[data-tone-poster="point-price"]','#F6EFE7'],
-  ['[data-tone-poster="cred-a2"]','#F0F2F4'],
-  ['#arcProcess','#F4EEEA'],
-  ['#arcFaq','#F3EFF3'],
-  ['.solo-notice','#F6F2EA'],
-  ['.solo-map','#EEF3F0']
+  ['.mas-intro','#FFFFFF'],
+  ['.mas-information','#F5F5F7'],
+  ['.arc-reviews','#FFFFFF'],
+  ['#arcRecording','#F5F5F7'],
+  ['#arcKey','#FFFFFF'],
+  ['#arcTuning','#F5F5F7'],
+  ['#soloPoint04','#FFFFFF'],
+  ['.solo-lyric-poster','#F5F5F7'],
+  ['[data-tone-poster="point-adv"]','#FFFFFF'],
+  ['[data-tone-poster="point-price"]','#F5F5F7'],
+  ['[data-tone-poster="cred-a2"]','#FFFFFF'],
+  ['#arcProcess','#F5F5F7'],
+  ['#arcFaq','#FFFFFF'],
+  ['.solo-notice','#F5F5F7'],
+  ['.solo-map','#FFFFFF']
  ]
  function numberSections(detail){
   detail.querySelectorAll('.solo-poster-stack>.detail-poster-image').forEach(image=>{
@@ -82,7 +85,7 @@
   function paint(entry){
    const img=entry.image,src=img.currentSrc||img.src
    if((!themed&&!media.matches)||!img.complete||!img.naturalWidth||getComputedStyle(img).display==='none')return
-   const surface=img.closest('[data-wistia-section]')?.style.getPropertyValue('--wistia-section-surface')||'#F6E6E6'
+   const surface=img.closest('[data-wistia-section]')?.style.getPropertyValue('--wistia-section-surface')||'#FFFFFF'
    if(entry.src===src&&entry.surface===surface){position(entry);return}
    entry.canvas?.remove()
    try{
@@ -90,7 +93,7 @@
     const ctx=work.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0)
     const pixels=ctx.getImageData(0,0,width,height).data,mask=backgroundMask(pixels,width,height,protections(src))
     const overlay=ctx.createImageData(width,height);let removed=0
-    const color=surface.match(/^#([\da-f]{6})$/i)?.[1]||'F6E6E6',rgb=[0,2,4].map(i=>parseInt(color.slice(i,i+2),16))
+    const color=surface.match(/^#([\da-f]{6})$/i)?.[1]||'FFFFFF',rgb=[0,2,4].map(i=>parseInt(color.slice(i,i+2),16))
     for(let i=0;i<mask.length;i++)if(mask[i]){const p=i*4;overlay.data[p]=rgb[0];overlay.data[p+1]=rgb[1];overlay.data[p+2]=rgb[2];overlay.data[p+3]=255;removed++}
     ctx.putImageData(overlay,0,0);work.className='pc-image-background';work.setAttribute('aria-hidden','true');work.dataset.backgroundPixels=String(removed)
     img.parentElement.classList.add('pc-background-host');img.parentElement.append(work)
