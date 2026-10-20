@@ -50,7 +50,7 @@ runInNewContext(read('js/before-after.js'),{window,document:{querySelector:()=>r
 const player=window.initWistiaBeforeAfter()
 await new Promise(resolve=>setImmediate(resolve))
 const originalShape=JSON.stringify(rects)
-await player.play();audioTime=10
+await player.play();for(let i=0;i<5;i++)await new Promise(resolve=>setImmediate(resolve));audioTime=10
 player.setMode('after')
 assert.equal(lastBuffer.kind,2,'switch must change real audio, not only the button')
 assert.equal(root.dataset.position,'10','switch preserves timeline')

@@ -20,7 +20,9 @@
   let value=clamp(input?.value||70),ctx=null,master=null,isPlaying=false,pendingPlay=false,startedAt=0,offset=0,raf=0,muted=false,destroyed=false,observer=null,playRequest=0
   const on=(node,event,handler,opts)=>{if(!node)return;node.addEventListener(event,handler,opts);listeners.push(()=>node.removeEventListener(event,handler,opts))}
   const sourceFor=ratio=>root.getAttribute('data-audio-'+ratio)||''
-  const duration=()=>Math.max(0,...ANCHORS.map(r=>buffers[r]?.duration||0))
+  // All four web WAVs are 32.75s; show that total before the first play so nothing changes on screen while audio waits for a tap.
+  const durationHint=ANCHORS.every(r=>/voice-\d+-web\.wav/.test(sourceFor(r)))?32.75:0
+  const duration=()=>Math.max(0,...ANCHORS.map(r=>buffers[r]?.duration||0))||durationHint
   const position=()=>isPlaying&&ctx?Math.min(duration(),ctx.currentTime-startedAt):offset
   const touched=()=>root.classList.add('is-touched')
 
@@ -105,7 +107,7 @@
   on(seek,'input',()=>{const d=duration();if(!d)return;offset=Math.max(0,Math.min(d,Number(seek.value)));if(isPlaying){stopAll();startAll(offset);applyMix(true)}progress()})
 
   // 섹션이 보이기 시작하면 현재 비율 음원 하나만 미리 받아 재생 대기 시간을 줄인다
-  if('IntersectionObserver' in global){observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){load(nearest(value));observer.disconnect();observer=null}},{rootMargin:'300px 0px'});observer.observe(root)}else load(nearest(value))
+  // 음원은 재생(또는 비율 선택)을 누를 때만 받는다, 첫 화면 로딩에 WAV를 포함하지 않는다
 
   render();progress()
   return{
