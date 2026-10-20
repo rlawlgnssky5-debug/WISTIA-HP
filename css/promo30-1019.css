@@ -29,10 +29,10 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .promo30-star-small{right:38px!important;top:26px!important;font-size:8px!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mas-event-money{display:grid!important;place-items:center!important;flex:0 0 48px!important;width:48px!important;height:48px!important;font:32px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .mas-gallery{overflow:visible!important}
-@media(max-width:900px){
+@media(max-width:779px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top picture.solo-shot-frame{transform:translateY(54px)!important;clip-path:inset(62.674% 0 0 0)!important;margin-bottom:54px!important}
 }
-@media(min-width:901px){
+@media(min-width:780px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .mas-gallery-viewport{overflow:hidden!important;border-radius:28px!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .promo30-ribbon{border-radius:28px!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .promo30-card{position:absolute!important;left:55.47%!important;top:47.4%!important;width:38.28%!important;max-width:none!important;margin:0!important}

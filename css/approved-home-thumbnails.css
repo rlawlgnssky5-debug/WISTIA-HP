@@ -25,7 +25,7 @@ html[data-studio-motion="on"] #app#app .we-hero-thumbnails .we-hero-thumbnail:nt
  html[data-studio-motion="on"] #app#app .we-hero-thumbnails .we-hero-thumbnail{transition:transform .25s ease}
  html[data-studio-motion="on"] #app#app .we-hero-thumbnails .we-hero-thumbnail:hover{transform:translateY(-4px)}
 }
-@media(max-width:768px){
+@media(max-width:779px){
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero.we-hero-thumbnails .we-hero-grid{grid-template-columns:minmax(0,1fr);gap:24px}
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero.we-hero-thumbnails .we-hero-collage{max-width:500px;margin-inline:auto}
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero.we-hero-thumbnails .we-hero-thumbnail{border-width:4px}

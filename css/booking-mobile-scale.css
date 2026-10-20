@@ -1,6 +1,6 @@
 /* Compact type hierarchy, not browser zoom; preserve native input zoom and touch targets. */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-draft-note{margin:-10px 0 22px!important;color:#8A6F75!important;font:400 12px/1.6 Pretendard,sans-serif!important;word-break:keep-all!important}
-@media(max-width:900px){
+@media(max-width:779px){
  html body:has(.wistia-wizard){-webkit-text-size-adjust:100%;text-size-adjust:100%}
  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{padding:24px 18px 64px!important;font-size:14px!important}
  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard h1{font-size:22px!important;line-height:1.4!important;margin-bottom:18px!important}

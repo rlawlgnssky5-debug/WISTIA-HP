@@ -96,7 +96,7 @@ html[data-studio-motion=on] .studio-scene.is-in-view .studio-orbit-two{animation
 @keyframes studio-disc-turn{0%,100%{transform:translateZ(65px) rotateY(-12deg) rotateZ(-20deg)}50%{transform:translateZ(90px) rotateY(25deg) rotateZ(12deg)}}
 @keyframes studio-wave{0%,100%{scale:1 .65}50%{scale:1 1}}
 @keyframes studio-orbit{from{rotate:y 0deg}to{rotate:y 360deg}}
-@media(max-width:900px){
+@media(max-width:779px){
  .studio-hero-visual .we-hero-photo{width:30%;right:5px;bottom:24px}
  .studio-scene{height:390px}.studio-world{scale:.88}
  .studio-sound-section{gap:32px}
@@ -147,4 +147,4 @@ html[data-studio-motion=on] .studio-scene.is-in-view .studio-orbit-two{animation
 }
 html[data-studio-motion=off] .studio-scene *{animation:none!important;transition:none!important}
 html[data-studio-motion=off] .studio-depth-card{transform:none!important}
-@media(min-width:901px) and (hover:hover) and (pointer:fine){html[data-studio-motion=on] .wistia-cursor{display:block!important}}
+@media(min-width:780px) and (hover:hover) and (pointer:fine){html[data-studio-motion=on] .wistia-cursor{display:block!important}}

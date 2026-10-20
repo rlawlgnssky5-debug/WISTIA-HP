@@ -42,7 +42,7 @@ html #app#app#app#app .ar-commerce-detail :is(.mas-key-note,.ar-expert-panel,.wi
 html #app#app#app#app .ar-commerce-detail .arc-notices ul{box-sizing:border-box;max-width:var(--detail-content-width)!important;width:100%!important;margin-inline:auto!important;padding:4px 20px!important;border:1px solid #D8D1C5!important;border-radius:6px!important}
 html #app#app#app#app .ar-commerce-detail .arc-notices li{border-color:#D8D1C5!important;color:#252421!important}
 html #app#app#app#app .ar-commerce-detail .arc-notices li :is(strong,b,small,p){color:#252421!important}
-@media(max-width:768px){html #app#app#app#app .ar-commerce-detail{--detail-section-space:40px;--detail-gutter:20px}}
+@media(max-width:779px){html #app#app#app#app .ar-commerce-detail{--detail-section-space:40px;--detail-gutter:20px}}
 @media(max-width:359px){html #app#app#app#app .ar-commerce-detail{--detail-gutter:16px}}
 
 html #app#app#app#app .ar-commerce-detail .detail-section-group{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important}
@@ -67,7 +67,7 @@ html #app#app#app#app .we-home .home-point-layout .svg-title-icon{margin:0!impor
 html #app#app#app#app .we-home .home-point-layout :is(.svg-section-text,.svg-section-text span,.svg-section-description,.svg-item-description,p,.we-section-tag){text-align:center!important;margin-inline:auto!important}
 html #app#app#app#app .we-home .home-point-layout .we-section-tag{display:table!important;width:fit-content!important;min-height:44px!important;margin:0 auto 20px!important;padding:10px 20px!important;border:1px solid #252421!important;border-radius:6px!important;background:#252421!important;color:#FFFCF5!important;box-shadow:none!important;font-size:14px!important;line-height:1.5!important;font-weight:600!important;letter-spacing:.08em!important}
 html #app#app#app#app .we-home .detail-point-number{font-size:23px!important;font-weight:750!important;line-height:1!important;color:inherit!important;letter-spacing:.02em!important}
-@media(max-width:768px){html #app#app#app#app .we-home .home-point-layout{padding:40px 20px!important}}
+@media(max-width:779px){html #app#app#app#app .we-home .home-point-layout{padding:40px 20px!important}}
 html #app#app#app#app .we-home .home-point-layout .review-carousel-head{display:flex!important;flex-direction:column!important;align-items:center!important;gap:20px!important}
 html #app#app#app#app .we-home .home-point-layout .review-carousel-head>header{width:100%!important;text-align:center!important}
 html #app#app#app#app .we-home .home-point-layout .review-carousel-controls{margin-inline:auto!important;justify-content:center!important}
@@ -104,10 +104,10 @@ html #app#app#app#app .ar-commerce-detail .mas-location :is(header,.mas-location
 html #app#app#app#app .ar-commerce-detail .mas-location :is(header,dl>div){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important}
 html #app#app#app#app .ar-commerce-detail .mas-location::before,
 html #app#app#app#app .ar-commerce-detail .mas-location::after{content:none!important;display:none!important}
-@media(max-width:900px){html #app#app#app#app .ar-commerce-detail .mas-bottom{bottom:0!important;margin-bottom:0!important;border-radius:0!important}}
+@media(max-width:779px){html #app#app#app#app .ar-commerce-detail .mas-bottom{bottom:0!important;margin-bottom:0!important;border-radius:0!important}}
 
 /* Desktop maps and footer content must scroll clear of the fixed contact bar. */
-@media(min-width:901px){
+@media(min-width:780px){
  html #app#app#app#app .ar-commerce-detail{padding-bottom:0!important}
  html #app#app#app#app .ar-commerce-detail .mas-map-links{scroll-margin-bottom:160px}
 }

@@ -1,5 +1,5 @@
 /* Alignment only, keep existing home / DUET layouts, image sizes, spacing and floating actions */
-@media(max-width:768px){
+@media(max-width:779px){
  #app :is(.we-home,.ar-commerce-detail) :is(h1,h2,h3,p,figcaption){text-align:center!important}
  #app .we-home :is(.we-meta,.we-actions,.we-hero-foot,.we-carousel-controls,.wistia-location-links){justify-content:center}
  #app .we-home :is(.we-service,.we-location,.we-directions-copy,.we-final){text-align:center}

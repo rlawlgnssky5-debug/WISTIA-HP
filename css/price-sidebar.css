@@ -50,7 +50,7 @@ body[data-page="event"] .booking-price-sidebar .booking-live-total strong{font-s
 .booking-calculator #bookingSummary .price-formula>strong>small{font-size:13px}
 .booking-calculator #bookingSummary>.fine{margin:14px 0 0;font-size:10px;line-height:1.8}
 .ar-commerce-detail .arc-final .arc-actions:has(>a:only-child){grid-template-columns:1fr;max-width:380px}
-@media(max-width:900px){
+@media(max-width:779px){
  body[data-page="event"] .booking-calculator-wrap{max-width:800px;padding:36px 24px 155px!important}
  body[data-page="event"] .booking-calculator{grid-template-columns:minmax(0,1fr);gap:0}
  body[data-page="event"] .booking-static-bar.booking-follow-total.booking-price-sidebar{position:fixed!important;top:auto;left:12px!important;right:12px!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;width:calc(100% - 24px)!important;padding:14px 16px!important;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;background:#fff!important;border-radius:10px!important;box-shadow:0 4px 30px #27394320!important;z-index:70}

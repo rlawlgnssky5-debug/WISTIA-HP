@@ -86,7 +86,7 @@ html #app#app#app#app#app .ar-commerce-detail .mas-selection{text-align:left!imp
 html #app#app#app#app#app .mas-selection h2.svg-section-title{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;gap:14px!important;align-items:start!important;text-align:left!important;white-space:nowrap!important}
 html #app#app#app#app#app .mas-selection h2 .svg-section-text{text-align:left!important;margin-inline:0!important}
 html #app#app#app#app#app .mas-selection h2>.svg-title-icon{align-self:start!important}
-@media(max-width:768px){html #app#app#app#app#app .mas-selection{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:20px}}
+@media(max-width:779px){html #app#app#app#app#app .mas-selection{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:20px}}
 html #app#app#app#app#app .mas-selection .mas-variant+.mas-variant{margin-top:0!important}
 
 /* 16c: preserve the illustration's intrinsic 360:300 ratio and the POINT media rail. */
@@ -97,10 +97,10 @@ html[data-wistia-typography] #app#app#app#app#app#app#app .studio-address{font-s
 /* H2 section headings share one typography; explicit authored line breaks remain. */
 html #app#app#app#app#app#app#app .ar-commerce-detail h2{font-size:20px!important;font-weight:600!important;line-height:1.4!important;letter-spacing:-.04em!important;white-space:nowrap!important}
 html #app#app#app#app#app#app#app .ar-commerce-detail h2 :is(.svg-section-text,.solo-type-line,mark,strong,b,.ar-copy-emphasis,.ar-copy-emphasis-text){font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;white-space:nowrap!important}
-@media(min-width:769px){html #app#app#app#app#app#app#app .ar-commerce-detail h2{font-size:28px!important}}
+@media(min-width:780px){html #app#app#app#app#app#app#app .ar-commerce-detail h2{font-size:28px!important}}
 @media(max-width:359px){html #app#app#app#app#app#app#app .info-page-about .about-fixed-lines.about-long-lines{white-space:normal!important}}
 
 /* Primary home section headings share a single scale, including their SVG text wrappers. */
 html #app#app#app#app#app#app#app .we-home h2{font-size:clamp(20px,6.1vw,24px)!important;font-weight:600!important;line-height:1.4!important;letter-spacing:-.04em!important;white-space:nowrap!important}
 html #app#app#app#app#app#app#app .we-home h2 :is(.svg-section-text,.solo-type-line,strong,b,mark){font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;white-space:nowrap!important}
-@media(min-width:769px){html #app#app#app#app#app#app#app .we-home h2{font-size:36px!important}}
+@media(min-width:780px){html #app#app#app#app#app#app#app .we-home h2{font-size:36px!important}}

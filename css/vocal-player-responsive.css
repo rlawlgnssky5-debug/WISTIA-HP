@@ -5,7 +5,7 @@
 #wistiaBeforeAfter .bap-time{white-space:nowrap;flex:0 0 auto;font-variant-numeric:tabular-nums}
 #wistiaBeforeAfter .bap-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 #wistiaBeforeAfter .bap-tab{min-width:0}
-@media(max-width:900px){
+@media(max-width:779px){
  .we-home #homeSound #wistiaBeforeAfter .wistia-ba-layout{grid-template-columns:minmax(0,1fr);gap:28px}
  .we-home #homeSound .wistia-ba-copy>p:last-child{font-size:14px!important;line-height:1.85}
 }

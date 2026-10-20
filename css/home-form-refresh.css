@@ -83,7 +83,7 @@ body[data-page=event]{background:#f1f3f5}
 #app .consultation-flow .event-benefit-card:has(input:checked){background:#f2f6f9;border-color:#658499}
 #app .consultation-flow .booking-price-sidebar{display:flex!important}
 #app .consultation-flow .contact-submit{min-height:50px;border-radius:5px!important;font-size:14px!important}
-@media(max-width:900px){#app .we-home .we-service{grid-template-columns:120px minmax(0,1fr);gap:20px;padding:22px}}
+@media(max-width:779px){#app .we-home .we-service{grid-template-columns:120px minmax(0,1fr);gap:20px;padding:22px}}
 @media(max-width:600px){
  #app .we-home .we-section{padding-block:44px}
  #app .we-home .we-heading{gap:14px;margin-bottom:26px}
@@ -142,7 +142,7 @@ body[data-page=event]{background:#f1f3f5}
 #app .mas-benefit-note{font-size:11px;color:#718491;line-height:1.8;margin:10px 0 0}
 #app .mas-event-content h4{font-size:13px;margin:16px 0 8px;color:#476579}
 @media(min-width:1000px){#app .consultation-flow .booking-price-sidebar{max-height:calc(100dvh - 112px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}}
-@media(max-width:999px){
+@media(max-width:779px){
  #app .booking-calculator-wrap.consultation-flow{max-width:720px}
  #app .consultation-flow .booking-calculator{display:block}
  #app .consultation-flow .booking-price-sidebar{position:static!important;margin-top:16px}

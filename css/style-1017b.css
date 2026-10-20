@@ -16,7 +16,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .wistia-location-details h3,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .wistia-location-details h3 span{color:#3A2E2F!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location :is(.wistia-location-details p,figcaption){color:#8A7A7B!important}
 /* 2 PC footer: centered, readable */
-@media(min-width:901px){
+@media(min-width:780px){
 html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) footer.footer{text-align:center!important}
 html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) footer.footer .footer-main{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:14px!important;text-align:center!important}
 html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) footer.footer .footer-brand{display:inline-flex!important;justify-content:center!important;align-items:center!important;width:auto!important;margin:0 auto!important;text-align:left!important}

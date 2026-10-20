@@ -2,41 +2,41 @@
 /* 2 detail FAQ */
 
 /* 3 phone hero: event box height = baked box, trim empty band below 1인/2인 */
-@media(max-width:900px){
+@media(max-width:779px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top .mas-event-disclosure>summary{height:100%!important;min-height:0!important;box-sizing:border-box!important;overflow:hidden!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top{clip-path:inset(0 0 calc(14% - 76px) 0)!important;margin-bottom:calc(76px - 37.23vw)!important}
 }
 /* 4 PC: content below fixed header, full-width header */
-@media(min-width:901px){
+@media(min-width:780px){
 html body:has(.mobile-ar-solo) main#app{padding-top:24px!important}
 }
-@media(min-width:1281px){
+@media(min-width:780px){
 html body header#siteHeader{left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;transform:none!important}
 html body main#app{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}
 }
 /* 6 PC caption on one line */
-@media(min-width:901px){
+@media(min-width:780px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top .mas-gallery-caption{white-space:nowrap!important;width:auto!important;max-width:none!important;font-size:15px!important;line-height:1.4!important;padding:10px 18px!important;height:auto!important}
 }
 /* 10 kakao always visible */
 html body:not(.menu-open):not(.modal-open) #floatingKakaoChat.floating-kakao-pill{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 html body:has(.wistia-wizard) #floatingKakaoChat.floating-kakao-pill,html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{display:flex!important;align-items:center!important;justify-content:center!important;width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;padding:0!important;border-radius:50%!important;background:#FEE500!important;color:#241d00!important;right:calc(12px + env(safe-area-inset-right,0px))!important;bottom:calc(16px + env(safe-area-inset-bottom,0px))!important;z-index:90!important}
 html body:has(.wistia-wizard) #floatingKakaoChat span,html body.is-event-inquiry #floatingKakaoChat span{display:none!important}
-@media(max-width:900px){html body:has(.wistia-wizard) #floatingKakaoChat.floating-kakao-pill,html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{bottom:calc(88px + env(safe-area-inset-bottom,0px))!important}}
+@media(max-width:779px){html body:has(.wistia-wizard) #floatingKakaoChat.floating-kakao-pill,html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill{bottom:calc(88px + env(safe-area-inset-bottom,0px))!important}}
 /* 11 phone: keep page end clear of floating 문의양식 작성 button */
-@media(max-width:900px){
+@media(max-width:779px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-map{padding-bottom:96px!important}
 html body:has(.mobile-ar-solo) main#app{padding-bottom:84px!important}
 }
 
-@media(max-width:900px){
+@media(max-width:779px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top .mas-selection{background:#F8ECEB!important;top:calc(86% - 6px)!important;padding-top:14px!important}
 }
-@media(max-width:900px){
+@media(max-width:779px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo .solo-shot-top .mas-selection{left:0!important;width:100%!important;right:0!important;bottom:0!important;height:auto!important;min-height:0!important;padding:14px 4% 0!important;column-gap:3%!important;box-sizing:border-box!important}
 }
 
 /* Keep mobile inquiry buttons behind the open navigation. */
-@media(max-width:900px){
+@media(max-width:779px){
  body.menu-open :is(.we-home,.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])) .solo-footer-inquiry{visibility:hidden!important;pointer-events:none!important}
 }

@@ -1,5 +1,5 @@
 /* Keep approved poster assets intact; correct only mobile header/picker overlays. */
-@media(max-width:900px){
+@media(max-width:779px){
  html body.is-solo-detail:has(.solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"])){padding-top:64px!important;}
  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .solo-shot-top .mas-selection{min-height:0!important;box-shadow:0 12px 0 12px #F6E6E6!important;overflow:visible!important;}
  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) .mas-gallery-caption{top:16px!important;max-width:calc(100% - 28px)!important;white-space:normal!important;word-break:keep-all!important;}

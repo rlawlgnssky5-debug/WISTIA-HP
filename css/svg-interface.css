@@ -130,7 +130,7 @@ html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-
 html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle svg{display:block;width:28px;height:28px;color:var(--palette-ink)}
 html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle[aria-expanded="false"]>.svg-menu-close,
 html[data-wistia-palette="noir-minimal"] #siteHeader#siteHeader #menuToggle.svg-menu-toggle[aria-expanded="true"]>.svg-menu-open{display:none!important}
-@media(max-width:768px){
+@media(max-width:779px){
  html[data-wistia-palette="noir-minimal"] #app#app#app .we-home{--svg-home-gutter:20px}
  html[data-wistia-palette="noir-minimal"] #app#app#app .svg-title-icon{margin-top:4px!important}
  html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .review-carousel-head{flex-wrap:wrap!important}

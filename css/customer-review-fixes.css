@@ -22,7 +22,7 @@
 #app .footer .footer-brand>img{filter:grayscale(1) brightness(0);opacity:.85}
 .ar-commerce-detail .arc-point-tuning,.ar-commerce-detail .arc-point-ratio{padding-top:32px}
 .ar-commerce-detail .solo-review-carousel>.shell{width:100%;max-width:1152px;margin-inline:auto}
-@media(max-width:768px){
+@media(max-width:779px){
  .we-home .we-hero-grid.we-hero-text{padding-block:32px 24px}
  .we-home .we-directions-grid{grid-template-columns:1fr;gap:28px}
  .we-directions-copy .studio-address-street{white-space:nowrap}

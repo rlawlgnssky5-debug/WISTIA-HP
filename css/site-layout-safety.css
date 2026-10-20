@@ -39,5 +39,5 @@ html body #mediaDialog:has(.detail-events-dialog){width:min(680px,calc(100% - 24
 .detail-events-dialog li>div{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 .detail-events-dialog li b{white-space:nowrap;color:#A65A6C}
 .detail-events-dialog li p{margin:10px 0 0}
-@media(min-width:901px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .solo-live-benefit{left:55.47%!important;top:47.5%!important;width:38.28%!important;height:7.4%!important;font-size:clamp(10px,1.35vw,16px)!important;padding:0 2%!important}}
+@media(min-width:780px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-shot-top .solo-live-benefit{left:55.47%!important;top:47.5%!important;width:38.28%!important;height:7.4%!important;font-size:clamp(10px,1.35vw,16px)!important;padding:0 2%!important}}
 @media(max-width:420px){.detail-events-dialog{padding:48px 16px 20px!important}.detail-events-dialog .benefit-kind-card{padding:16px!important}}

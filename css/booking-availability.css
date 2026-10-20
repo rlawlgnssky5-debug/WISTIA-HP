@@ -119,7 +119,7 @@ html #app#app#app#app .consultation-flow :is(.calendar-day,.calendar-time-grid b
 html #app#app#app#app [data-calendar-range-status][hidden]{display:none!important}
 
 /* Desktop actions share the inquiry container axis, including its summary column. */
-@media(min-width:901px){
+@media(min-width:780px){
  html #app#app#app#app .consultation-flow #contactInquiryForm{padding-bottom:0!important}
 }
 

@@ -79,6 +79,6 @@ html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #m
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #mediaDialog#mediaDialog .consult-validation-list{background:var(--warm-beige)!important;border-color:transparent!important;border-radius:20px}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #floatingKakao #floatingKakaoChat{box-shadow:0 6px 16px rgba(60,48,44,.12)!important}
 html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) ::selection{background:var(--dusty-pink);color:var(--deep-brown)}
-@media(min-width:769px){html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .we-home .we-hero{padding:56px 32px 64px;border-radius:44px}}
-@media(min-width:769px){html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-selection .mas-variant+.mas-variant{margin-top:0}}
+@media(min-width:780px){html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .we-home .we-hero{padding:56px 32px 64px;border-radius:44px}}
+@media(min-width:780px){html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .mas-selection .mas-variant+.mas-variant{margin-top:0}}
 @media(max-width:360px){html:is([data-wistia-theme="dusty-wedding"],[data-wistia-theme="monochrome"]) #app#app .we-home .we-hero{width:calc(100% - 28px);padding-inline:16px;border-radius:28px}}

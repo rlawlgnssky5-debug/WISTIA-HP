@@ -24,7 +24,7 @@ html[data-wistia-theme="monochrome"] #app#app .story-process-folder .process-fol
 html[data-wistia-theme="monochrome"] #app#app .story-process-folder .process-folder-art b{background:var(--mono-white)!important}
 html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0;list-style:none}
 html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-card{background:var(--mono-gray)!important;border-radius:20px}
-@media(max-width:768px){
+@media(max-width:779px){
  html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-grid{grid-template-columns:1fr}
  html[data-wistia-theme="monochrome"] #app#app .mas-detailed-process .story-process-card{grid-column:1;grid-row:auto}
 }
@@ -129,7 +129,7 @@ html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-lead{margin:
  html[data-wistia-theme="monochrome"] #app#app .we-cases-guide-compact{display:inline}
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-directions-copy{padding:24px 16px 26px}
 }
-@media(min-width:769px){
+@media(min-width:780px){
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero{padding:40px 32px 44px}
  html[data-wistia-theme="monochrome"] #app#app .we-home .we-hero .we-meta{margin-bottom:28px}
 }

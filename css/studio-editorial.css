@@ -131,7 +131,7 @@ html[data-wistia-typography="pretendard-editorial"] #app#app#app .footer{border-
 html:not([data-wistia-theme]){font-family:"Pretendard Variable","Pretendard",sans-serif!important;color:#111111;background:#FFFFFF}
 html:not([data-wistia-theme]) :is(p,li,td){color:rgba(17,17,17,.78)}
 html:not([data-wistia-theme]) :is(section,th,td,.top,footer){border-color:#E8E8E8}
-@media(max-width:768px){
+@media(max-width:779px){
  html[data-wistia-typography="pretendard-editorial"] #app#app#app .studio-home-hero .we-hero-grid{grid-template-columns:1fr;gap:26px}
  html[data-wistia-typography="pretendard-editorial"] #app#app#app .studio-home-hero h1{font-size:42px!important}
  html[data-wistia-typography="pretendard-editorial"] #app#app#app .studio-hero-media{aspect-ratio:1.55;max-height:360px}

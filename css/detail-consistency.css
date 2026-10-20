@@ -177,7 +177,7 @@ html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wisti
 html[data-wistia-palette="noir-minimal"] #app#app#app .wistia-event-group .wistia-event-card-top strong{
  background:var(--palette-soft)!important;border-radius:3px!important;padding:8px 10px!important;
 }
-@media(min-width:769px){
+@media(min-width:780px){
  /* Fit two boxes only where the actual content column has enough width */
  html[data-wistia-palette="noir-minimal"] #app#app#app .benefit-kind-grid{
   grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))!important;

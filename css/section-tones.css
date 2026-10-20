@@ -33,7 +33,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   border:0!important;box-sizing:content-box!important;transform:none!important;
   filter:none!important;opacity:1!important;z-index:1!important;
 }
-@media(min-width:901px){
+@media(min-width:780px){
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .wistia-section-number{inset:14px auto auto 18px!important;font-size:11px!important;}
 }
 
@@ -59,4 +59,26 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
    band underneath paints instead of introducing a fifth rose surface. */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones .solo-poster-stack>.detail-poster-image{
   background:transparent!important;
+}
+
+/* Web baseline: the detail canvas is 780 wide and centred at every width
+   above it, so one design serves 780, 1024 and 1440 alike instead of the
+   scope stretching to whatever the viewport happens to be. */
+@media(min-width:780px){
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-section-tones{
+    width:100%!important;
+    max-width:780px!important;
+    margin-inline:auto!important;
+  }
+}
+
+/* Header axis: the header sat on a 1200px container while the detail canvas
+   is 780, so the logo and the content started on two different lines. On
+   detail pages the header now shares the canvas width. */
+@media(min-width:780px){
+  body.is-solo-detail #siteHeader{width:min(100%,780px)!important;margin-inline:auto!important;}
+  body.is-solo-detail #siteHeader .header-inner{
+    width:100%!important;max-width:780px!important;
+    padding-inline:0!important;box-sizing:border-box!important;
+  }
 }

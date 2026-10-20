@@ -27,7 +27,7 @@
 .process-folder-art i,.process-folder-art b{transition:transform .6s cubic-bezier(.22,1,.36,1)}
 .story-process-folder[open] .process-folder-art i{transform:translateY(-4px) rotate(-3deg)}
 @keyframes folder-paper-reveal{from{opacity:0;transform:perspective(800px) translateY(-32px) rotateX(-8deg) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:900px){.solo-detail-scope .ar-expert-readable .ar-expert-split,.solo-detail-scope .ar-expert-readable .ar-expert-split[data-active]{gap:20px}.solo-detail-scope .ar-expert-readable .ar-expert-panel-content{padding:20px}.solo-detail-scope .ar-expert-readable .ar-expert-panel-keyword{font-size:21px}}
+@media(max-width:779px){.solo-detail-scope .ar-expert-readable .ar-expert-split,.solo-detail-scope .ar-expert-readable .ar-expert-split[data-active]{gap:20px}.solo-detail-scope .ar-expert-readable .ar-expert-panel-content{padding:20px}.solo-detail-scope .ar-expert-readable .ar-expert-panel-keyword{font-size:21px}}
 @media(max-width:600px){
  .solo-detail-scope .ar-expert-readable .ar-expert-split,.solo-detail-scope .ar-expert-readable .ar-expert-split[data-active]{grid-template-columns:1fr;gap:24px}
  .solo-detail-scope .ar-expert-readable .ar-expert-panel-content{padding:22px 20px}

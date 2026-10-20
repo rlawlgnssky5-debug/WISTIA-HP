@@ -36,7 +36,7 @@
 #app .info-page-about .wistia-specialist-grid article,#app .info-page-about .wistia-specialist-grid article:first-child,#app .info-page-about .wistia-specialist-grid article:last-child{padding:20px;border:1px solid #dce5eb;border-radius:12px;background:linear-gradient(135deg,#fff,#f7f9fb);box-shadow:inset 0 1px 0 #fff,0 4px 0 #e3eaf0,0 12px 22px #2842530d}
 #app .info-page-about .wistia-specialist-grid img{border-radius:8px}
 #app .info-page-about .wistia-about-closing{padding:44px 24px;border-top:0;border-radius:12px}
-@media(min-width:769px){
+@media(min-width:780px){
  :root{--header:72px}
  #app .mobile-ar-solo .arc-engineer .ar-expert-story{padding:44px 48px!important}
  #app .mobile-ar-solo .mas-bottom{max-width:560px;bottom:16px;border-radius:16px;padding:10px 12px 15px;box-shadow:inset 0 1px 0 #fff,0 4px 0 #d8e3eb,0 12px 26px #20354224}

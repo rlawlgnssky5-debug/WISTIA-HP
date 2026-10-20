@@ -151,6 +151,6 @@ html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog .button:not(.d
 html[data-wistia-palette="noir-minimal"] #app#app#app .contact-field:has([aria-invalid="true"]){box-shadow:inset 4px 0 0 var(--palette-charcoal)!important}
 html[data-wistia-typography="pretendard-noir"] #siteHeader .wordmark small{font-size:8px!important;letter-spacing:.08em!important}
 html[data-wistia-typography="pretendard-noir"] .top .brand>span{font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important}
-@media(min-width:769px){
+@media(min-width:780px){
  html[data-wistia-palette="noir-minimal"] #app#app#app .we-home .we-hero{padding:52px 40px 56px}
 }

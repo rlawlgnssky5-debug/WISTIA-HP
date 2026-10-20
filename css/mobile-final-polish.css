@@ -34,7 +34,7 @@
 #app .consultation-flow .contact-field select,#app .consultation-flow textarea{font-family:var(--sans);font-size:16px}
 #app .consultation-flow :is(.contact-field,.event-benefit-card,.booking-price-card){min-width:0}
 #app .consultation-flow .contact-submit{word-break:keep-all;text-wrap:balance}
-@media(max-width:768px){
+@media(max-width:779px){
  #app .mobile-ar-solo :is(.arc-point,.arc-section) h2,
  #app .mobile-ar-solo .wistia-ba-copy h2{font-size:23px!important;line-height:1.45!important;letter-spacing:-.035em;word-break:keep-all;text-wrap:balance;margin:0 0 14px!important}
  #app .mobile-ar-solo .arc-lyrics .arc-option-fee{margin:0 0 12px!important;font-size:12px!important}

@@ -66,7 +66,7 @@ html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir
  content:"✓";position:absolute;right:16px;top:50%;width:22px;height:22px;margin-top:-11px;display:grid;place-items:center;
  border-radius:50%;background:var(--solo-rose);color:#fff;font-size:13px;line-height:1;
 }
-@media(min-width:769px){
+@media(min-width:780px){
  html[data-wistia-palette="noir-minimal"][data-wistia-typography="pretendard-noir"] #app#app#app#app#app#app#app#app .mobile-ar-solo[data-ar-product="solo"] .mas-selection{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
  }

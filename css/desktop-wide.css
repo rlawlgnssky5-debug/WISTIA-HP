@@ -1,5 +1,5 @@
 /* Keep the compact phone layout; give desktop visitors the full browser canvas. */
-@media (min-width: 901px) {
+@media (min-width: 780px) {
   :root { --app-canvas-width: 100vw; }
   main, #siteHeader { width: 100%; max-width: none; }
   .shell { width: min(1440px, calc(100% - 96px)); }

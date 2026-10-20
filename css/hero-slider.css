@@ -9,7 +9,7 @@ html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow{display
 html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow svg{width:18px;height:18px;fill:none;stroke:#333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-prev{left:10px}
 html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-next{right:10px}
-@media (hover:hover) and (min-width:901px){html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow{display:grid}}
+@media (hover:hover) and (min-width:780px){html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-arrow{display:grid}}
 /* Landscape slide (studio facility): show the whole original image, letterboxed on the page colour. */
 html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-landscape .hs-photo{object-fit:contain!important;object-position:50% 50%!important}
 html body #app#app#app#app#app#app#app#app#app#app .hs-gallery .hs-picture{display:block!important;width:100%!important;height:100%!important}
