@@ -1817,7 +1817,7 @@ function initMetaEngagementTracking(pagePath,pricePage){
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 function setPageMeta({title,description,image,robots=""}){
  document.title=title;
- const url="https://wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
+ const url="https://www.wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
  const shareImage=image||"https://www.wistiastudio.com/assets/img/og/wistia-og.png";
  const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":url,"meta[property='og:image']":shareImage,"meta[name='twitter:image']":shareImage};
  Object.entries(values).forEach(([selector,value])=>{const tag=document.querySelector(selector);if(tag)tag.content=value});
