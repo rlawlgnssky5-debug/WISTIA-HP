@@ -1128,8 +1128,7 @@ function soloReviewGrid(){
  const featured={src:img('n4'),name:'김○○',meta:'7월 예식 · SOLO',body:'본식 때 현장 반응이 정말 완전 최고였습니다 신부 입장을 노래 부르면서 들어가니까 다들 놀라서 감탄했고요 결혼식이 한편의 콘서트 같았다고 엄청 칭찬 받았습니다'}
  const cards=[
   {src:img('n7'),name:'이○○',meta:'8월 예식 · DUET',title:'축가 녹음 안했으면 큰일날뻔했어요',body:'드레스도 쪼이고 떨리고 그러니까 목소리도 잘 안나오고ㅜㅜ ar덕분에 잘 진행했네요 친구들, 친척분들도 다들 좋았다고 말씀 많이 주셨습니다'},
-  {src:img('n4'),name:'박○○',meta:'9월 예식 · SOLO',title:'신부가 립싱크로 노래 부르는거 다들 모르더라구요',body:'AR 너무 잘 만들어주셔서 신부 입장할때 신부가 립싱크로 노래 부르는거 다들 모르더라구요 ㅋㅋㅋ 모두들 저보고 노래 왜이렇게 잘하냐고 칭찬 일색이었습니다'},
-  {src:img('n5'),name:'최○○',meta:'9월 예식 · DUET',title:'녹음할때도 잘 이끌어주셔서 긴장감을 떨치고',body:'편하게 진행했었는데 알려주신대로 당일에 잘 부를 수 있게 연습해보겠습니다'},
+  {src:img('n5'),name:'최○○',meta:'9월 예식 · SOLO',title:'녹음할때도 잘 이끌어주셔서 긴장감을 떨치고',body:'편하게 진행했었는데 알려주신대로 당일에 잘 부를 수 있게 연습해보겠습니다'},
   {src:img('n6'),name:'정○○',meta:'7월 예식 · DUET',title:'저희 노래 정말 잘하는것처럼 만들어주셨네요',body:'결혼식날 다들 정말 좋아하실 것 같아요 ㅠㅠ'}
  ]
  const who=(item,label)=>'<div class="rv5-who"><b>'+item.name+'</b><span>'+item.meta+'</span><button type="button" class="rv5-thumb" data-review-full="'+item.src+'" aria-label="'+label+' 카카오톡 원본 크게 보기"><img src="'+item.src+'" alt="" width="38" height="38" loading="lazy" decoding="async"><em>원본 보기</em></button></div>'
