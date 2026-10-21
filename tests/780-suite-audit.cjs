@@ -1,8 +1,10 @@
 const fs=require('node:fs'),cp=require('node:child_process'),path=require('node:path')
 const root=path.resolve(__dirname,'..'),out=path.join(root,'output/780-payback-20261021')
-const tracked=cp.execFileSync('git',['ls-files','tests/*.test.mjs'],{cwd:root,encoding:'utf8'}).trim().split('\n')
-const changed=cp.execFileSync('git',['diff','--name-only'],{cwd:root,encoding:'utf8'}).trim().split('\n'),sources={}
-for(const file of changed){if(!/\.(?:js|mjs|css|json|html|md)$/.test(file))continue;sources[path.join(root,file).replaceAll('\\','/')]=cp.execFileSync('git',['show','HEAD:'+file],{cwd:root,encoding:'utf8',maxBuffer:8e6})}
+const base='25ede5d'
+const originalFiles=cp.execFileSync('git',['ls-tree','-r','--name-only',base],{cwd:root,encoding:'utf8'}).trim().split('\n')
+const tracked=originalFiles.filter(file=>/^tests\/.*\.test\.mjs$/.test(file))
+const changed=cp.execFileSync('git',['diff',base,'--name-only'],{cwd:root,encoding:'utf8'}).trim().split('\n'),sources={}
+for(const file of changed){if(!originalFiles.includes(file)||!/\.(?:js|mjs|css|json|html|md)$/.test(file))continue;sources[path.join(root,file).replaceAll('\\','/')]=cp.execFileSync('git',['show',base+':'+file],{cwd:root,encoding:'utf8',maxBuffer:8e6})}
 fs.writeFileSync(path.join(out,'baseline-sources.json'),JSON.stringify(sources))
 const results={}
 for(const phase of ['baseline','updated']){
