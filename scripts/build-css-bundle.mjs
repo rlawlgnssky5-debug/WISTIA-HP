@@ -12,7 +12,7 @@ const version = '20261021-base780'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }
-const isLocal = href => /^\/?css\/[^?#]+\.css(?:\?[^#]*)?$/.test(href || '')
+const isLocal = href => /^\/?css\/[^?#]+\.css(?:\?[^#]*)?$/.test(href || '') && !/canvas-780\.css/.test(href || '')
 const isBundle = href => /^\/?css\/bundle-[a-f0-9]{8}\.css(?:\?.*)?$/.test(href || '')
 
 // Ignore tags inside comments and raw script/style text, including JS strings.
