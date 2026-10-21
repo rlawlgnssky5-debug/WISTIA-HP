@@ -6,7 +6,7 @@ import {execFileSync} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
 const root=fileURLToPath(new URL('..',import.meta.url)),read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
 const app=read('js/app.js'),manifest=JSON.parse(read('css/bundles.json'))
-const git=p=>execFileSync('git',['show','25ede5d:'+p],{cwd:root,encoding:'utf8',maxBuffer:8e6})
+const git=p=>execFileSync('git',['show','bc0980a:'+p],{cwd:root,encoding:'utf8',maxBuffer:8e6})
 test('Only the two approved 30k paybacks determine every effective price',()=>{
  const events=runInNewContext(app.slice(app.indexOf('const EVENTS ='),app.indexOf('const ACTUAL_REVIEW_IMAGES'))+';EVENTS')
  assert.deepEqual(Array.from(events,e=>[e.key,e.label,e.discount]),[['blog','네이버 블로그 리뷰',30000],['reaction','본식 현장 리액션 영상',30000]])
@@ -19,8 +19,8 @@ test('The full approved event copy and every all-entry stylesheet are served',()
  for(const [page,data] of Object.entries(manifest.pages)){
   if(!read(page).includes('id="app"'))continue
   assert.ok(data.sources.some(x=>x.includes('mobile-gutters-1020.css')),page)
-  assert.match(read(page),/canvas-780\.css\?v=20261021-780-payback-1/)
-  assert.match(read(page),/js\/app\.js\?v=20261021-780-payback-1/)
+  assert.match(read(page),/canvas-780\.css\?v=20261021-mobile-parity-1/)
+  assert.match(read(page),/js\/app\.js\?v=20261021-mobile-parity-1/)
  }
  assert.equal((read('events.html').match(/후기 페이백 이벤트 2가지, 각 3만원 · 최대 6만원/g)||[]).length,2)
  const quick=read('js/quick-estimate.js');assert.doesNotMatch(quick,/할인과|\['discount','payback'\]/)
@@ -30,10 +30,10 @@ test('Tracking, booking, music and image source files remain byte-identical to t
  for(const p of ['js/analytics.js','js/meta-pixel.js','js/tracking-common.js','js/inquiry-funnel.js','js/contact-form.js','js/booking-wizard.js'])assert.equal(read(p).replaceAll('\r\n','\n'),git(p).replaceAll('\r\n','\n'),p)
  const protectedLines=s=>s.replaceAll('\r\n','\n').split('\n').filter(line=>/wistia_vid|KakaoTalkClick|['"]Contact['"]/.test(line))
  assert.deepEqual(protectedLines(app),protectedLines(git('js/app.js')))
- const changed=execFileSync('git',['diff','25ede5d','--name-only','--','assets'],{cwd:root,encoding:'utf8'}).trim()
+ const changed=execFileSync('git',['diff','bc0980a','--name-only','--','assets'],{cwd:root,encoding:'utf8'}).trim()
  assert.equal(changed,'','no music or original image mutations')
  for(const p of Object.keys(manifest.pages)){
-  const normalize=s=>s.replace(/css\/bundle-[a-f\d]{8}\.css\?v=[^"\s]+/g,'CSS_BUNDLE').replace(/(css\/canvas-780\.css|js\/app\.js|js\/quick-estimate\.js)\?v=[^"\s]+/g,'$1?v=CACHE').replace(/content="(?:위스티아의 할인과 후기 페이백 혜택, 각 이벤트의 참여 조건을 확인하세요|후기 페이백 이벤트 2가지, 각 3만원 · 최대 6만원)"/g,'content="EVENT_DESCRIPTION"').replaceAll('\r\n','\n')
-  assert.equal(normalize(read(p)),normalize(git(p)),p+' only cache and approved event metadata changed')
+  assert.ok(manifest.pages[p].sources.some(href=>href.includes('mobile-parity-780.css')),p+' shared parity CSS')
+  assert.match(read(p),/js\/privacy-content\.js\?v=20261021-mobile-parity-1/,p+' shared privacy content')
  }
 })

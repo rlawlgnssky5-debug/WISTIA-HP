@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
+import { mobileCanvasCss } from '../scripts/mobile-canvas-css.mjs'
 
 // Let legacy assertions inspect the original stylesheet order/cache queries.
 // First prove those sources are actually served by the page's current bundle.
@@ -20,7 +21,7 @@ export function readWithBundleSources(file) {
     const path = href.replace(/^\//, '').split('?')[0]
     let text = read(path).replace(/^\uFEFF/, '').replace(/^@charset "utf-8";\r?\n?/i, '')
     if (!text.endsWith('\n')) text += '\n'
-    return `/* == ${path} == */\n${text}`
+    return `/* == ${path} == */\n${mobileCanvasCss(text, path)}`
   })
   assert.equal(bundle.replace(/^@charset "UTF-8";\n/, ''), parts.join(''), `${file}: exact source contents and order`)
   return html.replace(tag, page.sources.map(href => `<link rel="stylesheet" href="${href}">`).join('\n  '))

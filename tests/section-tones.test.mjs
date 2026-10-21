@@ -5,10 +5,10 @@ import {readFileSync} from 'node:fs'
 const {sectionTones}=createRequire(import.meta.url)('../js/detail-pc-background.js')
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
-test('15 ordered sections use distinct, restrained light surfaces',()=>{
+test('15 ordered sections keep the neutral surface ramp until colour approval',()=>{
  assert.equal(sectionTones.length,15)
  assert.equal(new Set(sectionTones.map(([selector])=>selector)).size,15)
- assert.equal(new Set(sectionTones.map(([,color])=>color)).size,15)
+ assert.deepEqual([...new Set(sectionTones.map(([,color])=>color))],['#FFFFFF','#F5F5F7'])
  for(const [,color]of sectionTones){
   assert.match(color,/^#[\dA-F]{6}$/)
   for(const hex of color.slice(1).match(/../g))assert.ok(parseInt(hex,16)>=225)
@@ -31,6 +31,6 @@ test('home and normal DUET entries load the section CSS and fresh background scr
  const manifest=JSON.parse(read('css/bundles.json'))
  for(const page of ['index.html','detail/duo.html']){
   assert.ok(manifest.pages[page].sources.includes('css/section-tones.css?v=20261021-section-tones-1'))
-  assert.match(read(page),/js\/detail-pc-background\.js\?v=20261021-section-tones-1/)
+  assert.match(read(page),/js\/detail-pc-background\.js\?v=20261021-mobile-parity-1/)
  }
 })

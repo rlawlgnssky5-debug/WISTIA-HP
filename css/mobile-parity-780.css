@@ -1,0 +1,49 @@
+/* Shared fixes only; optional section colours live outside the shipped CSS */
+html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu {
+  background:#FBF3F3!important;color:#5A3A40!important;
+  border-color:#EBD5D8!important;box-shadow:none!important;
+}
+html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu :is(a,button,.menu-title){color:#5A3A40!important}
+html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu .menu-group-label{color:#A65A6C!important}
+html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu :is(a,.menu-group){border-color:#EBD5D8!important}
+html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu .menu-group{border-top:1px solid #EBD5D8!important}
+html body #siteHeader #menuToggle{color:#A65A6C!important}
+
+/* These scopes outrank the old theme layers without touching other type */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app:has(.rv5) .rv5-title,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app #rv5 .rv5-title{white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important;max-width:100%!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-art{position:relative;display:block;width:100%;aspect-ratio:860/1490;overflow:hidden}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-art>.solo-shot-img{display:block;width:100%!important;max-width:none!important;height:auto!important;border-radius:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links{
+  position:relative!important;inset:auto!important;display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+  width:auto!important;height:auto!important;margin:0 5.8% 7%!important;padding:0!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links a{
+  position:static!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;min-height:42px!important;width:auto!important;height:auto!important;
+  padding:10px 8px!important;border:1px solid #C4808C!important;border-radius:999px!important;
+  background:#fff!important;color:#A65A6C!important;font:600 13px/1.4 Pretendard,sans-serif!important;
+  text-decoration:none!important;text-indent:0!important;opacity:1!important;visibility:visible!important;box-shadow:none!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links a:first-child{background:#A65A6C!important;color:#fff!important;border-color:#A65A6C!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links a:focus-visible{outline:2px solid #5A3A40!important;outline-offset:3px}
+.privacy-policy{box-sizing:border-box;padding:40px 20px 64px;line-height:1.75}
+.privacy-policy h1{font-size:30px;line-height:1.25;margin:10px 0 20px}
+.privacy-policy h2{font-size:20px;line-height:1.45;margin:0 0 12px}
+.privacy-policy :is(p,li){font-size:15px;overflow-wrap:anywhere}
+.privacy-policy section{margin:28px 0;padding:0}
+.privacy-policy table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:13px}
+.privacy-policy :is(td,th){padding:10px 6px;border:1px solid #EBD5D8;overflow-wrap:anywhere}
+
+@media(min-width:780px){
+  html body #floatingKakaoChat.floating-kakao-pill{right:calc((100vw - 780px)/2 + 16px)!important;left:auto!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(.arc-section,.arc-point,.solo-shot,.solo-poster-stack){width:100%!important;max-width:none!important;margin-inline:0!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean{padding-inline:0!important}
+  html body #app .solo-faq-html{--wistia-font-cqw:3.1712px}
+  /* No extra inset from an old desktop shell inside the 780px canvas */
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.wistia-wizard,.ev2-wrap,.info-page,.before-after-page,.detail-cover,.solo-footer-clean,.solo-footer-clean .footer,.mobile-ar-solo){width:100%!important;max-width:780px!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
+  html body #app>.shell{width:100%!important;max-width:780px!important;margin-inline:0!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .footer{width:100%!important;max-width:780px!important;margin-inline:0!important;box-sizing:border-box!important}
+  html[data-wistia-theme][data-wistia-palette] body #mainMenu#mainMenu{right:calc((100vw - 780px)/2)!important;left:auto!important;max-width:780px!important}
+}

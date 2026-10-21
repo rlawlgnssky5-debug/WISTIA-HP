@@ -11,9 +11,9 @@ html[data-wistia-theme],html[data-wistia-theme] body{
 html[data-wistia-theme] #app#app{color:var(--brand-black);background:var(--brand-gray)!important}
 html[data-wistia-theme] #app#app *,html[data-wistia-theme] #siteHeader#siteHeader *{color:inherit!important;border-color:var(--brand-line)!important}
 html[data-wistia-theme] #siteHeader#siteHeader{color:var(--brand-black);background:var(--brand-gray)!important;border-color:var(--brand-line)!important}
-html[data-wistia-theme] #mainMenu#mainMenu{color:var(--brand-gray);background:var(--brand-black)!important;border-color:var(--brand-pink)!important}
-html[data-wistia-theme] #mainMenu#mainMenu *{color:inherit!important;border-color:rgba(245,245,245,.18)!important}
-html[data-wistia-theme] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--brand-pink)!important}
+html[data-wistia-theme] #mainMenu#mainMenu{color:#5A3A40!important;background:#FBF3F3!important;border-color:#EBD5D8!important}
+html[data-wistia-theme] #mainMenu#mainMenu *{color:#5A3A40!important;border-color:#EBD5D8!important}
+html[data-wistia-theme] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:#A65A6C!important}
 html[data-wistia-theme] #menuToggle#menuToggle span{background:var(--brand-black)!important}
 html[data-wistia-theme] #app#app :is(.we-home,.we-hero,.we-section,.we-review-wrap,.mobile-ar-solo,.mas-intro,.mas-gallery,.mas-gallery-caption,.mas-gallery-viewport,.mas-summary,.mas-selection,.mas-information,.arc-section,.arc-point,.arc-engineer,.arc-advantages,.arc-reviews,.solo-reviews,.wistia-ba-section,.wistia-ar,.wistia-advantages,.info-page,.info-section,.footer){background:var(--brand-gray)!important}
 html[data-wistia-theme] #app#app :is(.we-service,.we-craft-list details,.we-directions-copy,.wistia-about-closing,.wistia-specialist-grid article,.arc-recording-flow li,.arc-free-edit,.arc-key-statement,.ar-expert-story,.ar-expert-panel,.story-process-folder>summary,.story-process-grid li,.wistia-advantages li,.detail-price-reason,.mas-event-list,.mas-event-content,.bap-player,.bap-tabs,.bap-badge,.bap-hint,.bap-note){color:var(--brand-black)!important;background:var(--brand-gray)!important;border-color:var(--brand-line)!important;box-shadow:0 4px 0 rgba(23,23,23,.08),0 12px 24px rgba(23,23,23,.05)!important}

@@ -55,8 +55,8 @@ html[data-wistia-palette="noir-minimal"] #app#app#app :is(.wistia-ba-section,.wi
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-gallery-dots button[aria-pressed="true"]::after{background:var(--palette-charcoal)!important;border-color:var(--palette-ink)!important}
 html[data-wistia-palette="noir-minimal"] #app#app#app .mas-gallery-dots button:not([aria-pressed="true"])::after{background:var(--palette-paper)!important;border-color:var(--palette-charcoal)!important}
 /* Menu and modal chrome, without recolouring the Kakao mark or any media */
-html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu{background:var(--palette-charcoal)!important;color:var(--palette-paper)!important}
-html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:var(--palette-paper)!important}
+html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu{background:#FBF3F3!important;color:#5A3A40!important}
+html[data-wistia-palette="noir-minimal"] #mainMenu#mainMenu :is(.menu-group-label,.menu-title){color:#A65A6C!important}
 html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog{background:var(--palette-paper)!important;color:var(--palette-ink)!important}
 html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog::backdrop{background:rgba(37,36,33,.55)}
 html[data-wistia-palette="noir-minimal"] #mediaDialog#mediaDialog :is(.consult-copy-mark,.consult-validation-list li,.consult-validation-list){background:var(--palette-soft)!important;color:var(--palette-ink)!important}

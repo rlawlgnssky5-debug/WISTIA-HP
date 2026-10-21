@@ -100,7 +100,7 @@
     entry.src=src;entry.surface=surface;entry.canvas=work;position(entry)
    }catch{entry.canvas=null}
   }
-  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame .solo-shot-img,.solo-approved-info,.solo-approved-faq,.solo-review-grid>.solo-shot-img,.solo-p4-art>.solo-shot-img,.solo-map>.solo-shot-img,.solo-footer>.solo-shot-img')
+  const images=detail.querySelectorAll('.detail-poster-image,.solo-shot-frame .solo-shot-img,.solo-approved-info,.solo-approved-faq,.solo-review-grid>.solo-shot-img,.solo-p4-art>.solo-shot-img,.solo-map-art>.solo-shot-img,.solo-footer>.solo-shot-img')
   images.forEach(image=>{const entry={image};entries.push(entry);entry.load=()=>paint(entry);image.addEventListener('load',entry.load);observer.observe(image);paint(entry)})
   const change=()=>entries.forEach(paint);media.addEventListener('change',change)
   cleanup=()=>{observer.disconnect();media.removeEventListener('change',change);entries.forEach(e=>{e.image.removeEventListener('load',e.load);e.canvas?.remove()})}

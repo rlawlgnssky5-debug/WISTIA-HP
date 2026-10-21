@@ -3,7 +3,7 @@
 body{background:#e9e8e1}
 #app{background:#f7f6f1}
 #siteHeader,body.is-solo-detail #siteHeader,body.menu-open #siteHeader{background:#f7f6f1;border-bottom-color:#deddd5;box-shadow:none}
-#mainMenu{background:#f7f6f1;border-left:1px solid #deddd5}
+#mainMenu{background:#FBF3F3!important;border-left:1px solid #EBD5D8}
 .menu-group-label,.menu-title{color:#79796e}
 .wordmark>span{letter-spacing:.12em}
 .info-page-intro h1{font-weight:400}

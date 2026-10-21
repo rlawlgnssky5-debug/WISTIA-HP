@@ -5,10 +5,11 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { resolve, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
+import { mobileCanvasCss } from './mobile-canvas-css.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(root, 'css/bundles.json')
-const version = '20261021-780-payback-1'
+const version = '20261021-mobile-parity-1'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }
@@ -63,7 +64,8 @@ export function inspectCss(text, file) {
   if (/@charset\b/i.test(body.replace(/\/\*[\s\S]*?\*\//g, ' '))) fail(`${file}: @charset must be at the very top`)
   // Source and output are both in css/: every relative url(), including ../,
   // retains exactly the same base URL. Nested source paths are rejected above.
-  return { body: body.endsWith('\n') ? body : body + '\n', charset: Boolean(charset) }
+  body = body.endsWith('\n') ? body : body + '\n'
+  return { body: mobileCanvasCss(body, file), charset: Boolean(charset) }
 }
 
 export function expandBundledHtml(html, manifest = loadManifest(), page = 'index.html') {
@@ -73,7 +75,7 @@ export function expandBundledHtml(html, manifest = loadManifest(), page = 'index
     const bundle = manifest.bundles[key]
     if (!bundle) fail(`Missing manifest sources for ${key}`)
     const sources = manifest.pages[page]?.bundle === key ? manifest.pages[page].sources : bundle.sources
-    const links = sources.map(href => `<link rel="stylesheet" href="${href}">`).join('\n  ')
+    const links = sources.filter(href => !/canvas-780\.css/.test(href)).map(href => `<link rel="stylesheet" href="${href}">`).join('\n  ')
     html = html.slice(0, token.start) + links + html.slice(token.end)
   }
   return html
@@ -81,7 +83,7 @@ export function expandBundledHtml(html, manifest = loadManifest(), page = 'index
 
 function servedPages(dir = root) {
   return readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name)).flatMap(entry => {
-    if (entry.name.startsWith('.') || ['tmp', 'tests', 'node_modules', 'Claude outputs'].includes(entry.name)) return []
+    if (entry.name.startsWith('.') || ['tmp', 'output', 'tests', 'node_modules', 'Claude outputs'].includes(entry.name)) return []
     const path = resolve(dir, entry.name)
     return entry.isDirectory() ? servedPages(path) : /\.html$/i.test(entry.name) ? [relative(root, path).replaceAll('\\', '/')] : []
   })
@@ -95,7 +97,7 @@ export function buildCssBundles() {
       const html = read(page), tokens = stylesheetTokens(html), local = tokens.filter(t => isLocal(t.href))
       if (!local.length) continue
       const between = tokens.filter(t => t.start > local[0].start && t.start < local.at(-1).start)
-      if (between.some(t => t.style || !isLocal(t.href))) fail(`${page}: interleaved <style> or non-local stylesheet; page not bundled`)
+      if (between.some(t => t.style || !isLocal(t.href))) fail(`${page}: interleaved <style> or non-local stylesheet; page not bundled (${between.filter(t => t.style || !isLocal(t.href)).map(t => t.href || '<style>').join(', ')})`)
       for (const token of local) {
         if (Object.keys(token.attrs).some(key => !['href', 'rel'].includes(key))) fail(`${page}: local stylesheet has extra attributes; cannot preserve semantics`)
       }
@@ -105,13 +107,14 @@ export function buildCssBundles() {
         const saved = previous.pages[page]
         if (saved?.bundle === key) return saved.sources
         return previous.bundles[key]?.sources ?? fail(`${page}: missing original sources for ${key}`)
-      })
+      }).filter(href => !/canvas-780\.css/.test(href))
       // Every app entry can reach the same routes through pushState
       // Keep the existing mobile gutter rules in every entry's source list
       if (/\bid=["']app["']/.test(html) && !sources.some(href => /mobile-gutters-1020\.css/.test(href))) {
         const beforeHero = sources.findIndex(href => /hero-slider\.css/.test(href))
         sources.splice(beforeHero < 0 ? sources.length : beforeHero, 0, 'css/mobile-gutters-1020.css?v=20261020-mobile-gutters-1')
       }
+      if (/\bid=["']app["']/.test(html) && !sources.some(href => /mobile-parity-780\.css/.test(href))) sources.push('css/mobile-parity-780.css?v=20261021-mobile-parity-1')
       const groupKey = JSON.stringify(sources)
       let group = groups.get(groupKey)
       if (!group) {

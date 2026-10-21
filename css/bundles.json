@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "cacheVersion": "20261021-780-payback-1",
+  "cacheVersion": "20261021-mobile-parity-1",
   "bundles": {
-    "css/bundle-1b08e064.css": {
+    "css/bundle-47da7046.css": {
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -82,7 +82,7 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
       "sourceLists": [
         [
@@ -164,7 +164,7 @@
           "css/hero-slider.css?v=20261020-hero2",
           "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
           "css/section-tones.css?v=20261021-section-tones-1",
-          "css/canvas-780.css?v=20261021-base780"
+          "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
         ]
       ],
       "pages": [
@@ -194,38 +194,19 @@
         "info/faq.html",
         "info/location.html",
         "info/process.html",
+        "privacy.html",
         "section/homeCases.html",
         "section/homeLocation.html",
         "section/homeProcess.html",
         "section/homeServices.html",
         "song.html"
       ],
-      "size": 1078260
-    },
-    "css/bundle-720c6398.css": {
-      "sources": [
-        "/css/noir-minimal.css?v=20261014-detail-polish-16j",
-        "css/heading-font.css?v=20261014-detail-polish-16j",
-        "/css/kakao-inquiry.css?v=20261014-detail-polish-16j11",
-        "/css/canvas-780.css?v=20261021-base780"
-      ],
-      "sourceLists": [
-        [
-          "/css/noir-minimal.css?v=20261014-detail-polish-16j",
-          "css/heading-font.css?v=20261014-detail-polish-16j",
-          "/css/kakao-inquiry.css?v=20261014-detail-polish-16j11",
-          "/css/canvas-780.css?v=20261021-base780"
-        ]
-      ],
-      "pages": [
-        "privacy.html"
-      ],
-      "size": 34658
+      "size": 2087632
     }
   },
   "pages": {
     "ar/friend.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -305,13 +286,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "ar/self.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -391,13 +372,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "before-after.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -477,13 +458,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "contact.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -563,13 +544,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/duet-film.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -649,13 +630,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/duo.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -735,13 +716,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/proposal.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -821,13 +802,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/solo-film.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -907,13 +888,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/solo.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -993,13 +974,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "detail/wedding.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1079,13 +1060,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/duet-film.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1165,13 +1146,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/duo.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1251,13 +1232,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/proposal.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1337,13 +1318,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/solo-film.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1423,13 +1404,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/solo.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1509,13 +1490,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "event/wedding.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1595,13 +1576,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "events.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1681,13 +1662,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "film.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1767,13 +1748,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "find/people.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1853,13 +1834,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "find/role.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -1939,13 +1920,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "find/service.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2025,13 +2006,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "index.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2111,13 +2092,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "info/about.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2197,13 +2178,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "info/faq.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2283,13 +2264,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "info/location.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2369,13 +2350,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "info/process.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2455,24 +2436,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "privacy.html": {
-      "bundle": "css/bundle-720c6398.css",
-      "sources": [
-        "/css/noir-minimal.css?v=20261014-detail-polish-16j",
-        "css/heading-font.css?v=20261014-detail-polish-16j",
-        "/css/kakao-inquiry.css?v=20261014-detail-polish-16j11",
-        "/css/canvas-780.css?v=20261021-base780"
-      ],
-      "href": "/css/bundle-720c6398.css?v=20261021-780-payback-1",
-      "linksRemoved": 3
-    },
-    "section/homeCases.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2552,13 +2522,99 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
+      "linksRemoved": 78
+    },
+    "section/homeCases.html": {
+      "bundle": "css/bundle-47da7046.css",
+      "sources": [
+        "css/design.css?v=20261014-detail-polish-16j12",
+        "css/before-after.css?v=20261014-detail-polish-16j12",
+        "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
+        "css/process-studio.css?v=20261014-detail-polish-16j12",
+        "css/hero-editor.css?v=20261014-detail-polish-16j12",
+        "css/process-editor.css?v=20261014-detail-polish-16j12",
+        "css/home-finder.css?v=20261014-detail-polish-16j12",
+        "css/solo-typography.css?v=20261014-detail-polish-16j12",
+        "css/customer-fixes.css?v=20261014-detail-polish-16j12",
+        "css/events-page.css?v=20261014-detail-polish-16j12",
+        "css/editorial-theme.css?v=20261014-detail-polish-16j12",
+        "css/ar-sales-detail.css?v=20261014-detail-polish-16j12",
+        "css/ar-product-detail.css?v=20261014-detail-polish-16j12",
+        "css/wedding-studio-home.css?v=20261014-detail-polish-16j12",
+        "css/wedding-renewal.css?v=20261014-detail-polish-16j12",
+        "css/studio-depth.css?v=20261014-detail-polish-16j12",
+        "css/studio-refinements.css?v=20261014-detail-polish-16j12",
+        "css/approved-refinements.css?v=20261014-detail-polish-16j12",
+        "css/seamless-surfaces.css?v=20261014-detail-polish-16j12",
+        "css/responsive-pages.css?v=20261014-detail-polish-16j12",
+        "css/detail-readability.css?v=20261014-detail-polish-16j12",
+        "css/price-sidebar.css?v=20261014-detail-polish-16j12",
+        "css/vocal-player-responsive.css?v=20261014-detail-polish-16j12",
+        "css/booking-contact.css?v=20261014-detail-polish-16j12",
+        "css/inquiry-flow.css?v=20261014-detail-polish-16j12",
+        "css/consultation-flow.css?v=20261014-detail-polish-16j12",
+        "css/customer-review-fixes.css?v=20261014-detail-polish-16j12",
+        "css/detail-point-system.css?v=20261014-detail-polish-16j12",
+        "css/mobile-ar-solo.css?v=20261014-detail-polish-16j12",
+        "css/mobile-studio-home.css?v=20261014-detail-polish-16j12",
+        "css/home-form-refresh.css?v=20261014-detail-polish-16j12",
+        "css/brand-detail-polish.css?v=20261014-detail-polish-16j12",
+        "css/mobile-final-polish.css?v=20261014-detail-polish-16j12",
+        "css/phone-capture-fixes.css?v=20261014-detail-polish-16j12",
+        "css/alignment-audit.css?v=20261014-detail-polish-16j12",
+        "css/inquiry-actions.css?v=20261014-detail-polish-16j12",
+        "css/question-cards-kakao.css?v=20261014-detail-polish-16j12",
+        "css/pink-black-theme.css?v=20261014-detail-polish-16j12",
+        "css/dusty-wedding-theme.css?v=20261014-detail-polish-16j12",
+        "css/inquiry-choice-editor.css?v=20261014-detail-polish-16j12",
+        "css/monochrome-maru-theme.css?v=20261014-detail-polish-16j12",
+        "css/functional-card-clarity.css?v=20261014-detail-polish-16j12",
+        "css/approved-home-thumbnails.css?v=20261014-detail-polish-16j12",
+        "css/noir-minimal.css?v=20261014-detail-polish-16j12",
+        "css/studio-graphics.css?v=20261014-detail-polish-16j12",
+        "css/luxury-finish.css?v=20261014-detail-polish-16j12",
+        "css/detail-consistency.css?v=20261014-detail-polish-16j12",
+        "css/svg-interface.css?v=20261014-detail-polish-16j12",
+        "css/svg-player-controls.css?v=20261014-detail-polish-16j12",
+        "css/booking-availability.css?v=20261014-detail-polish-16j12",
+        "css/detail-section-layout.css?v=20261014-detail-polish-16j12",
+        "css/heading-font.css?v=20261014-detail-polish-16j12",
+        "css/kakao-inquiry.css?v=20261014-detail-polish-16j12",
+        "css/detail-point-16f.css?v=20261014-detail-polish-16j12",
+        "css/detail-point-16i.css?v=20261014-detail-polish-16j12",
+        "css/detail-solo-16j.css?v=20261017-hotfix2",
+        "css/booking-wizard.css?v=20261015-friendly-options-1",
+        "css/detail-booking-refinement.css?v=20261014-pc-wizard-2",
+        "css/detail-inquiry-five.css?v=20261015-lyric-only-1",
+        "css/mobile-detail-safety.css?v=20261015-mobile-safety-1",
+        "css/faq-guide.css?v=20261015-faq-guide-1",
+        "css/site-layout-safety.css?v=20261015-layout-safety-1",
+        "css/consult-choice.css?v=20261015-consult-choice-1",
+        "css/booking-schedule-switch.css?v=20261015-schedule-switch-1",
+        "css/booking-mobile-scale.css?v=20261015-draft-mobile-1",
+        "css/fix-1017.css?v=20261017-codex1",
+        "css/style-1017b.css?v=20261017-style-1",
+        "css/review6-1017.css?v=20261017-review6",
+        "css/batch3-1017.css?v=20261017-batch3",
+        "/css/evt1-1017.css?v=20261017-faqbr",
+        "/css/faqbr-1017.css?v=20261017-faqbr",
+        "/css/contactok-1017.css?v=20261017-contactok",
+        "css/promo30-1019.css?v=20261019-promo30",
+        "css/faqm-1019.css?v=20261019-faqm",
+        "css/mobile-gutters-1020.css?v=20261020-mobile-gutters-1",
+        "css/hero-slider.css?v=20261020-hero2",
+        "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
+        "css/section-tones.css?v=20261021-section-tones-1",
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
+      ],
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "section/homeLocation.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2638,13 +2694,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "section/homeProcess.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2724,13 +2780,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "section/homeServices.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2810,13 +2866,13 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     },
     "song.html": {
-      "bundle": "css/bundle-1b08e064.css",
+      "bundle": "css/bundle-47da7046.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -2896,9 +2952,9 @@
         "css/hero-slider.css?v=20261020-hero2",
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
-        "css/canvas-780.css?v=20261021-base780"
+        "css/mobile-parity-780.css?v=20261021-mobile-parity-1"
       ],
-      "href": "css/bundle-1b08e064.css?v=20261021-780-payback-1",
+      "href": "css/bundle-47da7046.css?v=20261021-mobile-parity-1",
       "linksRemoved": 78
     }
   }
