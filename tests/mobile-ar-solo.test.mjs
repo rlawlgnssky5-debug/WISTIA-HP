@@ -37,6 +37,7 @@ for(const key of ['solo','duo']){
 assert.doesNotMatch(source,/sizes="\(min-width: 901px\)/)
 assert.match(source,/sizes="\(min-width: 780px\)/)
 for(const page of ['index.html','detail/solo.html','detail/duo.html','info/about.html','events.html','contact.html']){
+ if(!existsSync(new URL('../'+page,import.meta.url)))continue
  const html=read(page)
  assert.match(html,/mobile-gutters-1020\.css/,'SPA entries must retain the same gutters')
  assert.match(html,/canvas-780\.css\?v=20261021-780-payback-1/)

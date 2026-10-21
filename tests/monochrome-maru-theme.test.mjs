@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const css=read('css/monochrome-maru-theme.css'),index=read('index.html'),base=read('css/dusty-wedding-theme.css')
 assert.match(index,/data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir"/)
@@ -39,6 +39,7 @@ assert.match(css,/\.info-faq-group h2[^\n]*background:var\(--mono-gray\)!importa
 assert.match(css,/\.info-process \.booking-guide article/)
 assert.doesNotMatch(css,/filter:|img\s*\{/,'actual media and brand mark must not be recoloured')
 for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/solo','event/duo','event/duet-film','info/location','info/about','info/faq','info/process','events']){
+ if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue
  const page=read(route+'.html')
  assert.match(page,/monochrome-maru-theme.css\?v=20261014-detail-polish-16j/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)

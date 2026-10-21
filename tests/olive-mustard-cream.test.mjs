@@ -2,7 +2,7 @@ import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertInquiryWithoutName} from './inquiry-without-name-fixture.mjs'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 const read=readWithBundleSources
 const css=read('css/olive-mustard-cream.css'),index=read('index.html')
@@ -23,6 +23,7 @@ const contrast=(a,b)=>(Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05
 for(const pair of [['4B5234','F2EBD9'],['59613F','F2EBD9'],['FFFDF4','667044'],['30361F','E7B928'],['4B5234','EEDCA6'],['4B5234','E6E3CD']])assert.ok(contrast(...pair)>=4.5,pair.join(' / '))
 assert.ok(contrast('87916B','FFFDF4')>=3,'rest waveform must be visible')
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/location','info/about','info/faq','info/process','events','before-after','find/role','find/service','find/people','privacy']){
+ if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue
  assert.match(read(route+'.html'),/data-wistia-palette="noir-minimal"/)
  assert.match(read(route+'.html'),/noir-minimal.css\?v=20261014-detail-polish-16j/)
 }
@@ -30,6 +31,6 @@ for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','inf
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
 assertPreservedAppLogic(read('js/app.js')) // Latest approved graphic renderers supersede the palette-only whole-file lock
 assertInquiryWithoutName(read('js/contact-form.js')) // Name removal supersedes the earlier whole-file inquiry lock
-assert.equal(hash(read('privacy.html').replace('<body class="privacy-page">','<body>').replace(/^  <a class="floating-kakao-pill".*\n/m,'').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908','legal content is unchanged')
+assert.equal(existsSync(new URL('../privacy.html',import.meta.url)),false,'retired privacy page is not served')
 console.log('Archived olive palette, active successor, readable roles and unchanged geometry/media/app/legal content passed')
 assert.doesNotMatch(index,/href="css\/olive-mustard-cream.css/,'the archived palette must not load alongside its successor')

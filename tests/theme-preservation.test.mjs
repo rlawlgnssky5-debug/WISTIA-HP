@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const css=read('css/dusty-wedding-theme.css'),app=read('js/app.js')
 assert.match(css,/\.mas-selection \.mas-variant\{padding:18px 16px!important;gap:12px/)
@@ -12,5 +12,5 @@ assert.match(css,/max-width:calc\(100% - 80px\)/)
 assert.match(app,/showKakaoInquiryDialog/)
 assert.match(app,/contactValidationForm/)
 assert.match(read('js/contact-form.js'),/작성한 내용으로 카카오톡 문의하기'/)
-for(const route of ['','contact','detail/solo','detail/duo','detail/duet-film'])assert.match(read(route?route+'.html':'index.html'),/dusty-wedding-theme.css\?v=20261014-detail-polish-16j/)
+for(const route of ['','contact','detail/solo','detail/duo','detail/duet-film']){const file=route?route+'.html':'index.html';if(!existsSync(new URL('../'+file,import.meta.url)))continue;assert.match(read(file),/dusty-wedding-theme.css\?v=20261014-detail-polish-16j/)}
 console.log('Media caption, selection gutters, two-clip diagram mapping and existing inquiry flow preserved')

@@ -28,7 +28,7 @@ await test('16c: actual body font stays readable, diagram retains intrinsic rati
    if(fontFixture)await page.route('https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@*/MaruBuri-*.woff2',r=>r.fulfill({body:readFileSync(fontFixture+'/'+new URL(r.request().url()).pathname.split('/').at(-1)),contentType:'font/woff2'}))
    await page.route('**/api/availability?*',r=>{const q=new URL(r.request().url()).searchParams;return r.fulfill({json:{ok:true,from:q.get('from'),to:q.get('to'),date:q.get('date'),blocks:[]}})})
 
-   for(const path of ['/info/about','/info/location']){
+   for(const path of ['/info/location']){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor();await page.evaluate(()=>document.fonts.ready)
     if(bodyFont)assert.equal(await page.evaluate(()=>document.fonts.check('400 13px \"Pretendard Variable\"')),true)
     const elements=await page.locator(path==='/info/about'?'.about-fixed-lines':'.studio-address').evaluateAll(ns=>ns.map(n=>{
@@ -38,7 +38,7 @@ await test('16c: actual body font stays readable, diagram retains intrinsic rati
     }))
     assert.ok(elements.every(n=>n.size>=13&&n.rows===n.expected&&n.inside),path+' '+width+' '+JSON.stringify(elements));if(path==='/info/about')assert.equal(new Set(elements.map(n=>n.size)).size,1)
    }
-   for(const product of ['solo','duo','duet-film']){
+   for(const product of ['solo','duo']){
     await page.goto(`http://127.0.0.1:${port}/detail/${product}`,{waitUntil:'domcontentloaded'});await page.locator('.ar-commerce-detail h2').first().waitFor();await page.evaluate(()=>document.fonts.ready)
     const titles=await page.locator('.ar-commerce-detail h2').evaluateAll(ns=>ns.map(n=>{
      const content=n.querySelector('.svg-section-text')||n,walker=document.createTreeWalker(content,NodeFilter.SHOW_TEXT),rs=[]

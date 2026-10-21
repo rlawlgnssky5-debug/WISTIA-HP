@@ -20,12 +20,22 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
  try{
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('preview timeout')),10000);server.stdout.once('data',()=>{clearTimeout(timer);resolve()});server.once('error',reject)})
   browser=await playwright.chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox','--disable-dev-shm-usage']})
-  const paths=['/','/contact','/privacy','/before-after','/song','/film','/events','/ar/self','/ar/friend',...['about','faq','location','process'].map(p=>'/info/'+p),...['role','service','people'].map(p=>'/find/'+p),...['homeServices','homeCases','homeLocation','homeProcess'].map(p=>'/section/'+p),...['solo','duo','duet-film','solo-film','wedding','proposal'].flatMap(p=>['/detail/'+p,'/event/'+p])]
+  const live=['/','/contact','/events','/info/faq','/info/location','/detail/solo','/detail/duo','/event/solo','/event/duo']
+  const gone=['/privacy','/before-after','/song','/film','/ar/self','/ar/friend','/info/about','/info/process','/find/service','/section/homeProcess','/detail/duet-film','/detail/wedding','/event/wedding','/event/duet-film']
   for(const width of [320,390,1280]){
    const context=await browser.newContext({viewport:{width,height:844},isMobile:width<600,hasTouch:true}),page=await context.newPage()
    await page.route('https://**/*',r=>r.abort())
    await page.route('**/api/availability?*',r=>{const q=new URL(r.request().url()).searchParams;return r.fulfill({json:{ok:true,from:q.get('from'),to:q.get('to'),date:q.get('date'),blocks:[]}})})
-   for(const path of paths){
+   if(width===1280){
+    for(const path of gone){
+     const response=await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
+     assert.equal(response.status(),410,path)
+     assert.match(await page.locator('body').innerText(),/없어진 페이지예요/)
+     assert.equal(await page.locator('#app').count(),0,path)
+     assert.doesNotMatch(await page.content(),/js\/app\.js/)
+    }
+   }
+   for(const path of live){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     if(path!='/privacy')await page.locator('#app h1').first().waitFor()
     if(path==='/detail/solo'||path==='/detail/duo'){
@@ -66,16 +76,14 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
    }
    if(width===390){
     await context.route('https://pf.kakao.com/_GbExjX/chat',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>kakao-chat</title>'}))
-    for(const path of ['/','/privacy','/detail/duo','/events','/info/location']){
+    for(const path of ['/','/detail/duo','/events','/info/location']){
      await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
-     if(path!=='/privacy'){
-      await page.locator('.wistia-intro').waitFor({state:'detached'})
-      await page.locator('footer').scrollIntoViewIfNeeded()
-      await page.locator('#floatingKakaoChat').click()
-      await page.locator('#mediaDialog .consult-choice-dialog').waitFor({state:'visible'})
-      assert.equal(await page.locator('#mediaDialog .consult-choice-card').count(),2)
-     }
-     const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator(path==='/privacy'?'#floatingKakaoChat':'#mediaDialog .consult-choice-direct').click()])
+     await page.locator('.wistia-intro').waitFor({state:'detached'})
+     await page.locator('footer').scrollIntoViewIfNeeded()
+     await page.locator('#floatingKakaoChat').click()
+     await page.locator('#mediaDialog .consult-choice-dialog').waitFor({state:'visible'})
+     assert.equal(await page.locator('#mediaDialog .consult-choice-card').count(),2)
+     const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('#mediaDialog .consult-choice-direct').click()])
      await popup.waitForLoadState('domcontentloaded')
      assert.equal(popup.url(),'https://pf.kakao.com/_GbExjX/chat',path)
      assert.equal(await page.locator('#mediaDialog[open]').count(),0,path+' direct choice closes the chooser')
@@ -83,8 +91,6 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
      await popup.close()
     }
    }
-   await page.goto(`http://127.0.0.1:${port}/detail/duet-film`,{waitUntil:'domcontentloaded'})
-   await page.locator('.product-inquiry a').click();assert.equal(await page.locator('#mediaDialog a[href="/event/duet-film"]').count(),1)
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'})
    await page.locator('.solo-footer-inquiry').click()
    await page.waitForURL(/\/event\/solo$/)

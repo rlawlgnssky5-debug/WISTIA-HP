@@ -36,11 +36,11 @@ await test('Requested titles fit mobile and enlarged text; only the recording st
      await setting?.evaluate(n=>n.remove())
     }
    }
-   await page.goto(`http://127.0.0.1:${port}/info/about`,{waitUntil:'domcontentloaded'})
-   await checkTitle('.about-story-title',1)
-   // Measure both specialist headings independently (their article order is stable).
-   for(const child of [2,3])await checkTitle('.wistia-specialist-grid article:nth-child('+child+') .about-specialist-title',1)
-   for(const [product,hours] of [['solo',1],['duo',2],['duet-film',3]]){
+   const gone=await page.goto(`http://127.0.0.1:${port}/info/about`,{waitUntil:'domcontentloaded'})
+   assert.equal(gone.status(),410)
+   assert.match(await page.content(),/없어진 페이지예요/)
+   assert.equal(await page.locator('#app').count(),0)
+   for(const [product,hours] of [['solo',1],['duo',2]]){
     await page.goto(`http://127.0.0.1:${port}/event/${product}`,{waitUntil:'domcontentloaded'})
     await checkTitle('#sourceTitle',1)
     await page.locator('[data-calendar-trigger="bookingDate"]').tap()
