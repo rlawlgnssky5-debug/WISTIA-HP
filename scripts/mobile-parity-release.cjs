@@ -1,7 +1,8 @@
 const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process')
 const root=path.resolve(__dirname,'..'),out=path.join(root,'output/mobile-parity-20261021')
 const git=args=>cp.execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim()
-const sha=git(['rev-parse','HEAD']),files=git(['diff-tree','--no-commit-id','--name-only','-r',sha]).split('\n')
+const sha=git(['rev-parse','HEAD']),files=git(['diff','--name-only','bc0980a',sha]).split('\n')
+const commits=git(['log','--reverse','--format=%H %s','bc0980a..HEAD']).split('\n')
 const read=f=>JSON.parse(fs.readFileSync(path.join(out,f),'utf8'))
 const validation=read('validation.json'),suite=read('suite-comparison.json')
 const deployment=fs.existsSync(path.join(out,'deployment.json'))?read('deployment.json'):null
@@ -9,7 +10,7 @@ const live=fs.existsSync(path.join(out,'live-measurements.json'))?read('live-mea
 const md=[
  '# 위스티아 전체 수정 최종 보고서','',
  '기준 커밋 bc0980a9b13d86eaa4d1ddb385986159496ebcb3',
- '변경 커밋 '+sha,
+ '변경 커밋 전체',...commits.map(c=>'- '+c),
  '변경 파일 '+files.length+'개','',
  '## 반영 범위','',
  '- 1~5번과 7번 반영: PC 780px 가운데 정렬, 휴대폰과 같은 구성·글자 크기·이미지, 제목 잘림 방지, 메뉴 색상·위치, 지도 실제 버튼, 소개 영상 설명·03 카드 제거',

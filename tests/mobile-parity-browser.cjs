@@ -43,7 +43,7 @@ async function measure(page){return page.evaluate(()=>{
  await context.route('**/*',async r=>{
   const u=new URL(r.request().url())
   if(!['GET','HEAD'].includes(r.request().method())||/facebook|google-analytics|googletagmanager|doubleclick/.test(u.hostname))return r.abort()
-  if(u.origin===base){let file=decodeURIComponent(u.pathname.slice(1)||'index.html');if(!path.extname(file))file+='.html';const data=frozen.get(file);if(data)return r.fulfill({status:200,contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.json')?'application/json':'text/html; charset=utf-8',body:file.endsWith('.html')?data.toString().replace(/<meta http-equiv="refresh"[^>]*>/gi,''):data});if(file.endsWith('.html')){const response=await r.fetch();return r.fulfill({response,body:(await response.text()).replace(/<meta http-equiv="refresh"[^>]*>/gi,'')})}}
+  if(u.origin===base&&!u.pathname.startsWith('/api/')){let file=decodeURIComponent(u.pathname.slice(1)||'index.html');if(!path.extname(file))file+='.html';const data=frozen.get(file);if(data)return r.fulfill({status:200,contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.json')?'application/json':'text/html; charset=utf-8',body:file.endsWith('.html')?data.toString().replace(/<meta http-equiv="refresh"[^>]*>/gi,''):data});if(file.endsWith('.html')){const response=await r.fetch();return r.fulfill({response,body:(await response.text()).replace(/<meta http-equiv="refresh"[^>]*>/gi,'')})}}
   return r.continue()
  })
  return context
@@ -65,7 +65,7 @@ async function measure(page){return page.evaluate(()=>{
     results.push({...job,...result})
     console.log(phase,name,'=>',result.path,'overflow',result.overflow,'main',result.layout['main#app'][0]?.width)
    }catch(e){errors.push({...job,message:e.message});console.log('FAIL',name,e.message)}
-   finally{await context.close();fs.writeFileSync(path.join(out,phase+'-measurements.json'),JSON.stringify({base,phase,routes,results,errors},null,2))}
+   finally{await context.unrouteAll({behavior:'ignoreErrors'});await context.close();fs.writeFileSync(path.join(out,phase+'-measurements.json'),JSON.stringify({base,phase,routes,results,errors},null,2))}
   }
  }
  try{await Promise.all(Array.from({length:Number(process.env.WISTIA_QA_WORKERS||1)},worker))}finally{await browser.close()}
