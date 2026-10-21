@@ -11,8 +11,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo
 html body:has(.mobile-ar-solo) main#app{padding-top:24px!important}
 }
 @media(min-width:780px){
-html body header#siteHeader{left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;transform:none!important}
-html body main#app{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important}
+/* legacy full-width header/app rules removed — canvas-780.css now handles 780px canvas and header alignment */
 }
 /* 6 PC caption on one line */
 @media(min-width:780px){

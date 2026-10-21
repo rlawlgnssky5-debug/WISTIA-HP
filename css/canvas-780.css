@@ -1,0 +1,68 @@
+/* ============================================================================
+   780 web canvas
+   ----------------------------------------------------------------------------
+   One design serves every page. The app canvas is 780 wide and centred at any
+   viewport of 780 or more, and each device below that keeps its own mobile
+   layout. Everything that used to stretch — the app root, the header, the
+   floating bars, the price bar — is derived from --app-canvas-width, so the
+   canvas only has to be declared once here.
+
+   This file is the last stylesheet on every page, so it is also the last word
+   in the cascade for the handful of rules that hard-code a wider canvas.
+   ========================================================================== */
+
+@media (min-width: 780px) {
+  /* The canvas variable drives main, #siteHeader, .fixed-price,
+     .booking-mobile-bar, .home-mobile-cta and the floating kakao button.
+     !important is needed because a few pages raise it per product
+     (1120px for commerce detail) with a :has() selector. */
+  html body {
+    --app-canvas-width: 780px !important;
+    /* The area outside the canvas is page frame, not content. */
+    background: #FFFFFF !important;
+  }
+
+  /* The app root is the canvas.
+     html body prefix matches the specificity of fix-1017.css so this
+     always wins regardless of load order inside the bundle. */
+  html body main#app {
+    width: 100% !important;
+    max-width: 780px !important;
+    margin-inline: auto !important;
+  }
+
+  /* The header shares the canvas, so the logo and the content start on the
+     same vertical line at 780, 1024 and 1440 alike. */
+  html body #siteHeader {
+    width: 100% !important;
+    max-width: 780px !important;
+    margin-inline: auto !important;
+  }
+
+  /* 22px matches --solo-page-gutter, the content edge used by the sections. */
+  html body #siteHeader .header-inner {
+    width: 100% !important;
+    max-width: 780px !important;
+    padding-inline: 22px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* The detail scope is the page root on the product pages. It must never be
+     wider than the canvas it sits in. */
+  html body .solo-detail-scope {
+    width: 100% !important;
+    max-width: 780px !important;
+    margin-inline: auto !important;
+  }
+
+  /* Sticky and fixed bars are positioned against the viewport, so they need
+     the same canvas width explicitly. */
+  html body .fixed-price,
+  html body .booking-mobile-bar,
+  html body .home-mobile-cta {
+    width: min(100%, 780px) !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+}
