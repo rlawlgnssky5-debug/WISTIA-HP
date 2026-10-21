@@ -45,4 +45,8 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  assert.doesNotMatch(contact,/href="\/privacy"/)
  for(const file of ['privacy.html','js/privacy-content.js','film.html','song.html','before-after.html','info/about.html','info/process.html','detail/duet-film.html','detail/solo-film.html','section/homeServices.html','find/service.html','ar/self.html','ar/friend.html'])assert.equal(existsSync(new URL('../'+file,import.meta.url)),false,file)
  for(const file of ['index.html','detail/solo.html','detail/duo.html','event/solo.html','event/duo.html','contact.html','events.html','info/faq.html','info/location.html','js/before-after.js'])assert.equal(existsSync(new URL('../'+file,import.meta.url)),true,file)
+ const middleware=read('middleware.js')
+ assert.doesNotMatch(middleware,/\b(?:import|require)\b/)
+ assert.equal(middleware.match(/return `([\s\S]*?)`/)[1],goneDocument())
+ assert.match(middleware,/status:\s*410/)
 })
