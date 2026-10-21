@@ -16,15 +16,15 @@ let selectedOptions=new Set(),selectedEvents=new Set(),optionQuantities={},chose
 `+calculate+bridge+contact,context)
 const quoteFor=state=>{context.testState=state;runInNewContext('setQuoteState(testState)',context);return context.consultationText()}
 const numbers=text=>[...text.matchAll(/^(\d+)\) /gm)].map(match=>Number(match[1]))
-const selected={key:'solo',options:[],events:['voice-photo-consent','blog','reaction','instagram']}
+const selected={key:'solo',options:[],events:['blog','reaction']}
 const text=quoteFor(selected)
 assert.deepEqual(numbers(text),[1,2,3])
 assert.match(text,/\n\n2\) 결제 안내\n기본 가격 : 120,000원\n결제 예상 금액 : 120,000원\n\n/)
 assert.doesNotMatch(text,/활용 동의|선택한 할인|할인 합계/)
-assert.match(text,/3\) 선택한 후기 페이백\n블로그 리뷰 30,000원\n현장 리액션 영상 10,000원\n인스타그램 후기 10,000원\n후기 페이백 합계 : 50,000원\n\n페이백 완료 후 혜택가 : 70,000원/)
+assert.match(text,/3\) 선택한 후기 페이백\n네이버 블로그 리뷰 30,000원\n본식 현장 리액션 영상 30,000원\n후기 페이백 합계 : 60,000원\n\n페이백 완료 후 혜택가 : 60,000원/)
 assert.doesNotMatch(text,/이미 반영된 할인/)
 assert.match(text,/조건을 모두 충족/)
-assert.match(text,/조건 충족 확인 후 별도 지급\n결제 시 미리 차감하지 않습니다$/)
+assert.match(text,/참여 자료와 조건 확인 후 카카오톡으로 환급 안내\n결제 시 미리 차감하지 않습니다$/)
 assert.doesNotMatch(text,/🇼|WELCOME|^• |30,000원 \/|null|undefined|빠른 작업/gm)
 const form=context.window.WistiaContact.text({name:'예전 이름',source:'메타 광고',service:'AR 축가 사전녹음',eventDate:'2026-11-15',eventDateMode:'date',bookingDateMode:'unknown',timeStart:'15:00'},{text})
 assert.deepEqual(numbers(form),[])

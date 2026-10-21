@@ -79,6 +79,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   body.is-solo-detail #siteHeader{width:min(100%,780px)!important;margin-inline:auto!important;}
   body.is-solo-detail #siteHeader .header-inner{
     width:100%!important;max-width:780px!important;
-    padding-inline:0!important;box-sizing:border-box!important;
+    padding-inline:22px!important;box-sizing:border-box!important;
   }
 }

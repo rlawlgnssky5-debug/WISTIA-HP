@@ -16,9 +16,10 @@
      .booking-mobile-bar, .home-mobile-cta and the floating kakao button.
      !important is needed because a few pages raise it per product
      (1120px for commerce detail) with a :has() selector. */
-  html body {
+  html body:has(main#app) {
     --app-canvas-width: 780px !important;
-    /* The area outside the canvas is page frame, not content. */
+    /* One app ID outranks the product :has() and info/form theme selectors
+       without changing any background inside the app canvas */
     background: #FFFFFF !important;
   }
 
@@ -40,7 +41,8 @@
   }
 
   /* 22px matches --solo-page-gutter, the content edge used by the sections. */
-  html body #siteHeader .header-inner {
+  html body #siteHeader .header-inner,
+  html body.is-solo-detail #siteHeader .header-inner {
     width: 100% !important;
     max-width: 780px !important;
     padding-inline: 22px !important;

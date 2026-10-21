@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(root, 'css/bundles.json')
-const version = '20261021-base780'
+const version = '20261021-780-payback-1'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }
@@ -106,6 +106,12 @@ export function buildCssBundles() {
         if (saved?.bundle === key) return saved.sources
         return previous.bundles[key]?.sources ?? fail(`${page}: missing original sources for ${key}`)
       })
+      // Every app entry can reach the same routes through pushState
+      // Keep the existing mobile gutter rules in every entry's source list
+      if (/\bid=["']app["']/.test(html) && !sources.some(href => /mobile-gutters-1020\.css/.test(href))) {
+        const beforeHero = sources.findIndex(href => /hero-slider\.css/.test(href))
+        sources.splice(beforeHero < 0 ? sources.length : beforeHero, 0, 'css/mobile-gutters-1020.css?v=20261020-mobile-gutters-1')
+      }
       const groupKey = JSON.stringify(sources)
       let group = groups.get(groupKey)
       if (!group) {

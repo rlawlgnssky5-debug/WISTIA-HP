@@ -11,5 +11,5 @@ assert.doesNotMatch(JSON.stringify(groups),/촬영|다른 곡도 녹음|추가 1
 const menu=source.slice(source.indexOf('function navigationMenu()'),source.indexOf('function navigationMenu()')+1600)
 assert.doesNotMatch(menu,/위스티아는 어떤 곳인가요|\/info\/about/)
 assert.match(source,/faq-category-nav a/)
-assert.match(source,/key: "reaction"[^\n]+discount: 20000/)
-console.log('Five FAQ topics, 15 warm answers, five requested additions, removed menu entry and reaction 20k passed')
+assert.match(source,/key: "reaction"[^\n]+discount: 30000/)
+console.log('Five FAQ topics, 15 warm answers, five requested additions, removed menu entry and reaction 30k passed')

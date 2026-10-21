@@ -24,10 +24,10 @@ AR 축가 SOLO (1인·1시간)
 ━━━━━━━━━━━━
 
 ※ 예약 가능 여부는 상담에서 확정돼요`)
-const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:00',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'추가 1절 녹음',amount:60000}],paybacks:[{label:'블로그 리뷰',amount:30000},{label:'인스타그램 후기',amount:10000}],paybackTotal:40000}})
+const full=api.text({...values,eventDateMode:'date',eventDate:'2027-01-09',timeStart:'15:00',source:'메타 광고'},{details:{...details,total:220000,options:[{label:'가사 영상 추가',amount:40000},{label:'추가 1절 녹음',amount:60000}],paybacks:[{label:'네이버 블로그 리뷰',amount:30000},{label:'본식 현장 리액션 영상',amount:30000}],paybackTotal:60000}})
 assert.match(full,/추가 옵션 :\n· 가사 영상 \(\+40,000원\)\n· 추가 1절 녹음 \(\+60,000원\)/)
 assert.match(full,/예상 금액 : 220,000원\n기본 120,000원 \+ 옵션 100,000원/)
-assert.match(full,/후기 페이백 :\n· 블로그 리뷰 \(−30,000원\)\n· 인스타 후기 \(−10,000원\)\n페이백 합계 : −40,000원/)
+assert.match(full,/후기 페이백 :\n· 네이버 블로그 리뷰 \(−30,000원\)\n· 본식 현장 리액션 영상 \(−30,000원\)\n페이백 합계 : −60,000원/)
 assert.match(full,/예식일 : 2027년 1월 9일 \(토\)/);assert.match(full,/방문 희망 시간 : 오후 3시~오후 4시 \(1시간\)/)
 assert.doesNotMatch(full,/^\d+\) |결제 예상 금액|페이백 완료 후|최종 확정|WELCOME/gm)
 assert.equal((full.match(/[📦💰📅]/gu)||[]).length,3)
