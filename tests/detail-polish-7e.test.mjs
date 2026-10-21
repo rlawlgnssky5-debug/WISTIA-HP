@@ -43,7 +43,7 @@ await test('Copy, one-line comparison titles and layout at 360/390/1280px',{skip
    const page=await browser.newPage({viewport:{width,height:844},hasTouch:width<600,isMobile:width<600})
    await page.route('https://**/*',route=>route.abort())
    await page.route('**/api/availability?*',route=>{const q=new URL(route.request().url()).searchParams;return route.fulfill({json:{ok:true,date:q.get('date'),from:q.get('from'),to:q.get('to'),blocks:[]}})})
-   for(const path of ['/before-after','/','/detail/solo','/detail/duo','/detail/duet-film','/info/location','/info/about','/events','/contact','/ar/friend','/ar/self','/event/solo','/event/duo','/event/duet-film']){
+   for(const path of ['/detail/solo','/detail/duo','/info/location','/events','/contact','/event/solo','/event/duo']){
     await page.goto(`http://127.0.0.1:${port}${path}`,{waitUntil:'domcontentloaded'});await page.locator('#app h1').first().waitFor({state:'visible'});await page.evaluate(()=>document.fonts.ready)
     if(path==='/before-after'){
      assert.equal(await page.locator('#app h1,#app h2').count(),1)

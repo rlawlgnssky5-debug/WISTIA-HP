@@ -7,7 +7,7 @@ import {createServer} from 'node:net'
 const require=createRequire(import.meta.url),root=new URL('../',import.meta.url),retired=/불후\s*의\s*명곡|IMMORTAL\s*SONGS/i
 await test('Every tracked HTML/JS/SVG and active banner metadata excludes the retired broadcast credit',()=>{
  const files=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(p=>/\.(html|js|svg)$/.test(p))
- for(const path of files)assert.doesNotMatch(readFileSync(new URL(path,root),'utf8'),retired,path)
+ for(const path of files){if(!existsSync(new URL(path,root)))continue;assert.doesNotMatch(readFileSync(new URL(path,root),'utf8'),retired,path)}
  const app=readFileSync(new URL('js/app.js',root),'utf8')
  assert.match(app,/〈싱어게인2〉 방송 음악 작업 참여/)
  assert.match(app,/〈싱어게인2〉 등 방송 음악 작업에 참여한 엔지니어/)
@@ -27,12 +27,20 @@ await test('Home, about and every product render clean body/alt/meta with the si
   for(const width of [320,390]){
    const context=await browser.newContext({viewport:{width,height:844},isMobile:true,hasTouch:true}),page=await context.newPage()
    await page.route('https://**/*',r=>r.abort())
-   for(const path of ['/','/info/about','/detail/solo','/detail/duo','/detail/duet-film','/detail/solo-film','/detail/wedding','/detail/proposal']){
+   for(const path of ['/info/about','/detail/duet-film','/detail/solo-film','/detail/wedding','/detail/proposal']){
+    const response=await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
+    assert.equal(response.status(),410,path+' '+width)
+    const body=await page.content()
+    assert.match(body,/없어진 페이지예요/)
+    assert.doesNotMatch(body,retired,path+' '+width)
+    assert.equal(await page.locator('#app').count(),0)
+   }
+   for(const path of ['/','/detail/solo','/detail/duo']){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     await page.locator('#app h1').first().waitFor()
     const content=await page.evaluate(()=>[document.body.innerText,document.head.outerHTML,...[...document.images].map(n=>n.alt)].join('\n'))
     assert.doesNotMatch(content,retired,path+' '+width)
-    if(['/detail/solo','/detail/duo','/detail/duet-film'].includes(path)){
+    if(['/detail/solo','/detail/duo'].includes(path)){
      const banner=page.locator('img[src*="broadcast-singagain-v4.webp"]');assert.equal(await banner.count(),1)
      await banner.scrollIntoViewIfNeeded();await page.waitForFunction(()=>{const n=document.querySelector('img[src*="broadcast-singagain-v4.webp"]');return n?.complete&&n.naturalWidth>0})
      assert.equal(await page.locator('img[src*="broadcast-typography-noir-v3"]').count(),0)

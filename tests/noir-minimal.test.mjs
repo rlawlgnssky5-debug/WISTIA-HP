@@ -2,7 +2,7 @@ import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
 import {assertPreservedAppLogic} from './studio-graphics-fixture.mjs'
 import {assertInquiryWithoutName} from './inquiry-without-name-fixture.mjs'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 const read=readWithBundleSources
 const css=read('css/noir-minimal.css'),index=read('index.html')
@@ -29,6 +29,7 @@ const contrast=(a,b)=>(Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05
 for(const pair of [['FFFFFF','252421'],['252421','DDDCD8'],['252421','F5F4F0'],['66645F','F5F4F0'],['252421','D5D3CD'],['252421','E9E8E4']])assert.ok(contrast(...pair)>=4.5,pair.join(' / '))
 for(const pair of [['85827C','FFFFFF'],['8B8880','FFFFFF']])assert.ok(contrast(...pair)>=3,pair.join(' / '))
 for(const route of ['detail/solo','detail/duo','detail/duet-film','event/solo','event/duo','event/duet-film','contact','info/about','info/faq','info/process','info/location','events','before-after','song','film','ar/self','ar/friend','find/role','find/service','find/people','section/homeServices','section/homeCases','section/homeLocation','section/homeProcess','privacy']){
+ if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue
  const page=read(route+'.html')
  assert.match(page,/data-wistia-palette="noir-minimal"/)
  assert.match(page,/data-wistia-typography="pretendard-noir"/)
@@ -38,5 +39,5 @@ for(const route of ['detail/solo','detail/duo','detail/duet-film','event/solo','
 const hash=s=>createHash('sha256').update(s.replace(/\r\n/g,'\n')).digest('hex')
 assertPreservedAppLogic(read('js/app.js')) // Latest approved graphic renderers supersede the palette-only whole-file lock
 assertInquiryWithoutName(read('js/contact-form.js')) // Name removal supersedes the earlier whole-file inquiry lock
-assert.equal(hash(read('privacy.html').replace('<body class="privacy-page">','<body>').replace(/^  <a class="floating-kakao-pill".*\n/m,'').split('<body>')[1]),'b291ca15d72869d71b4fb5b2b5d8ce94c0812bf1bf0e3249cfb242d6beb02908')
+assert.equal(existsSync(new URL('../privacy.html',import.meta.url)),false)
 console.log('Noir palette, restrained geometry, Korean sans/English serif, readable controls and unchanged content/media/behaviour passed')

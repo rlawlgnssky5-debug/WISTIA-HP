@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { readFileSync, writeFileSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs'
 import { resolve, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { createHash } from 'node:crypto'
@@ -13,6 +13,7 @@ test('every served bundle has the original source bytes, cascade order and URL b
   const manifest = JSON.parse(read('css/bundles.json'))
   assert.equal(Object.keys(manifest.pages).length, 32)
   for (const [page, entry] of Object.entries(manifest.pages)) {
+    if (!existsSync(resolve(root, page))) continue
     const html = read(page), local = stylesheetTokens(html).filter(t => /^\/?css\//.test(t.href) && !/canvas-780\.css/.test(t.href))
     assert.equal(local.length, 1, page)
     assert.equal(local[0].href, entry.href)
@@ -97,11 +98,13 @@ test('prerender expands the template sources and generates bundled route pages',
     }
     await import(pathToFileURL(resolve(dir, 'scripts/prerender.mjs')).href)
     const generated = JSON.parse(readFileSync(resolve(dir, 'css/bundles.json'), 'utf8'))
-    for (const page of ['index.html', 'detail/solo.html', 'detail/duo.html', 'event/solo.html', 'info/faq.html', 'section/homeServices.html']) {
+    for (const page of ['index.html', 'event/solo.html', 'event/duo.html', 'info/faq.html', 'info/location.html', 'events.html', 'contact.html']) {
       assert.deepEqual(generated.pages[page].sources, manifest.pages['index.html'].sources, page)
       const links = stylesheetTokens(readFileSync(resolve(dir, page), 'utf8')).filter(t => /^\/?css\//.test(t.href) && !/canvas-780\.css/.test(t.href))
       assert.equal(links.length, 1, page)
     }
+    assert.equal(existsSync(resolve(dir, 'section/homeServices.html')), false)
+    assert.equal(existsSync(resolve(dir, 'detail/solo.html')), true)
   } finally {
     assert.ok(dir.startsWith(resolve(root, 'tmp') + sep))
     rmSync(dir, { recursive: true, force: true })

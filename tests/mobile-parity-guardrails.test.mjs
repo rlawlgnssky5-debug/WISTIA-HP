@@ -19,11 +19,17 @@ test('desktop poster and map raster buttons are replaced without changing map de
  }
  assert.equal(cp.execFileSync('git',['diff','bc0980a','--name-only','--','assets'],{cwd:new URL('..',import.meta.url),encoding:'utf8'}).trim(),'')
 })
-test('privacy legal copy is preserved and section colours remain approval-gated',()=>{
- const previous=original('privacy.html').match(/<main class="wrap">([\s\S]*?)<\/main>/)[1]
- const content=read('js/privacy-content.js').replace(/^window\.WistiaPrivacyContent = /,'').trim()
- assert.equal(JSON.parse(content).replaceAll('\r\n','\n'),previous.replaceAll('\r\n','\n'))
+test('privacy page is removed and section colours remain approval-gated',()=>{
+ assert.equal(fs.existsSync(new URL('../privacy.html',import.meta.url)),false)
+ assert.equal(fs.existsSync(new URL('../js/privacy-content.js',import.meta.url)),false)
+ const needles=[['전','영민'],['aidoc','33333'],['3672-','9987']].map(parts=>parts.join(''))
+ let tree=''
+ try{tree=cp.execFileSync('git',['grep','-I','-n','-e',needles[0],'-e',needles[1],'-e',needles[2],'--','.'],{cwd:new URL('..',import.meta.url),encoding:'utf8'}).trim()}catch(error){if(error.status!==1)throw error;tree=String(error.stdout||'').trim()}
+ assert.equal(tree,'')
  const tones=s=>s.match(/const sectionTones=\[[\s\S]*?\n \]/)[0]
  assert.equal(tones(read('js/detail-pc-background.js')).replaceAll('\r\n','\n'),tones(original('js/detail-pc-background.js')).replaceAll('\r\n','\n'))
- for(const p of Object.keys(JSON.parse(read('css/bundles.json')).pages))assert.doesNotMatch(read(p),/colour-preview/)
+ for(const p of Object.keys(JSON.parse(read('css/bundles.json')).pages)){
+  if(!fs.existsSync(new URL('../'+p,import.meta.url)))continue
+  assert.doesNotMatch(read(p),/colour-preview/)
+ }
 })

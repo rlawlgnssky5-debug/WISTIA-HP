@@ -8,7 +8,7 @@ const seo = require('../js/seo-meta.js')
 const root = resolve(import.meta.dirname, '..')
 const template = expandBundledHtml(readFileSync(resolve(root, 'index.html'), 'utf8'))
 const origin = 'https://wistiastudio.com'
-const products = ['solo', 'duo', 'solo-film', 'wedding', 'proposal', 'duet-film']
+const products = ['solo', 'duo']
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
 function page(path, data, options={}) {
@@ -28,8 +28,7 @@ function page(path, data, options={}) {
   if ((path === '/detail/solo' || path === '/detail/duo') && !html.includes('css/detail-solo-16j.css')) {
     html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261017-hotfix2">\n</head>')
   }
-  if (options.robots && /^\/(detail|event)\/(duet-film|solo-film|wedding|proposal)$/.test(path)) html=html.replace('</head>', '<meta http-equiv="refresh" content="0;url=/">\n</head>')
-  const hero = /^\/(detail|event)\/(solo|duo|duet-film|solo-film|wedding|proposal)$/.test(path) || /^\/(film|find|section)(?:\/|$)/.test(path)
+  const hero = /^\/(detail|event)\/(solo|duo)$/.test(path)
   if (hero) {
     const poster = /^\/(detail|event)\/duo$/.test(path) ? 'duet-live-proof-v2.jpg' : 'solo-live-proof.jpg'
     html = html.replace('</head>', `  <link rel="preload" as="image" href="/assets/img/ar-detail/${poster}" fetchpriority="high">\n</head>`)
@@ -41,23 +40,11 @@ function page(path, data, options={}) {
 }
 
 for (const product of products) {
-  const retired = ['wedding', 'proposal', 'solo-film', 'duet-film'].includes(product)
-  page(`/detail/${product}`, retired ? seo.home : seo.detail[product], retired ? {robots:'noindex, follow'} : {})
-  page(`/event/${product}`, retired ? seo.home : seo.event, retired ? {robots:'noindex, follow'} : {})
+  page(`/detail/${product}`, seo.detail[product])
+  page(`/event/${product}`, product === 'solo' ? {...seo.event, title:'얼마일까 | 위스티아 축가 사전녹음 가격'} : seo.event)
 }
 page('/info/location', seo.location)
-// The shared product brand links here; direct visits must serve the app as well.
-page('/info/about', {title:'위스티아 소개 | 경기도 부천 웨딩 축가 전문 스튜디오',description:'위스티아의 보컬 디렉팅·음원 제작 전문가와 웨딩 축가 제작 과정을 소개합니다'})
 page('/info/faq', {title:'자주 묻는 질문 | 위스티아',description:'곡 선택과 녹음 준비부터 AR 본식 사용, 완성 음원 전달과 수정, 스튜디오 방문까지 편하게 확인해 보세요'})
-page('/info/process', {title:'진행 안내 | 위스티아',description:'상담과 예약부터 녹음·촬영, 보정과 완성 파일 전달까지 위스티아의 제작 과정을 안내합니다'})
 page('/events', {title:'후기 참여 이벤트 | 위스티아',description:'위스티아의 할인과 후기 페이백 혜택, 각 이벤트의 참여 조건을 확인하세요'})
-// Home section links must also resolve on direct visits and refreshes.
-for (const section of ['homeServices','homeCases','homeLocation','homeProcess']) {
-  page(`/section/${section}`, seo.home, {robots:'noindex, follow'})
-}
-// Finder routes also need a static entry point for direct visits and refreshes.
-for (const stage of ['role','service','people']) {
-  page(`/find/${stage}`, seo.home, {robots:'noindex, follow'})
-}
 for (const [path, data] of Object.entries(seo.noindex)) page(path, data, {robots:'noindex, follow'})
 buildCssBundles()

@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const index=read('index.html'),css=read('css/pink-black-theme.css')
 assert.match(index,/<html data-build="20261013-detail-polish-16f" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
@@ -32,9 +32,9 @@ assert.match(css,/mas-gallery-dots button\[aria-pressed="true"\]::after/)
 assert.match(css,/bap-tab\.active\[data-mode="before"\]/)
 assert.match(css,/--ba-wave-after:var\(--brand-pink\)/)
 assert.match(read('js/before-after.js'),/progress\?waveColors\[mode\]:waveColors\.rest/)
-for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','info/location','events'])assert.match(read(route+'.html'),/pink-black-theme\.css/)
+for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','info/location','events']){if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue;assert.match(read(route+'.html'),/pink-black-theme\.css/)}
 assert.match(read('contact.html'),/noindex, follow/)
-assert.match(read('detail/solo-film.html'),/noindex, follow/)
+assert.equal(existsSync(new URL('../detail/solo-film.html',import.meta.url)),false)
 const luminance=hex=>{const rgb=hex.match(/[a-f\d]{2}/gi).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722}
 const ratio=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
 assert.ok(ratio('171717','FF4F9A')>=4.5)

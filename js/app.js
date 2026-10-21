@@ -913,7 +913,6 @@ function renderLegacyHome(requested="role"){
  updateHomeFinder()
  app.querySelectorAll(".finder-choice").forEach(choice=>choice.addEventListener("click",event=>{event.preventDefault();const input=choice.querySelector("input");if(input)handleFinderChoice(input)}))
 }
-function renderPrivacyPage(){ app.innerHTML='<article class="privacy-policy shell">'+window.WistiaPrivacyContent+'</article>'+footer() }
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><h2 class="about-story-title about-specialist-title">목소리와 이야기를 담는 스튜디오</h2><p class="about-fixed-lines">말로 다 전하지 못한 마음을<br>직접 부른 노래에 담습니다</p><p class="about-fixed-lines about-long-lines">한 곡의 노래가 완성된 음원이 되기까지,<br>목소리에 담긴 마음이 자연스럽게 전해지도록<br>녹음부터 음원 보정, 믹싱까지 함께합니다</p></div><figure>'+img("assets/img/studio-facility/facility-1640.webp","위스티아 스튜디오 내부, 소파와 녹음 부스, 마이크",true).replace('<img ','<img srcset="assets/img/studio-facility/facility-820.webp 820w, assets/img/studio-facility/facility-1640.webp 1640w" sizes="(min-width: 780px) 560px, 100vw" ')+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><h2 id="specialistTitle" class="single-line-heading about-specialist-title">함께 완성하는 전문가들</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-no-people/03.svg","1대1 보컬 디렉팅",true)+'<p>현장</p><h3 class="about-specialist-title">편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-no-people/06.svg","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3 class="about-specialist-title">내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
@@ -1837,6 +1836,10 @@ function initMetaEngagementTracking(pagePath,pricePage){
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
+const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 축가 녹음 스튜디오 위스티아, 결혼식 축가 녹음과 AR 축가 사전녹음으로 신부 축가·신랑 축가·셀프 축가를 미리 준비하세요 축가 녹음 비용은 1인 12만원, 2인 16만원이고 인천·서울·부천 근처에서 찾아오기 편한 부천시청역 축가 녹음실이에요"}
+const EVENT_SOLO_TITLE="얼마일까 | 위스티아 축가 사전녹음 가격"
+const LIVE_ROUTES=new Set(["/","/detail/solo","/detail/duo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
+function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
 function setPageMeta({title,description,image,robots=""}){
  document.title=title;
  const url="https://www.wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
@@ -1938,22 +1941,9 @@ function initSoloMapZoom(){
  initSoloDialog(dialog)
 }
 function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
+ if(!isLiveRoute(routePath())){location.reload();return}
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")
- if(/^\/(detail|event|choose)\/duet-film(?:\/|$)/.test(routePath())||/^\/(film|find|section)(?:\/|$)/.test(routePath())){history.replaceState(history.state,"","/"+location.search)}
- if(routePath()==='/section/homeProcess')history.replaceState(history.state,"",'/info/process'+location.search)
- // The retired making-film detail now leads to the current story-film product.
- if(/^\/detail\/solo-film(?:\/|$)/.test(routePath())){
-  closeDialog();
-  history.replaceState(history.state,"","/"+location.search);
- }
- if(/^\/(detail|event|choose)\/(wedding|proposal|solo-film)(?:\/|$)/.test(routePath())){
-  closeDialog();
-  history.replaceState(history.state,"","/"+location.search);
- }
- if(/^\/(detail|event|choose)\/duet-film\/making(?:\/|$)/.test(routePath())){
-  history.replaceState(history.state,"",routePath().replace(/\/making(?:\/.*)?$/,"")+location.search)
- }
  const previousScrollY=preserveScroll?window.scrollY:0
  const previousAnchorTop=scrollAnchor?document.querySelector(scrollAnchor)?.getBoundingClientRect().top:null
  closeDialog();metaEngagementCleanup?.();metaEngagementCleanup=null;scrollMediaCleanup?.();scrollMediaCleanup=null;soloPoint04Cleanup?.();soloPoint04Cleanup=null;arCdRatioInstance?.destroy();arCdRatioInstance=null;beforeAfterInstance?.destroy();beforeAfterInstance=null;homeHighlightInstance?.destroy();homeHighlightInstance=null;const parts=routePath().split("/").filter(Boolean);const [type,key]=parts;
@@ -1963,7 +1953,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=rootSolo?"detail":home?"home":type==="contact"?"event":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("is-solo-detail",unifiedDetail||rootSolo);document.body.classList.toggle("is-ar-detail",arDetail||rootSolo);document.body.classList.toggle("is-event-inquiry",Boolean(event));
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
- if(home)renderDetail("solo");else if(type==="privacy")renderPrivacyPage();else if(type==="contact")renderContactPage();else if(type==="before-after")renderBeforeAfterPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else if(ar)renderArPurpose(key);else if(type==="song"||type==="film")renderPicker(type);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ if(home)renderDetail("solo");else if(type==="contact")renderContactPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
  window.WistiaGuide?.destroy?.()
  document.querySelector('#guideLayer')?.remove()
  prepareSvgPlayerControls()
@@ -1993,9 +1983,9 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  const fallbackTitle=eventsPage?"이벤트 | WISTIA":info?INFO_PAGES[key].title.replace("\n"," ")+" | WISTIA":type==="before-after"?"보컬 보정 전후 비교 | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
  const path=routePath();
  const orphan=window.WISTIA_SEO.noindex?.[path];
- const recognized=home||validDetail||Boolean(ar)||Boolean(event)||eventsPage||Boolean(info)||type==="song"||type==="film"||type==="before-after"||type==="contact"||type==="privacy";
- const noindex=Boolean(orphan)||path==="/before-after"||path==="/find"||path.startsWith("/find/")||path.startsWith("/choose/")||!recognized;
- const pageMeta=type==="privacy"?{title:"개인정보처리방침 | 위스티아",description:"위스티아 홈페이지 및 모바일 앱 개인정보처리방침"}:orphan||(home?SEO_DETAIL.solo:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:event?SEO_EVENT:info&&key==="location"?window.WISTIA_SEO?.location||{title:fallbackTitle,description:INFO_PAGES.location.description}:{title:fallbackTitle,description:SEO_HOME.description});
+ const recognized=home||validDetail||Boolean(event)||eventsPage||Boolean(info)||type==="contact";
+ const noindex=Boolean(orphan)||!recognized;
+ const pageMeta=orphan||(path==="/"?HOME_PAGE_META:detail&&SEO_DETAIL[key]?SEO_DETAIL[key]:path==="/event/solo"?{...SEO_EVENT,title:EVENT_SOLO_TITLE}:event?SEO_EVENT:info&&key==="location"?window.WISTIA_SEO?.location||{title:fallbackTitle,description:INFO_PAGES.location.description}:{title:fallbackTitle,description:SEO_HOME.description});
  setPageMeta({...pageMeta,robots:noindex?"noindex, follow":""});
  window.wistiaMeta?.trackPageView();
  if(detail){
@@ -2055,7 +2045,7 @@ document.addEventListener("click",e=>{
  if(el.dataset.processFormat){const section=el.closest(".film-process-section"),format=el.dataset.processFormat,expand=el.getAttribute("aria-expanded")!=="true";section?.querySelectorAll("[data-process-format]").forEach(button=>button.setAttribute("aria-expanded",String(expand&&button===el)));section?.querySelectorAll("[data-process-panel]").forEach(panel=>panel.hidden=!expand||panel.dataset.processPanel!==format)}
  if(el.matches("summary[data-process-step]")){const current=el.closest("details");current?.parentElement.querySelectorAll(":scope > details[open]").forEach(item=>{if(item!==current)item.open=false})}
  if(el.hasAttribute("data-reservation")){document.querySelector("#reservation")?.scrollIntoView({behavior:"smooth"});document.querySelector("#eventDate")?.focus({preventScroll:true})}
- if(el.tagName==="A"&&(el.getAttribute("href")?.startsWith("/")||el.getAttribute("href")?.startsWith("#/"))){e.preventDefault();if(el.hasAttribute('data-contact-quote')){const c=calculate();contactQuote={service:["solo","duo"].includes(currentEventProduct)?'AR 축가 사전녹음':'축가 스토리 필름',summary:c.product.title+' · '+shortWon(c.finalPrice),text:consultationText(),details:inquiryQuoteDetails(c)}}else if(el.getAttribute('href')==='/contact')contactQuote=null;const consult=el.hasAttribute("data-ar-consult");const scrollAnchor=el.matches(".mobile-ar-solo .mas-selection .mas-variant")?".mobile-ar-solo .mas-selection":el.matches(".ar-sales-detail [data-solo-person-tab]")?".sales-offer":"";const path=el.getAttribute("href").replace(/^#/,"");if(path!==routePath()){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",path+location.search)}route({scrollAnchor});if(consult)jumpToInquiry()}
+ if(el.tagName==="A"&&(el.getAttribute("href")?.startsWith("/")||el.getAttribute("href")?.startsWith("#/"))){const internalPath=el.getAttribute("href").replace(/^#/,"").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";if(!isLiveRoute(internalPath))return;e.preventDefault();if(el.hasAttribute('data-contact-quote')){const c=calculate();contactQuote={service:["solo","duo"].includes(currentEventProduct)?'AR 축가 사전녹음':'축가 스토리 필름',summary:c.product.title+' · '+shortWon(c.finalPrice),text:consultationText(),details:inquiryQuoteDetails(c)}}else if(el.getAttribute('href')==='/contact')contactQuote=null;const consult=el.hasAttribute("data-ar-consult");const scrollAnchor=el.matches(".mobile-ar-solo .mas-selection .mas-variant")?".mobile-ar-solo .mas-selection":el.matches(".ar-sales-detail [data-solo-person-tab]")?".sales-offer":"";const path=el.getAttribute("href").replace(/^#/,"");if(path!==routePath()){history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",path+location.search)}route({scrollAnchor});if(consult)jumpToInquiry()}
 })
 document.addEventListener("change",e=>{
  const el=e.target;

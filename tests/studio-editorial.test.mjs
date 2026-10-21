@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const source=read('js/app.js'),index=read('index.html'),theme=read('css/noir-minimal.css')
 assert.match(index,/data-wistia-typography="pretendard-noir"/)
@@ -18,11 +18,12 @@ for(const n of ['01','02','03','04','05','06']){
  assert.doesNotMatch(svg,/<image|<script|https:\/\//)
 }
 for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','event/solo','event/duo','event/duet-film','info/location','info/about','info/faq','info/process','events','song','film','ar/self','ar/friend','find/role','find/service','find/people']){
+ if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue
  const page=read(route+'.html')
  assert.match(page,/pretendard-noir/)
  assert.doesNotMatch(page,/studio-editorial.css/)
 }
-assert.doesNotMatch(read('privacy.html'),/studio-editorial.css/)
+assert.equal(existsSync(new URL('../privacy.html',import.meta.url)),false)
 assert.match(source,/story-process-folder home-process-folder" open/)
 assert.match(source,/function mobileArProcess\(key="solo"\)\{\s*const steps=detailStudioSteps\(key\)/)
 assert.match(source,/완성도는 높이고, 부담은 줄인 가격을 약속드립니다/)

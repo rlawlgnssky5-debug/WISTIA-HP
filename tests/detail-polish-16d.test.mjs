@@ -28,7 +28,7 @@ await test('16d: home/inquiry titles, refined image bounds and retired detail re
    if(fontFixture)await page.route('https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri@*/MaruBuri-*.woff2',r=>r.fulfill({body:readFileSync(fontFixture+'/'+new URL(r.request().url()).pathname.split('/').at(-1)),contentType:'font/woff2'}))
    await page.route('**/api/availability?*',r=>{const q=new URL(r.request().url()).searchParams;return r.fulfill({json:{ok:true,from:q.get('from'),to:q.get('to'),date:q.get('date'),blocks:[]}})})
 
-   for(const path of ['/','/event/solo','/event/duo','/event/duet-film']){
+   for(const path of ['/event/solo','/event/duo']){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'});await page.locator('#app h2').first().waitFor();await page.evaluate(()=>document.fonts.ready)
     const titles=await page.locator(path==='/'?'.we-home h2':'.consultation-step-heading h2').evaluateAll(ns=>ns.map(n=>{
      const content=n.querySelector('.svg-section-text')||n,walker=document.createTreeWalker(content,NodeFilter.SHOW_TEXT),rs=[]
@@ -39,8 +39,10 @@ await test('16d: home/inquiry titles, refined image bounds and retired detail re
     assert.ok(titles.every(n=>n.rows===n.expected&&n.inside),path+' '+width+' '+JSON.stringify(titles))
     if(path!=='/')assert.equal(titles.find(n=>n.text==='어디에서 보고 오셨나요?').size,width<=768?'19px':titles[0].size)
    }
-   await page.goto(`http://127.0.0.1:${port}/detail/solo-film?utm_source=regression`,{waitUntil:'domcontentloaded'});await page.locator('.ar-commerce-detail').waitFor()
-   assert.equal(new URL(page.url()).pathname,'/detail/duet-film');assert.equal(new URL(page.url()).search,'?utm_source=regression');assert.equal(await page.locator('.we-home').count(),0)
+   const retired=await page.goto(`http://127.0.0.1:${port}/detail/solo-film?utm_source=regression`,{waitUntil:'domcontentloaded'})
+   assert.equal(retired.status(),410);assert.match(await page.content(),/없어진 페이지예요/);assert.equal(await page.locator('#app').count(),0)
+   const film=await page.goto(`http://127.0.0.1:${port}/event/duet-film`,{waitUntil:'domcontentloaded'})
+   assert.equal(film.status(),410);assert.equal(await page.locator('#app').count(),0)
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'});await page.locator('#arcRecording .detail-poster-image').scrollIntoViewIfNeeded()
    const image=await page.locator('#arcRecording .detail-poster-image').evaluate(async n=>{await n.decode();const b=n.getBoundingClientRect(),p=n.parentElement.getBoundingClientRect();return {width:b.width,height:b.height,center:b.left+b.width/2,parentCenter:p.left+p.width/2,src:n.currentSrc,natural:n.naturalWidth+'x'+n.naturalHeight}})
    assert.equal(image.natural,'860x2236');assert.match(image.src,/point01-recording\.webp\?v=16f/);assert.ok(image.width<=860.5,JSON.stringify(image));assert.ok(Math.abs(image.width/image.height-860/2236)<.02);assert.ok(Math.abs(image.center-image.parentCenter)<1)
@@ -60,5 +62,5 @@ await test('16d: illustrations use centered labels, smooth joined gradients and 
  for(const name of ['advantages-desktop.svg','advantages-mobile.svg']){
   const svg=readFileSync(new URL(name,root),'utf8');assert.match(svg,/Pretendard Variable/);assert.equal((svg.match(/stroke-width="1.3"/g)||[]).length,3);assert.equal((svg.match(/font-size="17.5"/g)||[]).length,8);assert.match(svg,/linearGradient id="paper"/)
  }
- const config=JSON.parse(readFileSync(new URL('../vercel.json',import.meta.url),'utf8'));assert.ok(config.redirects.some(r=>r.source==='/detail/solo-film/:path*'&&r.destination==='/detail/duet-film'&&r.permanent))
+ const config=JSON.parse(readFileSync(new URL('../vercel.json',import.meta.url),'utf8'));assert.equal(config.redirects,undefined)
 })

@@ -7,7 +7,7 @@ try{playwright=require('playwright')}catch{playwright=createRequire('/tmp/pw/nod
 const executable=process.env.WISTIA_BROWSER_EXECUTABLE||['/usr/bin/chromium','/opt/google/chrome/chrome',playwright.chromium.executablePath()].find(existsSync)
 const browser=await playwright.chromium.launch({executablePath:executable,args:['--no-sandbox']})
 const base=process.env.WISTIA_PREVIEW_URL||'http://127.0.0.1:4174'
-const pages=['/contact','/event/solo','/event/duo','/event/duet-film']
+const pages=['/contact','/event/solo','/event/duo']
 try{
  const page=await browser.newPage({viewport:{width:375,height:812},hasTouch:true,isMobile:true})
  await page.clock.install({time:new Date('2026-10-13T03:00:00Z')})

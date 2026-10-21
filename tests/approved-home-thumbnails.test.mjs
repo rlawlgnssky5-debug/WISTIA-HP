@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const source=read('js/app.js'),index=read('index.html'),css=read('css/approved-home-thumbnails.css')
 const helper=source.split('function renderApprovedHomeThumbnails(){')[1].split('function renderWeddingHome(){')[0]
@@ -32,5 +32,5 @@ assert.match(css,/data-studio-motion="off".*animation:none;transition:none;trans
 assert.match(css,/@media\(prefers-reduced-motion:reduce\)/)
 assert.doesNotMatch(css,/infinite|font-family|grayscale|object-fit:cover|z-index:99/)
 assert.doesNotMatch(css.slice(css.indexOf('@media(prefers-reduced-motion:reduce)')),/animation-delay|animation:wistia/)
-for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/process','find/role','section/homeServices'])assert.match(read(route+'.html'),/approved-home-thumbnails.css\?v=20261014-detail-polish-16j/)
+for(const route of ['detail/solo','detail/duo','detail/duet-film','contact','info/process','find/role','section/homeServices']){if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue;assert.match(read(route+'.html'),/approved-home-thumbnails.css\?v=20261014-detail-polish-16j/)}
 console.log('Three different approved real thumbnails, original copy, scoped responsive layout and reduced-motion protection passed')

@@ -158,8 +158,7 @@ await test('16j12 live controls and layout at 360/375/390/1280',{skip,timeout:42
     assert.equal(layout.tryHint,true)
     if(width>=901)assert.match(layout.pc,/^assets\/detail-solo-16j\/top_A_pc\.png$/)
    }
-   assert.match(layout.footer,/href="\/privacy"/)
-   assert.match(layout.footer,/aidoc\.kr\/support/)
+   assert.doesNotMatch(layout.footer,/href="\/privacy"|aidoc\.kr\/support/)
    const selected=page.locator('.mas-variant.is-selected')
    const before=await selected.boundingBox()
    await selected.hover()

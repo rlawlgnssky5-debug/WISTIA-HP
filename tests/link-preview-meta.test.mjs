@@ -11,7 +11,7 @@ const skip=new Set(['tests','tmp','node_modules','.git','.vercel','output','work
 const pages=[]
 const walk=dir=>{for(const name of readdirSync(dir)){const path=join(dir,name);if(statSync(path).isDirectory()){if(!skip.has(name))walk(path)}else if(name.endsWith('.html'))pages.push(path)}}
 walk(root)
-assert.ok(pages.length>=32,'all static pages are checked')
+assert.ok(pages.length>=9,'living static pages are checked')
 const shareImage='https://www.wistiastudio.com/assets/img/og/wistia-og.png'
 const image=readFileSync(join(root,'assets/img/og/wistia-og.png'))
 assert.deepEqual(image.subarray(0,8),Buffer.from([137,80,78,71,13,10,26,10]),'shared image is PNG')

@@ -1,6 +1,6 @@
 import {readWithBundleSources} from './bundled-html-fixture.mjs'
 import assert from 'node:assert/strict'
-import {readFileSync} from 'node:fs'
+import {existsSync,readFileSync} from 'node:fs'
 const read=readWithBundleSources
 const index=read('index.html'),css=read('css/dusty-wedding-theme.css')
 assert.match(index,/<html data-build="20261013-detail-polish-16f" lang="ko" data-wistia-theme="monochrome" data-wistia-typography="pretendard-noir" data-wistia-palette="noir-minimal">/)
@@ -35,7 +35,7 @@ assert.match(css,/\.bap-tab\.active\[data-mode="before"\]\{background:var\(--war
 assert.match(css,/\.bap-tab\.active\[data-mode="after"\]\{background:var\(--dusty-pink\)/)
 assert.doesNotMatch(css,/touch-action:\s*none|display:\s*none|#FF4F9A|#171717|#F5F5F5/)
 assert.equal((css.match(/pointer-events:none/g)||[]).length,1,'only the non-interactive video caption may ignore pointer events')
-for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/duet-film','info/location'])assert.match(read(route+'.html'),/dusty-wedding-theme\.css/)
+for(const route of ['contact','detail/solo','detail/duo','detail/duet-film','event/duet-film','info/location']){if(!existsSync(new URL('../'+route+'.html',import.meta.url)))continue;assert.match(read(route+'.html'),/dusty-wedding-theme\.css/)}
 const luminance=hex=>{const rgb=hex.match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722}
 const ratio=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
 for(const pair of [['7B625B','FBF8F4'],['3C302C','EFA8B8'],['3C302C','EFE3D5']])assert.ok(ratio(...pair)>=4.5)

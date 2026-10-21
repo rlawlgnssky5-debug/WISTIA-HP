@@ -116,7 +116,7 @@ await test('16g calendar at 360/375/390/1280 shows one team, Sunday evening and 
     check(box)
     assert.equal(box.page,0,width+' page overflow')
    }
-   for(const [path,product,date,time,dateTeams,sundayTeams] of [['/event/solo','solo','2026-10-17','20:00','1팀 남음','1팀 남음'],['/event/duo','duo','2026-10-16','21:00','','2팀 남음'],['/event/duet-film','duet-film','2026-10-17','20:00','1팀 남음','2팀 남음']]){
+   for(const [path,product,date,time,dateTeams,sundayTeams] of [['/event/solo','solo','2026-10-17','20:00','1팀 남음','1팀 남음'],['/event/duo','duo','2026-10-16','21:00','','2팀 남음']]){
     await page.goto('http://127.0.0.1:'+port+path,{waitUntil:'domcontentloaded'})
     await page.locator('[data-contact-date-mode="bookingDate"][value="date"]').click()
     await page.waitForFunction(value=>document.querySelector('#calendar-bookingDate [data-calendar-day="'+value+'"]'),date)
@@ -221,7 +221,7 @@ await test('16g rose hint is visible and play produces sound at 360/375/390/1280
   const quiet=await browser.newContext({viewport:{width:390,height:900}})
   const page=await quiet.newPage()
   await page.route('https://**/*',route=>route.abort())
-  for(const path of ['/','/detail/duo','/before-after']){
+  for(const path of ['/','/detail/duo']){
    await page.goto('http://127.0.0.1:'+port+path,{waitUntil:'domcontentloaded'})
    await page.waitForSelector('.bap-play')
    assert.equal(await page.locator('.bap-try').count(),0,path+' must not show the rose cue')
