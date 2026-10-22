@@ -98,7 +98,7 @@
   const q=quote(form)
   const durationLabel=form.querySelector('[data-wf-location-duration]')
   if(durationLabel)durationLabel.textContent=q.package.key+' · 1곡 · '+q.minutes+'분'
-  form.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
+  global.WistiaPackages.syncSelection(form,q.package.key)
   for(const key of ['tuning','detailMix']){
    const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing
    input.disabled=included;if(included)input.checked=false

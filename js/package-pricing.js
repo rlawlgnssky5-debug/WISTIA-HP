@@ -47,11 +47,23 @@
   if(p.key==='A')return ['1인·1곡',hours,'기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 미포함',p.delivery]
   return ['1인·1곡',hours,'기본 믹싱','음정·박자 보정',p.key==='B'?'디테일 믹싱 서비스(음색·톤)':'디테일 믹싱 서비스',p.delivery]
  }
+ const checkIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>'
+ const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}
+ function selectionDetails(key){
+  const p=packageFor(key)
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li>'+checkIcon+'<span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving">개별 선택 <s>'+money(p.individual)+'</s> → <strong>'+money(p.price)+'</strong><b>'+money(p.saving)+' 절약</b></p>':'')
+ }
  function cards(selected='A',mode='detail'){
-  return '<div class="package-cards" role="group" aria-label="패키지 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===selected?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'"'+(p.key===selected?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.key+' <b>'+p.title+'</b></span><strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-features">'+features(p).map(s=>'<span>'+s+'</span>').join('')+'</span>'+(p.saving?'<span class="package-card-saving">개별 '+money(p.individual)+'→'+money(p.price)+'('+money(p.saving)+' 절약)</span>':'')+'</span></label>').join('')+'</div>'
+  const key=packageFor(selected).key
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="패키지 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.key+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-check">'+checkIcon+'</span><span class="package-card-body"><span class="package-card-name">'+p.key+'</span><span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-original">'+(p.saving?'<s>'+money(p.individual)+'</s>':'1인·1곡')+'</span><strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-benefit">'+(p.saving?p.saving/10000+'만원 절약':'기본 구성')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 패키지 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+ }
+ function syncSelection(root,key){
+  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')
+  root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
+  if(panel&&panel.dataset.packageKey!==p.key){panel.innerHTML=selectionDetails(p.key);panel.dataset.packageKey=p.key}
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul><li>첫 이용 <b>10,000원 할인</b></li><li>목·금 오후 1~4시 방문 <b>10,000원 할인</b></li><li>녹음일까지 1~2개월 <b>10,000원 할인</b></li><li>2개월 이상 <b>20,000원 할인</b></li></ul></section>'}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,discountsHtml,addMonths,today}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)

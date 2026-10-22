@@ -28,7 +28,7 @@ async function run(){
   for(const route of routes){
    await page.goto(base+route,{waitUntil:'domcontentloaded'});await settled(page)
    const data=await measure(page);results.push({route,width,direct:data})
-   if(!baseline){assert.equal(data.overflow,0,route+' '+width+' overflow');assert.equal(data.hiddenSeo,true);assert.equal(data.removedPaidAr,true,'removed paid AR option '+route);assert.equal(data.clipped.length,0,route+' heading clipping');for(const c of data.cards){assert.equal(c.width,c.parentWidth);assert.equal(c.size,'16px')}if(width===1280){assert.equal(data.main.width,780);assert.equal(data.main.x,250);assert.equal(data.body,'rgb(255, 255, 255)')}assert.equal(data.removed.length,0,'removed option/old-price images')}
+   if(!baseline){assert.equal(data.overflow,0,route+' '+width+' overflow');assert.equal(data.hiddenSeo,true);assert.equal(data.removedPaidAr,true,'removed paid AR option '+route);assert.equal(data.clipped.length,0,route+' heading clipping');for(const c of data.cards){assert.ok(Math.abs(c.width*3+16-c.parentWidth)<1);assert.equal(c.size,'20px')}if(width===1280){assert.equal(data.main.width,780);assert.equal(data.main.x,250);assert.equal(data.body,'rgb(255, 255, 255)')}assert.equal(data.removed.length,0,'removed option/old-price images')}
    await capture(page,path.join(out,phase,slug(route)+'-'+width+'.jpg'))
    if(!baseline){
     await page.evaluate(target=>{history.pushState({},'', '/info/location');dispatchEvent(new PopStateEvent('popstate'));history.pushState({},'',target);dispatchEvent(new PopStateEvent('popstate'))},route)

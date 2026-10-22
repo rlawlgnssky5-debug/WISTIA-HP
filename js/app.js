@@ -1347,7 +1347,7 @@ function initArCommerceDetail(){
   if(event.target.name!=='detailPackage')return
   const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)
   url.searchParams.set('package',p.key);history.replaceState(history.state,'',url.pathname+url.search)
-  packageRoot.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
+  window.WistiaPackages.syncSelection(packageRoot,p.key)
   document.querySelector('[data-package-information]').innerHTML=packageInformation(key,p.key)
   packageRoot.querySelector('[data-package-total]').innerHTML=packageTotalHtml(p,key)
   document.querySelectorAll('[data-package-inquiry],.solo-footer-inquiry').forEach(a=>a.href=packageInquiryHref(key,p.key))
