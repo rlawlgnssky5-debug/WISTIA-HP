@@ -258,7 +258,7 @@
    if(key==='time')return timeField()+discoveryField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
    const id='contact-'+key
    let input
-   if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음','축가 스토리 필름'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
+   if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
    else if(key==='source')input='<select id="'+id+'" name="source"><option value="" disabled selected>선택해 주세요</option>'+sourceChoices.map(value=>'<option>'+value+'</option>').join('')+'</select>'
    else input='<input id="'+id+'" name="'+key+'" type="text" maxlength="200" autocomplete="off" placeholder="'+hint+'"'+(key==='source'?' list="contact-sources"':'')+'>'
    return '<label class="contact-field" for="'+id+'"><span'+(key==='source'&&integrated?' class="sr-only"':'')+'>'+label+(key==='service'?'<small>필수</small>':'')+'</span>'+input+(key==='time'?'<em>방문 가능 시간 편하게 적어주세요</em>':'')+'</label>'
@@ -325,15 +325,17 @@
   const oldPaybacks=section('선택한 후기 페이백','후기 페이백 합계').split('\n').flatMap(line=>{const match=/^(.+?) ([\d,]+)원$/.exec(line);return match?[{label:match[1],amount:Number(match[2].replaceAll(',',''))}]:[]})
   const estimated=amount('결제 예상 금액')??amount('최종 예상 가격')
   const info=quote?.details||{product:/희망 상품 : (.+)/.exec(legacy)?.[1]||quote?.service||values.service||'미정',base:amount('기본 가격')??estimated,total:estimated,options:oldOptions,paybacks:oldPaybacks,paybackTotal:amount('후기 페이백 합계')||0}
-  const money=value=>Number(value).toLocaleString('ko-KR')+'원',shortLabel=label=>label==='1절 녹음 추가'?label:label.replace(/ 추가$/,'').replace('인스타그램','인스타')
+  const money=value=>Number(value).toLocaleString('ko-KR')+'원',shortLabel=label=>label.replace(/ 추가$/,'').replace('인스타그램','인스타')
   const product=info.product.replace(/AR 축가 · (SOLO|DUET)\(([^)]+)\) · (\d+시간)/,'AR 축가 $1 ($2·$3)')
   const lines=['[위스티아 상담 요청]','━━━━━━━━━━━━','📦 상품',product]
   if(info.options.length){lines.push('추가 옵션 :');info.options.forEach(o=>lines.push('· '+shortLabel(o.label)+(o.quantity>1?' '+o.quantity+(o.unit||'회'):'')+' ('+(o.amount?'+'+money(o.amount):'상담 후 안내')+')'))}else lines.push('추가 옵션 : 없음')
   lines.push('','💰 금액','예상 금액 : '+(info.total==null?'상담에서 확인':money(info.total)))
   if(info.base!=null&&info.total!=null&&info.base!==info.total)lines.push('기본 '+money(info.base)+' + 옵션 '+money(info.total-info.base))
-  if(info.paybacks.length){lines.push('후기 페이백 :');info.paybacks.forEach(p=>lines.push('· '+shortLabel(p.label)+' (−'+money(p.amount)+')'));lines.push('페이백 합계 : −'+money(info.paybackTotal))}else lines.push('후기 페이백 : 없음')
+  if(info.paybacks.length){lines.push('후기 페이백 :');info.paybacks.forEach(p=>lines.push('· '+shortLabel(p.label)+' (환급 '+money(p.amount)+')'));lines.push('페이백 합계 : 환급 '+money(info.paybackTotal)+' · 결제 때 차감하지 않아요')}else lines.push('후기 페이백 : 없음')
   const date=key=>{const parsed=values[key+'Mode']==='unknown'?null:parseDate(values[key]);if(!parsed)return '미정';return (String(parsed.getUTCFullYear())!==calendarToday().slice(0,4)?parsed.getUTCFullYear()+'년 ':'')+(parsed.getUTCMonth()+1)+'월 '+parsed.getUTCDate()+'일 ('+weekdays[parsed.getUTCDay()]+')'}
-  const minutes=info.bookingMinutes||global.WistiaBooking?.duration?.(info.productKey||global.WistiaBooking?.calendarKey?.())||(/DUET/.test(info.product)?120:/필름/.test(info.product)?180:60)
+  const durationKey=info.productKey||global.WistiaBooking?.calendarKey?.()
+  const fromBooking=/^ar-\d+$/.test(String(durationKey||''))?global.WistiaBooking.duration(durationKey):0
+  const minutes=info.bookingMinutes||fromBooking||60
   lines.push('━━━━━━━━━━━━','📅 일정','예식일 : '+date('eventDate'),'방문 희망일 : '+date('bookingDate'),'방문 희망 시간 : '+formatTimeRange(values.timeStart,minutes),'━━━━━━━━━━━━')
   const notes=String(values.specialNotes||'').trim();if(notes)lines.push('특이사항',notes,'━━━━━━━━━━━━')
   const discovery=String(values.discovery||'').trim()

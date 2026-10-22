@@ -42,19 +42,19 @@ test('approved discounts combine without inventing a payback cap',()=>{
  assert.equal(result.discount,40000);assert.equal(result.total,50000);assert.equal(result.payback,60000)
  assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
 })
-test('2026 wedding promo adds real bookable minutes, not another charge',()=>{
- assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,210)
- assert.equal(q({eventDate:'2026-12-30'}).minutes,90)
+test('recording length follows the package and extra hour, with no promo minutes',()=>{
+ assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,180)
+ assert.equal(q({eventDate:'2026-12-30'}).minutes,60)
  assert.equal(q({eventDate:'2026-12-30',eventDateMode:'unknown'}).minutes,60)
  assert.equal(q({eventDate:'2027-01-01'}).minutes,60)
- assert.equal(booking.duration('ar-90'),90);assert.equal(booking.duration('ar-210'),210)
+ assert.equal(booking.duration('ar-60'),60);assert.equal(booking.duration('ar-120'),120);assert.equal(booking.duration('ar-180'),180)
 })
 test('delivery depends on correction rather than people',()=>{
  assert.match(q({package:'A'}).delivery,/당일/)
- assert.match(q({package:'A',tuning:'1'}).delivery,/영업일 기준 7일/)
- assert.match(q({package:'B'}).delivery,/영업일 기준 7일/)
- assert.equal(q({package:'A',rush:'1'}).total,90000,'same-day A is not charged for a redundant three-day option')
- assert.equal(q({package:'B',rush:'1'}).total,160000)
+ assert.match(q({package:'A',tuning:'1'}).delivery,/영업일 7일/)
+ assert.match(q({package:'B'}).delivery,/영업일 7일/)
+ assert.equal(q({package:'A',rush:'1'}).total,90000,'same-day A is not charged for a removed rush option')
+ assert.equal(q({package:'B',rush:'1'}).total,130000)
 })
 test('draft whitelist retains new fields and drops removed options',()=>{
  const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')

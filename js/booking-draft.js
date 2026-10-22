@@ -13,7 +13,7 @@
    package:['A','B','C'].includes(input.package)?input.package:'A',people:input.people==='1'?'1':'0',discovery:sources.includes(input.discovery)?input.discovery:'',
    eventDateMode:input.eventDateMode==='unknown'?'unknown':'date',eventDate:date(input.eventDate),bookingDate:date(input.bookingDate),
    timeStart:/^(?:1[3-9]|2[0-2]):00$/.test(input.timeStart)?input.timeStart:'',
-   rush:input.rush==='1'?'1':'',tuning:input.tuning==='1'?'1':'',detailMix:input.detailMix==='1'?'1':'',extraHour:input.extraHour==='1'?'1':'',lipsync:input.lipsync==='1'?'1':'',firstVisit:input.firstVisit==='1'?'1':'',paybackBlog:input.paybackBlog==='1'?'1':'',paybackReaction:input.paybackReaction==='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
+   tuning:input.tuning==='1'?'1':'',detailMix:input.detailMix==='1'?'1':'',extraHour:input.extraHour==='1'?'1':'',lipsync:input.lipsync==='1'?'1':'',firstVisit:input.firstVisit==='1'?'1':'',paybackBlog:input.paybackBlog==='1'?'1':'',paybackReaction:input.paybackReaction==='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
   },wedding:{year:/^\d{4}$/.test(parts.year)?String(parts.year):'',month:/^(?:[1-9]|1[0-2])$/.test(parts.month)?String(parts.month):'',day:/^(?:[1-9]|[12]\d|3[01])$/.test(parts.day)?String(parts.day):''}}
  }
  function read(key){
