@@ -12,7 +12,34 @@
  ]
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const packageFor=key=>Object.hasOwn(packages,key)?packages[key]:packages.A
+ // One holiday source for calendar colours, time badges and actual quotes
+ // Checked 2026-10-23 against KASA 2027 almanac and KASI 2026–2028 data
+ // https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431
+ // https://astro.kasi.re.kr/kor/life/post/calendarData?year=2027
+ // 2028 is KASI preliminary data; update when the official almanac is announced
+ // Add newly announced temporary holidays here, never infer them from weekends
+ const publicHolidays=new Set([
+  '2026-01-01','2026-02-16','2026-02-17','2026-02-18','2026-03-01','2026-03-02',
+  '2026-05-01','2026-05-05','2026-05-24','2026-05-25','2026-06-03','2026-06-06',
+  '2026-07-17','2026-08-15','2026-08-17','2026-09-24','2026-09-25','2026-09-26',
+  '2026-10-03','2026-10-05','2026-10-09','2026-12-25',
+  '2027-01-01','2027-02-06','2027-02-07','2027-02-08','2027-02-09','2027-03-01',
+  '2027-05-01','2027-05-03','2027-05-05','2027-05-13','2027-06-06','2027-07-17',
+  '2027-07-19','2027-08-15','2027-08-16','2027-09-14','2027-09-15','2027-09-16',
+  '2027-10-03','2027-10-04','2027-10-09','2027-10-11','2027-12-25','2027-12-27',
+  '2028-01-01','2028-01-26','2028-01-27','2028-01-28','2028-03-01','2028-04-12',
+  '2028-05-01','2028-05-02','2028-05-05','2028-06-06','2028-07-17','2028-08-15',
+  '2028-10-02','2028-10-03','2028-10-04','2028-10-05','2028-10-09','2028-12-25'
+ ])
+ const fixedHolidays=new Set(['01-01','03-01','05-01','05-05','06-06','07-17','08-15','10-03','10-09','12-25'])
+ const discountOffers=[
+  {key:'first',label:'위스티아 첫 이용',discount:10000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
+  {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
+  {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'},
+  {key:'advance2',label:'녹음일 2개월 이후',discount:20000,detail:'사전 예약 할인은 1개월·2개월 중 해당하는 한 가지만 적용돼요'}
+ ]
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
+ function isPublicHoliday(date){return validDate(date)&&(publicHolidays.has(date)||Number(date.slice(0,4))>=2026&&fixedHolidays.has(date.slice(5)))}
  function addMonths(date,months){
   const [y,m,d]=date.split('-').map(Number),last=new Date(Date.UTC(y,m-1+months+1,0)).getUTCDate()
   return new Date(Date.UTC(y,m-1+months,Math.min(d,last))).toISOString().slice(0,10)
@@ -25,7 +52,7 @@
   return null
  }
  function weekdayDiscount(date,time){
-  if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return 0
+  if(!validDate(date)||isPublicHoliday(date)||!/^\d{2}:\d{2}$/.test(time||''))return 0
   const day=new Date(date+'T12:00:00Z').getUTCDay(),[h,m]=time.split(':').map(Number)
   return [4,5].includes(day)&&h*60+m>=780&&h*60+m<=960?10000:0
  }
@@ -68,7 +95,23 @@
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
   if(panel&&panel.dataset.packageKey!==p.key){panel.innerHTML=selectionDetails(p.key);panel.dataset.packageKey=p.key}
  }
- function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul><li>첫 이용 <b>10,000원 할인</b></li><li>목·금 오후 1~4시 방문 <b>10,000원 할인</b></li><li>녹음일 1개월 이후 <b>10,000원 할인</b></li><li>녹음일 2개월 이후 <b>20,000원 할인</b></li></ul></section>'}
+ const selectionRoots=new WeakSet()
+ function mountSelection(root){
+  if(!root||selectionRoots.has(root))return
+  selectionRoots.add(root)
+  root.addEventListener('click',event=>{
+   const card=event.target.closest('.package-card'),input=card?.querySelector('input[type="radio"]')
+   if(!input||!root.contains(card)||input.disabled||event.target===input||event.defaultPrevented)return
+   // Native label forwarding scrolls its 1px radio into the viewport's centre
+   // Preserve radio/keyboard semantics while preventing that pointer-focus jump
+   event.preventDefault();input.focus({preventScroll:true})
+   if(input.checked)return
+   input.checked=true
+   input.dispatchEvent(new global.Event('input',{bubbles:true}))
+   input.dispatchEvent(new global.Event('change',{bubbles:true}))
+  })
+ }
+ function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOffers.map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
  function firstVisitBanner(){return '<div class="welcome-gift"><img src="/assets/img/studio-3d/gift-benefits-yellow-v1.webp" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 10,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
@@ -78,7 +121,7 @@
   burst.innerHTML=Array.from({length:16},(_,i)=>'<i style="--i:'+i+';--dx:'+((i%2?1:-1)*(28+i*4))+'px;--turn:'+(i*43)+'deg"></i>').join('')
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,discountOffers,isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)

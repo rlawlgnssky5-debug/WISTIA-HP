@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {runInNewContext} from 'node:vm'
-const source=readFileSync(new URL('../js/contact-form.js',import.meta.url),'utf8'),window={}
+const source=readFileSync(new URL('../js/contact-form.js',import.meta.url),'utf8'),pricingSource=readFileSync(new URL('../js/package-pricing.js',import.meta.url),'utf8'),window={}
+runInNewContext(pricingSource,{window})
 runInNewContext(source,{window})
-const list=[...source.match(/const publicHolidays=new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'(\d{4}-\d{2}-\d{2})'/g)].map(m=>m[1])
+const list=[...pricingSource.match(/const publicHolidays=new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'(\d{4}-\d{2}-\d{2})'/g)].map(m=>m[1])
 assert.equal(new Set(list).size,64)
 for(const [year,count]of [[2026,22],[2027,24],[2028,18]])assert.equal(list.filter(d=>d.startsWith(year+'-')).length,count)
 for(const value of list){

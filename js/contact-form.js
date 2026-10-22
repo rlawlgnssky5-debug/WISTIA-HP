@@ -15,23 +15,7 @@
  const timeOptions=Array.from({length:10},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">오후 '+(hour-12)+'시</option>'}).join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
- // Verified 2026-10-09: KASI calendar data and the 2026 Labour/Constitution Day update.
- // https://astro.kasi.re.kr/kor/life/post/calendarData
- // https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431
- // Future temporary holidays require a newly announced date; do not guess them.
- const publicHolidays=new Set([
-  '2026-01-01','2026-02-16','2026-02-17','2026-02-18','2026-03-01','2026-03-02',
-  '2026-05-01','2026-05-05','2026-05-24','2026-05-25','2026-06-03','2026-06-06',
-  '2026-07-17','2026-08-15','2026-08-17','2026-09-24','2026-09-25','2026-09-26',
-  '2026-10-03','2026-10-05','2026-10-09','2026-12-25',
-  '2027-01-01','2027-02-06','2027-02-07','2027-02-08','2027-02-09','2027-03-01',
-  '2027-05-01','2027-05-03','2027-05-05','2027-05-13','2027-06-06','2027-07-17',
-  '2027-07-19','2027-08-15','2027-08-16','2027-09-14','2027-09-15','2027-09-16',
-  '2027-10-03','2027-10-04','2027-10-09','2027-10-11','2027-12-25','2027-12-27',
-  '2028-01-01','2028-01-26','2028-01-27','2028-01-28','2028-03-01','2028-04-12',
-  '2028-05-01','2028-05-02','2028-05-05','2028-06-06','2028-07-17','2028-08-15',
-  '2028-10-02','2028-10-03','2028-10-04','2028-10-05','2028-10-09','2028-12-25'
- ])
+ const publicHolidays={has:date=>global.WistiaPackages?.isPublicHoliday(date)||false}
  function parseDate(value){
   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null
   const date=new Date(value+'T12:00:00Z')

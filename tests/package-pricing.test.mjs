@@ -45,6 +45,17 @@ test('one-month and two-month discounts are mutually exclusive calendar interval
  const result=q({bookingDate:'2026-12-22'});assert.equal(result.discount,20000);assert.equal(result.discounts.length,1)
  assert.equal(pricing.addMonths('2026-01-31',1),'2026-02-28')
 })
+test('public holidays never receive the Thursday/Friday time discount',()=>{
+ for(const date of ['2026-01-01','2026-05-01','2026-07-17','2026-09-24','2026-09-25','2026-10-09','2026-12-25','2027-01-01','2027-05-13','2027-09-16','2028-01-27','2028-01-28','2028-05-05','2028-10-05','2031-12-25']){
+  assert.equal(pricing.isPublicHoliday(date),true,date)
+  for(const time of ['13:00','14:00','15:00','16:00'])assert.equal(pricing.weekdayDiscount(date,time),0,date+' '+time)
+ }
+ const christmas=q({package:'C',firstVisit:'1',bookingDate:'2026-12-25',timeStart:'13:00'})
+ assert.equal(christmas.discount,30000);assert.equal(christmas.total,140000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
+ assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,130000)
+ assert.equal(pricing.weekdayDiscount('2027-05-14','13:00'),10000)
+ for(const date of ['','invalid','2026-02-31','2026-12-24'])assert.equal(pricing.isPublicHoliday(date),false)
+})
 
 test('calendar and time hint helpers match quote thresholds and reject invalid inputs',()=>{
  for(const [date,amount] of [['2026-11-21',0],['2026-11-22',10000],['2026-12-21',10000],['2026-12-22',20000]])assert.equal(pricing.advanceDiscount(date,'2026-10-22')?.amount||0,amount)

@@ -923,7 +923,7 @@ function renderEventsPage(){
  const bar=items.map((item,i)=>'<i style="width:'+(item.discount/maximum*100).toFixed(1)+'%" data-seg="'+i+'"></i>').join('')
  const legend=items.map(item=>'<span>'+escapeHtml(item.label.replace(/ (리뷰|후기|영상)$/,''))+' '+won(item.discount)+'</span>').join('')
  const cards=items.map((item,i)=>'<article class="ev2-card"><div class="ev2-no">'+String(i+1).padStart(2,'0')+'</div><div class="ev2-body"><div class="ev2-top"><h3 data-svg-title="off">'+escapeHtml(item.label)+'</h3><span class="ev2-amt">페이백 '+won(item.discount)+'</span></div>'+PAYBACK_EVENT_GUIDE[item.key].map(([title,lines])=>(title?'<p class="ev2-lbl">'+escapeHtml(title)+'</p>':'')+'<div class="ev2-cond">'+lines.map(line=>'<span>'+escapeHtml(line)+'</span>').join('')+'</div>').join('')+'</div></article>').join('')
- const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+window.WistiaPackages.firstVisitBanner()+'<div class="events-discount-list">'+[['목·금 오후 1~4시 시작','10,000원 할인','해당 요일과 시작 시간을 선택하면 자동 반영돼요'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정'],['녹음일 2개월 이후','20,000원 할인','사전 예약 할인은 두 항목 중 한 가지만 적용돼요']].map(([title,amount,note])=>'<article><h3>'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+ const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+window.WistiaPackages.firstVisitBanner()+'<div class="events-discount-list">'+[['목·금 오후 1~4시 시작','10,000원 할인','공휴일 제외 · 해당 요일과 시작 시간을 선택하면 자동 반영돼요'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정'],['녹음일 2개월 이후','20,000원 할인','사전 예약 할인은 두 항목 중 한 가지만 적용돼요']].map(([title,amount,note])=>'<article><h3>'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
  app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+'<section class="events-payback" aria-labelledby="paybackTitle"><p class="ev2-k">PAYBACK</p><h2 id="paybackTitle">후기 참여 페이백 이벤트</h2><p class="ev2-lead">위스티아와 함께한 경험을 다른 분들께도 소개해 주실 수 있을까요?<br>고객님께서 나눠주시는 후기와 영상은 위스티아에 정말 큰 힘이 됩니다<br>감사의 마음을 담아 참여해 주시는 분들께 페이백을 준비했습니다</p><div class="ev2-big"><small>두 가지 모두 참여 시</small><h2 data-svg-title="off">총 <em>'+won(maximum)+'</em> 페이백!</h2><div class="ev2-bar">'+bar+'</div><div class="ev2-legend">'+legend+'</div><p>참여 조건 확인 후 카카오톡으로 환급 절차를 안내해 드립니다<br>결제 금액에서 미리 차감하지 않습니다</p></div><div class="ev2-list">'+cards+'</div><div class="ev2-note">'+PAYBACK_EVENT_GUIDE.notes.map(line=>'<p>'+escapeHtml(line)+'</p>').join('')+'</div></section><a class="ev2-cta" href="'+KAKAO_FALLBACK+'" target="_blank" rel="noopener noreferrer">카카오톡으로 상담하기</a></div></section>'+footer()
 }
 let contactQuote=null
@@ -1257,9 +1257,8 @@ function mobileArNotices(story=false){
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
 function mobileDetailEvents(){
- const maximum=EVENTS.reduce((total,event)=>total+event.discount,0)
- const group=(type,title,timing,note)=>{const items=EVENTS.filter(event=>(event.type||'discount')===type),limit=items.reduce((total,event)=>total+event.discount,0);return '<section class="mas-event-group benefit-kind-card" data-benefit-type="'+type+'" aria-label="'+title+' 안내"><header class="benefit-kind-header"><h4>'+title+'</h4><strong class="benefit-kind-limit">최대 '+won(limit)+'</strong>'+(timing?'<span class="benefit-kind-timing">'+timing+'</span>':'')+'</header><p class="benefit-kind-note">'+note+'</p><ul>'+items.map(event=>'<li><div><strong>'+escapeHtml(event.label)+'</strong><b>'+(type==='payback'?'페이백 ':'할인 −')+won(event.discount)+'</b></div><p>'+escapeHtml(event.detail)+'</p></li>').join('')+'</ul></section>'}
- return '<details class="mas-event-disclosure"><summary><span class="mas-event-money" aria-hidden="true">💰</span><span><strong>페이백 목록 확인하기</strong><small>참여 혜택 최대 '+won(maximum)+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content"><div class="benefit-kind-grid">'+group('payback','후기 페이백','','참여 조건 충족 확인 후 돌려드리는 금액이며, 결제 금액에서 미리 차감하지 않아요 · 확인 후 카카오톡으로 환급 절차를 안내해 드려요')+'</div><p class="mas-event-note">참여 조건과 최종 혜택 적용 여부는 상담에서 확인해요</p></div></details>'
+ const group=(type,title,note)=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type),limit=items.reduce((total,event)=>total+event.discount,0);return '<section class="mas-event-group benefit-kind-card" data-benefit-type="'+type+'" aria-label="'+title+' 안내"><header class="benefit-kind-header"><h4>'+title+'</h4><strong class="benefit-kind-limit">'+(type==='discount'?'예약 시 할인':'최대 '+won(limit))+'</strong></header><p class="benefit-kind-note">'+note+'</p><ul>'+items.map(event=>'<li><div><strong>'+escapeHtml(event.label)+'</strong><b>'+(type==='payback'?'페이백 ':'할인 −')+won(event.discount)+'</b></div><p>'+escapeHtml(event.detail)+'</p></li>').join('')+'</ul></section>'}
+ return '<details class="mas-event-disclosure"><summary><span class="mas-event-money" aria-hidden="true">💰</span><span><strong>할인·페이백 목록 확인하기</strong><small>예약 할인과 후기 참여 혜택을 확인해 보세요</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content"><div class="benefit-kind-grid">'+group('discount','할인 내역','조건에 맞는 할인은 문의 양식에서 결제 예정 금액에 반영돼요 · 사전 예약 할인은 1개월·2개월 중 한 가지만 적용돼요')+group('payback','후기 페이백','참여 조건 충족 확인 후 돌려드리는 금액이며, 결제 금액에서 미리 차감하지 않아요 · 확인 후 카카오톡으로 환급 절차를 안내해 드려요')+'</div><p class="mas-event-note">참여 조건과 최종 혜택 적용 여부는 상담에서 확인해요</p></div></details>'
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
@@ -1286,7 +1285,6 @@ function packageOptionsGuide(){return '<section data-svg-title="off" class="pack
 function packageTotalHtml(p,key){return escapeHtml(p.key+' 타입')+' <strong>'+won(p.price)+'</strong>'+(key==='duo'?' <span class="package-duet-add">+ 30,000원</span>':'')}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">내게 맞는 녹음 타입을 골라보세요</h2>'+window.WistiaPackages.cards(p.key)+window.WistiaPackages.firstVisitBanner()+'<p class="package-selection-total" data-package-total>'+packageTotalHtml(p,key)+'</p><a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>A 기본 구성은 당일 전달<br>B·C 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>A·B는 1시간, C는 2시간</span></li><li><strong>일요일</strong><span>18:00부터 시작하는 시간만 마감이에요</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
-function packageWorkOverview(){return '<section data-svg-title="off" class="package-notices"><h2>필요한 작업을 골라 준비하세요</h2><ul><li><strong>기본 믹싱 · A·B·C 포함</strong><span>목소리와 MR의 밸런스·울림을 조절해요</span></li><li><strong>보컬 튜닝 · B·C 포함</strong><span>음정·박자를 자연스럽게 다듬어요</span></li><li><strong>디테일 믹싱 · B·C 서비스 포함</strong><span>목소리의 음색·톤을 조절해요</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 1:1 디렉팅을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 보컬 튜닝과 디테일 믹싱을 더해요'],['검수·전달','A 기본 구성은 당일, B·C 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
@@ -1310,7 +1308,7 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
 details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16f" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
  if(key==='solo'||key==='duo'){
   details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'')
-  details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,'<section data-svg-title="off" class="package-notices"><h2>위스티아에서 함께 준비해요</h2><ul><li><strong>구간별 녹음과 1:1 디렉팅</strong><span>처음부터 끝까지 한 번에 부르지 않아도 괜찮아요</span></li><li><strong>필요한 보정과 믹싱 선택</strong><span>목소리와 준비 상황에 맞춰 A·B·C 중 골라 주세요</span></li><li><strong>여유로운 녹음 시간</strong><span>C는 2시간 녹음으로 준비할 수 있어요</span></li></ul></section><section data-svg-title="off" class="package-notices"><h2>왜 저렴한가요?</h2><p>서울이 아닌 부천에서 운영해 가격 부담을 낮췄어요</p><p>녹음과 기본 믹싱을 바탕으로 필요한 작업을 선택해 준비할 수 있어요</p></section><div class="arc-engineer">')
+  details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,'<section data-svg-title="off" class="package-notices"><h2>위스티아에서 함께 준비해요</h2><ul><li><strong>구간별 녹음과 1:1 디렉팅</strong><span>처음부터 끝까지 한 번에 부르지 않아도 괜찮아요</span></li><li><strong>필요한 보정과 믹싱 선택</strong><span>목소리와 준비 상황에 맞춰 A·B·C 중 골라 주세요</span></li><li><strong>여유로운 녹음 시간</strong><span>C는 2시간 녹음으로 준비할 수 있어요</span></li></ul></section><div class="arc-engineer">')
   details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,soloPosterStack(detailPosterImage('assets/detail/cred-a2.webp?v=16i','방송 음악 작업 참여, 싱어게인2 사운드 작업',860,1012))+'<section class="arc-section arc-process"')
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
@@ -1326,13 +1324,11 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
  const intro='<section class="mas-intro package-intro" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="package-brand-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음</h1><p>내 목소리로 준비하는 본식 축가</p>'+mobileDetailEvents(null)+'</div></section>'
- details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,packageWorkOverview())
+ details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace('<section class="arc-point arc-point-tuning','<p class="package-point-note">보컬 보정 전후 예시 · B·C 또는 보컬 튜닝 선택 시 진행</p><section class="arc-point arc-point-tuning')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
  const detailParts=document.createElement('template');detailParts.innerHTML=details
- const tuning=detailParts.content.querySelector('#arcTuning')
- const workOverview=tuning?.querySelector('.package-notices');if(workOverview)tuning.after(workOverview)
  const map=detailParts.content.querySelector('[data-solo-map]')
  if(map)map.insertAdjacentHTML('afterend',packageSalesSection(key))
  else detailParts.content.append(document.createRange().createContextualFragment(packageSalesSection(key)))
@@ -1390,6 +1386,7 @@ function initArCommerceDetail(){
  const gift=document.querySelector('.welcome-gift')
  if(gift&&'IntersectionObserver' in window){welcomeGiftObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){window.WistiaPackages.celebrate(gift);welcomeGiftObserver.disconnect()}},{threshold:.4});welcomeGiftObserver.observe(gift)}
  const packageRoot=document.querySelector('#packageSelection')
+ window.WistiaPackages.mountSelection(packageRoot)
  packageRoot?.addEventListener('change',event=>{
   if(event.target.name!=='detailPackage')return
   const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)
@@ -1951,7 +1948,7 @@ function initCompactKakao(){
  const paint=()=>{
   frame=0
   const hit=button.getBoundingClientRect()
-  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,dt,dd,figcaption),main .package-selected-features li')
+  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,h4,dt,dd,figcaption),main .package-selected-features li,main .benefit-kind-header')
   const overlap=[...protectedRegions].some(el=>{
    if(!el.getClientRects().length||getComputedStyle(el).visibility!=='visible')return false
    const box=el.getBoundingClientRect()

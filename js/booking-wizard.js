@@ -44,7 +44,7 @@
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key)
   const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.textContent=q.package.key+' · 1곡 · '+q.minutes+'분'
   const advance=global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
-  const weekday=form.querySelector('[data-wf-weekday-note]');weekday.classList.toggle('is-applied',!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart))
+  const weekday=form.querySelector('[data-wf-weekday-note]');weekday.textContent=global.WistiaPackages.isPublicHoliday(q.v.bookingDate)?'공휴일은 목·금 시간대 할인이 적용되지 않아요':'목·금 13~16시 시작은 10,000원 할인돼요 (공휴일 제외)';weekday.classList.toggle('is-applied',!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart))
   if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount){const target=q.v.firstVisit==='1'&&!state.lastFirst?form.querySelector('.wf-welcome'):state.step===1?note:weekday;global.WistiaPackages.celebrate(target)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1'
   form.querySelector('.welcome-toggle strong').textContent=state.lastFirst?'할인 적용 완료':'10,000원 할인 받기'
@@ -84,6 +84,7 @@
  }
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false};states.set(form,state)
+  global.WistiaPackages.mountSelection(form)
   form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 녹음 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 2층</small></div><span data-wf-location-duration>1곡 · 1시간</span></aside>')
   restoreDraft(form,state,onPeople);state.draftReady=true
   const explicit=new URLSearchParams(global.location.search).get('package');if(['A','B','C'].includes(explicit))form.querySelectorAll('[name="package"]').forEach(input=>input.checked=input.value===explicit)
