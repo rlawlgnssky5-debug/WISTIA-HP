@@ -51,8 +51,7 @@
   sectionTones.forEach(([selector,color])=>{
    const section=detail.querySelector(selector);if(!section)return
    section.dataset.wistiaSection=String(++number).padStart(2,'0')
-   const surface=document.body.classList.contains('home-neutral-tone')&&color==='#F5F5F7'?'#F5F3ED':color
-   section.style.setProperty('--wistia-section-surface',surface)
+   section.style.setProperty('--wistia-section-surface',color)
    if(!section.querySelector(':scope>.wistia-section-number')){
     const badge=document.createElement('span');badge.className='wistia-section-number';badge.setAttribute('aria-hidden','true');section.prepend(badge)
    }
