@@ -78,5 +78,6 @@ test('delivery depends on correction rather than people',()=>{
 test('draft whitelist retains new fields and drops removed options',()=>{
  const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')
  assert.ok(!text.includes('lyricVideo'));assert.ok(!text.includes('extraVerse'));assert.ok(!text.includes('lipsync'))
- for(const name of ['package','extraHour','tuning','detailMix','firstVisit','paybackBlog','paybackReaction'])assert.ok(text.includes(name))
+ for(const name of ['package','extraHour','tuning','detailMix','firstVisit'])assert.ok(text.includes(name))
+ for(const name of ['paybackBlog','paybackReaction','eventDate'])assert.ok(!text.includes(name))
 })

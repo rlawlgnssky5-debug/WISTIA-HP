@@ -53,10 +53,7 @@
   ordered.forEach(({section,color})=>{
    section.dataset.wistiaSection=String(++number).padStart(2,'0')
    section.style.setProperty('--wistia-section-surface',color)
-   if(!section.querySelector(':scope>.wistia-section-number')){
-    const badge=document.createElement('span');badge.className='wistia-section-number';badge.setAttribute('aria-hidden','true');section.prepend(badge)
-   }
-   section.querySelector(':scope>.wistia-section-number').textContent=section.dataset.wistiaSection
+   section.querySelector(':scope>.wistia-section-number')?.remove()
   })
   detail.classList.add('wistia-section-tones')
  }

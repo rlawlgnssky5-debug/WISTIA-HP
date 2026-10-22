@@ -6,8 +6,8 @@
   C:{key:'C',title:'음정·박자 보정과 여유로운 녹음 시간이 필요해요!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
-  {key:'tuning',label:'보컬 튜닝',price:40000,detail:'B·C에 포함 · 선택 시 영업일 7일 이내 전달'},
-  {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'B·C에 서비스 포함'},
+  {key:'tuning',label:'보컬 튜닝',price:40000,detail:'B·C 패키지에 포함되어 있어요 · 선택 시 영업일 7일 이내 전달'},
+  {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'B·C 패키지에 포함되어 있어요'},
   {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 타입의 녹음 시간에 1시간 추가'},
  ]
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
@@ -36,7 +36,7 @@
  function quote(input={},reference=today()){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')).map(o=>({...o}))
-  if(duet)entries.unshift({key:'duet',label:'듀엣으로 변경',price:30000,detail:'2인·1곡 · 선택한 타입의 녹음 시간 유지'})
+  if(duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
   if(validDate(v.bookingDate)){
@@ -57,7 +57,7 @@
  const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}
  function selectionDetails(key){
   const p=packageFor(key)
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li>'+checkIcon+'<span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving">개별 선택 <s>'+money(p.individual)+'</s> → <strong>'+money(p.price)+'</strong><b>'+money(p.saving)+' 절약</b></p>':'')
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li><span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -69,7 +69,16 @@
   if(panel&&panel.dataset.packageKey!==p.key){panel.innerHTML=selectionDetails(p.key);panel.dataset.packageKey=p.key}
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul><li>첫 이용 <b>10,000원 할인</b></li><li>목·금 오후 1~4시 방문 <b>10,000원 할인</b></li><li>녹음일 1개월 이후 <b>10,000원 할인</b></li><li>녹음일 2개월 이후 <b>20,000원 할인</b></li></ul></section>'}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today,advanceDiscount,weekdayDiscount}
+ function firstVisitBanner(){return '<div class="welcome-gift"><img src="/assets/img/studio-3d/gift-benefits-yellow-v1.webp" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 10,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ function celebrate(root){
+  root=root?.closest('.wf-welcome')||root
+  if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
+  root.querySelector('.benefit-confetti')?.remove()
+  const burst=global.document.createElement('span');burst.className='benefit-confetti';burst.setAttribute('aria-hidden','true')
+  burst.innerHTML=Array.from({length:16},(_,i)=>'<i style="--i:'+i+';--dx:'+((i%2?1:-1)*(28+i*4))+'px;--turn:'+(i*43)+'deg"></i>').join('')
+  root.append(burst);setTimeout(()=>burst.remove(),1600)
+ }
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)
