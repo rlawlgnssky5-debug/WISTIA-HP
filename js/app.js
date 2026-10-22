@@ -1774,8 +1774,8 @@ function playInlineVideo(button){
  button.replaceWith(frame)
 }
 async function copyLocationAddress(button){
- const text=button.dataset.copyAddress,status=button.closest('.wistia-location-address').querySelector('[data-address-copy-status]')
- if(button.disabled)return
+ const text=button.dataset.copyAddress,status=button.closest('.wistia-location-address,.lc2-addr')?.querySelector('[data-address-copy-status]')
+ if(button.disabled||!text||!status)return
  button.disabled=true;let copied=false
  try{await navigator.clipboard.writeText(text);copied=true}catch{
   // A readonly, explicitly selected textarea supports iOS and in-app clipboard restrictions.
@@ -1950,23 +1950,21 @@ function initCompactKakao(){
  let frame=0
  const paint=()=>{
   frame=0
-  const scope=document.querySelector('.mobile-ar-solo')
-  button.classList.remove('is-content-overlap');button.removeAttribute('tabindex');if(!scope||true)return
-  const hit=button.getBoundingClientRect(),top=scope.querySelector('.solo-shot-top')
-  const topVisible=top&&top.getBoundingClientRect().bottom>0
-  const protectedRegions=[...scope.querySelectorAll('#arcFaq,#soloPoint04,.solo-footer,.mas-selection,.mas-event-content')]
-  const overlap=topVisible||protectedRegions.some(el=>{
-   if(!el.getClientRects().length)return false
+  const hit=button.getBoundingClientRect()
+  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,dt,dd,figcaption),main .package-selected-features li')
+  const overlap=[...protectedRegions].some(el=>{
+   if(!el.getClientRects().length||getComputedStyle(el).visibility!=='visible')return false
    const box=el.getBoundingClientRect()
-   return box.top<innerHeight&&box.bottom>innerHeight-120&&box.left<hit.right&&box.right>hit.left
+   return box.top<hit.bottom+6&&box.bottom>hit.top-6&&box.left<hit.right+6&&box.right>hit.left-6
   })
   button.classList.toggle('is-content-overlap',overlap)
   if(overlap)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
  }
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint)}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule)
- const observer=new ResizeObserver(schedule);observer.observe(document.querySelector('#app'))
- window.wistiaCompactKakaoCleanup=()=>{removeEventListener('scroll',schedule);removeEventListener('resize',schedule);observer.disconnect();cancelAnimationFrame(frame)}
+ const appRoot=document.querySelector('#app'),observer=new ResizeObserver(schedule);observer.observe(appRoot)
+ const changes=new MutationObserver(schedule);changes.observe(appRoot,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','open']})
+ window.wistiaCompactKakaoCleanup=()=>{removeEventListener('scroll',schedule);removeEventListener('resize',schedule);observer.disconnect();changes.disconnect();cancelAnimationFrame(frame)}
  schedule()
 }
 

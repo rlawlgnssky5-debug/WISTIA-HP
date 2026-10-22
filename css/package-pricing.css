@@ -193,4 +193,6 @@
 .events-payback .ev2-cond{display:block!important;margin:8px 0 16px!important}
 .events-payback .ev2-cond>span{display:block!important;padding:0!important;margin:8px 0!important;border:0!important;background:transparent!important;border-radius:0!important;font-size:13px!important;line-height:1.9!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
 .wistia-section-number{display:none!important}
+/* Hide only while the floating chat target would cover text or a working control. */
+html body #floatingKakaoChat.is-content-overlap{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 }
