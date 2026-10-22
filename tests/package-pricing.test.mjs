@@ -1,0 +1,63 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {createRequire} from 'node:module'
+import {readFileSync} from 'node:fs'
+const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
+const q=v=>pricing.quote(v,'2026-10-22')
+test('approved A/B/C prices and individual savings',()=>{
+ assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,60,0],[130000,60,20000],[170000,120,30000]])
+ for(const p of ['A','B','C'])assert.equal(q({package:p}).total,pricing.packages[p].price)
+ for(const key of ['unknown','__proto__','constructor'])assert.equal(q({package:key}).total,90000)
+})
+test('tuning and detail mixing are never charged twice in B/C',()=>{
+ assert.equal(q({package:'A',options:['tuning','detailMix']}).total,150000)
+ for(const p of ['B','C']){const result=q({package:p,options:['tuning','detailMix']});assert.equal(result.options.length,0);assert.equal(result.total,pricing.packages[p].price)}
+})
+test('duet changes people, not the selected recording time',()=>{
+ for(const p of ['A','B','C']){const result=q({package:p,people:'1'});assert.equal(result.total,pricing.packages[p].price+30000);assert.equal(result.minutes,pricing.packages[p].minutes)}
+})
+test('one additional hour costs 50000, including a further hour after C',()=>{
+ assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,120],[180000,120],[220000,180]])
+})
+test('100% lipsync costs 20000 and does not silently add mastering again',()=>{
+ assert.deepEqual(['A','B','C'].map(p=>q({package:p,options:['lipsync']}).total),[110000,150000,190000])
+})
+test('removed verse and lyric draft selections cannot affect the quote',()=>{
+ assert.equal(q({options:['lyrics-video','extra-verse'],lyricVideo:'1',extraVerse:'1'}).total,90000)
+ assert.equal(pricing.options.some(o=>/가사|1절/.test(o.label)),false)
+})
+test('weekday discount is one condition, Thursday/Friday 13:00 through 16:00',()=>{
+ for(const timeStart of ['13:00','14:00','15:00','16:00'])assert.equal(q({bookingDate:'2026-10-23',timeStart}).discount,10000)
+ for(const [bookingDate,timeStart] of [['2026-10-23','12:59'],['2026-10-23','16:01'],['2026-10-24','14:00'],['2026-10-23','']])assert.equal(q({bookingDate,timeStart}).discount,0)
+})
+test('one-month and two-month discounts are mutually exclusive calendar intervals',()=>{
+ assert.equal(q({bookingDate:'2026-11-21'}).discount,0)
+ assert.equal(q({bookingDate:'2026-11-22'}).discount,10000)
+ assert.equal(q({bookingDate:'2026-12-21'}).discount,10000)
+ const result=q({bookingDate:'2026-12-22'});assert.equal(result.discount,20000);assert.equal(result.discounts.length,1)
+ assert.equal(pricing.addMonths('2026-01-31',1),'2026-02-28')
+})
+test('approved discounts combine without inventing a payback cap',()=>{
+ const result=q({firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
+ assert.equal(result.discount,40000);assert.equal(result.total,50000);assert.equal(result.payback,60000)
+ assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
+})
+test('2026 wedding promo adds real bookable minutes, not another charge',()=>{
+ assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,210)
+ assert.equal(q({eventDate:'2026-12-30'}).minutes,90)
+ assert.equal(q({eventDate:'2026-12-30',eventDateMode:'unknown'}).minutes,60)
+ assert.equal(q({eventDate:'2027-01-01'}).minutes,60)
+ assert.equal(booking.duration('ar-90'),90);assert.equal(booking.duration('ar-210'),210)
+})
+test('delivery depends on correction rather than people',()=>{
+ assert.match(q({package:'A'}).delivery,/당일/)
+ assert.match(q({package:'A',tuning:'1'}).delivery,/영업일 기준 7일/)
+ assert.match(q({package:'B'}).delivery,/영업일 기준 7일/)
+ assert.equal(q({package:'A',rush:'1'}).total,90000,'same-day A is not charged for a redundant three-day option')
+ assert.equal(q({package:'B',rush:'1'}).total,160000)
+})
+test('draft whitelist retains new fields and drops removed options',()=>{
+ const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')
+ assert.ok(!text.includes('lyricVideo'));assert.ok(!text.includes('extraVerse'))
+ for(const name of ['package','extraHour','tuning','detailMix','lipsync','firstVisit','paybackBlog','paybackReaction'])assert.ok(text.includes(name))
+})

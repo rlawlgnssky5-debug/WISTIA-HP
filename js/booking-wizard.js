@@ -1,7 +1,7 @@
 (function(global){
  'use strict'
- const titles=['인원 선택','결혼식 날짜','녹음 날짜·시작 시간','추가 옵션','마지막 확인 후 카톡 문의']
- const steps=['인원','결혼식','녹음','옵션','확인']
+ const titles=['패키지와 인원 선택','결혼식 날짜','녹음 날짜·시작 시간','추가 옵션과 할인','마지막 확인 후 카톡 문의']
+ const steps=['상품','결혼식','녹음','옵션','확인']
  const sources=['인스타','스레드','광고','카페','블로그','지인 추천']
  const sourceLabels={'지인 추천':'기타 (지인 추천 등)'}
  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
@@ -21,11 +21,12 @@
   return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')
  }
  function render(key,benefits){
+  const selected=global.WistiaPackages.packageFor(new URLSearchParams(global.location.search).get('package')).key
   const sections=[
-   pair('people',['<b>SOLO(1인)</b><small>1곡 기준·1시간</small><strong>12만원</strong>','<b>DUET(2인)</b><small>1곡 기준·2시간</small><strong>16만원</strong>'],key==='duo'?'1':'0','people')+discoveryField(),
+   '<h3 class="package-heading">패키지로 예약하면 더 저렴해요!</h3>'+global.WistiaPackages.cards(selected,'wizard')+'<fieldset class="wf-people"><legend>녹음 인원</legend>'+pair('people',['<b>1인</b><small>1인·1곡 기준</small>','<b>듀엣으로 변경</b><small>2인·1곡 · 녹음 시간 유지</small><strong>+30,000원</strong>'],key==='duo'?'1':'0','people')+'</fieldset>'+discoveryField(),
    eventDateField(),
    '<div class="wf-schedule"><div data-wf-date-view>'+bookingDateField()+'</div><div class="wf-time-view" data-wf-time-view hidden><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1" aria-live="polite"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 선택</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>1시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite">시작 시간을 고르면 녹음 시간이 나와요</p>')+error('timeStart')+'</div>'+error('bookingDate')+'</div><fieldset class="wf-rush" data-wf-rush><legend class="sr-only">빠른 작업</legend>'+checkRow('rush','완성 음원이 빨리 필요해요!',30000,'3일 이내 받기')+'<p>제작 일정과 자료 준비 상태에 따라 상담 후 확정돼요</p></fieldset>',
-   '<p class="wf-option-guide">선택하실 추가 옵션이 없으시면 바로 다음 단계로 넘어가셔도 됩니다!</p><fieldset class="wf-option"><legend class="sr-only">가사영상 제작 추가 옵션</legend>'+'<div class="wf-option-pair">'+checkRow('lyricVideo','스크린에 띄울 가사 영상도 필요해요!',40000).replace('<span class="wf-check-label">','<span class="wf-check-label"><span class="wf-opt-num" aria-hidden="true">1</span>')+checkRow('lyricNone','필요 없어요!',0).replace(/<strong>[^<]*<\/strong>/,'').replace('<span class="wf-check-label">','<span class="wf-check-label"><span class="wf-opt-num" aria-hidden="true">2</span>')+'</div><img class="wf-lyric-example" src="/assets/img/song-options/lyric-video-v2.webp" width="1600" height="900" alt="두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시" loading="lazy">'+'</fieldset>',
+   '<p class="wf-option-guide">필요한 옵션만 선택해 주세요</p><fieldset class="wf-option package-extra-options"><legend>추가 옵션</legend>'+global.WistiaPackages.options.filter(o=>o.key!=='rush').map(o=>'<div data-wf-option="'+o.key+'">'+checkRow(o.key,o.label,o.price,o.detail)+'</div>').join('')+'</fieldset>'+global.WistiaPackages.discountsHtml()+'<label class="wf-check-row package-first-visit"><input type="checkbox" name="firstVisit" value="1"><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">위스티아가 처음이에요</span><strong>−10,000원</strong></label><p class="package-auto-discount-note">방문 요일·시간과 사전 예약 할인은 선택한 녹음 일정에 따라 자동 반영돼요</p><dl class="package-discount-result" data-wf-discounts aria-live="polite"></dl><fieldset class="wf-option package-paybacks"><legend>페이백 이벤트</legend><label class="wf-check-row"><input type="checkbox" name="paybackReaction" value="1"><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">본식 현장 영상 제공<small>얼굴 공개 및 위스티아 공식 인스타그램 게시 동의</small></span><strong>30,000원 환급</strong></label><label class="wf-check-row"><input type="checkbox" name="paybackBlog" value="1"><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">네이버 블로그 리뷰<small>일 방문자 100명 이상 · 위스티아 제공 가이드에 따라 작성</small></span><strong>30,000원 환급</strong></label><p>두 가지 모두 참여하면 총 60,000원 환급<br>결제 시 미리 차감하지 않고, 참여 조건 확인 후 카카오톡으로 환급 절차를 안내해 드려요</p></fieldset>',
    '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><dl data-wf-review></dl><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다</p>'
   ]
   return '<section class="wistia-wizard"><h1>문의양식 작성</h1><p class="wf-draft-note" data-wf-draft-note>작성 내용은 이 브라우저에 3시간 동안 임시 저장돼요</p><form id="contactInquiryForm" data-wizard="true" data-booking-calendar-opened="true" novalidate><ol class="wf-progress" aria-label="문의 단계">'+steps.map((title,index)=>'<li data-wf-progress="'+index+'"><button type="button" data-wf-goto="'+index+'" aria-label="'+(index+1)+'단계 '+title+'"><span>'+(index+1)+'</span><small>'+title+'</small></button></li>').join('')+'</ol><p class="wf-step-label" aria-live="polite" data-wf-step-label></p>'+sections.map((body,index)=>'<section class="wf-step" data-wf-step="'+index+'"'+(index?' hidden':'')+'><h2 tabindex="-1">'+titles[index]+'</h2>'+body+'</section>').join('')+'<div class="wf-nav"><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 카카오톡 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
@@ -33,17 +34,15 @@
  function values(form){const v=Object.fromEntries(new FormData(form));if(form.elements?.eventDateUnknown?.checked||v.eventDateUnknown)v.eventDateMode='unknown';return v}
  const promo2026=v=>v.eventDateMode!=='unknown'&&/^2026-\d{2}-\d{2}$/.test(v.eventDate||'')
  function quote(form){
-  const v=values(form),state=states.get(form),base=v.people==='1'?160000:120000
-  const options=v.lyricVideo==='1'?[['가사영상 제작 추가 옵션',40000]]:[]
-  const paybacks=[],total=base+options.reduce((s,o)=>s+o[1],0)+(v.rush==='1'?30000:0)
-  return {v,base,options,total,paybacks,payback:paybacks.reduce((s,b)=>s+b.discount,0)}
+  const v=values(form),result=global.WistiaPackages.quote(v)
+  return {...result,v,options:result.options.map(o=>[o.label,o.price])}
  }
  const clock=value=>Number(value.slice(0,2))*60+Number(value.slice(3))
  const clockText=minute=>String(Math.floor(minute/60)).padStart(2,'0')+':'+String(minute%60).padStart(2,'0')
- function range(time,people){if(!time)return '미정';const start=clock(time);return clockText(start)+'~'+clockText(start+(people==='1'?120:60))}
+ function range(time,minutes=60){if(!time)return '미정';const start=clock(time);return clockText(start)+'~'+clockText(start+(typeof minutes==='number'?minutes:60))}
  function rows(form){
   const q=quote(form),v=q.v,date=key=>v[key+'Mode']==='unknown'?'미정':v[key]?v[key]+' ('+['일','월','화','수','목','금','토'][new Date(v[key]+'T12:00:00Z').getUTCDay()]+')':'미정'
-  return [['인원',v.people==='1'?'DUET(2인) · 1곡 · 2시간':'SOLO(1인) · 1곡 · 1시간'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,v.people,v.extraVerse)],['빠른 작업',v.rush==='1'?'3일 이내 받기 +30,000원':'선택 안 함'],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],...(promo2026(v)?[['서비스','녹음 30분 무료 추가 (2026 예식 이벤트)']]:[]),['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
+  return [['패키지',q.package.key+' | '+q.package.title],['인원',v.people==='1'?'듀엣(2인) · 1곡':'1인 · 1곡'],['녹음 소요 시간',q.minutes+'분'],['결혼식 날짜',date('eventDate')],['녹음 날짜',date('bookingDate')],['녹음 시간',range(v.timeStart,q.minutes)],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['할인',q.discounts.map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],...(q.promo?[['서비스','녹음 30분 무료 추가 (2026 예식 이벤트)']]:[]),['페이백',q.paybacks.map(p=>p.label+' '+money(p.amount)+' 환급').join('\n')||'선택 안 함'],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]
  }
  function text(form){
   const q=quote(form),details=Object.fromEntries(rows(form)),date=value=>value
@@ -53,16 +52,19 @@
    '📅 녹음 예약','',
    '• 날짜 : '+date(details['녹음 날짜']),
    '• 시간 : '+details['녹음 시간'].replace('~',' ~ '),
-   '• 구성 : '+details['인원'],
+   '• 패키지 : '+details['패키지'],
+   '• 구성 : '+details['인원']+' · '+details['녹음 소요 시간'],
    '• 결혼식 : '+date(details['결혼식 날짜']),'',
    '🎵 추가 옵션','',
    ...(q.options.length?q.options.map(([label,amount])=>'• '+label+' : +'+money(amount)):['• 추가 옵션 : 없음']),
-   '• 빠른 작업 : '+(q.v.rush==='1'?'3일 이내 받기 (+30,000원)':'미선택'),'',
-   ...(promo2026(q.v)?['🎁 서비스','','• 2026 예식 이벤트 : 녹음 30분 무료 추가 ('+(q.v.people==='1'?'2인 2시간 → 2시간 30분':'1인 1시간 → 1시간 30분')+')','']:[]),
+   '• 음원 전달 : '+q.delivery,'',
+   ...(q.promo?['🎁 서비스','','• 2026 예식 이벤트 : 녹음 30분 무료 추가','']:[]),
    '💰 결제 금액','',
    '• 기본 상품 : '+money(q.base),
-   '• 추가 금액 : '+money(q.total-q.base),
+   '• 추가 금액 : '+money(q.optionTotal),
+   ...q.discounts.map(d=>'• '+d.label+' : −'+money(d.amount)),
    '• 총 결제 금액 : '+money(q.total),'',
+   ...(q.paybacks.length?['💝 후기 페이백','',...q.paybacks.map(p=>'• '+p.label+' : '+money(p.amount)+' 환급'),'결제 시 미리 차감하지 않고, 참여 조건 확인 후 카카오톡으로 환급 안내','']:[]),
    '💬 고객 정보','',
    '• 유입 경로 : '+details['처음 본 곳'],
    '• 특이사항 : '+(notes||'없음'),'',
@@ -97,10 +99,21 @@
   const q=quote(form)
   const promo=form.querySelector('[data-promo30-note]')
   promo.hidden=!promo2026(q.v)
-  const promoHours=q.v.people==='1'?'2':'1'
-  promo.querySelector('[data-promo30-duration]').textContent='녹음 '+promoHours+'시간 → '+promoHours+'시간 30분 · 녹음 시간에만 적용돼요'
+  promo.querySelector('[data-promo30-duration]').textContent='녹음 '+q.baseMinutes+'분 → '+q.minutes+'분 · 녹음 시간에만 적용돼요'
   const durationLabel=form.querySelector('[data-wf-location-duration]')
-  if(durationLabel)durationLabel.textContent='1곡 · '+(q.v.people==='1'?'2':'1')+'시간'
+  if(durationLabel)durationLabel.textContent=q.package.key+' · 1곡 · '+q.minutes+'분'
+  form.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
+  for(const key of ['tuning','detailMix']){
+   const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing
+   input.disabled=included;if(included)input.checked=false
+   row.classList.toggle('is-included',included)
+   row.querySelector('strong').textContent=included?'패키지 포함':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)
+  }
+  form.querySelector('[data-wf-discounts]').innerHTML=q.discounts.map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
+  const rush=form.querySelector('[name="rush"]'),sameDay=q.delivery===global.WistiaPackages.packages.A.delivery
+  rush.disabled=sameDay;if(sameDay)rush.checked=false
+  form.querySelector('[data-wf-rush] .wf-check-description').textContent=sameDay?'A 기본 구성은 당일 전달돼요':'3일 이내 받기'
+  form.dataset.bookingMinutes=String(q.minutes)
   updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
   form.querySelector('[data-wf-review]').innerHTML=rows(form).map(([label,value])=>'<div'+(label==='총 금액'?' class="wf-final-total"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('')
   form.querySelectorAll('[data-wf-step]').forEach(section=>section.hidden=Number(section.dataset.wfStep)!==state.step)
@@ -110,7 +123,7 @@
   form.querySelector('[data-wf-prev]').title=state.step===0?'상품 상세페이지로 돌아가기':'이전 단계'
   form.querySelector('[data-wf-next]').hidden=state.step===4
   form.querySelector('[type="submit"]').hidden=state.step!==4
-  const recording=form.querySelector('[data-wf-recording-range]');recording.textContent=q.v.timeStart?'녹음 시간 · '+range(q.v.timeStart,q.v.people,q.v.extraVerse):'시작 시간을 고르면 녹음 시간이 나와요';recording.classList.toggle('has-selection',!!q.v.timeStart)
+  const recording=form.querySelector('[data-wf-recording-range]');recording.textContent=q.v.timeStart?'녹음 시간 · '+range(q.v.timeStart,q.minutes):'시작 시간을 고르면 녹음 시간이 나와요';recording.classList.toggle('has-selection',!!q.v.timeStart)
   persistDraft(form)
   try{global.WistiaInquiryFunnel?.view(form)}catch{}
  }
@@ -132,7 +145,7 @@
  function restoreDraft(form,state,onPeople){
   const draft=global.WistiaBookingDraft?.read(state.draftKey);if(!draft)return
   const fields=draft.fields
-  for(const name of ['people','discovery','rush','lyricVideo','lyricNone','specialNotes']){
+  for(const name of ['package','people','discovery','rush','tuning','detailMix','extraHour','lipsync','firstVisit','paybackBlog','paybackReaction','specialNotes']){
    form.querySelectorAll('[name="'+name+'"]').forEach(control=>{
     if(control.type==='radio')control.checked=control.value===fields[name]
     else if(control.type==='checkbox')control.checked=fields[name]==='1'
@@ -184,10 +197,10 @@
  }
  function syncTimes(form){
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate');if(!list||!time||!date)return
-  const known=!date.disabled&&!!date.value,loading=form.dataset.scheduleState==='loading',minutes=values(form).people==='1'?120:60
+  const known=!date.disabled&&!!date.value,loading=form.dataset.scheduleState==='loading',minutes=quote(form).minutes
   list.hidden=!known||loading;list.closest('[data-time-scroll-wrap]').hidden=!known||loading;time.closest('label').hidden=true;time.disabled=!known
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'날짜를 먼저 골라 주시면 가능한 시간을 보여 드릴게요';form.querySelector('[data-time-help]').hidden=true
-  form.querySelector('[data-wf-duration]').textContent=minutes/60+'시간 진행'
+  form.querySelector('[data-wf-duration]').textContent=minutes+'분 진행'
   list.classList?.toggle('is-loading',loading);list.setAttribute?.('aria-busy',String(loading));list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>loading?'<button type="button" data-wf-time="'+o.value+'" class="is-loading" disabled aria-pressed="false"><strong>'+o.value+'</strong></button>':'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(o.disabled?'<small>마감</small>':'')+'</button>').join('')
   syncSchedule(form)
   update(form)
@@ -211,16 +224,19 @@
   form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 녹음 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 2층</small></div><span data-wf-location-duration>1곡 · 1시간</span></aside>')
   syncEventDropdowns(form)
   restoreDraft(form,state,onPeople);state.draftReady=true
+  const explicitPackage=new URLSearchParams(global.location.search).get('package')
+  if(['A','B','C'].includes(explicitPackage))form.querySelectorAll('[name="package"]').forEach(input=>input.checked=input.value===explicitPackage)
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
-   if((el.name==='lyricVideo'||el.name==='lyricNone')&&el.checked){const other=form.querySelector('[name="'+(el.name==='lyricVideo'?'lyricNone':'lyricVideo')+'"]');if(other)other.checked=false}
    if(el.hasAttribute('data-wf-date-part'))syncEventDropdowns(form)
-   else if(el.name==='people'){const key=el.value==='1'?'duo':'solo';onPeople(key);global.WistiaBooking.mount(form,key)}
+   else if(el.name==='people'){const key=el.value==='1'?'duo':'solo';onPeople(key)}
    else if(['bookingDateMode','bookingDate','timeStart'].includes(el.name))global.WistiaContact.update(el)
    if(el.name==='eventDateUnknown'){syncEventMode(form);mark(form,'eventDate','')}
+   if(el.name==='package'){const url=new URL(global.location.href);url.searchParams.set('package',el.value);global.history.replaceState(global.history.state,'',url.pathname+url.search)}
    if(el.name==='bookingDate'){mark(form,'bookingDate','');mark(form,'timeStart','');syncSchedule(form,'time');form.querySelector('[data-wf-selected-date]').focus({preventScroll:true})}
    if(el.name==='timeStart')mark(form,'timeStart','')
    update(form)
+   if(['package','people','extraHour','eventDateUnknown'].includes(el.name)||el.hasAttribute('data-wf-date-part'))global.WistiaBooking.mount(form,bookingKey(form))
   })
   form.addEventListener('input',()=>update(form))
   form.addEventListener('click',event=>{
@@ -243,10 +259,11 @@
     await onSubmit(text(form))
    }finally{delete form.dataset.copyPending;button.disabled=false}
   })
-  Promise.resolve(global.WistiaBooking.mount(form,values(form).people==='1'?'duo':'solo')).then(()=>{
+  Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{
    if(!form.isConnected)return
    if(state.step>2&&!validate(form,2)){state.step=2;update(form)}
   });update(form)
  }
- global.WistiaWizard={currentStep:form=>(states.get(form)?.step??0)+1,render,mount,syncTimes,syncSchedule,text,quote,rows,range}
+ function bookingKey(form){return 'ar-'+quote(form).minutes}
+ global.WistiaWizard={currentStep:form=>(states.get(form)?.step??0)+1,render,mount,syncTimes,syncSchedule,text,quote,rows,range,bookingKey}
 })(window)

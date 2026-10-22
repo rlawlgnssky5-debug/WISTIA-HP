@@ -34,21 +34,123 @@
   <meta name="naver-site-verification" content="f24cd7223810c0ae8fb57e8a9cd795ccc01ac4c6">
   <title>오시는 길 | 경기도 부천 위스티아</title>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"Organization","@id":"https://wistiastudio.com/#organization","name":"WISTIA","alternateName":"위스티아","url":"https://wistiastudio.com/","logo":"https://wistiastudio.com/assets/img/wistia-logo.png","sameAs":["https://pf.kakao.com/_GbExjX"]},
-    {"@type":"LocalBusiness","@id":"https://wistiastudio.com/#studio","name":"위스티아","url":"https://wistiastudio.com/","address":{"@type":"PostalAddress","streetAddress":"석천로170번길 19, 2층","addressLocality":"부천시","addressCountry":"KR"},"parentOrganization":{"@id":"https://wistiastudio.com/#organization"}},
-    {"@type":"Service","name":"사전 녹음 1시간","url":"https://wistiastudio.com/detail/solo","provider":{"@id":"https://wistiastudio.com/#studio"}},
-    {"@type":"Service","name":"사전 녹음 2시간","url":"https://wistiastudio.com/detail/duo","provider":{"@id":"https://wistiastudio.com/#studio"}},
-    {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"스튜디오는 어디에 있나요?","acceptedAnswer":{"@type":"Answer","text":"<strong>부천시청역 1번 출구</strong>에서 도보 <strong>약 300m</strong>예요.<br>주소는 부천시 석천로170번길 19, 2층이에요."}},{"@type":"Question","name":"완성까지 얼마나 걸리나요?","acceptedAnswer":{"@type":"Answer","text":"녹음과 자료 전달이 완료된 뒤 최대 7일 이내 전달합니다"}}]}
-  ]}
-  </script>
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://wistiastudio.com/#organization",
+   "name": "WISTIA",
+   "alternateName": "위스티아",
+   "url": "https://wistiastudio.com/",
+   "logo": "https://wistiastudio.com/assets/img/wistia-logo.png",
+   "sameAs": [
+    "https://pf.kakao.com/_GbExjX"
+   ]
+  },
+  {
+   "@type": "LocalBusiness",
+   "@id": "https://wistiastudio.com/#studio",
+   "name": "위스티아",
+   "url": "https://wistiastudio.com/",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "석천로170번길 19, 2층",
+    "addressLocality": "부천시",
+    "addressCountry": "KR"
+   },
+   "parentOrganization": {
+    "@id": "https://wistiastudio.com/#organization"
+   },
+   "priceRange": "90000-170000 KRW"
+  },
+  {
+   "@type": "Service",
+   "name": "위스티아 AR 축가 패키지 A",
+   "serviceType": "AR 축가 사전녹음",
+   "description": "1인·1곡 기준 · 녹음 1시간 + 1:1 디렉팅 · 기본 믹싱 · 목소리와 MR의 밸런스·울림 조절 · 음정·박자 보정 미포함 · 당일 음원 전달",
+   "url": "https://www.wistiastudio.com/detail/solo?package=A",
+   "provider": {
+    "@id": "https://www.wistiastudio.com/#studio"
+   },
+   "offers": {
+    "@type": "Offer",
+    "price": 90000,
+    "priceCurrency": "KRW",
+    "url": "https://www.wistiastudio.com/detail/solo?package=A"
+   }
+  },
+  {
+   "@type": "Service",
+   "name": "위스티아 AR 축가 패키지 B",
+   "serviceType": "AR 축가 사전녹음",
+   "description": "1인·1곡 기준 · 녹음 1시간 + 1:1 디렉팅 · 기본 믹싱 · 목소리와 MR의 밸런스·울림 조절 · 음정·박자 보정 포함 · 디테일 믹싱 서비스 포함 · 음색·톤 조절 · 영업일 기준 7일 이내 음원 전달",
+   "url": "https://www.wistiastudio.com/detail/solo?package=B",
+   "provider": {
+    "@id": "https://www.wistiastudio.com/#studio"
+   },
+   "offers": {
+    "@type": "Offer",
+    "price": 130000,
+    "priceCurrency": "KRW",
+    "url": "https://www.wistiastudio.com/detail/solo?package=B"
+   }
+  },
+  {
+   "@type": "Service",
+   "name": "위스티아 AR 축가 패키지 C",
+   "serviceType": "AR 축가 사전녹음",
+   "description": "1인·1곡 기준 · 녹음 2시간 + 1:1 디렉팅 · 기본 믹싱 · 목소리와 MR의 밸런스·울림 조절 · 음정·박자 보정 포함 · 디테일 믹싱 서비스 포함 · 음색·톤 조절 · 영업일 기준 7일 이내 음원 전달",
+   "url": "https://www.wistiastudio.com/detail/solo?package=C",
+   "provider": {
+    "@id": "https://www.wistiastudio.com/#studio"
+   },
+   "offers": {
+    "@type": "Offer",
+    "price": 170000,
+    "priceCurrency": "KRW",
+    "url": "https://www.wistiastudio.com/detail/solo?package=C"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "패키지는 어떻게 다른가요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A는 녹음 1시간과 기본 믹싱, B는 보컬 튜닝과 디테일 믹싱 포함, C는 B 구성에 녹음 1시간을 더해 총 2시간이에요"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "완성 음원은 언제 받을 수 있나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A 기본 구성은 당일, B·C 또는 보컬 튜닝 선택 시 영업일 기준 7일 이내 전달해 드려요"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "100% 립싱크도 선택할 수 있나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "100% 립싱크를 원해요 옵션은 20,000원 추가예요"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
   <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"></noscript>
-  <link rel="stylesheet" href="css/bundle-47da7046.css?v=20261021-mobile-parity-1">
+  <link rel="stylesheet" href="css/bundle-0309d952.css?v=20261022-packages-1">
   <link rel="stylesheet" href="css/canvas-780.css?v=20261021-mobile-parity-1">
   <script src="js/hero-editor.js?v=20261014-detail-polish-16j12" defer></script>
   <script src="js/process-editor.js?v=20261014-detail-polish-16j12" defer></script>
@@ -59,16 +161,17 @@
   <script src="js/tracking-common.js?v=20261017-funnel2" defer></script>
   <script src="js/meta-pixel.js?v=20261017-funnel2" defer></script>
   <script src="js/analytics.js?v=20261017-funnel2" defer></script>
-  <script src="js/seo-meta.js?v=20261021-retire-410-1" defer></script>
-  <script src="js/booking-availability.js?v=20261015-schedule-switch-1" defer></script>
+  <script src="js/seo-meta.js?v=20261022-packages-1" defer></script>
+  <script src="js/booking-availability.js?v=20261022-packages-1" defer></script>
   <script src="js/contact-form.js?v=20261021-retire-410-1" defer></script>
   <script src="js/site-motion.js?v=20261014-detail-polish-16j12" defer></script>
   <script src="js/svg-interface.js?v=20261014-detail-polish-16j12" defer></script>
-  <script src="js/booking-draft.js?v=20261017-form3h" defer></script>
+  <script src="js/booking-draft.js?v=20261022-packages-1" defer></script>
   <script src="js/inquiry-funnel.js?v=20261017-funnel2" defer></script>
-  <script src="js/booking-wizard.js?v=20261019-svc" defer></script>
+  <script src="js/package-pricing.js?v=20261022-packages-1" defer></script>
+  <script src="js/booking-wizard.js?v=20261022-packages-1" defer></script>
   <script src="js/detail-pc-background.js?v=20261021-mobile-parity-1" defer></script>
-  <script src="js/app.js?v=20261021-retire-410-1" defer></script>
+  <script src="js/app.js?v=20261022-packages-1" defer></script>
   <meta property="og:image" content="https://wistiastudio.com/assets/img/og/wistia-og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">

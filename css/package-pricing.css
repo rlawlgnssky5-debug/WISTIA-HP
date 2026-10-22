@@ -1,0 +1,87 @@
+/* Isolate approved pricing from legacy high-specificity theme overrides */
+@layer wistia-packages{
+/* Approved A/B/C pricing, shared by every SPA entry and both canvas sizes */
+.package-section,.package-information,.package-options-guide,.package-discount-guide{color:#5a3a40!important}
+.package-section{padding:24px 20px 28px!important;background:#fbf1f1!important}
+.package-section h2,.package-heading{font-size:22px!important;line-height:1.45!important;font-weight:650!important;margin:0 0 20px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.package-cards{display:grid!important;grid-template-columns:1fr!important;gap:12px!important}
+.package-card{display:block!important;position:relative!important;min-width:0!important;margin:0!important;cursor:pointer!important;color:#5a3a40!important;background:#fff!important;border:1px solid #ebd5d8!important;border-radius:12px!important;overflow:hidden!important}
+.package-card.is-selected,.package-card:has(input:checked){border-color:#a65a6c!important;box-shadow:0 0 0 1px #a65a6c!important}
+.package-card>input{position:absolute!important;opacity:0!important;width:1px!important;height:1px!important}
+.package-card:has(input:focus-visible){outline:3px solid #a65a6c!important;outline-offset:3px!important}
+.package-card-body{display:block!important;padding:18px!important;background:transparent!important;color:inherit!important}
+.package-card-name{display:block!important;font-size:16px!important;line-height:1.5!important;font-weight:600!important;overflow-wrap:anywhere!important}
+.package-card-name b{font-weight:600!important}
+.package-card-price{display:block!important;margin:8px 0 12px!important;font-size:24px!important;line-height:1.4!important;font-weight:700!important;color:#a65a6c!important}
+.package-card-features{display:grid!important;gap:6px!important;font-size:14px!important;line-height:1.65!important}
+.package-card-features>span{display:block!important;padding-left:12px!important;position:relative!important}
+.package-card-features>span:before{content:'·'!important;position:absolute!important;left:0!important}
+.package-card-saving{display:grid!important;gap:5px!important;margin-top:14px!important;padding-top:12px!important;border-top:1px solid #ebd5d8!important;font-size:13px!important;line-height:1.6!important}
+.package-card-saving s{color:#826f73!important}
+.package-card-saving b{color:#a65a6c!important;font-size:15px!important}
+.package-card-saving small{font-size:12px!important}
+.package-people{margin:22px 0 0!important}
+.package-people h3,.package-options-guide h3,.package-discount-guide h3{font-size:18px!important;line-height:1.5!important;margin:0 0 12px!important}
+.package-people-buttons{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+.package-people-buttons button{padding:14px 8px!important;min-height:52px!important;border:1px solid #c4808c!important;border-radius:10px!important;background:#fff!important;color:#a65a6c!important;font:inherit!important;font-size:14px!important}
+.package-people-buttons button[aria-pressed=true]{background:#a65a6c!important;color:#fff!important}
+.package-people-note,.package-delivery,.package-auto-discount-note{font-size:13px!important;line-height:1.7!important;margin:12px 0!important;color:#826f73!important}
+.package-inquiry-link{display:flex!important;justify-content:center!important;align-items:center!important;margin-top:18px!important;min-height:50px!important;background:#a65a6c!important;color:#fff!important;border-radius:10px!important;font-size:15px!important;font-weight:600!important;text-decoration:none!important}
+.package-options-guide{margin:24px 0 0!important;padding-top:22px!important;border-top:1px solid #ebd5d8!important}
+.package-options-guide ul,.package-discount-guide ul{list-style:none!important;padding:0!important;margin:0!important;display:grid!important;gap:12px!important}
+.package-options-guide li{display:grid!important;gap:5px!important;font-size:14px!important;line-height:1.6!important}
+.package-options-guide li b{font-weight:600!important}
+.package-options-guide li small{font-size:12px!important;color:#826f73!important}
+.package-discount-guide{margin-top:24px!important;padding-top:22px!important;border-top:1px solid #ebd5d8!important}
+.package-discount-guide li{display:flex!important;flex-wrap:wrap!important;justify-content:space-between!important;gap:4px 12px!important;font-size:13px!important;line-height:1.7!important}
+.package-information{padding:24px 20px!important;background:#fff!important}
+.package-information h2{font-size:22px!important;margin:0 0 18px!important}
+.package-information dl,.package-discount-result{margin:0!important}
+.package-information dl>div,.package-discount-result>div{display:flex!important;justify-content:space-between!important;align-items:start!important;gap:18px!important;padding:12px 0!important;border-bottom:1px solid #ebd5d8!important;font-size:14px!important;line-height:1.7!important}
+.package-information dt{flex:0 0 72px!important;color:#a65a6c!important}
+.package-information dd,.package-discount-result dd{margin:0!important;text-align:right!important;overflow-wrap:anywhere!important}
+.package-notices{padding:26px 20px!important;background:#fbf1f1!important}
+.package-notices h2{font-size:22px!important;margin:0 0 20px!important}
+.package-notices ul{list-style:none!important;padding:0!important;margin:0!important;display:grid!important;gap:18px!important}
+.package-notices li{display:grid!important;gap:6px!important;font-size:14px!important;line-height:1.7!important}
+.package-notices li strong{color:#a65a6c!important}
+.package-point-note{padding:14px 20px!important;margin:0!important;background:#fbf1f1!important;color:#a65a6c!important;font-size:13px!important;line-height:1.6!important}
+.wistia-wizard .package-heading{margin-top:8px!important}
+.wistia-wizard .package-card-body{padding:16px!important}
+.wistia-wizard .wf-people{margin:24px 0!important}
+.wistia-wizard .package-extra-options{display:grid!important;gap:12px!important}
+.wistia-wizard .package-extra-options .wf-check-row{margin:0!important}
+.wistia-wizard .wf-check-label small{display:block!important;margin-top:5px!important;font-size:12px!important;line-height:1.6!important;font-weight:400!important}
+.wistia-wizard .wf-check-row{gap:10px!important;min-width:0!important;flex-wrap:wrap!important}
+.wistia-wizard .wf-check-row>strong{font-size:14px!important;white-space:normal!important;text-align:right!important}
+.wistia-wizard .wf-check-label{min-width:0!important;overflow-wrap:anywhere!important}
+.wistia-wizard .is-included{opacity:.7!important}
+.wistia-wizard .package-paybacks{margin-top:24px!important}
+.wistia-wizard .package-paybacks p{font-size:13px!important;line-height:1.8!important}
+.wistia-wizard .package-discount-result{font-size:13px!important;color:#a65a6c!important}
+.wistia-wizard .package-first-visit{margin-top:18px!important}
+.solo-detail-scope .package-section .package-inquiry-link{position:static!important}
+.solo-detail-scope .package-section,.solo-detail-scope .package-information,.solo-detail-scope .package-notices{width:100%!important;box-sizing:border-box!important}
+.package-brand-summary{padding:22px 20px!important;background:#fbf1f1!important}
+.package-brand-summary h1{font-size:24px!important;line-height:1.45!important;margin:18px 0 8px!important;white-space:normal!important}
+.package-brand-summary>p{font-size:14px!important;line-height:1.7!important}
+.package-selection-total{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:center!important;font-size:14px!important;margin:18px 0 0!important}
+.package-selection-total strong{font-size:22px!important;color:#a65a6c!important}
+.package-process-list{padding-left:20px!important;display:grid!important;gap:18px!important;font-size:14px!important;line-height:1.7!important}
+.package-process-list p{margin:4px 0 0!important}
+#app .package-intro{padding:0!important;display:block!important}
+#app .package-intro .mas-gallery{position:relative!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;aspect-ratio:auto!important}
+#app .package-intro .mas-gallery-viewport{width:100%!important;height:auto!important;aspect-ratio:780/900!important;min-height:0!important}
+#app .package-intro :is(.mas-gallery-track,.mas-gallery-slide){height:100%!important;min-height:0!important;aspect-ratio:auto!important}
+.package-brand-summary .mas-event-disclosure{position:relative!important;width:100%!important;margin:18px 0 0!important}
+.package-brand-summary .mas-event-content{position:static!important;width:100%!important;box-sizing:border-box!important}
+
+.package-section,.package-information,.package-notices{margin:0!important;max-width:none!important;line-height:1.7!important;text-align:left!important}
+.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul,.package-process-list{width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
+.package-card-name,.package-card-price,.package-card-features,.package-card-saving,.package-section h2,.package-section h3,.package-information h2,.package-notices h2{text-align:left!important}
+.package-card-features>span{width:100%!important;max-width:none!important;text-align:left!important}
+.package-inquiry-link{position:static!important;width:100%!important;box-sizing:border-box!important;text-align:center!important;padding:12px!important}
+.package-information dl>div{width:100%!important}
+.package-brand-summary .mas-event-disclosure>summary{color:#5a3a40!important}
+
+}

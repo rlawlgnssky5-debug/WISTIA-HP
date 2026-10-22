@@ -6,16 +6,16 @@ const source=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf
 const store=new Map(),win={localStorage:{getItem:key=>store.get(key)||null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)}}
 runInNewContext(source,{window:win,Date,JSON})
 const api=win.WistiaBookingDraft
-const data={step:4,view:'time',fields:{people:'1',discovery:'스레드',eventDateMode:'unknown',bookingDate:'2026-10-22',timeStart:'15:00',rush:'1',lyricVideo:'1',specialNotes:'궁금한 점\n상담 부탁드려요',name:'must never persist',phone:'must never persist',extraVerse:'1'},wedding:{year:'2026',month:'12',day:'25'}}
+const data={step:4,view:'time',fields:{package:'C',people:'1',discovery:'스레드',eventDateMode:'unknown',bookingDate:'2026-10-22',timeStart:'15:00',rush:'1',tuning:'1',detailMix:'1',extraHour:'1',lipsync:'1',firstVisit:'1',paybackBlog:'1',paybackReaction:'1',lyricVideo:'1',specialNotes:'궁금한 점\n상담 부탁드려요',name:'must never persist',phone:'must never persist',extraVerse:'1'},wedding:{year:'2026',month:'12',day:'25'}}
 assert.equal(api.save('solo',data),true)
 const stored=JSON.parse(store.get('wistia:inquiry-draft:v1:solo'))
 assert.equal(stored.version,1)
 assert.ok(stored.savedAt)
-assert.doesNotMatch(JSON.stringify(stored),/must never persist|extraVerse|phone|"name"/)
+assert.doesNotMatch(JSON.stringify(stored),/must never persist|extraVerse|lyricVideo|phone|"name"/)
 const loaded=api.read('solo')
 assert.equal(loaded.step,4)
 assert.equal(loaded.view,'time')
-for(const field of ['people','discovery','eventDateMode','bookingDate','timeStart','rush','lyricVideo','specialNotes'])assert.equal(loaded.fields[field],data.fields[field])
+for(const field of ['package','people','discovery','eventDateMode','bookingDate','timeStart','rush','tuning','detailMix','extraHour','lipsync','firstVisit','paybackBlog','paybackReaction','specialNotes'])assert.equal(loaded.fields[field],data.fields[field])
 assert.equal(loaded.wedding.year,'2026')
 assert.equal(api.read('duo'),null,'explicit product routes keep independent drafts')
 api.save('duo',{step:1,wedding:{year:'2027',month:'2'}})
@@ -94,7 +94,10 @@ for(const timestamp of ['missing','future','invalid'])test('removes drafts with 
 test('wizard input/change handlers save drafts and both notes show three hours',()=>{
  const wizard=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8').replace(/\r\n/g,'\n')
  assert.match(wizard,/form\.addEventListener\('input',\(\)=>update\(form\)\)/)
- assert.match(wizard,/form\.addEventListener\('change',event=>\{[\s\S]*?\n   update\(form\)\n  \}\)/)
+ const changeHandler=wizard.split("form.addEventListener('change',event=>{")[1]?.split("form.addEventListener('input'")[0]
+ assert.ok(changeHandler,'change listener exists')
+ assert.match(changeHandler,/\n   update\(form\)\n/)
+ assert.match(changeHandler,/WistiaBooking\.mount\(form,bookingKey\(form\)\)/)
  assert.match(wizard,/function update\(form\)\{[\s\S]*?persistDraft\(form\)/)
  assert.match(wizard,/WistiaBookingDraft\.save\(state\.draftKey,/)
  assert.equal(wizard.split('작성 내용은 이 브라우저에 3시간 동안 임시 저장돼요').length-1,2)

@@ -8,7 +8,7 @@
  }
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
- function duration(key){return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
+ function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=60&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
  function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
  // Server blocks already include each existing reservation's 30-minute buffers.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
@@ -161,7 +161,8 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   if(!activeForm){generation++;return}
   const time=activeForm.querySelector('#contact-time')
   if(time?.tagName==='SELECT'&&time.dataset.productKey!==key){
-   const previous=time.dataset.productKey&&time.dataset.productKey!==key?'':time.value,slots=timeWindows(key)
+   const samePackageFamily=/^ar-/.test(key)&&/^ar-/.test(time.dataset.productKey||'')
+   const previous=!samePackageFamily&&time.dataset.productKey&&time.dataset.productKey!==key?'':time.value,slots=timeWindows(key)
    time.innerHTML='<option value="">미정</option>'+slots.map(slot=>'<option value="'+slot.value+'">'+slot.label+'</option>').join('')
    time.dataset.productKey=key;time.value=slots.some(slot=>slot.value===previous)?previous:''
   }

@@ -47,6 +47,6 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  for(const file of ['index.html','detail/solo.html','detail/duo.html','event/solo.html','event/duo.html','contact.html','events.html','info/faq.html','info/location.html','js/before-after.js'])assert.equal(existsSync(new URL('../'+file,import.meta.url)),true,file)
  const middleware=read('middleware.js')
  assert.doesNotMatch(middleware,/\b(?:import|require)\b/)
- assert.equal(middleware.match(/return `([\s\S]*?)`/)[1],goneDocument())
+ assert.equal(middleware.match(/return `([\s\S]*?)`/)[1].replace(/\r\n/g,'\n'),goneDocument().replace(/\r\n/g,'\n'))
  assert.match(middleware,/status:\s*410/)
 })
