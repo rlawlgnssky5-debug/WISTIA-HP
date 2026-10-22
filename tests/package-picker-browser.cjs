@@ -12,6 +12,10 @@ const cleanCapture={style:'@layer wistia-packages{#floatingKakaoChat,.solo-foote
 for(const width of [360,375,390,780,1280]){
 await page.setViewportSize({width,height:900})
 await page.goto(base+'/?wistia_vid=qa-package-picker',{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready)
+const flow=await page.evaluate(()=>{const selectors=['.package-intro','#arcTuning','.arc-reviews','#packageSelection'];return {positions:selectors.map(s=>document.querySelector(s).getBoundingClientRect().top+scrollY),counts:['#arcTuning','#wistiaBeforeAfter','#packageSelection'].map(s=>document.querySelectorAll(s).length),numbers:[...document.querySelectorAll('.wistia-section-number')].map(e=>e.textContent)}})
+assert.ok(flow.positions.every((v,i,a)=>i===0||v>a[i-1]),'intro → comparison → reviews → type')
+assert.deepEqual(flow.counts,[1,1,1],'no duplicate players or selection IDs')
+assert.deepEqual(flow.numbers,flow.numbers.map((_,i)=>String(i+1).padStart(2,'0')),'section numbers follow visible order')
 for(const key of ['A','B','C']){
 await page.locator('.package-card').filter({has:page.locator('input[value="'+key+'"]')}).click()
 const panel=page.locator('[data-package-selection-details]');assert.equal(await panel.getAttribute('data-package-key'),key)

@@ -48,8 +48,9 @@
    image.before(section);section.append(image)
   })
   let number=0
-  sectionTones.forEach(([selector,color])=>{
-   const section=detail.querySelector(selector);if(!section)return
+  const ordered=sectionTones.map(([selector,color])=>({section:detail.querySelector(selector),color})).filter(item=>item.section)
+  ordered.sort((a,b)=>a.section===b.section?0:a.section.compareDocumentPosition(b.section)&4?-1:1)
+  ordered.forEach(({section,color})=>{
    section.dataset.wistiaSection=String(++number).padStart(2,'0')
    section.style.setProperty('--wistia-section-surface',color)
    if(!section.querySelector(':scope>.wistia-section-number')){

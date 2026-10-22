@@ -1329,14 +1329,25 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const intro='<section class="mas-intro package-intro" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="package-brand-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음</h1><p>내 목소리로 준비하는 본식 축가</p>'+mobileDetailEvents(null)+'</div></section>'+packageSalesSection(key)
+ const intro='<section class="mas-intro package-intro" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="package-brand-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음</h1><p>내 목소리로 준비하는 본식 축가</p>'+mobileDetailEvents(null)+'</div></section>'
  const information='<section data-svg-title="off" class="package-information" data-package-information aria-label="상품정보">'+packageInformation(key,selectedPackage().key)+'</section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,packageWorkOverview())
  details=details.replace('<section class="arc-point arc-point-tuning','<p class="package-point-note">보컬 보정 전후 예시 · B·C 또는 보컬 튜닝 선택 시 진행</p><section class="arc-point arc-point-tuning')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
+ // Move the existing comparison, never duplicate its player or audio IDs
+ const detailParts=document.createElement('template');detailParts.innerHTML=details
+ const tuning=detailParts.content.querySelector('#arcTuning'),tuningNote=tuning?.previousElementSibling
+ let tuningPreview=''
+ if(tuning){
+  const workOverview=tuning.querySelector('.package-notices');if(workOverview)tuning.after(workOverview)
+  if(tuningNote?.classList.contains('package-point-note')){tuningPreview+=tuningNote.outerHTML;tuningNote.remove()}
+  tuningPreview+=tuning.outerHTML;tuning.remove()
+ }
+ details=detailParts.innerHTML
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
- intro+information+
+ intro+tuningPreview+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
+ packageSalesSection(key)+information+
  '<span id="arcDetails" hidden></span>'+details+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
