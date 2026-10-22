@@ -9,7 +9,6 @@
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정·박자 보정 · 선택 시 영업일 기준 7일 이내 전달'},
   {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'목소리의 음색·톤 조절'},
   {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 패키지의 녹음 시간에 1시간 추가'},
-  {key:'lipsync',label:'100% 립싱크를 원해요',price:20000,detail:''},
   {key:'rush',label:'3일 이내 빠른 작업',price:30000,detail:'제작 일정과 자료 준비 상태에 따라 상담 후 확정'}
  ]
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'

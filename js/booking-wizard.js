@@ -145,7 +145,7 @@
  function restoreDraft(form,state,onPeople){
   const draft=global.WistiaBookingDraft?.read(state.draftKey);if(!draft)return
   const fields=draft.fields
-  for(const name of ['package','people','discovery','rush','tuning','detailMix','extraHour','lipsync','firstVisit','paybackBlog','paybackReaction','specialNotes']){
+  for(const name of ['package','people','discovery','rush','tuning','detailMix','extraHour','firstVisit','paybackBlog','paybackReaction','specialNotes']){
    form.querySelectorAll('[name="'+name+'"]').forEach(control=>{
     if(control.type==='radio')control.checked=control.value===fields[name]
     else if(control.type==='checkbox')control.checked=fields[name]==='1'

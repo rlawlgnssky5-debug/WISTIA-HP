@@ -19,8 +19,16 @@ test('duet changes people, not the selected recording time',()=>{
 test('one additional hour costs 50000, including a further hour after C',()=>{
  assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,120],[180000,120],[220000,180]])
 })
-test('100% lipsync costs 20000 and does not silently add mastering again',()=>{
- assert.deepEqual(['A','B','C'].map(p=>q({package:p,options:['lipsync']}).total),[110000,150000,190000])
+test('removed 100% AR option is not offered or charged from legacy selections',()=>{
+ assert.equal(pricing.options.some(o=>o.key==='lipsync'),false)
+ for(const p of ['A','B','C']){
+  const old=q({package:p,lipsync:'1',options:['lipsync']})
+  assert.equal(old.total,pricing.packages[p].price)
+  assert.deepEqual(old.options,[])
+  assert.deepEqual(old.v.options,[])
+  assert.equal(q({package:p,lipsync:'1'}).total,pricing.packages[p].price)
+ }
+ assert.equal(q({package:'A',options:['lipsync','tuning','detailMix']}).total,150000)
 })
 test('removed verse and lyric draft selections cannot affect the quote',()=>{
  assert.equal(q({options:['lyrics-video','extra-verse'],lyricVideo:'1',extraVerse:'1'}).total,90000)
@@ -58,6 +66,6 @@ test('delivery depends on correction rather than people',()=>{
 })
 test('draft whitelist retains new fields and drops removed options',()=>{
  const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')
- assert.ok(!text.includes('lyricVideo'));assert.ok(!text.includes('extraVerse'))
- for(const name of ['package','extraHour','tuning','detailMix','lipsync','firstVisit','paybackBlog','paybackReaction'])assert.ok(text.includes(name))
+ assert.ok(!text.includes('lyricVideo'));assert.ok(!text.includes('extraVerse'));assert.ok(!text.includes('lipsync'))
+ for(const name of ['package','extraHour','tuning','detailMix','firstVisit','paybackBlog','paybackReaction'])assert.ok(text.includes(name))
 })

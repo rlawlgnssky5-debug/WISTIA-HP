@@ -405,7 +405,7 @@ const INFO_FAQ_GROUPS=[
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
   ["AR 축가는 본식 현장에서 어떻게 하면 되나요?","예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요.<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요."],
-  ["AR에 들어가는 제 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어 보고 골라요<br><strong>100% 립싱크를 원하시면 20,000원 추가 옵션</strong>을 선택해 주세요"],
+  ["AR에 들어가는 제 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어 보고 골라요"],
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","미리 녹음한 목소리와 현장 목소리가<br>어우러지도록 비율을 맞춰요.<br>녹음 당일 <strong>직접 리허설</strong>해 보고 확인하실 수 있어요."]
  ]},
  {title:"완성본 전달과 수정",description:"완성된 음원을 받고 본식에 전달하는 방법이에요",items:[
@@ -1160,7 +1160,7 @@ function soloChatFaq(){
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요.<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요.'],
   ['완성 음원은 언제 받을 수 있나요?','A 기본 구성은 당일 전달해 드려요<br>B·C 또는 보컬 튜닝 선택 시 영업일 기준 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요.<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요.'],
-  ['녹음한 목소리의 비율도 고를 수 있나요?','녹음 당일 여러 비율을 직접 들어 보고 골라요<br><strong>100% 립싱크를 원해요</strong> 옵션은 20,000원 추가예요']
+  ['녹음한 목소리의 비율도 고를 수 있나요?','녹음 당일 여러 비율을 직접 들어 보고 골라요']
  ]
  return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
@@ -1291,7 +1291,7 @@ function packageInformation(key,packageKey){
 function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 패키지의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'||o.key==='detailMix'?'B·C에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">패키지로 예약하면 더 저렴해요!</h2>'+window.WistiaPackages.cards(p.key)+'<div class="package-people"><h3>녹음 인원</h3><div class="package-people-buttons"><button type="button" data-detail-person="solo" aria-pressed="'+(key==='solo')+'">1인</button><button type="button" data-detail-person="duo" aria-pressed="'+(key==='duo')+'">듀엣 +30,000원</button></div><p class="package-people-note">1곡 기준 · 듀엣으로 변경해도 선택한 패키지의 녹음 시간은 같아요</p></div><p class="package-selection-total" data-package-total>'+escapeHtml(p.key+' · '+(key==='duo'?'듀엣':'1인'))+' <strong>'+won(p.price+(key==='duo'?30000:0))+'</strong></p><a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a>'+packageOptionsGuide()+window.WistiaPackages.discountsHtml()+'</section>'}
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>A 기본 구성은 당일 전달<br>B·C 또는 보컬 튜닝 선택 시 영업일 기준 7일 이내 전달</span></li><li><strong>수정</strong><span>3회까지 무료 · 4회차부터 회당 10,000원</span></li><li><strong>빠른 작업</strong><span>3일 이내 빠른 작업 +30,000원<br>제작 일정과 자료 준비 상태에 따라 상담 후 확정</span></li><li><strong>녹음 시간</strong><span>A·B는 1시간, C는 2시간<br>녹음 1시간 추가는 50,000원</span></li></ul></section>'}
-function packageWorkOverview(){return '<section data-svg-title="off" class="package-notices"><h2>필요한 작업을 골라 준비하세요</h2><ul><li><strong>기본 믹싱 · A·B·C 포함</strong><span>목소리와 MR의 밸런스·울림을 조절해요</span></li><li><strong>보컬 튜닝 · B·C 포함</strong><span>음정·박자를 자연스럽게 다듬어요<br>A에서는 40,000원 추가로 선택할 수 있어요</span></li><li><strong>디테일 믹싱 · B·C 서비스 포함</strong><span>목소리의 음색·톤을 조절해요<br>A에서는 20,000원 추가로 선택할 수 있어요</span></li><li><strong>100% 립싱크를 원해요</strong><span>20,000원 추가로 선택할 수 있어요</span></li></ul></section>'}
+function packageWorkOverview(){return '<section data-svg-title="off" class="package-notices"><h2>필요한 작업을 골라 준비하세요</h2><ul><li><strong>기본 믹싱 · A·B·C 포함</strong><span>목소리와 MR의 밸런스·울림을 조절해요</span></li><li><strong>보컬 튜닝 · B·C 포함</strong><span>음정·박자를 자연스럽게 다듬어요<br>A에서는 40,000원 추가로 선택할 수 있어요</span></li><li><strong>디테일 믹싱 · B·C 서비스 포함</strong><span>목소리의 음색·톤을 조절해요<br>A에서는 20,000원 추가로 선택할 수 있어요</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 패키지와 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 1:1 디렉팅을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 보컬 튜닝과 디테일 믹싱을 더해요'],['검수·전달','A 기본 구성은 당일, B·C 또는 보컬 튜닝 선택 시 영업일 기준 7일 이내 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.

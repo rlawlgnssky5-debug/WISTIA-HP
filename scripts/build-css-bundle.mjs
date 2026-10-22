@@ -10,7 +10,7 @@ import { updatePackageHtml } from './package-content.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(root, 'css/bundles.json')
-const version = '20261022-packages-1'
+const version = '20261022-remove-ar-option-1'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }
@@ -98,7 +98,7 @@ export function buildCssBundles() {
       let html = updatePackageHtml(read(page),page)
       if (/\bid=["']app["']/.test(html)) {
         if (!/src="js\/package-pricing\.js/.test(html)) html=html.replace(/(<script src="js\/booking-wizard\.js)/,'<script src="js/package-pricing.js?v='+version+'" defer></script>\n  $1')
-        html=html.replace(/(src="js\/(?:app|booking-wizard|booking-draft|booking-availability|seo-meta)\.js)(?:\?[^"<>]*)?/g,'$1?v='+version)
+        html=html.replace(/(src="js\/(?:app|package-pricing|booking-wizard|booking-draft|booking-availability|seo-meta)\.js)(?:\?[^"<>]*)?/g,'$1?v='+version)
       }
       const tokens = stylesheetTokens(html), local = tokens.filter(t => isLocal(t.href))
       if (!local.length) continue
