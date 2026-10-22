@@ -11,7 +11,7 @@ export function updatePackageHtml(html,file){
   for(const [attribute,name,value] of [['name','description',meta.description],['property','og:title',meta.title],['property','og:description',meta.description],['name','twitter:title',meta.title],['name','twitter:description',meta.description]])html=html.replace(new RegExp('(<meta '+attribute+'="'+name+'" content=")[^"]*(">)'),(_,start,end)=>start+esc(value)+end)
  }
  const services=Object.values(pricing.packages).map(p=>({'@type':'Service',name:'위스티아 AR 축가 패키지 '+p.key,serviceType:'AR 축가 사전녹음',description:pricing.features(p).join(' · '),url:origin+'/detail/solo?package='+p.key,provider:{'@id':origin+'/#studio'},offers:{'@type':'Offer',price:p.price,priceCurrency:'KRW',url:origin+'/detail/solo?package='+p.key}}))
- const faq={'@type':'FAQPage',mainEntity:[{q:'패키지는 어떻게 다른가요?',a:'A는 녹음 1시간과 기본 믹싱, B는 보컬 튜닝과 디테일 믹싱 포함, C는 B 구성에 녹음 1시간을 더해 총 2시간이에요'},{q:'완성 음원은 언제 받을 수 있나요?',a:'A 기본 구성은 당일, B·C 또는 보컬 튜닝 선택 시 영업일 기준 7일 이내 전달해 드려요'},{q:'100% 립싱크도 선택할 수 있나요?',a:'100% 립싱크를 원해요 옵션은 20,000원 추가예요'}].map(({q,a})=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))}
+ const faq={'@type':'FAQPage',mainEntity:[{q:'패키지는 어떻게 다른가요?',a:'A는 녹음 1시간과 기본 믹싱, B는 보컬 튜닝과 디테일 믹싱 포함, C는 B 구성에 녹음 1시간을 더해 총 2시간이에요'},{q:'완성 음원은 언제 받을 수 있나요?',a:'A 기본 구성은 당일, B·C 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달해 드려요'},{q:'100% 립싱크도 선택할 수 있나요?',a:'100% 립싱크 옵션은 20,000원 추가예요'}].map(({q,a})=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))}
  html=html.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g,(_,start,body,end)=>{
   const data=JSON.parse(body),graph=data['@graph'];if(!graph)return start+body+end
   const retained=graph.filter(x=>!['Service','FAQPage'].includes(x['@type']))
