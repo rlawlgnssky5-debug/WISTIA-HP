@@ -28,7 +28,7 @@ async function run(){
   for(const route of routes){
    await page.goto(base+route,{waitUntil:'domcontentloaded'});await settled(page)
    const data=await measure(page);results.push({route,width,direct:data})
-   if(!baseline){assert.equal(data.overflow,0,route+' '+width+' overflow');assert.equal(data.hiddenSeo,true);assert.equal(data.removedPaidAr,true,'removed paid AR option '+route);assert.equal(data.clipped.length,0,route+' heading clipping');for(const c of data.cards){assert.ok(Math.abs(c.width*3+16-c.parentWidth)<1);assert.equal(c.size,'20px')}if(width===1280){assert.equal(data.main.width,780);assert.equal(data.main.x,250);assert.equal(data.body,'rgb(255, 255, 255)')}assert.equal(data.removed.length,0,'removed option/old-price images')}
+   if(!baseline){assert.equal(data.overflow,0,route+' '+width+' overflow');assert.equal(data.hiddenSeo,true);assert.equal(data.removedPaidAr,true,'removed paid AR option '+route);assert.equal(data.clipped.length,0,route+' heading clipping');for(const c of data.cards){assert.ok(Math.abs(c.width*3+20-c.parentWidth)<1);assert.equal(c.size,'20px')}if(width===1280){assert.equal(data.main.width,780);assert.equal(data.main.x,250);assert.equal(data.body,'rgb(255, 255, 255)')}assert.equal(data.removed.length,0,'removed option/old-price images')}
    await capture(page,path.join(out,phase,slug(route)+'-'+width+'.jpg'))
    if(!baseline){
     await page.evaluate(target=>{history.pushState({},'', '/info/location');dispatchEvent(new PopStateEvent('popstate'));history.pushState({},'',target);dispatchEvent(new PopStateEvent('popstate'))},route)
@@ -72,7 +72,7 @@ async function functional(page){
  await capture(page,path.join(out,'after','inquiry-options-390.jpg'))
  await page.locator('[data-wf-next]').click();await page.locator('[name="specialNotes"]').fill('테스트용 입력 · 실제 제출하지 않음')
  const text=await page.evaluate(()=>WistiaWizard.text(document.querySelector('form')))
- assert.ok(text.includes('패키지 : C'));assert.ok(text.includes('듀엣'));assert.ok(!/100%|립싱크|가사|추가 1절/.test(text));assert.ok(text.includes('총 결제 금액 : '+expected.total.toLocaleString('ko-KR')+'원'));checks.push('summary and generated consultation text agree, removed AR option absent, no submission')
+ assert.ok(text.includes('타입 : C'));assert.ok(!text.includes('패키지'));assert.ok(text.includes('듀엣'));assert.ok(!/100%|립싱크|가사|추가 1절/.test(text));assert.ok(text.includes('총 결제 금액 : '+expected.total.toLocaleString('ko-KR')+'원'));checks.push('summary uses type naming and agrees with quote, removed AR option absent, no submission')
  await capture(page,path.join(out,'after','inquiry-summary-390.jpg'))
  await page.reload();await settled(page);assert.equal((await value()).total,expected.total);assert.equal((await value()).payback,60000);assert.equal(await page.locator('[name="specialNotes"]').inputValue(),'테스트용 입력 · 실제 제출하지 않음');checks.push('all new options, discount, payback and notes survive refresh')
  await page.evaluate(()=>localStorage.clear())

@@ -1,6 +1,6 @@
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict')
-const out=path.resolve(__dirname,'../output/package-picker-20261022'),base='http://127.0.0.1:4212'
+const out=path.resolve(__dirname,'../output/type-picker-20261022'),base='http://127.0.0.1:4212'
 ;(async()=>{
 fs.mkdirSync(out,{recursive:true})
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true})

@@ -8,7 +8,7 @@
  const options=[
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'B·C에 포함 · 선택 시 영업일 7일 이내 전달'},
   {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'B·C에 서비스 포함'},
-  {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 패키지의 녹음 시간에 1시간 추가'},
+  {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 타입의 녹음 시간에 1시간 추가'},
  ]
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const packageFor=key=>Object.hasOwn(packages,key)?packages[key]:packages.A
@@ -25,7 +25,7 @@
  function quote(input={},reference=today()){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')).map(o=>({...o}))
-  if(duet)entries.unshift({key:'duet',label:'듀엣으로 변경',price:30000,detail:'2인·1곡 · 선택한 패키지의 녹음 시간 유지'})
+  if(duet)entries.unshift({key:'duet',label:'듀엣으로 변경',price:30000,detail:'2인·1곡 · 선택한 타입의 녹음 시간 유지'})
   const discounts=[]
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
   if(validDate(v.bookingDate)){
@@ -55,7 +55,7 @@
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="패키지 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.key+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-check">'+checkIcon+'</span><span class="package-card-body"><span class="package-card-name">'+p.key+'</span><span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-original">'+(p.saving?'<s>'+money(p.individual)+'</s>':'1인·1곡')+'</span><strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-benefit">'+(p.saving?p.saving/10000+'만원 절약':'기본 구성')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 패키지 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.key+' 타입 '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.key+' 타입</span><strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-subtitle">'+shortTitles[p.key]+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')
