@@ -6,7 +6,7 @@
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const icon=kind=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">'+(kind==='calendar'?'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>':kind==='people'?'<circle cx="9" cy="7" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4m2-17a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 4v4"/>':'<path d="m5 12 4 4L19 6"/>')+'</svg>'
  const error=key=>'<p class="wf-error" id="wf-error-'+key+'" data-wf-error="'+key+'" role="alert" hidden></p>'
- function discoveryField(){return '<fieldset><legend>처음에 위스티아를 어디서 보고 오셨나요? (선택)</legend><div class="wf-sources">'+sources.map(source=>'<label class="wf-choice"><input type="radio" name="discovery" value="'+source+'"><span>'+source+'</span></label>').join('')+'</div></fieldset>'}
+ function discoveryField(){return '<fieldset><legend>처음에 위스티아를 어디서 보고 오셨나요? (선택)</legend><div class="wf-sources">'+sources.map(source=>'<label class="wf-choice"><input type="radio" name="discovery" value="'+source+'"><span'+(source==='지인 추천'?' class="wf-source-label"':'')+'>'+(source==='지인 추천'?'<span class="wf-source-main">기타</span> <small class="wf-source-sub">(지인 추천 등)</small>':source)+'</span></label>').join('')+'</div></fieldset>'}
  function checkRow(name,label,amount,description=''){return '<label class="wf-check-row"><input type="checkbox" name="'+name+'" value="1"><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">'+esc(label)+(description?'<small>'+esc(description)+'</small>':'')+'</span><strong>+'+money(amount)+'</strong></label>'}
  function firstVisitField(){return '<div class="wf-welcome">'+global.WistiaPackages.firstVisitBanner()+'<label class="welcome-toggle"><input type="checkbox" name="firstVisit" value="1"><span>첫 이용이시라면 눌러 주세요</span><strong>10,000원 할인 받기</strong></label></div>'}
  function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><p class="earlybird-two"><strong>'+format(global.WistiaPackages.addMonths(today,2))+'부터</strong><span>20,000원 할인</span></p><small>녹음 날짜 기준 · 두 할인 중 해당하는 한 가지만 적용돼요</small></div>'}
@@ -42,6 +42,7 @@
  function update(form){
   const state=states.get(form);if(!state)return
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key)
+  const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.textContent=q.package.key+' · 1곡 · '+q.minutes+'분'
   const advance=global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
   const weekday=form.querySelector('[data-wf-weekday-note]');weekday.classList.toggle('is-applied',!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart))
   if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount){const target=q.v.firstVisit==='1'&&!state.lastFirst?form.querySelector('.wf-welcome'):state.step===1?note:weekday;global.WistiaPackages.celebrate(target)}
@@ -81,6 +82,7 @@
  }
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false};states.set(form,state)
+  form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 녹음 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 2층</small></div><span data-wf-location-duration>1곡 · 1시간</span></aside>')
   restoreDraft(form,state,onPeople);state.draftReady=true
   const explicit=new URLSearchParams(global.location.search).get('package');if(['A','B','C'].includes(explicit))form.querySelectorAll('[name="package"]').forEach(input=>input.checked=input.value===explicit)
   form.addEventListener('change',event=>{
