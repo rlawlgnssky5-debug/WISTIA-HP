@@ -9,7 +9,7 @@ fs.readFileSync=function(file,options){
  let local
  try{local=relative(root,file instanceof URL?fileURLToPath(file):resolve(String(file))).replaceAll('\\','/')}catch{return read(file,options)}
  if(!local.startsWith('../')&&!local.startsWith('.git/')&&/\.(?:js|html|css|json)$/.test(local)){
-  if(!cache.has(local)){try{cache.set(local,execFileSync('git',['-c','safe.directory='+root,'show','HEAD:'+local],{cwd:root,stdio:['ignore','pipe','pipe']}))}catch{cache.set(local,null)}}
+  if(!cache.has(local)){try{cache.set(local,execFileSync('git',['-c','safe.directory='+root,'show','9fe648b:'+local],{cwd:root,stdio:['ignore','pipe','pipe']}))}catch{cache.set(local,null)}}
   const data=cache.get(local)
   if(data){const encoding=typeof options==='string'?options:options?.encoding;return encoding?data.toString(encoding):Buffer.from(data)}
  }
