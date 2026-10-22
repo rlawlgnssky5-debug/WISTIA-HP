@@ -45,6 +45,17 @@ test('one-month and two-month discounts are mutually exclusive calendar interval
  const result=q({bookingDate:'2026-12-22'});assert.equal(result.discount,20000);assert.equal(result.discounts.length,1)
  assert.equal(pricing.addMonths('2026-01-31',1),'2026-02-28')
 })
+
+test('calendar and time hint helpers match quote thresholds and reject invalid inputs',()=>{
+ for(const [date,amount] of [['2026-11-21',0],['2026-11-22',10000],['2026-12-21',10000],['2026-12-22',20000]])assert.equal(pricing.advanceDiscount(date,'2026-10-22')?.amount||0,amount)
+ assert.equal(pricing.advanceDiscount('2026-02-31','2026-01-31'),null)
+ assert.equal(pricing.advanceDiscount('2026-02-28','2026-01-31').amount,10000)
+ assert.equal(pricing.advanceDiscount('2026-03-31','2026-01-31').amount,20000)
+ assert.equal(pricing.advanceDiscount('', '2026-10-22'),null)
+ assert.equal(pricing.weekdayDiscount('2026-10-23','13:00'),10000)
+ for(const args of [['2026-10-23','16:01'],['2026-10-24','14:00'],['invalid','14:00'],['2026-10-23','']])assert.equal(pricing.weekdayDiscount(...args),0)
+ assert.equal(q({eventDate:'2027-01-10',bookingDate:'2026-10-24'}).discount,0,'advance discount uses recording date, not wedding date')
+})
 test('approved discounts combine without inventing a payback cap',()=>{
  const result=q({firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
  assert.equal(result.discount,40000);assert.equal(result.total,50000);assert.equal(result.payback,60000)

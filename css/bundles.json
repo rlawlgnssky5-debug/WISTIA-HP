@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "cacheVersion": "20261022-type-flow-1",
+  "cacheVersion": "20261022-inquiry-discounts-1",
   "bundles": {
-    "css/bundle-68aae5a3.css": {
+    "css/bundle-1a781abd.css": {
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -180,12 +180,12 @@
         "info/faq.html",
         "info/location.html"
       ],
-      "size": 2117229
+      "size": 2119649
     }
   },
   "pages": {
     "contact.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -268,11 +268,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "detail/duo.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -355,11 +355,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "detail/solo.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -442,11 +442,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "event/duo.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -529,11 +529,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "event/solo.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -616,11 +616,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "events.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -703,11 +703,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "index.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -790,11 +790,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "info/faq.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -877,11 +877,11 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     },
     "info/location.html": {
-      "bundle": "css/bundle-68aae5a3.css",
+      "bundle": "css/bundle-1a781abd.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -964,7 +964,7 @@
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
         "css/package-pricing.css?v=20261022-packages-1"
       ],
-      "href": "css/bundle-68aae5a3.css?v=20261022-type-flow-1",
+      "href": "css/bundle-1a781abd.css?v=20261022-inquiry-discounts-1",
       "linksRemoved": 79
     }
   }

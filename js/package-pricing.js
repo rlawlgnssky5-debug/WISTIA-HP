@@ -18,6 +18,17 @@
   return new Date(Date.UTC(y,m-1+months,Math.min(d,last))).toISOString().slice(0,10)
  }
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+ function advanceDiscount(date,reference=today()){
+  if(!validDate(date)||!validDate(reference))return null
+  if(date>=addMonths(reference,2))return {key:'advance2',label:'녹음일 2개월 이후 사전 예약',amount:20000}
+  if(date>=addMonths(reference,1))return {key:'advance1',label:'녹음일 1개월 이후 사전 예약',amount:10000}
+  return null
+ }
+ function weekdayDiscount(date,time){
+  if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return 0
+  const day=new Date(date+'T12:00:00Z').getUTCDay(),[h,m]=time.split(':').map(Number)
+  return [4,5].includes(day)&&h*60+m>=780&&h*60+m<=960?10000:0
+ }
  function normalize(input={}){
   const selected=Array.isArray(input.options)?input.options:options.filter(o=>input[o.key]==='1'||input[o.key]===true).map(o=>o.key)
   return {...input,package:packageFor(input.package).key,people:input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true}
@@ -29,13 +40,8 @@
   const discounts=[]
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
   if(validDate(v.bookingDate)){
-   const day=new Date(v.bookingDate+'T12:00:00Z').getUTCDay()
-   if([4,5].includes(day)&&/^\d{2}:\d{2}$/.test(v.timeStart||'')){
-    const [h,m]=v.timeStart.split(':').map(Number),minute=h*60+m
-    if(minute>=780&&minute<=960)discounts.push({key:'weekday',label:'목·금 오후 1~4시 방문',amount:10000})
-   }
-   if(validDate(reference)&&v.bookingDate>=addMonths(reference,2))discounts.push({key:'advance2',label:'2개월 이상',amount:20000})
-   else if(validDate(reference)&&v.bookingDate>=addMonths(reference,1))discounts.push({key:'advance1',label:'녹음일까지 1~2개월',amount:10000})
+   if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 13~16시 시작',amount:10000})
+   const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
   const baseMinutes=p.minutes+(v.options.includes('extraHour')?60:0)
@@ -62,8 +68,8 @@
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
   if(panel&&panel.dataset.packageKey!==p.key){panel.innerHTML=selectionDetails(p.key);panel.dataset.packageKey=p.key}
  }
- function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul><li>첫 이용 <b>10,000원 할인</b></li><li>목·금 오후 1~4시 방문 <b>10,000원 할인</b></li><li>녹음일까지 1~2개월 <b>10,000원 할인</b></li><li>2개월 이상 <b>20,000원 할인</b></li></ul></section>'}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today}
+ function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul><li>첫 이용 <b>10,000원 할인</b></li><li>목·금 오후 1~4시 방문 <b>10,000원 할인</b></li><li>녹음일 1개월 이후 <b>10,000원 할인</b></li><li>녹음일 2개월 이후 <b>20,000원 할인</b></li></ul></section>'}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,discountsHtml,addMonths,today,advanceDiscount,weekdayDiscount}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)
