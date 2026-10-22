@@ -1,0 +1,115 @@
+/* Homepage only: colour changes, no typography, geometry or media filters
+   Share the pricing layer so important legacy themes cannot win by specificity */
+@layer wistia-packages {
+body.home-neutral-tone {
+  --home-ink:#292D29;
+  --home-muted:#666B62;
+  --home-accent:#4B5B43;
+  --home-paper:#FFFFFF;
+  --home-cream:#F5F3ED;
+  --home-line:#D8D9CE;
+  --rose:#4B5B43;
+  --palette-ink:#292D29;
+  --palette-charcoal:#292D29;
+  --palette-soft:#ECEDE5;
+  --palette-offwhite:#F5F3ED;
+  --palette-muted:#666B62;
+  --palette-line:#D8D9CE;
+  color:var(--home-ink)!important;
+}
+body.home-neutral-tone :is(#siteHeader,#mainMenu) {
+  background:var(--home-cream)!important;color:var(--home-ink)!important;
+  border-color:var(--home-line)!important;
+}
+body.home-neutral-tone :is(#menuToggle,#mainMenu a,#mainMenu button,#mainMenu .menu-title) {color:var(--home-ink)!important}
+body.home-neutral-tone #menuToggle span {background:var(--home-ink)!important}
+body.home-neutral-tone #mainMenu :is(a,.menu-group) {border-color:var(--home-line)!important}
+body.home-neutral-tone #mainMenu .menu-group-label {color:var(--home-accent)!important}
+body.home-neutral-tone :is(#app,.solo-detail-scope,.solo-footer-clean,.footer) {color:var(--home-ink)!important}
+body.home-neutral-tone :is(.package-section,.package-brand-summary,.package-notices,.package-point-note) {background:var(--home-cream)!important;color:var(--home-ink)!important}
+body.home-neutral-tone :is(.package-information,.package-options-guide,.package-discount-guide,.package-section h2,.package-section h3,.package-brand-summary h1,.package-notices h2,.package-notices p,.package-notices li) {color:var(--home-ink)!important}
+body.home-neutral-tone :is(.package-options-guide,.package-discount-guide,.package-information dl>div,.package-discount-result>div) {border-color:var(--home-line)!important}
+body.home-neutral-tone :is(.package-people-note,.package-delivery,.package-auto-discount-note,.package-options-guide li small,.package-brand-summary>p) {color:var(--home-muted)!important}
+body.home-neutral-tone :is(.package-point-note,.package-information dt,.package-notices li strong) {color:var(--home-accent)!important}
+
+/* Dark selection and olive savings give the three packages a visible hierarchy
+   Every border, line-height, font size, padding and position stays unchanged */
+body.home-neutral-tone .package-card {
+  background:var(--home-paper)!important;color:var(--home-ink)!important;
+  border-color:#B8BDAE!important;
+}
+body.home-neutral-tone .package-card-body {color:inherit!important}
+body.home-neutral-tone :is(.package-card-name,.package-card-name b,.package-card-features,.package-card-saving small) {color:inherit!important}
+body.home-neutral-tone :is(.package-card-price,.package-selection-total strong) {color:var(--home-ink)!important}
+body.home-neutral-tone .package-card-saving {background:#EDF0E6!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .package-card-saving s {color:var(--home-muted)!important}
+body.home-neutral-tone .package-card-saving b {color:#3D5435!important}
+body.home-neutral-tone .package-card-saving small {color:#4E5D45!important}
+body.home-neutral-tone .package-card-features>span:nth-child(2) {color:#3D5435!important}
+body.home-neutral-tone .package-card:has(input[value="B"]) .package-card-features>span:nth-child(4),
+body.home-neutral-tone .package-card:has(input[value="C"]) .package-card-features>span:nth-child(4) {color:#3D5435!important}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) {
+  background:var(--home-ink)!important;color:#F7F6F1!important;
+  border-color:var(--home-ink)!important;box-shadow:0 0 0 1px var(--home-ink)!important;
+}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) .package-card-price {color:#ECDFC0!important}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) .package-card-features>span:nth-child(n) {color:#F7F6F1!important}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) .package-card-saving {background:#3A4235!important;border-color:#65705C!important}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) .package-card-saving :is(b,small) {color:#E0EDCC!important}
+body.home-neutral-tone .package-card:is(.is-selected,:has(input:checked)) .package-card-saving s {color:#C8CEC1!important}
+body.home-neutral-tone .package-card:has(input:focus-visible) {outline-color:#687C52!important}
+body.home-neutral-tone .package-people-buttons button {background:#FFF!important;color:var(--home-ink)!important;border-color:#7B876E!important}
+body.home-neutral-tone .package-people-buttons button[aria-pressed=true] {background:var(--home-accent)!important;color:#FFF!important}
+body.home-neutral-tone .package-inquiry-link {background:var(--home-ink)!important;color:#FFF!important}
+
+/* Existing disclosure, promo, review and audio controls keep their behaviour */
+body.home-neutral-tone :is(.pr-ribbon,.promo30-ribbon,.mas-event-disclosure,.mas-event-content) {background:var(--home-paper)!important;border-color:var(--home-line)!important;color:var(--home-ink)!important}
+body.home-neutral-tone .pr-ribbon :is(.k,.t b) {color:var(--home-accent)!important}
+body.home-neutral-tone .pr-ribbon .k {background:var(--home-accent)!important;color:#FFF!important}
+body.home-neutral-tone .package-brand-summary .mas-event-disclosure>summary,
+body.home-neutral-tone .mas-event-disclosure>summary * {color:var(--home-ink)!important}
+body.home-neutral-tone :is(.mas-event-content,.mas-event-note,.benefit-kind-card) :is(p,span,small,strong) {color:var(--home-ink)!important}
+body.home-neutral-tone .mas-event-note>strong {color:#C62828!important}
+body.home-neutral-tone .benefit-kind-card {border-color:var(--home-line)!important;background:var(--home-cream)!important}
+body.home-neutral-tone .rv5 {background:var(--home-cream)!important;color:var(--home-ink)!important}
+body.home-neutral-tone .rv5 :is(.rv5-eye,.rv5-stars,.rv5-tag,.rv5-thumb em) {color:var(--home-accent)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .rv5 :is(.rv5-title,.rv5-card h3,.rv5-who b) {color:var(--home-ink)!important}
+body.home-neutral-tone .rv5 :is(.rv5-card p,.rv5-who) {color:var(--home-muted)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .rv5 .rv5-card {color:var(--home-ink)!important;border-color:var(--home-line)!important;box-shadow:0 8px 22px #292d2915!important}
+body.home-neutral-tone .rv5 .rv5-thumb img {border-color:var(--home-line)!important;box-shadow:0 4px 10px #292d2915!important}
+body.home-neutral-tone .rv5 .rv5-feat {background:#424C3D!important;box-shadow:0 8px 24px #292d2926!important}
+body.home-neutral-tone .rv5 .rv5-feat :is(h3,h3 em,p,.rv5-who,.rv5-who b) {color:#F7F6F1!important}
+body.home-neutral-tone .rv5 .rv5-q {color:#D7DDCC!important}
+body.home-neutral-tone :is(.bap-try,.solo-p4-pointer) {background:var(--home-accent)!important;color:#FFF!important}
+body.home-neutral-tone :is(.bap-try,.solo-p4-pointer)::after {border-top-color:var(--home-accent)!important}
+body.home-neutral-tone :is(.wistia-ba-section,.bap-body) {--ba-wave-before:#66705F;--ba-wave-after:#292D29;--ba-wave-rest:#D8D9CE}
+body.home-neutral-tone :is(.bap-body,.bap-controls,.bap-time,.bap-time b,.bap-time span) {color:var(--home-muted)!important}
+body.home-neutral-tone :is(.bap-switch,.bap-tab) {color:var(--home-ink)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone :is(.bap-switch,.bap-tab) :is(svg,path,span,small,strong) {color:inherit!important}
+body.home-neutral-tone :is(.solo-p4-panel,.bap-player,.solo-p4-copy,.solo-p4-help) {color:var(--home-ink)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .solo-p4-copy :is(strong,b) {color:var(--home-accent)!important}
+body.home-neutral-tone :is(.solo-p4-title,.solo-p4-hint,.solo-p4-meta) {color:var(--home-ink)!important}
+body.home-neutral-tone :is(.solo-p4-title,.solo-p4-hint,.solo-p4-meta) :is(strong,b) {color:var(--home-accent)!important}
+body.home-neutral-tone .solo-p4-ratio {background:#FFF!important;color:var(--home-ink)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .solo-p4-ratio :is(b,small,span) {color:inherit!important}
+body.home-neutral-tone .solo-p4-ratio.is-on {background:var(--home-accent)!important;color:#FFF!important;border-color:var(--home-accent)!important;box-shadow:0 5px 0 #303E29!important}
+body.home-neutral-tone :is(.solo-p4-status,.solo-p4-status span,.solo-p4-legend) {color:var(--home-muted)!important}
+body.home-neutral-tone .solo-p4-status b {color:var(--home-accent)!important}
+body.home-neutral-tone :is(.solo-p4-dot,.solo-p4-eq i) {background:var(--home-accent)!important}
+body.home-neutral-tone :is(.bap-play,.solo-p4-play,.solo-p4-transport button,.bap-tab.active) {background:var(--home-accent)!important;color:#FFF!important;border-color:var(--home-accent)!important}
+body.home-neutral-tone .solo-map-links a {background:#FFF!important;color:var(--home-accent)!important;border-color:#7B876E!important}
+body.home-neutral-tone .solo-map-links a:first-child {background:var(--home-accent)!important;color:#FFF!important;border-color:var(--home-accent)!important}
+body.home-neutral-tone :is(.footer-social,.footer-socials,.solo-footer-clean .footer) :is(a,i,span) {color:var(--home-accent)!important}
+body.home-neutral-tone .footer :is(b,small,svg) {color:inherit!important}
+body.home-neutral-tone .solo-faq-html summary {color:var(--home-ink)!important;background:#EFEEE7!important;border-color:var(--home-line)!important}
+body.home-neutral-tone #arcFaq :is(h2,p,strong) {color:var(--home-ink)!important}
+body.home-neutral-tone .solo-faq-html summary span {color:inherit!important}
+body.home-neutral-tone .solo-faq-html summary i {color:var(--home-accent)!important}
+body.home-neutral-tone .solo-faq-answer {background:var(--home-accent)!important;color:#FFF!important;box-shadow:0 8px 22px #292d2920!important}
+body.home-neutral-tone .solo-faq-answer p {color:inherit!important}
+body.home-neutral-tone .solo-footer-inquiry {background:var(--home-ink)!important;color:#FFF!important;box-shadow:0 4px 20px #292d2930!important}
+body.home-neutral-tone .wistia-section-number {color:var(--home-muted)!important}
+body.home-neutral-tone .mas-bottom {background:var(--home-paper)!important;border-color:var(--home-line)!important}
+body.home-neutral-tone .mas-bottom :is(a,button) {background:var(--home-ink)!important;color:#FFF!important;border-color:var(--home-ink)!important}
+/* The branded yellow floating Kakao button and red benefit prices are untouched */
+}
