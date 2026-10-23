@@ -81,7 +81,7 @@
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
   if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 : 미포함','전달 : '+when]
-  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 디테일 믹싱 (서비스)','음정·박자 보정 : 포함','전달 : '+when]
+  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
