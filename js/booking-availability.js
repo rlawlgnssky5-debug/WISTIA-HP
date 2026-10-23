@@ -12,11 +12,11 @@
  function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
  // Server blocks already include each existing reservation's 30-minute buffers.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Sunday recording must finish by 18:00; the other operating days close at 23:00.
- function sundayEvening(date,time){return validDate(date)&&/^\d{2}:\d{2}$/.test(time)&&new Date(date+'T12:00:00Z').getUTCDay()===0&&Number(time.slice(0,2))*60+Number(time.slice(3))>=18*60}
+ // Every operating day closes at 23:00; other closures come from the availability blocks.
+ function sundayEvening(){return false} // no fixed Sunday closure: closures come only from the Notion-linked availability blocks
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
-  const clock=Number(time.slice(0,2))*60+Number(time.slice(3)),closing=new Date(date+'T12:00:00Z').getUTCDay()===0?18*60:23*60;if(clock<13*60||clock+minutes>closing)return true
+  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
   if(sundayEvening(date,time))return true
   const start=Date.parse(date+'T'+time+':00+09:00')-30*60000,end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
