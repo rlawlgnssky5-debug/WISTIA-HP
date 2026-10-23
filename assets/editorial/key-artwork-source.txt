@@ -1,0 +1,5 @@
+The ribbon image is the exact PNG supplied by the user on 2026-10-23:
+codex-clipboard-0e592b06-0122-456e-9ba9-ffd0fef71ee0.png (1536 x 1024).
+No raster content was regenerated or edited. Responsive cropping and edge fading are CSS only.
+The three process SVGs were drawn for this section. Their circle fill #9c596b
+was sampled from the user's fourth reference (RGB 156, 89, 107).

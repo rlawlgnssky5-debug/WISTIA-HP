@@ -1,0 +1,23 @@
+recording-studio-portrait.webp
+
+Created for this website redesign with OpenAI ImageGen on 2026-10-23.
+1122 x 1402, converted from the generated PNG to WebP quality 90.
+This is an illustrative recording setup, not a photograph of the actual venue.
+The five existing hero photographs, including the actual studio, are unchanged.
+
+Generation direction:
+Edit of an initial generated studio photograph, using built-in OpenAI ImageGen:
+Preserve the professional silver condenser microphone, shock mount, black pop
+filter and correct physical supports. Recompose as a portrait 4:5 photograph
+for an arched frame, with both microphone and pop filter centered and fully
+visible, airy room above and the stand extending below. Light warm ivory and
+very muted dusty blush acoustic-fabric booth, subtle pale oak details, soft
+natural daylight, realistic materials and fine photographic texture. Calm
+and softly romantic. No ribbons, flowers, petals, draped satin, ornamental
+arch structure, text, badges, UI, logos or people. Keep the bitmap rectangular;
+the website supplies the arched frame. Avoid orange cast and metallic glow.
+
+Implementation:
+Referenced by js/detail-editorial.js with explicit width/height, lazy loading
+and alt text. Original high-resolution PNG is included with the delivered
+preview assets, rather than the production website payload.

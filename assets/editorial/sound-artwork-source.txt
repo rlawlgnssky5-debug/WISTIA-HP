@@ -1,0 +1,7 @@
+The vinyl texture uses the exact user-supplied reference PNG from 2026-10-23:
+codex-clipboard-4c3d4be5-6b2e-43d1-abcd-474b6b0752b0.png.
+Only the bottom vinyl region is displayed through CSS background positioning;
+the raster file is unchanged and its baked text is outside the visible region.
+The logo displays the logo region of that same user reference with CSS
+cropping and lighten blending. No new logo or image was generated.
+All section headings, captions and descriptions remain real responsive text.
