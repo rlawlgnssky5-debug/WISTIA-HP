@@ -1948,7 +1948,7 @@ function initCompactKakao(){
  const paint=()=>{
   frame=0
   const hit=button.getBoundingClientRect()
-  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,h4,dt,dd,figcaption),main .package-selected-features li,main .benefit-kind-header')
+  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,h4,dt,dd,figcaption),main .package-selected-features li,main .benefit-kind-header,main .wistia-location img,main .wistia-location iframe,main .solo-map img,.wf-nav,.solo-footer-inquiry')
   const overlap=[...protectedRegions].some(el=>{
    if(!el.getClientRects().length||getComputedStyle(el).visibility!=='visible')return false
    const box=el.getBoundingClientRect()

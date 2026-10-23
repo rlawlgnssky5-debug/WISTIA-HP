@@ -108,8 +108,9 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 }
 html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill > :not(svg) { display: none !important; }
 html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill .kakao-bubble { display: block !important; width: 26px !important; height: 26px !important; flex: 0 0 26px !important; }
-/* On wide PC the button sits in the margin outside the 780 canvas so it never
-   covers the map or any content. */
-@media (min-width: 920px) {
-  html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: calc((100vw - 780px) / 2 - 68px) !important; left: auto !important; }
+/* PC: the button stays inside the 780 column, anchored to its right edge
+   exactly like the phone (12px in from the edge); bottom offsets follow the
+   phone rules, so it sits above the bottom bars there too. */
+@media (min-width: 780px) {
+  html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: calc((100vw - 780px) / 2 + 12px) !important; left: auto !important; }
 }
