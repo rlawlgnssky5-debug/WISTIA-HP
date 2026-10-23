@@ -5,7 +5,6 @@
 const LIVE_PATHS = new Set([
   '/',
   '/detail/solo',
-  '/detail/duo',
   '/event/solo',
   '/event/duo',
   '/contact',
@@ -17,7 +16,6 @@ const LIVE_PATHS = new Set([
 const LIVE_FILES = new Set([
   '/index.html',
   '/detail/solo.html',
-  '/detail/duo.html',
   '/event/solo.html',
   '/event/duo.html',
   '/contact.html',

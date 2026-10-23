@@ -68,3 +68,48 @@
     transform: translateX(-50%) !important;
   }
 }
+
+/* ==== 2026-10-23 PC = phone layout enlarged to 780 ==========================
+   Text sections render at the 390px phone width and are zoomed 2x, so they
+   fill the 780 canvas exactly like the image sections. <780px is untouched. */
+@media (min-width: 780px) {
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app > :not(.solo-detail-scope):not(script):not(template),
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope > :is(.arc-reviews,.package-point-note,.package-notices,.solo-faq,.package-section,.solo-footer-clean,.solo-footer-inquiry),
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .mas-intro > .package-brand-summary,
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-point-tuning > .wistia-ba-section,
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-p4 > .solo-p4-panel,
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map > .solo-map-links {
+    width: 390px !important;
+    max-width: 390px !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    zoom: 2;
+  }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map > .solo-map-links { width: 346px !important; margin-left: 22px !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-faq .solo-faq-html { --wistia-font-cqw: 3.1712px; }
+  /* Fixed bars inside a zoomed section use zoomed coordinates: 25vw-195px
+     becomes 50vw-390px on screen, i.e. the canvas edge. */
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wf-nav { left: calc(25vw - 195px) !important; right: auto !important; width: 390px !important; max-width: 390px !important; transform: none !important; }
+  html body #siteHeader { width: 390px !important; max-width: 390px !important; zoom: 2; }
+  html body #siteHeader .header-inner, html body.is-solo-detail #siteHeader .header-inner { padding-inline: 22px !important; max-width: 390px !important; }
+}
+
+/* ==== One footer everywhere: the centred pink footer =================== */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean { background: #F6E6E6 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean footer.footer { background: transparent !important; text-align: center !important; }
+
+/* ==== Circle Kakao floating button everywhere ========================== */
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill {
+  width: 52px !important; height: 52px !important; min-width: 52px !important; min-height: 52px !important;
+  max-width: 52px !important; padding: 0 !important; gap: 0 !important; border-radius: 50% !important;
+  background: #FEE500 !important; color: #191919 !important; justify-content: center !important; align-items: center !important;
+}
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill > :not(svg) { display: none !important; }
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill .kakao-bubble { display: block !important; width: 26px !important; height: 26px !important; flex: 0 0 26px !important; }
+/* On wide PC the button sits in the margin outside the 780 canvas so it never
+   covers the map or any content. */
+@media (min-width: 920px) {
+  html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: calc((100vw - 780px) / 2 - 68px) !important; left: auto !important; }
+}
