@@ -314,3 +314,10 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   html body #app#app#app#app .package-card.is-selected .package-card-was, html body #app#app#app#app .package-card.is-selected .package-card-was small { color: rgba(255,255,255,.85) !important; }
   html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: rgba(255,255,255,.85) !important; }
 }
+
+@layer wistia-site-fixes {
+  /* r17: Sunday numbers red again on open dates, early-discount dates keep their pink fill */
+  html body #app#app#app#app .calendar-grid > .calendar-day:nth-child(7n+1):not(:disabled) span { color: #c0505c !important; }
+  html body #app#app#app#app .calendar-grid > .calendar-day.earlybird-one:not(:disabled):not(.is-selected) { background: rgba(224,147,170,.22) !important; border-color: #dfa3b5 !important; }
+  html body #app#app#app#app .calendar-grid > .calendar-day.earlybird-two:not(:disabled):not(.is-selected) { background: rgba(158,126,199,.24) !important; border-color: #b7a0d3 !important; }
+}

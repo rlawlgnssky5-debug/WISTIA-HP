@@ -9,7 +9,7 @@ const WISTIA_SEO = {
   "/contact":{title:"상담 신청 | 위스티아",description:"상품 선택부터 예식일과 방문 일정 작성까지 한 번에 준비하고 카카오톡으로 위스티아에 문의하세요"}
  },
  event:{title:"상담 신청 · 상품과 일정 선택 | 위스티아",description:"상품과 일정, 필요한 옵션과 이벤트 혜택을 한 양식에서 선택하세요 · 예상 가격과 문의 내용을 복사해 카카오톡으로 상담할 수 있어요"},
- location:{title:"오시는 길 | 경기도 부천 위스티아",description:"위스티아는 경기도 부천시 석천로170번길 19, 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m · 일요일은 18:00부터 시작하는 시간만 마감이에요"}
+ location:{title:"오시는 길 | 경기도 부천 위스티아",description:"위스티아는 경기도 부천시 석천로170번길 19, 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m"}
 };
 if(typeof window!=="undefined")window.WISTIA_SEO=WISTIA_SEO;
 if(typeof module!=="undefined")module.exports=WISTIA_SEO;
