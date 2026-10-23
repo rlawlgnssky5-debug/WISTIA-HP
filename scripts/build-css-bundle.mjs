@@ -10,7 +10,7 @@ import { updatePackageHtml } from './package-content.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(root, 'css/bundles.json')
-const version = '20261023-holiday-type-1'
+const version = '20261023-editorial-12'
 const fail = message => { throw new Error(message) }
 const read = path => readFileSync(resolve(root, path), 'utf8')
 const loadManifest = () => existsSync(manifestPath) ? JSON.parse(read('css/bundles.json')) : { pages: {}, bundles: {} }
@@ -97,8 +97,9 @@ export function buildCssBundles() {
     try {
       let html = updatePackageHtml(read(page),page)
       if (/\bid=["']app["']/.test(html)) {
+        if (!/src="js\/detail-editorial\.js/.test(html)) html=html.replace(/(<script src="js\/app\.js)/,'<script src="js/detail-editorial.js?v='+version+'" defer></script>\n  $1')
         if (!/src="js\/package-pricing\.js/.test(html)) html=html.replace(/(<script src="js\/booking-wizard\.js)/,'<script src="js/package-pricing.js?v='+version+'" defer></script>\n  $1')
-        html=html.replace(/(src="js\/(?:app|package-pricing|booking-wizard|booking-draft|booking-availability|seo-meta|contact-form|detail-pc-background)\.js)(?:\?[^"<>]*)?/g,'$1?v='+version)
+        html=html.replace(/(src="js\/(?:app|detail-editorial|package-pricing|booking-wizard|booking-draft|booking-availability|seo-meta|contact-form|detail-pc-background)\.js)(?:\?[^"<>]*)?/g,'$1?v='+version)
       }
       const tokens = stylesheetTokens(html), local = tokens.filter(t => isLocal(t.href))
       if (!local.length) continue
@@ -122,6 +123,7 @@ export function buildCssBundles() {
       }
       if (/\bid=["']app["']/.test(html) && !sources.some(href => /mobile-parity-780\.css/.test(href))) sources.push('css/mobile-parity-780.css?v=20261021-mobile-parity-1')
       if (/\bid=["']app["']/.test(html) && !sources.some(href => /package-pricing\.css/.test(href))) sources.push('css/package-pricing.css?v='+version)
+      if (/\bid=["']app["']/.test(html) && !sources.some(href => /editorial-unified\.css/.test(href))) sources.push('css/editorial-unified.css?v='+version)
       const groupKey = JSON.stringify(sources)
       let group = groups.get(groupKey)
       if (!group) {

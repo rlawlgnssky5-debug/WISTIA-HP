@@ -40,7 +40,7 @@ function page(path, data, options={}) {
 }
 
 for (const product of products) {
-  page(`/detail/${product}`, seo.detail[product])
+  if (product === 'solo') page(`/detail/${product}`, seo.detail[product])
   page(`/event/${product}`, product === 'solo' ? {...seo.event, title:'문의양식 | 위스티아 축가 사전녹음 가격'} : seo.event)
 }
 page('/info/location', seo.location)
