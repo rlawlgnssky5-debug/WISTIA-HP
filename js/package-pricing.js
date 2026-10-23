@@ -84,7 +84,8 @@
  const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}
  function selectionDetails(key){
   const p=packageFor(key)
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li><span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
+  const icon=item=>item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li data-feature-icon="'+icon(item)+'"><span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -112,7 +113,7 @@
   })
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOffers.map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
- function firstVisitBanner(){return '<div class="welcome-gift"><img src="/assets/img/studio-3d/gift-benefits-yellow-v1.webp" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 10,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 10,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
   if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
