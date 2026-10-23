@@ -3,9 +3,8 @@
    ----------------------------------------------------------------------------
    One design serves every page. The app canvas is 780 wide and centred at any
    viewport of 780 or more, and each device below that keeps its own mobile
-   layout. Everything that used to stretch — the app root, the header, the
-   floating bars, the price bar — is derived from --app-canvas-width, so the
-   canvas only has to be declared once here.
+   layout. The bundled desktop cascade enlarges the complete 390px phone design
+   by two; this final sheet constrains viewport-positioned UI to the same canvas.
 
    This file is the last stylesheet on every page, so it is also the last word
    in the cascade for the handful of rules that hard-code a wider canvas.
@@ -45,7 +44,7 @@
   html body.is-solo-detail #siteHeader .header-inner {
     width: 100% !important;
     max-width: 780px !important;
-    padding-inline: 22px !important;
+    padding-inline: 32px !important;
     box-sizing: border-box !important;
   }
 
@@ -66,5 +65,82 @@
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
+  }
+
+  /* Viewport-positioned chat follows the right edge of the centred canvas. */
+  html body #floatingKakaoChat.floating-kakao-pill {
+    right: calc((100vw - 780px) / 2 + 16px) !important;
+  }
+
+}
+
+/* One footer treatment on every kept route. This sheet loads last, so forms
+   and events cannot fall back to their former beige, left-aligned variant. */
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 780px !important;
+  margin-inline: auto !important;
+  padding: 28px 20px 32px !important;
+  background: #F6E6E6 !important;
+  color: #553E46 !important;
+  text-align: center !important;
+}
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-main,
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-brand,
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-social,
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-bottom {
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-main {
+  display: flex !important;
+  flex-direction: column !important;
+}
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .footer-message,
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer .mas-footer-slogan {
+  width: 100% !important;
+  color: #553E46 !important;
+  text-align: center !important;
+}
+
+/* The shared Kakao control is a circle on every route. It remains inert while
+   a modal/menu is open and yields whenever overlap detection finds content. */
+html body #floatingKakaoChat.floating-kakao-pill {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  min-height: 52px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: #FEE500 !important;
+  color: #191919 !important;
+}
+html body.is-event-inquiry #floatingKakaoChat.floating-kakao-pill,
+html body:has(.wistia-wizard) #floatingKakaoChat.floating-kakao-pill {
+  display: flex !important;
+}
+html body #floatingKakaoChat.floating-kakao-pill span {
+  display: none !important;
+}
+html body #floatingKakaoChat.floating-kakao-pill .kakao-bubble {
+  width: 26px !important;
+  height: 26px !important;
+  flex-basis: 26px !important;
+}
+html body:is(.menu-open,.modal-open) #floatingKakaoChat.floating-kakao-pill,
+html body #floatingKakaoChat.floating-kakao-pill.is-content-overlap {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (min-width: 780px) {
+  html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #app footer.footer {
+    padding: 56px 40px 64px !important;
   }
 }

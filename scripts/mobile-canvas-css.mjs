@@ -36,10 +36,14 @@ export function mobileCanvasCss(source, file = '') {
       if (!match) result += part
       else {
         const prop = match[2], type = /^(?:font(?:-.*)?|line-height|letter-spacing|word-spacing)$/.test(prop) || /^--.*(?:font|type|title).*(?:size)?$/.test(prop)
-        result += part.replace(/(-?(?:\d*\.)?\d+)(vw|cqw)\b/g, (_, value, unit) => {
+        result += part.replace(/(-?(?:\d*\.)?\d+)(vw|cqw|px)\b/g, (_, value, unit) => {
+          // Desktop is the 390px phone design enlarged to the 780px canvas.
+          // Fixed pixel values must scale with its fluid values; otherwise text,
+          // controls and spacing stay phone-sized beside the 780px artwork.
+          if (unit === 'px') return Number((Number(value) * 2).toFixed(5)) + 'px'
           if (unit === 'cqw' && !type) return value + unit
-          if (unit === 'cqw' && type) return 'calc(' + value + ' * var(--wistia-font-cqw, 3.588px))'
-          const scale = type ? 3.9 : 7.8
+          if (unit === 'cqw' && type) return 'calc(' + value + ' * var(--wistia-font-cqw, 7.176px))'
+          const scale = 7.8
           return Number((Number(value) * scale).toFixed(5)) + 'px'
         })
       }

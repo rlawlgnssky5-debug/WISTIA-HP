@@ -38,9 +38,12 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 
 @media(min-width:780px){
   html body #floatingKakaoChat.floating-kakao-pill{right:calc((100vw - 780px)/2 + 16px)!important;left:auto!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links{gap:20px!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links a{min-height:84px!important;padding:20px 16px!important;border-width:2px!important;font-size:26px!important}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-links a:focus-visible{outline-width:4px!important;outline-offset:6px!important}
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(.arc-section,.arc-point,.solo-shot,.solo-poster-stack){width:100%!important;max-width:none!important;margin-inline:0!important}
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-footer-clean{padding-inline:0!important}
-  html body #app .solo-faq-html{--wistia-font-cqw:3.1712px}
+  html body #app .solo-faq-html{--wistia-font-cqw:6.3424px}
   /* No extra inset from an old desktop shell inside the 780px canvas */
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.wistia-wizard,.ev2-wrap,.info-page,.before-after-page,.detail-cover,.solo-footer-clean,.solo-footer-clean .footer,.mobile-ar-solo){width:100%!important;max-width:780px!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
   html body #app>.shell{width:100%!important;max-width:780px!important;margin-inline:0!important}

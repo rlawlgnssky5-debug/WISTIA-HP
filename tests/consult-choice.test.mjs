@@ -5,7 +5,7 @@ const app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
 let shown,aria
 const scope={escapeHtml:String,kakao:()=> 'https://pf.kakao.com/_GbExjX/chat',studioIcon:()=>'<svg></svg>',footerIcon:()=>'<svg></svg>',showDialog:(html,type)=>shown={html,type},dialog:{setAttribute:(key,value)=>aria=value}}
 runInNewContext(app.slice(app.indexOf('function inquiryPathForPage('),app.indexOf('function openVideo(')),scope)
-for(const [path,expected] of [['/','/event/solo'],['/detail/solo','/event/solo'],['/detail/duo','/event/duo'],['/info/faq','/contact'],['/events','/contact']])assert.equal(scope.inquiryPathForPage(path),expected)
+for(const [path,expected] of [['/','/event/solo'],['/detail/solo','/event/solo'],['/info/faq','/contact'],['/events','/contact']])assert.equal(scope.inquiryPathForPage(path),expected)
 scope.showKakaoInquiryDialog('/event/duo')
 assert.equal(shown.type,'consult-choice-dialog')
 assert.equal(aria,'카카오톡 문의 방법 선택')

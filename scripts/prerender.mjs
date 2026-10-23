@@ -8,7 +8,8 @@ const seo = require('../js/seo-meta.js')
 const root = resolve(import.meta.dirname, '..')
 const template = expandBundledHtml(readFileSync(resolve(root, 'index.html'), 'utf8'))
 const origin = 'https://wistiastudio.com'
-const products = ['solo', 'duo']
+const detailProducts = ['solo']
+const eventProducts = ['solo', 'duo']
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
 function page(path, data, options={}) {
@@ -25,7 +26,7 @@ function page(path, data, options={}) {
   if (options.robots) {
     html = html.replace(/(<meta name="theme-color" content="[^"]+">)/, `$1\n  <meta name="robots" content="${escapeHtml(options.robots)}">`)
   }
-  if ((path === '/detail/solo' || path === '/detail/duo') && !html.includes('css/detail-solo-16j.css')) {
+  if (path === '/detail/solo' && !html.includes('css/detail-solo-16j.css')) {
     html = html.replace('</head>', '  <link rel="stylesheet" href="css/detail-solo-16j.css?v=20261017-hotfix2">\n</head>')
   }
   const hero = /^\/(detail|event)\/(solo|duo)$/.test(path)
@@ -39,8 +40,10 @@ function page(path, data, options={}) {
   console.log(path)
 }
 
-for (const product of products) {
+for (const product of detailProducts) {
   page(`/detail/${product}`, seo.detail[product])
+}
+for (const product of eventProducts) {
   page(`/event/${product}`, product === 'solo' ? {...seo.event, title:'얼마일까 | 위스티아 축가 사전녹음 가격'} : seo.event)
 }
 page('/info/location', seo.location)

@@ -5,7 +5,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 export function updatePackageHtml(html,file){
  if(!/\bid=["']app["']/.test(html))return html
  const path=file==='index.html'?'/':'/'+file.replace(/\.html$/,''),origin='https://www.wistiastudio.com'
- const meta=path==='/detail/solo'?seo.detail.solo:path==='/detail/duo'?seo.detail.duo:path==='/'?{...seo.home,title:'부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아'}:null
+ const meta=path==='/detail/solo'?seo.detail.solo:path==='/'?{...seo.home,title:'부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아'}:null
  if(meta){
   html=html.replace(/<title>[^<]*<\/title>/,'<title>'+esc(meta.title)+'</title>')
   for(const [attribute,name,value] of [['name','description',meta.description],['property','og:title',meta.title],['property','og:description',meta.description],['name','twitter:title',meta.title],['name','twitter:description',meta.description]])html=html.replace(new RegExp('(<meta '+attribute+'="'+name+'" content=")[^"]*(">)'),(_,start,end)=>start+esc(value)+end)
