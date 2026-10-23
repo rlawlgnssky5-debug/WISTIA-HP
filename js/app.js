@@ -369,8 +369,7 @@ const dialog = document.querySelector("#mediaDialog")
 const MENU = []
 const NAVIGATION_GROUPS = [
  {label:"직접 부른다면",items:[
-  {title:"AR 축가 사전녹음",href:"#/detail/solo"},
-  {title:"AR 축가 듀엣",href:"#/detail/duo"}
+  {title:"AR 축가 사전녹음",href:"#/detail/solo"}
  ]},
  {label:"위스티아",kind:"utility",items:[
   {title:"오시는 길",href:"#/info/location"},
@@ -599,7 +598,8 @@ function packageItem(item){return ({
  "최종 필름 전달":"상영용 최종 필름"
  })[item]||item}
 function footerIcon(type){const icons={instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg>',youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 7.1a2.8 2.8 0 0 0-2-2C16.6 4.6 12 4.6 12 4.6s-4.6 0-6.3.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 3.2 12a29 29 0 0 0 .5 4.9 2.8 2.8 0 0 0 2 2c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-4.9 29 29 0 0 0-.5-4.9Z"></path><path d="m10 15.3 5.2-3.3L10 8.7v6.6Z" fill="currentColor" stroke="none"></path></svg>',kakao:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C6.9 4 2.8 7.2 2.8 11.2c0 2.6 1.7 4.8 4.4 6.1L6.3 21l4.2-2.6 1.5.1c5.1 0 9.2-3.2 9.2-7.3S17.1 4 12 4Z"></path></svg>'};return icons[type]||''}
-function footer(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent-q88.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><div class="footer-message"><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'}
+function footer(){return '<div class="solo-footer-clean">'+footerMarkup()+'</div>'}
+function footerMarkup(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent-q88.webp','')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><div class="footer-message"><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© '+new Date().getFullYear()+' WISTIA. All rights reserved.</small></div></footer>'}
 function serviceRows(keys){return keys.filter(key=>["solo","duo"].includes(key)).map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="#/detail/'+key+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
 function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image"><img src="'+escapeHtml(src)+'" alt="실제 고객 카카오톡 후기 '+(i+1)+'" loading="eager" decoding="async"></span></figure>'}
 function homeReviews(){
@@ -938,7 +938,7 @@ function handleFinderChoice(el){
  if(el.name==="finderRole"){
   finderChoice={role:el.value,moment:"",people:"",lyrics:""}
   sessionStorage.setItem("wistia:finder-selection",JSON.stringify(finderChoice))
-  const next=el.value==="singer"?"#/detail/solo":"#/detail/duo"
+  const next=el.value==="singer"?"#/detail/solo":"#/event/duo"
   history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next.slice(1)+location.search);route();return
  }
  if(el.name==="finderMoment"){
@@ -1119,7 +1119,7 @@ function soloPoint04Section(){
  const labels={30:'라이브 중심',50:'반반 균형',70:'든든하게',100:'완벽하게'}
  const buttons=[30,50,70,100].map(value=>'<button type="button" class="solo-p4-ratio'+(value===50?' is-on':'')+'" data-solo-ratio="'+value+'" aria-pressed="'+(value===50)+'"><span class="solo-p4-eq" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" focusable="false"><rect x="1" y="7" width="3" height="8" rx="1.5"/><rect x="6" y="2" width="3" height="13" rx="1.5"/><rect x="11" y="5" width="3" height="10" rx="1.5"/></svg></span><b>'+value+'<small>%</small></b><span>'+labels[value]+'</span></button>').join('')
  return '<section class="arc-point arc-point-ratio solo-p4 solo-shot solo-shot-narrow" id="soloPoint04" aria-label="본식 AR 비율 체험" data-svg-title="off">'+
-  '<div class="solo-p4-art"><img class="solo-shot-img" src="assets/detail-solo-16j/point04_ui_390.webp?v=20261020-speed" alt="본식 AR 비율 체험. 30, 50, 70, 100 퍼센트 중 하나를 누르면 해당 비율로 재생되고 정지로 멈춥니다" width="1170" height="2526" loading="lazy" decoding="async"></div>'+
+  '<div class="solo-p4-art"><img class="solo-shot-img" src="assets/detail-solo-16j/point04_ui_390.webp?v=20261023-no-period-1" alt="본식 AR 비율 체험. 30, 50, 70, 100 퍼센트 중 하나를 누르면 해당 비율로 재생되고 정지로 멈춥니다" width="780" height="1684" loading="lazy" decoding="async"></div>'+
   '<div class="solo-p4-panel">'+
   '<h2 class="solo-p4-title">이제는 <strong>딱 맞는 비율</strong>로 섞어요</h2>'+
   '<p class="solo-p4-hint">👇 <strong>비율을 누르면</strong> 바로 재생돼요</p>'+
@@ -1169,7 +1169,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return '<div class="solo-footer-clean">'+footer()+'</div><a class="solo-footer-inquiry" href="/event/'+key+'"><span>문의양식 작성</span></a>'
+ return footer()+'<a class="solo-footer-inquiry" href="/event/'+key+'"><span>문의양식 작성</span></a>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1313,7 +1313,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap().replace(/<section class="arc-section arc-notices solo-notice">[\s\S]*?<\/section>/,''))
-  details=details.replace(/<footer class="footer shell">[\s\S]*?<\/footer>/,soloFooter(key))
+  details=details.replace(/(?:<div class="solo-footer-clean">)?<footer class="footer shell">[\s\S]*?<\/footer>(?:<\/div>)?/,soloFooter(key))
  }else{
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
@@ -1750,7 +1750,7 @@ function showContactValidationDialog(issues){
  lastDialogFocus=issues[0].control
 }
 function inquiryPathForPage(path=routePath()){
- return path==='/'||path==='/detail/solo'?'/event/solo':path==='/detail/duo'?'/event/duo':'/contact'
+ return path==='/'||path==='/detail/solo'?'/event/solo':'/contact'
 }
 function showKakaoInquiryDialog(formPath){
  const choice=(kind,href,title,description,external=false)=>'<a class="consult-choice-card consult-choice-'+kind+'" href="'+escapeHtml(href)+'"'+(external?' target="_blank" rel="noopener noreferrer"':'')+' data-close><span class="consult-choice-icon" aria-hidden="true">'+(external?footerIcon('kakao'):studioIcon('file'))+'</span><span class="consult-choice-copy"><strong>'+title+'</strong><small>'+description+'</small></span><span class="consult-choice-arrow" aria-hidden="true">'+studioIcon('arrow')+'</span></a>'
@@ -1907,7 +1907,7 @@ function initMetaEngagementTracking(pagePath,pricePage){
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 위스티아 AR 축가 사전녹음 · A 90,000원, B 130,000원, C 170,000원 · 녹음 시간과 보컬 튜닝을 필요한 구성으로 선택하세요 · 부천시청역 도보 약 300m"}
 const EVENT_SOLO_TITLE="얼마일까 | 위스티아 축가 사전녹음 가격"
-const LIVE_ROUTES=new Set(["/","/detail/solo","/detail/duo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
+const LIVE_ROUTES=new Set(["/","/detail/solo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
 function setPageMeta({title,description,image,robots=""}){
  document.title=title;
