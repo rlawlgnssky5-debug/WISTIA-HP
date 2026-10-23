@@ -46,6 +46,12 @@
   if(from===total||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches){state.priceShown=total;amount.textContent=money(total);return}
   let began;const tick=now=>{if(!amount.isConnected)return;began??=now;const t=Math.min(1,(now-began)/380);state.priceShown=Math.round((from+(total-from)*(1-Math.pow(1-t,3)))/100)*100;amount.textContent=money(t===1?total:state.priceShown);if(t<1)state.priceFrame=global.requestAnimationFrame(tick);else{state.priceShown=total;state.priceFrame=0}};state.priceFrame=global.requestAnimationFrame(tick)
  }
+ function syncOptions(form,q){
+  for(const key of ['tuning','detailMix']){const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
+  const fieldset=form.querySelector('.package-extra-options'),rows=global.WistiaPackages.options.map(option=>form.querySelector('[data-wf-option="'+option.key+'"]'))
+  const ordered=rows.filter(row=>!row.querySelector('input').disabled).concat(rows.filter(row=>row.querySelector('input').disabled)),current=[...fieldset.querySelectorAll('[data-wf-option]')]
+  if(ordered.some((row,index)=>row!==current[index]))for(const row of ordered)fieldset.appendChild(row)
+ }
  function update(form){
   const state=states.get(form);if(!state)return
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key)
@@ -55,7 +61,7 @@
   if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount){const target=q.v.firstVisit==='1'&&!state.lastFirst?form.querySelector('.wf-welcome'):state.step===1&&!q.v.timeStart?note:weekday;global.WistiaPackages.celebrate(target)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1'
   form.querySelector('.welcome-toggle strong').textContent=state.lastFirst?'할인 적용 완료':'10,000원 할인 받기'
-  for(const key of ['tuning','detailMix']){const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
+  syncOptions(form,q)
   const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=q.discounts.map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
   form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
   form.querySelector('[data-wf-review]').innerHTML=reviewHtml(form,q)
@@ -111,5 +117,5 @@
   Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
  }
  function bookingKey(form){return 'ar-'+quote(form).minutes}
- global.WistiaWizard={currentStep:form=>[1,2,4,5][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,text,quote,rows,range,bookingKey}
+ global.WistiaWizard={currentStep:form=>[1,2,4,5][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,syncOptions,text,quote,rows,range,bookingKey}
 })(window)

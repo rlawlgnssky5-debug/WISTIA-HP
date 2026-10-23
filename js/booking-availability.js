@@ -12,11 +12,11 @@
  function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
  // Server blocks already include each existing reservation's 30-minute buffers.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Sunday stays open. Only starts at 18:00 or later are always closed; earlier starts follow the usual rules.
+ // Sunday recording must finish by 18:00; the other operating days close at 23:00.
  function sundayEvening(date,time){return validDate(date)&&/^\d{2}:\d{2}$/.test(time)&&new Date(date+'T12:00:00Z').getUTCDay()===0&&Number(time.slice(0,2))*60+Number(time.slice(3))>=18*60}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
-  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
+  const clock=Number(time.slice(0,2))*60+Number(time.slice(3)),closing=new Date(date+'T12:00:00Z').getUTCDay()===0?18*60:23*60;if(clock<13*60||clock+minutes>closing)return true
   if(sundayEvening(date,time))return true
   const start=Date.parse(date+'T'+time+':00+09:00')-30*60000,end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
@@ -76,7 +76,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  }
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}
  function sync(){global.WistiaContact?.syncSubmitState(activeForm);global.WistiaContact?.syncTimeChoices?.(activeForm)}
- function message(text,state){const ui=controls();if(!ui)return;ui.status.textContent=text;ui.status.hidden=state!=='unavailable';ui.status.dataset.state=state;activeForm.dataset.scheduleState=state;sync()}
+ function message(text,state,notice=false){const ui=controls();if(!ui)return;ui.status.textContent=text;ui.status.hidden=state!=='unavailable'&&!notice;ui.status.dataset.state=state;activeForm.dataset.scheduleState=state;sync()}
  function openList(text){const list=activeForm?.querySelector('[data-booking-open-times]');if(list){list.textContent=text;list.hidden=!text}}
  function resetTimes(disabled=false){const ui=controls();if(!ui)return;[...ui.time.options].forEach(option=>{option.dataset.originalLabel??=option.textContent;option.disabled=disabled&&!!option.value;option.dataset.disabledReason='';option.textContent=option.dataset.originalLabel});ui.time.setCustomValidity('')}
  function dateError(text){const ui=controls();if(!ui)return;ui.date.setCustomValidity(text);ui.error.textContent=text;ui.error.hidden=!text;if(text)ui.date.setAttribute('aria-invalid','true');else ui.date.removeAttribute('aria-invalid')}
@@ -91,18 +91,20 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
    option.dataset.disabledReason=reason;option.disabled=!!reason
    if(reason==='booking'||reason==='sunday')option.textContent=option.dataset.originalLabel+' · 마감'
   }
-  if(ui.time.selectedOptions[0]?.disabled)ui.time.value=''
+  const invalidated=!!ui.time.selectedOptions[0]?.disabled
+  if(invalidated)ui.time.value=''
   ui.time.setCustomValidity('')
+  return invalidated
  }
  function apply(blocks){
   const ui=controls();if(!ui)return
-  restrictTimes(blocks)
+  const invalidated=restrictTimes(blocks)
   const noSlots=[...ui.time.options].filter(option=>option.value).every(option=>option.disabled)
   dateError(noSlots?'선택한 상품으로 예약 가능한 시간이 없는 날짜입니다, 다른 날짜를 선택해 주세요':'')
   const blocked=!!ui.time.selectedOptions[0]?.disabled
   ui.time.setCustomValidity(blocked?'선택한 시간은 마감되었습니다, 다른 시간을 선택해 주세요':'')
   const labels=[...ui.time.options].filter(option=>option.value&&!option.disabled).map(option=>option.textContent)
-  message(noSlots?'이 날짜는 예약 마감입니다':blocked?'선택한 시간은 마감입니다, 다른 시간을 선택해 주세요':'마감 시간을 제외한 희망 시작 시간을 선택해 주세요 · 최종 확정은 카카오톡 상담에서 진행합니다',noSlots||blocked?'closed':'ready')
+  message(noSlots?'이 날짜는 예약 마감입니다':invalidated?'선택한 시작 시간이 녹음 소요 시간·예약 마감 또는 운영 종료와 겹쳐 해제했어요 · 다른 시작 시간을 선택해 주세요':blocked?'선택한 시간은 마감입니다, 다른 시간을 선택해 주세요':'마감 시간을 제외한 희망 시작 시간을 선택해 주세요 · 최종 확정은 카카오톡 상담에서 진행합니다',noSlots||blocked?'closed':'ready',invalidated)
   // Only plain text is displayed; no customer names or financial properties enter the DOM.
   openList(noSlots?'':labels.join(' / '))
  }

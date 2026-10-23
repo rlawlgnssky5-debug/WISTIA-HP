@@ -78,14 +78,24 @@
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
   if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 : 미포함','전달 : '+when]
-  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 기본 믹싱','음정·박자 보정 : 포함',p.key==='B'?'디테일 믹싱 : 서비스(음색·톤)':'디테일 믹싱 : 서비스','전달 : '+when]
+  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 디테일 믹싱 (서비스)','음정·박자 보정 : 포함','전달 : '+when]
  }
- const checkIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>'
+ const featurePaths={
+  record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
+  mix:'<path d="M5 3v6m0 4v8M12 3v10m0 4v4M19 3v2m0 4v12"/><circle cx="5" cy="11" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="7" r="2"/>',
+  tune:'<path d="M4 15h5v-5h6V5h5M3 20h18m-5-5 2 2 4-4"/>',
+  untuned:'<path d="M4 15h5v-5h6V5h5M3 3l18 18M3 21 21 3"/>',
+  file:'<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>'
+ }
  const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}
  function selectionDetails(key){
   const p=packageFor(key)
   const icon=item=>item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+features(p).slice(1).map(item=>'<li data-feature-icon="'+icon(item)+'"><span>'+item+'</span></li>').join('')+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
+  const featureRows=features(p).slice(1).map(item=>{
+   const kind=icon(item),enhanced=p.key!=='A'&&(item.startsWith('믹싱')||item.startsWith('음정')||(p.key==='C'&&item.startsWith('녹음 시간')))
+   return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span></li>'
+  }).join('')
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
