@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "cacheVersion": "20261023-holiday-type-1",
+  "cacheVersion": "20261023-editorial-12",
   "bundles": {
-    "css/bundle-4fb17a0e.css": {
+    "css/bundle-6f7736fb.css": {
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -83,7 +83,8 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
       "sourceLists": [
         [
@@ -166,12 +167,12 @@
           "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
           "css/section-tones.css?v=20261021-section-tones-1",
           "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-          "css/package-pricing.css?v=20261022-packages-1"
+          "css/package-pricing.css?v=20261022-packages-1",
+          "css/editorial-unified.css?v=20261023-editorial-1"
         ]
       ],
       "pages": [
         "contact.html",
-        "detail/duo.html",
         "detail/solo.html",
         "event/duo.html",
         "event/solo.html",
@@ -180,12 +181,12 @@
         "info/faq.html",
         "info/location.html"
       ],
-      "size": 2138611
+      "size": 2215061
     }
   },
   "pages": {
     "contact.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -266,100 +267,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
-    },
-    "detail/duo.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
-      "sources": [
-        "css/design.css?v=20261014-detail-polish-16j12",
-        "css/before-after.css?v=20261014-detail-polish-16j12",
-        "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
-        "css/process-studio.css?v=20261014-detail-polish-16j12",
-        "css/hero-editor.css?v=20261014-detail-polish-16j12",
-        "css/process-editor.css?v=20261014-detail-polish-16j12",
-        "css/home-finder.css?v=20261014-detail-polish-16j12",
-        "css/solo-typography.css?v=20261014-detail-polish-16j12",
-        "css/customer-fixes.css?v=20261014-detail-polish-16j12",
-        "css/events-page.css?v=20261014-detail-polish-16j12",
-        "css/editorial-theme.css?v=20261014-detail-polish-16j12",
-        "css/ar-sales-detail.css?v=20261014-detail-polish-16j12",
-        "css/ar-product-detail.css?v=20261014-detail-polish-16j12",
-        "css/wedding-studio-home.css?v=20261014-detail-polish-16j12",
-        "css/wedding-renewal.css?v=20261014-detail-polish-16j12",
-        "css/studio-depth.css?v=20261014-detail-polish-16j12",
-        "css/studio-refinements.css?v=20261014-detail-polish-16j12",
-        "css/approved-refinements.css?v=20261014-detail-polish-16j12",
-        "css/seamless-surfaces.css?v=20261014-detail-polish-16j12",
-        "css/responsive-pages.css?v=20261014-detail-polish-16j12",
-        "css/detail-readability.css?v=20261014-detail-polish-16j12",
-        "css/price-sidebar.css?v=20261014-detail-polish-16j12",
-        "css/vocal-player-responsive.css?v=20261014-detail-polish-16j12",
-        "css/booking-contact.css?v=20261014-detail-polish-16j12",
-        "css/inquiry-flow.css?v=20261014-detail-polish-16j12",
-        "css/consultation-flow.css?v=20261014-detail-polish-16j12",
-        "css/customer-review-fixes.css?v=20261014-detail-polish-16j12",
-        "css/detail-point-system.css?v=20261014-detail-polish-16j12",
-        "css/mobile-ar-solo.css?v=20261014-detail-polish-16j12",
-        "css/mobile-studio-home.css?v=20261014-detail-polish-16j12",
-        "css/home-form-refresh.css?v=20261014-detail-polish-16j12",
-        "css/brand-detail-polish.css?v=20261014-detail-polish-16j12",
-        "css/mobile-final-polish.css?v=20261014-detail-polish-16j12",
-        "css/phone-capture-fixes.css?v=20261014-detail-polish-16j12",
-        "css/alignment-audit.css?v=20261014-detail-polish-16j12",
-        "css/inquiry-actions.css?v=20261014-detail-polish-16j12",
-        "css/question-cards-kakao.css?v=20261014-detail-polish-16j12",
-        "css/pink-black-theme.css?v=20261014-detail-polish-16j12",
-        "css/dusty-wedding-theme.css?v=20261014-detail-polish-16j12",
-        "css/inquiry-choice-editor.css?v=20261014-detail-polish-16j12",
-        "css/monochrome-maru-theme.css?v=20261014-detail-polish-16j12",
-        "css/functional-card-clarity.css?v=20261014-detail-polish-16j12",
-        "css/approved-home-thumbnails.css?v=20261014-detail-polish-16j12",
-        "css/noir-minimal.css?v=20261014-detail-polish-16j12",
-        "css/studio-graphics.css?v=20261014-detail-polish-16j12",
-        "css/luxury-finish.css?v=20261014-detail-polish-16j12",
-        "css/detail-consistency.css?v=20261014-detail-polish-16j12",
-        "css/svg-interface.css?v=20261014-detail-polish-16j12",
-        "css/svg-player-controls.css?v=20261014-detail-polish-16j12",
-        "css/booking-availability.css?v=20261014-detail-polish-16j12",
-        "css/detail-section-layout.css?v=20261014-detail-polish-16j12",
-        "css/heading-font.css?v=20261014-detail-polish-16j12",
-        "css/kakao-inquiry.css?v=20261014-detail-polish-16j12",
-        "css/detail-point-16f.css?v=20261014-detail-polish-16j12",
-        "css/detail-point-16i.css?v=20261014-detail-polish-16j12",
-        "css/detail-solo-16j.css?v=20261017-hotfix2",
-        "css/booking-wizard.css?v=20261015-friendly-options-1",
-        "css/detail-booking-refinement.css?v=20261014-pc-wizard-2",
-        "css/detail-inquiry-five.css?v=20261015-lyric-only-1",
-        "css/mobile-detail-safety.css?v=20261015-mobile-safety-1",
-        "css/faq-guide.css?v=20261015-faq-guide-1",
-        "css/site-layout-safety.css?v=20261015-layout-safety-1",
-        "css/consult-choice.css?v=20261015-consult-choice-1",
-        "css/booking-schedule-switch.css?v=20261015-schedule-switch-1",
-        "css/booking-mobile-scale.css?v=20261015-draft-mobile-1",
-        "css/fix-1017.css?v=20261017-codex1",
-        "css/style-1017b.css?v=20261017-style-1",
-        "css/review6-1017.css?v=20261017-review6",
-        "css/batch3-1017.css?v=20261017-batch3",
-        "/css/evt1-1017.css?v=20261017-faqbr",
-        "/css/faqbr-1017.css?v=20261017-faqbr",
-        "/css/contactok-1017.css?v=20261017-contactok",
-        "css/promo30-1019.css?v=20261019-promo30",
-        "css/faqm-1019.css?v=20261019-faqm",
-        "css/mobile-gutters-1020.css?v=20261020-mobile-gutters-1",
-        "css/hero-slider.css?v=20261020-hero2",
-        "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
-        "css/section-tones.css?v=20261021-section-tones-1",
-        "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
-      ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "detail/solo.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -440,13 +355,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "event/duo.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -527,13 +443,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "event/solo.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -614,13 +531,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "events.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -701,13 +619,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "index.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -788,13 +707,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "info/faq.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -875,13 +795,14 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     },
     "info/location.html": {
-      "bundle": "css/bundle-4fb17a0e.css",
+      "bundle": "css/bundle-6f7736fb.css",
       "sources": [
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
@@ -962,10 +883,11 @@
         "css/reviews-b5-1020.css?v=20261020-reviews-b5b",
         "css/section-tones.css?v=20261021-section-tones-1",
         "css/mobile-parity-780.css?v=20261021-mobile-parity-1",
-        "css/package-pricing.css?v=20261022-packages-1"
+        "css/package-pricing.css?v=20261022-packages-1",
+        "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-4fb17a0e.css?v=20261023-holiday-type-1",
-      "linksRemoved": 79
+      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
+      "linksRemoved": 80
     }
   }
 }

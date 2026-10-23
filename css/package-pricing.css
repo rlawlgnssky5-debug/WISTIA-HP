@@ -1,3 +1,4 @@
+@layer wistia-editorial, wistia-packages;
 /* Isolate approved pricing from legacy high-specificity theme overrides */
 @layer wistia-packages{
 /* Approved A/B/C pricing, shared by every SPA entry and both canvas sizes */
