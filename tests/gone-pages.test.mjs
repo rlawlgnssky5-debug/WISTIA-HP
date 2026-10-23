@@ -37,7 +37,7 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  assert.equal((sitemap.match(/<lastmod>2026-10-21<\/lastmod>/g)||[]).length,8)
  for(const loc of ['https://www.wistiastudio.com/','https://www.wistiastudio.com/detail/solo','https://www.wistiastudio.com/detail/duo','https://www.wistiastudio.com/event/solo','https://www.wistiastudio.com/event/duo','https://www.wistiastudio.com/events','https://www.wistiastudio.com/info/faq','https://www.wistiastudio.com/info/location'])assert.match(sitemap,new RegExp(loc.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'</loc>'))
  assert.doesNotMatch(sitemap,/\/contact|privacy|duet-film|wedding|\/info\/about|\/info\/process|\/song|before-after/)
- assert.match(read('event/solo.html'),/<title>얼마일까 \| 위스티아 축가 사전녹음 가격<\/title>/)
+ assert.match(read('event/solo.html'),/<title>문의양식 \| 위스티아 축가 사전녹음 가격<\/title>/)
  assert.match(read('event/duo.html'),/<title>상담 신청 · 상품과 일정 선택 \| 위스티아<\/title>/)
  assert.match(read('index.html'),/"@type": "WebPage"[\s\S]{0,400}"name": "부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 \| 위스티아"/)
  const contact=read('js/contact-form.js')

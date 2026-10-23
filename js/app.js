@@ -1805,6 +1805,34 @@ async function copyConsultationAndShowChoice(text){
  const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인</a>'
  showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카카오톡 채팅창에 붙여넣어 보내 주세요</p>'+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 직접 복사해 카카오톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+ok,'contact-ok-dialog')
  dialog.setAttribute('aria-label','문의 내용 복사 완료')
+ guardKakaoExit(dialog.querySelector('.contact-ok-action'))
+}
+// Kakao opens only after 확인, and never sooner than 1000ms after the inquiry
+// tap, so the Contact/KakaoTalkClick requests (fired by the existing click
+// listeners on 확인) are not cut off by leaving the page.
+const KAKAO_EXIT_GUARD_MS=1000,KAKAO_EXIT_MIN_OVERLAY_MS=400
+function showKakaoExitOverlay(){
+ let el=document.querySelector('.kakao-exit-overlay')
+ if(!el){el=document.createElement('div');el.className='kakao-exit-overlay';el.setAttribute('role','status');el.setAttribute('aria-live','polite');el.innerHTML='<div class="kakao-exit-box"><span class="kakao-exit-spinner" aria-hidden="true"></span><p>카카오톡으로 넘어가는 중이에요</p></div>';document.body.appendChild(el)}
+ el.hidden=false
+ return el
+}
+function guardKakaoExit(link){
+ if(!link)return
+ link.addEventListener('click',event=>{
+  if(event.defaultPrevented)return
+  event.preventDefault()
+  const href=link.href,now=performance.now(),tapAt=Number(window.wistiaKakaoTapAt)||now
+  // the existing listeners fire the pixel events on this same 확인 click. Leave
+  // 1000ms after the first tap, and keep the overlay up at least 400ms so it never flashes
+  const wait=Math.max(KAKAO_EXIT_MIN_OVERLAY_MS,tapAt+KAKAO_EXIT_GUARD_MS-now)
+  const overlay=showKakaoExitOverlay()
+  setTimeout(()=>{
+   const opened=window.open(href,'_blank','noopener,noreferrer')
+   if(!opened)location.href=href
+   setTimeout(()=>{overlay.hidden=true},300)
+  },wait)
+ })
 }
 function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
@@ -1906,7 +1934,7 @@ function initMetaEngagementTracking(pagePath,pricePage){
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 위스티아 AR 축가 사전녹음 · A 90,000원, B 130,000원, C 170,000원 · 녹음 시간과 보컬 튜닝을 필요한 구성으로 선택하세요 · 부천시청역 도보 약 300m"}
-const EVENT_SOLO_TITLE="얼마일까 | 위스티아 축가 사전녹음 가격"
+const EVENT_SOLO_TITLE="문의양식 | 위스티아 축가 사전녹음 가격"
 const LIVE_ROUTES=new Set(["/","/detail/solo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
 function setPageMeta({title,description,image,robots=""}){
