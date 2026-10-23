@@ -114,3 +114,13 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 @media (min-width: 780px) {
   html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: calc((100vw - 780px) / 2 + 12px) !important; left: auto !important; }
 }
+
+/* rv5 reviews: its own 780 rules must not apply inside the 2x zoomed block */
+@media (min-width: 780px) {
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .arc-reviews .rv5 { width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; left: auto !important; transform: none !important; box-sizing: border-box !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .arc-reviews .rv5 .rv5-in { width: 100% !important; max-width: 100% !important; margin-inline: 0 !important; box-sizing: border-box !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .arc-reviews .rv5 .rv5-eye { width: auto !important; max-width: 100% !important; }
+}
+@media (min-width: 780px) {
+  html body .skip-link { left: calc((100vw - 780px) / 2 + 20px) !important; }
+}
