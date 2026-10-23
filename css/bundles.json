@@ -1,9 +1,12 @@
 {
   "version": 1,
-  "cacheVersion": "20261023-editorial-12",
+  "cacheVersion": "20261024-site-fixes-1",
   "bundles": {
-    "css/bundle-6f7736fb.css": {
+    "css/bundle-3472a5da.css": {
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -88,6 +91,9 @@
       ],
       "sourceLists": [
         [
+          "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+          "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+          "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
           "css/design.css?v=20261014-detail-polish-16j12",
           "css/before-after.css?v=20261014-detail-polish-16j12",
           "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -181,13 +187,16 @@
         "info/faq.html",
         "info/location.html"
       ],
-      "size": 2215061
+      "size": 2230851
     }
   },
   "pages": {
     "contact.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -270,12 +279,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "detail/solo.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -358,12 +370,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "event/duo.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -446,12 +461,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "event/solo.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -534,12 +552,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "events.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -622,12 +643,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "index.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -710,12 +734,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "info/faq.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -798,12 +825,15 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     },
     "info/location.html": {
-      "bundle": "css/bundle-6f7736fb.css",
+      "bundle": "css/bundle-3472a5da.css",
       "sources": [
+        "css/site-fixes-20261024.css?v=20261024-site-fixes-1",
+        "css/wizard-layout-20261024.css?v=20261024-site-fixes-1",
+        "css/package-card-fixes-20261024.css?v=20261024-site-fixes-1",
         "css/design.css?v=20261014-detail-polish-16j12",
         "css/before-after.css?v=20261014-detail-polish-16j12",
         "css/ar-ratio-cd.css?v=20261014-detail-polish-16j12",
@@ -886,8 +916,8 @@
         "css/package-pricing.css?v=20261022-packages-1",
         "css/editorial-unified.css?v=20261023-editorial-1"
       ],
-      "href": "css/bundle-6f7736fb.css?v=20261023-editorial-12",
-      "linksRemoved": 80
+      "href": "css/bundle-3472a5da.css?v=20261024-site-fixes-1",
+      "linksRemoved": 83
     }
   }
 }

@@ -1,0 +1,130 @@
+/* Load before the legacy bundle: important declarations in the first layer
+   outrank later layers and unlayered specificity overrides. Keep appearance
+   in the existing card styles; this file owns inquiry geometry only. */
+@layer wistia-wizard-layout, wistia-editorial, wistia-packages;
+
+@layer wistia-wizard-layout {
+  #app:has(> .wistia-wizard) {
+    display: block !important;
+    width: min(100%, 780px) !important;
+    max-width: 780px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin-inline: auto !important;
+    padding-block: 0 !important;
+    transform: none !important;
+    zoom: 1 !important;
+    overflow: visible !important;
+  }
+
+  #app > .wistia-wizard {
+    --wizard-gutter: clamp(12px, 4vw, 24px);
+    --wizard-nav-clearance: calc(96px + env(safe-area-inset-bottom, 0px));
+    display: block !important;
+    position: relative !important;
+    width: min(100%, 780px) !important;
+    max-width: 780px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 16px auto 0 !important;
+    padding: 24px var(--wizard-gutter) 16px !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    scale: none !important;
+    translate: none !important;
+    zoom: 1 !important;
+    overflow: visible !important;
+  }
+
+  .wistia-wizard > h1 {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 20px !important;
+    transform: none !important;
+  }
+
+  .wistia-wizard form {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 0 var(--wizard-nav-clearance) !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    scroll-padding-bottom: var(--wizard-nav-clearance) !important;
+  }
+
+  .wistia-wizard .wf-progress {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto 8px !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    justify-content: center !important;
+    align-items: start !important;
+  }
+
+  .wistia-wizard .wf-progress li {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .wistia-wizard .wf-step {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin-inline: 0 !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .wistia-wizard :is(.wf-review, .wf-payment, .wf-copy-note, .wf-privacy) {
+    position: static !important;
+    inset: auto !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-inline: 0 !important;
+    box-sizing: border-box !important;
+    grid-column: 1 / -1 !important;
+    justify-self: stretch !important;
+    transform: none !important;
+  }
+
+  .wistia-wizard :is(.wf-copy-note, .wf-privacy) {
+    padding-inline: 0 !important;
+    margin-block: 10px 0 !important;
+    text-align: left !important;
+  }
+
+  .wistia-wizard .wf-nav {
+    position: fixed !important;
+    inset: auto auto 0 50% !important;
+    width: min(100%, 780px) !important;
+    max-width: 780px !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 12px var(--wizard-gutter) calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+    transform: translateX(-50%) !important;
+    zoom: 1 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) !important;
+    gap: 10px !important;
+    z-index: 100 !important;
+  }
+
+  .wistia-wizard .wf-nav button {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  @media (min-width:780px) {
+    #app > .wistia-wizard { margin-top:80px!important; }
+  }
+}

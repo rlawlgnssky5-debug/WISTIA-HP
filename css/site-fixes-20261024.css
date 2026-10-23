@@ -1,0 +1,82 @@
+/* The earliest layer owns the bounded fixes requested on 2026-10-24. */
+@layer wistia-site-fixes, wistia-wizard-layout, wistia-editorial, wistia-packages;
+@layer wistia-site-fixes {
+  #mainMenu {
+    position:fixed!important; inset:64px auto auto 50%!important;
+    width:min(100%,780px)!important; max-width:780px!important;
+    max-height:calc(100dvh - 64px)!important; margin:0!important;
+    padding:24px!important; box-sizing:border-box!important;
+    transform:translateX(-50%)!important; zoom:1!important;
+    overflow-y:auto!important; overscroll-behavior:contain;
+  }
+  #mainMenu .menu-title { margin-top:0!important; }
+  @media(min-width:780px) {
+    #mainMenu { top:128px!important; max-height:calc(100dvh - 128px)!important; }
+    #app .mobile-ar-solo .solo-footer-inquiry { zoom:0.5617977528!important; }
+  }
+  #app .mobile-ar-solo > .arc-reviews,
+  #app .ed-reviews { background:#faf1f3!important; }
+  #app .mobile-ar-solo > #arcWorries {
+    --ed-surface:#ededee; --ed-next-surface:#fff;
+    background:#ededee!important; border-radius:0!important;
+    border-block:1px solid #ddd9dc!important;
+  }
+  #app .mobile-ar-solo > #arcWorries::before { background:#ededee!important; border-radius:0!important; }
+  #app .mobile-ar-solo > .ed-section { isolation:isolate; }
+  #app .hs-slide { isolation:isolate; }
+  #app .hs-gallery .hs-photo { transform:scale(1.025)!important; }
+  #app .hs-gallery .hs-landscape .hs-photo {
+    position:relative!important; z-index:1!important;
+    object-fit:contain!important; background:transparent!important;
+  }
+  #app .hs-gallery .hs-blur-backdrop {
+    position:absolute!important; inset:-5%!important; width:110%!important; height:110%!important;
+    object-fit:cover!important; filter:blur(18px) brightness(.75)!important;
+    transform:scale(1.08)!important; opacity:1!important; z-index:0!important;
+  }
+  #app .ed-review-card h3, #app .ed-review-card footer { flex-shrink:0!important; }
+  #app .ed-review-card > p { white-space:pre-wrap!important; }
+  #app .ed-review-slide.is-current .ed-review-card > p {
+    flex:1!important; min-height:0!important; overflow-y:auto!important;
+    overscroll-behavior:contain; scrollbar-width:thin;
+  }
+  #app .ed-review-dots { flex-wrap:wrap!important; max-width:42cqw!important; margin-inline:auto!important; }
+  #app .solo-footer-clean {
+    background:#f6e6e6!important; border-radius:0!important;
+    width:100%!important; max-width:780px!important; margin-inline:auto!important;
+  }
+  #app:has(.solo-footer-clean) { background:#f6e6e6!important; }
+  #app .solo-footer-clean :is(footer.footer,.footer-main,.footer-message,.footer-bottom,.footer-social) {
+    background:transparent!important; box-shadow:none!important;
+  }
+  #app .solo-footer-clean footer.footer { margin:0!important; width:100%!important; max-width:none!important; }
+  #app .solo-footer-inquiry {
+    position:fixed!important; left:50%!important; right:auto!important;
+    width:min(748px,calc(100% - 32px))!important; max-width:748px!important;
+    min-width:0!important; margin-inline:0!important; box-sizing:border-box!important;
+    transform:translateX(-50%)!important; zoom:1!important;
+  }
+  #app .welcome-toggle {
+    display:flex!important; flex-wrap:nowrap!important; gap:6px!important;
+    padding:12px 8px!important; min-width:0!important;
+    font-size:clamp(10px,2.75vw,14px)!important;
+  }
+  #app .welcome-toggle > span { display:flex!important; align-items:center!important; gap:4px!important; white-space:nowrap!important; }
+  #app .welcome-toggle > span::after {
+    content:'→'; color:#a65a6c; font-size:20px; line-height:1;
+    animation:welcome-arrow-nudge 1.25s ease-in-out infinite;
+  }
+  #app .welcome-toggle > strong {
+    white-space:nowrap!important; font-size:clamp(10px,2.7vw,14px)!important;
+    min-height:38px!important; display:flex!important; align-items:center!important;
+    padding:8px 10px!important; border:1px solid #bf925d!important;
+    border-radius:10px!important; box-shadow:0 3px 0 #ba8c5044!important;
+    transition:transform .15s,box-shadow .15s!important;
+  }
+  #app .welcome-toggle:active > strong { transform:translateY(2px)!important; box-shadow:0 1px 0 #ba8c5044!important; }
+  @keyframes welcome-arrow-nudge { 0%,100%{transform:translateX(-2px)} 50%{transform:translateX(2px)} }
+  @media(prefers-reduced-motion:reduce) {
+    #app .welcome-toggle > span::after { animation:none!important; }
+    #app .welcome-toggle > strong { transition:none!important; }
+  }
+}
