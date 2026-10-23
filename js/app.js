@@ -1945,17 +1945,23 @@ function initCompactKakao(){
  if(!button)return
  if(window.wistiaCompactKakaoCleanup)window.wistiaCompactKakaoCleanup()
  let frame=0
+ // Always visible. Plain text and images may sit underneath; controls, form
+ // fields, maps and the fixed bars may not, so the button is nudged upward
+ // (never sideways, it stays on the column's right edge) until it is clear.
  const paint=()=>{
   frame=0
-  const hit=button.getBoundingClientRect()
-  const protectedRegions=document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,p,h1,h2,h3,h4,dt,dd,figcaption),main .package-selected-features li,main .benefit-kind-header,main .wistia-location img,main .wistia-location iframe,main .solo-map img,.wf-nav,.solo-footer-inquiry')
-  const overlap=[...protectedRegions].some(el=>{
-   if(!el.getClientRects().length||getComputedStyle(el).visibility!=='visible')return false
-   const box=el.getBoundingClientRect()
-   return box.top<hit.bottom+6&&box.bottom>hit.top-6&&box.left<hit.right+6&&box.right>hit.left-6
-  })
-  button.classList.toggle('is-content-overlap',overlap)
-  if(overlap)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
+  button.style.removeProperty('translate')
+  const base=button.getBoundingClientRect()
+  const boxes=[...document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,[role=button]),main .wistia-location :is(img,iframe),main .solo-map img,.wf-nav,.solo-footer-inquiry,.fixed-price,.booking-mobile-bar,.home-mobile-cta')]
+   .filter(el=>el!==button&&!button.contains(el)&&el.getClientRects().length&&getComputedStyle(el).visibility==='visible')
+   .map(el=>el.getBoundingClientRect()).filter(r=>r.width>1&&r.height>1&&r.left<base.right+6&&r.right>base.left-6)
+  const hits=top=>boxes.some(r=>r.top<top+base.height+6&&r.bottom>top-6)
+  let lift=0
+  while(lift<=Math.max(0,base.top-80)&&hits(base.top-lift))lift+=4
+  const clear=lift<=Math.max(0,base.top-80)
+  if(lift&&clear)button.style.setProperty('translate','0 -'+lift+'px')
+  button.classList.toggle('is-content-overlap',!clear)
+  if(!clear)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
  }
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint)}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule)
