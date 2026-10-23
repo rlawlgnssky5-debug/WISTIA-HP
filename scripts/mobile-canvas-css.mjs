@@ -1,7 +1,7 @@
 // Keep the real phone cascade byte-for-byte; build a desktop cascade evaluated
 // at the agreed 390px design width, with a 780px layout canvas
 export function mobileCanvasCss(source, file = '') {
-  if (/(?:mobile-parity-780|editorial-unified)\.css$/.test(file)) return source
+  if (/(?:mobile-parity-780|editorial-unified|site-fixes-20261024|wizard-layout-20261024|package-card-fixes-20261024)\.css$/.test(file)) return source
   function boundary(text, start) {
     let quote = '', comment = false, parens = 0
     for (let i = start; i < text.length; i++) {
