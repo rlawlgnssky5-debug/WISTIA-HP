@@ -76,9 +76,9 @@
   return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:p.tuning||v.options.includes('tuning')?packages.B.delivery:packages.A.delivery}
  }
  function features(p){
-  const hours='녹음 '+(p.minutes/60)+'시간+1:1 디렉팅'
-  if(p.key==='A')return ['1인·1곡',hours,'기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 미포함',p.delivery]
-  return ['1인·1곡',hours,'기본 믹싱','음정·박자 보정',p.key==='B'?'디테일 믹싱 서비스(음색·톤)':'디테일 믹싱 서비스',p.delivery]
+  const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
+  if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 : 미포함','전달 : '+when]
+  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','디렉팅 : 1:1','믹싱 : 기본 믹싱','음정·박자 보정 : 포함',p.key==='B'?'디테일 믹싱 : 서비스(음색·톤)':'디테일 믹싱 : 서비스','전달 : '+when]
  }
  const checkIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>'
  const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}

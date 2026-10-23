@@ -41,7 +41,7 @@ function page(path, data, options={}) {
 
 for (const product of products) {
   page(`/detail/${product}`, seo.detail[product])
-  page(`/event/${product}`, product === 'solo' ? {...seo.event, title:'얼마일까 | 위스티아 축가 사전녹음 가격'} : seo.event)
+  page(`/event/${product}`, product === 'solo' ? {...seo.event, title:'문의양식 | 위스티아 축가 사전녹음 가격'} : seo.event)
 }
 page('/info/location', seo.location)
 page('/info/faq', {title:'자주 묻는 질문 | 위스티아',description:'곡 선택과 녹음 준비부터 AR 본식 사용, 완성 음원 전달과 수정, 스튜디오 방문까지 편하게 확인해 보세요'})

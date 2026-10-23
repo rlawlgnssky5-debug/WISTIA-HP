@@ -9,7 +9,7 @@ const mime = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset
 const expected = [
   ['/', '위스티아 | 웨딩 사전 녹음·식전·프로포즈 영상'],
   ['/detail/solo', '사전 녹음 1시간 | 본식 축가 AR · 위스티아'],
-  ['/event/solo', '얼마일까 | 위스티아 사전녹음·영상 가격 계산'],
+  ['/event/solo', '문의양식 | 위스티아 사전녹음·영상 가격 계산'],
   ['/info/location', '오시는 길 | 경기도 부천 위스티아'],
   ['/detail/duet-film', '듀엣 축가 영상 | 우리 목소리 본식 상영 · 위스티아']
 ]
