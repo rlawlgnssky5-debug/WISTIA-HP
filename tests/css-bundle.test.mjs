@@ -11,12 +11,18 @@ const read = path => readFileSync(resolve(root, path), 'utf8')
 
 test('every served bundle has the original source bytes, cascade order and URL base', () => {
   const manifest = JSON.parse(read('css/bundles.json'))
-  assert.equal(Object.keys(manifest.pages).length, 32)
+  assert.deepEqual(Object.keys(manifest.pages).sort(), [
+    'contact.html', 'detail/solo.html', 'event/duo.html',
+    'event/solo.html', 'events.html', 'index.html', 'info/faq.html', 'info/location.html'
+  ].sort())
   for (const [page, entry] of Object.entries(manifest.pages)) {
     if (!existsSync(resolve(root, page))) continue
     const html = read(page), local = stylesheetTokens(html).filter(t => /^\/?css\//.test(t.href) && !/canvas-780\.css/.test(t.href))
     assert.equal(local.length, 1, page)
     assert.equal(local[0].href, entry.href)
+    assert.equal((html.match(/src="\/?js\/detail-editorial\.js[^"\\]*"/g) || []).length, 1, page + ': editorial module included once')
+    assert.ok(html.indexOf('js/detail-editorial.js') < html.indexOf('js/app.js'), page + ': editorial module loads before app')
+    assert.ok(html.includes('js/detail-editorial.js?v=' + manifest.cacheVersion + '"'), page + ': editorial cache version follows app release')
     assert.deepEqual(entry.sources, manifest.bundles[entry.bundle].sources)
     const parts = entry.sources.map(href => {
       const file = href.replace(/^\//, '').split('?')[0], source = read(file)
@@ -49,6 +55,7 @@ test('regeneration, grouping, absolute paths, exclusions and failure before writ
   try {
     put('scripts/build-css-bundle.mjs', read('scripts/build-css-bundle.mjs'))
     put('scripts/mobile-canvas-css.mjs', read('scripts/mobile-canvas-css.mjs'))
+    for (const file of ['scripts/package-content.mjs', 'js/package-pricing.js', 'js/seo-meta.js']) put(file, read(file))
     put('css/a.css', '@charset "UTF-8";\na{background:url(../image.png)}')
     put('css/b.css', '@charset "utf-8";\nb{}\n')
     const links = '<link rel="stylesheet" href="/css/a.css?v=1">\n  <script defer src="app.js"></script>\n  <link rel="stylesheet" href="/css/b.css?v=2">'
@@ -91,7 +98,7 @@ test('prerender expands the template sources and generates bundled route pages',
   const put = (file, text) => { const path = resolve(dir, file); mkdirSync(resolve(path, '..'), { recursive: true }); writeFileSync(path, text) }
   try {
     const manifest = JSON.parse(read('css/bundles.json'))
-    for (const file of ['scripts/prerender.mjs', 'scripts/build-css-bundle.mjs', 'scripts/mobile-canvas-css.mjs', 'js/seo-meta.js', 'index.html', 'css/bundles.json', ...Object.keys(manifest.bundles)]) put(file, read(file))
+    for (const file of ['scripts/prerender.mjs', 'scripts/build-css-bundle.mjs', 'scripts/mobile-canvas-css.mjs', 'scripts/package-content.mjs', 'js/package-pricing.js', 'js/seo-meta.js', 'index.html', 'css/bundles.json', ...Object.keys(manifest.bundles)]) put(file, read(file))
     for (const entry of Object.values(manifest.bundles)) for (const href of entry.sources) {
       const path = href.replace(/^\//, '').split('?')[0]
       put(path, read(path))
