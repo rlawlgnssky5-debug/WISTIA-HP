@@ -12,6 +12,7 @@ let change;
 let visible;
 const location = { protocol: "https:", hostname: "www.wistiastudio.com", origin: "https://www.wistiastudio.com", pathname: "/detail/solo", href: "https://www.wistiastudio.com/detail/solo", hash: "" };
 const window = {
+  wistiaVisitorId: () => "analytics-test-visitor",
   gtag: (...args) => calls.push(args),
   innerHeight: 800,
   scrollY: 0,
@@ -41,6 +42,7 @@ assert.equal(typeof analytics.startPageTracking, "function");
 assert.equal(analytics.trackPageView(), true);
 assert.equal(analytics.trackPageView(), false);
 assert.equal(calls.find(call => call[1] === "page_view")[2].page_location, location.href);
+assert.equal(calls.find(call => call[1] === "page_view")[2].visitor_id, "analytics-test-visitor");
 
 analytics.startPageTracking("/detail/solo", null);
 window.scrollY = 1600;
@@ -53,7 +55,7 @@ assert.equal(calls.find(call => call[1] === "time_on_page")[2].page_path, "/deta
 location.pathname = "/event/solo";
 location.href = "https://www.wistiastudio.com/event/solo";
 analytics.startPageTracking("/event/solo", () => ({ content_ids: ["solo"], content_name: "AR 축가", value: 120000, currency: "KRW" }));
-assert.equal(timers.size, 3);
+assert.deepEqual([...timers.values()].map(timer => timer.delay).sort((a, b) => a - b), [0, 30000, 60000, 120000]);
 visible([{ isIntersecting: true, intersectionRatio: 0.4 }]);
 assert.equal(calls.some(call => call[1] === "view_price"), false);
 visible([{ isIntersecting: true, intersectionRatio: 0.6 }]);
