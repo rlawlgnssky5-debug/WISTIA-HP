@@ -34,8 +34,19 @@
    +group('할인·금액',(q.discounts.length?q.discounts.map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount'))+row('총 금액',d['총 금액'],'wf-final-total'),'is-amount')
  }
  function text(form){
-  const q=quote(form),details=Object.fromEntries(rows(form)),notes=String(q.v.specialNotes||'').trim().replace(/\r\n?/g,'\n').replace(/\n/g,'\n  ')
-  return ['🎙️ 위스티아 | 신규 상담 신청','','📅 녹음 예약','','• 날짜 : '+details['녹음 날짜'],'• 시간 : '+details['녹음 시간'].replace('~',' ~ '),'• 타입 : '+details['타입'],'• 구성 : '+details['인원']+' · '+details['녹음 소요 시간'],'','🎵 추가 옵션','',...(q.options.length?q.options.map(([label,amount])=>'• '+label+' : +'+money(amount)):['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'','💰 결제 금액','','• 기본 상품 : '+money(q.base),'• 추가 금액 : '+money(q.optionTotal),...q.discounts.map(d=>'• '+d.label+' : −'+money(d.amount)),'• 총 결제 금액 : '+money(q.total),'','💬 고객 정보','','• 유입 경로 : '+details['처음 본 곳'],'• 특이사항 : '+(notes||'없음'),'','📌 결제 안내','카카오톡 맞춤 상담 후 결제를 진행해요'].join('\n')
+  // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
+  const v=values(form),q=global.WistiaPackages.quote(v),details=Object.fromEntries(rows(form)),notes=String(v.specialNotes||'').trim().replace(/\r\n?/g,'\n')
+  const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
+  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정','디테일 믹싱']:['기본 믹싱'])]
+  const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간',rush:'3일 이내 전달 (녹음일 기준)'}
+  const items=[...included,...q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))]
+  const discountName=d=>d.key==='first'?'첫 이용 할인':d.key==='weekday'?'목·금 시간 할인 (13~16시)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
+  return ['🎙️ 위스티아 | 신규 상담 신청','📅 녹음 예약','• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'','',
+   '📦 상품','• 타입 : '+q.package.key+' 타입','• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+q.minutes+'분','• 옵션 : ',...items.map((item,index)=>'- '+item+(index<items.length-1?', ':'')),'',
+   '💰 결제 금액','• 기본 상품 : '+money(q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
+   '할인 내역',...(q.discounts.length?q.discounts.map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total),'',
+   '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',
+   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음'])].join('\n')
  }
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
@@ -48,6 +59,7 @@
  }
  function syncOptions(form,q){
   for(const key of ['tuning','detailMix']){const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
+  {const row=form.querySelector('[data-wf-option="rush"]');if(row){const input=row.querySelector('input'),sameDay=!q.package.tuning&&!form.querySelector('input[name="tuning"]')?.checked;input.disabled=sameDay;if(sameDay)input.checked=false;row.classList.toggle('is-same-day',sameDay);row.querySelector('strong').textContent=sameDay?'당일 전달 포함':'+'+money(global.WistiaPackages.options.find(o=>o.key==='rush').price)}}
   const fieldset=form.querySelector('.package-extra-options'),rows=global.WistiaPackages.options.map(option=>form.querySelector('[data-wf-option="'+option.key+'"]'))
   const ordered=rows.filter(row=>!row.querySelector('input').disabled).concat(rows.filter(row=>row.querySelector('input').disabled)),current=[...fieldset.querySelectorAll('[data-wf-option]')]
   if(ordered.some((row,index)=>row!==current[index]))for(const row of ordered)fieldset.appendChild(row)
@@ -113,7 +125,7 @@
   })
   form.addEventListener('input',()=>update(form))
   form.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-wf-change-date')){form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(button.dataset.wfTime){const time=form.querySelector('#contact-time');time.value=button.dataset.wfTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimes(form)}if(button.hasAttribute('data-wf-goto'))navigate(form,Number(button.dataset.wfGoto));if(button.hasAttribute('data-wf-next'))navigate(form,state.step+1);if(button.hasAttribute('data-wf-prev')){if(state.step===0){const url=new URL('/detail/solo',global.location.href);url.search=global.location.search;url.searchParams.set('package',quote(form).package.key);global.history.pushState({...global.history.state,wistiaDepth:(global.history.state?.wistiaDepth||0)+1},'',url.pathname+url.search);global.dispatchEvent(new global.PopStateEvent('popstate'))}else navigate(form,state.step-1)}})
-  form.addEventListener('submit',async event=>{event.preventDefault();event.stopPropagation();global.wistiaKakaoTapAt=global.performance?.now?.()??Date.now();if(state.step!==LAST||form.dataset.copyPending)return;const button=form.querySelector('[type="submit"]');form.dataset.copyPending='true';button.disabled=true;try{await global.WistiaBooking.refresh();if(!form.isConnected)return;for(const step of [1])if(!validate(form,step)){state.step=step;update(form);form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}await onSubmit(text(form))}finally{delete form.dataset.copyPending;button.disabled=false}})
+  form.addEventListener('submit',async event=>{event.preventDefault();event.stopPropagation();if(state.step!==LAST||form.dataset.copyPending)return;const button=form.querySelector('[type="submit"]');form.dataset.copyPending='true';button.disabled=true;try{await global.WistiaBooking.refresh();if(!form.isConnected)return;for(const step of [1])if(!validate(form,step)){state.step=step;update(form);form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}await onSubmit(text(form))}finally{delete form.dataset.copyPending;button.disabled=false}})
   Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
  }
  function bookingKey(form){return 'ar-'+quote(form).minutes}

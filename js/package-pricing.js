@@ -6,9 +6,10 @@
   C:{key:'C',title:'음정·박자 보정과 여유로운 녹음 시간이 필요해요!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
-  {key:'tuning',label:'보컬 튜닝',price:40000,detail:'B·C 패키지에 포함되어 있어요 · 선택 시 영업일 7일 이내 전달'},
-  {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'B·C 패키지에 포함되어 있어요'},
-  {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 타입의 녹음 시간에 1시간 추가'},
+  {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
+  {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
+  {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 타입의 녹음 시간에 1시간을 더해 드려요'},
+  {key:'rush',label:'3일 이내 받기',price:30000,detail:'녹음일 기준 3일 이내에 음원을 받아요',messageLabel:'3일 이내 전달 (녹음일 기준)'},
  ]
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const packageFor=key=>Object.hasOwn(packages,key)?packages[key]:packages.A
@@ -62,7 +63,9 @@
  }
  function quote(input={},reference=today()){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
-  const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')).map(o=>({...o}))
+  // 3일 이내 받기 only applies when the delivery would otherwise be 영업일 7일 이내 (A without tuning is already same-day)
+  const slowDelivery=p.tuning||v.options.includes('tuning')
+  const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')&&!(o.key==='rush'&&!slowDelivery)).map(o=>({...o}))
   if(duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
@@ -73,7 +76,7 @@
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
   const baseMinutes=p.minutes+(v.options.includes('extraHour')?60:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
-  return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:p.tuning||v.options.includes('tuning')?packages.B.delivery:packages.A.delivery}
+  return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
@@ -91,15 +94,17 @@
  function selectionDetails(key){
   const p=packageFor(key)
   const icon=item=>item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
+  // One rule for every row: mark it when its value differs from the A card (same label, different value)
+  const baseRows=features(packageFor('A')).slice(1)
   const featureRows=features(p).slice(1).map(item=>{
-   const kind=icon(item),enhanced=p.key!=='A'&&(item.startsWith('믹싱')||item.startsWith('음정')||(p.key==='C'&&item.startsWith('녹음 시간')))
+   const kind=icon(item),enhanced=p.key!=='A'&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span></li>'
   }).join('')
   return '<div class="package-selected-head"><span class="package-selected-letter">'+p.key+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.key+' 타입 '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.key+' 타입</span><strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-subtitle">'+shortTitles[p.key]+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.key+' 타입 '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.key+' 타입</span>'+(p.individual>p.price?'<span class="package-card-was"><small>따로 고르면</small> <s>'+money(p.individual)+'</s></span>':'')+'<strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-subtitle">'+shortTitles[p.key]+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')

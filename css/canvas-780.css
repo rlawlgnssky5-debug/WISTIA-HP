@@ -249,11 +249,68 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 
 }
 
-/* 2026-10-23 Kakao exit overlay */
-.kakao-exit-overlay{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;background:rgba(90,58,64,.28)}
-.kakao-exit-overlay[hidden]{display:none}
-.kakao-exit-box{display:flex;flex-direction:column;align-items:center;gap:12px;padding:22px 26px;border-radius:18px;background:#fff7f8;box-shadow:0 10px 30px rgba(90,58,64,.18);color:#5a3a40;font-size:15px;font-weight:600}
-.kakao-exit-box p{margin:0}
-.kakao-exit-spinner{width:28px;height:28px;border-radius:50%;border:3px solid #f2d3d9;border-top-color:#c97b8a;animation:kakao-exit-spin .8s linear infinite}
-@keyframes kakao-exit-spin{to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){.kakao-exit-spinner{animation-duration:2.4s}}
+
+/* ===== 2026-10-24 r16 owner requests (first layer, so these win over the legacy !important layers) ===== */
+@layer wistia-site-fixes {
+  /* POINT 04: presets read as tappable chips, hint points at them */
+  html body #app#app#app#app #soloPoint04 .solo-p4-buttons { gap: 8px !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-ratio { border: 1.5px solid #d9aab5 !important; border-radius: 14px !important; background: #fff !important; box-shadow: 0 2px 0 #ecd2d8, 0 4px 10px rgba(140,80,95,.10) !important; cursor: pointer !important; transition: transform .12s ease, box-shadow .12s ease, background .12s ease !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-ratio:active { transform: translateY(2px) !important; box-shadow: 0 0 0 #ecd2d8 !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-ratio.is-on { background: linear-gradient(135deg,#c88f99,#a8687a) !important; border-color: #a8687a !important; color: #fff !important; box-shadow: 0 3px 10px rgba(140,80,95,.25) !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-ratio.is-on :is(b,span,small) { color: #fff !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-hint { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; margin-top: 10px !important; color: #9a5a6c !important; font-weight: 600 !important; }
+  html body #app#app#app#app #soloPoint04 .solo-p4-hint::before { content: "☝" !important; display: inline-block !important; animation: wistia-hint-up 1.4s ease-in-out infinite !important; }
+  @keyframes wistia-hint-up { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }
+
+  /* first-use row: bigger text, arrow centred between text and button */
+  html body #app#app#app#app .welcome-toggle { display: grid !important; grid-template-columns: auto 1fr auto !important; align-items: center !important; column-gap: 6px !important; }
+  html body #app#app#app#app .welcome-toggle > span { grid-column: 1 !important; font-size: 15px !important; font-weight: 600 !important; white-space: nowrap !important; display: block !important; }
+  html body #app#app#app#app .welcome-toggle > span::after { content: none !important; display: none !important; }
+  html body #app#app#app#app .welcome-toggle::after { content: "›››" !important; grid-column: 2 !important; grid-row: 1 !important; justify-self: center !important; color: #c9963f !important; font-weight: 800 !important; letter-spacing: -.1em !important; animation: wistia-trail-r16 1.2s ease-in-out infinite !important; }
+  html body #app#app#app#app .welcome-toggle > strong { grid-column: 3 !important; grid-row: 1 !important; font-size: 14px !important; white-space: nowrap !important; }
+  html body #app#app#app#app .welcome-toggle strong::after { content: none !important; display: none !important; }
+  @keyframes wistia-trail-r16 { 0%,100% { transform: translateX(-2px); opacity: .6 } 50% { transform: translateX(3px); opacity: 1 } }
+  @media (max-width: 400px) { html body #app#app#app#app .welcome-toggle > span { font-size: 14px !important; } html body #app#app#app#app .welcome-toggle > strong { font-size: 13px !important; padding: 7px 10px !important; } }
+
+  /* calendar: selectable vs not */
+  html body #app#app#app#app .calendar-day:not(:disabled) { background: #fff !important; border: 1.5px solid #d8b7bf !important; color: #3a2a2f !important; opacity: 1 !important; }
+  html body #app#app#app#app .calendar-day:not(:disabled) span { color: #3a2a2f !important; font-weight: 600 !important; }
+  html body #app#app#app#app .calendar-day:not(:disabled).is-selected { background: #a8687a !important; border-color: #a8687a !important; }
+  html body #app#app#app#app .calendar-day:not(:disabled).is-selected span { color: #fff !important; }
+  html body #app#app#app#app .calendar-day:disabled { background: transparent !important; border: 0 !important; box-shadow: none !important; opacity: .32 !important; cursor: default !important; pointer-events: none !important; }
+  html body #app#app#app#app .calendar-day:disabled span { color: #8f8487 !important; font-weight: 400 !important; }
+  html body #app#app#app#app .calendar-day.is-past { opacity: .18 !important; }
+  /* -1만 / -2만 mark: yellow pill */
+  html body #app#app#app#app .calendar-day.earlybird-day { position: relative !important; }
+  html body #app#app#app#app .calendar-day.earlybird-day::after { position: absolute !important; left: 50% !important; bottom: 2px !important; transform: translateX(-50%) !important; padding: 0 4px !important; border-radius: 999px !important; background: #FFE36E !important; color: #3a2a12 !important; font-size: 9.5px !important; font-weight: 800 !important; line-height: 1.45 !important; letter-spacing: -.03em !important; white-space: nowrap !important; box-shadow: 0 1px 2px rgba(120,90,20,.25) !important; }
+  html body #app#app#app#app .calendar-day.earlybird-one::after { content: "-1만" !important; }
+  html body #app#app#app#app .calendar-day.earlybird-two::after { content: "-2만" !important; }
+  html body #app#app#app#app .calendar-day.earlybird-day:disabled::after { content: none !important; }
+
+  /* '10,000원 할인 적용돼요!' as a small event banner */
+  html body #app#app#app#app .wf-discount-banner.is-applied { position: relative !important; display: flex !important; align-items: center !important; gap: 12px !important; padding: 12px 14px 12px 64px !important; border: 0 !important; border-radius: 14px !important; background: linear-gradient(120deg,#fff3d6 0%,#ffe1e8 55%,#f7d3e0 100%) !important; color: #7a3c4f !important; font-weight: 800 !important; font-size: 15px !important; box-shadow: 0 4px 14px rgba(200,120,140,.18) !important; overflow: hidden !important; }
+  html body #app#app#app#app .wf-discount-banner.is-applied::before { content: "" !important; position: absolute !important; left: 12px !important; top: 50% !important; width: 42px !important; height: 42px !important; transform: translateY(-50%) !important; background: url('../assets/editorial/welcome-gift-rose.png') center / contain no-repeat !important; }
+  html body #app#app#app#app .wf-discount-banner.is-applied::after { content: "✦" !important; position: absolute !important; right: 14px !important; top: 8px !important; color: #e0a83f !important; font-size: 14px !important; animation: wistia-sparkle 1.8s ease-in-out infinite !important; }
+  @keyframes wistia-sparkle { 0%,100% { opacity: .35; transform: scale(.8) } 50% { opacity: 1; transform: scale(1.15) } }
+
+  /* option cards: keep the description on included cards; 3일 option on A shows as unavailable */
+  html body #app#app#app#app .wistia-wizard [data-wf-option].is-included small { display: block !important; }
+  html body #app#app#app#app .wistia-wizard [data-wf-option].is-same-day { opacity: .55 !important; }
+  html body #app#app#app#app .wistia-wizard [data-wf-option].is-same-day .wf-check-row { background: #f7f2f3 !important; box-shadow: none !important; cursor: default !important; }
+  html body #app#app#app#app .wistia-wizard [data-wf-option].is-same-day strong { background: transparent !important; color: #8f8487 !important; }
+
+  @media (prefers-reduced-motion: reduce) { html body #app#app#app#app :is(.welcome-toggle, #soloPoint04 .solo-p4-hint, .wf-discount-banner.is-applied)::before, html body #app#app#app#app :is(.welcome-toggle, .wf-discount-banner.is-applied)::after { animation: none !important; } }
+}
+
+@layer wistia-site-fixes {
+  html body #app#app#app#app .package-card-was { display: block !important; margin: 2px 0 -2px !important; font-size: 12px !important; line-height: 1.2 !important; color: #9b8d90 !important; white-space: nowrap !important; }
+  html body #app#app#app#app .package-card-was small { font-size: 10.5px !important; color: #a77f8a !important; font-weight: 600 !important; }
+  html body #app#app#app#app .package-card-was s { text-decoration-thickness: 1.5px !important; text-decoration-color: #b98591 !important; }
+}
+
+@layer wistia-site-fixes {
+  html body #app#app#app#app .package-card-was { white-space: normal !important; font-size: 11.5px !important; text-align: center !important; }
+  html body #app#app#app#app .package-card-was small { display: block !important; font-size: 10px !important; margin-bottom: 1px !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-was, html body #app#app#app#app .package-card.is-selected .package-card-was small { color: rgba(255,255,255,.85) !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: rgba(255,255,255,.85) !important; }
+}
