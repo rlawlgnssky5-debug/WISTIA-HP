@@ -39,10 +39,13 @@
   const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
   const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정','디테일 믹싱']:['기본 믹싱'])]
   const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간',rush:'3일 이내 전달 (녹음일 기준)'}
-  const items=[...included,...q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))]
+  const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
   const discountName=d=>d.key==='first'?'첫 이용 할인':d.key==='weekday'?'목·금 시간 할인 (13~16시)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
-  return ['🎙️ 위스티아 | 신규 상담 신청','📅 녹음 예약','• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'','',
-   '📦 상품','• 타입 : '+q.package.key+' 타입','• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+q.minutes+'분','• 옵션 : ',...items.map((item,index)=>'- '+item+(index<items.length-1?', ':'')),'',
+  // One blank line after the title and exactly one between sections; no trailing spaces or commas
+  return ['🎙️ 위스티아 | 신규 상담 신청','',
+   '📅 녹음 예약','• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
+   '📦 상품','• 타입 : '+q.package.key+' 타입','• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+q.minutes+'분','• 옵션 :',...included.map(item=>'- '+item),'',
+   '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
    '💰 결제 금액','• 기본 상품 : '+money(q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
    '할인 내역',...(q.discounts.length?q.discounts.map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total),'',
    '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',

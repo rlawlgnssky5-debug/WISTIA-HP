@@ -321,3 +321,18 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   html body #app#app#app#app .calendar-grid > .calendar-day.earlybird-one:not(:disabled):not(.is-selected) { background: rgba(224,147,170,.22) !important; border-color: #dfa3b5 !important; }
   html body #app#app#app#app .calendar-grid > .calendar-day.earlybird-two:not(:disabled):not(.is-selected) { background: rgba(158,126,199,.24) !important; border-color: #b7a0d3 !important; }
 }
+
+@layer wistia-site-fixes {
+  /* r18: small UP badge on upgraded B/C rows */
+  html body #app#app#app#app .package-selected-features li[data-feature-enhanced="true"] { display: flex !important; align-items: center !important; }
+  html body #app#app#app#app .package-selected-features li[data-feature-enhanced="true"] .package-feature-copy { flex: 1 1 auto !important; min-width: 0 !important; }
+  html body #app#app#app#app .package-feature-up { flex: 0 0 auto !important; margin-left: 8px !important; padding: 2px 7px !important; border-radius: 999px !important; background: linear-gradient(135deg,#d9a54a,#c27e8f) !important; color: #fff !important; font-size: 10px !important; font-weight: 800 !important; line-height: 1.4 !important; letter-spacing: .06em !important; box-shadow: 0 1px 3px rgba(150,90,60,.25) !important; }
+}
+
+/* r18: Kakao button in one fixed spot on every page: 88px above the bottom (clears the 75px wizard bar
+   and the 54px+12px inquiry bar), 12px in from the column's right edge, inside 780 on PC */
+html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; translate: none !important; }
+@layer wistia-site-fixes {
+  /* hero slider arrows move to the top-right of the slide so the button never sits on them */
+  html body #app#app#app#app .mas-gallery-viewport .hs-arrow { top: 14px !important; bottom: auto !important; }
+}
