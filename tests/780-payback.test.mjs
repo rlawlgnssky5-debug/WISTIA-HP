@@ -9,7 +9,7 @@ const app=read('js/app.js'),manifest=JSON.parse(read('css/bundles.json'))
 const git=p=>execFileSync('git',['show','bc0980a:'+p],{cwd:root,encoding:'utf8',maxBuffer:8e6})
 test('Only the two approved 30k paybacks determine every effective price',()=>{
  const events=runInNewContext(app.slice(app.indexOf('const EVENTS ='),app.indexOf('const ACTUAL_REVIEW_IMAGES'))+';EVENTS')
- assert.deepEqual(Array.from(events,e=>[e.key,e.label,e.discount]),[['blog','네이버 블로그 리뷰',30000],['reaction','본식 현장 리액션 영상',30000]])
+ assert.deepEqual(Array.from(events,e=>[e.key,e.label,e.discount]),[['blog','네이버 블로그 리뷰',30000],['reaction','본식 현장 영상',30000]])
  assert.equal(events.reduce((s,e)=>s+e.discount,0),60000)
  assert.doesNotMatch(app,/1만원 추가 할인|추가 할인|최대 7만원|70,000|sizes="\(min-width: 901px\)/)
 })

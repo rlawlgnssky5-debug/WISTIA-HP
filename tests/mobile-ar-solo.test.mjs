@@ -10,7 +10,7 @@ const scope={EXTRA_RECORDING_OPTIONS:[],
  img:(src,alt)=>'<img src="'+src+'" alt="'+alt+'">',escapeHtml:x=>x,
  config:{accounts:{instagram:'https://www.instagram.com/wistia.film/',youtube:'https://www.youtube.com/@wistia_film',kakao:'https://pf.kakao.com/wistia'}},
  kakao:()=> 'https://pf.kakao.com/wistia',footerIcon:()=>'<svg></svg>',studioIcon:()=>'<svg></svg>',
- EVENTS:[{type:'payback',label:'네이버 블로그 리뷰',discount:30000,detail:'일 방문자 100명 이상'},{type:'payback',label:'본식 현장 리액션 영상',discount:30000,detail:'인스타그램 공개 동의'}],
+ EVENTS:[{type:'payback',label:'네이버 블로그 리뷰',discount:30000,detail:'일 방문자 100명 이상'},{type:'payback',label:'본식 현장 영상',discount:30000,detail:'인스타그램 공개 동의'}],
  shortWon:n=>(n/10000)+'만원',won:n=>n.toLocaleString('ko-KR')+'원',ratioSource:()=> 'assets/audio/ratio-50.mp3',
  soloReviewCarousel:()=>'<section id="reviews"><header><h2 id="soloReviewTitle">실제 고객 후기</h2></header></section>',
  productPackageOverview:()=>'<div>기본 구성</div>',productComparisonSection:()=>'<section>장점</section>',arExpertStory:()=>'<section>엔지니어</section>',
@@ -27,7 +27,7 @@ for(const key of ['solo','duo']){
  assert.match(html,/class="mas-summary solo-seo"/,'search-only product text stays in its hidden class')
  assert.match(html,/참여 혜택 최대 6만원/)
  assert.match(html,new RegExp('페이백 완료 후 혜택가 <strong>'+(key==='solo'?'60,000':'100,000')+'원'))
- assert.equal((html.match(/<li><div><strong>(네이버 블로그 리뷰|본식 현장 리액션 영상)/g)||[]).length,2)
+ assert.equal((html.match(/<li><div><strong>(네이버 블로그 리뷰|본식 현장 영상)/g)||[]).length,2)
  assert.match(html,/카카오톡으로 환급/)
  assert.match(html,new RegExp('class="solo-footer-inquiry" href="/event/'+key+'"'))
  assert.match(html,/info_v[56]\.webp/)

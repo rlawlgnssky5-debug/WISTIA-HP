@@ -449,3 +449,8 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .ed-review-slide:not(.is-current) .ed-review-card > h3 { display: block !important; -webkit-line-clamp: unset !important; line-clamp: unset !important; overflow: visible !important; max-height: none !important; height: auto !important; text-overflow: clip !important; word-break: keep-all !important; overflow-wrap: anywhere !important; }
   html body #app#app#app#app .ed-review-slide:not(.is-current) .ed-review-card > p, html body #app#app#app#app .ed-review-slide:not(.is-current) .ed-review-card > footer { visibility: hidden !important; }
 }
+/* Round 27: confetti in Wistia gold/rose only, normal spacing around the dot in the next-step button */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .benefit-confetti i:nth-child(3n+1) { background: #d6ab57 !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard [data-wf-amount] { min-width: 0 !important; text-align: left !important; }
+}

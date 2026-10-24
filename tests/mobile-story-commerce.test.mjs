@@ -43,7 +43,7 @@ assert.doesNotMatch(html,/<details class="mas-event-disclosure" open|arRatioExpe
 assert.doesNotMatch(html.slice(html.indexOf('mas-information'),html.indexOf('arc-reviews')),/수작업 보정/)
 const events=scope.mobileDetailEvents()
 assert.equal((events.match(/<li>/g)||[]).length,2)
-for(const term of ['최대 6만원','네이버 블로그 리뷰','일 방문자 100명 이상','본식 현장 리액션 영상','인스타그램 공개 동의','카카오톡으로 환급','최종 혜택 적용 여부'])assert.ok(events.includes(term),term)
+for(const term of ['최대 6만원','네이버 블로그 리뷰','일 방문자 100명 이상','본식 현장 영상','인스타그램 공개 동의','카카오톡으로 환급','최종 혜택 적용 여부'])assert.ok(events.includes(term),term)
 assert.doesNotMatch(events,/웨딩 카페 후기|인스타그램 후기/)
 assert.doesNotMatch(events,/월~목|평일 할인/)
 assert.doesNotMatch(events,/mas-benefit-note/)
