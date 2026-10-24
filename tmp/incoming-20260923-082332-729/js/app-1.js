@@ -260,7 +260,7 @@ const PRODUCTS = {
 
 const EVENTS = [
   { key: "blog", label: "블로그 리뷰", discount: 30000, detail: "일 방문자 100명 이상 · 안내 가이드에 따라 작성" },
-  { key: "reaction", label: "현장 리액션 영상", discount: 10000, detail: "본식 현장 촬영 파일 제공" },
+  { key: "reaction", label: "본식 현장 영상", discount: 10000, detail: "본식 현장 촬영 파일 제공" },
   { key: "cafe", label: "웨딩 카페 후기", discount: 10000, detail: "300자 이상 · 관련 사진 4장 이상" },
   { key: "instagram", label: "인스타그램 후기", discount: 10000, detail: "후기 50자 이상 · 사진 4장 이상 · BGM 추가 · 공식 계정 태그 · 공개 계정" }
 ]

@@ -22,7 +22,7 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  const listed=app.match(/const LIVE_ROUTES=new Set\((\[[^\]]+\])\)/)
  assert.deepEqual(JSON.parse(listed[1]),[...LIVE_PATHS])
  assert.match(app,/if\(!isLiveRoute\(routePath\(\)\)\)\{location\.reload\(\);return\}/)
- assert.match(app,/본식 현장 리액션 영상/)
+ assert.match(app,/본식 현장 영상/)
  assert.doesNotMatch(app,/function renderPrivacyPage|renderPrivacyPage\(/)
  const doc=goneDocument()
  assert.match(doc,/없어진 페이지예요/)
