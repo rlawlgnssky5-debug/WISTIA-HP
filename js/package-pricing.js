@@ -3,7 +3,7 @@
  const packages={
   A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:60,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
   B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:130000,minutes:60,individual:150000,saving:20000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  C:{key:'C',name:'PREMIUM',title:'음정·박자 보정과 여유로운 녹음 시간이 필요해요!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'}
+  C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},

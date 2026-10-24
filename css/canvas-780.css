@@ -378,3 +378,9 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   }
   html body #app#app#app#app .package-card:has(input:focus-visible) { box-shadow: inset 0 0 0 2px var(--tier, #c0607e) !important; }
 }
+@layer wistia-site-fixes {
+  /* r21: C detail title sits next to the P like A/B */
+  html body #app#app#app#app :is(.package-picker,#packageSelection) [data-package-key="C"] .package-selected-head h3 { grid-column: auto !important; }
+  html body #app#app#app#app .package-picker [data-package-key="C"] .package-selected-head h3 { font-size: clamp(13px, 4.1cqw, 25px) !important; }
+  html body #app#app#app#app #packageSelection [data-package-key="C"] .package-selected-head h3 { font-size: 4.1cqw !important; }
+}
