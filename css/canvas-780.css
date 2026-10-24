@@ -336,3 +336,6 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   /* hero slider arrows move to the top-right of the slide so the button never sits on them */
   html body #app#app#app#app .mas-gallery-viewport .hs-arrow { top: 14px !important; bottom: auto !important; }
 }
+
+/* r19: same right inset on every page on phones (events/faq/location were 16px) */
+@media (max-width: 779px) { html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: 12px !important; left: auto !important; } }
