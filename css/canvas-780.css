@@ -339,3 +339,42 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 
 /* r19: same right inset on every page on phones (events/faq/location were 16px) */
 @media (max-width: 779px) { html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: 12px !important; left: auto !important; } }
+
+@layer wistia-site-fixes {
+  /* r20: smaller tier names; only the name text gets a tier colour (gray-brown / rose / gold), card styling unchanged */
+  html body #app#app#app#app .package-card .package-card-name { font-size: 13px !important; letter-spacing: .06em !important; font-weight: 700 !important; white-space: nowrap !important; }
+  @media (min-width: 780px) { html body #app#app#app#app .package-card .package-card-name { font-size: 21px !important; } }
+  html body #app#app#app#app .package-card[data-tier="A"] .package-card-name, html body #app#app#app#app :is(.wf-tier-name,.is-tier dd):is([data-tier="A"],[data-tier="A"] dd) { color: #8a7a72 !important; }
+  html body #app#app#app#app .package-card[data-tier="B"] .package-card-name, html body #app#app#app#app :is(.wf-tier-name,.is-tier dd):is([data-tier="B"],[data-tier="B"] dd) { color: #c0607e !important; }
+  html body #app#app#app#app .package-card[data-tier="C"] .package-card-name, html body #app#app#app#app :is(.wf-tier-name,.is-tier dd):is([data-tier="C"],[data-tier="C"] dd) { color: #b8862b !important; }
+
+  html body #app#app#app#app :is(.wf-tier-name,.is-tier dd) { font-weight: 700 !important; }
+}
+
+@layer wistia-site-fixes {
+  /* r20c: selected card is not filled; a thin tier-coloured border and a tier-tinted check mark show the selection */
+  html body #app#app#app#app .package-card[data-tier="A"] { --tier: #8a7a72; }
+  html body #app#app#app#app .package-card[data-tier="B"] { --tier: #c0607e; }
+  html body #app#app#app#app .package-card[data-tier="C"] { --tier: #b8862b; }
+  html body #app#app#app#app .package-card.is-selected { background: transparent !important; background-image: none !important; color: #3c3034 !important; outline: none !important; box-shadow: inset 0 0 0 1.5px var(--tier) !important; }
+  html body #app#app#app#app .package-card.is-selected:focus-within { outline: none !important; }
+  html body #app#app#app#app .package-card.is-selected :is(.package-card-body,.package-card-price) { color: #3c3034 !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-subtitle { color: #867878 !important; }
+  html body #app#app#app#app .package-card.is-selected :is(.package-card-was,.package-card-was small) { color: #9b8d90 !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: #b98591 !important; }
+  html body #app#app#app#app .package-card.is-selected::after { color: var(--tier) !important; }
+}
+
+@layer wistia-site-fixes {
+  html body #app#app#app#app .package-card :is(input,.package-card-body) { outline: none !important; }
+  html body #app#app#app#app .package-card:has(input:focus-visible) { box-shadow: inset 0 0 0 2.5px var(--tier, #c0607e) !important; }
+}
+
+@layer wistia-site-fixes {
+  /* the home/detail block is zoomed 1.78x on PC, so its sizes are given in pre-zoom px */
+  @media (min-width: 780px) {
+    html body #app#app#app#app #packageSelection .package-card .package-card-name { font-size: 12px !important; }
+    html body #app#app#app#app #packageSelection .package-card.is-selected { box-shadow: inset 0 0 0 .9px var(--tier) !important; }
+  }
+  html body #app#app#app#app .package-card:has(input:focus-visible) { box-shadow: inset 0 0 0 2px var(--tier, #c0607e) !important; }
+}
