@@ -1932,7 +1932,7 @@ function initSoloDialog(dialog){
  dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close()})
 }
 
-// Keep the floating chat target away from the painted prices and working controls.
+// Floating chat button: one fixed spot, see the CSS in canvas-780.css (r18).
 function initCompactKakao(){
  const button=document.querySelector('#floatingKakaoChat')
  if(!button)return
@@ -1941,20 +1941,14 @@ function initCompactKakao(){
  // Always visible. Plain text and images may sit underneath; controls, form
  // fields, maps and the fixed bars may not, so the button is nudged upward
  // (never sideways, it stays on the column's right edge) until it is clear.
+ // r18: the button stays in one fixed spot on every page (no scroll-time lift).
+ // The old lift moved it 244px up at the top of home/detail to dodge the hero arrows;
+ // the arrows and bottom spacing now leave that spot clear instead.
  const paint=()=>{
   frame=0
   button.style.removeProperty('translate')
-  const base=button.getBoundingClientRect()
-  const boxes=[...document.querySelectorAll('main :is(a,button,input,select,textarea,label,summary,[role=button]),main .wistia-location :is(img,iframe),main .solo-map img,.wf-nav,.solo-footer-inquiry,.fixed-price,.booking-mobile-bar,.home-mobile-cta')]
-   .filter(el=>el!==button&&!button.contains(el)&&el.getClientRects().length&&getComputedStyle(el).visibility==='visible')
-   .map(el=>el.getBoundingClientRect()).filter(r=>r.width>1&&r.height>1&&r.left<base.right+6&&r.right>base.left-6)
-  const hits=top=>boxes.some(r=>r.top<top+base.height+6&&r.bottom>top-6)
-  let lift=0
-  while(lift<=Math.max(0,base.top-80)&&hits(base.top-lift))lift+=4
-  const clear=lift<=Math.max(0,base.top-80)
-  if(lift&&clear)button.style.setProperty('translate','0 -'+lift+'px')
-  button.classList.toggle('is-content-overlap',!clear)
-  if(!clear)button.setAttribute('tabindex','-1');else button.removeAttribute('tabindex')
+  button.classList.remove('is-content-overlap')
+  button.removeAttribute('tabindex')
  }
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint)}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule)
