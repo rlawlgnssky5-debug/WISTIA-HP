@@ -384,3 +384,7 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .package-picker [data-package-key="C"] .package-selected-head h3 { font-size: clamp(13px, 4.1cqw, 25px) !important; }
   html body #app#app#app#app #packageSelection [data-package-key="C"] .package-selected-head h3 { font-size: 4.1cqw !important; }
 }
+@layer wistia-site-fixes {
+  /* r22: first-use toggle text aligned with the box content */
+  html body #app#app#app#app .wf-welcome .welcome-toggle { padding-left: 20px !important; padding-right: 12px !important; }
+}
