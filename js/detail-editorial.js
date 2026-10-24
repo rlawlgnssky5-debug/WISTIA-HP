@@ -10,7 +10,7 @@
     reviews(items) {
       const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]))
       const card = (item, index, clone = false) => '<div class="ed-review-slide' + (index === 0 && !clone ? ' is-current' : '') + '" data-review-slide-index="' + index + '"' + (clone ? ' data-review-clone' : '') + ' role="group" aria-roledescription="슬라이드" aria-label="' + (index + 1) + ' / ' + items.length + '"' + (clone || index !== 0 ? ' aria-hidden="true" inert' : '') + '><article class="ed-review-card"><h3>' + escape(item.title) + '</h3><p>' + escape(item.body) + '</p><footer><div><b>' + escape(item.name) + '</b><span>' + escape(item.meta) + '</span></div><button type="button" data-review-full="' + escape(item.src) + '" aria-label="' + escape(item.name) + ' 후기 카카오톡 원본 크게 보기">원본 보기 <span aria-hidden="true">›</span></button></footer></article></div>'
-      return '<section class="rv5 ed-reviews" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" aria-roledescription="캐러셀" data-svg-title="off"><div class="rv5-in"><header class="ed-review-heading"><p class="rv5-eye">REAL REVIEW</p><h2 id="soloReviewTitle" class="rv5-title">고객님들이 직접 남긴<br><strong>축가 후기</strong></h2></header><div class="ed-review-viewport" tabindex="0" aria-label="후기 카드, 좌우 방향키로 넘기기"><div class="ed-review-track" style="--review-position:1">' + card(items.at(-1), items.length - 1, true) + items.map((item, index) => card(item, index)).join('') + card(items[0], 0, true) + '</div></div><nav class="ed-review-controls" aria-label="후기 넘기기"><button type="button" class="ed-review-arrow" data-ed-review-prev aria-label="이전 후기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><div class="ed-review-position"><p aria-live="off"><strong data-ed-review-count>01</strong><span> / ' + String(items.length).padStart(2, '0') + '</span></p><div class="ed-review-dots">' + items.map((_, index) => '<button type="button" data-ed-review-dot="' + index + '" aria-label="' + (index + 1) + '번째 후기" aria-current="' + (index === 0) + '"><span></span></button>').join('') + '</div></div><button type="button" class="ed-review-arrow" data-ed-review-next aria-label="다음 후기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></nav><button type="button" class="ed-review-autoplay" data-ed-review-autoplay aria-pressed="false">자동 넘김 정지</button></div><dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button></dialog></section>'
+      return '<section class="rv5 ed-reviews" id="reviews" data-solo-reviews aria-labelledby="soloReviewTitle" aria-roledescription="캐러셀" data-svg-title="off"><div class="rv5-in"><header class="ed-review-heading"><p class="rv5-eye">REAL REVIEW</p><h2 id="soloReviewTitle" class="rv5-title">고객님들이 직접 남긴<br><strong>축가 후기</strong></h2></header><div class="ed-review-viewport" tabindex="0" aria-label="후기 카드, 좌우 방향키로 넘기기"><div class="ed-review-track" style="--review-position:1">' + card(items.at(-1), items.length - 1, true) + items.map((item, index) => card(item, index)).join('') + card(items[0], 0, true) + '</div></div><nav class="ed-review-controls" aria-label="후기 넘기기"><button type="button" class="ed-review-arrow" data-ed-review-prev aria-label="이전 후기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><div class="ed-review-position"><p aria-live="off"><strong data-ed-review-count>01</strong></p><div class="ed-review-dots">' + items.map((_, index) => '<button type="button" data-ed-review-dot="' + index + '" aria-label="' + (index + 1) + '번째 후기" aria-current="' + (index === 0) + '"><span></span></button>').join('') + '</div></div><button type="button" class="ed-review-arrow" data-ed-review-next aria-label="다음 후기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></nav></div><dialog class="solo-review-dialog"><button type="button" class="solo-dialog-close" data-solo-dialog-close aria-label="닫기">닫기</button></dialog></section>'
     },
     createReviewRotation(count, paint, clock = global) {
       let index = 0, position = 1, timer = null, destroyed = false, moving = false
@@ -54,11 +54,14 @@
         })
         dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)))
         root.querySelector('[data-ed-review-count]').textContent = String(index + 1).padStart(2, '0')
+        const row = root.querySelector('.ed-review-dots'); if (row && dots[index]) { row.scrollLeft = Math.max(0, dots[index].offsetLeft + dots[index].offsetWidth / 2 - row.clientWidth / 2); row.classList.toggle('is-clipped', row.scrollLeft + row.clientWidth < row.scrollWidth - 1) }
         if (animate) settleTimer = global.setTimeout(() => rotation.settle(), motion.matches ? 0 : 700)
       })
       on(root.querySelector('[data-ed-review-prev]'), 'click', () => rotation.move(-1))
       on(root.querySelector('[data-ed-review-next]'), 'click', () => rotation.move(1))
       dots.forEach((dot, index) => on(dot, 'click', () => rotation.go(index)))
+      const dotRow = root.querySelector('.ed-review-dots'), clipDots = () => { if (dotRow) dotRow.classList.toggle('is-clipped', dotRow.scrollLeft + dotRow.clientWidth < dotRow.scrollWidth - 1) }
+      on(global, 'resize', clipDots); clipDots(); global.requestAnimationFrame(clipDots)
       on(viewport, 'keydown', event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); rotation.move(event.key === 'ArrowLeft' ? -1 : 1) } })
       on(viewport, 'pointerdown', event => { swiped = false; if (event.isPrimary && !event.target.closest('button')) { down = {x:event.clientX, y:event.clientY, id:event.pointerId}; rotation.pause('pointer') } })
       on(global, 'pointerup', event => {
@@ -74,8 +77,8 @@
       on(root, 'focusin', () => rotation.pause('focus'))
       on(root, 'focusout', event => { if (!root.contains(event.relatedTarget)) rotation.resume('focus') })
       const autoplay = root.querySelector('[data-ed-review-autoplay]')
-      on(autoplay, 'click', () => { userPaused = !userPaused; rotation[userPaused ? 'pause' : 'resume']('user'); autoplay.setAttribute('aria-pressed', String(userPaused)); autoplay.textContent = userPaused ? '자동 넘김 시작' : '자동 넘김 정지' })
-      const syncMotion = () => { rotation[motion.matches ? 'pause' : 'resume']('reduced-motion'); autoplay.hidden = motion.matches }
+      if (autoplay) on(autoplay, 'click', () => { userPaused = !userPaused; rotation[userPaused ? 'pause' : 'resume']('user'); autoplay.setAttribute('aria-pressed', String(userPaused)); autoplay.textContent = userPaused ? '자동 넘김 시작' : '자동 넘김 정지' })
+      const syncMotion = () => { rotation[motion.matches ? 'pause' : 'resume']('reduced-motion'); if (autoplay) autoplay.hidden = motion.matches }
       on(motion, 'change', syncMotion); syncMotion()
       const visibility = () => rotation[global.document.hidden ? 'pause' : 'resume']('hidden')
       on(global.document, 'visibilitychange', visibility); visibility()
@@ -115,7 +118,7 @@
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
-        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 STANDARD·DELUXE·PREMIUM 중 골라 주세요'], ['여유로운 녹음 시간', 'PREMIUM은 2시간 녹음으로 준비할 수 있어요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3><p>' + copy + '</p></li>').join('') + '</ol></section>'
+        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 STANDARD·DELUXE·PREMIUM 중 골라 주세요'], ['여유로운 녹음 시간', 'PREMIUM은 2시간 녹음으로 준비할 수 있어요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
     },
     engineer() {
       return '<section class="ed-section ed-engineer" data-svg-title="off">' +

@@ -80,7 +80,7 @@
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱(목소리와 MR 밸런스·울림)','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
+  if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
   return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
  }
  const featurePaths={

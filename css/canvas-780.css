@@ -387,4 +387,47 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 @layer wistia-site-fixes {
   /* r22: first-use toggle text aligned with the box content */
   html body #app#app#app#app .wf-welcome .welcome-toggle { padding-left: 20px !important; padding-right: 12px !important; }
+  /* r23: never overflow; button drops below the text when the row is too narrow */
+  html body #app#app#app#app .wf-welcome .welcome-toggle { display: flex !important; flex-wrap: wrap !important; align-items: center !important; column-gap: 8px !important; row-gap: 8px !important; box-sizing: border-box !important; max-width: 100% !important; }
+  html body #app#app#app#app .wf-welcome .welcome-toggle > span { order: 0 !important; flex: 0 1 auto !important; min-width: 0 !important; }
+  html body #app#app#app#app .wf-welcome .welcome-toggle::after { order: 1 !important; flex: 0 0 auto !important; }
+  html body #app#app#app#app .wf-welcome .welcome-toggle > strong { order: 2 !important; flex: 0 0 auto !important; margin-left: auto !important; max-width: 100% !important; white-space: nowrap !important; }
+}
+@layer wistia-site-fixes {
+  /* r23: benefit lists - one flat list per accordion */
+  html body #app#app#app#app .ed-benefit-items { list-style: none !important; margin: 0 !important; padding: 2px 18px 10px !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+  html body #app#app#app#app .ed-benefit-items > li { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 12px !important; margin: 0 !important; padding: 12px 0 !important; border: 0 !important; border-top: 1px solid #f0dfe0 !important; background: transparent !important; box-shadow: none !important; }
+  html body #app#app#app#app .ed-benefit-items > li:first-child { border-top: 0 !important; }
+  html body #app#app#app#app .ed-benefit-items > li::before, html body #app#app#app#app .ed-benefit-items > li::after { content: none !important; display: none !important; }
+  html body #app#app#app#app .ed-benefit-items .ebi-text { display: flex !important; flex-direction: column !important; gap: 3px !important; min-width: 0 !important; }
+  html body #app#app#app#app .ed-benefit-items .ebi-text strong { font-size: 14px !important; font-weight: 700 !important; color: #3c3034 !important; line-height: 1.35 !important; word-break: keep-all !important; }
+  html body #app#app#app#app .ed-benefit-items .ebi-text small { font-size: 12px !important; font-weight: 400 !important; color: #8a7a72 !important; line-height: 1.4 !important; word-break: keep-all !important; }
+  html body #app#app#app#app .ed-benefit-items .ebi-pill { flex: 0 0 auto !important; padding: 4px 10px !important; border-radius: 999px !important; background: #fbeaec !important; color: #a65a6c !important; font-size: 13px !important; font-weight: 800 !important; line-height: 1.3 !important; white-space: nowrap !important; }
+  html body #app#app#app#app .ed-benefit-items[data-benefit-type="payback"] .ebi-pill { background: #fbf1dd !important; color: #9a6f1f !important; }
+  html body #app#app#app#app .mas-event-disclosure .mas-event-content { padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+  /* r23: review dots on one line, trailing ellipsis when they do not fit */
+  html body #app#app#app#app .ed-review-dots { display: flex !important; flex-wrap: nowrap !important; justify-content: flex-start !important; scroll-behavior: auto !important; overflow: hidden !important; position: relative !important; max-width: 100% !important; }
+  html body #app#app#app#app .ed-review-dots > button { flex: 0 0 auto !important; }
+  html body #app#app#app#app .ed-review-dots.is-clipped { padding-right: 0 !important; }
+  html body #app#app#app#app .ed-review-dots.is-clipped::after { content: "…" !important; position: absolute !important; right: 0 !important; top: 50% !important; transform: translateY(-55%) !important; width: 20px !important; text-align: right !important; background: rgb(250, 241, 243) !important; color: #b98a92 !important; font-size: 14px !important; line-height: 1 !important; }
+  html body #app#app#app#app .ed-review-autoplay { display: none !important; }
+  /* r23: AR ratio presets about 22% smaller */
+  html body #app#app#app#app .solo-p4-ratio > b { font-size: 15.5px !important; }
+  html body #app#app#app#app .solo-p4-ratio > b small { font-size: 9.5px !important; }
+  html body #app#app#app#app .solo-p4-ratio > span:not(.solo-p4-eq) { font-size: 9px !important; white-space: nowrap !important; }
+  /* r23: preparation timeline - titles only, proportional columns */
+  html body #app#app#app#app .ed-preparation { grid-template-columns: max-content minmax(0, 1fr) !important; }
+  html body #app#app#app#app .ed-preparation-list h3 { word-break: keep-all !important; overflow-wrap: normal !important; }
+}
+@layer wistia-site-fixes {
+  /* r23: events discount cards - one icon style, ordinal label */
+  html body #app#app#app#app .events-discount-list .evd-card { display: grid !important; grid-template-columns: 40px minmax(0, 1fr) !important; column-gap: 12px !important; row-gap: 2px !important; align-items: start !important; }
+  html body #app#app#app#app .events-discount-list .evd-card > * { grid-column: 2 !important; margin: 0 !important; }
+  html body #app#app#app#app .events-discount-list .evd-icon { grid-column: 1 !important; grid-row: 1 / span 2 !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 40px !important; height: 40px !important; border-radius: 50% !important; background: #fbeaec !important; color: #a65a6c !important; }
+  html body #app#app#app#app .events-discount-list .evd-icon svg { width: 22px !important; height: 22px !important; }
+  html body #app#app#app#app .events-discount-list .evd-no { font-size: 11px !important; font-weight: 700 !important; letter-spacing: .04em !important; color: #b8862b !important; line-height: 1.4 !important; }
+  html body #app#app#app#app .events-discount-list .evd-card h3 { word-break: keep-all !important; }
+  html body #app#app#app#app .events-discount-list .evd-card h3::before, html body #app#app#app#app .events-discount-list .evd-card h3 > svg { display: none !important; }
+  html body #app#app#app#app .events-discount-list .evd-card > strong { margin-top: 6px !important; }
+  html body #app#app#app#app .events-discount-list .evd-card > p:last-child { margin-top: 4px !important; }
 }
