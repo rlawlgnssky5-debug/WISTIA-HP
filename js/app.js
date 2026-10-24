@@ -277,7 +277,7 @@ const PAYBACK_EVENT_GUIDE = {
  notes: ['두 가지 이벤트는 각각 참여하셔도 괜찮습니다, 편하신 방법으로 함께해 주세요!', '두 가지 모두 참여 시 총 60,000원 페이백!', '고객님께서 나눠주시는 소중한 경험 하나하나가 위스티아를 알리는 데 정말 큰 도움이 됩니다', '함께해 주시는 모든 분께 진심으로 감사드립니다', '페이백은 결제 금액에서 미리 차감하지 않으며, 참여 자료와 조건 확인 후 카카오톡으로 환급 절차를 안내해 드립니다']
 }
 
-const ACTUAL_REVIEW_IMAGES = Array.from({ length: 16 }, (_, index) => index===5?"assets/img/reviews/review-06-clean.webp":`assets/img/reviews/review-${String(index + 1).padStart(2, "0")}.webp`)
+const ACTUAL_REVIEW_IMAGES = [1,2,3,4,5,6,7,8,9,12,13,14].map(n => n===6?"assets/img/reviews/review-06-clean.webp?v=20261024-r26":`assets/img/reviews/review-${String(n).padStart(2, "0")}.webp?v=20261024-r26`)
 const SOLO_REVIEW_IMAGES=[...Array.from({length:8},(_,index)=>`assets/img/reviews/showcase/review-${String(index+1).padStart(2,"0")}-black.webp`),...Array.from({length:3},(_,index)=>`assets/img/reviews/showcase/review-${String(index+9).padStart(2,"0")}-light.webp`)]
 
 const DETAIL_STORIES = {
