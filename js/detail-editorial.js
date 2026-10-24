@@ -103,19 +103,19 @@
         '<div class="ed-free"><strong>0<span>원</span></strong><p>FREE OF CHARGE</p></div>' +
         '<div class="ed-key-process-block"><p class="ed-eyebrow">PROCESS</p><ol class="ed-key-process">' +
         [['send', '곡·MR 보내기'], ['consult', '키 상담'], ['record', '내 키로 녹음']].map(([icon, label]) => '<li><img class="ed-key-process-icon" src="assets/editorial/process-' + icon + '.svg" alt="" width="48" height="48" aria-hidden="true"><span>' + label + '</span></li>').join('') + '</ol></div>' +
-        '<div class="ed-key-artwork"><div class="ed-key-services"><article><span class="ed-key-service-number" aria-hidden="true">01</span><h3>음원 편집</h3><p>원하는 길이로 자르고<br>자연스럽게 이어요.</p><span class="ed-key-connector" aria-hidden="true"></span></article>' +
-        '<article><span class="ed-key-service-number" aria-hidden="true">02</span><h3>키 조절</h3><p>내 목소리에 맞는<br>높이로 조절해요.</p><span class="ed-key-connector" aria-hidden="true"></span></article></div>' +
+        '<div class="ed-key-artwork"><div class="ed-key-services"><article><span class="ed-key-service-number" aria-hidden="true">01</span><h3>음원 편집</h3><p>원하는 길이로 자르고<br>자연스럽게 이어요</p><span class="ed-key-connector" aria-hidden="true"></span></article>' +
+        '<article><span class="ed-key-service-number" aria-hidden="true">02</span><h3>키 조절</h3><p>내 목소리에 맞는<br>높이로 조절해요</p><span class="ed-key-connector" aria-hidden="true"></span></article></div>' +
         '<figure class="ed-key-ribbon"><img src="assets/editorial/key-wave-ribbon.png" alt="음원 파형이 이어지고 음표의 높이가 바뀌는 리본" width="1536" height="1024" loading="lazy" decoding="async"><svg class="ed-key-scissors" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11 20.5 25 5M21 20.5 7 5"/></svg><svg class="ed-key-curve" viewBox="0 0 100 46" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 31C30 3 66 7 94 32M83 28l11 4-4-11"/></svg></figure><p class="ed-key-example">원곡 키 0 <span aria-hidden="true">→</span> 내 키 -2</p></div></section>'
     },
     tuningHeader() {
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요', '내 목소리 그대로, 어색한 부분만<br>음정·박자·호흡을 섬세하게 보정합니다')
     },
     ratioHeader() {
-      return heading('LIVE &amp; AR MIX · POINT 04', '<span>내 목소리에 맞게</span>AR 비율을 골라보세요', '같은 노래를 라이브와 AR 비율별로<br>직접 비교해 들어보세요.')
+      return heading('LIVE &amp; AR MIX · POINT 04', '<span>내 목소리에 맞게</span>AR 비율을 골라보세요', '같은 노래를 라이브와 AR 비율별로<br>직접 비교해 들어보세요')
     },
     preparation() {
-      return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요.</p></header><ol class="ed-preparation-list">' +
-        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 A·B·C 중 골라 주세요'], ['여유로운 녹음 시간', 'C는 2시간 녹음으로 준비할 수 있어요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3><p>' + copy + '</p></li>').join('') + '</ol></section>'
+      return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
+        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 STANDARD·DELUXE·PREMIUM 중 골라 주세요'], ['여유로운 녹음 시간', 'PREMIUM은 2시간 녹음으로 준비할 수 있어요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3><p>' + copy + '</p></li>').join('') + '</ol></section>'
     },
     engineer() {
       return '<section class="ed-section ed-engineer" data-svg-title="off">' +
