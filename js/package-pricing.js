@@ -3,7 +3,9 @@
  const packages={
   A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:60,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
   B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:130000,minutes:60,individual:150000,saving:20000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'}
+  C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
+  // DUET bundles 2인 + 2시간 녹음 + 보정 + 디테일 믹싱 (90,000 + 30,000 + 50,000 + 40,000 + 20,000 = 230,000)
+  D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:190000,minutes:120,individual:230000,saving:40000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
@@ -59,14 +61,14 @@
  }
  function normalize(input={}){
   const selected=Array.isArray(input.options)?input.options:options.filter(o=>input[o.key]==='1'||input[o.key]===true).map(o=>o.key)
-  return {...input,package:packageFor(input.package).key,people:input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true}
+  return {...input,package:packageFor(input.package).key,people:packageFor(input.package).duet||input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true}
  }
  function quote(input={},reference=today()){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
   // 3일 이내 받기 only applies when the delivery would otherwise be 영업일 7일 이내 (A without tuning is already same-day)
   const slowDelivery=p.tuning||v.options.includes('tuning')
-  const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')&&!(o.key==='rush'&&!slowDelivery)).map(o=>({...o}))
-  if(duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
+  const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
+  if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
   if(validDate(v.bookingDate)){
@@ -74,14 +76,14 @@
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  const baseMinutes=p.minutes+(v.options.includes('extraHour')?60:0)
+  const baseMinutes=p.minutes+(v.options.includes('extraHour')&&!p.duet?60:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
   return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  if(p.key==='A')return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
-  return ['1인·1곡','녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
+  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
+  return [(p.duet?'2인·1곡':'1인·1곡'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -90,7 +92,8 @@
   untuned:'<path d="M4 15h5v-5h6V5h5M3 3l18 18M3 21 21 3"/>',
   file:'<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>'
  }
- const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음'}
+ const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음',D:'듀엣 녹음'}
+ const headcount=p=>(p.duet?'2인':'1인')+'·1곡 기준'
  function selectionDetails(key){
   const p=packageFor(key)
   const icon=item=>item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
@@ -100,11 +103,11 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">1인·1곡 기준 · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'')+'<strong class="package-card-price">'+money(p.price)+'</strong><span class="package-card-subtitle">'+shortTitles[p.key]+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'')+'<strong class="package-card-price">'+money(p.price)+'</strong>'+(p.duet?'<span class="package-card-save">'+money(p.saving)+' 절약</span>':'')+'<span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-headcount">'+headcount(p)+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')

@@ -61,14 +61,22 @@
   let began;const tick=now=>{if(!amount.isConnected)return;began??=now;const t=Math.min(1,(now-began)/380);state.priceShown=Math.round((from+(total-from)*(1-Math.pow(1-t,3)))/100)*100;amount.textContent=money(t===1?total:state.priceShown);if(t<1)state.priceFrame=global.requestAnimationFrame(tick);else{state.priceShown=total;state.priceFrame=0}};state.priceFrame=global.requestAnimationFrame(tick)
  }
  function syncOptions(form,q){
-  for(const key of ['tuning','detailMix']){const row=form.querySelector('[data-wf-option="'+key+'"]'),input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:q.package.mixing;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
+  for(const key of ['tuning','detailMix','extraHour']){const row=form.querySelector('[data-wf-option="'+key+'"]');if(!row)continue;const input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:key==='detailMix'?q.package.mixing:!!q.package.duet;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
   {const row=form.querySelector('[data-wf-option="rush"]');if(row){const input=row.querySelector('input'),sameDay=!q.package.tuning&&!form.querySelector('input[name="tuning"]')?.checked;input.disabled=sameDay;if(sameDay)input.checked=false;row.classList.toggle('is-same-day',sameDay);row.querySelector('strong').textContent=sameDay?'당일 전달 포함':'+'+money(global.WistiaPackages.options.find(o=>o.key==='rush').price)}}
   const fieldset=form.querySelector('.package-extra-options'),rows=global.WistiaPackages.options.map(option=>form.querySelector('[data-wf-option="'+option.key+'"]'))
   const ordered=rows.filter(row=>!row.querySelector('input').disabled).concat(rows.filter(row=>row.querySelector('input').disabled)),current=[...fieldset.querySelectorAll('[data-wf-option]')]
   if(ordered.some((row,index)=>row!==current[index]))for(const row of ordered)fieldset.appendChild(row)
  }
+ // DUET already includes 2인 and 2시간: lock the people choice to 2인 and restore the earlier choice when leaving DUET
+ function syncDuet(form,state){
+  const duet=!!global.WistiaPackages.packageFor(form.querySelector('input[name="package"]:checked')?.value).duet,people=form.querySelector('.wf-people'),current=form.querySelector('input[name="people"]:checked')?.value||'0'
+  if(duet&&form.dataset.peopleBeforeDuet===undefined){form.dataset.peopleBeforeDuet=current;form.querySelectorAll('input[name="people"]').forEach(input=>input.checked=input.value==='1');state.onPeople?.('duo')}
+  if(!duet&&form.dataset.peopleBeforeDuet!==undefined){const back=form.dataset.peopleBeforeDuet;delete form.dataset.peopleBeforeDuet;form.querySelectorAll('input[name="people"]').forEach(input=>input.checked=input.value===back);state.onPeople?.(back==='1'?'duo':'solo')}
+  if(people)people.hidden=duet
+ }
  function update(form){
   const state=states.get(form);if(!state)return
+  syncDuet(form,state)
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key)
   const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.innerHTML='<b class="wf-tier-name" data-tier="'+q.package.key+'">'+q.package.name+'</b> · 1곡 · '+q.minutes+'분'
   const advance=global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
@@ -111,11 +119,11 @@
   if(focused)list.querySelector('[data-wf-time="'+focused+'"]:not(:disabled)')?.focus({preventScroll:true})
  }
  function mount(root,{benefits,onPeople,onSubmit}){
-  const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false};states.set(form,state)
+  const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false,onPeople};states.set(form,state)
   global.WistiaPackages.mountSelection(form)
   form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 녹음 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 2층</small></div><span data-wf-location-duration>1곡 · 1시간</span></aside>')
   restoreDraft(form,state,onPeople);state.draftReady=true
-  const explicit=new URLSearchParams(global.location.search).get('package');if(['A','B','C'].includes(explicit))form.querySelectorAll('[name="package"]').forEach(input=>input.checked=input.value===explicit)
+  const explicit=new URLSearchParams(global.location.search).get('package');if(['A','B','C','D'].includes(explicit))form.querySelectorAll('[name="package"]').forEach(input=>input.checked=input.value===explicit)
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
    if(el.name==='people')onPeople(el.value==='1'?'duo':'solo')
