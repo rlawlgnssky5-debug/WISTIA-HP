@@ -10,7 +10,8 @@
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=60&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
  function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
- // Server blocks already include each existing reservation's 30-minute buffers.
+ // Server blocks are each booking's occupied window: start to stored end (which already
+ // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
  // Every operating day closes at 23:00; other closures come from the availability blocks.
  function sundayEvening(){return false} // no fixed Sunday closure: closures come only from the Notion-linked availability blocks
@@ -18,9 +19,10 @@
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
   if(sundayEvening(date,time))return true
-  const start=Date.parse(date+'T'+time+':00+09:00')-30*60000,end=start+(minutes+60)*60000
+  // A new booking occupies its recording length + 30 min extra time + 30 min preparation.
+  const start=Date.parse(date+'T'+time+':00+09:00'),end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
-  const endDay=new Date(end-30*60000-1+9*3600000).toISOString().slice(0,10)
+  const endDay=new Date(start+minutes*60000-1+9*3600000).toISOString().slice(0,10)
   if(!isOperatingDay(date)||!isOperatingDay(endDay))return true
   return blocks.some(block=>start<Date.parse(block.end)&&end>Date.parse(block.start))
  }
