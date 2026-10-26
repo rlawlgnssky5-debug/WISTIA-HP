@@ -468,3 +468,10 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .package-card .package-card-save { display: block !important; width: max-content !important; margin: 3px auto 0 !important; padding: 1px 8px !important; border-radius: 999px !important; background: #e7efe9 !important; color: #3f6a5a !important; font-size: 11px !important; line-height: 1.5 !important; font-weight: 700 !important; white-space: nowrap !important; }
   @media (min-width: 780px) { html body #app#app#app#app .wistia-wizard .package-card :is(.package-card-headcount,.package-card-save) { font-size: 15px !important; } }
 }
+
+/* Round 29: savings pill on DELUXE and PREMIUM, every card line on one line */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .package-picker .package-card :is(.package-card-name,.package-card-was,.package-card-price,.package-card-save,.package-card-subtitle,.package-card-headcount){white-space:nowrap!important;overflow-wrap:normal!important;word-break:keep-all!important;max-width:100%!important}
+  html body #app#app#app#app .package-picker .package-card .is-empty{visibility:hidden!important}
+  html body #app#app#app#app .package-picker .package-card-save{display:inline-block!important;padding:3px 7px!important;letter-spacing:-0.02em!important}
+}
