@@ -30,7 +30,8 @@ for (const [name, [metaName, params]] of Object.entries(events)) {
   const dirty = { ...params, name: "PRIVATE", phone: "01012345678", email: "PRIVATE@example.com", value: "PRIVATE", specialNotes: "PRIVATE", search: "?PRIVATE" };
   assert.equal(client.window.wistiaAnalytics.trackFunnel(name, dirty), true);
   assert.equal(client.window.wistiaMeta.trackFunnel(name, dirty), true);
-  const ga = client.ga.at(-1), meta = client.meta.at(-1);
+  const ga = client.ga.at(-1), meta = client.meta.findLast(call => call[1] === metaName);
+  if (name === "inquiry_submit_popup") { const submit = client.meta.at(-1); assert.equal(submit[1], "InquirySubmit"); assert.deepEqual(JSON.parse(JSON.stringify(submit[2])), { page_path: "/event/solo" }); assert.doesNotMatch(JSON.stringify(submit), /PRIVATE|01012345678/); }
   assert.equal(ga[1], name);
   assert.equal(meta[1], metaName);
   assert.deepEqual(JSON.parse(JSON.stringify(meta[2])), { page_path: "/event/solo", ...params, visitor_id: client.window.wistiaVisitorId() });

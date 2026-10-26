@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
 const q=v=>pricing.quote(v,'2026-10-22')
 test('approved A/B/C prices and individual savings',()=>{
- assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[150000,90,40000],[200000,150,50000],[220000,150,60000]])
+ assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[170000,90,40000],[220000,150,50000],[240000,150,60000]])
  for(const p of ['A','B','C'])assert.equal(q({package:p}).total,pricing.packages[p].price)
  for(const key of ['unknown','__proto__','constructor'])assert.equal(q({package:key}).total,90000)
 })
@@ -17,7 +17,7 @@ test('duet changes people, not the selected recording time',()=>{
  for(const p of ['A','B','C']){const result=q({package:p,people:'1'});assert.equal(result.total,pricing.packages[p].price+30000);assert.equal(result.minutes,pricing.packages[p].minutes)}
 })
 test('one additional hour costs 50000, including a further hour after C',()=>{
- assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,100],[200000,140],[250000,200]])
+ assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,100],[220000,140],[270000,200]])
 })
 test('removed 100% AR option is not offered or charged from legacy selections',()=>{
  assert.equal(pricing.options.some(o=>o.key==='lipsync'),false)
@@ -51,8 +51,8 @@ test('public holidays never receive the Thursday/Friday time discount',()=>{
   for(const time of ['13:00','14:00','15:00','16:00'])assert.equal(pricing.weekdayDiscount(date,time),0,date+' '+time)
  }
  const christmas=q({package:'C',firstVisit:'1',bookingDate:'2026-12-25',timeStart:'13:00'})
- assert.equal(christmas.discount,40000);assert.equal(christmas.total,160000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
- assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,150000)
+ assert.equal(christmas.discount,40000);assert.equal(christmas.total,180000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
+ assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,170000)
  assert.equal(pricing.weekdayDiscount('2027-05-14','13:00'),10000)
  for(const date of ['','invalid','2026-02-31','2026-12-24'])assert.equal(pricing.isPublicHoliday(date),false)
 })
@@ -84,11 +84,22 @@ test('delivery depends on correction rather than people',()=>{
  assert.match(q({package:'A',tuning:'1'}).delivery,/영업일 7일/)
  assert.match(q({package:'B'}).delivery,/영업일 7일/)
  assert.equal(q({package:'A',rush:'1'}).total,90000,'same-day A is not charged for a removed rush option')
- assert.equal(q({package:'B',rush:'1'}).total,180000)
+ assert.equal(q({package:'B',rush:'1'}).total,200000)
 })
 test('draft whitelist retains new fields and drops removed options',()=>{
  const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')
  assert.ok(!text.includes('lyricVideo'));assert.ok(!text.includes('extraVerse'));assert.ok(!text.includes('lipsync'))
  for(const name of ['package','extraHour','tuning','detailMix','firstVisit'])assert.ok(text.includes(name))
  for(const name of ['paybackBlog','paybackReaction','eventDate'])assert.ok(!text.includes(name))
+})
+test('정밀 믹싱 option is 20000 for STANDARD and included in mixing packages',()=>{
+ assert.equal(q({package:'A',options:['precisionMix']}).total,110000)
+ for(const p of ['B','C','D'])assert.equal(q({package:p,options:['precisionMix']}).options.length,0)
+})
+test('10월 예약 쿠폰 applies only when chosen, only to B/C/D and only in October 2026 KST',()=>{
+ assert.equal(pricing.quote({package:'B',octoberCoupon:'1'},'2026-10-27').total,150000)
+ assert.equal(pricing.quote({package:'B'},'2026-10-27').total,170000)
+ assert.equal(pricing.quote({package:'A',octoberCoupon:'1'},'2026-10-27').total,90000)
+ assert.equal(pricing.quote({package:'B',octoberCoupon:'1'},'2026-11-01').total,170000)
+ assert.deepEqual(['B','C','D'].map(k=>pricing.quote({package:k,firstVisit:'1',octoberCoupon:'1',bookingDate:pricing.bestDate('2026-10-27'),timeStart:'13:00'},'2026-10-27').total),[100000,150000,170000])
 })
