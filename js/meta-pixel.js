@@ -85,6 +85,7 @@
       }
       if (typeof window.fbq !== "function") return false;
       window.fbq("trackCustom", definition[0], { ...payload, visitor_id: window.wistiaVisitorId() });
+      if (name === "inquiry_submit_popup") window.fbq("trackCustom", "InquirySubmit", { page_path: pagePath });
       return true;
     } catch { return false; }
   }
