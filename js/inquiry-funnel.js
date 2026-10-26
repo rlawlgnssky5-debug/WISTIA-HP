@@ -16,7 +16,7 @@
     activeForm = form; lastStep = step(form); formPath = path();
     if (viewed.get(form) === lastStep) return;
     viewed.set(form, lastStep);
-    emit("inquiry_step_view", { step: lastStep, step_total: form.dataset.wizard ? 5 : 1, ...stepChoice(form, lastStep) });
+    emit("inquiry_step_view", { step: lastStep, step_total: form.dataset.wizard ? 4 : 1, ...stepChoice(form, lastStep) });
   }
   function start(form) {
     view(form);
@@ -38,7 +38,7 @@
     return value === undefined ? {} : { field_name: name, field_value: value };
   }
   function stepChoice(form, number) {
-    const names = { 1: "people", 2: "eventDate", 3: "timeStart", 4: "lyricVideo" };
+    const names = { 1: "people", 2: "eventDate" };
     const control = form.elements?.[names[number]];
     return control ? choice(control.name ? control : { name: names[number], value: control.value }, form) : {};
   }
