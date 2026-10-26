@@ -507,3 +507,11 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=untuned]::before{background-image:url('../assets/editorial/type-untuned.svg')!important}
   html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=file]::before{background-image:url('../assets/editorial/type-file.svg')!important}
 }
+
+/* Round 31: earlybird −2만 in Wistia gold */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .calendar-grid > .calendar-day.earlybird-two:not(:disabled):not(.is-selected){background:rgba(214,171,87,.28)!important;border-color:#d6ab57!important}
+  html body #app#app#app#app .calendar-day.earlybird-two::after{color:#8a6420!important;background:#f6ecd6!important}
+  html body #app#app#app#app .wf-earlybird-legend .earlybird-two{color:#8a6420!important;background:#f6ecd6!important}
+  html body #app#app#app#app .wf-earlybird-legend .earlybird-two *{color:#8a6420!important}
+}
