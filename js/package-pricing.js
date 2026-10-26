@@ -4,7 +4,7 @@
   A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
   B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:150000,minutes:90,individual:190000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:200000,minutes:150,individual:250000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 마스터링, list price 280,000 (decided 2026-10-26 21:47)
+  // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 기본 믹싱 + 마스터링, list price 280,000 (decided 2026-10-26 21:47)
   D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:230000,minutes:150,individual:280000,saving:50000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
@@ -84,7 +84,7 @@
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
   if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 마스터링','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 기본 믹싱','마스터링 : 포함','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -99,7 +99,7 @@
  const headcount=p=>(p.duet?'2인':'1인')+'·1곡 기준'
  function selectionDetails(key){
   const p=packageFor(key)
-  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
+  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
   const baseRows=features(packageFor('A')).slice(1)
   const featureRows=features(p).slice(1).map(item=>{
