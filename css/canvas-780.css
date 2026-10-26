@@ -523,3 +523,10 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .wf-earlybird-legend .earlybird-two{background:#fdebdc!important;color:#a85a26!important}
   html body #app#app#app#app .wf-earlybird-legend .earlybird-two *{color:#a85a26!important}
 }
+
+/* Round 33: selected calendar day in soft pink with a rose ring */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .calendar-grid > .calendar-day:not(:disabled).is-selected{background:#fbd3dd!important;border:3px solid #d9667f!important;box-shadow:none!important}
+  html body #app#app#app#app .calendar-grid > .calendar-day:not(:disabled).is-selected span{color:#333333!important}
+  html body #app#app#app#app .calendar-legend .legend-selected{background:#fbd3dd!important;border:1.5px solid #d9667f!important}
+}
