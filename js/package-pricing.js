@@ -1,18 +1,19 @@
 (function(global){
  'use strict'
  const packages={
-  A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:60,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
-  B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:130000,minutes:60,individual:150000,saving:20000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:170000,minutes:120,individual:200000,saving:30000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  // DUET bundles 2인 + 2시간 녹음 + 보정 + 디테일 믹싱 (90,000 + 30,000 + 50,000 + 40,000 + 20,000 = 230,000)
-  D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:190000,minutes:120,individual:230000,saving:40000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
+  A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
+  B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:150000,minutes:90,individual:190000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
+  C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:200000,minutes:150,individual:250000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
+  // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 마스터링, list price 280,000 (decided 2026-10-26 21:47)
+  D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:230000,minutes:150,individual:280000,saving:50000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
-  {key:'detailMix',label:'디테일 믹싱',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
-  {key:'extraHour',label:'녹음 1시간 추가',price:50000,detail:'선택한 타입의 녹음 시간에 1시간을 더해 드려요'},
+  {key:'detailMix',label:'마스터링',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
+  {key:'extraHour',label:'녹음 50분 추가',price:50000,detail:'선택한 타입의 녹음 시간에 50분을 더해 드려요'},
   {key:'rush',label:'3일 이내 받기',price:30000,detail:'녹음일 기준 3일 이내에 음원을 받아요',messageLabel:'3일 이내 전달 (녹음일 기준)'},
  ]
+ const hoursText=minutes=>minutes<60?minutes+'분':Math.floor(minutes/60)+'시간'+(minutes%60?' '+minutes%60+'분':'')
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const packageFor=key=>Object.hasOwn(packages,key)?packages[key]:packages.A
  // One holiday source for calendar colours, time badges and actual quotes
@@ -36,7 +37,7 @@
  ])
  const fixedHolidays=new Set(['01-01','03-01','05-01','05-05','06-06','07-17','08-15','10-03','10-09','12-25'])
  const discountOffers=[
-  {key:'first',label:'위스티아 첫 이용',discount:10000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
+  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'},
   {key:'advance2',label:'녹음일 2개월 이후',discount:20000,detail:'사전 예약 할인은 1개월·2개월 중 해당하는 한 가지만 적용돼요'}
@@ -70,20 +71,20 @@
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&o.key==='detailMix')&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
-  if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:10000})
+  if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:20000})
   if(validDate(v.bookingDate)){
    if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 13~16시 시작',amount:10000})
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  const baseMinutes=p.minutes+(v.options.includes('extraHour')&&!p.duet?60:0)
+  const baseMinutes=p.minutes+(v.options.includes('extraHour')&&!p.duet?50:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
   return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
+  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 마스터링','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -105,7 +106,7 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -133,7 +134,7 @@
   })
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOffers.map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
- function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 10,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
   if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
@@ -142,7 +143,7 @@
   burst.innerHTML=Array.from({length:16},(_,i)=>'<i style="--i:'+i+';--dx:'+((i%2?1:-1)*(28+i*4))+'px;--turn:'+(i*43)+'deg"></i>').join('')
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,discountOffers,isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,discountOffers,isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate,hoursText}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)

@@ -29,7 +29,7 @@ const PRODUCTS = {
       ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
       ["최종 검수 & 완성본 전달", "본식에서 바로 사용할 수 있도록 전체 음원을 검수한 뒤 전달합니다", {duration:"약 7일",note:"녹음 완료 후 일정 확정"}]
     ],
-    included: ["녹음 및 1대1 디렉팅", "기본 믹싱", "선택한 타입에 따른 음정·박자 보정 및 디테일 믹싱", "최종 음원 전달"],
+    included: ["녹음 및 1대1 디렉팅", "기본 믹싱", "선택한 타입에 따른 음정·박자 보정 및 마스터링", "최종 음원 전달"],
     faq: [
       ["AR 음원은 어떻게 사용하나요", "예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요."],
       ["내 목소리 비율은 어떻게 정하나요", "녹음 당일 <strong>여러 비율을 직접 들어 보고</strong><br>AR에 맞춰 불러 봐요.<br>현장 목소리와 가장 잘 어우러지는 비율로 정해 드려요."],
@@ -67,7 +67,7 @@ const PRODUCTS = {
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
     faq: [
       ["DUET 상품은 몇 명이 이용하나요", "1곡 기준 두 분이 이용해요 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요"],
-      ["두 사람이 함께 녹음할 수 있나요", "듀엣으로 변경하면 2인·1곡으로 준비해요 STANDARD·DELUXE는 1시간, PREMIUM은 2시간이에요 DUET 패키지는 2인 1곡, 녹음 2시간, 보정·디테일 믹싱 포함 190,000원이에요"],
+      ["두 사람이 함께 녹음할 수 있나요", "듀엣으로 변경하면 2인·1곡으로 준비해요 STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분이에요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·마스터링 포함 230,000원이에요"],
       ["어떤 파일을 받나요", "예식장에서 사용할 AR과 선택한 작업이 반영된 완성 음원을 전달해요"]
     ]
   },
@@ -161,7 +161,7 @@ const PRODUCTS = {
     ],
     included: ["두 사람 녹음 및 1대1 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "녹음 메이킹 및 립싱크 촬영", "영상 편집", "축가 상영용 최종본과 완성 음원 전달"],
     faq: [
-      ["AR 축가와 듀엣은 어떻게 다른가요", "둘 다 같은 STANDARD·DELUXE·PREMIUM예요 듀엣은 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요 DUET 패키지는 2인 1곡, 녹음 2시간, 보정·디테일 믹싱 포함 190,000원이에요"],
+      ["AR 축가와 듀엣은 어떻게 다른가요", "둘 다 같은 STANDARD·DELUXE·PREMIUM예요 듀엣은 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·마스터링 포함 230,000원이에요"],
       ["듀엣에는 어떤 구성이 포함되나요", "1곡 기준으로 두 분이 함께 준비해요 선택한 타입의 녹음 시간과 작업 구성을 유지해요"],
       ["어떤 파일을 받나요", "본식 축가 순서에 상영할 영상과 두 분이 함께 부른 완성 음원을 전달합니다"],
       ["완성까지 얼마나 걸리나요", "기본 제작 기간은 촬영과 자료 전달이 완료된 뒤 약 14일입니다"]
@@ -392,8 +392,8 @@ const INFO_FAQ_GROUPS=[
  ]},
  {title:"녹음 당일",description:"처음이어도 편하게 부르실 수 있도록 도와드려요",items:[
   ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong><br>음정·박자 보정은 DELUXE·PREMIUM·DUET에 포함되며 STANDARD에서는 추가 선택할 수 있어요"],
-  ["녹음은 현장에서 어떻게 진행되나요?","곡과 키를 확인하고 연습한 뒤 한 구간씩 녹음해요<br><strong>STANDARD·DELUXE는 1시간, PREMIUM·DUET은 2시간</strong>이며 안내·연습 시간도 포함이에요<br>DUET 패키지는 2인 1곡, 녹음 2시간, 보정·디테일 믹싱 포함 190,000원이에요<br>듀엣으로 변경해도 선택한 타입의 녹음 시간은 같아요"],
-  ["녹음 시간을 더 추가할 수 있나요?","녹음 1시간 추가는 <strong>50,000원</strong>이에요<br>PREMIUM은 기본 2시간 녹음해요<br>당일 연장 가능 여부는 다음 예약 일정을 확인한 뒤 안내해 드려요"]
+  ["녹음은 현장에서 어떻게 진행되나요?","곡과 키를 확인하고 연습한 뒤 한 구간씩 녹음해요<br><strong>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM·DUET은 2시간 30분</strong>이며 안내·연습 시간도 포함이에요<br>DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·마스터링 포함 230,000원이에요<br>듀엣으로 변경해도 선택한 타입의 녹음 시간은 같아요"],
+  ["녹음 시간을 더 추가할 수 있나요?","녹음 50분 추가는 <strong>50,000원</strong>이에요<br>PREMIUM은 기본 2시간 30분 녹음해요<br>당일 연장 가능 여부는 다음 예약 일정을 확인한 뒤 안내해 드려요"]
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
   ["AR 축가는 본식 현장에서 어떻게 하면 되나요?","예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요"],
@@ -922,7 +922,7 @@ function renderEventsPage(){
  const bar=items.map((item,i)=>'<i style="width:'+(item.discount/maximum*100).toFixed(1)+'%" data-seg="'+i+'"></i>').join('')
  const legend=items.map(item=>'<span>'+escapeHtml(item.label.replace(/ (리뷰|후기|영상)$/,''))+' '+won(item.discount)+'</span>').join('')
  const cards=items.map((item,i)=>'<article class="ev2-card"><div class="ev2-no">'+String(i+1).padStart(2,'0')+'</div><div class="ev2-body"><div class="ev2-top"><h3 data-svg-title="off">'+escapeHtml(item.label)+'</h3><span class="ev2-amt">페이백 '+won(item.discount)+'</span></div>'+PAYBACK_EVENT_GUIDE[item.key].map(([title,lines])=>(title?'<p class="ev2-lbl">'+escapeHtml(title)+'</p>':'')+'<div class="ev2-cond">'+lines.map(line=>'<span>'+escapeHtml(line)+'</span>').join('')+'</div>').join('')+'</div></article>').join('')
- const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+[['위스티아 첫 이용','10,000원 할인','처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요','gift'],['목·금 오후 1~4시 시작','10,000원 할인','공휴일 제외 · 해당 요일과 시작 시간을 선택하면 자동 반영돼요','clock'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정','calendar'],['녹음일 2개월 이후','20,000원 할인','사전 예약 할인은 두 항목 중 한 가지만 적용돼요','calendar']].map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg></span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+ const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+[['위스티아 첫 이용','20,000원 할인','처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요','gift'],['목·금 오후 1~4시 시작','10,000원 할인','공휴일 제외 · 해당 요일과 시작 시간을 선택하면 자동 반영돼요','clock'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정','calendar'],['녹음일 2개월 이후','20,000원 할인','사전 예약 할인은 두 항목 중 한 가지만 적용돼요','calendar']].map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg></span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
  app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+'<section class="events-payback" aria-labelledby="paybackTitle"><p class="ev2-k">PAYBACK</p><h2 id="paybackTitle">후기 참여 페이백 이벤트</h2><p class="ev2-lead">위스티아와 함께한 경험을 다른 분들께도 소개해 주실 수 있을까요?<br>고객님께서 나눠주시는 후기와 영상은 위스티아에 정말 큰 힘이 됩니다<br>감사의 마음을 담아 참여해 주시는 분들께 페이백을 준비했습니다</p><div class="ev2-big"><small>두 가지 모두 참여 시</small><h2 data-svg-title="off">총 <em>'+won(maximum)+'</em> 페이백!</h2><div class="ev2-bar">'+bar+'</div><div class="ev2-legend">'+legend+'</div><p>참여 조건 확인 후 카카오톡으로 환급 절차를 안내해 드립니다<br>결제 금액에서 미리 차감하지 않습니다</p></div><div class="ev2-list">'+cards+'</div><div class="ev2-note">'+PAYBACK_EVENT_GUIDE.notes.map(line=>'<p>'+escapeHtml(line)+'</p>').join('')+'</div></section><a class="ev2-cta ev2-consult ed-hero-consult" href="/event/solo">AR 축가 상담하기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></section>'+footer()
 }
 let contactQuote=null
@@ -1222,7 +1222,7 @@ function arCommerceDetail(p,key="solo"){
  '<section class="arc-section arc-process" id="arcProcess"><span class="arc-kicker">진행 순서</span><h2>준비부터 전달까지<br>이렇게 진행합니다</h2><ol>'+[['상담·예약','원하는 곡, 녹음 시간과 본식 일정을 확인합니다'],['방문·녹음','경기도 부천 스튜디오에서 구간별 녹음과 1:1 디렉팅을 진행합니다'],['보정·완성','음정·박자를 수작업으로 다듬고 믹싱·마스터링을 진행합니다'],['음원 전달','본식용 AR과 완성 음원을 받고 예식장 담당자와 재생을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><div><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')+'</ol></section>'+
  '<section class="arc-section arc-faq" id="arcFaq"><h2>자주 묻는 질문</h2>'+faq(questions)+'</section>'+
  '<section class="arc-section arc-time-guide"><span class="arc-kicker">인원과 녹음 시간</span><h2>혼자 또는 함께,<br>인원에 맞게 선택하세요</h2><div class="arc-time-cards"><article><h3>SOLO(1인)</h3><strong>90,000원</strong><p>1곡 기준 · STANDARD·DELUXE·PREMIUM</p></article><article><h3>DUET(2인)</h3><strong>30,000원</strong><p>듀엣 변경 · 녹음 시간 유지</p></article></div><p>SOLO는 1인, DUET은 2인 녹음 상품입니다<br>표시 시간에는 안내·연습·부가 시간이 포함됩니다</p></section>'+
- '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>수정은 상담에서 안내해요</span></li><li><strong>추가 옵션</strong> <span>녹음 1시간 추가 50,000원<br>100% 립싱크 20,000원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
+ '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>수정은 상담에서 안내해요</span></li><li><strong>추가 옵션</strong> <span>녹음 50분 추가 50,000원<br>100% 립싱크 20,000원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
  '<section class="arc-section arc-final"><h2>축가는 직접,<br>준비는 위스티아와 함께</h2><p>선택한 구성과 가격을 복사한 뒤<br>카카오톡에서 일정을 확인하세요</p><div class="arc-actions">'+action('가격·옵션 확인')+'</div></section>'+footer()+
  '<aside class="arc-bottom" aria-label="상품 가격과 상담"><span><small>AR 축가 · <span data-ar-hours>'+hours+'</span>시간</small><b><span data-ar-price>'+amount+'</span>원</b></span>'+action('가격 보기')+action('카카오톡 상담',true)+'</aside></div>'
  // The approved mobile composition is canonical at every width; CSS handles sizing only.
@@ -1247,7 +1247,7 @@ function mobileDetailEvents(){
  const short={first:'문의 양식에서 첫 이용 선택',weekday:'공휴일 제외 · 녹음 시작 시간 기준',advance1:'사전 예약 · 1·2개월 중 하나만 적용',advance2:'사전 예약 · 1·2개월 중 하나만 적용',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
  const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
  const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
- return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
+ return '<div class="ed-benefit-lists">'+window.WistiaPackages.firstVisitBanner('/assets/editorial/welcome-gift-rose.png')+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
@@ -1267,14 +1267,14 @@ function selectedPackage(){return window.WistiaPackages.packageFor(new URLSearch
 function packageInquiryHref(key,packageKey=selectedPackage().key){return '/event/'+key+'?package='+packageKey}
 function packageInformation(key,packageKey){
  const p=window.WistiaPackages.packageFor(packageKey),duet=key==='duo'
- const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',p.minutes/60+'시간 + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['보컬 튜닝',p.tuning?'음정·박자 보정 포함':'추가 선택'],['디테일 믹싱',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
+ const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['보컬 튜닝',p.tuning?'음정·박자 보정 포함':'추가 선택'],['마스터링',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
  return '<h2>선택한 상품정보</h2><dl>'+rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escapeHtml(value)+'</dd></div>').join('')+'</dl>'
 }
 function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'||o.key==='detailMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function packageTotalHtml(p,key){return escapeHtml(p.name)+' <strong>'+won(p.price)+'</strong>'+(key==='duo'?' <span class="package-duet-add">+ 30,000원</span>':'')}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">내게 맞는 녹음 타입을<br>골라보세요</h2>'+window.WistiaPackages.cards(p.key)+window.WistiaPackages.firstVisitBanner('/assets/editorial/welcome-gift-rose.png')+'<p class="package-selection-total" data-package-total>'+packageTotalHtml(p,key)+'</p><a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
-function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD·DELUXE는 1시간, PREMIUM은 2시간</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 1:1 디렉팅을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 보컬 튜닝과 디테일 믹싱을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
+function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 1:1 디렉팅을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 보컬 튜닝과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
@@ -1607,7 +1607,7 @@ function bookingBaseSection(key){
  const service=["solo","duo"].includes(key)?"solo":key
  const services=[["solo","AR 축가 사전녹음"]]
  const serviceSelect='<label class="booking-product-select" for="bookingService"><span class="sr-only">상품</span><select id="bookingService" name="quoteProduct" data-product-select>'+services.map(([value,label])=>'<option value="'+value+'"'+(service===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
- const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1인</strong><small>1곡 기준 · STANDARD·DELUXE 1시간 · PREMIUM 2시간</small></span><b>STANDARD·DELUXE·PREMIUM</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>듀엣(2인)</strong><small>1곡 기준 · 선택한 타입 시간 유지</small></span><b>듀엣 변경 30,000원</b></label></div></div>':bookingFilmFormatSection(key)
+ const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1인</strong><small>1곡 기준 · STANDARD 50분 · DELUXE 1시간 30분 · PREMIUM 2시간 30분</small></span><b>STANDARD·DELUXE·PREMIUM</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>듀엣(2인)</strong><small>1곡 기준 · 선택한 타입 시간 유지</small></span><b>듀엣 변경 30,000원</b></label></div></div>':bookingFilmFormatSection(key)
  const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준</p>':''
  return '<section class="booking-base calculator-step consultation-step"><span class="booking-step">01</span><h2>상품 선택</h2><p>원하시는 상품을 선택해 주세요</p>'+serviceSelect+people+note+'<div class="booking-base-amount"'+(inquiryUndecided?' hidden':'')+'><span>기본 가격</span><strong id="basePrice"></strong></div></section>'
 }
@@ -1899,7 +1899,7 @@ function initMetaEngagementTracking(pagePath,pricePage){
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
-const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 위스티아 AR 축가 사전녹음 · STANDARD 90,000원, DELUXE 130,000원, PREMIUM 170,000원 · 녹음 시간과 보컬 튜닝을 필요한 구성으로 선택하세요 · 부천시청역 도보 약 300m"}
+const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 위스티아 AR 축가 사전녹음 · STANDARD 90,000원, DELUXE 150,000원, PREMIUM 200,000원 · 녹음 시간과 보컬 튜닝을 필요한 구성으로 선택하세요 · 부천시청역 도보 약 300m"}
 const EVENT_SOLO_TITLE="문의양식 | 위스티아 축가 사전녹음 가격"
 const LIVE_ROUTES=new Set(["/","/detail/solo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
