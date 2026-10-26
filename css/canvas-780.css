@@ -468,3 +468,29 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .package-card .package-card-save { display: block !important; width: max-content !important; margin: 3px auto 0 !important; padding: 1px 8px !important; border-radius: 999px !important; background: #e7efe9 !important; color: #3f6a5a !important; font-size: 11px !important; line-height: 1.5 !important; font-weight: 700 !important; white-space: nowrap !important; }
   @media (min-width: 780px) { html body #app#app#app#app .wistia-wizard .package-card :is(.package-card-headcount,.package-card-save) { font-size: 15px !important; } }
 }
+
+/* Round 29: savings pill on DELUXE and PREMIUM, every card line on one line */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .package-picker .package-card :is(.package-card-name,.package-card-was,.package-card-price,.package-card-save,.package-card-subtitle,.package-card-headcount){white-space:nowrap!important;overflow-wrap:normal!important;word-break:keep-all!important;max-width:100%!important}
+  html body #app#app#app#app .package-picker .package-card .is-empty{visibility:hidden!important}
+  html body #app#app#app#app .package-picker .package-card-save{display:inline-block!important;padding:3px 7px!important;letter-spacing:-0.02em!important}
+}
+
+/* Round 29b: four package cards in one row on phones too */
+@layer wistia-site-fixes {
+@media (max-width:779px){
+  html body #app#app#app#app .package-picker .package-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:3px!important;padding:4px!important}
+  html body #app#app#app#app .package-picker .package-card-body{padding:12px 1px 10px!important}
+  html body #app#app#app#app .package-picker .package-card-name{font-size:10.5px!important;letter-spacing:0!important}
+  html body #app#app#app#app .package-picker .package-card-was{font-size:9.5px!important;letter-spacing:-0.02em!important}
+  html body #app#app#app#app .package-picker .package-card-price{font-size:13px!important;letter-spacing:-0.03em!important}
+  html body #app#app#app#app .package-picker .package-card-save{font-size:9px!important;padding:2px 4px!important;letter-spacing:-0.04em!important}
+  html body #app#app#app#app .package-picker .package-card :is(.package-card-subtitle,.package-card-headcount){font-size:10px!important;letter-spacing:-0.03em!important}
+}
+}
+@layer wistia-site-fixes {
+@media (max-width:779px){
+  html body #app#app#app#app .package-picker .package-card:is(.is-selected,:has(input:checked))::after{top:2px!important;right:2px!important;width:12px!important;height:12px!important;font-size:9px!important}
+  html body #app#app#app#app .package-picker .package-card-body{padding-top:15px!important}
+}
+}

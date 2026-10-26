@@ -13,8 +13,8 @@
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Every operating day closes at 23:00; other closures come from the availability blocks.
- function sundayEvening(){return false} // no fixed Sunday closure: closures come only from the Notion-linked availability blocks
+ // Every operating day closes at 23:00; Sundays also close from 18:00; other closures come from the availability blocks.
+ function sundayEvening(date,time){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;const day=new Date(date+'T12:00:00+09:00').getUTCDay();return day===0&&Number(time.slice(0,2))>=18} // fixed rule: on Sundays every start time from 18:00 is closed, on top of the Notion-linked blocks
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
