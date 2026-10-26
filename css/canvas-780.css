@@ -494,3 +494,16 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .package-picker .package-card-body{padding-top:15px!important}
 }
 }
+
+/* Round 30: person row icons, no savings pill */
+@layer wistia-site-fixes {
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=person]::before{background-image:url('../assets/editorial/type-person.svg')!important}
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=people]::before{background-image:url('../assets/editorial/type-people.svg')!important}
+}
+@layer wistia-site-fixes {
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=record]::before{background-image:url('../assets/editorial/type-record.svg')!important}
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=mix]::before{background-image:url('../assets/editorial/type-mix.svg')!important}
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=tune]::before{background-image:url('../assets/editorial/type-tune.svg')!important}
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=untuned]::before{background-image:url('../assets/editorial/type-untuned.svg')!important}
+  html body #app#app#app#app #packageSelection [data-package-key] .package-selected-features [data-feature-icon=file]::before{background-image:url('../assets/editorial/type-file.svg')!important}
+}
