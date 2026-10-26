@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
 const q=v=>pricing.quote(v,'2026-10-22')
 test('approved A/B/C prices and individual savings',()=>{
- assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,60,0],[130000,60,20000],[170000,120,30000]])
+ assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[150000,90,40000],[200000,150,50000],[230000,150,50000]])
  for(const p of ['A','B','C'])assert.equal(q({package:p}).total,pricing.packages[p].price)
  for(const key of ['unknown','__proto__','constructor'])assert.equal(q({package:key}).total,90000)
 })
@@ -17,7 +17,7 @@ test('duet changes people, not the selected recording time',()=>{
  for(const p of ['A','B','C']){const result=q({package:p,people:'1'});assert.equal(result.total,pricing.packages[p].price+30000);assert.equal(result.minutes,pricing.packages[p].minutes)}
 })
 test('one additional hour costs 50000, including a further hour after C',()=>{
- assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,120],[180000,120],[220000,180]])
+ assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,100],[200000,140],[250000,200]])
 })
 test('removed 100% AR option is not offered or charged from legacy selections',()=>{
  assert.equal(pricing.options.some(o=>o.key==='lipsync'),false)
@@ -51,8 +51,8 @@ test('public holidays never receive the Thursday/Friday time discount',()=>{
   for(const time of ['13:00','14:00','15:00','16:00'])assert.equal(pricing.weekdayDiscount(date,time),0,date+' '+time)
  }
  const christmas=q({package:'C',firstVisit:'1',bookingDate:'2026-12-25',timeStart:'13:00'})
- assert.equal(christmas.discount,30000);assert.equal(christmas.total,140000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
- assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,130000)
+ assert.equal(christmas.discount,40000);assert.equal(christmas.total,160000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
+ assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,150000)
  assert.equal(pricing.weekdayDiscount('2027-05-14','13:00'),10000)
  for(const date of ['','invalid','2026-02-31','2026-12-24'])assert.equal(pricing.isPublicHoliday(date),false)
 })
@@ -69,14 +69,14 @@ test('calendar and time hint helpers match quote thresholds and reject invalid i
 })
 test('approved discounts combine without inventing a payback cap',()=>{
  const result=q({firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
- assert.equal(result.discount,40000);assert.equal(result.total,50000);assert.equal(result.payback,60000)
+ assert.equal(result.discount,50000);assert.equal(result.total,40000);assert.equal(result.payback,60000)
  assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
 })
 test('recording length follows the package and extra hour, with no promo minutes',()=>{
- assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,180)
- assert.equal(q({eventDate:'2026-12-30'}).minutes,60)
- assert.equal(q({eventDate:'2026-12-30',eventDateMode:'unknown'}).minutes,60)
- assert.equal(q({eventDate:'2027-01-01'}).minutes,60)
+ assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,200)
+ assert.equal(q({eventDate:'2026-12-30'}).minutes,50)
+ assert.equal(q({eventDate:'2026-12-30',eventDateMode:'unknown'}).minutes,50)
+ assert.equal(q({eventDate:'2027-01-01'}).minutes,50)
  assert.equal(booking.duration('ar-60'),60);assert.equal(booking.duration('ar-120'),120);assert.equal(booking.duration('ar-180'),180)
 })
 test('delivery depends on correction rather than people',()=>{
@@ -84,7 +84,7 @@ test('delivery depends on correction rather than people',()=>{
  assert.match(q({package:'A',tuning:'1'}).delivery,/영업일 7일/)
  assert.match(q({package:'B'}).delivery,/영업일 7일/)
  assert.equal(q({package:'A',rush:'1'}).total,90000,'same-day A is not charged for a removed rush option')
- assert.equal(q({package:'B',rush:'1'}).total,130000)
+ assert.equal(q({package:'B',rush:'1'}).total,180000)
 })
 test('draft whitelist retains new fields and drops removed options',()=>{
  const text=readFileSync(new URL('../js/booking-draft.js',import.meta.url),'utf8')

@@ -547,3 +547,13 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body .wf-popup-ok{display:block!important;width:100%!important;height:48px!important;margin:22px 0 0!important;border:0!important;border-radius:12px!important;background:#d9667f!important;color:#fff!important;font:600 15px Pretendard,sans-serif!important;cursor:pointer}
   html body .wf-popup-ok:focus-visible{outline:2px solid #d9667f!important;outline-offset:3px!important}
 }
+
+/* Round 37: first-visit gift card above 할인 목록, same component and look as the price-list card */
+@layer wistia-site-fixes {
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift { margin:0!important; padding:3cqw!important; gap:3cqw!important; border:1px solid #efd8ca!important; border-radius:2cqw!important; background:linear-gradient(110deg,#fff8ef,#fce9e2)!important; }
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift>img { width:26%!important; height:auto!important; flex:0 0 26%!important; aspect-ratio:1!important; object-fit:contain!important; }
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift>div { flex:1!important; padding-left:4cqw!important; border-left:1px solid #ebd2c7!important; }
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift small { font-size:3cqw!important; line-height:1.6!important; color:#a77870!important; }
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift strong { font-size:4.8cqw!important; line-height:1.5!important; margin-top:1.2cqw!important; letter-spacing:-.055em!important; color:#8f514c!important; white-space:nowrap!important; }
+  html body #app#app#app#app .ed-benefit-lists>.welcome-gift :is(.welcome-spark,.benefit-confetti) { display:none!important; }
+}

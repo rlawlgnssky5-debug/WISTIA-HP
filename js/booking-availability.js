@@ -8,7 +8,7 @@
  }
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
- function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=60&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
+ function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=30&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
  function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
