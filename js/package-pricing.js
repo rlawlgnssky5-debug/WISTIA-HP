@@ -82,32 +82,34 @@
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
-  return [(p.duet?'2인·1곡':'1인·1곡'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
+  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+(p.minutes/60)+'시간','믹싱 : 디테일 믹싱','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
   mix:'<path d="M5 3v6m0 4v8M12 3v10m0 4v4M19 3v2m0 4v12"/><circle cx="5" cy="11" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="7" r="2"/>',
   tune:'<path d="M4 15h5v-5h6V5h5M3 20h18m-5-5 2 2 4-4"/>',
   untuned:'<path d="M4 15h5v-5h6V5h5M3 3l18 18M3 21 21 3"/>',
-  file:'<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>'
+  file:'<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
+  people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
  const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음',D:'듀엣 녹음'}
  const headcount=p=>(p.duet?'2인':'1인')+'·1곡 기준'
  function selectionDetails(key){
   const p=packageFor(key)
-  const icon=item=>item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
+  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
   const baseRows=features(packageFor('A')).slice(1)
   const featureRows=features(p).slice(1).map(item=>{
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'+(p.saving?'<p class="package-selected-saving"><b>'+money(p.saving)+' 절약</b></p>':'')
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+p.minutes/60+'시간</p><ul class="package-selected-features">'+featureRows+'</ul>'
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"><s>'+money(p.price)+'</s></span>')+'<strong class="package-card-price">'+money(p.price)+'</strong>'+(p.saving?'<span class="package-card-save">'+money(p.saving)+' 절약</span>':'<span class="package-card-save is-empty" aria-hidden="true">0원 절약</span>')+'<span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-headcount">'+headcount(p)+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"><s>'+money(p.price)+'</s></span>')+'<strong class="package-card-price">'+money(p.price)+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-headcount">'+headcount(p)+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')

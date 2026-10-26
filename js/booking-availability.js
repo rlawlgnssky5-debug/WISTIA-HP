@@ -13,12 +13,12 @@
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Every operating day closes at 23:00; Sundays also close from 18:00; other closures come from the availability blocks.
- function sundayEvening(date,time){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;const day=new Date(date+'T12:00:00+09:00').getUTCDay();return day===0&&Number(time.slice(0,2))>=18} // fixed rule: on Sundays every start time from 18:00 is closed, on top of the Notion-linked blocks
+ // Every operating day closes at 23:00; Sunday bookings must end by 18:00; other closures come from the availability blocks.
+ function sundayEvening(date,time,minutes=60){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;const day=new Date(date+'T12:00:00+09:00').getUTCDay(),clock=Number(time.slice(0,2))*60+Number(time.slice(3));return day===0&&clock+(Number(minutes)>0?Number(minutes):60)>18*60} // fixed rule: on Sundays the studio is used until 18:00, so a booking must end by 18:00, on top of the Notion-linked blocks
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
-  if(sundayEvening(date,time))return true
+  if(sundayEvening(date,time,minutes))return true
   // A new booking occupies its recording length + 30 min extra time + 30 min preparation.
   const start=Date.parse(date+'T'+time+':00+09:00'),end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
@@ -89,7 +89,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   for(const option of ui.time.options){
    if(!option.value)continue
    const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
-   const reason=sundayEvening(ui.date.value,option.value)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
+   const reason=sundayEvening(ui.date.value,option.value,minutes)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
    option.dataset.disabledReason=reason;option.disabled=!!reason
    if(reason==='booking'||reason==='sunday')option.textContent=option.dataset.originalLabel+' · 마감'
   }
