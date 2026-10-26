@@ -5,7 +5,7 @@
   B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:150000,minutes:90,individual:190000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:200000,minutes:150,individual:250000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 기본 믹싱 + 마스터링, list price 280,000 (decided 2026-10-26 21:47)
-  D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:230000,minutes:150,individual:280000,saving:50000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
+  D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:220000,minutes:150,individual:280000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
   {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
@@ -83,9 +83,9 @@
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  // Spec row order: 인원 / 녹음 시간 / 음정·박자 보정 / 마스터링 / 곡 수 / 디렉팅 / 믹싱 / 전달
+  // Spec row order: 인원 / 녹음 시간 / 음정·박자 보정 / 믹싱 / 마스터링 / 디렉팅 / 전달
   const tuned=p.key!=='A'
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(tuned?'포함':'미포함'),'마스터링 : '+(tuned?'포함':'미포함'),'곡 수 : 1곡','디렉팅 : 1:1 맞춤 디렉팅','믹싱 : '+(tuned?'정밀 믹싱 포함':'기본 믹싱'),'전달 : '+when]
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(tuned?'포함':'미포함'),'믹싱 : '+(tuned?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(tuned?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -98,7 +98,6 @@
   people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
  const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'여유로운 녹음',D:'듀엣 녹음'}
- const headcount=p=>(p.duet?'2인':'1인')+'·1곡 기준'
  function selectionDetails(key){
   const p=packageFor(key)
   const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
@@ -108,11 +107,11 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">'+money(p.individual-p.price)+' 저렴해져요!</span>':'')+'</div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">'+money(p.individual-p.price)+' 저렴해져요!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"><s>'+money(p.price)+'</s></span>')+'<strong class="package-card-price">'+money(p.price)+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key]+'</span><span class="package-card-headcount">'+headcount(p)+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(p.price)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"><s>'+money(p.price)+'</s></span>')+'<strong class="package-card-price">'+money(p.price)+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key]+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')

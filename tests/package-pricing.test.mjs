@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
 const q=v=>pricing.quote(v,'2026-10-22')
 test('approved A/B/C prices and individual savings',()=>{
- assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[150000,90,40000],[200000,150,50000],[230000,150,50000]])
+ assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[150000,90,40000],[200000,150,50000],[220000,150,60000]])
  for(const p of ['A','B','C'])assert.equal(q({package:p}).total,pricing.packages[p].price)
  for(const key of ['unknown','__proto__','constructor'])assert.equal(q({package:key}).total,90000)
 })

@@ -31,7 +31,7 @@ await test('Home, about and every product render clean body/alt/meta with the si
     const response=await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     assert.equal(response.status(),410,path+' '+width)
     const body=await page.content()
-    assert.match(body,/없어진 페이지예요/)
+    assert.match(body,/410 Gone/)
     assert.doesNotMatch(body,retired,path+' '+width)
     assert.equal(await page.locator('#app').count(),0)
    }

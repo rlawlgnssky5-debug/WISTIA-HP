@@ -30,7 +30,7 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
     for(const path of gone){
      const response=await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
      assert.equal(response.status(),410,path)
-     assert.match(await page.locator('body').innerText(),/없어진 페이지예요/)
+     assert.match(await page.locator('body').innerText(),/410 Gone/)
      assert.equal(await page.locator('#app').count(),0,path)
      assert.doesNotMatch(await page.content(),/js\/app\.js/)
     }
