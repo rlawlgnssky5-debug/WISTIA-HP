@@ -38,7 +38,7 @@ await test('Requested titles fit mobile and enlarged text; only the recording st
    }
    const gone=await page.goto(`http://127.0.0.1:${port}/info/about`,{waitUntil:'domcontentloaded'})
    assert.equal(gone.status(),410)
-   assert.match(await page.content(),/없어진 페이지예요/)
+   assert.match(await page.content(),/410 Gone/)
    assert.equal(await page.locator('#app').count(),0)
    for(const [product,hours] of [['solo',1],['duo',2]]){
     await page.goto(`http://127.0.0.1:${port}/event/${product}`,{waitUntil:'domcontentloaded'})

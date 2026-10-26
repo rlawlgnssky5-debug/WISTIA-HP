@@ -40,7 +40,7 @@ await test('16d: home/inquiry titles, refined image bounds and retired detail re
     if(path!=='/')assert.equal(titles.find(n=>n.text==='어디에서 보고 오셨나요?').size,width<=768?'19px':titles[0].size)
    }
    const retired=await page.goto(`http://127.0.0.1:${port}/detail/solo-film?utm_source=regression`,{waitUntil:'domcontentloaded'})
-   assert.equal(retired.status(),410);assert.match(await page.content(),/없어진 페이지예요/);assert.equal(await page.locator('#app').count(),0)
+   assert.equal(retired.status(),410);assert.match(await page.content(),/410 Gone/);assert.equal(await page.locator('#app').count(),0)
    const film=await page.goto(`http://127.0.0.1:${port}/event/duet-film`,{waitUntil:'domcontentloaded'})
    assert.equal(film.status(),410);assert.equal(await page.locator('#app').count(),0)
    await page.goto(`http://127.0.0.1:${port}/detail/solo`,{waitUntil:'domcontentloaded'});await page.locator('#arcRecording .detail-poster-image').scrollIntoViewIfNeeded()

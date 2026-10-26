@@ -24,7 +24,7 @@ await test('About title, label and prose rails match; icons center on the first 
 
    const gone=await page.goto(`http://127.0.0.1:${port}/info/about`,{waitUntil:'domcontentloaded'})
    assert.equal(gone.status(),410)
-   assert.match(await page.content(),/없어진 페이지예요/)
+   assert.match(await page.content(),/410 Gone/)
    assert.equal(await page.locator('#app').count(),0)
    await page.goto(`http://127.0.0.1:${port}/event/solo`,{waitUntil:'domcontentloaded'})
    await page.locator('#sourceTitle[data-title-aligned]').waitFor()

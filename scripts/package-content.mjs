@@ -18,7 +18,7 @@ export function updatePackageHtml(html,file){
   for(const item of retained){if(item['@type']==='LocalBusiness')item.priceRange='90000-200000 KRW';if(item['@type']==='WebPage'){item.url=origin+path;item['@id']=origin+path+'#webpage';if(meta)item.name=meta.title}}
   return start+'\n'+JSON.stringify({...data,'@graph':[...retained,...services,faq]},null,1)+'\n'+end
  })
- const fallback='<h1>부천 AR 축가 사전녹음 · 위스티아</h1><p>부천시청역 1번 출구 도보 약 300m · 경기도 부천시 석천로170번길 19, 2층</p><h2>내게 맞는 녹음 타입을 골라보세요</h2>'+Object.values(pricing.packages).map(p=>'<section><h2>'+p.key+' | '+esc(p.title)+' — '+pricing.money(p.price)+'</h2><ul>'+pricing.features(p).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul></section>').join('')+'<h2>추가 옵션</h2><p>듀엣으로 변경 30,000원 · 녹음 시간 유지</p><ul>'+pricing.options.map(o=>'<li>'+esc(o.label)+' '+pricing.money(o.price)+'</li>').join('')+'</ul><h2>후기 페이백</h2><p>네이버 블로그 리뷰와 본식 현장 영상 제공 각각 30,000원 · 최대 60,000원 · 결제 시 미리 차감하지 않고 조건 확인 후 환급</p>'
+ const fallback='<h1>부천 AR 축가 사전녹음 · 위스티아</h1><p>부천시청역 1번 출구 도보 약 300m · 경기도 부천시 석천로170번길 19, 부광프라자 2층</p><h2>내게 맞는 녹음 타입을 골라보세요</h2>'+Object.values(pricing.packages).map(p=>'<section><h2>'+p.key+' | '+esc(p.title)+' — '+pricing.money(p.price)+'</h2><ul>'+pricing.features(p).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul></section>').join('')+'<h2>추가 옵션</h2><p>듀엣으로 변경 30,000원 · 녹음 시간 유지</p><ul>'+pricing.options.map(o=>'<li>'+esc(o.label)+' '+pricing.money(o.price)+'</li>').join('')+'</ul><h2>후기 페이백</h2><p>네이버 블로그 리뷰와 본식 현장 영상 제공 각각 30,000원 · 최대 60,000원 · 결제 시 미리 차감하지 않고 조건 확인 후 환급</p>'
  html=html.replace(/(<div class="seo-fallback" data-seo-fallback[^>]*>)[\s\S]*?(<\/div><\/main>)/,(_,start,end)=>start+fallback+end)
  return html
 }

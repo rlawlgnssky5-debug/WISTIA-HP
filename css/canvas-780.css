@@ -578,3 +578,28 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app#app .package-selected-head > .package-selected-cheaper{grid-column:2!important;justify-self:start!important;margin-left:0!important;margin-top:-2px!important}
   html body #app#app#app#app#app .package-selected-head:has(> .package-selected-cheaper) > .package-selected-letter{grid-row:span 2!important}
 }
+@layer wistia-site-fixes{
+  /* r40: package tip bubbles above the wizard option cards */
+  html body #app#app#app#app#app .wistia-wizard .wf-tip{position:relative!important;display:block!important;width:max-content!important;max-width:calc(100% - 16px)!important;margin:4px 0 10px 6px!important;padding:5px 12px!important;border:1.5px solid #d9667f!important;border-radius:999px!important;background:#fff!important;color:#c4566f!important;font-size:12px!important;font-weight:800!important;line-height:1.3!important;white-space:nowrap!important;box-shadow:0 3px 8px rgba(217,102,127,.15)!important;justify-self:start!important;align-self:flex-start!important}
+  html body #app#app#app#app#app .wistia-wizard .wf-tip[hidden]{display:none!important}
+  html body #app#app#app#app#app .wistia-wizard .wf-tip::before{content:"✦ "!important;color:#e0a83f!important}
+  html body #app#app#app#app#app .wistia-wizard .wf-tip::after{content:""!important;position:absolute!important;left:20px!important;bottom:-6px!important;width:9px!important;height:9px!important;background:#fff!important;border-right:1.5px solid #d9667f!important;border-bottom:1.5px solid #d9667f!important;transform:rotate(45deg)!important}
+  html body #app#app#app#app#app .wistia-wizard .wf-tip.is-right{margin-left:auto!important;margin-right:8px!important;justify-self:end!important;align-self:flex-end!important}
+  html body #app#app#app#app#app .wistia-wizard .wf-tip.is-right::after{left:auto!important;right:24px!important}
+}
+@layer wistia-site-fixes{
+  /* r40: FAQ header alignment, one step smaller type, balanced Korean line breaks */
+  html body #app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title{display:flex!important;align-items:center!important;gap:14px!important;font-size:17.5px!important;line-height:1.4!important}
+  html body #app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title .svg-title-icon{transform:none!important;margin:0!important;align-self:center!important;flex:0 0 auto!important}
+  html body #app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-description{font-size:12px!important}
+  html body #app#app#app#app#app#app .info-page-faq .faq-group-heading h2{font-size:14.5px!important}
+  html body #app#app#app#app#app#app .info-page-faq .faq-group-heading p{font-size:11.5px!important}
+  html body #app#app#app#app#app#app :is(.info-faq,.we-home-faq) .faq-list summary{font-size:14px!important}
+  html body #app#app#app#app#app#app :is(.info-faq,.we-home-faq) .faq-list details p{font-size:13px!important}
+  html body #app#app#app#app#app#app :is(.info-page-faq .info-page-intro,.info-faq,.we-home-faq) :is(h1,h2,p,summary,.svg-section-text){word-break:keep-all!important;overflow-wrap:break-word!important}
+  html body #app#app#app#app#app#app :is(.info-page-faq .info-page-intro,.info-faq,.we-home-faq) :is(h1,h2,summary,.svg-section-text,.faq-group-heading p){text-wrap:balance!important}
+  html body #app#app#app#app#app#app :is(.info-page-faq .info-page-intro,.info-faq,.we-home-faq) :is(.faq-list details p,.svg-section-description){text-wrap:pretty!important}
+}
+@layer wistia-site-fixes{@media (max-width:767px){html body #app#app#app#app .wf-location-bar{flex-wrap:wrap!important;row-gap:8px!important}html body #app#app#app#app .wf-location-bar>div{min-width:max-content!important}html body #app#app#app#app .wf-location-bar small{white-space:nowrap!important}}}
+@layer wistia-site-fixes{html body #app#app#app#app .ed-map-stop p{white-space:nowrap!important;letter-spacing:-.01em!important}}
+@layer wistia-site-fixes{@media (max-width:767px){html body #app#app#app#app .wf-location-bar>span{margin-left:auto!important}}}

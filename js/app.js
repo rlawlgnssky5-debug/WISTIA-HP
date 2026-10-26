@@ -67,7 +67,7 @@ const PRODUCTS = {
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
     faq: [
       ["DUET 상품은 몇 명이 이용하나요", "1곡 기준 두 분이 이용해요 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요"],
-      ["두 사람이 함께 녹음할 수 있나요", "듀엣으로 변경하면 2인·1곡으로 준비해요 STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분이에요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 230,000원이에요"],
+      ["두 사람이 함께 녹음할 수 있나요", "듀엣으로 변경하면 2인·1곡으로 준비해요 STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분이에요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 220,000원이에요"],
       ["어떤 파일을 받나요", "예식장에서 사용할 AR과 선택한 작업이 반영된 완성 음원을 전달해요"]
     ]
   },
@@ -161,7 +161,7 @@ const PRODUCTS = {
     ],
     included: ["두 사람 녹음 및 1대1 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "녹음 메이킹 및 립싱크 촬영", "영상 편집", "축가 상영용 최종본과 완성 음원 전달"],
     faq: [
-      ["AR 축가와 듀엣은 어떻게 다른가요", "둘 다 같은 STANDARD·DELUXE·PREMIUM예요 듀엣은 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 230,000원이에요"],
+      ["AR 축가와 듀엣은 어떻게 다른가요", "둘 다 같은 STANDARD·DELUXE·PREMIUM예요 듀엣은 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 220,000원이에요"],
       ["듀엣에는 어떤 구성이 포함되나요", "1곡 기준으로 두 분이 함께 준비해요 선택한 타입의 녹음 시간과 작업 구성을 유지해요"],
       ["어떤 파일을 받나요", "본식 축가 순서에 상영할 영상과 두 분이 함께 부른 완성 음원을 전달합니다"],
       ["완성까지 얼마나 걸리나요", "기본 제작 기간은 촬영과 자료 전달이 완료된 뒤 약 14일입니다"]
@@ -391,8 +391,8 @@ const INFO_FAQ_GROUPS=[
   ["녹음 전에 무엇을 준비하면 좋을까요?","<strong>따로 준비하실 건 없어요!</strong><br>몸만 편하게 오시면 나머지는 저희가 다 준비해 드려요"]
  ]},
  {title:"녹음 당일",description:"처음이어도 편하게 부르실 수 있도록 도와드려요",items:[
-  ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong><br>음정·박자 보정은 DELUXE·PREMIUM·DUET에 포함되며 STANDARD에서는 추가 선택할 수 있어요"],
-  ["녹음은 현장에서 어떻게 진행되나요?","곡과 키를 확인하고 연습한 뒤 한 구간씩 녹음해요<br><strong>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM·DUET은 2시간 30분</strong>이며 안내·연습 시간도 포함이에요<br>DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 230,000원이에요<br>듀엣으로 변경해도 선택한 타입의 녹음 시간은 같아요"],
+  ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>"],
+  ["녹음은 현장에서 어떻게 진행되나요?","곡과 키를 확인하고 연습한 뒤 한 구간씩 녹음해요<br><strong>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM·DUET은 2시간 30분</strong>이며 안내·연습 시간도 포함이에요<br>DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·기본 믹싱·마스터링 포함 220,000원이에요<br>듀엣으로 변경해도 선택한 타입의 녹음 시간은 같아요"],
   ["녹음 시간을 더 추가할 수 있나요?","녹음 50분 추가는 <strong>50,000원</strong>이에요<br>PREMIUM은 기본 2시간 30분 녹음해요<br>당일 연장 가능 여부는 다음 예약 일정을 확인한 뒤 안내해 드려요"]
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
@@ -406,7 +406,7 @@ const INFO_FAQ_GROUPS=[
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달받으신 본식용 AR 음원을 예식장 담당자에게 보내 주세요 예식장에서 사용하는 파일 형식과 재생 환경도 미리 확인해 알려주시면 좋아요 본식 전에 파일이 잘 재생되는지 꼭 확인해 주세요"]
  ]},
  {title:"스튜디오 방문",description:"오시는 길과 주차를 안내해 드려요",items:[
-  ["스튜디오는 어디에 있나요?","<strong>부천시청역 1번 출구</strong>에서 도보 <strong>약 300m</strong>예요<br>주소는 부천시 석천로170번길 19, 2층이에요"],
+  ["스튜디오는 어디에 있나요?","<strong>부천시청역 1번 출구</strong>에서 도보 <strong>약 300m</strong>예요<br>주소는 부천시 석천로170번길 19, 부광프라자 2층이에요"],
   ["차를 가져가도 괜찮을까요?","스튜디오 <strong>바로 옆 공영주차장</strong>을 이용하실 수 있어요<br>주차 요금은 별도이고 주차비 지원은 어려워요"],
  ]}
 ]
@@ -580,7 +580,7 @@ function priceBar(key,purpose=""){
  return ''
 }
 function sentenceBreaks(text){return String(text).replace(/(요|니다)\s+(?=\S)/g,'$1<br>')}
-function faq(items){return '<div class="faq-list">'+items.map(([q,a])=>'<details><summary>'+q+'<span aria-hidden="true">+</span></summary><p>'+sentenceBreaks(a)+'</p></details>').join("")+'</div>'}
+function faq(items){return '<div class="faq-list">'+items.map(([q,a])=>'<details><summary>Q. '+q+'<span aria-hidden="true">+</span></summary><p>'+sentenceBreaks(a)+'</p></details>').join("")+'</div>'}
 function packageItem(item){return ({
  "녹음 및 1대1 디렉팅":"1:1 레코딩 · 보컬 디렉팅",
  "두 사람 녹음 및 1대1 디렉팅":"2인 레코딩 · 보컬 디렉팅",
@@ -834,8 +834,8 @@ function productionGuide(p){const film=p.category!=="song";return '<section clas
 function resultSection(p,m,w,song){return '<section class="result-band"><div class="shell"><div>'+label("THE RESULT")+'<h2>이렇게 완성됩니다</h2></div><div><p>'+m.result+'</p><span>'+escapeHtml(p.resultCopy|| (song?"보정과 믹싱·마스터링을 거친 최종 음원으로 전달합니다":"직접 부른 노래와 촬영 장면을 하나의 영상으로 완성합니다"))+'</span></div></div>'+(w?'<div class="shell result-film"><button class="film-poster" data-video="'+w.id+'" aria-label="'+w.title+' 실제 결과물 재생">'+img(w.image,w.title,true)+'<span class="play" aria-hidden="true">▶</span><span class="poster-note">실제 결과물 재생하기</span></button></div>':'')+'</section>'}
 function detailNext(key,purpose=""){const eventHref="#/event/"+key+(purpose?"/"+purpose:"");return '<section class="detail-next section"><div class="shell"><h2>상품 구성과 가격을<br>확인해 보세요</h2><p>포함 작업과 이벤트 혜택을 확인한 뒤 예약 상담으로 이어집니다</p>'+cta("상품 구성·가격 확인하기",eventHref)+'</div></section>'}
 function homeDirectionsSection(){
- const address='경기도 부천시 석천로170번길 19, 2층'
- return '<section class="we-shell we-section we-home-location" id="homeLocation" aria-labelledby="homeLocationTitle"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 08 · 오시는 길</span><h2 id="homeLocationTitle">부천에서 만나요</h2></header><div class="we-directions-grid"><figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img('assets/img/wistia-directions.png','부천시청역, 위스티아 스튜디오와 공영주차장 위치 안내 지도')+'</a><figcaption>지도를 누르면 크게 볼 수 있습니다</figcaption></figure><div class="we-directions-copy"><h3 class="studio-address" data-svg-title="off">'+address+'</h3><p>부천시청역 1번 출구에서 도보 약 300m</p><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">네이버 지도 ↗</a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">카카오맵 ↗</a></div></div></div></section>'
+ const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',mapAddress='경기도 부천시 석천로170번길 19, 2층'
+ return '<section class="we-shell we-section we-home-location" id="homeLocation" aria-labelledby="homeLocationTitle"><header class="we-heading"><span class="we-kicker we-section-tag">POINT 08 · 오시는 길</span><h2 id="homeLocationTitle">부천에서 만나요</h2></header><div class="we-directions-grid"><figure class="wistia-directions-map"><a href="'+location.origin+'/assets/img/wistia-directions.png" target="_blank" rel="noopener noreferrer" aria-label="오시는 길 지도 크게 보기">'+img('assets/img/wistia-directions.png','부천시청역, 위스티아 스튜디오와 공영주차장 위치 안내 지도')+'</a><figcaption>지도를 누르면 크게 볼 수 있습니다</figcaption></figure><div class="we-directions-copy"><h3 class="studio-address" data-svg-title="off">'+address+'</h3><p>부천시청역 1번 출구에서 도보 약 300m</p><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p><div class="wistia-location-links"><a href="https://map.naver.com/p/search/'+encodeURIComponent(mapAddress)+'" target="_blank" rel="noopener noreferrer">네이버 지도 ↗</a><a href="https://map.kakao.com/link/search/'+encodeURIComponent(mapAddress)+'" target="_blank" rel="noopener noreferrer">카카오맵 ↗</a></div></div></div></section>'
 }
 function studioSculpture(kind="voice"){
  const record='<div class="studio-record"><div class="studio-record-face"><span>WISTIA<small>우리의 목소리</small></span></div><div class="studio-record-back"></div><div class="studio-record-edge"></div></div>'
@@ -907,11 +907,11 @@ function renderLegacyHome(requested="role"){
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><h2 class="about-story-title about-specialist-title">목소리와 이야기를 담는 스튜디오</h2><p class="about-fixed-lines">말로 다 전하지 못한 마음을<br>직접 부른 노래에 담습니다</p><p class="about-fixed-lines about-long-lines">한 곡의 노래가 완성된 음원이 되기까지,<br>목소리에 담긴 마음이 자연스럽게 전해지도록<br>녹음부터 음원 보정, 믹싱까지 함께합니다</p></div><figure>'+img("assets/img/studio-facility/facility-1640.webp","위스티아 스튜디오 내부, 소파와 녹음 부스, 마이크",true).replace('<img ','<img srcset="assets/img/studio-facility/facility-820.webp 820w, assets/img/studio-facility/facility-1640.webp 1640w" sizes="(min-width: 780px) 560px, 100vw" ')+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><h2 id="specialistTitle" class="single-line-heading about-specialist-title">함께 완성하는 전문가들</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-no-people/03.svg","1대1 보컬 디렉팅",true)+'<p>현장</p><h3 class="about-specialist-title">편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-no-people/06.svg","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3 class="about-specialist-title">내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
- const address="경기도 부천시 석천로170번길 19, 2층"
- const enc=encodeURIComponent(address),ic=(d)=>'<span class="lc2-ic" aria-hidden="true">'+d+'</span>'
+ const address="경기도 부천시 석천로170번길 19, 부광프라자 2층",mapAddress="경기도 부천시 석천로170번길 19, 2층"
+ const enc=encodeURIComponent(mapAddress),ic=(d)=>'<span class="lc2-ic" aria-hidden="true">'+d+'</span>'
  const locationContent='<div class="wistia-location lc2"><div class="lc2-card lc2-addr"><span class="lc2-badge">'+studioIcon('pin')+'WISTIA STUDIO</span><h2 class="studio-address" data-svg-title="off">'+address+'</h2><p class="lc2-sub">7호선 부천시청역 1번 출구</p><div class="lc2-btns"><a class="lc2-n" href="https://map.naver.com/p/search/'+enc+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a class="lc2-k" href="https://map.kakao.com/link/search/'+enc+'" target="_blank" rel="noopener noreferrer">카카오맵</a><button class="lc2-c location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">주소복사</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p></div><div class="lc2-card lc2-map"><figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure><div class="lc2-cap"><span>부천시청역 1번 출구 → 위스티아 스튜디오</span></div></div><div class="lc2-side"><h3 data-svg-title="off" class="lc2-sec">교통편 안내</h3><div class="lc2-card lc2-rows"><div class="lc2-row">'+ic(studioIcon('train'))+'<div><h4 data-svg-title="off">지하철로 오실 때</h4><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p><div class="lc2-steps"><span>1번 출구</span><i>›</i><span>도보 이동</span><i>›</i><span>2층 스튜디오</span></div></div></div><div class="lc2-row">'+ic(studioIcon('car'))+'<div><h4 data-svg-title="off">차량으로 오실 때</h4><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p></div></div><div class="lc2-row">'+ic('<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>')+'<div><h4 data-svg-title="off">주차 안내</h4><p>시의회 옆 공영주차장 · 주차 요금 별도<br>주차비 지원은 어렵습니다</p></div></div></div></div></div>'
  const directionsMap='<figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure>'
- const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><span class="faq-group-number" aria-hidden="true">'+String(index+1).padStart(2,'0')+'</span><div><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
+ const faqContent='<div class="info-faq">'+INFO_FAQ_GROUPS.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><div><h2 id="infoFaqGroup'+index+'">'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','선택한 타입에 맞춰 목소리를 완성해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/detail/solo">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent:aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
  const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>AR 축가 사전녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+sentenceBreaks(page.description)+'</p>'
@@ -1136,17 +1136,17 @@ function soloReviewGrid(){
 }
 function soloChatFaq(){
  const questions=[
-  ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong><br>음정·박자 보정은 DELUXE·PREMIUM·DUET에 포함되며 STANDARD에서는 추가 선택할 수 있어요'],
+  ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>'],
   ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
   ['완성 음원은 언제 받을 수 있나요?','STANDARD 기본 구성은 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 영업일 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
-  ['녹음한 목소리의 비율도 고를 수 있나요?','녹음 당일 여러 비율을 직접 들어 보고 골라요']
+  ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
  return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
 function soloNoticeAndMap(){
- const address='경기도 부천시 석천로170번길 19, 2층',encoded=encodeURIComponent(address)
+ const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=16i','예약 전에 확인하세요, STANDARD는 당일 전달, DELUXE·PREMIUM은 영업일 7일 이내',860,1088)+'</section>'+
   '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>'+
   '<div class="ed-map-art"><img src="assets/detail-solo-16j/map_C3_v2.webp?v=20261020-speed" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="860" height="1680" loading="lazy" decoding="async"></div>'+
@@ -1194,7 +1194,7 @@ function arCommerceDetail(p,key="solo"){
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
   ['완성 음원은 언제 받을 수 있나요?','녹음과 필요한 자료 전달이 모두 끝난 뒤 최대 7일 이내에 전달합니다<br>본식 일정이 가까우면 예약 전에 제작 가능 일정을 먼저 확인해 주세요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
-  ['녹음한 목소리의 비율도 고를 수 있나요?','녹음 당일 <strong>여러 비율을 직접 들어 보고</strong><br>AR에 맞춰 불러 봐요.<br>현장 목소리와 가장 잘 어우러지는 비율로 정해 드려요.']
+  ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
  const customerVideo=arCustomerVideoData(key)
  const imageLayout=['solo','duo'].includes(key)
@@ -1240,7 +1240,7 @@ function mobileArProcess(key="solo"){
 }
 function mobileArNotices(story=false){
  const address=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
- return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'최대 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'녹음 후')+'</small></div></li><li><strong>수정</strong><div><b>상담에서 안내해요</b><small>원하는 부분을 모아서 알려 주세요</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><address class="studio-address" data-svg-title="off">경기도 부천시 석천로170번길 19, 2층</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+address+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
+ return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'최대 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'녹음 후')+'</small></div></li><li><strong>수정</strong><div><b>상담에서 안내해요</b><small>원하는 부분을 모아서 알려 주세요</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><address class="studio-address" data-svg-title="off">경기도 부천시 석천로170번길 19, 부광프라자 2층</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="https://map.kakao.com/link/search/'+address+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
 function mobileDetailEvents(){
@@ -1903,11 +1903,13 @@ const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · �
 const EVENT_SOLO_TITLE="문의양식 | 위스티아 축가 사전녹음 가격"
 const LIVE_ROUTES=new Set(["/","/detail/solo","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
+const ROUTE_META={"/": ["부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아", "부천 AR 축가 사전녹음 위스티아 · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구"], "/detail/solo": ["AR 축가 사전녹음 · STANDARD·DELUXE·PREMIUM·DUET | 위스티아", "1곡 기준 STANDARD·DELUXE·PREMIUM·DUET · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정 · 30·50·70·100% 모든 비율 제공"], "/event/solo": ["문의 양식 | 위스티아 AR 축가 사전녹음", "타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/event/duo": ["듀엣 문의 양식 | 위스티아 AR 축가 사전녹음", "2인·1곡 듀엣 녹음 문의 · 녹음 날짜와 시작 시간, 추가 옵션을 고르면 예상 금액과 문의 내용을 카카오톡으로 보낼 수 있어요"], "/contact": ["문의 양식 | 위스티아 AR 축가 사전녹음", "타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/events": ["후기 참여 이벤트 | 위스티아", "위스티아 후기 참여 이벤트 · 참여 조건을 확인하고 후기를 남기면 카카오톡으로 환급을 안내해 드려요"], "/info/faq": ["자주 묻는 질문 | 위스티아", "곡 선택과 녹음 준비부터 AR 본식 사용, 완성 음원 전달과 수정, 스튜디오 방문까지 편하게 확인해 보세요"], "/info/location": ["오시는 길 | 경기도 부천 위스티아", "위스티아는 경기도 부천시 석천로170번길 19, 부광프라자 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m"]}
 function setPageMeta({title,description,image,robots=""}){
+ {const fixed=ROUTE_META[location.pathname.replace(/\/$/,"")||"/"];if(fixed){title=fixed[0];description=fixed[1]}}
  document.title=title;
  const url="https://www.wistiastudio.com"+location.pathname.replace(/\/$/,"")+(location.pathname==="/"?"/":"");
  const shareImage=image||"https://www.wistiastudio.com/assets/img/og/wistia-og.png";
- const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":url,"meta[property='og:image']":shareImage,"meta[name='twitter:image']":shareImage};
+ const values={"meta[name='description']":description,"meta[property='og:title']":title,"meta[property='og:description']":description,"meta[property='og:url']":url,"meta[property='og:image']":shareImage,"meta[name='twitter:image']":shareImage,"meta[name='twitter:title']":title,"meta[name='twitter:description']":description};
  Object.entries(values).forEach(([selector,value])=>{const tag=document.querySelector(selector);if(tag)tag.content=value});
  const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=url;
  let robotsTag=document.querySelector("meta[name='robots']");
