@@ -530,3 +530,9 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .calendar-grid > .calendar-day:not(:disabled).is-selected span{color:#333333!important}
   html body #app#app#app#app .calendar-legend .legend-selected{background:#fbd3dd!important;border:1.5px solid #d9667f!important}
 }
+
+/* Round 34: selected voice-ratio button in the same rose as the selected calendar day */
+@layer wistia-site-fixes {
+  html[lang] body #app#app#app#app#app#app#app#app#app#app#app#app .solo-p4-ratio.is-on{border-color:#d9667f!important}
+  html[lang] body #app#app#app#app#app#app#app#app#app#app#app#app .solo-p4-ratio.is-on::before{background:#d9667f!important}
+}
