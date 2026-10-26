@@ -114,7 +114,7 @@
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요', '내 목소리 그대로, 어색한 부분만<br>음정·박자·호흡을 섬세하게 보정합니다')
     },
     ratioHeader() {
-      return heading('LIVE &amp; AR MIX · POINT 04', '<span>비율 고민하지 마세요</span>위스티아는 전 비율 다 드립니다!', '위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요')
+      return heading('LIVE &amp; AR MIX · POINT 04', '<span>비율 고민하지 마세요</span><b class="ed-title">위스티아는<br>전 비율 다 드립니다!</b>', '위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요')
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +

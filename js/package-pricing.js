@@ -83,30 +83,32 @@
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  if(p.key==='A')return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 기본 믹싱','음정·박자 보정 : 미포함','디렉팅 : 1:1','전달 : '+when]
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2명':'1명'),'녹음 시간 : '+hoursText(p.minutes),'믹싱 : 기본 믹싱','마스터링 : 포함','음정·박자 보정 : 포함','디렉팅 : 1:1','전달 : '+when]
+  // Spec row order: 인원 / 녹음 시간 / 음정·박자 보정 / 마스터링 / 곡 수 / 디렉팅 / 믹싱 / 전달
+  const tuned=p.key!=='A'
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(tuned?'포함':'미포함'),'마스터링 : '+(tuned?'포함':'미포함'),'곡 수 : 1곡','디렉팅 : 1:1 맞춤 디렉팅','믹싱 : '+(tuned?'정밀 믹싱 포함':'기본 믹싱'),'전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
   mix:'<path d="M5 3v6m0 4v8M12 3v10m0 4v4M19 3v2m0 4v12"/><circle cx="5" cy="11" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="7" r="2"/>',
   tune:'<path d="M4 15h5v-5h6V5h5M3 20h18m-5-5 2 2 4-4"/>',
   untuned:'<path d="M4 15h5v-5h6V5h5M3 3l18 18M3 21 21 3"/>',
+  unmixed:'<path d="M5 3v6m0 4v8M12 3v10m0 4v4M19 3v2m0 4v12M3 3l18 18M3 21 21 3"/><circle cx="5" cy="11" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="7" r="2"/>',
   file:'<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>',
   person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
   people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
- const shortTitles={A:'기본 녹음',B:'보컬 보정',C:'여유로운 녹음',D:'듀엣 녹음'}
+ const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'여유로운 녹음',D:'듀엣 녹음'}
  const headcount=p=>(p.duet?'2인':'1인')+'·1곡 기준'
  function selectionDetails(key){
   const p=packageFor(key)
-  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
+  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
   const baseRows=features(packageFor('A')).slice(1)
   const featureRows=features(p).slice(1).map(item=>{
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3></div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">'+money(p.individual-p.price)+' 저렴해져요!</span>':'')+'</div><p class="package-selected-meta">'+headcount(p)+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
