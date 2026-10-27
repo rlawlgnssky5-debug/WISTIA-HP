@@ -206,12 +206,20 @@
   if(seeded)writeCouponClaims(claims);syncCouponControls(form)
  }
  function celebrateCoupon(card,button){
-  if(!card||!global.document||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
+  if(!card||!global.document)return
   card.querySelector('.coupon-particle-layer')?.remove()
   const layer=global.document.createElement('span');layer.className='coupon-particle-layer';layer.setAttribute('aria-hidden','true')
-  const rect=card.getBoundingClientRect(),origin=button?.getBoundingClientRect()||rect,x=(origin.left-rect.left+origin.width/2)*(card.clientWidth/rect.width),y=(origin.top-rect.top+origin.height/2)*(card.clientHeight/rect.height)
-  for(let i=0;i<36;i++){const bit=global.document.createElement('i'),angle=(-175+(i%18)*9)*Math.PI/180,distance=38+(i%6)*13;bit.className=i%3?'coupon-particle-star':'coupon-particle-bit';bit.textContent=i%3===1?'✦':i%3===2?'✧':'';bit.style.cssText='left:'+x+'px;top:'+y+'px;--coupon-dx:'+Math.cos(angle)*distance+'px;--coupon-dy:'+(Math.sin(angle)*distance-12)+'px;--coupon-delay:'+(i<18?0:140)+'ms;--coupon-turn:'+(i*31)+'deg';layer.append(bit)}
-  card.append(layer);global.setTimeout(()=>layer.remove(),1450)
+  const reduced=global.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  layer.classList.toggle('is-still',!!reduced)
+  const width=card.clientWidth,height=card.clientHeight
+  // Spread three bursts across the card, rather than shrinking stars beside the button
+  for(let i=0;i<(reduced?8:48);i++){
+   const bit=global.document.createElement('i'),group=Math.floor(i/16),angle=(-170+(i%16)*10)*Math.PI/180,distance=48+(i%5)*14
+   bit.className=i%3?'coupon-particle-star':'coupon-particle-bit';bit.textContent=i%3===1?'✦':i%3===2?'✧':''
+   const x=reduced?(i%4+.5)*width/4:width*(.16+group*.34),y=reduced?(i<4?18:height-22):height*.72
+   bit.style.cssText='left:'+x+'px;top:'+y+'px;--coupon-size:'+(18+i%4*3)+'px;--coupon-dx:'+Math.cos(angle)*distance+'px;--coupon-dy:'+(Math.sin(angle)*distance-16)+'px;--coupon-delay:'+(group%2*160)+'ms;--coupon-turn:'+(i*31)+'deg';layer.append(bit)
+  }
+  card.append(layer);global.setTimeout(()=>layer.remove(),1800)
  }
  const couponRoots=new WeakSet()
  function mountCouponClaims(root){
