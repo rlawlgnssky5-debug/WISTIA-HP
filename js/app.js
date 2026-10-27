@@ -1247,7 +1247,7 @@ function mobileDetailEvents(){
  const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'문의 양식에서 첫 이용 선택',weekday:'공휴일 제외 · 녹음 시작 시간 기준',advance1:'사전 예약 · 1·2개월 중 하나만 적용',advance2:'사전 예약 · 1·2개월 중 하나만 적용',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
  const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
  const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
- return '<div class="ed-benefit-lists">'+window.WistiaPackages.firstVisitBanner('/assets/editorial/welcome-gift-rose.webp')+(window.WistiaPackages.yearEndBookingBanner?window.WistiaPackages.yearEndBookingBanner():'')+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
+ return '<div class="ed-benefit-lists">'+window.WistiaPackages.couponClaimCard('firstVisit','detail','/assets/editorial/welcome-gift-rose.webp')+window.WistiaPackages.couponClaimCard('yearEndCoupon','detail')+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
@@ -2066,6 +2066,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  window.initHeroEditor?.(validDetail ? key : "");
  window.initProcessEditor?.(validDetail ? key : "");
  window.WistiaPackages?.mountYearEndBanners(app);
+ window.WistiaPackages?.mountCouponClaims(app);
  const fallbackTitle=eventsPage?"이벤트 | WISTIA":info?INFO_PAGES[key].title.replace("\n"," ")+" | WISTIA":type==="before-after"?"보컬 보정 전후 비교 | WISTIA":(PRODUCTS[key]?.title||"축가 녹음 및 영상")+" | WISTIA";
  const path=routePath();
  const orphan=window.WISTIA_SEO.noindex?.[path];
