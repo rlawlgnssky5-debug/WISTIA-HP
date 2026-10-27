@@ -5,10 +5,10 @@ import {readFileSync} from 'node:fs'
 const source=readFileSync(new URL('../js/package-pricing.js',import.meta.url),'utf8'),key='wistia:coupon-claims:v1',clockNow=Date.parse('2026-10-27T12:00:00+09:00')
 class ClockDate extends Date{constructor(...args){super(...(args.length?args:[clockNow]))}static now(){return clockNow}}
 function setup(initial={},blocked=false){const items=new Map(Object.entries(initial)),context=vm.createContext({Intl,Date:ClockDate,setTimeout,localStorage:{getItem:k=>{if(blocked)throw Error('blocked');return items.get(k)||null},setItem:(k,v)=>{if(blocked)throw Error('blocked');items.set(k,v)}}});vm.runInContext(source,context);return {api:context.WistiaPackages,items}}
-test('coupon selections store only explicit boolean choices and a short lifetime',()=>{
+test('first visit stores a short-lived choice but limited inventory cannot be claimed locally',()=>{
  const {api,items}=setup({'unrelated':'keep'});api.setCouponClaim('firstVisit',true);api.setCouponClaim('yearEndCoupon',true)
- const saved=JSON.parse(items.get(key));assert.deepEqual(Object.keys(saved).sort(),['savedAt','selections','version']);assert.deepEqual(saved.selections,{firstVisit:true,yearEndCoupon:true});assert.equal(items.get('unrelated'),'keep')
- api.setCouponClaim('firstVisit',false);assert.equal(api.readCouponClaims().firstVisit,false);assert.equal(api.readCouponClaims().yearEndCoupon,true)
+ const saved=JSON.parse(items.get(key));assert.deepEqual(Object.keys(saved).sort(),['savedAt','selections','version']);assert.deepEqual(saved.selections,{firstVisit:true});assert.equal(items.get('unrelated'),'keep')
+ api.setCouponClaim('firstVisit',false);assert.equal(api.readCouponClaims().firstVisit,false);assert.equal(api.readCouponClaims().yearEndCoupon,undefined)
  api.setCouponClaim('__proto__',true);assert.equal(Object.hasOwn(JSON.parse(items.get(key)).selections,'__proto__'),false)
 })
 test('coupon choices ignore expired, corrupt, future and nonboolean storage',()=>{

@@ -9,6 +9,11 @@ const mime={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/jav
 createServer(async(req,res)=>{
  try{
   let path=decodeURIComponent(new URL(req.url,'http://localhost').pathname)
+  if(path==='/api/limited-coupon'){
+   res.status=code=>{res.statusCode=code;return res}
+   res.json=value=>{res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(value));return res}
+   await (await import('../api/limited-coupon.js')).default(req,res);return
+  }
   if(path==='/api/availability'){
    req.query=Object.fromEntries(new URL(req.url,'http://localhost').searchParams)
    res.status=code=>{res.statusCode=code;return res}
