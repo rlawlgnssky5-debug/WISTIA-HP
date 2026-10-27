@@ -128,3 +128,14 @@ test('year-end coupon is limited to November and December visits and uses approv
  assert.ok(sales.includes('WistiaPackages.cards(p.key)'))
  assert.ok(sales.includes('선택한 구성으로 문의양식 작성'))
 })
+
+test('approved ticket asset and banner size synchronization preserve coupon eligibility',()=>{
+ assert.equal(pricing.yearEndImage,'/assets/editorial/year-end-ticket-rose-v1.webp')
+ assert.equal(typeof pricing.mountYearEndBanners,'function')
+ const source=readFileSync(new URL('../js/package-pricing.js',import.meta.url),'utf8'),css=readFileSync(new URL('../css/canvas-780.css',import.meta.url),'utf8')
+ assert.ok(source.includes('ResizeObserver(sync)'))
+ assert.ok(source.includes("global.getComputedStyle(reference).height"))
+ assert.ok(css.includes('height:var(--year-end-height,auto)'))
+ assert.ok(css.includes('.year-end-products{margin-top:5px'))
+ assert.equal(pricing.quote({package:'B',yearEndCoupon:'1',firstVisit:'1',bookingDate:'2026-12-31',timeStart:'13:00'},'2026-10-27').total,100000)
+})

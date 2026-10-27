@@ -761,3 +761,19 @@ html body #app#app#app#app [data-year-end-gift] em>span{display:block!important;
 html body #app#app#app#app .year-end-products{display:block!important;white-space:nowrap!important;font-size:clamp(9px,2.45cqw,11px)!important;letter-spacing:-.025em!important}
 html body #app#app#app#app .wf-welcome [data-year-end-gift]{margin-top:16px!important}
 }
+
+/* Owner-approved 3D ticket, with its frame matched to the neighbouring first-visit coupon */
+@layer wistia-site-fixes{
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift]{height:var(--year-end-height,auto)!important;min-height:0!important;background:linear-gradient(110deg,#fffaf8,#f8e9ed)!important;border-color:#e7c7cf!important;align-items:center!important;overflow:hidden!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift]>div{min-width:0!important;border-left:1px dashed #dcb6c2!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift] small{line-height:1.2!important;color:#9f6878!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift] strong{margin-top:2px!important;line-height:1.2!important;letter-spacing:-.045em!important;color:#975366!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift] em{margin-top:3px!important;line-height:1.2!important;color:#a47b85!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift] em>span{line-height:1.2!important}
+html body #app#app#app#app#app#app#app .welcome-gift[data-year-end-gift] .year-end-products{margin-top:5px!important;line-height:1.2!important;color:#a47b85!important}
+html body #app#app#app#app#app#app#app .wf-welcome [data-year-end-gift]{padding-top:10px!important;padding-bottom:10px!important}
+html body #app#app#app#app#app#app#app .wf-welcome [data-year-end-gift]>div{padding-left:12px!important}
+html body #app#app#app#app#app#app#app .events-discount-list .year-end-products{margin-top:5px!important}
+html body #app#app#app#app#app#app#app .events-discount-list .evd-icon:has(img){background:transparent!important;border-radius:0!important}
+html body #app#app#app#app#app#app#app .events-discount-list .evd-icon>img{display:block!important;width:40px!important;height:40px!important;object-fit:contain!important}
+}

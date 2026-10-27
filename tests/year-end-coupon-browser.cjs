@@ -31,9 +31,11 @@ async function run(){
      const range=document.createRange();range.selectNodeContents(el);const lines=[...range.getClientRects()].filter(r=>r.width>0)
      if(new Set(lines.map(r=>Math.round(r.top))).size>1||lines.some(r=>r.left<box.left-1||r.right>box.right+1||r.left<0||r.right>innerWidth))issues.push({text:el.textContent,box:{left:box.left,right:box.right},lines:lines.map(r=>({left:r.left,right:r.right,top:r.top}))})
     }
-    return {overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-innerWidth,main:document.querySelector('main').getBoundingClientRect().width,issues}
+    const banners=[...document.querySelectorAll('[data-year-end-gift]')].map(ticket=>{const reference=ticket.parentElement.querySelector('.welcome-gift:not([data-year-end-gift])'),r=ticket.getBoundingClientRect(),a=reference?.getBoundingClientRect(),visit=ticket.querySelector('em>span')?.getBoundingClientRect(),products=ticket.querySelector('.year-end-products')?.getBoundingClientRect();for(const el of ticket.querySelectorAll('small,strong,em>span')){const range=document.createRange();range.selectNodeContents(el);for(const text of range.getClientRects())if(text.top<r.top||text.bottom>r.bottom||text.left<r.left||text.right>r.right)issues.push({text:el.textContent,clippedInBanner:true})}return {width:r.width,height:r.height,referenceWidth:a?.width,referenceHeight:a?.height,gap:products.top-visit.bottom,image:ticket.querySelector('img').getAttribute('src')}})
+    return {overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-innerWidth,main:document.querySelector('main').getBoundingClientRect().width,issues,banners}
    })
    assert.equal(measure.overflow,0,JSON.stringify({width,route,measure}));assert.deepEqual(measure.issues,[],JSON.stringify({width,route,measure}));if(width===1280)assert.equal(measure.main,780)
+   for(const banner of measure.banners){assert.ok(Math.abs(banner.width-banner.referenceWidth)<.8,JSON.stringify({width,route,banner}));assert.ok(Math.abs(banner.height-banner.referenceHeight)<.8,JSON.stringify({width,route,banner}));assert.ok(banner.gap>=3.8,JSON.stringify({width,route,banner}));assert.equal(banner.image,'/assets/editorial/year-end-ticket-rose-v1.webp')}
    if(route==='/'||route==='/detail/solo'){
     await page.locator('[data-year-end-gift]').evaluate(el=>scrollTo(0,el.getBoundingClientRect().top+scrollY-150))
     await page.screenshot({path:path.join(out,route==='/'?'home-'+width+'.png':'detail-'+width+'.png')})
