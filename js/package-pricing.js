@@ -37,10 +37,11 @@
   '2028-10-02','2028-10-03','2028-10-04','2028-10-05','2028-10-09','2028-12-25'
  ])
  const fixedHolidays=new Set(['01-01','03-01','05-01','05-05','06-06','07-17','08-15','10-03','10-09','12-25'])
- // 10월 예약 쿠폰: inquiries made in October 2026 KST, DELUXE·PREMIUM·DUET only, gone from 2026-11-01 00:00 KST
- const octoberActive=(reference=today())=>reference>='2026-10-01'&&reference<'2026-11-01'
+ // Visit-date coupon for DELUXE·PREMIUM·DUET, expires at 2027-01-01 00:00 KST
+ const yearEndActive=(reference=today())=>validDate(reference)&&reference<'2027-01-01'
+ const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&validDate(date)&&date>='2026-01-01'&&date<='2026-12-31'&&date>=reference
  const discountOfferList=()=>[
-  ...(octoberActive()?[{key:'october',label:'10월 예약 이벤트',discount:20000,detail:'10월 문의에 적용돼요 · 스탠다드에는 적용되지 않아요'}]:[]),
+  ...(yearEndActive()?[{key:'yearEnd',label:'연말 방문 할인 쿠폰',discount:20000,detail:'2026년 12월 31일까지 녹음실 방문 시 · 스탠다드 제외'}]:[]),
   {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'},
@@ -66,7 +67,7 @@
  }
  function normalize(input={}){
   const selected=Array.isArray(input.options)?input.options:options.filter(o=>input[o.key]==='1'||input[o.key]===true).map(o=>o.key)
-  return {...input,package:packageFor(input.package).key,people:packageFor(input.package).duet||input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true,octoberCoupon:input.octoberCoupon==='1'||input.octoberCoupon===true}
+  return {...input,package:packageFor(input.package).key,people:packageFor(input.package).duet||input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true,yearEndCoupon:input.yearEndCoupon==='1'||input.yearEndCoupon===true}
  }
  function quote(input={},reference=today()){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
@@ -75,7 +76,7 @@
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
-  if(v.octoberCoupon&&p.key!=='A'&&octoberActive(reference))discounts.push({key:'october',label:'10월 예약 쿠폰',amount:20000})
+  if(v.yearEndCoupon&&p.key!=='A'&&yearEndEligible(v.bookingDate,reference))discounts.push({key:'yearEnd',label:'연말 방문 할인 쿠폰',amount:20000})
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:20000})
   if(validDate(v.bookingDate)){
    if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 13~16시 시작',amount:10000})
@@ -105,12 +106,17 @@
  const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'+ 보컬 보정 + 녹음 1시간',D:'+ 보컬 보정 + 녹음 1시간 + 1인 추가'}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
- function cardCouponPrice(p,reference=today()){return quote({package:p.key,firstVisit:'1',octoberCoupon:'1'},reference).total}
- function priceLines(p,reference=today()){
+ // Without a chosen date this is the conditional 2026 visit price, never an applied quote
+ function cardCouponPrice(p,reference=today(),bookingDate=''){const q=quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate:bookingDate||reference},reference);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
+ function bestCouponPrice(p,reference=today()){
+  const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
+  return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate,timeStart:'13:00'},reference).total))
+ }
+ function priceLines(p,reference=today(),bookingDate=''){
   if(p.key==='A')return ''
-  const oct=octoberActive(reference),coupon=quote({package:p.key,firstVisit:'1',octoberCoupon:'1'},reference).total,best=quote({package:p.key,firstVisit:'1',octoberCoupon:'1',bookingDate:bestDate(reference),timeStart:'13:00'},reference).total
+  const eligible=yearEndEligible(bookingDate||reference,reference),coupon=cardCouponPrice(p,reference,bookingDate),best=validDate(bookingDate)?quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate,timeStart:'13:00'},reference).total:bestCouponPrice(p,reference)
   const down=amount=>'<span class="price-down-pill">'+money(amount)+' DOWN</span>'
-  const couponLabel=oct?'10월 쿠폰 + 첫 이용 쿠폰 적용가':'첫 이용 쿠폰 적용가'
+  const couponLabel=eligible?'연말 쿠폰 + 첫 이용 적용가':'첫 이용 쿠폰 적용가'
   return '<dl class="package-price-lines">'+
    '<div class="is-list"><div class="price-line-main"><dt>원가</dt><dd><s>'+money(p.individual)+'</s></dd></div></div>'+
    '<div class="is-pkg"><div class="price-line-main"><dt>패키지 할인가</dt><dd>'+money(p.price)+'</dd></div>'+down(p.individual-p.price)+'</div>'+
@@ -118,7 +124,7 @@
    '<div class="is-best"><div class="price-line-main"><dt>사전 예약·평일 할인까지 최대</dt><dd>'+money(best)+'</dd></div>'+down(coupon-best)+'</div>'+
    '</dl>'
  }
- function selectionDetails(key){
+ function selectionDetails(key,bookingDate=''){
   const p=packageFor(key)
   const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
@@ -127,16 +133,17 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">패키지로 예약하면 '+money(p.individual-p.price)+' 저렴해져요</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p)
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">패키지로 예약하면 '+money(p.individual-p.price)+' 저렴해져요</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate)
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
   return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(cardCouponPrice(p))+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"></span>')+'<strong class="package-card-price" data-package-coupon-price="'+p.key+'">'+money(cardCouponPrice(p))+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key].split(/ (?=\+ )/).map(t=>'<span class="package-card-sub-item">'+t+'</span>').join(' ')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
-  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]')
+  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||''
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
-  if(panel&&panel.dataset.packageKey!==p.key){panel.innerHTML=selectionDetails(p.key);panel.dataset.packageKey=p.key}
+  if(panel&&(panel.dataset.packageKey!==p.key||panel.dataset.couponDate!==bookingDate)){panel.innerHTML=selectionDetails(p.key,bookingDate);panel.dataset.packageKey=p.key;panel.dataset.couponDate=bookingDate}
+  refreshCardPrices(root,bookingDate)
  }
  const selectionRoots=new WeakSet()
  function mountSelection(root){
@@ -156,7 +163,7 @@
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOfferList().map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
- function octoberBookingBanner(imageSrc='/assets/editorial/welcome-gift-rose.webp'){if(!octoberActive())return '';const month=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'numeric'}).format(new Date()).replace(/\D/g,'')||'10';return '<div class="welcome-gift" data-october-gift><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+month+'월 예약 할인 쿠폰 · DELUXE · PREMIUM · DUET</small><strong>20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ function yearEndBookingBanner(imageSrc='/assets/editorial/welcome-gift-rose.webp'){if(!yearEndActive())return '';return '<div class="welcome-gift" data-year-end-gift><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>연말 방문 할인 쿠폰</small><strong>20,000원 할인</strong><em>2026년 방문 · 디럭스·프리미엄·듀엣</em></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
   if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
@@ -165,10 +172,25 @@
   burst.innerHTML=Array.from({length:16},(_,i)=>'<i style="--i:'+i+';--dx:'+((i%2?1:-1)*(28+i*4))+'px;--turn:'+(i*43)+'deg"></i>').join('')
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,octoberBookingBanner,celebrate,hoursText,octoberActive,priceLines,cardCouponPrice,bestDate}
- // When October ends while a page is open, drop the coupon from open panels and wizard forms
- function refreshOctober(){if(octoberActive()||!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey)});global.document.querySelectorAll('.package-discount-guide').forEach(guide=>{guide.outerHTML=discountsHtml()});global.document.querySelectorAll('form').forEach(form=>{if(form.querySelector('[data-october-coupon]'))form.dispatchEvent(new global.Event('input',{bubbles:true}))});const nums=['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'];global.document.querySelectorAll('.events-discount-list .evd-card').forEach(card=>{if(/10월/.test(card.textContent||''))card.remove()});global.document.querySelectorAll('.events-discount-list .evd-no').forEach((el,i)=>{el.textContent=nums[i]||(i+1)+'번째'});global.document.querySelectorAll('.ed-benefit-items[data-benefit-type="discount"] li').forEach(li=>{if(/10월/.test(li.textContent||''))li.remove()});global.document.querySelectorAll('[data-october-gift]').forEach(el=>el.remove());global.document.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg));el.textContent=amt;const radio=el.closest('label.package-card')&&el.closest('label.package-card').querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
- if(global.document&&global.setTimeout&&octoberActive()){const left=Date.parse('2026-11-01T00:00:00+09:00')-Date.now();if(left>0&&left<2147483647)global.setTimeout(refreshOctober,left+1000);global.document.addEventListener('visibilitychange',()=>{if(global.document.visibilityState==='visible')refreshOctober()})}
+ function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
+ // Refresh open pages at expiry, including after a suspended tab resumes
+ function refreshYearEnd(){
+  if(yearEndActive()||!global.document)return
+  global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey)})
+  global.document.querySelectorAll('.package-discount-guide').forEach(guide=>{guide.outerHTML=discountsHtml()})
+  global.document.querySelectorAll('form').forEach(form=>{if(form.querySelector('[data-year-end-coupon]'))form.dispatchEvent(new global.Event('input',{bubbles:true}))})
+  const nums=['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째']
+  global.document.querySelectorAll('.events-discount-list .evd-card').forEach(card=>{if(card.textContent.includes('연말 방문 할인 쿠폰'))card.remove()})
+  global.document.querySelectorAll('.events-discount-list .evd-no').forEach((el,i)=>{el.textContent=nums[i]||(i+1)+'번째'})
+  global.document.querySelectorAll('.ed-benefit-items[data-benefit-type="discount"] li').forEach(li=>{if(li.textContent.includes('연말 방문 할인 쿠폰'))li.remove()})
+  global.document.querySelectorAll('[data-year-end-gift]').forEach(el=>el.remove())
+  refreshCardPrices(global.document)
+ }
+ if(global.document&&global.setTimeout&&yearEndActive()){
+  const schedule=()=>{const left=Date.parse('2027-01-01T00:00:00+09:00')-Date.now();if(left<=0){refreshYearEnd();return}global.setTimeout(schedule,Math.min(left+50,2147483647))}
+  schedule();global.document.addEventListener('visibilitychange',()=>{if(global.document.visibilityState==='visible')refreshYearEnd()})
+ }
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)
