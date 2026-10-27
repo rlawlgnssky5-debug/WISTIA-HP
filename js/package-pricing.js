@@ -122,8 +122,8 @@
   return '<dl class="package-price-lines">'+
    '<div class="is-list"><div class="price-line-main"><dt>원가</dt><dd><s>'+money(p.individual)+'</s></dd></div></div>'+
    '<div class="is-pkg"><div class="price-line-main"><dt><span class="package-price-label">패키지 할인가</span>'+down(p.individual-p.price)+'</dt><dd>'+money(p.price)+'</dd></div></div>'+
-   '<div class="is-coupon"><div class="price-line-main"><dt>'+couponLabel+'</dt><dd>'+money(coupon)+'</dd></div>'+down(p.price-coupon)+'</div>'+
-   '<div class="is-best"><div class="price-line-main"><dt>사전 예약·평일 할인까지 최대</dt><dd>'+money(best)+'</dd></div>'+down(coupon-best)+'</div>'+
+   '<div class="is-coupon"><div class="price-line-main"><dt><span class="package-price-label">'+couponLabel+'</span>'+down(p.price-coupon)+'</dt><dd>'+money(coupon)+'</dd></div></div>'+
+   '<div class="is-best"><div class="price-line-main"><dt><span class="package-price-label">사전 예약·평일 할인까지 최대</span>'+down(coupon-best)+'</dt><dd>'+money(best)+'</dd></div></div>'+
    '</dl>'
  }
  function selectionDetails(key,bookingDate=''){

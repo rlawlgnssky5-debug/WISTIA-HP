@@ -148,3 +148,13 @@ test('package savings badge is beside the package price label without duplicate 
   assert.ok(row.includes('<dd>'+price+'</dd>'))
  }
 })
+
+test('coupon and maximum savings badges share their labels without separate badge rows',()=>{
+ const html=pricing.selectionDetails('D')
+ for(const cls of ['is-coupon','is-best']){
+  const row=html.split('<div class="'+cls+'">')[1].split('</dt>')[0]
+  assert.ok(row.includes('<dt><span class="package-price-label">'))
+  assert.equal((row.match(/price-down-pill/g)||[]).length,1)
+ }
+ assert.equal((html.match(/<\/dd><\/div><span class="price-down-pill">/g)||[]).length,0)
+})

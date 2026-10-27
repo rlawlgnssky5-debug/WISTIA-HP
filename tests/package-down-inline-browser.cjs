@@ -1,6 +1,6 @@
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict')
-const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'../output/year-end-ticket-20261027',phase)
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'..',process.env.WISTIA_QA_OUT||'output/all-price-down-20261028',phase)
 ;(async()=>{
  const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),results=[],errors=[]
  try{
@@ -20,6 +20,17 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env
      const m=await row.evaluate(el=>{const rect=sel=>{const r=el.querySelector(sel).getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,center:r.top+r.height/2}},label=rect('.package-price-label'),pill=rect('.price-down-pill'),price=rect('dd');return {label,pill,price,overflow:document.documentElement.scrollWidth-innerWidth,main:document.querySelector('main').getBoundingClientRect().width}})
      assert.ok(m.pill.left>=m.label.right+2,JSON.stringify({width,route,key,m}));assert.ok(m.price.left>=m.pill.right+3,JSON.stringify({width,route,key,m}));assert.ok(Math.abs(m.label.center-m.pill.center)<1,JSON.stringify({width,route,key,m}));assert.equal(m.overflow,0);if(width===1280)assert.equal(m.main,780)
      results.push({width,route,key,...m})
+     for(const [cls,text] of [['is-coupon','40,000원 DOWN'],['is-best','30,000원 DOWN']]){
+      const extra=page.locator('.package-price-lines>.'+cls)
+      assert.equal(await extra.locator('dt>.price-down-pill').innerText(),text)
+      assert.equal(await extra.locator('.price-down-pill').count(),1)
+      const layout=await extra.evaluate(el=>{const rect=sel=>{const r=el.querySelector(sel).getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,center:r.top+r.height/2}},label=rect('.package-price-label'),pill=rect('.price-down-pill'),price=rect('dd'),dt=rect('dt');return {label,pill,price,dt}})
+      assert.ok(layout.price.left>=Math.max(layout.label.right,layout.pill.right)+3,JSON.stringify({width,route,key,cls,layout}))
+      assert.ok(layout.pill.left>=layout.dt.left-.5)
+      if(width>=780){assert.ok(layout.pill.left>=layout.label.right+2);assert.ok(Math.abs(layout.label.center-layout.pill.center)<1)}
+      else assert.ok(Math.abs(layout.label.center-layout.pill.center)<1||layout.pill.top>=layout.label.bottom+2)
+      results.push({width,route,key,cls,...layout})
+     }
     }
     if(route==='/'||route==='/contact'){fs.mkdirSync(out,{recursive:true});const prices=page.locator('.package-price-lines');await prices.evaluate(el=>el.scrollIntoView({block:'center'}));await prices.screenshot({path:path.join(out,'inline-down-'+(route==='/'?'home':'contact')+'-'+width+'.png')})}
    }

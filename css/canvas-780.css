@@ -705,9 +705,10 @@ html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dd{color:#d9667f!important;font-size:15px!important}
 html body #app#app#app#app#app#app#app .package-price-lines .price-down-pill{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:start!important;width:fit-content!important;max-width:100%!important;margin:0!important;padding:2px 8px!important;border-radius:999px!important;background:#fbd3dd!important;border:1px solid #f0b9c6!important;color:#c4566f!important;font-size:10.5px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.02em!important;white-space:nowrap!important;box-shadow:0 1px 0 #f3c9d3!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg .price-down-pill{background:#fde7ec!important;color:#a8475f!important}
-html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg .price-line-main{align-items:center!important}
-html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg .price-line-main dt{display:flex!important;align-items:center!important;gap:5px!important}
-html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg dt .price-down-pill{align-self:center!important;font-size:9px!important;padding:2px 5px!important}
+html body #app#app#app#app#app#app#app .package-price-lines>:is(.is-pkg,.is-coupon,.is-best) .price-line-main{align-items:center!important}
+html body #app#app#app#app#app#app#app .package-price-lines>:is(.is-pkg,.is-coupon,.is-best) .price-line-main dt{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:4px 5px!important}
+html body #app#app#app#app#app#app#app .package-price-lines .package-price-label{flex:0 0 auto!important;white-space:nowrap!important}
+html body #app#app#app#app#app#app#app .package-price-lines dt .price-down-pill{flex:0 0 auto!important;align-self:center!important;font-size:9px!important;padding:2px 5px!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-coupon .price-down-pill{background:#fbf1dd!important;border-color:#ead4a0!important;color:#b8893a!important;box-shadow:0 1px 0 #ead4a0!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-down-pill{background:#fbd3dd!important;color:#d9667f!important}
 @media (min-width:414px){
