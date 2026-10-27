@@ -724,5 +724,5 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-subti
 html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{display:none!important}
 html body #app#app#app#app#app .package-picker .package-card .package-card-price{color:#d9667f!important;font-weight:800!important}
 html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] .package-card-price{color:#c4892a!important}
-html body #app#app#app#app#app .package-picker .package-card .package-card-was.is-empty{visibility:hidden!important;min-height:1.05em!important;display:block!important}
+html body #app#app#app#app#app .package-picker .package-card .package-card-was.is-empty{visibility:hidden!important;min-height:1.2em!important;display:block!important;line-height:1.2!important}
 }
