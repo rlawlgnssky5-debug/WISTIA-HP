@@ -167,10 +167,64 @@
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  const yearEndImage='/assets/editorial/year-end-ticket-rose-v1.webp'
  function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span>'+yearEndCopy.visit+'</span><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
+ const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=3*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
+ let memoryClaims=null
+ function readCouponClaims(){
+  let data=memoryClaims
+  try{const raw=global.localStorage?.getItem(couponStorageKey);if(raw)data=JSON.parse(raw)}catch{}
+  if(!data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>couponLifetime)return {}
+  return Object.fromEntries(couponKeys.filter(key=>typeof data.selections?.[key]==='boolean').map(key=>[key,key==='yearEndCoupon'&&!yearEndActive()?false:data.selections[key]]))
+ }
+ function writeCouponClaims(selections){memoryClaims={version:1,savedAt:Date.now(),selections:Object.fromEntries(couponKeys.filter(key=>typeof selections[key]==='boolean').map(key=>[key,selections[key]]))};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
+ function couponClaimCard(key,mode='form',imageSrc){
+  if(!couponKeys.includes(key)||key==='yearEndCoupon'&&!yearEndActive())return ''
+  const year=key==='yearEndCoupon',title=year?'연말 방문 할인 쿠폰':'첫 이용 쿠폰',banner=year?yearEndBookingBanner():firstVisitBanner(imageSrc)
+  return '<div class="coupon-claim-card" data-coupon-card="'+key+'"'+(year?' data-year-end-coupon':'')+'>'+banner+'<div class="coupon-claim-action"><span class="coupon-claim-hint">여기를 눌러주세요 →</span><button type="button" class="coupon-claim-button" data-coupon-claim="'+key+'" aria-label="'+title+'" aria-pressed="false"><span data-coupon-button-copy>쿠폰 받기</span><b data-coupon-check aria-hidden="true" hidden>✓</b></button>'+(mode==='form'?'<input type="checkbox" name="'+key+'" value="1" hidden aria-hidden="true">':'')+'</div></div>'
+ }
+ function syncCouponControls(root=global.document){
+  const claims=readCouponClaims()
+  root?.querySelectorAll('[data-coupon-claim]').forEach(button=>{
+   const key=button.dataset.couponClaim,form=button.closest('form'),input=form?.querySelector('[name="'+key+'"]'),selected=input?input.checked:claims[key]===true,card=button.closest('[data-coupon-card]'),standard=!!form&&key==='yearEndCoupon'&&packageFor(form.querySelector('[name="package"]:checked')?.value).key==='A',date=form?.querySelector('[name="bookingDate"]')?.value||''
+   button.disabled=standard||!!input?.disabled;button.setAttribute('aria-pressed',String(selected&&!button.disabled));button.querySelector('[data-coupon-button-copy]').textContent=button.disabled?'대상 상품 전용':selected?(form?'선택 완료':'받기 완료'):'쿠폰 받기';button.querySelector('[data-coupon-check]').hidden=!selected||button.disabled
+   card.classList.toggle('is-received',selected&&!button.disabled);card.classList.toggle('is-disabled',button.disabled)
+   card.querySelector('.coupon-claim-hint').textContent=button.disabled?'스탠다드 적용 제외':selected&&key==='yearEndCoupon'&&date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':selected?'쿠폰을 받았어요':'여기를 눌러주세요 →'
+  })
+ }
+ function syncCouponClaims(root=global.document,notify=true){
+  const claims=readCouponClaims()
+  root?.querySelectorAll('form').forEach(form=>couponKeys.forEach(key=>{
+   const input=form.querySelector('[name="'+key+'"]');if(!input||!Object.hasOwn(claims,key))return
+   const allowed=key!=='yearEndCoupon'||yearEndActive()&&packageFor(form.querySelector('[name="package"]:checked')?.value).key!=='A',checked=allowed&&claims[key]
+   if(input.checked===checked)return;input.checked=checked
+   if(notify){input.dispatchEvent(new global.Event('input',{bubbles:true}));input.dispatchEvent(new global.Event('change',{bubbles:true}))}
+  }));syncCouponControls(root)
+ }
+ function setCouponClaim(key,selected){if(!couponKeys.includes(key))return;writeCouponClaims({...readCouponClaims(),[key]:key==='yearEndCoupon'&&!yearEndActive()?false:!!selected});syncCouponClaims(global.document)}
+ function restoreCouponClaims(form){
+  const claims=readCouponClaims();let seeded=false
+  couponKeys.forEach(key=>{const input=form.querySelector('[name="'+key+'"]');if(!input)return;if(Object.hasOwn(claims,key)){input.checked=claims[key]&&(key!=='yearEndCoupon'||yearEndActive()&&packageFor(form.querySelector('[name="package"]:checked')?.value).key!=='A')}else{claims[key]=input.checked;seeded=true}})
+  if(seeded)writeCouponClaims(claims);syncCouponControls(form)
+ }
+ function celebrateCoupon(card,button){
+  if(!card||!global.document||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
+  card.querySelector('.coupon-particle-layer')?.remove()
+  const layer=global.document.createElement('span');layer.className='coupon-particle-layer';layer.setAttribute('aria-hidden','true')
+  const rect=card.getBoundingClientRect(),origin=button?.getBoundingClientRect()||rect,x=(origin.left-rect.left+origin.width/2)*(card.clientWidth/rect.width),y=(origin.top-rect.top+origin.height/2)*(card.clientHeight/rect.height)
+  for(let i=0;i<36;i++){const bit=global.document.createElement('i'),angle=(-175+(i%18)*9)*Math.PI/180,distance=38+(i%6)*13;bit.className=i%3?'coupon-particle-star':'coupon-particle-bit';bit.textContent=i%3===1?'✦':i%3===2?'✧':'';bit.style.cssText='left:'+x+'px;top:'+y+'px;--coupon-dx:'+Math.cos(angle)*distance+'px;--coupon-dy:'+(Math.sin(angle)*distance-12)+'px;--coupon-delay:'+(i<18?0:140)+'ms;--coupon-turn:'+(i*31)+'deg';layer.append(bit)}
+  card.append(layer);global.setTimeout(()=>layer.remove(),1450)
+ }
+ const couponRoots=new WeakSet()
+ function mountCouponClaims(root){
+  if(!root)return
+  syncCouponClaims(root)
+  if(couponRoots.has(root))return;couponRoots.add(root)
+  root.addEventListener('click',event=>{const button=event.target.closest('[data-coupon-claim]');if(!button||!root.contains(button)||button.disabled)return;const key=button.dataset.couponClaim,input=button.closest('form')?.querySelector('[name="'+key+'"]'),selected=!(input?input.checked:readCouponClaims()[key]===true);setCouponClaim(key,selected);if(selected)celebrateCoupon(button.closest('[data-coupon-card]'),button)})
+ }
+ if(global.addEventListener)global.addEventListener('storage',event=>{if(event.key===couponStorageKey){memoryClaims=null;syncCouponClaims(global.document)}})
  let bannerObserver=null
  function mountYearEndBanners(root=global.document){
   bannerObserver?.disconnect()
-  const pairs=[...root.querySelectorAll('[data-year-end-gift]')].map(ticket=>({ticket,reference:ticket.parentElement.querySelector('.welcome-gift:not([data-year-end-gift])')})).filter(pair=>pair.reference)
+  const pairs=[...root.querySelectorAll('[data-year-end-gift]')].map(ticket=>({ticket,reference:(ticket.closest('.wf-welcome,.ed-benefit-lists')||ticket.parentElement).querySelector('.welcome-gift:not([data-year-end-gift])')})).filter(pair=>pair.reference)
   const sync=()=>pairs.forEach(({ticket,reference})=>{if(ticket.isConnected&&reference.isConnected)ticket.style.setProperty('--year-end-height',global.getComputedStyle(reference).height)})
   sync()
   if(global.ResizeObserver&&pairs.length){bannerObserver=new global.ResizeObserver(sync);pairs.forEach(({reference})=>bannerObserver.observe(reference))}
@@ -184,7 +238,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon}
  // Refresh open pages at expiry, including after a suspended tab resumes
  function refreshYearEnd(){
   if(yearEndActive()||!global.document)return
@@ -195,7 +249,7 @@
   global.document.querySelectorAll('.events-discount-list .evd-card').forEach(card=>{if(card.textContent.includes('연말 방문 할인 쿠폰'))card.remove()})
   global.document.querySelectorAll('.events-discount-list .evd-no').forEach((el,i)=>{el.textContent=nums[i]||(i+1)+'번째'})
   global.document.querySelectorAll('.ed-benefit-items[data-benefit-type="discount"] li').forEach(li=>{if(li.textContent.includes('연말 방문 할인 쿠폰'))li.remove()})
-  global.document.querySelectorAll('[data-year-end-gift]').forEach(el=>el.remove())
+  global.document.querySelectorAll('[data-year-end-gift]').forEach(el=>(el.closest('[data-coupon-card="yearEndCoupon"]')||el).remove())
   refreshCardPrices(global.document)
  }
  if(global.document&&global.setTimeout&&yearEndActive()){

@@ -32,7 +32,7 @@ async function run(){
      const maxLines=el.matches('.package-price-label')?2:1
      if(new Set(lines.map(r=>Math.round(r.top))).size>maxLines||lines.some(r=>r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1||r.left<0||r.right>innerWidth))issues.push({text:el.textContent,box:{left:box.left,right:box.right},lines:lines.map(r=>({left:r.left,right:r.right,top:r.top}))})
     }
-    const banners=[...document.querySelectorAll('[data-year-end-gift]')].map(ticket=>{const reference=ticket.parentElement.querySelector('.welcome-gift:not([data-year-end-gift])'),r=ticket.getBoundingClientRect(),a=reference?.getBoundingClientRect(),visit=ticket.querySelector('em>span')?.getBoundingClientRect(),products=ticket.querySelector('.year-end-products')?.getBoundingClientRect();for(const el of ticket.querySelectorAll('small,strong,em>span')){const range=document.createRange();range.selectNodeContents(el);for(const text of range.getClientRects())if(text.top<r.top||text.bottom>r.bottom||text.left<r.left||text.right>r.right)issues.push({text:el.textContent,clippedInBanner:true})}return {width:r.width,height:r.height,referenceWidth:a?.width,referenceHeight:a?.height,gap:products.top-visit.bottom,image:ticket.querySelector('img').getAttribute('src')}})
+    const banners=[...document.querySelectorAll('[data-year-end-gift]')].map(ticket=>{const reference=(ticket.closest(".wf-welcome,.ed-benefit-lists")||ticket.parentElement).querySelector('.welcome-gift:not([data-year-end-gift])'),r=ticket.getBoundingClientRect(),a=reference?.getBoundingClientRect(),visit=ticket.querySelector('em>span')?.getBoundingClientRect(),products=ticket.querySelector('.year-end-products')?.getBoundingClientRect();for(const el of ticket.querySelectorAll('small,strong,em>span')){const range=document.createRange();range.selectNodeContents(el);for(const text of range.getClientRects())if(text.top<r.top||text.bottom>r.bottom||text.left<r.left||text.right>r.right)issues.push({text:el.textContent,clippedInBanner:true})}return {width:r.width,height:r.height,referenceWidth:a?.width,referenceHeight:a?.height,gap:products.top-visit.bottom,image:ticket.querySelector('img').getAttribute('src')}})
     return {overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-innerWidth,main:document.querySelector('main').getBoundingClientRect().width,issues,banners}
    })
    assert.equal(measure.overflow,0,JSON.stringify({width,route,measure}));assert.deepEqual(measure.issues,[],JSON.stringify({width,route,measure}));if(width===1280)assert.equal(measure.main,780)
@@ -51,10 +51,10 @@ async function run(){
    }
    if(route==='/events'){const coupon=page.locator('.evd-card').filter({hasText:'연말 방문 할인 쿠폰'});assert.match(await coupon.innerText(),/2026년 11·12월 방문 시 적용/);assert.equal(await coupon.locator('.year-end-products').innerText(),'DELUXE · PREMIUM · DUET ONLY');await coupon.screenshot({path:path.join(out,'events-coupon-'+width+'.png')})}
    if(['/contact','/event/solo','/event/duo'].includes(route)){
-    await page.evaluate(()=>localStorage.clear());await page.reload();await page.waitForSelector('[name="yearEndCoupon"]')
+    await page.evaluate(()=>localStorage.clear());await page.reload();await page.waitForSelector('[data-coupon-claim="yearEndCoupon"]')
     assert.match(await page.locator('[data-year-end-gift]').innerText(),/2026년 11·12월 방문 시 적용/)
     assert.match(await page.locator('[data-year-end-gift]').innerText(),/DELUXE · PREMIUM · DUET ONLY/)
-    await page.locator('[name="firstVisit"]').check();await page.locator('[name="yearEndCoupon"]').check()
+    if(!await page.locator('[name="firstVisit"]').isChecked())await page.locator('[data-coupon-claim="firstVisit"]').click();if(!await page.locator('[name="yearEndCoupon"]').isChecked())await page.locator('[data-coupon-claim="yearEndCoupon"]').click()
     assert.equal((await page.evaluate(()=>WistiaWizard.quote(document.querySelector('form')))).discounts.some(d=>d.key==='yearEnd'),false,'no date means no applied year-end discount')
     await page.locator('[data-wf-next]').click()
     const pick=async date=>{
@@ -76,7 +76,7 @@ async function run(){
     await page.locator('[name="package"][value="A"]').evaluate(el=>el.closest('label').click())
     assert.equal(await page.locator('[name="yearEndCoupon"]').isDisabled(),true)
     assert.equal((await page.evaluate(()=>WistiaWizard.quote(document.querySelector('form')))).discounts.some(d=>d.key==='yearEnd'),false)
-    await page.locator('[name="package"][value="B"]').evaluate(el=>el.closest('label').click());await page.locator('[name="yearEndCoupon"]').check()
+    await page.locator('[name="package"][value="B"]').evaluate(el=>el.closest('label').click());if(!await page.locator('[name="yearEndCoupon"]').isChecked())await page.locator('[data-coupon-claim="yearEndCoupon"]').click()
     await page.screenshot({path:path.join(out,route.replaceAll('/','_')+'-form-'+width+'.png')})
    }
    results.push({width,route,measure})
@@ -85,7 +85,7 @@ async function run(){
   for(const route of ['/','/events','/contact']){
    await page.clock.setSystemTime(new Date('2026-12-31T23:59:59+09:00'))
    await page.goto(base+route+'?package=B');await page.waitForFunction(()=>document.querySelector('main')?.innerText.length>30)
-   if(route==='/contact'){await page.locator('[name="yearEndCoupon"]').check()}
+   if(route==='/contact'){if(!await page.locator('[name="yearEndCoupon"]').isChecked())await page.locator('[data-coupon-claim="yearEndCoupon"]').click()}
    assert.match(await page.locator('main').innerText(),/연말/)
    await page.clock.runFor(1100)
    assert.doesNotMatch(await page.locator('main').innerText(),/연말 방문 할인 쿠폰|연말 쿠폰/)
