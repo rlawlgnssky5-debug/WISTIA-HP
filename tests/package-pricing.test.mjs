@@ -143,7 +143,7 @@ test('approved ticket asset and banner size synchronization preserve coupon elig
 test('package savings badge is beside the package price label without duplicate badges',()=>{
  for(const [key,amount,price] of [['B','40,000원','170,000원'],['C','50,000원','220,000원'],['D','60,000원','240,000원']]){
   const html=pricing.selectionDetails(key),row=html.match(/<div class="is-pkg">(.*?)<div class="is-coupon">/)[1]
-  assert.ok(row.includes('<dt><span class="package-price-label">패키지 할인가</span><span class="price-down-pill">'+amount+' DOWN</span></dt>'))
+  assert.ok(row.includes('<dt><span class="package-price-label">패키지 할인가</span><span class="price-down-pill" aria-label="'+amount+' 할인">'+amount+' ↓</span></dt>'))
   assert.equal((row.match(/price-down-pill/g)||[]).length,1)
   assert.ok(row.includes('<dd>'+price+'</dd>'))
  }
@@ -157,4 +157,12 @@ test('coupon and maximum savings badges share their labels without separate badg
   assert.equal((row.match(/price-down-pill/g)||[]).length,1)
  }
  assert.equal((html.match(/<\/dd><\/div><span class="price-down-pill">/g)||[]).length,0)
+})
+
+test('approved rose halo replaces both the section and its legacy grey paint layer',()=>{
+ const css=readFileSync(new URL('../css/canvas-780.css',import.meta.url),'utf8')
+ assert.ok(css.includes('.ed-worries{--ed-surface:#fff;--ed-next-surface:#fff;background:radial-gradient'))
+ assert.ok(css.includes('.ed-worries::before{background:inherit!important}'))
+ assert.ok(css.includes('.package-price-label{flex:0 1 auto!important;min-width:0!important;white-space:normal!important'))
+ for(const key of ['B','C','D'])assert.ok(!pricing.selectionDetails(key).includes('DOWN'))
 })

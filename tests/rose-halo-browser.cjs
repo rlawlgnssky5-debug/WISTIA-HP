@@ -1,0 +1,18 @@
+const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict')
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'../output/rose-halo-price-arrow-20261028',phase)
+;(async()=>{
+ const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),results=[],errors=[]
+ try{const ctx=await browser.newContext({viewport:{width:390,height:900},isMobile:true,hasTouch:true,timezoneId:'Asia/Seoul',reducedMotion:'reduce'});await ctx.route(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/,r=>r.abort());const page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message))
+ for(const width of [303,320,360,375,390,414,780,1280]){await page.setViewportSize({width,height:900})
+  for(const route of ['/','/detail/solo']){
+   const response=await page.goto(base+route+'?package=D');assert.equal(response.status(),200);await page.waitForSelector('.ed-worries');await page.evaluate(()=>document.fonts.ready)
+   const m=await page.locator('.ed-worries').evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el),before=getComputedStyle(el,'::before');return {background:s.backgroundImage,base:s.backgroundColor,paintedBackground:before.backgroundImage,paintedBase:before.backgroundColor,width:r.width,main:document.querySelector('main').getBoundingClientRect().width,overflow:document.documentElement.scrollWidth-innerWidth,messages:[...el.querySelectorAll('li')].map(li=>{const b=li.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(li);return {text:li.textContent,left:b.left,right:b.right,top:b.top,bottom:b.bottom,color:getComputedStyle(li).backgroundColor,clipped:[...range.getClientRects()].some(t=>t.left<b.left||t.right>b.right+.5||t.top<b.top||t.bottom>b.bottom)}})}})
+   assert.match(m.background,/radial-gradient/);assert.match(m.background,/247, 220, 230/);assert.equal(m.base,'rgb(255, 255, 255)');assert.equal(m.paintedBackground,m.background);assert.equal(m.paintedBase,m.base);assert.equal(m.messages.length,4);assert.equal(m.overflow,0);for(const b of m.messages)assert.equal(b.clipped,false);assert.equal(m.messages[1].color,'rgb(245, 227, 235)');if(width===1280)assert.equal(m.main,780)
+   results.push({route,width,...m});if(route==='/'){fs.mkdirSync(out,{recursive:true});await page.locator('.ed-worries').evaluate(el=>el.scrollIntoView({block:'start'}));await page.locator('.ed-worries').screenshot({path:path.join(out,'rose-halo-'+width+'.png')})}
+  }
+ }
+ await page.setViewportSize({width:390,height:900});await page.goto(base+'/?package=D');await page.waitForSelector('.package-inquiry-link');await page.locator('.package-inquiry-link').click();await page.waitForURL('**/event/solo?package=D');await page.goBack();await page.waitForSelector('.ed-worries');assert.match(await page.locator('.ed-worries').evaluate(el=>getComputedStyle(el).backgroundImage),/radial-gradient/);results.push({case:'SPA history retains halo'});await page.reload();await page.waitForSelector('.ed-worries');assert.match(await page.locator('.ed-worries').evaluate(el=>getComputedStyle(el).backgroundImage),/radial-gradient/);results.push({case:'reload retains halo'});assert.deepEqual(errors,[])
+ }finally{await browser.close();fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'rose-halo-results.json'),JSON.stringify({base,results,errors},null,2))}
+ console.log('PASS '+results.length+' rose halo layout and navigation checks')
+})().catch(e=>{console.error(e);process.exitCode=1})
