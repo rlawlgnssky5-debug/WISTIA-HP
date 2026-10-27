@@ -26,7 +26,7 @@ async function run(){
    assert.doesNotMatch(await page.locator('main').innerText(),/10월.*(?:쿠폰|예약 이벤트|패키지 할인)/)
    const measure=await page.evaluate(()=>{
     const issues=[]
-    for(const el of document.querySelectorAll('[data-year-end-gift] small,[data-year-end-gift] em>span,.year-end-products,.package-selected-cheaper,.price-down-pill,.package-price-lines dt,.welcome-toggle>span,.welcome-toggle>strong,.yearEnd-note')){
+    for(const el of document.querySelectorAll('[data-year-end-gift] small,[data-year-end-gift] em>span,.year-end-products,.package-selected-cheaper,.price-down-pill,.package-price-lines dt:not(:has(.package-price-label)),.package-price-label,.welcome-toggle>span,.welcome-toggle>strong,.yearEnd-note')){
      const box=el.getBoundingClientRect();if(!box.width||!box.height)continue
      const range=document.createRange();range.selectNodeContents(el);const lines=[...range.getClientRects()].filter(r=>r.width>0)
      if(new Set(lines.map(r=>Math.round(r.top))).size>1||lines.some(r=>r.left<box.left-1||r.right>box.right+1||r.left<0||r.right>innerWidth))issues.push({text:el.textContent,box:{left:box.left,right:box.right},lines:lines.map(r=>({left:r.left,right:r.right,top:r.top}))})

@@ -139,3 +139,12 @@ test('approved ticket asset and banner size synchronization preserve coupon elig
  assert.ok(css.includes('.year-end-products{margin-top:5px'))
  assert.equal(pricing.quote({package:'B',yearEndCoupon:'1',firstVisit:'1',bookingDate:'2026-12-31',timeStart:'13:00'},'2026-10-27').total,100000)
 })
+
+test('package savings badge is beside the package price label without duplicate badges',()=>{
+ for(const [key,amount,price] of [['B','40,000원','170,000원'],['C','50,000원','220,000원'],['D','60,000원','240,000원']]){
+  const html=pricing.selectionDetails(key),row=html.match(/<div class="is-pkg">(.*?)<div class="is-coupon">/)[1]
+  assert.ok(row.includes('<dt><span class="package-price-label">패키지 할인가</span><span class="price-down-pill">'+amount+' DOWN</span></dt>'))
+  assert.equal((row.match(/price-down-pill/g)||[]).length,1)
+  assert.ok(row.includes('<dd>'+price+'</dd>'))
+ }
+})
