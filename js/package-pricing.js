@@ -108,7 +108,7 @@
  function priceLines(p,reference=today()){
   if(p.key==='A')return ''
   const oct=octoberActive(reference),coupon=quote({package:p.key,firstVisit:'1',octoberCoupon:'1'},reference).total,best=quote({package:p.key,firstVisit:'1',octoberCoupon:'1',bookingDate:bestDate(reference),timeStart:'13:00'},reference).total
-  return '<dl class="package-price-lines"><div><dt>패키지 할인가</dt><dd>'+money(p.price)+'</dd></div><div><dt>'+(oct?'10월 쿠폰 + 첫 이용 쿠폰 적용가':'첫 이용 쿠폰 적용가')+'</dt><dd>'+money(coupon)+'</dd></div><div class="is-best"><dt>사전 예약·평일 할인까지 최대</dt><dd>'+money(best)+'</dd></div></dl>'
+  return '<dl class="package-price-lines"><div class="is-pkg"><dt>패키지 할인가</dt><dd>'+money(p.price)+'</dd></div><div class="is-coupon"><dt>'+(oct?'10월 쿠폰 + 첫 이용 쿠폰 적용가':'첫 이용 쿠폰 적용가')+'</dt><dd>'+money(coupon)+'</dd></div><div class="is-best"><dt>사전 예약·평일 할인까지 최대</dt><dd>'+money(best)+'</dd></div></dl>'
  }
  function selectionDetails(key){
   const p=packageFor(key)
@@ -158,7 +158,7 @@
  }
  const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,celebrate,hoursText,octoberActive,priceLines,bestDate}
  // When October ends while a page is open, drop the coupon from open panels and wizard forms
- function refreshOctober(){if(octoberActive()||!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey)});global.document.querySelectorAll('.package-discount-guide').forEach(guide=>{guide.outerHTML=discountsHtml()});global.document.querySelectorAll('form').forEach(form=>{if(form.querySelector('[data-october-coupon]'))form.dispatchEvent(new global.Event('input',{bubbles:true}))})}
+ function refreshOctober(){if(octoberActive()||!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey)});global.document.querySelectorAll('.package-discount-guide').forEach(guide=>{guide.outerHTML=discountsHtml()});global.document.querySelectorAll('form').forEach(form=>{if(form.querySelector('[data-october-coupon]'))form.dispatchEvent(new global.Event('input',{bubbles:true}))});const nums=['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'];global.document.querySelectorAll('.events-discount-list .evd-card').forEach(card=>{if(/10월/.test(card.textContent||''))card.remove()});global.document.querySelectorAll('.events-discount-list .evd-no').forEach((el,i)=>{el.textContent=nums[i]||(i+1)+'번째'});global.document.querySelectorAll('.ed-benefit-items[data-benefit-type="discount"] li').forEach(li=>{if(/10월/.test(li.textContent||''))li.remove()})}
  if(global.document&&global.setTimeout&&octoberActive()){const left=Date.parse('2026-11-01T00:00:00+09:00')-Date.now();if(left>0&&left<2147483647)global.setTimeout(refreshOctober,left+1000);global.document.addEventListener('visibilitychange',()=>{if(global.document.visibilityState==='visible')refreshOctober()})}
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
