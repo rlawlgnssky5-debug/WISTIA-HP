@@ -185,7 +185,7 @@
   const claims=readCouponClaims()
   root?.querySelectorAll('[data-coupon-claim]').forEach(button=>{
    const key=button.dataset.couponClaim,form=button.closest('form'),input=form?.querySelector('[name="'+key+'"]'),selected=input?input.checked:claims[key]===true,card=button.closest('[data-coupon-card]'),standard=!!form&&key==='yearEndCoupon'&&packageFor(form.querySelector('[name="package"]:checked')?.value).key==='A',date=form?.querySelector('[name="bookingDate"]')?.value||''
-   button.disabled=standard||!!input?.disabled;button.setAttribute('aria-pressed',String(selected&&!button.disabled));button.querySelector('[data-coupon-button-copy]').textContent=button.disabled?'대상 상품 전용':selected?(form?'선택 완료':'받기 완료'):'쿠폰 받기';button.querySelector('[data-coupon-check]').hidden=!selected||button.disabled
+   button.disabled=standard||!!input?.disabled;button.setAttribute('aria-pressed',String(selected&&!button.disabled));button.querySelector('[data-coupon-button-copy]').textContent=button.disabled?'대상 상품 전용':selected?'받기 완료':'쿠폰 받기';button.querySelector('[data-coupon-check]').hidden=!selected||button.disabled
    card.classList.toggle('is-received',selected&&!button.disabled);card.classList.toggle('is-disabled',button.disabled)
    card.querySelector('.coupon-claim-hint').textContent=button.disabled?'스탠다드 적용 제외':selected&&key==='yearEndCoupon'&&date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':selected?'쿠폰을 받았어요':'여기를 눌러주세요 →'
   })
