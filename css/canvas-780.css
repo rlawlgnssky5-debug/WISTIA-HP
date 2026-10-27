@@ -684,3 +684,45 @@ html body #app#app#app#app#app#app#app .wf-welcome .welcome-toggle::after{flex:0
 html body #app#app#app#app#app .wistia-wizard .wf-tip{box-sizing:border-box!important;max-width:min(100%,calc(100vw - 48px))!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
 @media (min-width:400px){html body #app#app#app#app#app .wistia-wizard .wf-tip{white-space:nowrap!important;overflow-wrap:normal!important}}
 }
+
+@layer wistia-site-fixes{
+/* Round 43 mock: 4 price rows + DOWN pills */
+html body #app#app#app#app#app#app#app .package-price-lines>div{display:grid!important;grid-template-columns:1fr!important;gap:4px!important;align-items:stretch!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main{display:flex!important;align-items:baseline!important;justify-content:space-between!important;gap:6px!important;min-width:0!important;width:100%!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dt{flex:1 1 auto!important;min-width:0!important;white-space:nowrap!important;font-size:11.5px!important;letter-spacing:-.025em!important;margin:0!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dd{flex:0 0 auto!important;margin:0!important;white-space:nowrap!important;font-size:13.5px!important;font-weight:800!important;line-height:1.2!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-list .price-line-main dt{color:#8a6a72!important;font-weight:600!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-list .price-line-main dd{color:#9a7a82!important;font-weight:700!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-list .price-line-main dd s{text-decoration:line-through!important;text-decoration-color:#d4a8b2!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg .price-line-main dd{color:#a8475f!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-coupon .price-line-main dd{color:#c4892a!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-best{margin-top:2px!important;padding-top:8px!important;border-top:1px dashed #f0b9c6!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dt{color:#c4566f!important;font-weight:800!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dd{color:#d9667f!important;font-size:15px!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-down-pill{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:start!important;width:fit-content!important;max-width:100%!important;margin:0!important;padding:2px 8px!important;border-radius:999px!important;background:#fbd3dd!important;border:1px solid #f0b9c6!important;color:#c4566f!important;font-size:10.5px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.02em!important;white-space:nowrap!important;box-shadow:0 1px 0 #f3c9d3!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-pkg .price-down-pill{background:#fde7ec!important;color:#a8475f!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-coupon .price-down-pill{background:#fbf1dd!important;border-color:#ead4a0!important;color:#b8893a!important;box-shadow:0 1px 0 #ead4a0!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-down-pill{background:#fbd3dd!important;color:#d9667f!important}
+@media (min-width:414px){
+ html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dt{font-size:12px!important}
+ html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dd{font-size:14px!important}
+ html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dd{font-size:16px!important}
+ html body #app#app#app#app#app#app#app .package-price-lines .price-down-pill{font-size:11px!important;padding:2px 9px!important}
+}
+}
+
+@layer wistia-site-fixes{
+/* Round 43 mock B: coupon-applied price on picker cards */
+html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{display:block!important;margin:2px 0 0!important;color:#d9667f!important;font-size:13px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.02em!important;white-space:nowrap!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] .package-card-coupon{color:#c4892a!important}
+html body #app#app#app#app#app .package-picker .package-card .package-card-subtitle{margin-top:4px!important}
+@media (max-width:389px){html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{font-size:12px!important}}
+}
+
+@layer wistia-site-fixes{
+/* Round 43: card main price = coupon-applied; no package mid price */
+html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{display:none!important}
+html body #app#app#app#app#app .package-picker .package-card .package-card-price{color:#d9667f!important;font-weight:800!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] .package-card-price{color:#c4892a!important}
+html body #app#app#app#app#app .package-picker .package-card .package-card-was.is-empty{visibility:hidden!important;min-height:1.05em!important;display:block!important}
+}
