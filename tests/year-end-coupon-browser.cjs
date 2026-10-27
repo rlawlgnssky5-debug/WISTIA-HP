@@ -1,7 +1,7 @@
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path')
 const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4270',phase=process.env.WISTIA_QA_PHASE||'local'
-const out=path.resolve(__dirname,'../output/year-end-coupon-20261027',phase),results=[],errors=[]
+const out=path.resolve(__dirname,'..',process.env.WISTIA_QA_OUT||'output/year-end-coupon-20261027',phase),results=[],errors=[]
 const routes=['/','/detail/solo','/contact','/event/solo','/event/duo','/events','/info/faq','/info/location']
 async function run(){
  fs.mkdirSync(out,{recursive:true})
@@ -26,7 +26,7 @@ async function run(){
    assert.doesNotMatch(await page.locator('main').innerText(),/10월.*(?:쿠폰|예약 이벤트|패키지 할인)/)
    const measure=await page.evaluate(()=>{
     const issues=[]
-    for(const el of document.querySelectorAll('[data-year-end-gift] small,[data-year-end-gift] em,.package-selected-cheaper,.price-down-pill,.package-price-lines dt,.welcome-toggle>span,.welcome-toggle>strong,.yearEnd-note')){
+    for(const el of document.querySelectorAll('[data-year-end-gift] small,[data-year-end-gift] em>span,.year-end-products,.package-selected-cheaper,.price-down-pill,.package-price-lines dt,.welcome-toggle>span,.welcome-toggle>strong,.yearEnd-note')){
      const box=el.getBoundingClientRect();if(!box.width||!box.height)continue
      const range=document.createRange();range.selectNodeContents(el);const lines=[...range.getClientRects()].filter(r=>r.width>0)
      if(new Set(lines.map(r=>Math.round(r.top))).size>1||lines.some(r=>r.left<box.left-1||r.right>box.right+1||r.left<0||r.right>innerWidth))issues.push({text:el.textContent,box:{left:box.left,right:box.right},lines:lines.map(r=>({left:r.left,right:r.right,top:r.top}))})
@@ -35,15 +35,22 @@ async function run(){
    })
    assert.equal(measure.overflow,0,JSON.stringify({width,route,measure}));assert.deepEqual(measure.issues,[],JSON.stringify({width,route,measure}));if(width===1280)assert.equal(measure.main,780)
    if(route==='/'||route==='/detail/solo'){
-    await page.locator('[data-year-end-gift]').scrollIntoViewIfNeeded()
+    await page.locator('[data-year-end-gift]').evaluate(el=>scrollTo(0,el.getBoundingClientRect().top+scrollY-150))
     await page.screenshot({path:path.join(out,route==='/'?'home-'+width+'.png':'detail-'+width+'.png')})
     assert.match(await page.locator('[data-year-end-gift]').innerText(),/연말 방문 할인 쿠폰/)
+    assert.match(await page.locator('[data-year-end-gift]').innerText(),/2026년 11·12월 방문 시 적용/)
+    assert.match(await page.locator('[data-year-end-gift]').innerText(),/DELUXE · PREMIUM · DUET ONLY/)
+    assert.equal(await page.locator('#packageSelection .welcome-gift,#packageSelection [data-package-total],#packageSelection .package-selection-total').count(),0)
     await page.locator('[data-benefit-list="discount"] summary').click()
-    assert.match(await page.locator('[data-benefit-type="discount"]').innerText(),/2026년 12월 31일/)
-    for(const type of ['A','B','C','D']){await page.locator('input[name="detailPackage"][value="'+type+'"]').evaluate(el=>el.closest('label').click());assert.equal(await page.locator('.package-card.is-selected').getAttribute('data-tier'),type)}
+    assert.match(await page.locator('[data-benefit-type="discount"]').innerText(),/2026년 11·12월/)
+    for(const type of ['A','B','C','D']){await page.locator('input[name="detailPackage"][value="'+type+'"]').evaluate(el=>el.closest('label').click());assert.equal(await page.locator('.package-card.is-selected').getAttribute('data-tier'),type);assert.match(await page.locator('#packageSelection [data-package-inquiry]').getAttribute('href'),new RegExp('package='+type))}
+    await page.locator('#packageSelection').screenshot({path:path.join(out,'picker-'+route.replaceAll('/','_')+'-'+width+'.png')})
    }
+   if(route==='/events'){const coupon=page.locator('.evd-card').filter({hasText:'연말 방문 할인 쿠폰'});assert.match(await coupon.innerText(),/2026년 11·12월 방문 시 적용/);assert.equal(await coupon.locator('.year-end-products').innerText(),'DELUXE · PREMIUM · DUET ONLY');await coupon.screenshot({path:path.join(out,'events-coupon-'+width+'.png')})}
    if(['/contact','/event/solo','/event/duo'].includes(route)){
     await page.evaluate(()=>localStorage.clear());await page.reload();await page.waitForSelector('[name="yearEndCoupon"]')
+    assert.match(await page.locator('[data-year-end-gift]').innerText(),/2026년 11·12월 방문 시 적용/)
+    assert.match(await page.locator('[data-year-end-gift]').innerText(),/DELUXE · PREMIUM · DUET ONLY/)
     await page.locator('[name="firstVisit"]').check();await page.locator('[name="yearEndCoupon"]').check()
     assert.equal((await page.evaluate(()=>WistiaWizard.quote(document.querySelector('form')))).discounts.some(d=>d.key==='yearEnd'),false,'no date means no applied year-end discount')
     await page.locator('[data-wf-next]').click()
@@ -54,10 +61,10 @@ async function run(){
      await page.waitForFunction(()=>document.querySelector('form').dataset.scheduleState==='ready')
      await page.locator('[data-wf-time="13:00"]').click()
     }
-    for(const [date,total,keys] of [['2026-12-31',100000,['yearEnd','first','weekday','advance2']],['2027-01-02',130000,['first','advance2']],['2026-12-31',100000,['yearEnd','first','weekday','advance2']]]){
+    for(const [date,total,keys] of [['2026-10-30',140000,['first','weekday']],['2026-11-01',130000,['yearEnd','first']],['2026-12-31',100000,['yearEnd','first','weekday','advance2']],['2027-01-02',130000,['first','advance2']],['2026-12-31',100000,['yearEnd','first','weekday','advance2']]]){
      await pick(date)
      const q=await page.evaluate(()=>WistiaWizard.quote(document.querySelector('form')));assert.equal(q.total,total+(route==='/event/duo'?30000:0),JSON.stringify({width,route,date,q}));assert.deepEqual(q.discounts.map(d=>d.key),keys)
-     assert.equal(await page.locator('[data-package-coupon-price="B"]').innerText(),date.startsWith('2026')?'130,000원':'150,000원')
+     assert.equal(await page.locator('[data-package-coupon-price="B"]').innerText(),date>='2026-11-01'&&date<='2026-12-31'?'130,000원':'150,000원')
      results.push({width,route,date,total:q.total,keys})
     }
     await page.reload();await page.waitForFunction(()=>document.querySelector('form')?.dataset.scheduleState==='ready')

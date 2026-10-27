@@ -113,3 +113,18 @@ test('year-end coupon follows the recording date, not the inquiry month',()=>{
  assert.deepEqual(['A','B','C','D'].map(k=>pricing.cardCouponPrice(pricing.packages[k],'2026-10-27','2027-01-02')),[70000,150000,200000,220000])
  assert.equal(pricing.bestCouponPrice(pricing.packages.B,'2026-11-10'),110000)
 })
+
+test('year-end coupon is limited to November and December visits and uses approved copy',()=>{
+ for(const key of ['B','C','D'])for(const date of ['2026-11-01','2026-11-30','2026-12-01','2026-12-31'])assert.equal(pricing.quote({package:key,yearEndCoupon:'1',bookingDate:date},'2026-10-27').discounts.some(d=>d.key==='yearEnd'),true)
+ for(const date of ['2026-10-27','2026-10-30','2026-10-31','2027-01-01','2027-01-02'])assert.equal(pricing.quote({package:'B',yearEndCoupon:'1',bookingDate:date},'2026-10-27').discounts.some(d=>d.key==='yearEnd'),false)
+ assert.equal(pricing.cardCouponPrice(pricing.packages.B,'2026-10-27','2026-10-30'),150000)
+ assert.equal(pricing.cardCouponPrice(pricing.packages.B,'2026-10-27','2026-11-01'),130000)
+ assert.equal(pricing.yearEndCopy.visit,'2026년 11·12월 방문 시 적용')
+ assert.equal(pricing.yearEndCopy.products,'DELUXE · PREMIUM · DUET ONLY')
+ const app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
+ assert.ok(!app.includes('data-package-total'))
+ const sales=app.match(/function packageSalesSection\(key\)\{[^\n]+/)[0]
+ assert.ok(!sales.includes('firstVisitBanner'))
+ assert.ok(sales.includes('WistiaPackages.cards(p.key)'))
+ assert.ok(sales.includes('선택한 구성으로 문의양식 작성'))
+})
