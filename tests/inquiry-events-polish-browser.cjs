@@ -7,6 +7,7 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env
  try{for(const width of [320,360,375,390,414,780,822,1280]){
   const c=await b.newContext({viewport:{width,height:1000},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'})
   await c.route(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/,r=>r.abort())
+  await c.route('**/api/limited-coupon',r=>r.fulfill({json:{ok:true,remaining:20,claimed:false,closed:false,newlyClaimed:false}}))
   await c.route('**/api/availability?*',r=>r.fulfill({json:{ok:true,...Object.fromEntries(new URL(r.request().url()).searchParams),blocks:[]}}))
   await c.route('**/*',r=>{assert.equal(r.request().method(),'GET');assert.doesNotMatch(r.request().url(),/pf\.kakao|kakaolink/);return r.fallback()})
   const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message))
@@ -21,7 +22,7 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env
    assert.equal(await p.locator('[data-mobile-gallery] .mas-gallery-slide').count(),5)
    await p.locator('[data-hs-step="1"]').click();await p.waitForTimeout(500);assert.match(await p.locator('.hs-count').innerText(),/02/);await p.locator('[data-hs-step="-1"]').click()
    const styles=await p.evaluate(()=>{const t=document.querySelector('#arcTuning'),r=document.querySelector('#soloPoint04'),reviews=document.querySelector('.arc-reviews .ed-reviews');return {tuning:getComputedStyle(t,'::before').backgroundColor,ratio:getComputedStyle(r,'::before').backgroundColor,curve:getComputedStyle(reviews).borderBottomLeftRadius,worry:getComputedStyle(document.querySelector('.ed-worries')).background}})
-   assert.notEqual(styles.tuning,styles.ratio);assert.ok(parseFloat(styles.curve)>0);assert.ok(styles.worry.includes('radial-gradient'))
+   assert.equal(styles.tuning,'rgb(255, 255, 255)');assert.ok(parseFloat(styles.curve)>0);assert.ok(styles.worry.includes('radial-gradient'))
    const before=await p.evaluate(()=>location.pathname);await p.locator('.ed-hero-price-jump').click();await p.waitForFunction(()=>{const y=document.querySelector('#packageSelection').getBoundingClientRect().top,h=document.querySelector('#siteHeader').getBoundingClientRect().height;return y>=h-1&&y<h+70},null,{timeout:6000});assert.equal(await p.evaluate(()=>location.pathname),before)
    const target=await p.locator('#packageSelection').boundingBox(),head=await p.locator('#siteHeader').boundingBox();assert.ok(target.y>=head.height-1&&target.y<head.height+70,JSON.stringify({width,target,head}))
    assert.ok(await p.locator('[data-solo-map]').evaluate(e=>!!(e.compareDocumentPosition(document.querySelector('#packageSelection'))&Node.DOCUMENT_POSITION_FOLLOWING)))
