@@ -107,7 +107,7 @@ for(const timestamp of ['missing','future','invalid'])test('removes drafts with 
 })
 test('wizard input/change handlers save drafts and both notes show three hours',()=>{
  const wizard=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8').replace(/\r\n/g,'\n')
- assert.match(wizard,/form\.addEventListener\('input',\(\)=>update\(form\)\)/)
+  assert.match(wizard,/form\.addEventListener\('input',event=>\{if\(!event\.target\.matches\('\[data-wf-people-add\]'\)\)update\(form\)\}\)/)
  const changeHandler=wizard.split("form.addEventListener('change',event=>{")[1]?.split("form.addEventListener('input'")[0]
  assert.ok(changeHandler,'change listener exists')
  assert.match(changeHandler,/\n   update\(form\)\n/)

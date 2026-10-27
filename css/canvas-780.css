@@ -68,6 +68,68 @@
     transform: translateX(-50%) !important;
   }
 }
+/* Approved inquiry/event polish: preserve prices, order and the 780px canvas */
+@layer wistia-site-fixes{
+html:root body:has(main#app#app#app){padding-top:52px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader,html body #siteHeader#siteHeader#siteHeader#siteHeader .header-inner{height:52px!important;min-height:52px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark{min-height:44px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark img{height:28px!important;width:auto!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader #menuToggle{min-width:44px!important;min-height:44px!important;height:44px!important}
+html body #mainMenu#mainMenu#mainMenu{top:52px!important;max-height:calc(100dvh - 52px)!important;overflow-y:auto!important}
+@media(min-width:780px){html:root body:has(main#app#app#app){padding-top:104px!important}html body #mainMenu#mainMenu#mainMenu{top:104px!important;max-height:calc(100dvh - 104px)!important}}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-actions{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-actions .ed-hero-consult{grid-column:1/-1!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-actions :is(.ed-hero-listen,.ed-hero-price-jump){box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;min-height:44px!important;width:auto!important;margin:0!important;padding:8px 10px!important;background:#fff!important;color:#875267!important;font:600 11px/1.4 Pretendard,sans-serif!important;white-space:nowrap!important;text-decoration:none!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-price-jump{border-left:1px solid #efdee5!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app #packageSelection{scroll-margin-top:68px!important}
+@media(min-width:780px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app #packageSelection{scroll-margin-top:68px!important}}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo>#arcTuning{--ed-surface:#f6e3eb!important;--ed-next-surface:#fff!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo>#arcKey{--ed-next-surface:#f6e3eb!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo>#soloPoint04{--ed-surface:#fff!important;--ed-next-surface:#faf1f3!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo>.arc-reviews{background:#fff!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo>.arc-reviews .ed-reviews{background:#faf1f3!important;border-radius:0 0 clamp(24px,6cqw,48px) clamp(24px,6cqw,48px)!important;overflow:hidden!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard{margin-top:8px!important;padding-top:16px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard>h1{margin:0 0 6px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-draft-note{margin:0 0 12px!important;font-size:11px!important;line-height:1.5!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress{min-height:0!important;height:auto!important;margin:0 0 8px!important;padding:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress button{min-height:44px!important;padding:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress button>span{width:28px!important;height:28px!important;min-height:28px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-progress small{margin-top:4px!important;font-size:10px!important;line-height:1.3!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar{display:grid!important;grid-template-columns:18px minmax(0,1fr)!important;align-items:center!important;gap:2px 8px!important;padding:8px 0!important;margin:8px 0 0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar>svg{grid-column:1!important;grid-row:1/3!important;width:18px!important;height:18px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar>div{grid-column:2!important;min-width:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar strong{font-size:11px!important;line-height:1.4!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar small{font-size:10px!important;line-height:1.45!important;white-space:normal!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-location-bar>span{grid-column:2!important;margin:0!important;font-size:10px!important;line-height:1.4!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-step-label{margin:10px 0 6px!important;font-size:10px!important;line-height:1.3!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-step>h2{margin:0 0 16px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-wizard .wf-earlybird-legend{margin-top:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-clean{padding-top:32px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-clean .pb-heading{text-align:left!important;margin:0 0 18px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-clean .pb-heading .ev2-k{text-align:left!important;margin-bottom:8px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-clean .pb-heading h2{margin:0 0 10px!important;font-size:23px!important;line-height:1.4!important;letter-spacing:-.04em!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-clean .pb-heading>p:last-child{margin:0!important;color:#896c76!important;font-size:13px!important;line-height:1.7!important;word-break:keep-all!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-summary{display:flex!important;flex-direction:column!important;gap:7px!important;padding:22px 20px!important;margin:0 0 20px!important;border:1px solid #e9c8d4!important;border-radius:16px!important;background:#f6e5ed!important;box-shadow:none!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-summary>span{font-size:12px!important;font-weight:600!important;color:#8d5c6d!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-summary>strong{font-size:25px!important;font-weight:750!important;line-height:1.3!important;letter-spacing:-.04em!important;color:#9c526b!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-summary>p{font-size:12px!important;line-height:1.5!important;margin:0!important;color:#896c76!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-cards{display:grid!important;gap:16px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card{min-width:0!important;padding:20px 18px!important;border:1px solid #ead4dc!important;border-radius:16px!important;background:#fff!important;box-shadow:none!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card>header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin:0 0 12px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card h3{font-size:15px!important;line-height:1.5!important;margin:0!important;letter-spacing:-.035em!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card>header>strong{flex-shrink:0!important;font-size:15px!important;color:#a65a73!important;white-space:nowrap!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card p,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card li{font-size:13px!important;line-height:1.8!important;word-break:keep-all!important;overflow-wrap:anywhere!important;color:#806a73!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-description{margin:0 0 16px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-card h4{margin:0 0 6px!important;font-size:12px!important;line-height:1.5!important;font-weight:700!important;color:#7a4c5f!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-eligibility{padding:12px 14px!important;margin:0 0 16px!important;border-radius:10px!important;background:#fcf5f8!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-eligibility p{margin:0!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-steps ol{display:grid!important;gap:8px!important;margin:0!important;padding:0 0 0 19px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-steps li{display:list-item!important;list-style:decimal outside!important;padding-left:3px!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-steps li::marker{color:#a65a73!important;font-weight:700!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-refund{padding:16px 2px 0!important;margin-top:16px!important;border-top:1px solid #ead4dc!important;background:transparent!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-refund strong{font-size:12px!important;line-height:1.6!important;color:#865b6b!important}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pb-refund p{font-size:12px!important;line-height:1.8!important;margin:5px 0 0!important;color:#896c76!important}
+}
 
 /* ==== 2026-10-23 PC = phone layout enlarged to 780 ==========================
    Text sections render at the 390px phone width and are zoomed 2x, so they
