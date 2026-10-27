@@ -635,10 +635,10 @@ html body #app#app#app#app#app#app#app .package-price-lines dd{margin:0!importan
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best{margin-top:2px!important;padding-top:8px!important;border-top:1px dashed #f0b9c6!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best dt{color:#c4566f!important;font-weight:800!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best dd{color:#d9667f!important;font-size:16px!important}
-html body #app#app#app#app#app#app#app .wf-welcome .october-toggle{margin-top:8px!important}
-html body #app#app#app#app#app#app#app .wf-welcome .october-toggle.is-disabled{opacity:.5!important;filter:grayscale(.3)!important;pointer-events:none!important}
-html body #app#app#app#app#app#app#app .wf-welcome .october-note{margin:6px 2px 0!important;color:#c4566f!important;font-size:12px!important;font-weight:700!important;text-align:center!important}
-html body #app#app#app#app#app#app#app .wf-welcome .october-note[hidden]{display:none!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-toggle{margin-top:8px!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-toggle.is-disabled{opacity:.5!important;filter:grayscale(.3)!important;pointer-events:none!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-note{margin:6px 2px 0!important;color:#c4566f!important;font-size:12px!important;font-weight:700!important;text-align:center!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-note[hidden]{display:none!important}
 }
 @layer wistia-site-fixes{
 html body #app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title .svg-title-icon{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2028%2028%22%3E%3Cpath%20d%3D%22M14%202.5c6.6%200%2011.5%204.6%2011.5%2010.3S20.6%2023%2014%2023c-1.3%200-2.6-.2-3.8-.5L5%2025.5l1.4-4.6C4%2019%202.5%2016.1%202.5%2012.8%202.5%207.1%207.4%202.5%2014%202.5z%22%20fill%3D%22%23f3e1e1%22%20stroke%3D%22%23b98a8e%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M11.2%2010.2a2.8%202.8%200%201%201%204.2%202.4c-.9.5-1.4%201-1.4%202%22%20fill%3D%22none%22%20stroke%3D%22%239e6f74%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%2217.6%22%20r%3D%221.2%22%20fill%3D%22%239e6f74%22%2F%3E%3C%2Fsvg%3E") center/28px 28px no-repeat!important}
@@ -731,17 +731,26 @@ html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] .pac
 html body #app#app#app#app#app .package-picker .package-card .package-card-was.is-empty{visibility:hidden!important;min-height:1.2em!important;display:block!important;line-height:1.2!important}
 }
 
-/* r44 october gift + one-line pills */
+/* r44 yearEnd gift + one-line pills */
 html body #app#app#app#app .ed-benefit-lists{display:flex!important;flex-direction:column!important;gap:2.4cqw!important}
-html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift]{margin-top:0!important}
+html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift]{margin-top:0!important}
 html body #app#app#app#app .ed-benefit-lists>.welcome-gift em{display:block!important;margin-top:0.8cqw!important;font-size:3cqw!important;font-style:normal!important;font-weight:600!important;line-height:1.45!important;color:#a77870!important;letter-spacing:-.02em!important}
 
 
-/* r45 october gift small one-line */
+/* r45 yearEnd gift small one-line */
 @layer wistia-site-fixes{
-html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{display:block!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;font-size:2.9cqw!important;line-height:1.35!important;letter-spacing:-.055em!important;max-width:100%!important}
-@media (min-width:375px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:2.95cqw!important;letter-spacing:-.05em!important}}
-@media (min-width:390px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:3cqw!important;letter-spacing:-.05em!important}}
-@media (min-width:414px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:3cqw!important;letter-spacing:-.045em!important}}
-@media (min-width:768px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:13px!important;letter-spacing:-.04em!important}}
+html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] small{display:block!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;font-size:2.9cqw!important;line-height:1.35!important;letter-spacing:-.055em!important;max-width:100%!important}
+@media (min-width:375px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] small{font-size:2.95cqw!important;letter-spacing:-.05em!important}}
+@media (min-width:390px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] small{font-size:3cqw!important;letter-spacing:-.05em!important}}
+@media (min-width:414px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] small{font-size:3cqw!important;letter-spacing:-.045em!important}}
+@media (min-width:768px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] small{font-size:13px!important;letter-spacing:-.04em!important}}
+}
+
+/* Year-end coupon: retain the rose palette and single-line labels on narrow phones */
+@layer wistia-site-fixes{
+html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-year-end-gift] em{white-space:nowrap!important;font-size:clamp(9px,2.65cqw,12px)!important;letter-spacing:-.055em!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-toggle{gap:6px!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-toggle>span{min-width:0!important;white-space:nowrap!important;font-size:clamp(10px,2.9cqw,13px)!important;letter-spacing:-.05em!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-toggle>strong{flex-shrink:0!important;white-space:nowrap!important;font-size:clamp(10px,2.9cqw,13px)!important}
+html body #app#app#app#app#app#app#app .wf-welcome .yearEnd-note{white-space:nowrap!important;font-size:clamp(10px,2.85cqw,12px)!important;letter-spacing:-.04em!important}
 }
