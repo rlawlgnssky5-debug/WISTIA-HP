@@ -39,9 +39,10 @@
  const fixedHolidays=new Set(['01-01','03-01','05-01','05-05','06-06','07-17','08-15','10-03','10-09','12-25'])
  // Visit-date coupon for DELUXE·PREMIUM·DUET, expires at 2027-01-01 00:00 KST
  const yearEndActive=(reference=today())=>validDate(reference)&&reference<'2027-01-01'
- const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&validDate(date)&&date>='2026-01-01'&&date<='2026-12-31'&&date>=reference
+ const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&validDate(date)&&date>='2026-11-01'&&date<='2026-12-31'&&date>=reference
+ const yearEndCopy={label:'연말 방문 할인 쿠폰',visit:'2026년 11·12월 방문 시 적용',products:'DELUXE · PREMIUM · DUET ONLY'}
  const discountOfferList=()=>[
-  ...(yearEndActive()?[{key:'yearEnd',label:'연말 방문 할인 쿠폰',discount:20000,detail:'2026년 12월 31일까지 녹음실 방문 시 · 스탠다드 제외'}]:[]),
+  ...(yearEndActive()?[{key:'yearEnd',label:yearEndCopy.label,discount:20000,detail:yearEndCopy.visit+' · '+yearEndCopy.products}]:[]),
   {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'},
@@ -106,15 +107,16 @@
  const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'+ 보컬 보정 + 녹음 1시간',D:'+ 보컬 보정 + 녹음 1시간 + 1인 추가'}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
- // Without a chosen date this is the conditional 2026 visit price, never an applied quote
- function cardCouponPrice(p,reference=today(),bookingDate=''){const q=quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate:bookingDate||reference},reference);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
+ // Without a chosen date show the conditional Nov–Dec visit price, never an applied quote
+ const couponDisplayDate=reference=>reference<'2026-11-01'?'2026-11-01':reference
+ function cardCouponPrice(p,reference=today(),bookingDate=''){const q=quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate:bookingDate||couponDisplayDate(reference)},reference);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
  function bestCouponPrice(p,reference=today()){
   const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
   return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate,timeStart:'13:00'},reference).total))
  }
  function priceLines(p,reference=today(),bookingDate=''){
   if(p.key==='A')return ''
-  const eligible=yearEndEligible(bookingDate||reference,reference),coupon=cardCouponPrice(p,reference,bookingDate),best=validDate(bookingDate)?quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate,timeStart:'13:00'},reference).total:bestCouponPrice(p,reference)
+  const eligible=yearEndEligible(bookingDate||couponDisplayDate(reference),reference),coupon=cardCouponPrice(p,reference,bookingDate),best=validDate(bookingDate)?quote({package:p.key,firstVisit:'1',yearEndCoupon:'1',bookingDate,timeStart:'13:00'},reference).total:bestCouponPrice(p,reference)
   const down=amount=>'<span class="price-down-pill">'+money(amount)+' DOWN</span>'
   const couponLabel=eligible?'연말 쿠폰 + 첫 이용 적용가':'첫 이용 쿠폰 적용가'
   return '<dl class="package-price-lines">'+
@@ -163,7 +165,7 @@
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOfferList().map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
- function yearEndBookingBanner(imageSrc='/assets/editorial/welcome-gift-rose.webp'){if(!yearEndActive())return '';return '<div class="welcome-gift" data-year-end-gift><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>연말 방문 할인 쿠폰</small><strong>20,000원 할인</strong><em>2026년 방문 · 디럭스·프리미엄·듀엣</em></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ function yearEndBookingBanner(imageSrc='/assets/editorial/welcome-gift-rose.webp'){if(!yearEndActive())return '';return '<div class="welcome-gift" data-year-end-gift><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span>'+yearEndCopy.visit+'</span><span class="year-end-products">'+yearEndCopy.products+'</span></em></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
   if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
@@ -173,7 +175,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
  // Refresh open pages at expiry, including after a suspended tab resumes
  function refreshYearEnd(){
   if(yearEndActive()||!global.document)return
