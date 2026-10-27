@@ -736,3 +736,12 @@ html body #app#app#app#app .ed-benefit-lists{display:flex!important;flex-directi
 html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift]{margin-top:0!important}
 html body #app#app#app#app .ed-benefit-lists>.welcome-gift em{display:block!important;margin-top:0.8cqw!important;font-size:3cqw!important;font-style:normal!important;font-weight:600!important;line-height:1.45!important;color:#a77870!important;letter-spacing:-.02em!important}
 
+
+/* r45 october gift small one-line */
+@layer wistia-site-fixes{
+html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{display:block!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;font-size:2.9cqw!important;line-height:1.35!important;letter-spacing:-.055em!important;max-width:100%!important}
+@media (min-width:375px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:2.95cqw!important;letter-spacing:-.05em!important}}
+@media (min-width:390px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:3cqw!important;letter-spacing:-.05em!important}}
+@media (min-width:414px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:3cqw!important;letter-spacing:-.045em!important}}
+@media (min-width:768px){html body #app#app#app#app .ed-benefit-lists>.welcome-gift[data-october-gift] small{font-size:13px!important;letter-spacing:-.04em!important}}
+}
