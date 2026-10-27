@@ -121,7 +121,7 @@
   const couponLabel=eligible?'연말 쿠폰 + 첫 이용 적용가':'첫 이용 쿠폰 적용가'
   return '<dl class="package-price-lines">'+
    '<div class="is-list"><div class="price-line-main"><dt>원가</dt><dd><s>'+money(p.individual)+'</s></dd></div></div>'+
-   '<div class="is-pkg"><div class="price-line-main"><dt>패키지 할인가</dt><dd>'+money(p.price)+'</dd></div>'+down(p.individual-p.price)+'</div>'+
+   '<div class="is-pkg"><div class="price-line-main"><dt><span class="package-price-label">패키지 할인가</span>'+down(p.individual-p.price)+'</dt><dd>'+money(p.price)+'</dd></div></div>'+
    '<div class="is-coupon"><div class="price-line-main"><dt>'+couponLabel+'</dt><dd>'+money(coupon)+'</dd></div>'+down(p.price-coupon)+'</div>'+
    '<div class="is-best"><div class="price-line-main"><dt>사전 예약·평일 할인까지 최대</dt><dd>'+money(best)+'</dd></div>'+down(coupon-best)+'</div>'+
    '</dl>'
@@ -165,7 +165,16 @@
  }
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOfferList().map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
- function yearEndBookingBanner(imageSrc='/assets/editorial/welcome-gift-rose.webp'){if(!yearEndActive())return '';return '<div class="welcome-gift" data-year-end-gift><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span>'+yearEndCopy.visit+'</span><span class="year-end-products">'+yearEndCopy.products+'</span></em></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
+ const yearEndImage='/assets/editorial/year-end-ticket-rose-v1.webp'
+ function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span>'+yearEndCopy.visit+'</span><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
+ let bannerObserver=null
+ function mountYearEndBanners(root=global.document){
+  bannerObserver?.disconnect()
+  const pairs=[...root.querySelectorAll('[data-year-end-gift]')].map(ticket=>({ticket,reference:ticket.parentElement.querySelector('.welcome-gift:not([data-year-end-gift])')})).filter(pair=>pair.reference)
+  const sync=()=>pairs.forEach(({ticket,reference})=>{if(ticket.isConnected&&reference.isConnected)ticket.style.setProperty('--year-end-height',global.getComputedStyle(reference).height)})
+  sync()
+  if(global.ResizeObserver&&pairs.length){bannerObserver=new global.ResizeObserver(sync);pairs.forEach(({reference})=>bannerObserver.observe(reference))}
+ }
  function celebrate(root){
   root=root?.closest('.wf-welcome')||root
   if(!root||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return
@@ -175,7 +184,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice}
  // Refresh open pages at expiry, including after a suspended tab resumes
  function refreshYearEnd(){
   if(yearEndActive()||!global.document)return

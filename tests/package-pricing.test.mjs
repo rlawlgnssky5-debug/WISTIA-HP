@@ -128,3 +128,23 @@ test('year-end coupon is limited to November and December visits and uses approv
  assert.ok(sales.includes('WistiaPackages.cards(p.key)'))
  assert.ok(sales.includes('선택한 구성으로 문의양식 작성'))
 })
+
+test('approved ticket asset and banner size synchronization preserve coupon eligibility',()=>{
+ assert.equal(pricing.yearEndImage,'/assets/editorial/year-end-ticket-rose-v1.webp')
+ assert.equal(typeof pricing.mountYearEndBanners,'function')
+ const source=readFileSync(new URL('../js/package-pricing.js',import.meta.url),'utf8'),css=readFileSync(new URL('../css/canvas-780.css',import.meta.url),'utf8')
+ assert.ok(source.includes('ResizeObserver(sync)'))
+ assert.ok(source.includes("global.getComputedStyle(reference).height"))
+ assert.ok(css.includes('height:var(--year-end-height,auto)'))
+ assert.ok(css.includes('.year-end-products{margin-top:5px'))
+ assert.equal(pricing.quote({package:'B',yearEndCoupon:'1',firstVisit:'1',bookingDate:'2026-12-31',timeStart:'13:00'},'2026-10-27').total,100000)
+})
+
+test('package savings badge is beside the package price label without duplicate badges',()=>{
+ for(const [key,amount,price] of [['B','40,000원','170,000원'],['C','50,000원','220,000원'],['D','60,000원','240,000원']]){
+  const html=pricing.selectionDetails(key),row=html.match(/<div class="is-pkg">(.*?)<div class="is-coupon">/)[1]
+  assert.ok(row.includes('<dt><span class="package-price-label">패키지 할인가</span><span class="price-down-pill">'+amount+' DOWN</span></dt>'))
+  assert.equal((row.match(/price-down-pill/g)||[]).length,1)
+  assert.ok(row.includes('<dd>'+price+'</dd>'))
+ }
+})
