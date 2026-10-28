@@ -22,16 +22,21 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',out=path.resolve(
      const actual=await p.evaluate(()=>{const f=document.querySelector('form'),q=WistiaWizard.quote(f);return {amount:q.discounts.find(d=>d.key==='yearEnd')?.amount,coupon:q.v.yearEndCoupon,panel:f.querySelector('.is-coupon').innerText,quote:q.total}})
      assert.equal(actual.amount,20000,JSON.stringify({width,route,date,actual}));assert.equal(actual.coupon,'1')
      assert.match(actual.panel,/선착순 쿠폰 \+ 첫 이용 적용가/);assert.match(actual.panel,/130,000원/)
+     assert.equal(await form.locator('.is-best dd').innerText(),'100,000원','maximum example is independent of the recording date')
      results.push({width,route,date,limited:actual.amount,total:actual.quote})
     }
-    await p.evaluate(()=>{const e=document.querySelector('[name="bookingDate"]');e.value='2026-10-30';e.dispatchEvent(new Event('change',{bubbles:true}))})
+    await p.evaluate(()=>{const e=document.querySelector('[name="bookingDate"]');e.value='2026-10-30';e.dispatchEvent(new Event('change',{bubbles:true}));const t=document.querySelector('[name="timeStart"]');t.value='13:00';t.dispatchEvent(new Event('change',{bubbles:true}))})
+    const weekdayQuote=await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')));assert.equal(weekdayQuote.total,120000+weekdayQuote.optionTotal);assert.equal(await form.locator('.is-best dd').innerText(),'100,000원')
+    await p.evaluate(()=>{const t=document.querySelector('[name="timeStart"]');t.value='';t.dispatchEvent(new Event('change',{bubbles:true}))})
     for(const [tier,amount] of [['A',70000],['B',130000],['C',180000],['D',200000],['B',130000]]){
      await p.locator('.package-card[data-tier="'+tier+'"]').click()
      const q=await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')));assert.equal(q.total,amount+q.optionTotal);assert.equal(q.discounts.some(d=>d.key==='yearEnd'),tier!=='A')
+     if(tier!=='A')assert.equal(await form.locator('.is-best dd').innerText(),{B:'100,000원',C:'150,000원',D:'170,000원'}[tier])
     }
     await p.reload();await p.waitForFunction(()=>WistiaLimitedCoupon.state.ready);const restored=await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')));assert.equal(restored.total,130000+restored.optionTotal)
    }
    const couponRow=p.locator('[data-package-selection-details] .is-coupon').first();assert.match(await couponRow.innerText(),/130,000원/)
+   assert.equal(await p.locator('[data-package-selection-details] .is-best dd').first().innerText(),'100,000원')
    await p.evaluate(()=>document.fonts.ready);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)
    const clipping=await p.locator('.package-price-lines').first().evaluate(e=>{const bad=[];for(const el of e.querySelectorAll('dt,dd,.package-price-label,.price-down-pill')){const b=el.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(el);for(const r of range.getClientRects())if(r.left<b.left-1||r.right>b.right+1)bad.push(el.textContent)}return bad});assert.deepEqual(clipping,[])
    if(route==='/contact'&&[390,780].includes(width)){const price=p.locator('[data-package-selection-details] .package-price-lines');await price.evaluate(e=>e.scrollIntoView({block:'center'}));await p.waitForTimeout(600);await price.screenshot({path:path.join(out,'corrected-prices-'+width+'.png')})}

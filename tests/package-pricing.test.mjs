@@ -114,6 +114,19 @@ test('limited coupon combines with first visit and date discounts without the re
  assert.equal(pricing.bestCouponPrice(pricing.packages.B,'2026-11-10'),100000)
 })
 
+test('maximum discount example stays independent of the chosen recording date and actual quote',()=>{
+ for(const [key,total] of [['B',100000],['C',150000],['D',170000]]){
+  for(const date of ['','2026-10-30','2026-11-27','2026-12-25','2027-01-02']){
+   const html=pricing.priceLines(pricing.packages[key],'2026-10-29',date),best=html.slice(html.indexOf('<div class="is-best">'))
+   assert.ok(best.includes('<dd>'+pricing.money(total)+'</dd>'),key+' '+date)
+   assert.ok(best.includes('30,000원 ↓'))
+  }
+ }
+ const actual=pricing.quote({package:'B',firstVisit:'1',yearEndCoupon:'1',bookingDate:'2026-10-30',timeStart:'13:00'},'2026-10-29')
+ assert.equal(actual.total,120000)
+ assert.equal(actual.discounts.some(d=>d.key==='advance1'||d.key==='advance2'),false)
+})
+
 test('received limited coupon works before date selection and for October and January visits',()=>{
  for(const key of ['B','C','D'])for(const date of ['','2026-10-27','2026-10-30','2026-11-01','2026-12-31','2027-01-01','2027-01-02'])assert.equal(pricing.quote({package:key,yearEndCoupon:'1',bookingDate:date},'2026-10-27').discounts.some(d=>d.key==='yearEnd'),true)
  assert.equal(pricing.quote({package:'A',yearEndCoupon:'1'},'2026-10-27').discounts.some(d=>d.key==='yearEnd'),false)
