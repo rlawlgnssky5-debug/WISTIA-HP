@@ -118,7 +118,7 @@
  }
  function priceLines(p,reference=today(),bookingDate=''){
   if(p.key==='A')return ''
-  const eligible=limitedAvailable()&&yearEndEligible(bookingDate||couponDisplayDate(reference),reference),coupon=cardCouponPrice(p,reference,bookingDate),best=validDate(bookingDate)?quote({package:p.key,firstVisit:'1',yearEndCoupon:limitedAvailable(),bookingDate,timeStart:'13:00'},reference,true).total:bestCouponPrice(p,reference)
+  const eligible=limitedAvailable()&&yearEndEligible(bookingDate||couponDisplayDate(reference),reference),coupon=cardCouponPrice(p,reference,bookingDate),best=bestCouponPrice(p,reference)
   const down=amount=>'<span class="price-down-pill" aria-label="'+money(amount)+' 할인">'+money(amount)+' ↓</span>'
   const couponLabel=eligible?'선착순 쿠폰 + 첫 이용 적용가':'첫 이용 쿠폰 적용가'
   return '<dl class="package-price-lines">'+
