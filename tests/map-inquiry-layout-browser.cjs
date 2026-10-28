@@ -1,6 +1,6 @@
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path')
-const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'../output/map-inquiry-layout-20261028',phase),place='https://map.kakao.com/link/map/389994210'
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'../output/map-inquiry-layout-20261028',phase),place='https://map.kakao.com/?q=%EC%9C%84%EC%8A%A4%ED%8B%B0%EC%95%84&itemId=389994210'
 ;(async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),results=[],errors=[]
  try{for(const width of [303,320,360,375,390,414,780,822,1280]){
   const c=await b.newContext({viewport:{width,height:1000},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'})
