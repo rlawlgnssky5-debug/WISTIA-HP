@@ -4,7 +4,7 @@ import {runInNewContext} from 'node:vm'
 const source=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8')
 const frames=new Map();let serial=0,reduced=false
 const win={requestAnimationFrame:fn=>{frames.set(++serial,fn);return serial},cancelAnimationFrame:id=>frames.delete(id),matchMedia:()=>({matches:reduced})}
-runInNewContext(source.replace(' function update(form){',' global.testUpdateAmount=updateAmount;\n function update(form){'),{window:win})
+runInNewContext(source.replace(' global.WistiaWizard=',' global.testUpdateAmount=updateAmount;\n global.WistiaWizard='),{window:win})
 const amount={isConnected:true,textContent:''},button={setAttribute(name,value){this[name]=value},querySelector:()=>amount},state={}
 const advance=now=>{const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn(now))}
 win.testUpdateAmount(button,120000,state)

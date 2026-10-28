@@ -888,4 +888,5 @@ html body #app#app#app#app#app#app#app .coupon-particle-layer.is-still>i{animati
 html body #app#app#app#app#app#app#app .coupon-particle-layer.is-still::before{animation:none!important;opacity:.8!important}
 @media(max-width:340px){html body #app#app#app#app#app#app#app .coupon-claim-hint{font-size:11px!important}html body #app#app#app#app#app#app#app .coupon-claim-button{padding-inline:10px!important;font-size:12px!important;gap:5px!important}}
 @media(prefers-reduced-motion:reduce){html body #app#app#app#app#app#app#app .coupon-particle-layer>i,html body #app#app#app#app#app#app#app .coupon-particle-layer::before{animation:none!important}}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-addr .studio-address{white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important;max-width:100%!important}
 }

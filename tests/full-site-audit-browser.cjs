@@ -1,0 +1,34 @@
+const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict')
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',phase=process.env.WISTIA_QA_PHASE||'local',out=path.resolve(__dirname,'../output/full-audit-20261029',phase)
+const routes=['/','/detail/solo','/contact','/event/solo','/event/duo','/events','/info/faq','/info/location']
+;(async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),results=[],issues=[],assetFailures=new Set(),internal=new Set()
+ try{for(const width of [320,360,375,390,414,780,1280]){
+  const c=await b.newContext({viewport:{width,height:1000},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'}),p=await c.newPage()
+  await c.route('**/*',r=>{const u=r.request().url();if(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/.test(u))return r.abort();if(r.request().method()!=='GET'){issues.push({unexpectedMethod:r.request().method(),url:new URL(u).pathname});return r.abort()}if(/pf\.kakao|kakaolink/.test(u)){issues.push({chatOpened:true});return r.abort()}if(new URL(u).pathname==='/api/limited-coupon')return r.fulfill({json:{ok:true,remaining:17,claimed:false,closed:false,canClaim:true,inCooldown:false}});if(new URL(u).pathname==='/api/availability')return r.fulfill({json:{ok:true,...Object.fromEntries(new URL(u).searchParams),blocks:[]}});return r.continue()})
+  p.on('pageerror',e=>issues.push({width,error:e.message}));p.on('response',r=>{if(r.status()>=400&&new URL(r.url()).origin===new URL(base).origin)assetFailures.add(r.status()+' '+new URL(r.url()).pathname)})
+  for(const route of routes){
+   const response=await p.goto(base+route+'?package=B');if(response.status()!==200)issues.push({width,route,status:response.status()});await p.waitForSelector('main');await p.waitForFunction(()=>document.querySelector('main').innerText.length>30);await p.evaluate(()=>document.fonts.ready)
+   await p.locator('details summary').evaluateAll(ns=>ns.forEach(e=>e.parentElement.open=true))
+   const height=await p.evaluate(()=>document.documentElement.scrollHeight);for(let y=0;y<height;y+=850){await p.evaluate(y=>scrollTo(0,y),y);await p.waitForTimeout(25)}await p.waitForTimeout(120);await p.evaluate(()=>scrollTo(0,0))
+   const m=await p.evaluate(()=>{const main=document.querySelector('main'),text=main.innerText,imgs=[...main.querySelectorAll('img')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden');return {overflow:document.documentElement.scrollWidth-innerWidth,mainWidth:main.getBoundingClientRect().width,h1:main.querySelectorAll('h1').length,title:document.title,textLength:text.length,money:[...new Set(text.match(/[\d,]+원/g)||[])],brokenImages:imgs.filter(e=>e.complete&&!e.naturalWidth).map(e=>e.getAttribute('src')),links:[...document.querySelectorAll('a[href]')].map(e=>({href:e.href,text:e.textContent.trim()})),clipping:[...main.querySelectorAll('h1,h2,h3,address,.studio-address,.package-price-lines dd,.package-price-label,.price-down-pill,[data-coupon-button-copy]')].filter(e=>{const box=e.getBoundingClientRect();if(!box.width)return false;const range=document.createRange();range.selectNodeContents(e);return [...range.getClientRects()].some(r=>r.left<box.left-1||r.right>box.right+1)}).map(e=>e.textContent)}})
+   if(m.overflow||width>=780&&Math.round(m.mainWidth)!==780||m.h1!==1||m.brokenImages.length||m.clipping.length)issues.push({width,route,layout:m})
+   for(const l of m.links){const u=new URL(l.href);if(u.origin===new URL(base).origin&&!/\.(png|webp|mp3|m4a|mp4|svg|jpg)$/i.test(u.pathname))internal.add(u.pathname)}
+   if(route==='/info/location'){const address=await p.locator('.lc2-addr .studio-address').evaluate(e=>{const box=e.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(e);return {text:e.textContent,clipped:[...range.getClientRects()].some(r=>r.left<box.left-1||r.right>box.right+1)}});assert.equal(address.clipped,false,JSON.stringify({width,address}));assert.ok(address.text.includes('부광프라자 2층'))}
+   if(route==='/events'){assert.equal(await p.locator('.evd-card').count(),4);assert.equal(await p.locator('.pb-card').count(),2);assert.doesNotMatch(await p.locator('.events-discount-list').innerText(),/선착순|연말/)}
+   const mapUrls=m.links.filter(l=>l.href.includes('map.kakao.com'));for(const l of mapUrls){const u=new URL(l.href);assert.equal(u.searchParams.get('q'),'위스티아');assert.equal(u.searchParams.get('itemId'),'389994210')}
+   await p.locator('#menuToggle').click();assert.equal(await p.locator('#menuToggle').getAttribute('aria-expanded'),'true');await p.keyboard.press('Escape');assert.equal(await p.locator('#menuToggle').getAttribute('aria-expanded'),'false')
+   if([390,780].includes(width)){await p.screenshot({path:path.join(out,(route==='/'?'home':route.slice(1).replaceAll('/','-'))+'-'+width+'.png'),fullPage:true})}
+   results.push({width,route,overflow:m.overflow,mainWidth:m.mainWidth,money:m.money,title:m.title,textLength:m.textLength})
+  }
+  // Exercise SPA navigation and browser back, not only direct entry
+  await p.goto(base+'/');await p.waitForSelector('#mainMenu a',{state:'attached'});const navLinks=await p.locator('#mainMenu a').evaluateAll(ns=>ns.map(e=>e.getAttribute('href')))
+  for(const href of navLinks.filter(h=>h?.startsWith('/')&&!h.startsWith('//'))){await p.locator('#menuToggle').click();await p.locator('#mainMenu a').filter({hasText:await p.locator('#mainMenu a[href="'+href+'"]').first().innerText()}).first().click();await p.waitForTimeout(100);assert.equal(new URL(p.url()).pathname,new URL(href,base).pathname);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0)}
+  await p.goBack();await p.waitForTimeout(100);assert.ok(await p.locator('main').innerText());results.push({width,spa:true,navLinks:navLinks.length});await c.close()
+ }
+ const request=await b.newContext();for(const route of internal){const r=await request.request.get(base+route);if(r.status()!==200)issues.push({internalLink:route,status:r.status()})}
+ for(const route of ['/detail/duo','/info/about','/info/privacy','/unused-page']){const r=await request.request.get(base+route);if(r.status()!==410)issues.push({retired:route,status:r.status()})}
+ await request.close();assert.deepEqual([...assetFailures],[],'same-origin asset failures');assert.deepEqual(issues,[])
+ }finally{await b.close();fs.writeFileSync(path.join(out,'pages.json'),JSON.stringify({base,results,issues,assetFailures:[...assetFailures],internal:[...internal]},null,2))}
+ console.log('PASS '+results.length+' full-page/mobile/SPA cases, all 8 public pages, internal links and retired-route responses')
+})().catch(e=>{console.error(e);process.exitCode=1})

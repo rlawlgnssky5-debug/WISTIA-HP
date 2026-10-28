@@ -9,8 +9,10 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4272',phase=process.env
    const c=await b.newContext({viewport:{width,height:1000},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul',...(motion==='native'?{}:{reducedMotion:motion})})
    await c.route(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/,r=>r.abort())
    await c.route('**/api/availability?*',r=>r.fulfill({json:{ok:true,...Object.fromEntries(new URL(r.request().url()).searchParams),blocks:[]}}))
-   await c.route('**/*',r=>{assert.equal(r.request().method(),'GET');assert.doesNotMatch(r.request().url(),/pf\.kakao|kakaolink/);return r.fallback()})
-   const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message));await p.goto(base+route+'?package=B');await p.waitForSelector('[data-coupon-claim]');await p.evaluate(()=>document.fonts.ready)
+   let owned=false,issuedAt=Date.now()
+   await c.route('**/api/limited-coupon',r=>{const fresh=r.request().method()==='POST'&&!owned;if(fresh){owned=true;issuedAt=Date.now()}return r.fulfill({json:{ok:true,remaining:owned?19:20,claimed:owned,expired:false,expiresAt:owned?new Date(issuedAt+86400000).toISOString():null,serverNow:new Date().toISOString(),closed:false,newlyClaimed:fresh,canClaim:!owned,inCooldown:owned}})})
+   await c.route('**/*',r=>{if(new URL(r.request().url()).pathname==='/api/limited-coupon')return r.fallback();assert.equal(r.request().method(),'GET');assert.doesNotMatch(r.request().url(),/pf\.kakao|kakaolink/);return r.fallback()})
+   const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message));await p.goto(base+route+'?package=B');await p.waitForSelector('[data-coupon-claim]');await p.waitForFunction(()=>WistiaLimitedCoupon.state.ready);await p.evaluate(()=>document.fonts.ready)
    const reduced=await p.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches)
    for(const key of ['firstVisit','yearEndCoupon']){
     const card=p.locator('[data-coupon-card="'+key+'"]'),button=card.locator('button')

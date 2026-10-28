@@ -64,7 +64,7 @@
   return null
  }
  function weekdayDiscount(date,time){
-  if(!validDate(date)||isPublicHoliday(date)||!/^\d{2}:\d{2}$/.test(time||''))return 0
+  if(!validDate(date)||isPublicHoliday(date)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time||''))return 0
   const day=new Date(date+'T12:00:00Z').getUTCDay(),[h,m]=time.split(':').map(Number)
   return [4,5].includes(day)&&h*60+m>=780&&h*60+m<=960?10000:0
  }

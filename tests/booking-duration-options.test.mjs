@@ -17,8 +17,8 @@ test('full recording duration respects Sunday 18:00 and ordinary 23:00 closing',
 })
 
 test('closed cells anywhere in the recording and existing buffers block its start',()=>{
- const blocks=[{start:'2027-10-09T14:30:00+09:00',end:'2027-10-09T15:30:00+09:00'}]
- assert.equal(rules.slotBlocked('2027-10-09','13:00',60,blocks),false,'one hour still fits with its cleanup buffer')
+ const blocks=[{start:'2027-10-09T15:00:00+09:00',end:'2027-10-09T16:00:00+09:00'}]
+ assert.equal(rules.slotBlocked('2027-10-09','13:00',60,blocks),false,'one hour and the current 60-minute occupied buffer end at the closure boundary')
  assert.equal(rules.slotBlocked('2027-10-09','13:00',120,blocks),true,'C intersects the closed 14:00 start')
  assert.equal(rules.slotBlocked('2027-10-09','13:00',180,blocks),true)
  assert.equal(rules.slotBlocked('2027-10-09','14:00',60,blocks),true)
@@ -39,7 +39,7 @@ function schedule(dateValue='2027-10-09'){
 
 test('changing A/B/C and extra hour rechecks cached closures, clears invalid start and explains it',async()=>{
  const f=schedule(),p=f.api.mount(f.form,'ar-60')
- f.reply([{start:'2027-10-09T14:30:00+09:00',end:'2027-10-09T15:30:00+09:00'}]);await p
+ f.reply([{start:'2027-10-09T15:00:00+09:00',end:'2027-10-09T16:00:00+09:00'}]);await p
  f.time.value='13:00'
  await f.api.mount(f.form,'ar-120')
  assert.equal(f.option('13:00').disabled,true)
@@ -67,11 +67,11 @@ test('Sunday duration changes and failed refresh retain closure restrictions',as
 test('selectable options precede included disabled options after repeated type changes',()=>{
  const window={WistiaPackages:pricing};runInNewContext(read('booking-wizard.js'),{window})
  assert.equal(typeof window.WistiaWizard.syncOptions,'function','wizard must share option-state and DOM ordering updates')
- const order=['tuning','detailMix','extraHour'],rows=new Map(order.map(key=>[key,{dataset:{wfOption:key},input:{disabled:false,checked:true},strong:{textContent:''},classList:{toggle(){}},querySelector(s){return s==='input'?this.input:this.strong}}]))
+ const order=['people','tuning','detailMix','precisionMix','extraHour','rush'],rows=new Map(order.map(key=>[key,{dataset:{wfOption:key},input:{disabled:false,checked:true},strong:{textContent:''},classList:{toggle(){}},querySelector(s){return s==='input'||s==='[data-wf-people-add]'?this.input:this.strong}}]))
  let moves=0
  const fieldset={querySelectorAll(){return order.map(key=>rows.get(key))},appendChild(row){moves++;order.splice(order.indexOf(row.dataset.wfOption),1);order.push(row.dataset.wfOption)}}
- const form={querySelector:s=>s==='.package-extra-options'?fieldset:rows.get(s.match(/data-wf-option="([^"]+)"/)?.[1])}
- for(const [key,expected] of [['B',['extraHour','tuning','detailMix']],['A',['tuning','detailMix','extraHour']],['C',['extraHour','tuning','detailMix']],['B',['extraHour','tuning','detailMix']]]){
+ const form={querySelector:s=>s==='.package-extra-options'?fieldset:s==='input[name="tuning"]'?rows.get('tuning').input:rows.get(s.match(/data-wf-option="([^"]+)"/)?.[1])}
+ for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','tuning','detailMix','precisionMix','extraHour','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']]]){
   const previous=order.join(','),beforeMoves=moves
   window.WistiaWizard.syncOptions(form,pricing.quote({package:key}))
   if(previous===expected.join(','))assert.equal(moves,beforeMoves,'unchanged rows must retain checkbox focus during updates')
