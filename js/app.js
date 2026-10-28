@@ -1,6 +1,6 @@
 ﻿const KAKAO_FALLBACK = "http://pf.kakao.com/_GbExjX/chat"
 
-const KAKAO_STUDIO_PLACE_URL = "https://map.kakao.com/link/map/389994210"
+const KAKAO_STUDIO_PLACE_URL = "https://map.kakao.com/?q=%EC%9C%84%EC%8A%A4%ED%8B%B0%EC%95%84&itemId=389994210"
 
 const PRODUCTS = {
   solo: {
