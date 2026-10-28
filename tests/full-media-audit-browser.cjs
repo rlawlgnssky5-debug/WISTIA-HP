@@ -1,0 +1,22 @@
+const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path')
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',out=path.resolve(__dirname,'../output/full-audit-20261029',process.env.WISTIA_QA_PHASE||'local')
+;(async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),results=[],errors=[]
+ try{for(const width of [320,390,780,1280]){const c=await b.newContext({viewport:{width,height:950},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'})
+  await c.route('**/*',r=>{const u=r.request().url();if(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/.test(u))return r.abort();assert.equal(r.request().method(),'GET');assert.doesNotMatch(u,/pf\.kakao|kakaolink/);if(new URL(u).pathname==='/api/limited-coupon')return r.fulfill({json:{ok:true,remaining:17,claimed:false,canClaim:true,closed:false}});return r.continue()})
+  await c.addInitScript(()=>{window.__qaMedia=[];const original=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){this.muted=true;window.__qaMedia.push(this);return original.call(this)}})
+  const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message))
+  for(const route of ['/','/detail/solo']){
+   await p.goto(base+route);await p.waitForSelector('[data-mobile-gallery]');assert.equal(await p.locator('.mas-gallery-slide').count(),5)
+   for(let i=2;i<=5;i++){await p.locator('[data-hs-step="1"]').click();await p.waitForFunction(i=>document.querySelector('.hs-count').textContent===String(i).padStart(2,'0')+' / 05',i)}assert.equal(await p.locator('[data-hs-step="1"]').isDisabled(),true)
+   await p.locator('[data-mobile-video-slide="0"]').click();await p.waitForFunction(()=>document.querySelector('.hs-count').textContent==='01 / 05')
+   if(width===390){await p.locator('.mas-gallery-track').scrollIntoViewIfNeeded();const box=await p.locator('.mas-gallery-track').boundingBox(),s=await c.newCDPSession(p),y=box.y+Math.min(box.height*.5,220),x=box.x+box.width*.8;await s.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y}]});for(let i=1;i<=12;i++){await s.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-box.width*.65*i/12,y}]});await p.waitForTimeout(20)}await s.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await p.waitForFunction(()=>document.querySelector('.hs-count').textContent!=='01 / 05')}
+   for(const ratio of [30,50,70,100]){await p.locator('[data-solo-ratio="'+ratio+'"]').click();assert.equal(await p.locator('[data-solo-ratio="'+ratio+'"]').getAttribute('aria-pressed'),'true');await p.waitForFunction(()=>{const a=document.querySelector('[data-solo-audio]');return !a.paused&&a.currentTime>.05});assert.ok((await p.locator('[data-solo-audio]').getAttribute('src')).includes('voice-'+ratio))}
+   await p.evaluate(()=>document.querySelector('[data-solo-audio]').pause());await p.locator('#arcTuning button[aria-label="재생"]').click();await p.waitForFunction(()=>document.querySelector('#arcTuning .bap-time b')?.textContent!=='0:00')
+   await p.locator('#arcTuning [data-mode="after"]').click();await p.waitForTimeout(250);assert.equal(await p.locator('#arcTuning [data-mode="after"]').getAttribute('aria-pressed'),'true')
+   await p.evaluate(()=>window.__qaMedia.forEach(a=>a.pause()))
+   const review=p.locator('.ed-review-slide.is-current [data-review-full]');await review.click();const dialog=p.locator('dialog:visible');assert.equal(await dialog.isVisible(),true);await p.waitForFunction(()=>{const e=document.querySelector('dialog[open] img');return e?.complete&&e.naturalWidth>0});await p.keyboard.press('Escape');assert.equal(await p.locator('dialog[open]').count(),0)
+   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0);results.push({width,route,gallery:5,nativeSwipe:width===390,ratioPlayback:4,tuningPlayback:true,reviewLightbox:true})
+  }await c.close()
+ }assert.deepEqual(errors,[])}finally{await b.close();fs.writeFileSync(path.join(out,'media.json'),JSON.stringify({base,results,errors},null,2))}
+ console.log('PASS '+results.length+' gallery, audio comparison, AR ratio and original-review modal checks')
+})().catch(e=>{console.error(e);process.exitCode=1})
