@@ -166,7 +166,7 @@
  function discountsHtml(){return '<section data-svg-title="off" class="package-discount-guide"><h3>할인 내역</h3><ul>'+discountOfferList().map(item=>'<li>'+item.label+' <b>'+money(item.discount)+' 할인</b><small>'+item.detail+'</small></li>').join('')+'</ul></section>'}
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  const yearEndImage='/assets/editorial/year-end-ticket-rose-v1.webp'
- function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span>'+yearEndCopy.visit+'</span><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
+ function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
  const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=3*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
  let memoryClaims=null
  function readCouponClaims(){
@@ -197,7 +197,8 @@
     button.querySelector('[data-coupon-check]').hidden=!owned
     card.classList.toggle('is-received',owned);card.classList.toggle('is-disabled',!owned&&button.disabled)
     const stock=state.ready?state.remaining+'장 남음':state.error?'수량 확인 필요':'잔여 수량 확인 중'
-    card.querySelector('.coupon-claim-hint').innerHTML='<span data-limited-stock role="status">'+stock+'</span><span class="limited-coupon-note">'+(closed?'쿠폰이 마감되었어요':owned?standard?'스탠다드 적용 제외':date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':'쿠폰을 받았어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':'브라우저당 1장')+'</span>'
+    const note=closed?'쿠폰이 마감되었어요':owned?standard?'스탠다드 적용 제외':date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':'쿠폰을 받았어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':''
+    card.querySelector('.coupon-claim-hint').innerHTML='<span data-limited-stock role="status">'+stock+'</span>'+(note?'<span class="limited-coupon-note">'+note+'</span>':'')
    }
   })
  }

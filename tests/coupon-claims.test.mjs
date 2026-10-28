@@ -21,6 +21,6 @@ test('blocked storage still carries coupon choices during same-page navigation',
 test('shared coupon controls use the compact approved guide, without duplicate visit notes',()=>{
  const {api}=setup(),main=api.couponClaimCard('firstVisit','detail','/gift.webp'),form=api.couponClaimCard('yearEndCoupon')
  assert.ok(main.includes('여기를 눌러주세요 →'));assert.ok(main.includes('data-coupon-button-copy>쿠폰 받기'));assert.ok(!main.includes('↓'));assert.ok(!main.includes('type="checkbox"'))
- assert.ok(form.includes('name="yearEndCoupon"'));assert.equal((form.match(/2026년 11·12월 방문 시 적용/g)||[]).length,1);assert.ok(!form.includes('data-year-end-note'))
+ assert.ok(form.includes('name="yearEndCoupon"'));assert.equal((form.match(/2026년 11·12월 방문 시 적용/g)||[]).length,0);assert.ok(!form.includes('data-year-end-note'));assert.ok(!source.includes('브라우저당 1장'))
  assert.ok(!source.includes('선택 완료'),'all coupon buttons must use 받기 완료')
 })
