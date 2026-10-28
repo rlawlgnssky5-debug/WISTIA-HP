@@ -12,6 +12,7 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',out=path.resolve(
   const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message));await p.clock.setFixedTime(new Date('2026-10-28T12:00:00+09:00'))
   const button=()=>p.locator('[data-coupon-claim="yearEndCoupon"]'),card=()=>p.locator('[data-coupon-card="yearEndCoupon"]')
   const layout=async()=>{
+   assert.doesNotMatch(await card().innerText(),/브라우저당|2026년 11·12월 방문 시 적용|연말/)
    await p.evaluate(()=>document.fonts.ready)
    const m=await p.evaluate(()=>{const card=document.querySelector('[data-coupon-card="yearEndCoupon"]'),bad=[];for(const el of card.querySelectorAll('small,strong,em>span,.coupon-claim-hint,.limited-coupon-note')){const box=el.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(el);for(const r of range.getClientRects())if(r.left<box.left-1||r.right>box.right+1)bad.push(el.textContent)}return {bad,overflow:document.documentElement.scrollWidth-innerWidth,main:document.querySelector('main').getBoundingClientRect().width,heights:[...document.querySelectorAll('.coupon-claim-card>.welcome-gift')].map(e=>e.getBoundingClientRect().height)}})
    assert.equal(m.overflow,0);assert.deepEqual(m.bad,[]);assert.ok(Math.abs(m.heights[0]-m.heights[1])<1);if(width>=780)assert.equal(m.main,780)
