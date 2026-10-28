@@ -7,7 +7,7 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',out=path.resolve(
   const c=await b.newContext({viewport:{width,height:950},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'});let remaining=20,owned=false,posts=0,fail=false
   await c.route(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/,r=>r.abort())
   await c.route('**/api/availability?*',r=>r.fulfill({json:{ok:true,...Object.fromEntries(new URL(r.request().url()).searchParams),blocks:[]}}))
-  await c.route('**/api/limited-coupon',r=>{if(fail)return r.fulfill({status:503,json:{ok:false}});let fresh=false;if(r.request().method()==='POST'){posts++;if(!owned&&remaining>0){remaining--;owned=true;fresh=true}}return r.fulfill({json:{ok:true,remaining,claimed:owned,closed:remaining===0,newlyClaimed:fresh}})})
+  await c.route('**/api/limited-coupon',r=>{if(fail)return r.fulfill({status:503,json:{ok:false}});let fresh=false;if(r.request().method()==='POST'){posts++;if(!owned&&remaining>0){remaining--;owned=true;fresh=true}}return r.fulfill({json:{ok:true,remaining,claimed:owned,closed:remaining===0,newlyClaimed:fresh,expired:false,serverNow:'2026-10-28T12:00:00+09:00',expiresAt:owned?'2026-10-29T12:00:00+09:00':null}})})
   await c.route('**/*',r=>{assert.ok(r.request().method()==='GET'||new URL(r.request().url()).pathname==='/api/limited-coupon');assert.doesNotMatch(r.request().url(),/pf\.kakao|kakaolink/);return r.fallback()})
   const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message));await p.clock.setFixedTime(new Date('2026-10-28T12:00:00+09:00'))
   const button=()=>p.locator('[data-coupon-claim="yearEndCoupon"]'),card=()=>p.locator('[data-coupon-card="yearEndCoupon"]')
