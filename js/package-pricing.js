@@ -37,10 +37,11 @@
   '2028-10-02','2028-10-03','2028-10-04','2028-10-05','2028-10-09','2028-12-25'
  ])
  const fixedHolidays=new Set(['01-01','03-01','05-01','05-05','06-06','07-17','08-15','10-03','10-09','12-25'])
- // Visit-date coupon for DELUXE·PREMIUM·DUET, expires at 2027-01-01 00:00 KST
- const yearEndActive=(reference=today())=>validDate(reference)&&reference<'2027-01-01'
- const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&validDate(date)&&date>='2026-11-01'&&date<='2026-12-31'&&date>=reference
- const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'2026년 11·12월 방문 시 적용',products:'DELUXE · PREMIUM · DUET ONLY'}
+ // Keep legacy field/API names for saved drafts; stock and 24h receipt validity come from the server
+ // The retired November–December recording restriction must not affect limited coupons
+ const yearEndActive=(reference=today())=>validDate(reference)
+ const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&(!date||validDate(date)&&date>=reference)
+ const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'수령 후 24시간 이내 사용',products:'DELUXE · PREMIUM · DUET ONLY'}
  const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  const discountOfferList=()=>[
@@ -108,8 +109,8 @@
  const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'+ 보컬 보정 + 녹음 1시간',D:'+ 보컬 보정 + 녹음 1시간 + 1인 추가'}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
- // Without a chosen date show the conditional Nov–Dec visit price, never an applied quote
- const couponDisplayDate=reference=>reference<'2026-11-01'?'2026-11-01':reference
+ // A received limited coupon applies before a recording date is chosen as well
+ const couponDisplayDate=reference=>reference
  function cardCouponPrice(p,reference=today(),bookingDate=''){const q=quote({package:p.key,firstVisit:'1',yearEndCoupon:limitedAvailable(),bookingDate:bookingDate||couponDisplayDate(reference)},reference,true);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
  function bestCouponPrice(p,reference=today()){
   const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
@@ -268,19 +269,7 @@
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
  const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon}
- // Refresh open pages at expiry, including after a suspended tab resumes
- function refreshYearEnd(){
-  if(yearEndActive()||!global.document)return
-  global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey)})
-  global.document.querySelectorAll('.package-discount-guide').forEach(guide=>{guide.outerHTML=discountsHtml()})
-  global.document.querySelectorAll('form').forEach(form=>{if(form.querySelector('[data-year-end-coupon]'))form.dispatchEvent(new global.Event('input',{bubbles:true}))})
-  global.document.querySelectorAll('[data-year-end-gift]').forEach(el=>(el.closest('[data-coupon-card="yearEndCoupon"]')||el).remove())
-  refreshCardPrices(global.document)
- }
- if(global.document&&global.setTimeout&&yearEndActive()){
-  const schedule=()=>{const left=Date.parse('2027-01-01T00:00:00+09:00')-Date.now();if(left<=0){refreshYearEnd();return}global.setTimeout(schedule,Math.min(left+50,2147483647))}
-  schedule();global.document.addEventListener('visibilitychange',()=>{if(global.document.visibilityState==='visible')refreshYearEnd()})
- }
+ // WistiaLimitedCoupon refreshes server inventory and expires received coupons after 24h
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
 })(typeof window==='object'?window:globalThis)
