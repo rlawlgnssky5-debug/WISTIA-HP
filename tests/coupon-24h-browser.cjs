@@ -1,0 +1,31 @@
+const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path')
+const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4274',out=path.resolve(__dirname,'../output/coupon-24h-20261028',process.env.WISTIA_QA_PHASE||'local'),day=86400000,start=Date.parse('2026-10-28T12:00:00+09:00')
+;(async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),errors=[],results=[]
+ try{for(const width of [320,360,375,390,414,780,1280]){
+  const c=await b.newContext({viewport:{width,height:1000},isMobile:width<780,hasTouch:width<780,timezoneId:'Asia/Seoul'});let serverNow=start+3600000,posts=0
+  await c.route(/facebook\.com|connect\.facebook|google-analytics|googletagmanager/,r=>r.abort())
+  await c.route('**/api/limited-coupon',r=>{if(r.request().method()==='POST')posts++;return r.fulfill({json:{ok:true,remaining:18,claimed:true,closed:false,newlyClaimed:false,issuedAt:new Date(start).toISOString(),expiresAt:new Date(start+day).toISOString(),serverNow:new Date(serverNow).toISOString(),expired:serverNow>=start+day}})})
+  await c.route('**/api/availability?*',r=>r.fulfill({json:{ok:true,...Object.fromEntries(new URL(r.request().url()).searchParams),blocks:[]}}));await c.route('**/*',r=>{assert.equal(r.request().method(),'GET');assert.doesNotMatch(r.request().url(),/pf\.kakao|kakaolink/);return r.fallback()})
+  const p=await c.newPage();p.on('pageerror',e=>errors.push(e.message));await p.clock.install({time:new Date(serverNow)});await p.goto(base+'/contact?package=B');await p.waitForFunction(()=>WistiaLimitedCoupon.state.ready)
+  const card=()=>p.locator('[data-coupon-card="yearEndCoupon"]'),timer=()=>card().locator('[data-coupon-timer]')
+  assert.equal(await timer().isVisible(),true);assert.equal(await timer().locator('[data-coupon-timer-label]').innerText(),'쿠폰 사용 남은 시간');assert.equal(await p.locator('[name="yearEndCoupon"]').isChecked(),true);assert.match(await p.locator('[data-wf-draft-note]').innerText(),/24시간/)
+  const layout=async()=>{await p.evaluate(()=>document.fonts.ready);const m=await timer().evaluate(e=>{const r=e.getBoundingClientRect(),label=e.querySelector('span').getBoundingClientRect(),value=e.querySelector('strong').getBoundingClientRect();return {overflow:document.documentElement.scrollWidth-innerWidth,left:r.left,right:r.right,labelRight:label.right,valueLeft:value.left,valueRight:value.right,height:r.height,display:getComputedStyle(e).display}});assert.equal(m.overflow,0);assert.equal(m.display,'flex');assert.ok(m.labelRight+6<=m.valueLeft);assert.ok(m.valueRight<=m.right);assert.ok(m.height>=35)}
+  await layout()
+  await p.evaluate(()=>{const f=document.querySelector('form');f.querySelector('[name="bookingDate"]').value='2026-12-31';f.querySelector('[name="specialNotes"]').value='24시간 초안 검수';f.querySelector('[name="specialNotes"]').dispatchEvent(new Event('input',{bubbles:true}))})
+  const total=await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')).total)
+  const savedAt=await p.evaluate(()=>JSON.parse(localStorage.getItem('wistia:inquiry-draft:v1:solo')).savedAt)
+  if([390,1280].includes(width)){await card().scrollIntoViewIfNeeded();await p.waitForTimeout(300);await card().locator('img').evaluate(e=>e.decode());await p.evaluate(()=>document.querySelectorAll('body *').forEach(e=>{if(getComputedStyle(e).position==='fixed')e.style.setProperty('visibility','hidden','important')}));await card().screenshot({path:path.join(out,'timer-active-'+width+'.png')})}
+  serverNow=start+day-1000;await p.clock.fastForward(day-3600000-1000);await p.evaluate(()=>WistiaLimitedCoupon.refresh());assert.ok(await p.evaluate(()=>WistiaLimitedCoupon.remainingMs())<=1000);assert.equal(await p.evaluate(()=>WistiaLimitedCoupon.isUsable()),true)
+  serverNow=start+day+1;await p.clock.fastForward(1001);await p.waitForFunction(()=>WistiaLimitedCoupon.state.expired)
+  assert.equal(await card().locator('[data-limited-stock]').innerText(),'18장 남음');assert.equal(await card().locator('[data-coupon-button-copy]').innerText(),'사용 기간 만료');assert.equal(await timer().locator('[data-coupon-timer-value]').innerText(),'00:00:00');assert.equal(await p.locator('[name="yearEndCoupon"]').isChecked(),false)
+  assert.equal(await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')).discounts.some(d=>d.key==='yearEnd')),false);assert.equal(await p.evaluate(()=>WistiaWizard.quote(document.querySelector('form')).total),total+20000)
+  assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('wistia:inquiry-draft:v1:solo')).savedAt),savedAt,'timer refresh/expiry must not extend the inquiry draft lifetime')
+  await p.evaluate(()=>WistiaLimitedCoupon.refresh(true));assert.equal(posts,0);await layout()
+  if([390,1280].includes(width))await card().screenshot({path:path.join(out,'timer-expired-'+width+'.png')})
+  await p.reload();await p.waitForFunction(()=>WistiaLimitedCoupon.state.ready);assert.equal(await p.locator('[name="specialNotes"]').inputValue(),'24시간 초안 검수');assert.equal(await p.locator('[name="yearEndCoupon"]').isChecked(),false);assert.match(await card().innerText(),/사용 기간 만료/)
+  for(const route of ['/','/detail/solo','/event/solo','/event/duo']){await p.goto(base+route+'?package=B');await p.waitForFunction(()=>WistiaLimitedCoupon.state.ready);assert.equal(await card().locator('[data-limited-stock]').innerText(),'18장 남음');assert.equal(await card().locator('[data-coupon-claim]').isDisabled(),true);assert.match(await card().innerText(),/쿠폰이 만료되었어요/);await layout();if(route.includes('event'))assert.equal(await p.locator('[name="yearEndCoupon"]').isChecked(),false)}
+  assert.equal(posts,0);results.push({width,expiry:'fixed receipt +24h',stock:18,reissue:false,draft:'24h since save; timer does not renew it',routes:5});await c.close()
+ }assert.deepEqual(errors,[])}finally{await b.close();fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({base,results,errors},null,2))}
+ console.log('PASS fixed 24h expiry, non-renewing drafts, no restock/reissue, price removal, reload and strip layout at '+results.length+' widths')
+})().catch(e=>{console.error(e);process.exitCode=1})

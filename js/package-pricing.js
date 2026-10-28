@@ -41,7 +41,8 @@
  const yearEndActive=(reference=today())=>validDate(reference)&&reference<'2027-01-01'
  const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&validDate(date)&&date>='2026-11-01'&&date<='2026-12-31'&&date>=reference
  const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'2026년 11·12월 방문 시 적용',products:'DELUXE · PREMIUM · DUET ONLY'}
- const limitedAvailable=()=>yearEndActive()&&(!global.document||global.WistiaLimitedCoupon?.state.claimed===true||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.remaining>0&&!global.WistiaLimitedCoupon.state.closed)
+ const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
+ const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&!global.WistiaLimitedCoupon.state.received&&global.WistiaLimitedCoupon.state.remaining>0&&!global.WistiaLimitedCoupon.state.closed)
  const discountOfferList=()=>[
   {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
@@ -77,7 +78,7 @@
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
-  if(v.yearEndCoupon&&(preview||!global.document||global.WistiaLimitedCoupon?.state.claimed===true)&&p.key!=='A'&&yearEndEligible(v.bookingDate,reference))discounts.push({key:'yearEnd',label:'선착순 쿠폰',amount:20000})
+  if(v.yearEndCoupon&&(preview||!global.document||limitedClaimed())&&p.key!=='A'&&yearEndEligible(v.bookingDate,reference))discounts.push({key:'yearEnd',label:'선착순 쿠폰',amount:20000})
   if(v.firstVisit)discounts.push({key:'first',label:'첫 이용',amount:20000})
   if(validDate(v.bookingDate)){
    if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 13~16시 시작',amount:10000})
@@ -167,20 +168,20 @@
  function firstVisitBanner(imageSrc='/assets/img/studio-3d/gift-benefits-yellow-v1.webp'){return '<div class="welcome-gift"><img src="'+imageSrc+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>처음 만나는 위스티아의 선물</small><strong>첫 이용 20,000원 할인</strong></div><span class="welcome-spark" aria-hidden="true">✦</span></div>'}
  const yearEndImage='/assets/editorial/year-end-ticket-rose-v1.webp'
  function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
- const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=3*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
+ const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=24*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
  let memoryClaims=null
  function readCouponClaims(){
   let data=memoryClaims
   try{const raw=global.localStorage?.getItem(couponStorageKey);if(raw)data=JSON.parse(raw)}catch{}
-  const result=!data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>couponLifetime?{}:Object.fromEntries(couponKeys.filter(key=>typeof data.selections?.[key]==='boolean').map(key=>[key,data.selections[key]]))
-  if(global.document)result.yearEndCoupon=yearEndActive()&&global.WistiaLimitedCoupon?.state.claimed===true
+  const result=!data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>=couponLifetime?{}:Object.fromEntries(couponKeys.filter(key=>typeof data.selections?.[key]==='boolean').map(key=>[key,data.selections[key]]))
+  if(global.document)result.yearEndCoupon=yearEndActive()&&limitedClaimed()
   return result
  }
  function writeCouponClaims(selections){memoryClaims={version:1,savedAt:Date.now(),selections:Object.fromEntries(couponKeys.filter(key=>typeof selections[key]==='boolean').map(key=>[key,selections[key]]))};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
  function couponClaimCard(key,mode='form',imageSrc){
   if(!couponKeys.includes(key)||key==='yearEndCoupon'&&!yearEndActive())return ''
   const year=key==='yearEndCoupon',title=year?yearEndCopy.label:'첫 이용 쿠폰',banner=year?yearEndBookingBanner():firstVisitBanner(imageSrc)
-  return '<div class="coupon-claim-card" data-coupon-card="'+key+'"'+(year?' data-year-end-coupon':'')+'>'+banner+'<div class="coupon-claim-action"><span class="coupon-claim-hint">여기를 눌러주세요 →</span><button type="button" class="coupon-claim-button" data-coupon-claim="'+key+'" aria-label="'+title+'" aria-pressed="false"><span data-coupon-button-copy>쿠폰 받기</span><b data-coupon-check aria-hidden="true" hidden>✓</b></button>'+(mode==='form'?'<input type="checkbox" name="'+key+'" value="1" hidden aria-hidden="true">':'')+'</div></div>'
+  return '<div class="coupon-claim-card" data-coupon-card="'+key+'"'+(year?' data-year-end-coupon':'')+'>'+banner+'<div class="coupon-claim-action"><span class="coupon-claim-hint">여기를 눌러주세요 →</span><button type="button" class="coupon-claim-button" data-coupon-claim="'+key+'" aria-label="'+title+'" aria-pressed="false"><span data-coupon-button-copy>쿠폰 받기</span><b data-coupon-check aria-hidden="true" hidden>✓</b></button>'+(mode==='form'?'<input type="checkbox" name="'+key+'" value="1" hidden aria-hidden="true">':'')+'</div>'+(year?'<div class="limited-coupon-timer" data-coupon-timer hidden role="group" aria-label="쿠폰 사용 남은 시간" aria-live="off"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><span data-coupon-timer-label>쿠폰 사용 남은 시간</span></span><strong data-coupon-timer-value>24:00:00</strong></div>':'')+'</div>'
  }
  function syncCouponControls(root=global.document){
   const claims=readCouponClaims()
@@ -190,25 +191,27 @@
    card.classList.toggle('is-received',selected&&!button.disabled);card.classList.toggle('is-disabled',button.disabled)
    card.querySelector('.coupon-claim-hint').textContent=button.disabled?'스탠다드 적용 제외':selected&&key==='yearEndCoupon'&&date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':selected?'쿠폰을 받았어요':'여기를 눌러주세요 →'
    if(key==='yearEndCoupon'){
-    const state=global.WistiaLimitedCoupon?.state||{},owned=state.claimed===true,closed=state.ready&&state.closed&&!owned
-    button.disabled=standard||owned||closed||state.busy||!state.ready&&!state.error
+    const state=global.WistiaLimitedCoupon?.state||{},owned=limitedClaimed(),received=state.received===true,expired=received&&!owned,closed=state.ready&&state.closed&&!received
+    button.disabled=standard||received||closed||state.busy||!state.ready&&!state.error
     button.setAttribute('aria-pressed',String(owned));button.setAttribute('aria-busy',String(!!state.busy))
-    button.querySelector('[data-coupon-button-copy]').textContent=owned?'받기 완료':standard?'대상 상품 전용':closed?'발급 마감':state.busy?'확인 중':state.error?'다시 확인':'쿠폰 받기'
+    button.querySelector('[data-coupon-button-copy]').textContent=expired?'사용 기간 만료':owned?'받기 완료':standard?'대상 상품 전용':closed?'발급 마감':state.busy?'확인 중':state.error?'다시 확인':'쿠폰 받기'
     button.querySelector('[data-coupon-check]').hidden=!owned
-    card.classList.toggle('is-received',owned);card.classList.toggle('is-disabled',!owned&&button.disabled)
+    card.classList.toggle('is-received',owned);card.classList.toggle('is-expired',expired);card.classList.toggle('is-disabled',!owned&&button.disabled)
     const stock=state.ready?state.remaining+'장 남음':state.error?'수량 확인 필요':'잔여 수량 확인 중'
-    const note=closed?'쿠폰이 마감되었어요':owned?standard?'스탠다드 적용 제외':date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':'쿠폰을 받았어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':''
+    const note=expired?'':closed?'쿠폰이 마감되었어요':owned?standard?'스탠다드 적용 제외':date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':'쿠폰을 받았어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':''
     card.querySelector('.coupon-claim-hint').innerHTML='<span data-limited-stock role="status">'+stock+'</span>'+(note?'<span class="limited-coupon-note">'+note+'</span>':'')
+    const timer=card.querySelector('[data-coupon-timer]');timer.hidden=!received;timer.querySelector('[data-coupon-timer-label]').textContent=expired?'쿠폰이 만료되었어요':'쿠폰 사용 남은 시간'
    }
   })
+  global.WistiaLimitedCoupon?.paintTimers()
  }
- function syncCouponClaims(root=global.document,notify=true){
+ function syncCouponClaims(root=global.document,notify=true,system=false){
   const claims=readCouponClaims()
   root?.querySelectorAll('form').forEach(form=>couponKeys.forEach(key=>{
    const input=form.querySelector('[name="'+key+'"]');if(!input||!Object.hasOwn(claims,key))return
    const allowed=key!=='yearEndCoupon'||yearEndActive()&&packageFor(form.querySelector('[name="package"]:checked')?.value).key!=='A',checked=allowed&&claims[key]
    if(input.checked===checked)return;input.checked=checked
-   if(notify){input.dispatchEvent(new global.Event('input',{bubbles:true}));input.dispatchEvent(new global.Event('change',{bubbles:true}))}
+   if(notify){for(const type of ['input','change']){const event=new global.Event(type,{bubbles:true});event.wistiaCouponSync=system;input.dispatchEvent(event)}}
   }));syncCouponControls(root)
  }
  function setCouponClaim(key,selected){if(!couponKeys.includes(key))return;if(key==='yearEndCoupon')return;writeCouponClaims({...readCouponClaims(),[key]:!!selected});syncCouponClaims(global.document)}
@@ -242,7 +245,7 @@
   root.addEventListener('click',async event=>{const button=event.target.closest('[data-coupon-claim]');if(!button||!root.contains(button)||button.disabled)return;const key=button.dataset.couponClaim;if(key==='yearEndCoupon'){const inventory=global.WistiaLimitedCoupon;if(inventory.state.error){await inventory.refresh();return}const state=await inventory.refresh(true);if(state.newlyClaimed)celebrateCoupon(button.closest('[data-coupon-card]'),button);return}const input=button.closest('form')?.querySelector('[name="'+key+'"]'),selected=!(input?input.checked:readCouponClaims()[key]===true);setCouponClaim(key,selected);if(selected)celebrateCoupon(button.closest('[data-coupon-card]'),button)})
  }
  if(global.addEventListener)global.addEventListener('wistia:limited-coupon',()=>{
-  syncCouponClaims(global.document)
+  syncCouponClaims(global.document,true,true)
   global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey,panel.dataset.couponDate||'')})
   refreshCardPrices(global.document)
  })

@@ -40,7 +40,7 @@ assert.equal(api.read('solo'),null)
 assert.equal(api.save('solo',data),false)
 console.log('Browser-only allowlisted drafts, expiry, corrupt/blocked storage, partial dates, route isolation and personal-field exclusion passed')
 
-const lifetime=3*60*60*1000,prefix='wistia:inquiry-draft:v1:'
+const lifetime=24*60*60*1000,prefix='wistia:inquiry-draft:v1:'
 function fixture(){
  let now=Date.UTC(2026,9,17,4)
  const storage=new Map([['wistia_vid','existing-visitor'],['unrelated','keep']])
@@ -60,17 +60,17 @@ test('legacy 100% AR selection is discarded when an old draft is read and saved'
  assert.doesNotMatch(f.storage.get(prefix+'solo'),/lipsync/)
  assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
 })
-for(const age of [lifetime-1,lifetime])test('restores a draft aged '+age+'ms',()=>{
+for(const age of [lifetime-1])test('restores a draft aged '+age+'ms',()=>{
  const f=fixture()
  f.api.save('solo',data)
  f.advance(age)
  assert.equal(f.api.read('solo').fields.specialNotes,data.fields.specialNotes)
  assert.ok(f.storage.has(prefix+'solo'))
 })
-test('clears only the expired draft after three hours',()=>{
+test('clears only the expired draft at 24 hours',()=>{
  const f=fixture()
  f.api.save('solo',data)
- f.advance(lifetime+1)
+ f.advance(lifetime)
  f.api.save('duo',data)
  assert.equal(f.api.read('solo'),null)
  assert.equal(f.storage.has(prefix+'solo'),false)
@@ -78,7 +78,7 @@ test('clears only the expired draft after three hours',()=>{
  assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
  assert.equal(f.storage.get('unrelated'),'keep')
 })
-test('each save refreshes savedAt and starts a new three-hour lifetime',()=>{
+test('each save refreshes savedAt and starts a new 24-hour lifetime',()=>{
  const f=fixture()
  f.api.save('solo',data)
  const first=JSON.parse(f.storage.get(prefix+'solo')).savedAt
@@ -105,15 +105,15 @@ for(const timestamp of ['missing','future','invalid'])test('removes drafts with 
  assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
  assert.equal(f.storage.get('unrelated'),'keep')
 })
-test('wizard input/change handlers save drafts and both notes show three hours',()=>{
+test('wizard input/change handlers save drafts and both notes show 24 hours',()=>{
  const wizard=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8').replace(/\r\n/g,'\n')
-  assert.match(wizard,/form\.addEventListener\('input',event=>\{if\(!event\.target\.matches\('\[data-wf-people-add\]'\)\)update\(form\)\}\)/)
+  assert.match(wizard,/form\.addEventListener\('input',event=>\{if\(!event\.target\.matches\('\[data-wf-people-add\]'\)\)update\(form,\{save:!event\.wistiaCouponSync\}\)\}\)/)
  const changeHandler=wizard.split("form.addEventListener('change',event=>{")[1]?.split("form.addEventListener('input'")[0]
  assert.ok(changeHandler,'change listener exists')
- assert.match(changeHandler,/\n   update\(form\)\n/)
+ assert.match(changeHandler,/\n   update\(form,\{save:!event\.wistiaCouponSync\}\)\n/)
  assert.match(changeHandler,/WistiaBooking\.mount\(form,bookingKey\(form\)\)/)
- assert.match(wizard,/function update\(form\)\{[\s\S]*?persistDraft\(form\)/)
+ assert.match(wizard,/function update\(form,\{save=true\}=\{\}\)\{[\s\S]*?if\(save\)persistDraft\(form\)/)
  assert.match(wizard,/WistiaBookingDraft\.save\(state\.draftKey,/)
- assert.equal(wizard.split('작성 내용은 이 브라우저에 3시간 동안 임시 저장돼요').length-1,2)
+ assert.equal(wizard.split('작성 내용은 이 브라우저에 24시간 동안 임시 저장돼요').length-1,2)
  assert.doesNotMatch(wizard,/7일간/)
 })

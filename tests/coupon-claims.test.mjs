@@ -12,7 +12,7 @@ test('first visit stores a short-lived choice but limited inventory cannot be cl
  api.setCouponClaim('__proto__',true);assert.equal(Object.hasOwn(JSON.parse(items.get(key)).selections,'__proto__'),false)
 })
 test('coupon choices ignore expired, corrupt, future and nonboolean storage',()=>{
- for(const saved of ['bad',JSON.stringify({version:1,savedAt:clockNow-10800001,selections:{firstVisit:true}}),JSON.stringify({version:1,savedAt:clockNow+50000,selections:{firstVisit:true}})])assert.equal(Object.keys(setup({[key]:saved}).api.readCouponClaims()).length,0)
+ for(const saved of ['bad',JSON.stringify({version:1,savedAt:clockNow-86400001,selections:{firstVisit:true}}),JSON.stringify({version:1,savedAt:clockNow+50000,selections:{firstVisit:true}})])assert.equal(Object.keys(setup({[key]:saved}).api.readCouponClaims()).length,0)
  assert.equal(Object.keys(setup({[key]:JSON.stringify({version:1,savedAt:clockNow,selections:{firstVisit:'1',yearEndCoupon:1,email:'not stored'}})}).api.readCouponClaims()).length,0)
 })
 test('blocked storage still carries coupon choices during same-page navigation',()=>{
