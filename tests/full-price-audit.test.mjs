@@ -4,7 +4,7 @@ import {createRequire} from 'node:module'
 import fs from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js')
 const tiers={A:{price:90000,minutes:50},B:{price:170000,minutes:90},C:{price:220000,minutes:150},D:{price:240000,minutes:150}}
-const optionKeys=['tuning','detailMix','precisionMix','extraHour','rush'],fees=[40000,20000,20000,50000,30000]
+const optionKeys=['tuning','detailMix','precisionMix','extraHour','rush'],fees=[40000,20000,20000,60000,30000]
 const ref='2026-10-29',cases=[['',0,false],['2026-10-29',0,true],['2026-10-30',0,true],['2026-10-31',0,false],['2026-11-28',0,false],['2026-11-29',10000,false],['2026-12-28',10000,false],['2026-12-29',20000,false],['2026-12-31',20000,true],['2026-12-25',10000,false],['2027-01-01',20000,false],['2027-01-02',20000,false]]
 test('independent approved-price oracle checks every type, option combination, people, coupon and boundary time',()=>{
  let checked=0
@@ -16,7 +16,7 @@ test('independent approved-price oracle checks every type, option combination, p
   const expected=p.price+optionTotal-(first?20000:0)-limitedAmount-advance-weekdayAmount
   const q=pricing.quote({package:tier,people,options:selected,firstVisit:first,yearEndCoupon:limited,bookingDate:date,timeStart:time,paybackBlog:true,paybackReaction:true},ref)
   assert.equal(q.total,expected,JSON.stringify({tier,people,selected,first,limited,date,time}))
-  assert.equal(q.optionTotal,optionTotal);assert.equal(q.minutes,p.minutes+(selected.includes('extraHour')&&tier!=='D'?50:0));assert.equal(q.payback,60000)
+  assert.equal(q.optionTotal,optionTotal);assert.equal(q.minutes,p.minutes+(selected.includes('extraHour')&&tier!=='D'?60:0));assert.equal(q.payback,60000)
   assert.equal(q.delivery,slow?(payable.includes('rush')?'녹음일 기준 3일 이내 전달':'영업일 7일 이내 전달'):'당일 음원 전달')
   checked++
  }

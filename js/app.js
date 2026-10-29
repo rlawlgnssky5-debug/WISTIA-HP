@@ -395,7 +395,7 @@ const INFO_FAQ_GROUPS=[
  {title:"녹음 당일",description:"처음이어도 편하게 부르실 수 있도록 도와드려요",items:[
   ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>"],
   ["녹음은 현장에서 어떻게 진행되나요?","곡과 키를 확인하고 가볍게 연습한 뒤, 한 구간씩 녹음해요<br>옆에서 1:1로 디렉팅하며 필요한 구간은 다시 불러요<br>안내와 연습을 포함해 선택하신 타입의 녹음 시간 안에서 진행해요"],
-  ["녹음 시간을 더 추가할 수 있나요?","녹음 50분 추가는 <strong>50,000원</strong>이에요<br>PREMIUM은 기본 2시간 30분 녹음해요<br>당일 연장 가능 여부는 다음 예약 일정을 확인한 뒤 안내해 드려요"]
+  ["녹음 시간을 더 추가할 수 있나요?","녹음 1시간 추가는 <strong>60,000원</strong>이에요<br>PREMIUM은 기본 2시간 30분 녹음해요<br>당일 연장 가능 여부는 다음 예약 일정을 확인한 뒤 안내해 드려요"]
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
   ["AR 축가는 본식 현장에서 어떻게 하면 되나요?","예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요"],
@@ -1225,7 +1225,7 @@ function arCommerceDetail(p,key="solo"){
  '<section class="arc-section arc-process" id="arcProcess"><span class="arc-kicker">진행 순서</span><h2>준비부터 전달까지<br>이렇게 진행합니다</h2><ol>'+[['상담·예약','원하는 곡, 녹음 시간과 본식 일정을 확인합니다'],['방문·녹음','경기도 부천 스튜디오에서 구간별 녹음과 1:1 디렉팅을 진행합니다'],['보정·완성','음정·박자를 수작업으로 다듬고 믹싱·마스터링을 진행합니다'],['음원 전달','본식용 AR과 완성 음원을 받고 예식장 담당자와 재생을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><div><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')+'</ol></section>'+
  '<section class="arc-section arc-faq" id="arcFaq"><h2>자주 묻는 질문</h2>'+faq(questions)+'</section>'+
  '<section class="arc-section arc-time-guide"><span class="arc-kicker">인원과 녹음 시간</span><h2>혼자 또는 함께,<br>인원에 맞게 선택하세요</h2><div class="arc-time-cards"><article><h3>SOLO(1인)</h3><strong>90,000원</strong><p>1곡 기준 · STANDARD·DELUXE·PREMIUM</p></article><article><h3>DUET(2인)</h3><strong>30,000원</strong><p>듀엣 변경 · 녹음 시간 유지</p></article></div><p>SOLO는 1인, DUET은 2인 녹음 상품입니다<br>표시 시간에는 안내·연습·부가 시간이 포함됩니다</p></section>'+
- '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>수정은 상담에서 안내해요</span></li><li><strong>추가 옵션</strong> <span>녹음 50분 추가 50,000원<br>100% 립싱크 20,000원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
+ '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음과 필요한 자료 전달 완료 후 최대 7일 이내</span></li><li><strong>수정</strong> <span>수정은 상담에서 안내해요</span></li><li><strong>추가 옵션</strong> <span>녹음 1시간 추가 60,000원<br>100% 립싱크 20,000원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
  '<section class="arc-section arc-final"><h2>축가는 직접,<br>준비는 위스티아와 함께</h2><p>선택한 구성과 가격을 복사한 뒤<br>카카오톡에서 일정을 확인하세요</p><div class="arc-actions">'+action('가격·옵션 확인')+'</div></section>'+footer()+
  '<aside class="arc-bottom" aria-label="상품 가격과 상담"><span><small>AR 축가 · <span data-ar-hours>'+hours+'</span>시간</small><b><span data-ar-price>'+amount+'</span>원</b></span>'+action('가격 보기')+action('카카오톡 상담',true)+'</aside></div>'
  // The approved mobile composition is canonical at every width; CSS handles sizing only.

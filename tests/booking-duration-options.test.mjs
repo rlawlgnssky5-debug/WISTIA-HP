@@ -6,14 +6,16 @@ import {runInNewContext} from 'node:vm'
 const require=createRequire(import.meta.url),rules=require('../js/booking-availability.js'),pricing=require('../js/package-pricing.js')
 const read=p=>readFileSync(new URL('../js/'+p,import.meta.url),'utf8')
 
-test('full recording duration respects Sunday 18:00 and ordinary 23:00 closing',()=>{
+test('full recording duration respects Sunday 18:00 and ordinary latest start 23:00',()=>{
  assert.equal(rules.slotBlocked('2027-10-10','17:00',60,[]),false)
  assert.equal(rules.slotBlocked('2027-10-10','16:00',120,[]),false)
  assert.equal(rules.slotBlocked('2027-10-10','17:00',120,[]),true,'C must finish by Sunday 18:00')
  assert.equal(rules.slotBlocked('2027-10-10','16:00',180,[]),true,'C plus extra hour crosses Sunday close')
  assert.equal(rules.slotBlocked('2027-10-09','21:00',120,[]),false)
- assert.equal(rules.slotBlocked('2027-10-09','22:00',120,[]),true)
- assert.equal(rules.slotBlocked('2027-10-09','21:00',180,[]),true)
+ assert.equal(rules.slotBlocked('2027-10-09','22:00',120,[]),false)
+ assert.equal(rules.slotBlocked('2027-10-09','21:00',180,[]),false)
+ assert.equal(rules.slotBlocked('2027-10-09','23:00',150,[]),false)
+ assert.equal(rules.slotBlocked('2027-10-09','23:30',50,[]),true,'no starts after 23:00')
 })
 
 test('closed cells anywhere in the recording and existing buffers block its start',()=>{
@@ -51,7 +53,7 @@ test('changing A/B/C and extra hour rechecks cached closures, clears invalid sta
  assert.equal(f.pending.length,1,'duration changes use validated cached closure data')
  await f.api.mount(f.form,'ar-60');assert.equal(f.option('13:00').disabled,false)
  f.time.value='21:00';await f.api.mount(f.form,'ar-120');assert.equal(f.time.value,'21:00')
- await f.api.mount(f.form,'ar-180');assert.equal(f.time.value,'');assert.equal(f.option('21:00').disabled,true)
+ await f.api.mount(f.form,'ar-180');assert.equal(f.time.value,'21:00');assert.equal(f.option('21:00').disabled,false,'a valid late start no longer depends on finishing by 23:00')
 })
 
 test('Sunday duration changes and failed refresh retain closure restrictions',async()=>{

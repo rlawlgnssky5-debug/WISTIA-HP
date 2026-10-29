@@ -16,8 +16,8 @@ test('tuning and detail mixing are never charged twice in B/C',()=>{
 test('duet changes people, not the selected recording time',()=>{
  for(const p of ['A','B','C']){const result=q({package:p,people:'1'});assert.equal(result.total,pricing.packages[p].price+30000);assert.equal(result.minutes,pricing.packages[p].minutes)}
 })
-test('one additional hour costs 50000, including a further hour after C',()=>{
- assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[140000,100],[220000,140],[270000,200]])
+test('one additional hour costs 60000, including a further hour after C',()=>{
+ assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[150000,110],[230000,150],[280000,210]])
 })
 test('removed 100% AR option is not offered or charged from legacy selections',()=>{
  assert.equal(pricing.options.some(o=>o.key==='lipsync'),false)
@@ -73,7 +73,7 @@ test('approved discounts combine without inventing a payback cap',()=>{
  assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
 })
 test('recording length follows the package and extra hour, with no promo minutes',()=>{
- assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,200)
+ assert.equal(q({package:'C',extraHour:'1',eventDate:'2026-12-30'}).minutes,210)
  assert.equal(q({eventDate:'2026-12-30'}).minutes,50)
  assert.equal(q({eventDate:'2026-12-30',eventDateMode:'unknown'}).minutes,50)
  assert.equal(q({eventDate:'2027-01-01'}).minutes,50)

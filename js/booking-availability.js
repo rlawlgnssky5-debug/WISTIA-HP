@@ -9,15 +9,16 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=30&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
- function timeWindows(key){const minutes=duration(key);return Array.from({length:10},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
+ function timeWindows(key){const minutes=duration(key);return Array.from({length:11},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Every operating day closes at 23:00; Sunday bookings must end by 18:00; other closures come from the availability blocks.
+ // Operating days accept starts through 23:00; sessions may finish after midnight.
+ // Sunday bookings still must end by 18:00; linked reservations remain blocking.
  function sundayEvening(date,time,minutes=60){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;const day=new Date(date+'T12:00:00+09:00').getUTCDay(),clock=Number(time.slice(0,2))*60+Number(time.slice(3));return day===0&&clock+(Number(minutes)>0?Number(minutes):60)>18*60} // fixed rule: on Sundays the studio is used until 18:00, so a booking must end by 18:00, on top of the Notion-linked blocks
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
-  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock+minutes>23*60)return true
+  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock>23*60)return true
   if(sundayEvening(date,time,minutes))return true
   // A new booking occupies its recording length + 30 min extra time + 30 min preparation.
   const start=Date.parse(date+'T'+time+':00+09:00'),end=start+(minutes+60)*60000
@@ -41,7 +42,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
  let bookable=0
  // Capacity still measures free half-hours, independently of hourly start choices.
- for(let minute=13*60;minute<23*60;minute+=30){
+ for(let minute=13*60;minute<=23*60;minute+=30){
   const time=Math.floor(minute/60)+':'+(minute%60?'30':'00')
   const start=Date.parse(date+'T'+time+':00+09:00')
   if(!Number.isFinite(start)||start<now||slotBlocked(date,time,30,blocks))continue
@@ -89,7 +90,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   for(const option of ui.time.options){
    if(!option.value)continue
    const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
-   const reason=sundayEvening(ui.date.value,option.value,minutes)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock+minutes>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
+   const reason=sundayEvening(ui.date.value,option.value,minutes)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
    option.dataset.disabledReason=reason;option.disabled=!!reason
    if(reason==='booking'||reason==='sunday')option.textContent=option.dataset.originalLabel+' · 마감'
   }

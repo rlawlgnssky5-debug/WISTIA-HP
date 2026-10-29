@@ -10,9 +10,9 @@
  const discoveryChoices=['지인·가족 추천','웨딩플래너·웨딩홀 소개','네이버 검색','인스타그램·유튜브','블로그·카페 후기','기타']
  const snapshotKeys=new Set([...fields.map(field=>field[0]),'eventDateMode','bookingDateMode','timeStart','specialNotes','discovery'])
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
- function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>'오후 '+(Math.floor(clock/60)-12)+'시'+(clock%60?' 30분':'');return start>=13*60&&end<=23*60?label(start)+'~'+label(end)+' ('+(minutes/60)+'시간)':'미정'}
+ function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>(clock>=1440?'다음 날 ':'')+(Math.floor(clock/60)%24<12?'오전 ':'오후 ')+(Math.floor(clock/60)%12||12)+'시'+(clock%60?' '+clock%60+'분':'');return start>=13*60&&start<=23*60?label(start)+'~'+label(end)+' ('+(global.WistiaPackages?.hoursText(minutes)||(minutes/60)+'시간')+')':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- const timeOptions=Array.from({length:10},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">오후 '+(hour-12)+'시</option>'}).join('')
+ const timeOptions=Array.from({length:11},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">오후 '+(hour-12)+'시</option>'}).join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  const publicHolidays={has:date=>global.WistiaPackages?.isPublicHoliday(date)||false}
