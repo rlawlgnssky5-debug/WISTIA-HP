@@ -61,7 +61,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  const selectedDates=new WeakMap()
  let activeForm=null,activeKey='solo',generation=0
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
- const fallbackMessage='카카오톡 확인 필요 · 일정 자동 확인이 연결되지 않았거나 잠시 지연되고 있습니다 · 희망 일정으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
+ const fallbackMessage='일정 자동 확인이 어렵습니다 · 희망 시간으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
  function validBlocks(blocks){return Array.isArray(blocks)&&blocks.every(block=>Number.isFinite(Date.parse(block.start))&&Number.isFinite(Date.parse(block.end))&&Date.parse(block.end)>Date.parse(block.start))}
  // Freshness controls requests, not whether validated closures remain visible.
  function calendarBlocks(from,to){return rangeCache.get(from+':'+to)?.blocks??null}
@@ -174,7 +174,12 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   global.WistiaContact?.mountCalendars?.(activeForm)
   return check()
  }
- function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm)return check()}
+ function changed(target){if(activeForm&&target?.closest('#contactInquiryForm')===activeForm){
+  // Picking a wish time during an outage must not start another blocking retry.
+  // Date changes, explicit refresh, focus return and the pre-submit check retry.
+  if(target.name==='timeStart'&&activeForm.dataset.scheduleState==='unavailable')return fallback()
+  return check()
+ }}
  global.WistiaBooking={...rules,mount,changed,refresh:()=>{global.WistiaContact?.mountCalendars?.(activeForm,true);return check(true)},loadRange,calendarBlocks,calendarRangeFailed,calendarKey:()=>activeKey,timeoutMs}
  global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden&&activeForm?.isConnected&&activeForm.dataset.bookingCalendarOpened==='true'){global.WistiaContact?.mountCalendars?.(activeForm,true);check(true)}})
 })(typeof window==='object'?window:globalThis)

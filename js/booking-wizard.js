@@ -31,7 +31,7 @@
   const d=Object.fromEntries(rows(form)),row=(label,value,cls='')=>'<div'+(cls?' class="'+cls+'"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>'
   const group=(title,body,cls)=>'<section class="wf-review-group '+cls+'"><h3 class="wf-review-head">'+title+'</h3><dl>'+body+'</dl></section>'
   return group('상품',row('타입',q.package.name,'is-tier" data-tier="'+q.package.key)+row('인원',d['인원'])+row('녹음 소요 시간',d['녹음 소요 시간'])+row('추가 옵션',d['추가 옵션'])+row('음원 전달',d['음원 전달'])+row('처음 본 곳',d['처음 본 곳']),'is-product')
-   +group('일정',row('녹음 날짜',d['녹음 날짜'])+row('녹음 시간',d['녹음 시간']),'is-schedule')
+   +group('일정',(form.dataset.scheduleState==='unavailable'?row('일정 확인','자동 확인 불가 · 희망 일정 / 상담 후 확정'):'')+row('녹음 날짜',d['녹음 날짜'])+row('녹음 시간',d['녹음 시간']),'is-schedule')
    +group('할인·금액',(q.discounts.length?q.discounts.map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount'))+row('총 금액',d['총 금액'],'wf-final-total'),'is-amount')
  }
  function text(form){
@@ -44,7 +44,7 @@
   const discountName=d=>d.key==='first'?'첫 이용 할인':d.key==='weekday'?'목·금 시간 할인 (13~16시)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
-   '📅 녹음 예약','• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
+   '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
    '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+global.WistiaPackages.hoursText(q.minutes),'• 옵션 :',...included.map(item=>'- '+item),'',
    '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
    '💰 결제 금액','• 기본 상품 : '+money(q.base),'• 추가 옵션 : '+money(q.optionTotal),'',

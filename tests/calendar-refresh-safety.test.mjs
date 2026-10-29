@@ -13,6 +13,9 @@ const initial=cells(2026,9,'bookingDate','','2026-10-08',null)
 for(const day of [9,11,18,25])assert.match(initial.match(new RegExp('<button[^>]*data-calendar-day="2026-10-'+String(day).padStart(2,'0')+'"[^>]*>'))[0],/ disabled[^>]*확인 중/)
 const first=api.loadRange(from,to);requests[0].reject(Error('first offline'));await assert.rejects(first)
 assert.equal(api.calendarBlocks(from,to),null);assert.equal(api.calendarRangeFailed(from,to),true)
+const failed=cells(2026,9,'bookingDate','','2026-10-08',null,'solo',true)
+for(const day of [9,11,18,25]){const cell=failed.match(new RegExp('<button[^>]*data-calendar-day="2026-10-'+String(day).padStart(2,'0')+'"[^>]*>.*?</button>'))[0];assert.doesNotMatch(cell,/ disabled/);assert.doesNotMatch(cell,/<small>마감/);assert.match(cell,/카카오톡 확인 필요/)}
+for(const day of [7,12,13,14])assert.match(failed.match(new RegExp('<button[^>]*data-calendar-day="2026-10-'+String(day).padStart(2,'0')+'"[^>]*>'))[0],/ disabled/,'past dates and regular closures are not reopened')
 const success=api.loadRange(from,to);requests[1].resolve(reply(blocks));await success;closed()
 const failure=api.loadRange(from,to,true);requests[2].reject(Error('refresh offline'));await assert.rejects(failure);closed()
 assert.equal(api.calendarRangeFailed(from,to),true)
@@ -22,7 +25,7 @@ await rejection;closed();assert.equal(requests[3].options.signal.aborted,true)
 requests[3].resolve(reply([]));await Promise.resolve();await Promise.resolve();closed()
 const recovery=api.loadRange(from,to);assert.equal(requests.length,5,'failed refresh retries even with a retained fresh cache');requests[4].resolve(reply([]));await recovery
 assert.equal(api.calendarBlocks(from,to).length,0);assert.equal(api.calendarRangeFailed(from,to),false)
-console.log('First unknown/failed dates disabled, successful closures retained across failed and timed-out refreshes, late response rejected, successful recovery reopens dates passed')
+console.log('Pending dates wait; failed lookups allow wish-date inquiries; known closures survive failures/timeouts; late responses ignored and successful recovery reopens dates passed')
 
 const app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8')
 assert.doesNotMatch(app.slice(app.indexOf('const INFO_FAQ_GROUPS='),app.indexOf('const SERVICE_ORDER')),/녹음 시간이 남으면|추가 1절 녹음|촬영/)

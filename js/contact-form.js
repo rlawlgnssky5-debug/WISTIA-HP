@@ -33,13 +33,15 @@
   if(!selectableDate(value,key))return false
   if(key!=='bookingDate')return true
   const date=parseDate(value),from=isoDate(new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),1))),to=isoDate(new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+1,0))),booking=global.WistiaBooking,blocks=booking?.calendarBlocks(from,to)
-  return blocks!=null&&!booking.dayClosed(value,booking.calendarKey(),blocks)
+  // A failed lookup is unknown, not a sold-out date. Allow a wish-date inquiry
+  // after failure while preserving every closure from the last successful read.
+  return blocks==null?booking?.calendarRangeFailed?.(from,to)===true:!booking.dayClosed(value,booking.calendarKey(),blocks)
  }
  function calendarCells(year,month,key,selected='',today=calendarToday(),blocks=null,product='solo',failed=false){
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
-   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&!unknown
+   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&(!unknown||failed)
    const benefit=key==='bookingDate'&&enabled?global.WistiaPackages?.advanceDiscount(value,today):null
    cells+='<button type="button" class="calendar-day'+(benefit?' earlybird-day earlybird-'+(benefit.amount===20000?'two':'one'):'')+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'"'+(benefit?' data-discount="'+benefit.amount+'"':'')+' tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(benefit?' · '+benefit.amount.toLocaleString('ko-KR')+'원 할인':'')+(weekdayClosed?' · 휴무':notionClosed&&!past?' · 마감':past?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(notionClosed&&!past?'<small>마감</small>':'')+'</button>'
   }
@@ -94,7 +96,7 @@
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
   grid.innerHTML=calendarCells(state.year,state.month,key,selected,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
-  if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'카카오톡 확인 필요 · 일정 자동 확인이 어렵습니다':'예약 가능한 날짜를 불러오고 있어요'}
+  if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'일정 자동 확인이 어려워요 · 희망 날짜를 선택해 문의해 주세요':'예약 가능한 날짜를 불러오고 있어요'}
   if(key==='bookingDate'&&!calendar.hidden&&booking?.loadRange){
    const id=from+':'+to
    if(state.rangeId!==id){state.rangeId=id;booking.loadRange(from,to).catch(()=>{}).finally(()=>{if(state.rangeId===id&&calendar.isConnected)paintCalendar(state)})}
