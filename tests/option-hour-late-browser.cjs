@@ -14,8 +14,8 @@ const base=process.env.WISTIA_QA_BASE||'http://127.0.0.1:4319',phase=process.env
    assert.equal(await page.locator('#contact-time').inputValue(),'23:00')
    await page.locator('[data-wf-goto="2"]').click();await page.locator('[data-wf-step="2"]:not([hidden])').waitFor()
    const tip=page.locator('[data-wf-tip="extraHour"]');assert.equal(await tip.isVisible(),['A','B'].includes(key),key+' premium tip')
-   if(['A','B'].includes(key))assert.equal(await tip.innerText(),'프리미엄 패키지에 포함되어 있어요!')
-   for(const name of ['tuning','detailMix','precisionMix']){const t=page.locator('[data-wf-tip="'+name+'"]');assert.equal(await t.isVisible(),key==='A');if(key==='A')assert.equal(await t.innerText(),'디럭스 패키지에 포함되어 있어요!')}
+   if(['A','B'].includes(key))assert.equal(await tip.innerText(),'패키지로 하면 더 가성비 있어요!')
+   for(const name of ['tuning','detailMix','precisionMix']){const t=page.locator('[data-wf-tip="'+name+'"]');assert.equal(await t.isVisible(),key==='A');if(key==='A')assert.equal(await t.innerText(),'패키지로 하면 더 가성비 있어요!')}
    const row=page.locator('[data-wf-option="extraHour"]');assert.match(await row.innerText(),/녹음 1시간 추가/)
    if(key!=='D'){assert.equal(await row.locator('strong').innerText(),'+60,000원');if(!await row.locator('input').isChecked())await row.locator('.wf-check-row').click();await page.waitForFunction(()=>document.querySelector('[name="extraHour"]').checked)}
    const quote=await page.evaluate(()=>{const f=document.querySelector('form'),q=WistiaWizard.quote(f);return {total:q.total,minutes:q.minutes,text:WistiaWizard.text(f),range:f.querySelector('[data-wf-recording-range]').textContent,overflow:document.documentElement.scrollWidth-innerWidth,main:document.querySelector('main').getBoundingClientRect().width}})

@@ -1,0 +1,36 @@
+/* Inquiry geometry only; retain existing card colours, prices and included rows. */
+@layer wistia-wizard-layout {
+  body:has(#app > .wistia-wizard) #floatingKakaoChat {
+    display: none !important;
+  }
+
+  #app .wistia-wizard [data-wf-option="extraHour"]:not(.is-included) > .wf-check-row {
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) max-content !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  #app .wistia-wizard [data-wf-option="extraHour"]:not(.is-included) .wf-check-box {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  #app .wistia-wizard [data-wf-option="extraHour"]:not(.is-included) .wf-check-label {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: normal !important;
+  }
+
+  #app .wistia-wizard [data-wf-option="extraHour"]:not(.is-included) .wf-check-row > strong {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    align-self: center !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+}
