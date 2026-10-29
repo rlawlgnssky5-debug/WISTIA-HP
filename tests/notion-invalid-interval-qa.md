@@ -9,4 +9,7 @@
 - @vercel/node 3 빌더로 3개 의존 파일을 묶고 생성된 CommonJS 핸들러를 require하여 실제 동적 ESM import 및 날짜 범위 200 실행 확인, runtime nodejs24.x
 - 기존 booking-availability-ui 검사는 변경하지 않은 시간 슬롯 기대값에서 실패, 이번 수정과 별도이며 운영 브라우저로 날짜/시간을 추가 확인
 - 실제 문의 제출·카카오톡 채팅·쿠폰 발급 없음
-- 미리보기/운영 결과는 배포 후 추가
+- Vercel 브랜치 미리보기 빌드 success 확인, 배포 기록 https://vercel.com/wistia1/wistia/9TWFQbNid6GEgGXQNUUY5FezLyb7
+- 미리보기 실데이터 API는 직접 접근 경로를 확인하지 못함, 배포 후 운영 실데이터로 재검증
+- GitHub 연결 도구의 PR 생성 권한이 403으로 부족하여 기존 Git의 정상 main 배포 경로를 사용, 자격증명을 별도 추출하지 않음
+- 운영 결과는 배포 후 추가
