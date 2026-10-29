@@ -84,7 +84,10 @@
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key)
   const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.innerHTML='<b class="wf-tier-name" data-tier="'+q.package.key+'">'+q.package.name+'</b> <span class="wf-location-session">1곡 · '+global.WistiaPackages.hoursText(q.minutes)+'</span>'
   const advance=global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
-  const weekday=form.querySelector('[data-wf-weekday-note]');weekday.textContent=global.WistiaPackages.isPublicHoliday(q.v.bookingDate)?'공휴일은 목·금 시간대 할인이 적용되지 않아요':'목·금 13~16시 시작은 10,000원 할인돼요 (공휴일 제외)';weekday.classList.toggle('is-applied',!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart))
+  const weekday=form.querySelector('[data-wf-weekday-note]'),holiday=global.WistiaPackages.isPublicHoliday(q.v.bookingDate),weekdayApplied=!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart)
+  const weekdayCopy=holiday?'<span class="wf-weekday-copy">공휴일은 목·금 시간대 할인이 적용되지 않아요</span>':'<span class="wf-weekday-copy">목·금 13~16시 시작은 <strong>10,000원 할인</strong>돼요</span><small class="wf-weekday-condition">'+(weekdayApplied?'할인 적용 · ':'')+'공휴일 제외</small>'
+  if(weekday.innerHTML!==weekdayCopy)weekday.innerHTML=weekdayCopy
+  weekday.classList.toggle('is-applied',weekdayApplied)
   if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(state.step===1&&!q.v.timeStart?note:weekday)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   syncOptions(form,q)

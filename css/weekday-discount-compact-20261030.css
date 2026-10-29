@@ -1,0 +1,74 @@
+/* Compact weekday offer only; keep the other inquiry sections unchanged. */
+@layer wistia-site-fixes {
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 0 16px !important;
+    padding: 10px 13px !important;
+    border: 1px solid #e8becd !important;
+    border-radius: 12px !important;
+    background: linear-gradient(110deg, #fffafb, #f9eaf0) !important;
+    color: #99677a !important;
+    box-shadow: none !important;
+    font-size: clamp(11px, 3.1vw, 13px) !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+    letter-spacing: -.035em !important;
+    text-align: left !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note]::before,
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note]::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note] .wf-weekday-copy {
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font: inherit !important;
+    line-height: inherit !important;
+  }
+
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note] strong {
+    display: inline !important;
+    font: inherit !important;
+    font-weight: 700 !important;
+    color: #a54f6b !important;
+    white-space: nowrap !important;
+  }
+
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note] .wf-weekday-condition {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+    color: #a57b8c !important;
+  }
+
+  #app#app#app#app#app .wistia-wizard [data-wf-weekday-note].is-applied {
+    border-color: #b57089 !important;
+    background: linear-gradient(110deg, #f9e8ee, #f2d7e3) !important;
+    color: #8e4863 !important;
+  }
+
+  @media (min-width: 780px) {
+    #app#app#app#app#app .wistia-wizard [data-wf-weekday-note] {
+      padding-block: 12px !important;
+    }
+  }
+}
