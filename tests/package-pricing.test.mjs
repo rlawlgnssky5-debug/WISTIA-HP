@@ -4,6 +4,17 @@ import {createRequire} from 'node:module'
 import {readFileSync} from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
 const q=v=>pricing.quote(v,'2026-10-22')
+
+test('first-use coupon is only for DELUXE PREMIUM DUET, including restored STANDARD selections',()=>{
+ for(const firstVisit of ['1',true])for(const yearEndCoupon of ['1',true]){
+  const result=q({package:'A',firstVisit,yearEndCoupon})
+  assert.equal(result.total,90000)
+  assert.equal(result.discounts.some(d=>['first','yearEnd'].includes(d.key)),false)
+ }
+ for(const key of ['B','C','D'])assert.equal(q({package:key,firstVisit:'1'}).total,pricing.packages[key].price-20000)
+ assert.equal(q({package:'A',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,60000,'date discounts remain available')
+ assert.ok(pricing.firstVisitBanner().includes('DELUXE · PREMIUM · DUET ONLY'))
+})
 test('approved A/B/C prices and individual savings',()=>{
  assert.deepEqual(Object.values(pricing.packages).map(p=>[p.price,p.minutes,p.individual-p.price]),[[90000,50,0],[170000,90,40000],[220000,150,50000],[240000,150,60000]])
  for(const p of ['A','B','C'])assert.equal(q({package:p}).total,pricing.packages[p].price)
@@ -67,9 +78,9 @@ test('calendar and time hint helpers match quote thresholds and reject invalid i
  for(const args of [['2026-10-23','16:01'],['2026-10-24','14:00'],['invalid','14:00'],['2026-10-23','']])assert.equal(pricing.weekdayDiscount(...args),0)
  assert.equal(q({eventDate:'2027-01-10',bookingDate:'2026-10-24'}).discount,0,'advance discount uses recording date, not wedding date')
 })
-test('approved discounts combine without inventing a payback cap',()=>{
- const result=q({firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
- assert.equal(result.discount,50000);assert.equal(result.total,40000);assert.equal(result.payback,60000)
+test('approved discounts combine for eligible packages without inventing a payback cap',()=>{
+ const result=q({package:'B',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
+ assert.equal(result.discount,50000);assert.equal(result.total,120000);assert.equal(result.payback,60000)
  assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
 })
 test('recording length follows the package and extra hour, with no promo minutes',()=>{
@@ -109,8 +120,8 @@ test('limited coupon combines with first visit and date discounts without the re
  assert.equal(pricing.yearEndActive('2027-01-01'),true,'server receipt validity controls expiry across the new year')
  assert.equal(pricing.quote({package:'B',yearEndCoupon:'1',bookingDate:'2026-12-31'},'2027-01-01').total,170000)
  assert.equal(pricing.quote({package:'B',octoberCoupon:'1',bookingDate:'2026-12-31'},'2026-10-27').discounts.some(d=>d.key==='yearEnd'),false)
- assert.deepEqual(['A','B','C','D'].map(k=>pricing.cardCouponPrice(pricing.packages[k],'2026-10-27')),[70000,130000,180000,200000])
- assert.deepEqual(['A','B','C','D'].map(k=>pricing.cardCouponPrice(pricing.packages[k],'2026-10-27','2027-01-02')),[70000,130000,180000,200000])
+ assert.deepEqual(['A','B','C','D'].map(k=>pricing.cardCouponPrice(pricing.packages[k],'2026-10-27')),[90000,130000,180000,200000])
+ assert.deepEqual(['A','B','C','D'].map(k=>pricing.cardCouponPrice(pricing.packages[k],'2026-10-27','2027-01-02')),[90000,130000,180000,200000])
  assert.equal(pricing.bestCouponPrice(pricing.packages.B,'2026-11-10'),100000)
 })
 

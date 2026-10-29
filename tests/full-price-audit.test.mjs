@@ -13,7 +13,7 @@ test('independent approved-price oracle checks every type, option combination, p
   const payable=selected.filter(k=>!(tier!=='A'&&['tuning','detailMix','precisionMix'].includes(k))&&!(tier==='D'&&k==='extraHour')&&!(k==='rush'&&!slow))
   const optionTotal=payable.reduce((sum,k)=>sum+fees[optionKeys.indexOf(k)],people==='1'&&tier!=='D'?30000:0)
   const weekdayAmount=weekday&&['13:00','16:00'].includes(time)?10000:0,limitedAmount=limited&&tier!=='A'?20000:0
-  const expected=p.price+optionTotal-(first?20000:0)-limitedAmount-advance-weekdayAmount
+  const expected=p.price+optionTotal-(first&&tier!=='A'?20000:0)-limitedAmount-advance-weekdayAmount
   const q=pricing.quote({package:tier,people,options:selected,firstVisit:first,yearEndCoupon:limited,bookingDate:date,timeStart:time,paybackBlog:true,paybackReaction:true},ref)
   assert.equal(q.total,expected,JSON.stringify({tier,people,selected,first,limited,date,time}))
   assert.equal(q.optionTotal,optionTotal);assert.equal(q.minutes,p.minutes+(selected.includes('extraHour')&&tier!=='D'?60:0));assert.equal(q.payback,60000)
