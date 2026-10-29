@@ -888,5 +888,33 @@ html body #app#app#app#app#app#app#app .coupon-particle-layer.is-still>i{animati
 html body #app#app#app#app#app#app#app .coupon-particle-layer.is-still::before{animation:none!important;opacity:.8!important}
 @media(max-width:340px){html body #app#app#app#app#app#app#app .coupon-claim-hint{font-size:11px!important}html body #app#app#app#app#app#app#app .coupon-claim-button{padding-inline:10px!important;font-size:12px!important;gap:5px!important}}
 @media(prefers-reduced-motion:reduce){html body #app#app#app#app#app#app#app .coupon-particle-layer>i,html body #app#app#app#app#app#app#app .coupon-particle-layer::before{animation:none!important}}
-html body #app#app#app#app#app#app#app .info-page-location .lc2-addr .studio-address{white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important;max-width:100%!important}
+/* Compact rows remain single-line inside the mobile card, including Android text autosizing */
+html body #app#app#app#app#app#app#app .package-price-lines{container-type:inline-size;-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+@media(max-width:779px){html body #app#app#app#app#app#app#app .package-price-lines{padding-inline:8px!important}}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main{display:grid!important;grid-template-columns:minmax(0,1fr) max-content!important;align-items:center!important;column-gap:6px!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dt{display:flex!important;align-items:center!important;gap:3px!important;font-size:clamp(7.5px,3.8cqw,12px)!important;white-space:nowrap!important;min-width:0!important}
+html body #app#app#app#app#app#app#app .package-price-lines .package-price-label{flex:0 0 auto!important;font-size:inherit!important;white-space:nowrap!important;overflow-wrap:normal!important}
+html body #app#app#app#app#app#app#app .package-price-lines>:is(.is-pkg,.is-coupon,.is-best) .price-line-main dt{gap:2px!important}
+html body #app#app#app#app#app#app#app .package-price-lines dt .price-down-pill{font-size:.78em!important;padding:2px 2px!important;min-width:0!important;white-space:nowrap!important}
+html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dd{font-size:clamp(10.5px,4.2cqw,14px)!important;justify-self:end!important;text-align:right!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dd{font-size:clamp(10.5px,4.6cqw,16px)!important}
+html body #app#app#app#app#app#app#app #arcProcess .package-process-list li{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;column-gap:8px!important;row-gap:6px!important;align-items:baseline!important;padding:0!important}
+html body #app#app#app#app#app#app#app #arcProcess .package-process-list li::before{position:static!important;grid-column:1!important;grid-row:1!important;align-self:baseline!important;width:auto!important;margin:0!important;padding:0!important;transform:none!important;font-size:26px!important;line-height:1!important;text-align:left!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important}
+html body #app#app#app#app#app#app#app #arcProcess .package-process-list li>strong{grid-column:2!important;grid-row:1!important;align-self:baseline!important;margin:0!important}
+html body #app#app#app#app#app#app#app #arcProcess .package-process-list li>p{grid-column:2!important;grid-row:2!important;margin:0!important;min-width:0!important;word-break:keep-all!important;text-wrap:pretty!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-addr{container-type:inline-size}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-addr .studio-address{white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;max-width:100%!important;font-size:clamp(9px,5.1cqw,18px)!important;-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-btns{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;max-width:360px!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-btns>:is(a,button){min-width:0!important;width:auto!important;padding-inline:4px!important;font-size:clamp(8.5px,4.6cqw,13px)!important;white-space:nowrap!important;-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+html body #app#app#app#app#app#app#app #arcProcess .process-keep{white-space:nowrap!important;word-break:keep-all!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-row>div{min-width:0!important;flex:1 1 0!important;container-type:inline-size}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-row p{text-wrap:balance!important;word-break:keep-all!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-steps{flex-wrap:nowrap!important;align-items:center!important;gap:clamp(3px,1vw,6px)!important;font-size:clamp(8.5px,4.4cqw,12px)!important;-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important;white-space:nowrap!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-steps>span{flex:0 0 auto!important;padding:5px 4px!important;font-size:inherit!important;white-space:nowrap!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-steps>i{flex:0 0 auto!important;font-size:inherit!important;margin:0!important}
+@media(max-width:360px){
+html body #app#app#app#app#app#app#app .info-page-location .lc2-row{padding-inline:12px!important;gap:10px!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-row>:first-child{width:32px!important;height:32px!important;min-width:32px!important;flex:0 0 32px!important}
+html body #app#app#app#app#app#app#app .info-page-location .lc2-row>:first-child svg{width:18px!important;height:18px!important}
+}
 }
