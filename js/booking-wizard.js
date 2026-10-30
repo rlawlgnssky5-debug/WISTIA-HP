@@ -41,7 +41,7 @@
   const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정',q.package.mixing?'정밀 믹싱':'기본 믹싱','마스터링']:['기본 믹싱'])]
   const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
-  const discountName=d=>d.key==='first'?'첫 이용 할인':d.key==='weekday'?'목·금 시간 할인 (13~16시)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
+  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
