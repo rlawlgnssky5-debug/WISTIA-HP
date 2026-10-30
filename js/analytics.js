@@ -201,5 +201,24 @@
 
   window.addEventListener("pageshow", event => { if (event.persisted) startPageTracking(currentPagePath(), lastPricePayload); });
   window.addEventListener("pagehide", () => routeCleanup?.());
+
+  // GA4 recorded no user_engagement, so send foreground time ourselves once per hide
+  let foregroundSince = document.visibilityState === "hidden" ? 0 : Date.now();
+  let foregroundMs = 0;
+  let engagementSentForHide = false;
+  function flushEngagement() {
+    if (foregroundSince) { foregroundMs += Date.now() - foregroundSince; foregroundSince = 0; }
+    if (engagementSentForHide) return;
+    engagementSentForHide = true;
+    const ms = Math.round(foregroundMs);
+    if (ms <= 0) return;
+    if (send("user_engagement", { engagement_time_msec: ms, page_path: currentPagePath(), transport_type: "beacon" })) foregroundMs = 0;
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushEngagement();
+    else { foregroundSince = Date.now(); engagementSentForHide = false; }
+  });
+  window.addEventListener("pagehide", flushEngagement);
+  window.addEventListener("pageshow", () => { if (document.visibilityState !== "hidden") { foregroundSince = Date.now(); engagementSentForHide = false; } });
   window.wistiaAnalytics = { trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();

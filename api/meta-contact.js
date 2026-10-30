@@ -1,4 +1,6 @@
 const PIXEL_ID = "2825959717777272";
+// Each kind maps to the browser pixel events that share the same event_id, so Meta deduplicates them
+const EVENT_KINDS = { contact: ["Contact", "KakaoTalkClick"], inquiry_submit: ["InquirySubmit"], inquiry_open: ["InquiryOpen"] };
 
 function cookieValue(header, name) {
   const match = String(header || "").split(";").map(part => part.trim()).find(part => part.startsWith(`${name}=`));
@@ -19,7 +21,8 @@ export default async function handler(request, response) {
     return response.status(403).json({ ok: false });
   }
 
-  const { event_id: eventId, event_source_url: sourceUrl } = request.body || {};
+  const { event_id: eventId, event_source_url: sourceUrl, kind = "contact" } = request.body || {};
+  if (!Object.hasOwn(EVENT_KINDS, kind)) return response.status(400).json({ ok: false });
   if (typeof eventId !== "string" || !/^[a-f0-9-]{36}$/i.test(eventId) || typeof sourceUrl !== "string") {
     return response.status(400).json({ ok: false });
   }
@@ -29,7 +32,7 @@ export default async function handler(request, response) {
     return response.status(400).json({ ok: false });
   }
 
-  const token = process.env.META_CONVERSIONS_ACCESS_TOKEN;
+  const token = process.env.META_CAPI_TOKEN || process.env.META_CONVERSIONS_ACCESS_TOKEN;
   if (!token) return response.status(503).json({ ok: false, reason: "not_configured" });
 
   const userData = { client_user_agent: request.headers["user-agent"] || "" };
@@ -40,7 +43,7 @@ export default async function handler(request, response) {
     if (value) userData[name.slice(1)] = value;
   }
   const payload = {
-    data: ["Contact", "KakaoTalkClick"].map(eventName => ({
+    data: EVENT_KINDS[kind].map(eventName => ({
       event_name: eventName,
       event_time: Math.floor(Date.now() / 1000),
       event_id: eventId,
