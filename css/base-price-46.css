@@ -1,0 +1,5 @@
+/* Card headline is the 원가, the line below shows the price after package discount and received coupons only */
+.package-picker .package-card-was{display:block!important;margin:2px 0 0!important;font-size:11px!important;line-height:1.35!important;text-decoration:none!important;white-space:nowrap!important;text-align:center!important;color:#8a6a70!important}
+.package-picker .package-card-was b{display:block!important;font-size:12px!important;font-weight:700!important;color:#a65a6c!important;letter-spacing:-.01em}
+.package-picker .package-card-was s{text-decoration:none!important}
+.package-price-lines .is-now dd{font-weight:700!important}
