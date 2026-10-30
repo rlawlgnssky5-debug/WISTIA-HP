@@ -129,6 +129,7 @@
   const rows=[line('is-list','원가',0,money(p.individual)),line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price))]
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
   if(has('yearEnd'))rows.push(line('is-coupon','선착순 쿠폰',0,'−'+money(20000)))
+  q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
   rows.push(line('is-now','현재 적용가',0,money(now)))
   if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
   return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
@@ -146,7 +147,7 @@
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' 원가 '+money(p.individual)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+'<strong class="package-card-price">'+money(p.individual)+'</strong>'+(p.individual>p.price?'<span class="package-card-was">할인가 <b data-package-coupon-price="'+p.key+'">'+money(cardCouponPrice(p))+'</b></span>':'<span class="package-card-was is-empty" aria-hidden="true"></span>')+'<span class="package-card-subtitle">'+shortTitles[p.key].split(/ (?=\+ )/).map(t=>'<span class="package-card-sub-item">'+t+'</span>').join(' ')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' 원가 '+money(p.individual)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"></span>')+'<strong class="package-card-price" data-package-coupon-price="'+p.key+'">'+money(cardCouponPrice(p))+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key].split(/ (?=\+ )/).map(t=>'<span class="package-card-sub-item">'+t+'</span>').join(' ')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||''
@@ -180,6 +181,8 @@
   let data=memoryClaims
   try{const raw=global.localStorage?.getItem(couponStorageKey);if(raw)data=JSON.parse(raw)}catch{}
   const result=!data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>=couponLifetime?{}:Object.fromEntries(couponKeys.filter(key=>typeof data.selections?.[key]==='boolean').map(key=>[key,data.selections[key]]))
+  // An expired first-use claim reads as not received so its 20,000 drops out everywhere
+  if(data&&data.version===1&&Number.isFinite(data.savedAt)&&Date.now()-data.savedAt>=couponLifetime&&data.selections?.firstVisit===true)result.firstVisit=false
   if(global.document)result.yearEndCoupon=yearEndActive()&&limitedClaimed()
   return result
  }
@@ -256,6 +259,9 @@
   global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey,panel.dataset.couponDate||'')})
   refreshCardPrices(global.document)
  })
+ // Re-check once a minute so a coupon that expires while the page is open stops lowering prices
+ let lastClaimKey=null
+ if(global.document&&global.setInterval)global.setInterval(()=>{const c=readCouponClaims(),key=String(c.firstVisit===true)+String(c.yearEndCoupon===true);if(lastClaimKey!==null&&key!==lastClaimKey){syncCouponClaims(global.document);refreshPricePanels()}lastClaimKey=key},60000)
  if(global.addEventListener)global.addEventListener('storage',event=>{if(event.key===couponStorageKey){memoryClaims=null;syncCouponClaims(global.document)}})
  let bannerObserver=null
  function mountYearEndBanners(root=global.document){
