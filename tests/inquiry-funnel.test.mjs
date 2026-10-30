@@ -15,15 +15,19 @@ const events = {
   inquiry_submit_popup: ["InquirySubmitPopup", { step: 5 }]
 };
 function trackers(hostname = "www.wistiastudio.com") {
-  const ga = [], meta = [];
+  const ga = [], meta = [], server = [];
   const window = { gtag: (...args) => ga.push(args), fbq: (...args) => meta.push(args), addEventListener() {} };
   const document = { addEventListener() {}, head: { appendChild() {} }, createElement: () => ({}) };
   const location = { protocol: "https:", hostname, pathname: "/event/solo", search: "?phone=PRIVATE", href: `https://${hostname}/event/solo?phone=PRIVATE` };
-  const context = { window, document, location };
+  location.origin = `https://${hostname}`;
+  let n = 0;
+  const crypto = { randomUUID: () => `00000000-0000-4000-8000-${String(++n).padStart(12, "0")}` };
+  const fetch = (url, options) => { server.push([url, JSON.parse(options.body)]); return Promise.resolve({}); };
+  const context = { window, document, location, crypto, fetch, URL, URLSearchParams };
   runInNewContext(read("tracking-common.js"), context);
   runInNewContext(read("analytics.js"), context);
   runInNewContext(read("meta-pixel.js"), context);
-  return { window, ga, meta };
+  return { window, ga, meta, server };
 }
 const client = trackers();
 for (const [name, [metaName, params]] of Object.entries(events)) {
@@ -31,7 +35,14 @@ for (const [name, [metaName, params]] of Object.entries(events)) {
   assert.equal(client.window.wistiaAnalytics.trackFunnel(name, dirty), true);
   assert.equal(client.window.wistiaMeta.trackFunnel(name, dirty), true);
   const ga = client.ga.at(-1), meta = client.meta.findLast(call => call[1] === metaName);
-  if (name === "inquiry_submit_popup") { const submit = client.meta.at(-1); assert.equal(submit[1], "InquirySubmit"); assert.deepEqual(JSON.parse(JSON.stringify(submit[2])), { page_path: "/event/solo" }); assert.doesNotMatch(JSON.stringify(submit), /PRIVATE|01012345678/); }
+  if (name === "inquiry_submit_popup") {
+    const submit = client.meta.at(-1), sent = client.server.at(-1);
+    assert.equal(submit[1], "InquirySubmit"); assert.ok(!client.meta.some(call => call[1] === "Lead"));
+    assert.deepEqual(JSON.parse(JSON.stringify(submit[2])), { page_path: "/event/solo" });
+    assert.equal(sent[1].event_id, submit[3].eventID);
+    assert.deepEqual(sent, ["/api/meta-contact", { event_id: submit[3].eventID, event_source_url: "https://www.wistiastudio.com/event/solo", kind: "inquiry_submit" }]);
+    assert.doesNotMatch(JSON.stringify([submit, sent]), /PRIVATE|01012345678/);
+  }
   assert.equal(ga[1], name);
   assert.equal(meta[1], metaName);
   assert.deepEqual(JSON.parse(JSON.stringify(meta[2])), { page_path: "/event/solo", ...params, visitor_id: client.window.wistiaVisitorId() });

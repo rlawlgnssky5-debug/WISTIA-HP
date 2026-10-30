@@ -83,9 +83,15 @@
           payload.field_value = value;
         }
       }
+      // The server copy of InquirySubmit must go out even when the browser pixel is blocked
+      const submitEventId = name === "inquiry_submit_popup" ? sendServerEvent("inquiry_submit") : "";
+      const openEventId = name === "inquiry_open" ? sendServerEvent("inquiry_open") : "";
       if (typeof window.fbq !== "function") return false;
-      window.fbq("trackCustom", definition[0], { ...payload, visitor_id: window.wistiaVisitorId() });
-      if (name === "inquiry_submit_popup") window.fbq("trackCustom", "InquirySubmit", { page_path: pagePath });
+      if (openEventId) window.fbq("trackCustom", definition[0], { ...payload, visitor_id: window.wistiaVisitorId() }, { eventID: openEventId });
+      else window.fbq("trackCustom", definition[0], { ...payload, visitor_id: window.wistiaVisitorId() });
+      if (name === "inquiry_submit_popup") {
+        window.fbq("trackCustom", "InquirySubmit", { page_path: pagePath }, { eventID: submitEventId });
+      }
       return true;
     } catch { return false; }
   }
@@ -122,6 +128,24 @@
     }
   }
 
+  // Sends only the event name, a shared event_id and the page URL; the server adds IP, user agent and _fbp/_fbc
+  function sendServerEvent(kind, eventId = crypto.randomUUID()) {
+    // Strip query and hash so nothing typed into a URL reaches Meta; keep only a Meta test code
+    const sourceUrl = new URL(location.href);
+    const testCode = sourceUrl.searchParams.get("meta_test_code");
+    sourceUrl.search = "";
+    sourceUrl.hash = "";
+    if (testCode && /^TEST[A-Z0-9]{4,32}$/.test(testCode)) sourceUrl.searchParams.set("meta_test_code", testCode);
+    fetch("/api/meta-contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      keepalive: true,
+      body: JSON.stringify({ event_id: eventId, event_source_url: sourceUrl.href, kind })
+    }).catch(() => {});
+    return eventId;
+  }
+
   function trackContact() {
     if (localPreview) return false;
     const eventId = crypto.randomUUID();
@@ -133,13 +157,7 @@
         // A blocked browser pixel must not prevent the server event.
       }
     }
-    fetch("/api/meta-contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "same-origin",
-      keepalive: true,
-      body: JSON.stringify({ event_id: eventId, event_source_url: location.href })
-    }).catch(() => {});
+    sendServerEvent("contact", eventId);
     return true;
   }
 
