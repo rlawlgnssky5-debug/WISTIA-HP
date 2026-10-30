@@ -129,6 +129,25 @@
   }
 
   // Sends only the event name, a shared event_id and the page URL; the server adds IP, user agent and _fbp/_fbc
+  // Keep the landing fbclid exactly as written in the URL (no decoding) for when the pixel never set _fbc
+  const fbclidKey = "wistia:fbclid:v1";
+  try {
+    const raw = /[?&]fbclid=([^&#]*)/.exec(location.search)?.[1];
+    if (raw) localStorage.setItem(fbclidKey, JSON.stringify({ fbclid: raw, at: Date.now() }));
+  } catch {}
+  function rawCookie(name) {
+    const part = String(document.cookie || "").split(";").map(item => item.trim()).find(item => item.startsWith(name + "="));
+    return part ? part.slice(name.length + 1) : undefined;
+  }
+  function clickIds() {
+    const ids = { fbp: rawCookie("_fbp"), fbc: rawCookie("_fbc") };
+    try {
+      const saved = JSON.parse(localStorage.getItem(fbclidKey) || "null");
+      if (saved && typeof saved.fbclid === "string" && Date.now() - saved.at < 90 * 864e5) { ids.fbclid = saved.fbclid; ids.fbclid_at = saved.at; }
+    } catch {}
+    return ids;
+  }
+
   function sendServerEvent(kind, eventId = crypto.randomUUID()) {
     // Strip query and hash so nothing typed into a URL reaches Meta; keep only a Meta test code
     const sourceUrl = new URL(location.href);
@@ -141,7 +160,7 @@
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
       keepalive: true,
-      body: JSON.stringify({ event_id: eventId, event_source_url: sourceUrl.href, kind })
+      body: JSON.stringify({ event_id: eventId, event_source_url: sourceUrl.href, kind, ...clickIds() })
     }).catch(() => {});
     return eventId;
   }

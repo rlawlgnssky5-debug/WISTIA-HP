@@ -5,8 +5,8 @@ const EVENT_KINDS = { contact: ["Contact", "KakaoTalkClick"], inquiry_submit: ["
 function cookieValue(header, name) {
   const match = String(header || "").split(";").map(part => part.trim()).find(part => part.startsWith(`${name}=`));
   if (!match) return undefined;
-  try { return decodeURIComponent(match.slice(name.length + 1)); }
-  catch { return undefined; }
+  // Meta requires _fbc/_fbp exactly as stored, so never decode or change case
+  return match.slice(name.length + 1);
 }
 
 export default async function handler(request, response) {
@@ -21,7 +21,7 @@ export default async function handler(request, response) {
     return response.status(403).json({ ok: false });
   }
 
-  const { event_id: eventId, event_source_url: sourceUrl, kind = "contact" } = request.body || {};
+  const { event_id: eventId, event_source_url: sourceUrl, kind = "contact", fbp: bodyFbp, fbc: bodyFbc, fbclid, fbclid_at: fbclidAt } = request.body || {};
   if (!Object.hasOwn(EVENT_KINDS, kind)) return response.status(400).json({ ok: false });
   if (typeof eventId !== "string" || !/^[a-f0-9-]{36}$/i.test(eventId) || typeof sourceUrl !== "string") {
     return response.status(400).json({ ok: false });
@@ -36,12 +36,20 @@ export default async function handler(request, response) {
   if (!token) return response.status(503).json({ ok: false, reason: "not_configured" });
 
   const userData = { client_user_agent: request.headers["user-agent"] || "" };
-  const ip = String(request.headers["x-forwarded-for"] || request.socket?.remoteAddress || "").split(",")[0].trim();
+  const ip = String(request.headers["x-forwarded-for"] || request.headers["x-real-ip"] || request.socket?.remoteAddress || "").split(",")[0].trim();
   if (ip) userData.client_ip_address = ip;
-  for (const name of ["_fbp", "_fbc"]) {
-    const value = cookieValue(request.headers.cookie, name);
-    if (value) userData[name.slice(1)] = value;
+  // Cookie first, then the copy the browser read from document.cookie, both unchanged
+  const validFbp = value => typeof value === "string" && value.length <= 200 && /^fb\.\d\.\d+\.\d+$/.test(value);
+  const validFbc = value => typeof value === "string" && value.length <= 600 && /^fb\.\d\.\d+\.[!-~]+$/.test(value);
+  const fbp = [cookieValue(request.headers.cookie, "_fbp"), bodyFbp].find(validFbp);
+  let fbc = [cookieValue(request.headers.cookie, "_fbc"), bodyFbc].find(validFbc);
+  // No _fbc anywhere: build it from the raw landing fbclid exactly as it appeared in the URL
+  if (!fbc && typeof fbclid === "string" && fbclid.length <= 500 && /^[!-~]+$/.test(fbclid) && !/[&#=]/.test(fbclid)) {
+    const at = Number.isSafeInteger(fbclidAt) && fbclidAt > 1e12 && fbclidAt <= Date.now() + 6e4 ? fbclidAt : Date.now();
+    fbc = `fb.1.${at}.${fbclid}`;
   }
+  if (fbp) userData.fbp = fbp;
+  if (fbc) userData.fbc = fbc;
   const payload = {
     data: EVENT_KINDS[kind].map(eventName => ({
       event_name: eventName,
