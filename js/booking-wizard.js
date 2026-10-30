@@ -45,12 +45,12 @@
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
+   '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',
+   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음']),'',
    '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+global.WistiaPackages.hoursText(q.minutes),'• 옵션 :',...included.map(item=>'- '+item),'',
    '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
    '💰 결제 금액','• 기본 상품 (원가) : '+money(q.list??q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
-   '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total),'',
-   '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',
-   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음'])].join('\n')
+   '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total)].join('\n')
  }
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
