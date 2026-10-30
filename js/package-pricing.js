@@ -59,8 +59,8 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function advanceDiscount(date,reference=today()){
   if(!validDate(date)||!validDate(reference))return null
-  if(date>=addMonths(reference,2))return {key:'advance2',label:'녹음일 2개월 이후 사전 예약',amount:20000}
-  if(date>=addMonths(reference,1))return {key:'advance1',label:'녹음일 1개월 이후 사전 예약',amount:10000}
+  if(date>=addMonths(reference,2))return {key:'advance2',label:'사전 예약 할인 (2개월 이후)',amount:20000}
+  if(date>=addMonths(reference,1))return {key:'advance1',label:'사전 예약 할인 (1개월 이후)',amount:10000}
   return null
  }
  function weekdayDiscount(date,time){
@@ -79,16 +79,17 @@
   const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
+  if(v.firstVisit&&p.key!=='A')discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
   if(v.yearEndCoupon&&(preview||!global.document||limitedClaimed())&&p.key!=='A'&&yearEndEligible(v.bookingDate,reference))discounts.push({key:'yearEnd',label:'선착순 쿠폰',amount:20000})
-  if(v.firstVisit&&p.key!=='A')discounts.push({key:'first',label:'첫 이용',amount:20000})
   if(validDate(v.bookingDate)){
-   if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 13~16시 시작',amount:10000})
+   if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 할인 (13~16시 시작)',amount:10000})
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
   const baseMinutes=p.minutes+(v.options.includes('extraHour')&&!p.duet?60:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
-  return {v,package:p,base:p.price,options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
+  const packageLine=p.individual>p.price?[{key:'package',label:'패키지 할인',amount:p.individual-p.price}]:[]
+  return {v,package:p,base:p.price,list:p.individual,packageDiscount:p.individual-p.price,allDiscounts:[...packageLine,...discounts],options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
  }
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
@@ -111,22 +112,26 @@
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
  // A received limited coupon applies before a recording date is chosen as well
  const couponDisplayDate=reference=>reference
- function cardCouponPrice(p,reference=today(),bookingDate=''){const q=quote({package:p.key,firstVisit:'1',yearEndCoupon:limitedAvailable(),bookingDate:bookingDate||couponDisplayDate(reference)},reference,true);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
+ // Only coupons the visitor actually received on this site lower the shown price
+ const claimedCoupons=()=>{const c=readCouponClaims();return {firstVisit:c.firstVisit===true,yearEndCoupon:c.yearEndCoupon===true}}
+ function cardCouponPrice(p,reference=today(),bookingDate=''){const got=claimedCoupons(),q=quote({package:p.key,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:bookingDate||couponDisplayDate(reference)},reference,true);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
  function bestCouponPrice(p,reference=today()){
   const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
-  return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:'1',yearEndCoupon:limitedAvailable(),bookingDate,timeStart:'13:00'},reference,true).total))
+  return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:claimedCoupons().firstVisit?'1':'',yearEndCoupon:claimedCoupons().yearEndCoupon?'1':'',bookingDate,timeStart:'13:00'},reference,true).total))
  }
  function priceLines(p,reference=today(),bookingDate=''){
   if(p.key==='A')return ''
-  const eligible=limitedAvailable()&&yearEndEligible(bookingDate||couponDisplayDate(reference),reference),coupon=cardCouponPrice(p,reference,bookingDate),best=bestCouponPrice(p,reference)
+  const got=claimedCoupons(),date=bookingDate||couponDisplayDate(reference)
+  const q=quote({package:p.key,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date},reference,true)
+  const has=key=>q.discounts.some(d=>d.key===key),now=q.total,best=bestCouponPrice(p,reference)
   const down=amount=>'<span class="price-down-pill" aria-label="'+money(amount)+' 할인">'+money(amount)+' ↓</span>'
-  const couponLabel=eligible?'선착순 쿠폰 + 첫 이용 적용가':'첫 이용 쿠폰 적용가'
-  return '<dl class="package-price-lines">'+
-   '<div class="is-list"><div class="price-line-main"><dt>원가</dt><dd><s>'+money(p.individual)+'</s></dd></div></div>'+
-   '<div class="is-pkg"><div class="price-line-main"><dt><span class="package-price-label">패키지 할인가</span>'+down(p.individual-p.price)+'</dt><dd>'+money(p.price)+'</dd></div></div>'+
-   '<div class="is-coupon"><div class="price-line-main"><dt><span class="package-price-label">'+couponLabel+'</span>'+down(p.price-coupon)+'</dt><dd>'+money(coupon)+'</dd></div></div>'+
-   '<div class="is-best"><div class="price-line-main"><dt><span class="package-price-label">사전 예약·평일 할인까지 최대</span>'+down(coupon-best)+'</dt><dd>'+money(best)+'</dd></div></div>'+
-   '</dl>'
+  const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
+  const rows=[line('is-list','원가',0,money(p.individual)),line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price))]
+  if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
+  if(has('yearEnd'))rows.push(line('is-coupon','선착순 쿠폰',0,'−'+money(20000)))
+  rows.push(line('is-now','현재 적용가',0,money(now)))
+  if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
+  return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
  }
  function selectionDetails(key,bookingDate=''){
   const p=packageFor(key)
@@ -141,7 +146,7 @@
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
-  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' '+money(cardCouponPrice(p))+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+(p.individual>p.price?'<span class="package-card-was"><s>'+money(p.individual)+'</s></span>':'<span class="package-card-was is-empty" aria-hidden="true"></span>')+'<strong class="package-card-price" data-package-coupon-price="'+p.key+'">'+money(cardCouponPrice(p))+'</strong>'+'<span class="package-card-subtitle">'+shortTitles[p.key].split(/ (?=\+ )/).map(t=>'<span class="package-card-sub-item">'+t+'</span>').join(' ')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
+  return '<div class="package-picker"><div class="package-cards" role="group" aria-label="타입 선택">'+Object.values(packages).map(p=>'<label class="package-card'+(p.key===key?' is-selected':'')+'" data-tier="'+p.key+'"><input type="radio" name="'+(mode==='wizard'?'package':'detailPackage')+'" value="'+p.key+'" aria-label="'+p.name+' '+p.title+' 원가 '+money(p.individual)+'"'+(p.key===key?' checked':'')+'><span class="package-card-body"><span class="package-card-name">'+p.name+'</span>'+'<strong class="package-card-price">'+money(p.individual)+'</strong>'+(p.individual>p.price?'<span class="package-card-was">할인가 <b data-package-coupon-price="'+p.key+'">'+money(cardCouponPrice(p))+'</b></span>':'<span class="package-card-was is-empty" aria-hidden="true"></span>')+'<span class="package-card-subtitle">'+shortTitles[p.key].split(/ (?=\+ )/).map(t=>'<span class="package-card-sub-item">'+t+'</span>').join(' ')+'</span></span></label>').join('')+'</div><section data-svg-title="off" class="package-selected-detail" data-package-selection-details data-package-key="'+key+'" aria-label="선택한 타입 상세 구성" aria-live="polite" aria-atomic="true">'+selectionDetails(key)+'</section></div>'
  }
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||''
@@ -215,7 +220,8 @@
    if(notify){for(const type of ['input','change']){const event=new global.Event(type,{bubbles:true});event.wistiaCouponSync=system;input.dispatchEvent(event)}}
   }));syncCouponControls(root)
  }
- function setCouponClaim(key,selected){if(!couponKeys.includes(key))return;if(key==='yearEndCoupon')return;writeCouponClaims({...readCouponClaims(),[key]:!!selected});syncCouponClaims(global.document)}
+ function setCouponClaim(key,selected){if(!couponKeys.includes(key))return;if(key==='yearEndCoupon')return;writeCouponClaims({...readCouponClaims(),[key]:!!selected});syncCouponClaims(global.document);refreshPricePanels()}
+ function refreshPricePanels(){if(!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey,panel.dataset.couponDate||'')});refreshCardPrices(global.document)}
  function restoreCouponClaims(form){
   const claims=readCouponClaims();let seeded=false
   couponKeys.forEach(key=>{const input=form.querySelector('[name="'+key+'"]');if(!input)return;const allowed=packageFor(form.querySelector('[name="package"]:checked')?.value).key!=='A'&&(key!=='yearEndCoupon'||yearEndActive());if(Object.hasOwn(claims,key)){input.checked=claims[key]&&allowed}else{claims[key]=input.checked;input.checked=input.checked&&allowed;seeded=true}})
@@ -267,7 +273,7 @@
   burst.innerHTML=Array.from({length:16},(_,i)=>'<i style="--i:'+i+';--dx:'+((i%2?1:-1)*(28+i*4))+'px;--turn:'+(i*43)+'deg"></i>').join('')
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
- function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' '+amt)})}
+ function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' 원가 '+money(pkg.individual))})}
  const api={packages,options,money,packageFor,normalize,quote,features,cards,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon}
  // WistiaLimitedCoupon refreshes server inventory and expires received coupons after 24h
  if(typeof module==='object'&&module.exports)module.exports=api

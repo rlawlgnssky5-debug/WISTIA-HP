@@ -25,14 +25,14 @@
  function values(form){const v=Object.fromEntries(new FormData(form));delete v.eventDate;delete v.eventDateMode;delete v.paybackBlog;delete v.paybackReaction;return v}
  function quote(form){const v=values(form),q=global.WistiaPackages.quote(v);return {...q,v,options:q.options.map(o=>[o.label,o.price])}}
  function range(time,minutes=60){if(!time)return '미정';const start=Number(time.slice(0,2))*60+Number(time.slice(3)),clock=m=>(m>=1440?'다음 날 ':'')+String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');return clock(start)+'~'+clock(start+minutes)}
- function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['녹음 소요 시간',global.WistiaPackages.hoursText(q.minutes)],['녹음 날짜',v.bookingDate||'미정'],['녹음 시간',range(v.timeStart,q.minutes)],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['할인',q.discounts.map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]}
+ function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['녹음 소요 시간',global.WistiaPackages.hoursText(q.minutes)],['녹음 날짜',v.bookingDate||'미정'],['녹음 시간',range(v.timeStart,q.minutes)],['추가 옵션',q.options.map(o=>o[0]+' +'+money(o[1])).join('\n')||'없음'],['할인',(q.allDiscounts||q.discounts).map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['처음 본 곳',v.discovery||'선택 안 함'],['총 금액',money(q.total)]]}
  // Display only: the Kakao text still comes from rows() unchanged
  function reviewHtml(form,q){
   const d=Object.fromEntries(rows(form)),row=(label,value,cls='')=>'<div'+(cls?' class="'+cls+'"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>'
   const group=(title,body,cls)=>'<section class="wf-review-group '+cls+'"><h3 class="wf-review-head">'+title+'</h3><dl>'+body+'</dl></section>'
   return group('상품',row('타입',q.package.name,'is-tier" data-tier="'+q.package.key)+row('인원',d['인원'])+row('녹음 소요 시간',d['녹음 소요 시간'])+row('추가 옵션',d['추가 옵션'])+row('음원 전달',d['음원 전달'])+row('처음 본 곳',d['처음 본 곳']),'is-product')
    +group('일정',(form.dataset.scheduleState==='unavailable'?row('일정 확인','자동 확인 불가 · 희망 일정 / 상담 후 확정'):'')+row('녹음 날짜',d['녹음 날짜'])+row('녹음 시간',d['녹음 시간']),'is-schedule')
-   +group('할인·금액',(q.discounts.length?q.discounts.map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount'))+row('총 금액',d['총 금액'],'wf-final-total'),'is-amount')
+   +group('할인·금액',row('원가',money(q.list??q.base),'wf-review-list')+((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount'))+row('총 금액',d['총 금액'],'wf-final-total'),'is-amount')
  }
  function text(form){
   // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
@@ -41,16 +41,16 @@
   const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정',q.package.mixing?'정밀 믹싱':'기본 믹싱','마스터링']:['기본 믹싱'])]
   const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
-  const discountName=d=>d.key==='first'?'첫 이용 할인':d.key==='weekday'?'목·금 시간 할인 (13~16시)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
+  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
+   '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',
+   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음']),'',
    '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+global.WistiaPackages.hoursText(q.minutes),'• 옵션 :',...included.map(item=>'- '+item),'',
    '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
-   '💰 결제 금액','• 기본 상품 : '+money(q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
-   '할인 내역',...(q.discounts.length?q.discounts.map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total),'',
-   '💬 고객 정보','• 유입 경로 : '+details['처음 본 곳'],'',
-   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음'])].join('\n')
+   '💰 결제 금액','• 기본 상품 (원가) : '+money(q.list??q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
+   '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total)].join('\n')
  }
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
@@ -92,7 +92,7 @@
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   syncOptions(form,q)
   global.WistiaPackages.syncCouponControls(form)
-  const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=q.discounts.map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
+  const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=(q.allDiscounts||q.discounts).map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
   form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
   form.querySelector('[data-wf-review]').innerHTML=reviewHtml(form,q)
   form.dataset.wfCurrentStep=String(state.step);form.querySelectorAll('[data-wf-step]').forEach(s=>s.hidden=Number(s.dataset.wfStep)!==state.step)
