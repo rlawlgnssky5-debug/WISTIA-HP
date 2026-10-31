@@ -165,6 +165,20 @@
     return eventId;
   }
 
+  function trackCouponClaim(type) {
+    if (localPreview || !["first_visit", "limited"].includes(type)) return false;
+    const eventId = crypto.randomUUID();
+    if (typeof window.fbq === "function") {
+      try {
+        window.fbq("trackCustom", "CouponClaim", { coupon_type: type, visitor_id: window.wistiaVisitorId() }, { eventID: eventId });
+      } catch {
+        // A blocked browser pixel must not prevent the server event.
+      }
+    }
+    sendServerEvent(type === "limited" ? "coupon_claim_limited" : "coupon_claim_first_visit", eventId);
+    return true;
+  }
+
   function trackContact() {
     if (localPreview) return false;
     const eventId = crypto.randomUUID();
@@ -205,5 +219,5 @@
     return true;
   }
 
-  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackSectionView, trackFunnel, trackPageView, trackViewContent, trackContact, trackFloatingKakaoClick, trackScrollDepth, trackTimeOnPage, trackViewPrice });
+  window.wistiaMeta = Object.assign({}, window.wistiaMeta || {}, { trackCouponClaim, trackSectionView, trackFunnel, trackPageView, trackViewContent, trackContact, trackFloatingKakaoClick, trackScrollDepth, trackTimeOnPage, trackViewPrice });
 })();

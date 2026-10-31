@@ -1,6 +1,7 @@
 const PIXEL_ID = "2825959717777272";
 // Each kind maps to the browser pixel events that share the same event_id, so Meta deduplicates them
-const EVENT_KINDS = { contact: ["Contact", "KakaoTalkClick"], inquiry_submit: ["InquirySubmit"], inquiry_open: ["InquiryOpen"] };
+const EVENT_KINDS = { contact: ["Contact", "KakaoTalkClick"], inquiry_submit: ["InquirySubmit"], inquiry_open: ["InquiryOpen"], coupon_claim_first_visit: ["CouponClaim"], coupon_claim_limited: ["CouponClaim"] };
+const COUPON_TYPES = { coupon_claim_first_visit: "first_visit", coupon_claim_limited: "limited" };
 
 function cookieValue(header, name) {
   const match = String(header || "").split(";").map(part => part.trim()).find(part => part.startsWith(`${name}=`));
@@ -57,7 +58,8 @@ export default async function handler(request, response) {
       event_id: eventId,
       action_source: "website",
       event_source_url: source.href,
-      user_data: userData
+      user_data: userData,
+      ...(COUPON_TYPES[kind] ? { custom_data: { coupon_type: COUPON_TYPES[kind] } } : {})
     }))
   };
   const urlTestCode = source.searchParams.get("meta_test_code");

@@ -220,5 +220,10 @@
   });
   window.addEventListener("pagehide", flushEngagement);
   window.addEventListener("pageshow", () => { if (document.visibilityState !== "hidden") { foregroundSince = Date.now(); engagementSentForHide = false; } });
-  window.wistiaAnalytics = { trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
+  // Coupon claim tap: only the coupon kind, nothing personal
+  function trackCouponClaim(type) {
+    if (!["first_visit", "limited"].includes(type)) return false;
+    return send("coupon_claim", { coupon_type: type });
+  }
+  window.wistiaAnalytics = { trackCouponClaim, trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();
