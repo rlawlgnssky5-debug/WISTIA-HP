@@ -52,6 +52,8 @@
    '💰 결제 금액','• 기본 상품 (원가) : '+money(q.list??q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
    '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total)].join('\n')
  }
+ // The one place price views are reported (GA4 view_price + pixel ViewPrice); trackers dedupe per product per page
+ function trackPriceView(q){const payload={content_name:q.package.name+' · '+q.package.title,content_ids:[q.package.name.toLowerCase()],content_type:'product',value:q.total,currency:'KRW'};try{global.wistiaAnalytics?.trackViewPrice?.(payload)}catch{}try{global.wistiaMeta?.trackViewPrice?.(payload)}catch{}}
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
   state.priceTarget=total;button.setAttribute('aria-label','다음 단계 · '+money(total))
@@ -95,7 +97,7 @@
   syncOptions(form,q)
   global.WistiaPackages.syncCouponControls(form)
   const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=(q.allDiscounts||q.discounts).map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
-  form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state)
+  form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state);trackPriceView(q)
   form.querySelector('[data-wf-review]').innerHTML=reviewHtml(form,q)
   form.dataset.wfCurrentStep=String(state.step);form.querySelectorAll('[data-wf-step]').forEach(s=>s.hidden=Number(s.dataset.wfStep)!==state.step)
   form.querySelectorAll('[data-wf-progress]').forEach(li=>{const i=Number(li.dataset.wfProgress),active=i===state.step,done=i<state.step;li.classList.toggle('is-current',active);li.classList.toggle('is-complete',done);const button=li.querySelector('button');button.querySelector('span').innerHTML=done?icon('check'):String(i+1);if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')})

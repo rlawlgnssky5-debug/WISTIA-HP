@@ -56,10 +56,12 @@ location.pathname = "/event/solo";
 location.href = "https://www.wistiastudio.com/event/solo";
 analytics.startPageTracking("/event/solo", () => ({ content_ids: ["solo"], content_name: "AR 축가", value: 120000, currency: "KRW" }));
 assert.deepEqual([...timers.values()].map(timer => timer.delay).sort((a, b) => a - b), [0, 30000, 60000, 120000]);
-visible([{ isIntersecting: true, intersectionRatio: 0.4 }]);
 assert.equal(calls.some(call => call[1] === "view_price"), false);
-visible([{ isIntersecting: true, intersectionRatio: 0.6 }]);
-assert.equal(calls.find(call => call[1] === "view_price")[2].value, 120000);
+const priceView = { content_ids: ["deluxe"], content_name: "DELUXE", content_type: "product", value: 170000, currency: "KRW" };
+assert.equal(analytics.trackViewPrice(priceView), true);
+assert.equal(analytics.trackViewPrice({ ...priceView, value: 150000 }), false);
+assert.equal(analytics.trackViewPrice({ ...priceView, content_ids: ["premium"], value: 220000 }), true);
+assert.deepEqual(calls.filter(call => call[1] === "view_price").map(call => [call[2].content_ids[0], call[2].value, call[2].page_path]), [["deluxe", 170000, "/event/solo"], ["premium", 220000, "/event/solo"]]);
 
 function clickLink({ href, id = "", modal = false }) {
   click({ target: { closest: () => ({ href, id, matches: selector => selector === "a[href]" || (selector === ".consult-copy-action" && modal) }) } });

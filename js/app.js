@@ -1885,20 +1885,8 @@ function initMetaEngagementTracking(pagePath,pricePage){
  }
  window.addEventListener("scroll",onScroll,{passive:true})
  const timers=[30,60,120].map(seconds=>window.setTimeout(()=>window.wistiaMeta?.trackTimeOnPage?.(seconds,pagePath),seconds*1000))
- let observer=null
- const priceBlock=pricePage?document.querySelector(".booking-base-amount"):null
- if(priceBlock&&typeof IntersectionObserver==="function"){
-  observer=new IntersectionObserver(entries=>{
-   if(!entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=0.5))return
-   const purpose=currentEventProduct==="solo-film"?(selectedFilmPeople===2?"duo":"solo"):currentEventPurpose
-   const payload=detailViewContent(currentEventProduct,purpose)
-   if(!payload)return
-   payload.value=calculate().product.normal
-   if(window.wistiaMeta?.trackViewPrice?.(payload,pagePath))observer.disconnect()
-  },{threshold:0.5})
-  observer.observe(priceBlock)
- }
- return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer));observer?.disconnect()}
+ // Price views are sent from the booking wizard (WistiaWizard trackPriceView)
+ return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer))}
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
 const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 AR 축가 사전녹음 위스티아 · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구"}

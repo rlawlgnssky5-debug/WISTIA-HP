@@ -43,7 +43,7 @@
     const path = normalizePagePath(pagePath);
     if (!payload || !Array.isArray(payload.content_ids) || !payload.content_ids.length || !Number.isFinite(payload.value) || payload.currency !== "KRW") return false;
     if (!path.startsWith("/")) return false;
-    return trackCustomOnce("ViewPrice", path, payload, viewPriceSent);
+    return trackCustomOnce("ViewPrice", `${path}:${payload.content_ids[0]}`, payload, viewPriceSent);
   }
 
   const funnelEvents = {
