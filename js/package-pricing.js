@@ -130,7 +130,7 @@
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
   if(has('yearEnd'))rows.push(line('is-coupon','선착순 쿠폰',0,'−'+money(20000)))
   q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
-  rows.push(line('is-now','현재 적용가',0,money(now)))
+  rows.push(line('is-now','현재 적용가',p.individual-now,money(now)))
   if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
   return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
  }
