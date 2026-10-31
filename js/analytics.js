@@ -170,19 +170,6 @@
       const key = `${normalized}:${seconds}`;
       if (!sentTime.has(key) && send("time_on_page", { seconds, page_path: normalized })) sentTime.add(key);
     }, seconds * 1000));
-    let observer = null;
-    const priceBlock = pricePayload ? document.querySelector(".booking-base-amount") : null;
-    if (priceBlock && typeof IntersectionObserver === "function") {
-      observer = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.5) || sentPrice.has(normalized)) return;
-        const payload = pricePayload();
-        if (payload && send("view_price", { ...payload, page_path: normalized })) {
-          sentPrice.add(normalized);
-          observer.disconnect();
-        }
-      }, { threshold: 0.5 });
-      observer.observe(priceBlock);
-    }
     const stopSections = window.wistiaTrackSections?.(normalized, send);
     let finished = false;
     routeCleanup = () => {
@@ -193,7 +180,6 @@
       window.removeEventListener("scroll", onScroll);
       window.clearTimeout(initialScroll);
       timers.forEach(timer => window.clearTimeout(timer));
-      observer?.disconnect();
       const seconds = Math.floor((Date.now() - startedAt) / 1000);
       if (seconds > 0) send("page_dwell", { page_path: normalized, seconds, max_scroll_percent: maxScrollPercent, transport_type: "beacon" });
     };
@@ -220,10 +206,20 @@
   });
   window.addEventListener("pagehide", flushEngagement);
   window.addEventListener("pageshow", () => { if (document.visibilityState !== "hidden") { foregroundSince = Date.now(); engagementSentForHide = false; } });
+  // Called by the booking wizard each time a product's price is shown; once per product per page
+  function trackViewPrice(payload) {
+    const path = currentPagePath();
+    if (!payload || !Array.isArray(payload.content_ids) || !payload.content_ids.length || !Number.isFinite(payload.value) || payload.currency !== "KRW") return false;
+    const key = `${path}:${payload.content_ids[0]}`;
+    if (sentPrice.has(key) || !send("view_price", { ...payload, page_path: path })) return false;
+    sentPrice.add(key);
+    return true;
+  }
+
   // Coupon claim tap: only the coupon kind, nothing personal
   function trackCouponClaim(type) {
     if (!["first_visit", "limited"].includes(type)) return false;
     return send("coupon_claim", { coupon_type: type });
   }
-  window.wistiaAnalytics = { trackCouponClaim, trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
+  window.wistiaAnalytics = { trackViewPrice, trackCouponClaim, trackFunnel, trackPageView, trackKakaoClick, trackFloatingKakaoClick, trackSiteClick, startPageTracking };
 })();
