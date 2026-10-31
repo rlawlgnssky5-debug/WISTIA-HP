@@ -88,6 +88,8 @@
   const weekdayCopy=holiday?'<span class="wf-weekday-copy">공휴일은 목·금 시간대 할인이 적용되지 않아요</span>':'<span class="wf-weekday-copy">목·금 13~16시 시작은 <strong>10,000원 할인</strong>돼요</span><small class="wf-weekday-condition">'+(weekdayApplied?'할인 적용 · ':'')+'공휴일 제외</small>'
   if(weekday.innerHTML!==weekdayCopy)weekday.innerHTML=weekdayCopy
   weekday.classList.toggle('is-applied',weekdayApplied)
+  if(state.lastWeekday===false&&weekdayApplied)flashDiscount(form,10000)
+  state.lastWeekday=weekdayApplied
   if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(state.step===1&&!q.v.timeStart?note:weekday)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   syncOptions(form,q)
@@ -115,6 +117,8 @@
   const v=values(form);if(step===1){const date=form.querySelector('#contact-bookingDate'),valid=v.bookingDateMode==='date'&&global.WistiaContact.calendar.selectableDate(v.bookingDate,'bookingDate'),message=valid?(date.validationMessage||''):'녹음 날짜를 골라주세요';mark(form,'bookingDate',message,2);if(message)return false
   const time=form.querySelector('#contact-time'),timeMessage=!v.timeStart||time.selectedOptions[0]?.disabled||form.dataset.scheduleState==='loading'?'시작 시간을 골라주세요':'';mark(form,'timeStart',timeMessage,2);return !timeMessage}return true
  }
+ // Short pop on the next-button price plus a '할인 적용!' tag when the 목·금 discount kicks in
+ function flashDiscount(form,amount){const button=form.querySelector('[data-wf-next]');if(!button)return;button.classList.remove('wf-price-pop');void button.offsetWidth;button.classList.add('wf-price-pop');button.querySelector('.wf-discount-flash')?.remove();const tag=global.document.createElement('span');tag.className='wf-discount-flash';tag.setAttribute('aria-hidden','true');tag.textContent=money(amount)+' 할인 적용!';button.appendChild(tag);clearTimeout(button._wfFlash);button._wfFlash=setTimeout(()=>{button.classList.remove('wf-price-pop');tag.remove()},1700)}
  // Scroll so el sits below the fixed header and its bottom (or anchor's) clears the fixed 이전/다음 bar
  function reveal(form,el,anchor){if(!el)return;const doc=global.document,vh=global.innerHeight,fixed=node=>{for(;node&&node!==doc.body;node=node.parentElement){const p=getComputedStyle(node).position;if(p==='fixed'||p==='sticky')return node}return null}
   let top=0;const head=fixed(doc.elementFromPoint(global.innerWidth/2,2));if(head&&!form.contains(head))top=Math.max(0,head.getBoundingClientRect().bottom)
@@ -164,6 +168,8 @@
   })
   form.addEventListener('input',event=>{if(!event.target.matches('[data-wf-people-add]'))update(form,{save:!event.wistiaCouponSync})})
   form.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-wf-change-date')){form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(button.dataset.wfTime){const time=form.querySelector('#contact-time');time.value=button.dataset.wfTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimes(form)}if(button.hasAttribute('data-wf-goto'))navigate(form,Number(button.dataset.wfGoto));if(button.hasAttribute('data-wf-next'))navigate(form,state.step+1);if(button.hasAttribute('data-wf-prev')){if(state.step===0){const url=new URL('/detail/solo',global.location.href);url.search=global.location.search;url.searchParams.set('package',quote(form).package.key);global.history.pushState({...global.history.state,wistiaDepth:(global.history.state?.wistiaDepth||0)+1},'',url.pathname+url.search);global.dispatchEvent(new global.PopStateEvent('popstate'))}else navigate(form,state.step-1)}})
+  // Tapping a type card glides down to the next section, like picking a calendar date
+  form.addEventListener('click',event=>{if(!event.isTrusted||!event.target.closest('[data-wf-step="0"] .package-card'))return;global.setTimeout(()=>reveal(form,form.querySelector('[data-wf-step="0"] .wf-welcome')||form.querySelector('.wf-people')),60)})
   form.addEventListener('submit',async event=>{event.preventDefault();event.stopPropagation();if(state.step!==LAST||form.dataset.copyPending)return;const button=form.querySelector('[type="submit"]');form.dataset.copyPending='true';button.disabled=true;try{await global.WistiaBooking.refresh();if(!form.isConnected)return;for(const step of [1])if(!validate(form,step)){state.step=step;update(form);const err=form.querySelector('[data-wf-error="bookingDate"]:not([hidden]),[data-wf-error="timeStart"]:not([hidden])');if(err){const time=err.dataset.wfError==='timeStart';popup(err.textContent,()=>{(time?form.querySelector('[data-wf-selected-date]'):form.querySelector('[data-wf-step="1"] h2')).focus({preventScroll:true});reveal(form,form.querySelector(time?'[data-wf-time-view]':'[data-wf-date-view]'),err)})}else form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}await onSubmit(text(form))}finally{delete form.dataset.copyPending;button.disabled=false}})
   Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
  }
