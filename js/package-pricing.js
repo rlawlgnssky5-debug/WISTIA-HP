@@ -209,6 +209,8 @@
     const stock=state.ready?state.remaining+'장 남음':state.error?'수량 확인 필요':'잔여 수량 확인 중'
     const note=locked?'쿠폰을 받았어요':closed?'쿠폰이 마감되었어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':''
     card.querySelector('.coupon-claim-hint').innerHTML='<span data-limited-stock role="status">'+stock+'</span>'+(note?'<span class="limited-coupon-note">'+note+'</span>':'')
+    // Stock ran out (remaining 0 or campaign closed): remove the coupon card unless this browser still holds an unexpired one
+    const soldOut=state.ready&&(state.closed||state.remaining<=0)&&!owned;if(soldOut)card.style.setProperty('display','none','important');else card.style.removeProperty('display');card.toggleAttribute('data-sold-out',soldOut)
     const timer=card.querySelector('[data-coupon-timer]');timer.hidden=!locked;timer.querySelector('[data-coupon-timer-label]').textContent=expired?'쿠폰이 만료되었어요':'쿠폰 사용 남은 시간'
    }
   })
