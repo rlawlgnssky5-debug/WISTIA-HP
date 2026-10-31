@@ -774,6 +774,7 @@ html body #app#app#app#app#app#app#app .package-price-lines>:is(.is-pkg,.is-coup
 html body #app#app#app#app#app#app#app .package-price-lines .package-price-label{flex:0 1 auto!important;min-width:0!important;white-space:normal!important;word-break:keep-all!important}
 html body #app#app#app#app#app#app#app .package-price-lines dt .price-down-pill{flex:0 0 auto!important;align-self:center!important;font-size:9px!important;padding:2px 5px!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-coupon .price-down-pill{background:#fbf1dd!important;border-color:#ead4a0!important;color:#b8893a!important;box-shadow:0 1px 0 #ead4a0!important}
+html body #app#app#app#app#app#app#app .package-price-lines>.is-now .price-down-pill{background:#FFE36E!important;background-image:none!important;border-color:#FFE36E!important;color:#3A2A00!important;box-shadow:0 1px 0 #ecc94b!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-down-pill{background:#fbd3dd!important;color:#d9667f!important}
 @media (min-width:414px){
  html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dt{font-size:12px!important}
