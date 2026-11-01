@@ -43,7 +43,8 @@ export default async function handler(request, response) {
   const validFbp = value => typeof value === "string" && value.length <= 200 && /^fb\.\d\.\d+\.\d+$/.test(value);
   const validFbc = value => typeof value === "string" && value.length <= 600 && /^fb\.\d\.\d+\.[!-~]+$/.test(value);
   const fbp = [cookieValue(request.headers.cookie, "_fbp"), bodyFbp].find(validFbp);
-  let fbc = [cookieValue(request.headers.cookie, "_fbc"), bodyFbc].find(validFbc);
+  // The browser picks the exact _fbc (or the stable built value); pass it through unchanged, cookie header only as fallback
+  let fbc = [bodyFbc, cookieValue(request.headers.cookie, "_fbc")].find(validFbc);
   // No _fbc anywhere: build it from the raw landing fbclid exactly as it appeared in the URL
   if (!fbc && typeof fbclid === "string" && fbclid.length <= 500 && /^[!-~]+$/.test(fbclid) && !/[&#=]/.test(fbclid)) {
     const at = Number.isSafeInteger(fbclidAt) && fbclidAt > 1e12 && fbclidAt <= Date.now() + 6e4 ? fbclidAt : Date.now();

@@ -130,21 +130,28 @@
 
   // Sends only the event name, a shared event_id and the page URL; the server adds IP, user agent and _fbp/_fbc
   // Keep the landing fbclid exactly as written in the URL (no decoding) for when the pixel never set _fbc
+  // The first-landing timestamp is kept for the same fbclid so the built fbc stays identical across events and reloads
   const fbclidKey = "wistia:fbclid:v1";
-  try {
-    const raw = /[?&]fbclid=([^&#]*)/.exec(location.search)?.[1];
-    if (raw) localStorage.setItem(fbclidKey, JSON.stringify({ fbclid: raw, at: Date.now() }));
-  } catch {}
-  function rawCookie(name) {
-    const part = String(document.cookie || "").split(";").map(item => item.trim()).find(item => item.startsWith(name + "="));
-    return part ? part.slice(name.length + 1) : undefined;
+  const landing = (() => {
+    const raw = /[?&]fbclid=([^&#]*)/.exec(location.search)?.[1] || "";
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(fbclidKey) || "null"); } catch {}
+    if (!saved || typeof saved.fbclid !== "string" || !Number.isSafeInteger(saved.at)) saved = null;
+    if (raw && (!saved || saved.fbclid !== raw)) {
+      saved = { fbclid: raw, at: Date.now() };
+      try { localStorage.setItem(fbclidKey, JSON.stringify(saved)); } catch {}
+    }
+    return saved && Date.now() - saved.at < 90 * 864e5 ? saved : null;
+  })();
+  function rawCookies(name) {
+    return String(document.cookie || "").split(";").map(item => item.trim()).filter(item => item.startsWith(name + "=")).map(item => item.slice(name.length + 1));
   }
   function clickIds() {
-    const ids = { fbp: rawCookie("_fbp"), fbc: rawCookie("_fbc") };
-    try {
-      const saved = JSON.parse(localStorage.getItem(fbclidKey) || "null");
-      if (saved && typeof saved.fbclid === "string" && Date.now() - saved.at < 90 * 864e5) { ids.fbclid = saved.fbclid; ids.fbclid_at = saved.at; }
-    } catch {}
+    const fbcCookies = rawCookies("_fbc");
+    // _fbc cookie verbatim (the one carrying the landing fbclid if several exist), else fb.1.<first landing ms>.<fbclid as in the URL>
+    const fbc = (landing && fbcCookies.find(value => value.endsWith("." + landing.fbclid))) || fbcCookies[0] || (landing ? `fb.1.${landing.at}.${landing.fbclid}` : undefined);
+    const ids = { fbp: rawCookies("_fbp")[0], fbc };
+    if (landing) { ids.fbclid = landing.fbclid; ids.fbclid_at = landing.at; }
     return ids;
   }
 
