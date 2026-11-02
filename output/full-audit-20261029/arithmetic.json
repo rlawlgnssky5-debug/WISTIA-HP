@@ -1,0 +1,23 @@
+{
+  "checked": 61440,
+  "reference": "2026-10-29",
+  "types": {
+    "A": {
+      "price": 90000,
+      "minutes": 50
+    },
+    "B": {
+      "price": 170000,
+      "minutes": 90
+    },
+    "C": {
+      "price": 220000,
+      "minutes": 150
+    },
+    "D": {
+      "price": 240000,
+      "minutes": 150
+    }
+  },
+  "allPassed": true
+}
