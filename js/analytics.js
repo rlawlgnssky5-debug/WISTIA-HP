@@ -150,7 +150,8 @@
     activePath = normalized;
     sentScroll.clear();
     sentTime.clear();
-    sentPrice.clear();
+    // Keep this page's price views (the wizard may report one before page tracking starts)
+    for (const key of [...sentPrice]) if (!key.startsWith(`${normalized}:`)) sentPrice.delete(key);
     lastPricePayload = pricePayload;
     trackPageView();
     const startedAt = Date.now();

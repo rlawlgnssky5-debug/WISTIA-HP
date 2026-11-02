@@ -104,7 +104,8 @@
       window.fbq("track", "PageView", { visitor_id: window.wistiaVisitorId() });
       scrollDepthSent.clear();
       timeOnPageSent.clear();
-      viewPriceSent.clear();
+      // Keep this page's price views so a PageView right after the wizard's first report doesn't resend it
+      for (const key of [...viewPriceSent]) if (!key.startsWith(`${currentPagePath()}:`)) viewPriceSent.delete(key);
       lastPageViewUrl = url;
       lastViewContentKey = "";
       return true;
