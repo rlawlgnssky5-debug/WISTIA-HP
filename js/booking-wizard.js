@@ -10,7 +10,7 @@
  function checkRow(name,label,amount,description=''){return '<label class="wf-check-row"><input type="checkbox" '+(name?'name="'+name+'" value="1"':'data-wf-people-add')+'><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">'+esc(label)+(description?'<small>'+esc(description)+'</small>':'')+'</span><strong>+'+money(amount)+'</strong></label>'}
  const tipText={people:'듀엣 패키지로 하면 더 가성비 있어요!',tuning:'패키지로 하면 더 가성비 있어요!',detailMix:'패키지로 하면 더 가성비 있어요!',precisionMix:'패키지로 하면 더 가성비 있어요!',extraHour:'패키지로 하면 더 가성비 있어요!'}
  function firstVisitField(){return '<div class="wf-welcome">'+global.WistiaPackages.couponClaimCard('firstVisit')+global.WistiaPackages.couponClaimCard('yearEndCoupon')+'</div>'}
- function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><p class="earlybird-two"><strong>'+format(global.WistiaPackages.addMonths(today,2))+'부터</strong><span>20,000원 할인</span></p><small>녹음 날짜 기준 · 두 할인 중 해당하는 한 가지만 적용돼요</small></div>'}
+ function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><small>녹음 날짜 기준</small></div>'}
  function bookingDateField(){return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')}
  function render(key){
   const selected=global.WistiaPackages.packageFor(new URLSearchParams(global.location.search).get('package')).key
@@ -41,7 +41,7 @@
   const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정',q.package.mixing?'정밀 믹싱':'기본 믹싱','마스터링']:['기본 믹싱'])]
   const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
-  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance2'?'사전 예약 할인 (2개월 이후)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
+  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
