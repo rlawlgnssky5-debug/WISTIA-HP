@@ -93,7 +93,7 @@
    const pick=e=>{const c=e.target.closest('[data-tt]');if(!c||(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' '))return;e.preventDefault();const y=global.scrollY,input=cards.querySelector('.package-card[data-tier="'+c.dataset.tt+'"] input');if(!input||input.checked)return;input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));global.requestAnimationFrame(()=>global.scrollTo(0,y))}
    wrap.addEventListener('click',pick);wrap.addEventListener('keydown',pick)}
   const s=form.querySelector('[name="package"]:checked')?.value||'';wrap.querySelectorAll('[data-tt]').forEach(e=>{const on=e.dataset.tt===s;e.classList.toggle('is-on',on);if(e.tagName==='TH')e.setAttribute('aria-pressed',String(on))})
-  const when=wrap.querySelector('.wf-tt-when'),html=s?'<i>'+esc(P.packageFor(s).name)+' · 이럴 때</i>'+esc(P.packageFor(s).title.replace(/!$/,'')):'<i>이럴 때</i>타입을 골라 주세요';if(when.innerHTML!==html)when.innerHTML=html}
+  const when=wrap.querySelector('.wf-tt-when'),html=s?'<i>'+esc(P.packageFor(s).name)+'</i>'+esc(P.packageFor(s).title.replace(/!$/,'')):'<i>이럴 때</i>타입을 골라 주세요';if(when.innerHTML!==html)when.innerHTML=html}
  function update(form,{save=true}={}){
   const state=states.get(form);if(!state)return
   syncDuet(form,state)
