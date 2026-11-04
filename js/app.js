@@ -1799,8 +1799,12 @@ async function copyConsultationAndShowChoice(text){
   const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select()
   try{copied=document.execCommand("copy")}catch{}finally{area.remove()}
  }
- const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인</a>'
- showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카카오톡 채팅창에 붙여넣어 보내 주세요</p>'+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 직접 복사해 카카오톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+ok,'contact-ok-dialog')
+ const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>카카오톡 열기</a>'
+ // r70: KakaoTalk paste guide (owner picked P3) - a mini chat shows where the copied text goes
+ const preview=String(text).split(/\r?\n/).map(line=>line.trim()).filter(Boolean).slice(0,3).map(escapeHtml).join('<br>')
+ const input=label=>'<span class="contact-ok-chat-input"><span>'+label+'</span><b>전송</b></span>'
+ const chat=copied?'<div class="contact-ok-chat" aria-hidden="true"><span class="contact-ok-chat-bubble">'+preview+'<br>…</span>'+input('길게 눌러 붙여넣기')+'</div>':'<div class="contact-ok-chat is-fallback" aria-hidden="true">'+input('복사한 내용 붙여넣기')+'</div>'
+ showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카톡 채팅창에 붙여넣어 보내면 문의 끝</p>'+chat+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 길게 눌러 전체 복사한 뒤 카톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+chat+ok,'contact-ok-dialog')
  dialog.setAttribute('aria-label','문의 내용 복사 완료')
 }
 function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['AR 축가 사전녹음','/detail/solo']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
