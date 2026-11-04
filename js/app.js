@@ -1383,6 +1383,7 @@ function initArCommerceDetail(){
  if(gift&&'IntersectionObserver' in window){welcomeGiftObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){window.WistiaPackages.celebrate(gift);welcomeGiftObserver.disconnect()}},{threshold:.4});welcomeGiftObserver.observe(gift)}
  const packageRoot=document.querySelector('#packageSelection')
  window.WistiaPackages.mountSelection(packageRoot)
+ window.WistiaPackages.typeTable?.(packageRoot)
  packageRoot?.addEventListener('change',event=>{
   if(event.target.name!=='detailPackage')return
   const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)
