@@ -72,3 +72,5 @@ html body #mediaDialog .contact-ok-dialog .contact-ok-chat-input{display:flex!im
 html body #mediaDialog .contact-ok-dialog .contact-ok-chat-input>span{flex:1!important;min-width:0!important}
 html body #mediaDialog .contact-ok-dialog .contact-ok-chat-input>b{flex:none!important;padding:6px 12px!important;border-radius:999px!important;background:#FEE500!important;color:#3A2E2F!important;font:700 12.5px/1 Pretendard,sans-serif!important}
 html body #mediaDialog .contact-ok-dialog textarea+.contact-ok-chat{margin-top:0!important}
+/* r71: popup confirm button uses the site's KakaoTalk yellow */
+html body #mediaDialog .contact-ok-dialog .contact-ok-action{background:#FEE500!important;color:#3A2E2F!important;box-shadow:0 8px 18px rgba(58,46,47,.12)!important}

@@ -1799,7 +1799,7 @@ async function copyConsultationAndShowChoice(text){
   const area=document.createElement("textarea");area.value=text;area.style.cssText="position:fixed;opacity:0";document.body.append(area);area.select()
   try{copied=document.execCommand("copy")}catch{}finally{area.remove()}
  }
- const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>카카오톡 열기</a>'
+ const ok='<a class="contact-ok-action" href="'+escapeHtml(kakao())+'" target="_blank" rel="noopener noreferrer" data-close>확인</a>'
  // r70: KakaoTalk paste guide (owner picked P3) - a mini chat shows where the copied text goes
  const preview=String(text).split(/\r?\n/).map(line=>line.trim()).filter(Boolean).slice(0,3).map(escapeHtml).join('<br>')
  const input=label=>'<span class="contact-ok-chat-input"><span>'+label+'</span><b>전송</b></span>'
