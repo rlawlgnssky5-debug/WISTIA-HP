@@ -41,7 +41,8 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
   assert.match(css,/\.ox-figure\{[^}]*display:flex/)
   assert.match(css,/\.ox-status\{[^}]*flex:0 0 auto/)
   assert.match(css,/\.ox-figure img\{[^}]*background:transparent/)
-  assert.match(css,/\.ox-card\{[^}]*min-height:168px/)
+  assert.match(css,/\.ox-figure img\{[^}]*max-height:104px/)
+  assert.match(css,/\.ox-card\{[^}]*padding:8px 12px 9px/)
   assert.match(read('js/svg-interface.js'),/!section\.matches\('\.mas-selection,\.option-explain'\)/)
   const pricing=read('js/package-pricing.js')
   for(const line of [
