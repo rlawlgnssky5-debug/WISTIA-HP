@@ -503,7 +503,7 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   }
 }
 @layer wistia-site-fixes {
-  /* r25: /events consult button matches the site's AR 축가 상담하기 button and opens the chooser */
+  /* r25: /events consult button matches the site's AR 축가 상담하기 button and links to home */
   html body #app#app#app#app .ev2 .ev2-cta.ev2-consult { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 12px !important; width: 100% !important; box-sizing: border-box !important; margin: 18px 0 0 !important; padding: 16px 22px !important; border: 0 !important; border-radius: 0 !important; background: rgb(169, 99, 122) !important; color: #fff !important; font-size: 16px !important; font-weight: 500 !important; line-height: 1.3 !important; text-decoration: none !important; box-shadow: none !important; }
   html body #app#app#app#app .ev2 .ev2-cta.ev2-consult::before, html body #app#app#app#app .ev2 .ev2-cta.ev2-consult::after { content: none !important; display: none !important; }
   html body #app#app#app#app .ev2 .ev2-cta.ev2-consult svg { flex: 0 0 auto !important; width: 18px !important; height: 18px !important; }
