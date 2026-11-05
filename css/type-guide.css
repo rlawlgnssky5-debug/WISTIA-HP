@@ -8,6 +8,11 @@ html body #app .type-guide{
   box-shadow:none!important;
   overflow:hidden;
 }
+/* POINT 01–04 use the content column. Side padding stays small. */
+html body #app .mobile-ar-solo > :is(#arcRecording,#arcKey,#arcTuning,#soloPoint04){
+  padding-inline:8px!important;
+}
+html body #app .mobile-ar-solo > #arcKey{--ed-key-gutter:8px}
 html body #app .type-guide img{
   display:block!important;
   width:100%!important;
