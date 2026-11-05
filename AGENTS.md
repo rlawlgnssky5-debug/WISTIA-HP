@@ -3,10 +3,11 @@
 ## 2026-11-05 — 포스터와 타입 표를 한 아치로
 
 - 홈에서 `옵션 설명!`은 그리지 않는다. `assets/img/option-explain/` 이미지와 `optionExplainSection()`은 남긴다
-- 홈에는 `type-final.webp` 포스터를 그리지 않는다. 파일은 저장소에 남기고, HTML 타입 비교표만 `.type-unify#packageSelection`에 둔다
+- 승인 포스터 `type-final.webp`는 타입 표 위에 둔다. HTML 타입 비교표도 유지한다
 - POINT 01–04 좌우 여백은 4px, FAQ와 오시는 길은 22px다. 히어로 `타입·가격 바로 보기`는 `#packageSelection`으로 부드럽게 이동한다. 푸터는 `© WISTIA. All rights reserved.` `/events` 하단은 `AR 축가 자세히 보기`이고 `/`로 간다
 - 표 아래 안내는 네 타입 모두 이름과, 절약이 있을 때만 `개별 옵션 추가보다 패키지로 N원 저렴하게!` 알약이다. STANDARD는 이름만이다. 긴 추천 문장과 원가·패키지 할인·현재 적용가·최대 할인가 상자는 표 아래에 두지 않는다
-- 앱·포스터 CSS 캐시는 `20261105-type-poster-9`, 가격 스크립트 캐시는 `20261105-type-poster-8`이다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
+- 문의 첫 단계에서 `녹음 인원` 카드는 가격 요약 표보다 위다. 인원 카드는 낮고 글자는 작게 둔다
+- 앱·포스터 CSS 캐시는 `20261105-type-poster-10`, 예약 마법사 캐시는 `20261105-people-above-1`이다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
 
 ## 2026-11-05 — 홈 타입 안내 포스터
 
