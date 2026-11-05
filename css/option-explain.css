@@ -153,3 +153,29 @@ html body #app .option-explain>h2{
   font-size:18px;
   line-height:1;
 }
+.package-guide-sub{
+  margin:0 0 22px;
+  text-align:center;
+  font-family:Pretendard,"Pretendard Variable",sans-serif;
+  font-size:14px;
+  font-weight:500;
+  line-height:1.55;
+  letter-spacing:-.03em;
+  color:#6d5c62;
+  word-break:keep-all;
+}
+
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .package-guide-title{
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+  text-wrap:pretty!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .package-guide-sub{
+  display:block!important;
+  margin:0 0 22px!important;
+  text-align:center!important;
+  font:500 14px/1.55 Pretendard,sans-serif!important;
+  color:#6d5c62!important;
+  word-break:keep-all!important;
+  white-space:normal!important;
+}

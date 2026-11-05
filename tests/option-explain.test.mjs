@@ -23,11 +23,13 @@ test('homepage option steps use transparent pngs and sit above the type table',(
     '음원의 음압·다이내믹·주파수 밸런스를 정교하게 조율해',
     '선명도와 깊이를 높이고, 최종 음원으로 마무리합니다'
   ])assert.ok(block.includes(line),line)
-  assert.match(block,/assets\/img\/option-explain\/opt-tune\.png/)
-  assert.match(block,/assets\/img\/option-explain\/opt-mix\.png/)
-  assert.match(block,/assets\/img\/option-explain\/opt-master\.png/)
+  assert.match(block,/assets\/img\/option-explain\/opt-tune\.jpg/)
+  assert.match(block,/assets\/img\/option-explain\/opt-mix\.jpg/)
+  assert.match(block,/assets\/img\/option-explain\/opt-master\.jpg/)
   assert.doesNotMatch(block,/송송/)
-  assert.doesNotMatch(block,/\.jpg/)
+  assert.doesNotMatch(block,/\.png/)
+  assert.match(app,/어떤 타입이 나에게 맞을까요\?/)
+  assert.match(app,/나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!/)
   const hook=app.match(/function homeTypeBlock\(key\)\{[^}]+\}/)[0]
   assert.match(hook,/key==='solo'\?optionExplainSection\(\):''/)
   assert.match(hook,/packageSalesSection\(key\)/)
@@ -41,21 +43,29 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
   assert.match(css,/\.ox-figure img\{[^}]*background:transparent/)
   assert.match(css,/\.ox-card\{[^}]*min-height:168px/)
   assert.match(read('js/svg-interface.js'),/!section\.matches\('\.mas-selection,\.option-explain'\)/)
+  const pricing=read('js/package-pricing.js')
+  for(const line of [
+    '50분 녹음과 음정·박자 보정만 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',
+    '1시간 30분의 여유로운 녹음부터 믹싱·마스터링까지! 완성도 높은 축가를 위한 올인원 패키지예요',
+    '노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',
+    '두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!'
+  ])assert.ok(pricing.includes(line),line)
+  assert.match(pricing,/picked\.guide\|\|picked\.title/)
   assert.doesNotMatch(css,/\.ox-step:nth-child|data-ox="coral"[\s\S]{0,180}background:\s*#f[0-9a-f]{5}/i)
 })
 
-test('mascot pngs are transparent at the corners',()=>{
+test('mascot jpgs keep a clean white background',()=>{
   const report=execFileSync('python3',['-c',`
 from PIL import Image
 from pathlib import Path
 root=Path('assets/img/option-explain')
-for name in ['opt-tune.png','opt-mix.png','opt-master.png']:
-    im=Image.open(root/name)
-    assert im.mode=='RGBA', name
+for name in ['opt-tune.jpg','opt-mix.jpg','opt-master.jpg']:
+    im=Image.open(root/name).convert('RGB')
     w,h=im.size
     for x,y in ((0,0),(w-1,0),(0,h-1),(w-1,h-1)):
-        assert im.getpixel((x,y))[3]==0, f'{name} {x},{y}'
+        r,g,b=im.getpixel((x,y))
+        assert min(r,g,b)>=250, f'{name} {x},{y} {(r,g,b)}'
     print(name,'ok',w,h)
 `],{cwd:new URL('..',import.meta.url),encoding:'utf8'})
-  assert.match(report,/opt-master.png ok/)
+  assert.match(report,/opt-master.jpg ok/)
 })

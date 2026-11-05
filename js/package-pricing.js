@@ -1,11 +1,11 @@
 (function(global){
  'use strict'
  const packages={
-  A:{key:'A',name:'STANDARD',title:'50분 녹음에 음정·박자 보정만 필요하다면?',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
-  B:{key:'B',name:'DELUXE',title:'녹음부터 정밀 믹싱·마스터링까지 한 번에 해결하고 싶다면?',price:170000,minutes:90,individual:210000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  C:{key:'C',name:'PREMIUM',title:'넉넉한 녹음 시간에 완성도 높은 패키지를 원한다면?',price:220000,minutes:150,individual:270000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
+  A:{key:'A',name:'STANDARD',title:'50분 녹음에 음정·박자 보정만 필요하다면?',guide:'50분 녹음과 음정·박자 보정만 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
+  B:{key:'B',name:'DELUXE',title:'녹음부터 정밀 믹싱·마스터링까지 한 번에 해결하고 싶다면?',guide:'1시간 30분의 여유로운 녹음부터 믹싱·마스터링까지! 완성도 높은 축가를 위한 올인원 패키지예요',price:170000,minutes:90,individual:210000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
+  C:{key:'C',name:'PREMIUM',title:'넉넉한 녹음 시간에 완성도 높은 패키지를 원한다면?',guide:'노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',price:220000,minutes:150,individual:270000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 기본 믹싱 + 마스터링, list price 300,000 (정밀 믹싱 +20,000 added to list prices 2026-10-27 04:52)
-  D:{key:'D',name:'DUET',title:'두 사람이 함께 특별한 축가를 완성하고 싶다면?',price:240000,minutes:150,individual:300000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
+  D:{key:'D',name:'DUET',title:'두 사람이 함께 특별한 축가를 완성하고 싶다면?',guide:'두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!',price:240000,minutes:150,individual:300000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
   {key:'tuning',label:'음정·박자 보정',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
@@ -105,7 +105,7 @@
   person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
   people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
- const shortTitles={A:'50분 녹음에 음정·박자 보정만 필요하다면?',B:'녹음부터 정밀 믹싱·마스터링까지 한 번에 해결하고 싶다면?',C:'넉넉한 녹음 시간에 완성도 높은 패키지를 원한다면?',D:'두 사람이 함께 특별한 축가를 완성하고 싶다면?'}
+ const shortTitles={A:packages.A.guide,B:packages.B.guide,C:packages.C.guide,D:packages.D.guide}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
  // A received limited coupon applies before a recording date is chosen as well
@@ -140,7 +140,7 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+p.title+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate)
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+(p.guide||p.title)+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate)
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -155,7 +155,7 @@
    const pick=e=>{const c=e.target.closest('[data-tt]');if(!c||(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' '))return;e.preventDefault();const y=global.scrollY,input=cards.querySelector('.package-card[data-tier="'+c.dataset.tt+'"] input');if(!input||input.checked)return;input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));global.requestAnimationFrame(()=>global.scrollTo(0,y))}
    wrap.addEventListener('click',pick);wrap.addEventListener('keydown',pick);root.addEventListener('change',()=>typeTable(root))}
   const s=cards.querySelector('input[type="radio"]:checked')?.value||'';keys.forEach(k=>{const c=cards.querySelector('.package-card[data-tier="'+k+'"] .package-card-price'),t=wrap.querySelector('thead [data-tt="'+k+'"] .wf-tt-price strong');if(c&&t&&t.textContent!==c.textContent)t.textContent=c.textContent});wrap.querySelectorAll('[data-tt]').forEach(e=>{const on=e.dataset.tt===s;e.classList.toggle('is-on',on);if(e.tagName==='TH')e.setAttribute('aria-pressed',String(on))})
-  const when=wrap.querySelector('.wf-tt-when'),picked=s?P.packageFor(s):null,save=picked&&picked.individual>picked.price?'<span class="wf-tt-save">개별 옵션 추가보다 패키지로 '+esc(P.money(picked.individual-picked.price))+' 저렴하게!</span>':'',html=picked?'<i>'+esc(picked.name)+'</i>'+esc(picked.title)+save:'<i>이럴 때</i>타입을 골라 주세요';if(s)when.dataset.tt=s;else delete when.dataset.tt;if(when.innerHTML!==html)when.innerHTML=html}
+  const when=wrap.querySelector('.wf-tt-when'),picked=s?P.packageFor(s):null,save=picked&&picked.individual>picked.price?'<span class="wf-tt-save">개별 옵션 추가보다 패키지로 '+esc(P.money(picked.individual-picked.price))+' 저렴하게!</span>':'',html=picked?'<i>'+esc(picked.name)+'</i>'+esc(picked.guide||picked.title)+save:'<i>이럴 때</i>타입을 골라 주세요';if(s)when.dataset.tt=s;else delete when.dataset.tt;if(when.innerHTML!==html)when.innerHTML=html}
  function syncSelection(root,key){
   const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||''
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
