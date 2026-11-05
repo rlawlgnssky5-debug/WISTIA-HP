@@ -18,7 +18,7 @@ for (const page of ['index.html','events.html','contact.html','event/solo.html',
  assert.match(html,/js\/inquiry-funnel\.js\?v=20261105-merge-152-1/)
  assert.match(html,/css\/canvas-780\.css\?v=20261105-hero-price-pill-1/)
  assert.match(html,/js\/package-pricing\.js\?v=20261105-type-poster-8/)
- assert.match(html,/css\/type-guide\.css\?v=20261105-type-poster-12/)
+ assert.match(html,/css\/type-guide\.css\?v=20261105-type-poster-13/)
  assert.match(html,/js\/booking-wizard\.js\?v=20261105-people-above-1/)
 }
 console.log('Hero price bar is the only action; events consult still links home')
