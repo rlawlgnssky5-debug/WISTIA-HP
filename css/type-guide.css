@@ -1,56 +1,70 @@
-/* Homepage type poster. One image between option steps and the type table. */
-html body #app .type-unify{
-  margin:14px 12px 18px!important;
-  padding:0 0 16px!important;
-  background:#fdf6f2!important;
-  border:1px solid #e7c8d0!important;
-  border-radius:180px 180px 28px 28px / 84px 84px 28px 28px!important;
-  box-shadow:none!important;
-  overflow:hidden!important;
+/* Homepage type poster and comparison table share one arched frame.
+   These overrides live in the earliest author layer so they beat later
+   layered !important rules on #packageSelection, POINT, FAQ, and the map. */
+@layer wistia-site-fixes {
+  html body #app .mobile-ar-solo > #packageSelection.type-unify {
+    margin: 14px 12px 18px !important;
+    padding: 0 0 18px !important;
+    background: #fef4eb !important;
+    border: 1px solid #e7c8d0 !important;
+    border-radius: 180px 180px 28px 28px / 84px 84px 28px 28px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    --ed-surface: #fef4eb;
+    --ed-next-surface: #fef4eb;
+  }
+  html body #app .mobile-ar-solo > #packageSelection.type-unify::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
+  html body #app .type-unify .package-section {
+    margin: 0 !important;
+    padding: 18px 14px 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  html body #app .type-unify .wf-type-table {
+    background: transparent !important;
+  }
+  html body #app .type-unify-poster {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    object-fit: contain !important;
+    background: transparent !important;
+  }
+  html body #app .mobile-ar-solo > :is(#arcRecording, #arcKey, #arcTuning, #soloPoint04) {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  html body #app .mobile-ar-solo > #arcKey {
+    --ed-key-gutter: 4px;
+  }
+  html body #app .mobile-ar-solo > :is(#arcFaq.solo-faq, .solo-map) {
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+  html body #app .info-page-faq .info-faq-group {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+  html body #app .ed-map-art img {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
 }
-html body #app .mobile-ar-solo>#packageSelection.type-unify::before{content:none!important;display:none!important}
-html body #app .type-unify .package-section{
-  margin:0!important;
-  padding:16px 14px 0!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
-html body #app .type-unify .wf-type-table{background:transparent!important}
-html{scroll-behavior:smooth}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-#packageSelection{scroll-margin-top:76px}
-/* POINT 01–04 fill the content column. Later padding shorthands must not restore the side gap. */
-html body #app#app#app#app#app#app#app#app .mobile-ar-solo :is(#arcRecording,#arcKey,#arcTuning,#soloPoint04){
-  padding-left:4px!important;
-  padding-right:4px!important;
-}
-html body #app#app#app#app#app#app#app#app .mobile-ar-solo #arcKey{--ed-key-gutter:4px}
-/* FAQ white cards and the directions map sit in from the content edges. */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(#arcFaq.solo-faq,.solo-map){
-  padding-left:22px!important;
-  padding-right:22px!important;
-}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-faq-group{
-  margin-left:10px!important;
-  margin-right:10px!important;
-  padding-left:22px!important;
-  padding-right:22px!important;
-}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-map-art img{
-  width:100%!important;
-  max-width:100%!important;
-  margin-left:0!important;
-}
-html body #app .type-unify-poster{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  margin:0!important;
-  border:0!important;
-  border-radius:0!important;
-  object-fit:contain!important;
-  background:transparent!important;
-}
+#packageSelection { scroll-margin-top: 76px; }
