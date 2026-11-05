@@ -2177,6 +2177,9 @@ async function checkPageBuild(){
 }
 window.addEventListener('pageshow',event=>{if(event.persisted)void checkPageBuild()})
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)void checkPageBuild()})
+// r74: on detail pages the fixed 문의양식 작성 bar waits until POINT 01 (#arcRecording) has scrolled past the header; scrolling back above hides it again
+function syncDetailInquiryBar(){const bar=document.querySelector('.solo-footer-inquiry'),point=document.querySelector('#arcRecording');if(!bar)return;const header=document.getElementById('siteHeader'),top=header?header.getBoundingClientRect().bottom:0,show=!point||point.getBoundingClientRect().bottom<=top;if(bar.dataset.pointGate===(show?'shown':'hidden'))return;bar.dataset.pointGate=show?'shown':'hidden';bar.style.setProperty('transition','opacity .25s ease,visibility .25s ease','important');bar.style.setProperty('opacity',show?'1':'0','important');bar.style.setProperty('visibility',show?'visible':'hidden','important');bar.style.setProperty('pointer-events',show?'auto':'none','important');if(show)bar.removeAttribute('aria-hidden');else bar.setAttribute('aria-hidden','true');bar.tabIndex=show?0:-1}
+{let queued=false;const queue=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;syncDetailInquiryBar()})};window.addEventListener('scroll',queue,{passive:true});window.addEventListener('resize',queue);document.addEventListener('DOMContentLoaded',()=>{const app=document.querySelector('#app');if(app)new MutationObserver(queue).observe(app,{childList:true});queue()});if(document.readyState!=='loading'){const app=document.querySelector('#app');if(app)new MutationObserver(queue).observe(app,{childList:true})}queue()}
 async function init(){
  if(!document.querySelector("#siteHeader")||!document.querySelector("#app"))return
  // Render with the existing account defaults before the optional configuration request.
