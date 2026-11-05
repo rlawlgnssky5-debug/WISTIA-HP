@@ -4,7 +4,6 @@
 
 const LIVE_PATHS = new Set([
   '/',
-  '/detail/solo',
   '/event/solo',
   '/event/duo',
   '/contact',
@@ -15,7 +14,6 @@ const LIVE_PATHS = new Set([
 
 const LIVE_FILES = new Set([
   '/index.html',
-  '/detail/solo.html',
   '/event/solo.html',
   '/event/duo.html',
   '/contact.html',
@@ -31,6 +29,12 @@ function normalizePath(input) {
   if (!path.startsWith('/')) path = '/' + path
   if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1)
   return path || '/'
+}
+
+function soloDetailRedirect(input) {
+  const path = normalizePath(input)
+  if (path === '/detail/solo' || path === '/detail/solo.html') return '/'
+  return ''
 }
 
 function isGonePath(input) {
@@ -55,6 +59,12 @@ function goneDocument() {
 
 export default function middleware(request) {
   const url = new URL(request.url)
+  const home = soloDetailRedirect(url.pathname)
+  if (home) {
+    const target = new URL(home, url.origin)
+    target.search = url.search
+    return Response.redirect(target, 301)
+  }
   if (!isGonePath(url.pathname)) return
   return new Response(goneDocument(), {
     status: 410,

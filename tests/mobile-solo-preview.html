@@ -18,9 +18,9 @@
 <body>
  <header><label>페이지 <select id="mobilePage"><option value="solo">AR 1인</option><option value="duo">AR 듀엣</option><option value="story">축가 스토리 필름</option><option value="home">홈</option></select></label><label>화면 폭 <select id="mobileWidth"><option>320</option><option selected>390</option><option>430</option><option>663</option><option>768</option><option>769</option><option>1022</option><option>1440</option></select></label></header>
  <div class="section-toolbar"><label>섹션 이동 <select id="reviewSection" aria-label="검토할 섹션"><option>화면 로딩 중</option></select></label></div>
- <iframe id="mobileSoloFrame" title="AR 축가 1인 모바일 미리보기" src="/detail/solo"></iframe>
+ <iframe id="mobileSoloFrame" title="AR 축가 1인 모바일 미리보기" src="/"></iframe>
  <script>
-  const frame=document.querySelector('iframe'),pages={solo:'/detail/solo',duo:'/detail/duo',story:'/detail/duet-film',home:'/'}
+  const frame=document.querySelector('iframe'),pages={solo:'/',duo:'/detail/duo',story:'/detail/duet-film',home:'/'}
   const picker=document.querySelector('#mobilePage'),initial=new URLSearchParams(location.search).get('page')
   const sectionPicker=document.querySelector('#reviewSection')
   let reviewObserver=null
@@ -41,7 +41,7 @@
   function refreshSectionPicker(){
    const doc=frame.contentDocument,root=doc?.querySelector('.ar-commerce-detail')
    const path=frame.contentWindow?.location.pathname
-   const nextPage=path==='/detail/duo'?'duo':path==='/detail/solo'?'solo':path==='/detail/duet-film'?'story':path==='/'?'home':''
+   const nextPage=path==='/detail/duo'?'duo':path==='/'?'home':path==='/detail/duet-film'?'story':''
    if(nextPage){picker.value=nextPage;frame.title=picker.selectedOptions[0].textContent+' 모바일 미리보기'}
    if(root?.dataset.reviewSections==='ready')return
    sectionPicker.replaceChildren();sectionPicker.disabled=!root

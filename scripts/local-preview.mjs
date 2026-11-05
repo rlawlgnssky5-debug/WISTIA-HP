@@ -1,14 +1,17 @@
 import {createServer} from 'node:http'
 import {readFile,stat} from 'node:fs/promises'
 import {resolve,extname,sep} from 'node:path'
-import {isGonePath,goneDocument} from '../js/gone-paths.mjs'
+import {isGonePath,goneDocument,soloDetailRedirect} from '../js/gone-paths.mjs'
 const root=resolve(import.meta.dirname,'..')
 const port=Number(process.env.WISTIA_PREVIEW_PORT||4174)
 const availabilityHandler=(await import('../api/availability.js')).default
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.mp4':'video/mp4','.mp3':'audio/mpeg','.wav':'audio/wav','.m4a':'audio/mp4','.woff2':'font/woff2'}
 createServer(async(req,res)=>{
  try{
-  let path=decodeURIComponent(new URL(req.url,'http://localhost').pathname)
+  const requestUrl=new URL(req.url,'http://localhost')
+  const home=soloDetailRedirect(requestUrl.pathname)
+  if(home){res.writeHead(301,{Location:home+requestUrl.search,'Cache-Control':'no-store'}).end();return}
+  let path=decodeURIComponent(requestUrl.pathname)
   if(path==='/api/limited-coupon'){
    res.status=code=>{res.statusCode=code;return res}
    res.json=value=>{res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(value));return res}

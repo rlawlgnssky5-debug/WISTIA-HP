@@ -2,7 +2,6 @@
 // Classic scripts cannot import this module, so js/app.js keeps the same allowlist.
 export const LIVE_PATHS = new Set([
   '/',
-  '/detail/solo',
   '/event/solo',
   '/event/duo',
   '/contact',
@@ -13,7 +12,6 @@ export const LIVE_PATHS = new Set([
 
 export const LIVE_FILES = new Set([
   '/index.html',
-  '/detail/solo.html',
   '/event/solo.html',
   '/event/duo.html',
   '/contact.html',
@@ -29,6 +27,13 @@ export function normalizePath(input) {
   if (!path.startsWith('/')) path = '/' + path
   if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1)
   return path || '/'
+}
+
+// Old ads and bookmarks for the removed 1인 detail page land on home.
+export function soloDetailRedirect(input) {
+  const path = normalizePath(input)
+  if (path === '/detail/solo' || path === '/detail/solo.html') return '/'
+  return ''
 }
 
 export function isGonePath(input) {
