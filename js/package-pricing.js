@@ -45,7 +45,7 @@
  const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  const discountOfferList=()=>[
-  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요'},
+  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 문의 양식을 열면 받을 수 있어요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
  ]
@@ -78,7 +78,6 @@
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(v.firstVisit&&p.key!=='A')discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
-  if(v.yearEndCoupon&&(preview||!global.document||limitedClaimed())&&p.key!=='A'&&yearEndEligible(v.bookingDate,reference))discounts.push({key:'yearEnd',label:'선착순 쿠폰',amount:20000})
   if(validDate(v.bookingDate)){
    if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 할인 (13~16시 시작)',amount:10000})
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
@@ -126,7 +125,6 @@
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
   const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
-  if(has('yearEnd'))rows.push(line('is-coupon','선착순 쿠폰',0,'−'+money(20000)))
   q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
   rows.push(line('is-now','현재 적용가',p.individual-now,money(now)))
   if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
@@ -196,7 +194,7 @@
  }
  function writeCouponClaims(selections){memoryClaims={version:1,savedAt:Date.now(),selections:Object.fromEntries(couponKeys.filter(key=>typeof selections[key]==='boolean').map(key=>[key,selections[key]]))};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
  function couponClaimCard(key,mode='form',imageSrc){
-  if(!couponKeys.includes(key)||key==='yearEndCoupon'&&!yearEndActive())return ''
+  if(key==='yearEndCoupon'||!couponKeys.includes(key))return ''
   const year=key==='yearEndCoupon',title=year?yearEndCopy.label:'첫 이용 쿠폰',banner=year?yearEndBookingBanner():firstVisitBanner(imageSrc)
   return '<div class="coupon-claim-card" data-coupon-card="'+key+'"'+(year?' data-year-end-coupon':'')+'>'+banner+'<div class="coupon-claim-action"><span class="coupon-claim-hint">여기를 눌러주세요 →</span><button type="button" class="coupon-claim-button" data-coupon-claim="'+key+'" aria-label="'+title+'" aria-pressed="false"><span data-coupon-button-copy>쿠폰 받기</span><b data-coupon-check aria-hidden="true" hidden>✓</b></button>'+(mode==='form'?'<input type="checkbox" name="'+key+'" value="1" hidden aria-hidden="true">':'')+'</div>'+(year?'<div class="limited-coupon-timer" data-coupon-timer hidden role="group" aria-label="쿠폰 사용 남은 시간" aria-live="off"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><span data-coupon-timer-label>쿠폰 사용 남은 시간</span></span><strong data-coupon-timer-value>24:00:00</strong></div>':'')+'</div>'
  }

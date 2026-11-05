@@ -928,3 +928,15 @@ html body #app#app#app#app#app#app#app .info-page-faq .faq-group-heading>div>p{m
 html body #app#app#app#app#app#app#app .info-page-faq .faq-list summary{padding:20px 0!important}
 }
 }
+.wf-first-popup{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:20px;background:#2a1c2280;box-sizing:border-box}
+.wf-first-card{width:min(100%,380px);margin:0;padding:22px 20px 18px;border:1px solid #efcfb1;border-radius:20px;background:#fffaf8;color:#5c3d48;text-align:center;box-shadow:0 16px 40px #2a1c2240}
+.wf-first-card img{width:88px;height:88px;margin:0 auto 8px;object-fit:contain}
+.wf-first-kicker{margin:0;color:#a9637a;font-size:13px;font-weight:650}
+.wf-first-card h2{margin:6px 0 0;color:#8d3d55;font-size:22px;line-height:1.35;font-weight:750}
+.wf-first-only{margin:8px 0 0;color:#8d3d55;font-size:12px;font-weight:750;letter-spacing:.02em}
+.wf-first-note{margin:10px 0 0;color:#7a5c66;font-size:13px;line-height:1.55}
+.wf-first-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:16px}
+.wf-first-actions button{min-height:46px;border-radius:12px;font-size:15px;font-weight:700}
+.wf-first-dismiss{background:#fff;color:#8d3d55;border:1px solid #e7c3cc}
+.wf-first-take{background:#a9637a;color:#fff;border:0}
+.wf-first-take:focus-visible,.wf-first-dismiss:focus-visible{outline:2px solid #8d3d55;outline-offset:3px}
