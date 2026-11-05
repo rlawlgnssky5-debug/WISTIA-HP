@@ -12,7 +12,7 @@ const read = path => readFileSync(resolve(root, path), 'utf8')
 test('every served bundle has the original source bytes, cascade order and URL base', () => {
   const manifest = JSON.parse(read('css/bundles.json'))
   assert.deepEqual(Object.keys(manifest.pages).sort(), [
-    'contact.html', 'detail/solo.html', 'event/duo.html',
+    'contact.html', 'event/duo.html',
     'event/solo.html', 'events.html', 'index.html', 'info/faq.html', 'info/location.html'
   ].sort())
   for (const [page, entry] of Object.entries(manifest.pages)) {
@@ -111,7 +111,7 @@ test('prerender expands the template sources and generates bundled route pages',
       assert.equal(links.length, 1, page)
     }
     assert.equal(existsSync(resolve(dir, 'section/homeServices.html')), false)
-    assert.equal(existsSync(resolve(dir, 'detail/solo.html')), true)
+    assert.equal(existsSync(resolve(dir, 'detail/solo.html')), false)
   } finally {
     assert.ok(dir.startsWith(resolve(root, 'tmp') + sep))
     rmSync(dir, { recursive: true, force: true })

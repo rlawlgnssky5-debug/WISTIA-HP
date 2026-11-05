@@ -538,7 +538,7 @@ function handleFinderChoice(el){
  if(el.name==="finderRole"){
   finderChoice={role:el.value,moment:"",people:"",lyrics:""}
   sessionStorage.setItem("wistia:finder-selection",JSON.stringify(finderChoice))
-  const next=el.value==="singer"?"#/detail/solo":el.value==="proposal"?"#/detail/proposal":"#/detail/solo-film/making"
+  const next=el.value==="singer"?"#/":el.value==="proposal"?"#/detail/proposal":"#/detail/solo-film/making"
   history.pushState({wistiaDepth:(history.state?.wistiaDepth||0)+1},"",next);route();return
  }
  if(el.name==="finderLyrics"){

@@ -24,7 +24,7 @@ test('mobile gutters stay inside the 600px boundary and alter only spacing, radi
 
 test('all requested entry points include the gutter source last and use the refreshed cache',()=>{
   const m=JSON.parse(read('css/bundles.json'))
-  for(const page of ['index.html','detail/solo.html','detail/duo.html','info/faq.html','contact.html','event/solo.html','event/duo.html']){
+  for(const page of ['index.html','detail/duo.html','info/faq.html','contact.html','event/solo.html','event/duo.html']){
     assert.match(m.pages[page].sources.at(-1),/mobile-gutters-1020\.css/)
     assert.match(m.pages[page].href,/\?v=20261020-mobile-gutters-1$/)
   }

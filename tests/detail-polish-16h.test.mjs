@@ -32,9 +32,8 @@ await test('16j12 solo and duo details share the approved layout',()=>{
  assert.match(index,/css\/detail-point-16f\.css\?v=20261014-detail-polish-16j12/)
  assert.match(index,/css\/booking-availability\.css\?v=20261014-detail-polish-16j12/)
  assert.match(index,/data-build="20261013-detail-polish-16f"/)
- const solo=read('detail/solo.html'),duo=read('detail/duo.html')
- assert.match(solo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
- assert.match(duo,/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
+ if(existsSync(new URL('../detail/solo.html',import.meta.url)))assert.match(read('detail/solo.html'),/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
+ if(existsSync(new URL('../detail/duo.html',import.meta.url)))assert.match(read('detail/duo.html'),/css\/detail-solo-16j\.css\?v=20261014-detail-polish-16j12/)
 })
 
 let chromium,executable,skip=false

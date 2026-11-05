@@ -75,7 +75,7 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     });
     const page = await context.newPage();
     const origin = `http://wistia.localhost:${port}`;
-    await page.goto(origin + "/detail/solo", { waitUntil: "domcontentloaded" });
+    await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
     await page.locator(".ed-hero-consult").waitFor({ state: "visible" });
     const vid = await page.evaluate(() => localStorage.getItem("wistia_vid"));
     assert.match(vid, /^wv_[a-f0-9]{16,64}$/);
@@ -101,7 +101,7 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     assert.equal(snap.inquiry_open, 0);
     assert.equal(snap.kakao, 0, "consult-choice Kakao is not the Contact or floating Kakao path");
     assert.equal(snap.form, false);
-    assert.equal(new URL(page.url()).pathname, "/detail/solo");
+    assert.equal(new URL(page.url()).pathname, "/");
 
     await page.locator(".ed-hero-consult").click();
     await page.locator("#mediaDialog .consult-choice-form").click();
@@ -114,12 +114,12 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     assert.equal(snap.meta.button_label, "문의 양식 작성하고 상담받을래요!");
     assert.equal(snap.ga.button_location, snap.meta.button_location);
     assert.equal(snap.ga.button_label, snap.meta.button_label);
-    assert.equal(snap.ga.page_path, "/detail/solo");
+    assert.equal(snap.ga.page_path, "/");
     assert.equal(snap.vid, vid);
     assert.doesNotMatch(JSON.stringify(snap.meta) + JSON.stringify(snap.ga), /package=|@[a-z]|010/);
     assert.match(page.url(), /\/event\/solo/);
 
-    await page.goto(origin + "/detail/solo", { waitUntil: "domcontentloaded" });
+    await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
     await page.locator(".package-inquiry-link").click();
     await page.locator("#contactInquiryForm").waitFor({ state: "visible" });
     await page.waitForTimeout(500);
@@ -131,7 +131,7 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     assert.equal(snap.vid, vid);
     assert.match(page.url(), /\/event\/solo/);
 
-    await page.goto(origin + "/detail/solo", { waitUntil: "domcontentloaded" });
+    await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
     await page.locator("#arcRecording").waitFor();
     await page.evaluate(() => {
       const point = document.querySelector("#arcRecording");
