@@ -1,7 +1,7 @@
 import {createServer} from 'node:http'
 import {readFile,stat} from 'node:fs/promises'
 import {resolve,extname,sep} from 'node:path'
-import {isGonePath,goneDocument,soloDetailRedirect} from '../js/gone-paths.mjs'
+import {isGonePath,isUnknownPath,goneDocument,notFoundDocument,soloDetailRedirect} from '../js/gone-paths.mjs'
 const root=resolve(import.meta.dirname,'..')
 const port=Number(process.env.WISTIA_PREVIEW_PORT||4174)
 const availabilityHandler=(await import('../api/availability.js')).default
@@ -33,6 +33,7 @@ createServer(async(req,res)=>{
   }
   if(path.split('/').some(part=>part.startsWith('.'))||/^\/(?:api|lib)(?:\/|$)/.test(path)){res.writeHead(404).end();return}
   if(isGonePath(path)){res.writeHead(410,{'Content-Type':'text/plain; charset=utf-8','X-Robots-Tag':'noindex','Cache-Control':'no-store'}).end(goneDocument());return}
+  if(isUnknownPath(path)){res.writeHead(404,{'Content-Type':'text/html; charset=utf-8','X-Robots-Tag':'noindex','Cache-Control':'no-store'}).end(notFoundDocument());return}
   if(path==='/')path='/index.html'
   else if(!extname(path))path+='.html'
   let file=resolve(root,'.'+path)

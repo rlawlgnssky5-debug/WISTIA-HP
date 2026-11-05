@@ -20,8 +20,8 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
  try{
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('preview timeout')),10000);server.stdout.once('data',()=>{clearTimeout(timer);resolve()});server.once('error',reject)})
   browser=await playwright.chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox','--disable-dev-shm-usage']})
-  const live=['/','/contact','/events','/info/faq','/info/location','/detail/solo','/detail/duo','/event/solo','/event/duo']
-  const gone=['/privacy','/before-after','/song','/film','/ar/self','/ar/friend','/info/about','/info/process','/find/service','/section/homeProcess','/detail/duet-film','/detail/wedding','/event/wedding','/event/duet-film']
+  const live=['/','/contact','/events','/info/faq','/info/location','/event/solo','/event/duo']
+  const gone=['/privacy','/before-after','/song','/film','/ar/self','/ar/friend','/info/about','/info/process','/section/homeProcess','/detail/duet-film','/detail/wedding','/event/wedding','/event/duet-film']
   for(const width of [320,390,1280]){
    const context=await browser.newContext({viewport:{width,height:844},isMobile:width<600,hasTouch:true}),page=await context.newPage()
    await page.route('https://**/*',r=>r.abort())
@@ -38,19 +38,6 @@ await test('Public routes retain one compact yellow pill except event inquiry, o
    for(const path of live){
     await page.goto(`http://127.0.0.1:${port}`+path,{waitUntil:'domcontentloaded'})
     if(path!='/privacy')await page.locator('#app h1').first().waitFor()
-    if(path==='/detail/solo'||path==='/detail/duo'){
-     const form=await page.locator('.solo-footer-inquiry').evaluate(node=>{
-      const s=getComputedStyle(node),pill=document.querySelector('#floatingKakaoChat'),ps=getComputedStyle(pill)
-      return {text:node.innerText.replace(/\s+/g,' ').trim(),href:node.getAttribute('href'),kakao:node.hasAttribute('data-kakao-inquiry'),pillText:pill?.innerText.replace(/\s+/g,' ').trim(),pillDisplay:ps.display,pillHref:pill?.getAttribute('href')||''}
-     })
-     assert.equal(form.text,'문의양식 작성',path)
-     assert.equal(form.href,path==='/detail/solo'?'/event/solo':'/event/duo')
-     assert.equal(form.kakao,false)
-     assert.equal(form.pillText,'카카오톡 문의')
-     assert.equal(form.pillDisplay,'none')
-     assert.equal(form.pillHref,'https://pf.kakao.com/_GbExjX/chat')
-     continue
-    }
     const eventInquiry=await page.locator('body').evaluate(n=>n.classList.contains('is-event-inquiry'))
     await page.locator('#floatingKakaoChat').waitFor({state:eventInquiry?'hidden':'visible'})
     const check=await page.evaluate(()=>{

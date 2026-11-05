@@ -1,5 +1,13 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-05 — 문의 금액·주소·연도
+
+- `/event/duo`의 가격 요약은 2인 추가 30,000원을 포함한 견적과 같다. STANDARD 기본가와 초기 타입은 그대로다
+- `/detail/duo`와 `/find/service`는 홈으로 301이다. 없는 주소는 404 안내, 폐지한 옛 주소는 410이다
+- 공개 canonical·OG·sitemap은 `https://www.wistiastudio.com`이다. `/contact` noindex는 유지한다
+- 녹음 달력 연도는 오늘 기준 올해와 다음 해만이다. 과거 날짜는 고를 수 없다
+- CSS 번들 원본 2,230,461바이트·gzip 273,109바이트, app.js gzip 94,605바이트. 버전 쿼리가 있는 css·js·assets는 1년 immutable 캐시다
+
 ## 2026-11-05 — 포스터와 타입 표를 한 아치로
 
 - 홈에서 `옵션 설명!`은 그리지 않는다. `assets/img/option-explain/` 이미지와 `optionExplainSection()`은 남긴다

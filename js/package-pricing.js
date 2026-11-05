@@ -113,25 +113,25 @@
  // Only coupons the visitor actually received on this site lower the shown price
  const claimedCoupons=()=>{const c=readCouponClaims();return {firstVisit:c.firstVisit===true,yearEndCoupon:c.yearEndCoupon===true}}
  function cardCouponPrice(p,reference=today(),bookingDate=''){const got=claimedCoupons(),q=quote({package:p.key,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:bookingDate||couponDisplayDate(reference)},reference,true);return p.price-q.discounts.filter(d=>d.key==='first'||d.key==='yearEnd').reduce((sum,d)=>sum+d.amount,0)}
- function bestCouponPrice(p,reference=today()){
+ function bestCouponPrice(p,reference=today(),people=''){
   const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
-  return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:claimedCoupons().firstVisit?'1':'',yearEndCoupon:claimedCoupons().yearEndCoupon?'1':'',bookingDate,timeStart:'13:00'},reference,true).total))
+  return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,people,firstVisit:claimedCoupons().firstVisit?'1':'',yearEndCoupon:claimedCoupons().yearEndCoupon?'1':'',bookingDate,timeStart:'13:00'},reference,true).total))
  }
- function priceLines(p,reference=today(),bookingDate=''){
+ function priceLines(p,reference=today(),bookingDate='',people=''){
   // r72: STANDARD (no package saving) still shows its price box; it was empty since r68 hid the rest of the card
   const got=claimedCoupons(),date=bookingDate||couponDisplayDate(reference)
-  const q=quote({package:p.key,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date},reference,true)
-  const has=key=>q.discounts.some(d=>d.key===key),now=q.total,best=bestCouponPrice(p,reference)
+  const q=quote({package:p.key,people,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date},reference,true)
+  const has=key=>q.discounts.some(d=>d.key===key),now=q.total,best=bestCouponPrice(p,reference,people)
   const down=amount=>'<span class="price-down-pill" aria-label="'+money(amount)+' 할인">'+money(amount)+' ↓</span>'
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
-  const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)))
+  const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)));const duetAdd=q.options.find(o=>o.key==='duet');if(duetAdd)rows.push(line('is-date','2인(듀엣곡)으로 변경',0,'+'+money(duetAdd.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
   q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
-  rows.push(line('is-now','현재 적용가',p.individual-now,money(now)))
+  rows.push(line('is-now','현재 적용가',Math.max(0,p.individual-now),money(now)))
   if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
   return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
  }
- function selectionDetails(key,bookingDate=''){
+ function selectionDetails(key,bookingDate='',people=''){
   const p=packageFor(key)
   const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?'tune':item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
@@ -140,7 +140,7 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+(p.guide||p.title)+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate)
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+(p.guide||p.title)+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate,people)
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -157,9 +157,9 @@
   const s=cards.querySelector('input[type="radio"]:checked')?.value||'';keys.forEach(k=>{const c=cards.querySelector('.package-card[data-tier="'+k+'"] .package-card-price'),t=wrap.querySelector('thead [data-tt="'+k+'"] .wf-tt-price strong');if(c&&t&&t.textContent!==c.textContent)t.textContent=c.textContent});wrap.querySelectorAll('[data-tt]').forEach(e=>{const on=e.dataset.tt===s;e.classList.toggle('is-on',on);if(e.tagName==='TH')e.setAttribute('aria-pressed',String(on))})
   const when=wrap.querySelector('.wf-tt-when'),picked=s?P.packageFor(s):null,save=picked&&picked.individual>picked.price?'<span class="wf-tt-save">개별 옵션 추가보다 패키지로 '+esc(P.money(picked.individual-picked.price))+' 저렴하게!</span>':'',html=picked?'<i>'+esc(picked.name)+'</i>'+save:'<i>이럴 때</i>타입을 골라 주세요';if(s)when.dataset.tt=s;else delete when.dataset.tt;if(when.innerHTML!==html)when.innerHTML=html}
  function syncSelection(root,key){
-  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||''
+  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||'',people=root.querySelector('input[name="people"]:checked')?.value||''
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
-  if(panel&&(panel.dataset.packageKey!==p.key||panel.dataset.couponDate!==bookingDate)){panel.innerHTML=selectionDetails(p.key,bookingDate);panel.dataset.packageKey=p.key;panel.dataset.couponDate=bookingDate}
+  if(panel&&(panel.dataset.packageKey!==p.key||panel.dataset.couponDate!==bookingDate||(panel.dataset.people||'')!==people)){panel.innerHTML=selectionDetails(p.key,bookingDate,people);panel.dataset.packageKey=p.key;panel.dataset.couponDate=bookingDate;panel.dataset.people=people}
   refreshCardPrices(root,bookingDate)
  }
  const selectionRoots=new WeakSet()
