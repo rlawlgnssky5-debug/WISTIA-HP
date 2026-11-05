@@ -16,9 +16,9 @@ for (const page of ['index.html','events.html','contact.html','event/solo.html',
  const html=readFileSync(new URL('../'+page,import.meta.url),'utf8')
  assert.match(html,/js\/app\.js\?v=20261105-home-coupon-1/)
  assert.match(html,/js\/inquiry-funnel\.js\?v=20261105-merge-152-1/)
- assert.match(html,/css\/canvas-780\.css\?v=20261105-hero-price-pill-1/)
+ assert.match(html,/css\/canvas-780\.css\?v=20261105-coupon-sheen-1/)
  assert.match(html,/js\/package-pricing\.js\?v=20261105-home-coupon-1/)
- assert.match(html,/css\/type-guide\.css\?v=20261105-poster-gap-1/)
- assert.match(html,/js\/booking-wizard\.js\?v=20261105-home-coupon-1/)
+ assert.match(html,/css\/type-guide\.css\?v=20261105-arch-pad-1/)
+ assert.match(html,/js\/booking-wizard\.js\?v=20261105-coupon-sheen-1/)
 }
 console.log('Hero price bar is the only action; events consult still links home')
