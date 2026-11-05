@@ -1274,7 +1274,20 @@ function packageInformation(key,packageKey){
  return '<h2>선택한 상품정보</h2><dl>'+rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escapeHtml(value)+'</dd></div>').join('')+'</dl>'
 }
 function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'?'모든 타입에 포함':o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
+function optionExplainSection(){
+ const steps=[
+  ['rose','01','튜닝중~','음정·박자 보정','한 음, 한 박자까지 수작업으로 정교하게 다듬어','목소리의 자연스러움은 살리고 노래의 완성도를 높입니다','assets/img/option-explain/opt-tune.png',940,846],
+  ['gold','02','믹싱중~','정밀 믹싱','목소리의 음색·질감을 세밀하게 다듬고 반주와 균형을 맞춰,','더 풍성하고 조화로운 사운드로 완성합니다','assets/img/option-explain/opt-mix.png',945,820],
+  ['coral','03','마스터링중~','마스터링','음원의 음압·다이내믹·주파수 밸런스를 정교하게 조율해','선명도와 깊이를 높이고, 최종 음원으로 마무리합니다','assets/img/option-explain/opt-master.png',796,856]
+ ]
+ const items=steps.map(([tone,num,status,title,line1,line2,src,w,h],index)=>{
+  const step='<article class="ox-step" data-ox="'+tone+'"><div class="ox-figure"><img src="'+src+'" alt="" width="'+w+'" height="'+h+'" decoding="async"><p class="ox-status">'+status+'</p></div><div class="ox-card"><p class="ox-head"><span class="ox-badge">'+num+'</span><strong>'+title+'</strong></p><p class="ox-copy">'+line1+'<br>'+line2+'</p></div></article>'
+  return index?'<p class="ox-down" aria-hidden="true">↓</p>'+step:step
+ }).join('')
+ return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
+}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">내게 맞는 녹음 타입을<br>골라보세요</h2>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
+function homeTypeBlock(key){return (key==='solo'?optionExplainSection():'')+packageSalesSection(key)}
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 <span class="process-keep">음정·박자 보정</span>과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, <span class="process-keep">DELUXE·PREMIUM</span> 또는 <span class="process-keep">음정·박자 보정</span> 선택 시 <span class="process-keep">영업일 7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
@@ -1326,8 +1339,8 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const benefitIcons=['microphone','tune','clock']
  detailParts.content.querySelectorAll('.package-notices>ul>li').forEach((item,index)=>{item.insertAdjacentHTML('afterbegin','<span class="ed-benefit-icon" aria-hidden="true">'+studioIcon(benefitIcons[index%benefitIcons.length])+'</span>')})
  const map=detailParts.content.querySelector('[data-solo-map]')
- if(map)map.insertAdjacentHTML('afterend',packageSalesSection(key))
- else detailParts.content.append(document.createRange().createContextualFragment(packageSalesSection(key)))
+ if(map)map.insertAdjacentHTML('afterend',homeTypeBlock(key))
+ else detailParts.content.append(document.createRange().createContextualFragment(homeTypeBlock(key)))
  details=detailParts.innerHTML
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
