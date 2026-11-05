@@ -11,7 +11,7 @@ function htmlFiles(dir) {
   return entry.isDirectory() ? htmlFiles(file) : file.toLowerCase().endsWith('.html') ? [file] : []
  })
 }
-const expected = 'js/booking-wizard.js?v=20261105-people-above-1'
+const expected = 'js/booking-wizard.js?v=20261105-people-below-1'
 const files = htmlFiles(root)
 let scripts = 0
 assert.ok(files.length > 0, 'No HTML files found')
