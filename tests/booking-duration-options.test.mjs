@@ -73,7 +73,7 @@ test('selectable options precede included disabled options after repeated type c
  let moves=0
  const fieldset={querySelectorAll(){return order.map(key=>rows.get(key))},appendChild(row){moves++;order.splice(order.indexOf(row.dataset.wfOption),1);order.push(row.dataset.wfOption)}}
  const form={querySelector:s=>s==='.package-extra-options'?fieldset:s==='input[name="tuning"]'?rows.get('tuning').input:rows.get(s.match(/data-wf-option="([^"]+)"/)?.[1])}
- for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','detailMix','precisionMix','extraHour','tuning','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']]]){
+ for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','detailMix','precisionMix','extraHour','tuning','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['D',['extraHour','rush','people','tuning','detailMix','precisionMix']]]){
   const previous=order.join(','),beforeMoves=moves
   window.WistiaWizard.syncOptions(form,pricing.quote({package:key}))
   if(previous===expected.join(','))assert.equal(moves,beforeMoves,'unchanged rows must retain checkbox focus during updates')
