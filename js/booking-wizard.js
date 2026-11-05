@@ -152,16 +152,17 @@
   // After a tapped date, bring the time list into view once the buttons are ready
   if(form.dataset.wfRevealTimes&&known&&!loading&&list.querySelector('[data-wf-time]')){delete form.dataset.wfRevealTimes;global.requestAnimationFrame(()=>reveal(form,timeTop(form),list.querySelector('[data-wf-time]')))}
  }
- function offerFirstVisit(form){
-  if(!global.document||form.dataset.firstVisitOffered==='1')return
-  if(global.WistiaPackages.readCouponClaims().firstVisit===true)return
-  form.dataset.firstVisitOffered='1'
+ let firstVisitPromptShown=false
+ function offerFirstVisit(){
+  if(!global.document||firstVisitPromptShown||global.document.querySelector('.wf-first-popup'))return
+  if(global.WistiaPackages.firstVisitPromptClosed?.())return
+  firstVisitPromptShown=true
   const doc=global.document,wrap=doc.createElement('div')
   wrap.className='wf-first-popup'
   wrap.innerHTML='<div class="wf-first-card" role="dialog" aria-modal="true" aria-labelledby="wf-first-title"><img src="/assets/editorial/welcome-gift-rose.webp" alt="" width="88" height="88"><p class="wf-first-kicker">처음 만나는 위스티아의 선물</p><h2 id="wf-first-title">첫 이용 20,000원 할인</h2><p class="wf-first-only">DELUXE · PREMIUM · DUET ONLY</p><p class="wf-first-note">스탠다드에는 적용되지 않아요. 받으면 이 문의 금액에서 바로 빠져요.</p><div class="wf-first-actions"><button type="button" class="wf-first-dismiss">나중에</button><button type="button" class="wf-first-take">쿠폰 받기</button></div></div>'
-  const close=()=>{wrap.remove();doc.removeEventListener('keydown',onKey,true)}
-  const onKey=event=>{if(event.key==='Escape'){event.preventDefault();close()}}
-  wrap.querySelector('.wf-first-dismiss').addEventListener('click',close)
+  const close=()=>{wrap.remove();doc.removeEventListener('keydown',onKey,true);if(!doc.querySelector('.wf-popup'))doc.documentElement.classList.remove('wf-popup-open')}
+  const onKey=event=>{if(event.key==='Escape'){event.preventDefault();global.WistiaPackages.dismissFirstVisitPrompt?.();close()}}
+  wrap.querySelector('.wf-first-dismiss').addEventListener('click',()=>{global.WistiaPackages.dismissFirstVisitPrompt?.();close()})
   wrap.querySelector('.wf-first-take').addEventListener('click',()=>{
    global.WistiaPackages.setCouponClaim('firstVisit',true)
    try{global.wistiaAnalytics?.trackCouponClaim?.('first_visit')}catch{}
@@ -169,6 +170,7 @@
    close()
   })
   doc.addEventListener('keydown',onKey,true)
+  doc.documentElement.classList.add('wf-popup-open')
   doc.body.appendChild(wrap)
   wrap.querySelector('.wf-first-take').focus({preventScroll:true})
  }
@@ -203,8 +205,8 @@
   global.addEventListener('resize',()=>{fitOptionText(form);scrollDownButton(form)});global.addEventListener('scroll',()=>scrollDownButton(form),{passive:true});global.document.fonts?.ready.then(()=>fitOptionText(form))
   form.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-wf-scroll-down')){global.scrollBy({top:Math.round(global.innerHeight*.3),behavior:'smooth'});return}if(button.hasAttribute('data-wf-change-date')){timeMode(form,false);form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(button.dataset.wfTime){const time=form.querySelector('#contact-time');time.value=button.dataset.wfTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimes(form)}if(button.hasAttribute('data-wf-goto'))navigate(form,Number(button.dataset.wfGoto));if(button.hasAttribute('data-wf-next'))navigate(form,state.step+1);if(button.hasAttribute('data-wf-prev')){if(state.step===1&&form.dataset.wfTimeMode){timeMode(form,false);form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(state.step===0){const url=new URL('/',global.location.href);url.search=global.location.search;url.searchParams.set('package',quote(form).package.key);global.history.pushState({...global.history.state,wistiaDepth:(global.history.state?.wistiaDepth||0)+1},'',url.pathname+url.search);global.dispatchEvent(new global.PopStateEvent('popstate'))}else navigate(form,state.step-1)}})
   form.addEventListener('submit',async event=>{event.preventDefault();event.stopPropagation();if(state.step!==LAST||form.dataset.copyPending)return;const button=form.querySelector('[type="submit"]');form.dataset.copyPending='true';button.disabled=true;try{await global.WistiaBooking.refresh();if(!form.isConnected)return;for(const step of [1])if(!validate(form,step)){state.step=step;update(form);const err=form.querySelector('[data-wf-error="bookingDate"]:not([hidden]),[data-wf-error="timeStart"]:not([hidden])');if(err){const time=err.dataset.wfError==='timeStart';popup(err.textContent,()=>{(time?form.querySelector('[data-wf-selected-date]'):form.querySelector('[data-wf-step="1"] h2')).focus({preventScroll:true});reveal(form,form.querySelector(time?'[data-wf-time-view]':'[data-wf-date-view]'),err)})}else form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}await onSubmit(text(form))}finally{delete form.dataset.copyPending;button.disabled=false}})
-  Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form);offerFirstVisit(form)
+  Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
  }
  function bookingKey(form){return 'ar-'+quote(form).minutes}
- global.WistiaWizard={currentStep:form=>[1,2,3,4][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,syncOptions,text,quote,rows,range,bookingKey}
+ global.WistiaWizard={currentStep:form=>[1,2,3,4][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,syncOptions,text,quote,rows,range,bookingKey,offerFirstVisit}
 })(window)

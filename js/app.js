@@ -2110,6 +2110,8 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  normalizeInquiryLinks();window.WistiaSvgUI?.mountChrome(document,studioIcon);mountInquiryObserver()
  window.WistiaPCBackground?.mount(app)
  window.WistiaMotion?.mount()
+ if(routePath()!=='/'){document.querySelector('.wf-first-popup')?.remove();if(!document.querySelector('.wf-popup'))document.documentElement.classList.remove('wf-popup-open')}
+ else window.WistiaWizard?.offerFirstVisit?.()
  document.querySelectorAll("#mainMenu a").forEach(a=>{if(a.pathname===routePath())a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})
 }
 function normalizeInquiryLinks(){
