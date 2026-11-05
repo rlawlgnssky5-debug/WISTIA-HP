@@ -159,10 +159,10 @@
   firstVisitPromptShown=true
   const doc=global.document,wrap=doc.createElement('div')
   wrap.className='wf-first-popup'
-  wrap.innerHTML='<div class="wf-first-card" role="dialog" aria-modal="true" aria-labelledby="wf-first-title"><img src="/assets/editorial/welcome-gift-rose.webp" alt="" width="88" height="88"><p class="wf-first-kicker">처음 만나는 위스티아의 선물</p><h2 id="wf-first-title">첫 이용 20,000원 할인</h2><p class="wf-first-only">DELUXE · PREMIUM · DUET ONLY</p><p class="wf-first-note">스탠다드에는 적용되지 않아요. 받으면 이 문의 금액에서 바로 빠져요.</p><div class="wf-first-actions"><button type="button" class="wf-first-dismiss">나중에</button><button type="button" class="wf-first-take">쿠폰 받기</button></div></div>'
+  wrap.innerHTML='<div class="wf-first-card" role="dialog" aria-modal="true" aria-labelledby="wf-first-title"><button type="button" class="wf-first-x" aria-label="닫기">×</button><img src="/assets/editorial/welcome-gift-rose.webp" alt="" width="88" height="88"><p class="wf-first-kicker">처음 만나는 위스티아의 선물</p><h2 id="wf-first-title">첫 이용 20,000원 할인</h2><p class="wf-first-only">DELUXE · PREMIUM · DUET ONLY</p><div class="wf-first-actions"><button type="button" class="wf-first-take">쿠폰 받기</button></div></div>'
   const close=()=>{wrap.remove();doc.removeEventListener('keydown',onKey,true);if(!doc.querySelector('.wf-popup'))doc.documentElement.classList.remove('wf-popup-open')}
   const onKey=event=>{if(event.key==='Escape'){event.preventDefault();global.WistiaPackages.dismissFirstVisitPrompt?.();close()}}
-  wrap.querySelector('.wf-first-dismiss').addEventListener('click',()=>{global.WistiaPackages.dismissFirstVisitPrompt?.();close()})
+  wrap.querySelector('.wf-first-x').addEventListener('click',()=>{global.WistiaPackages.dismissFirstVisitPrompt?.();close()})
   wrap.querySelector('.wf-first-take').addEventListener('click',()=>{
    global.WistiaPackages.setCouponClaim('firstVisit',true)
    try{global.wistiaAnalytics?.trackCouponClaim?.('first_visit')}catch{}
