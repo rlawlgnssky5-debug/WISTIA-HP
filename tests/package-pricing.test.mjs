@@ -5,6 +5,18 @@ import {readFileSync} from 'node:fs'
 const require=createRequire(import.meta.url),pricing=require('../js/package-pricing.js'),booking=require('../js/booking-availability.js')
 const q=v=>pricing.quote(v,'2026-10-22')
 
+test('type table blurb follows the selected header tier color',()=>{
+ const js=readFileSync(new URL('../js/package-pricing.js',import.meta.url),'utf8')
+ const css=readFileSync(new URL('../css/inquiry-ux-51.css',import.meta.url),'utf8')
+ assert.match(js,/if\(s\)when\.dataset\.tt=s;else delete when\.dataset\.tt/)
+ assert.match(css,/\[data-tt="A"\]\{--wf-tt:#4A3238/)
+ assert.match(css,/\[data-tt="B"\]\{--wf-tt:#A65A6C/)
+ assert.match(css,/\[data-tt="C"\]\{--wf-tt:#D99A00/)
+ assert.match(css,/\[data-tt="D"\]\{--wf-tt:#E0705A/)
+ assert.match(css,/\.wf-tt-when\{[^}]*color:var\(--wf-tt,#5A3A40\)/)
+ assert.match(css,/\.wf-tt-when i\{[^}]*color:var\(--wf-tt,#A65A6C\)/)
+ assert.match(css,/\.wf-tt-when\{[^}]*background:var\(--wf-tt-bg,#FBE9EE\)/)
+})
 test('first-use coupon is only for DELUXE PREMIUM DUET, including restored STANDARD selections',()=>{
  for(const firstVisit of ['1',true])for(const yearEndCoupon of ['1',true]){
   const result=q({package:'A',firstVisit,yearEndCoupon})

@@ -88,10 +88,9 @@
     if (control.closest(".footer,.solo16j-footer")) return "detail_footer";
     return (control.id || control.classList[0] || control.closest("section")?.id || "inquiry_link").replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 40);
   }
-  // These do not open the inquiry form. The home hero scrolls to the type section;
-  // the others only open the consult-choice dialog.
+  // These do not open the inquiry form. They only open the consult-choice dialog.
   function opensChoiceDialogOnly(control) {
-    return control.id === "floatingKakaoChat" || !!control.matches?.(".ed-hero-consult, .product-inquiry > a, .consult-choice-direct");
+    return control.id === "floatingKakaoChat" || !!control.matches?.(".product-inquiry > a, .consult-choice-direct");
   }
   function buttonLabel(control) {
     const source = control.querySelector?.("strong")?.textContent || control.textContent || "";
