@@ -6,7 +6,8 @@
 - 승인 포스터 `type-final.webp`(782×1472)와 반응형 타입 표는 `.type-unify#packageSelection` 한 칸이다. 배경 `#fef4eb`, 위쪽 아치, 로즈 테두리 `#e7c8d0`. 표는 지우지 않는다
 - DUET 안내만 이름과 `개별 옵션 추가보다 패키지로 60,000원 저렴하게!` 알약이다
 - POINT 01–04 좌우 여백은 4px, FAQ와 오시는 길은 22px다. 히어로 `타입·가격 바로 보기`는 `#packageSelection`으로 부드럽게 이동한다. 푸터는 `© WISTIA. All rights reserved.` `/events` 하단은 `AR 축가 자세히 보기`이고 `/`로 간다
-- 앱·포스터 CSS 캐시는 `20261105-type-poster-6`이다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
+- DUET를 고르면 표 아래는 이름과 60,000원 알약만 보인다. 원가·패키지 할인·현재 적용가·최대 할인가 상자는 그 선택에서만 숨긴다
+- 앱 캐시는 `20261105-type-poster-6`, 포스터 CSS 캐시는 `20261105-type-poster-7`이다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
 
 ## 2026-11-05 — 홈 타입 안내 포스터
 
