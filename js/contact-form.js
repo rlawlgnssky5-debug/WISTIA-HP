@@ -38,12 +38,12 @@
   // after failure while preserving every closure from the last successful read.
   return blocks==null?booking?.calendarRangeFailed?.(from,to)===true:!booking.dayClosed(value,booking.calendarKey(),blocks)
  }
- function calendarCells(year,month,key,selected='',today=calendarToday(),blocks=null,product='solo',failed=false){
+ function calendarCells(year,month,key,selected='',today=calendarToday(),blocks=null,product='solo',failed=false,discounts=true){
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
    const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&(!unknown||failed)
-   const benefit=key==='bookingDate'&&enabled?global.WistiaPackages?.advanceDiscount(value,today):null
+   const benefit=discounts&&key==='bookingDate'&&enabled?global.WistiaPackages?.advanceDiscount(value,today):null
    cells+='<button type="button" class="calendar-day'+(benefit?' earlybird-day earlybird-one':'')+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'"'+(benefit?' data-discount="'+benefit.amount+'"':'')+' tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(benefit?' · '+benefit.amount.toLocaleString('ko-KR')+'원 할인':'')+(weekdayClosed?' · 휴무':notionClosed&&!past?' · 마감':past?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span>'+(key==='bookingDate'&&!enabled&&!(unknown&&!failed)?'<small>마감</small>':'')+'</button>'
   }
   return cells
@@ -98,7 +98,8 @@
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
-  grid.innerHTML=calendarCells(state.year,state.month,key,selected,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false)
+  const picked=input.form?.querySelector('input[name="package"]:checked'),discounts=key!=='bookingDate'||!picked||global.WistiaPackages?.packageFor?.(picked.value)?.key!=='A'
+  grid.innerHTML=calendarCells(state.year,state.month,key,selected,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false,discounts)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
   if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'일정 자동 확인이 어려워요 · 희망 날짜를 선택해 문의해 주세요':'예약 가능한 날짜를 불러오고 있어요'}
   if(key==='bookingDate'&&!calendar.hidden&&booking?.loadRange){
@@ -109,6 +110,7 @@
   if(active){active.tabIndex=0;if(focusValue&&!calendar.hidden)active.focus({preventScroll:true})}
   if(!calendar.hidden)positionCalendar(state)
  }
+ function repaintCalendars(form){form?.querySelectorAll('[data-calendar]').forEach(calendar=>{const state=calendarStates.get(calendar);if(state)paintCalendar(state)})}
  function refreshCalendarRange(from,to){
   global.document?.querySelectorAll('[data-calendar="bookingDate"]').forEach(calendar=>{
    const state=calendarStates.get(calendar)
@@ -337,5 +339,5 @@
   lines.push('','※ 예약 가능 여부는 상담에서 확정돼요')
   return lines.join('\n')
  }
- global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,syncTimeChoices,dateField,timeField,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
+ global.WistiaContact={render,submit,text,update,syncQuote,syncReview,snapshot,restore,validationIssues,syncSubmitState,validationEditor,mountCalendars,refreshCalendarRange,repaintCalendars,syncTimeChoices,dateField,timeField,calendar:{parseDate,today:calendarToday,displayDate,selectableDate,cells:calendarCells}}
 })(window)
