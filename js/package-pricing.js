@@ -118,13 +118,13 @@
   return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,firstVisit:claimedCoupons().firstVisit?'1':'',yearEndCoupon:claimedCoupons().yearEndCoupon?'1':'',bookingDate,timeStart:'13:00'},reference,true).total))
  }
  function priceLines(p,reference=today(),bookingDate=''){
-  if(p.key==='A')return ''
+  // r72: STANDARD (no package saving) still shows its price box; it was empty since r68 hid the rest of the card
   const got=claimedCoupons(),date=bookingDate||couponDisplayDate(reference)
   const q=quote({package:p.key,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date},reference,true)
   const has=key=>q.discounts.some(d=>d.key===key),now=q.total,best=bestCouponPrice(p,reference)
   const down=amount=>'<span class="price-down-pill" aria-label="'+money(amount)+' 할인">'+money(amount)+' ↓</span>'
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
-  const rows=[line('is-list','원가',0,money(p.individual)),line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price))]
+  const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
   if(has('yearEnd'))rows.push(line('is-coupon','선착순 쿠폰',0,'−'+money(20000)))
   q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
