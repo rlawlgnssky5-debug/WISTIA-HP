@@ -1,13 +1,23 @@
 /* Homepage type poster. One image between option steps and the type table. */
-html body #app .type-guide{
+html body #app .type-unify{
+  margin:14px 12px 18px!important;
+  padding:0 0 16px!important;
+  background:#fdf6f2!important;
+  border:1px solid #e7c8d0!important;
+  border-radius:180px 180px 28px 28px / 84px 84px 28px 28px!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+html body #app .mobile-ar-solo>#packageSelection.type-unify::before{content:none!important;display:none!important}
+html body #app .type-unify .package-section{
   margin:0!important;
-  padding:0!important;
-  background:#fdf2ec!important;
+  padding:16px 14px 0!important;
+  background:transparent!important;
   border:0!important;
   border-radius:0!important;
   box-shadow:none!important;
-  overflow:hidden;
 }
+html body #app .type-unify .wf-type-table{background:transparent!important}
 html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 #packageSelection{scroll-margin-top:76px}
@@ -33,7 +43,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   max-width:100%!important;
   margin-left:0!important;
 }
-html body #app .type-guide img{
+html body #app .type-unify-poster{
   display:block!important;
   width:100%!important;
   max-width:100%!important;
@@ -42,4 +52,5 @@ html body #app .type-guide img{
   border:0!important;
   border-radius:0!important;
   object-fit:contain!important;
+  background:transparent!important;
 }
