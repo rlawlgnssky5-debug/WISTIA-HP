@@ -45,7 +45,7 @@
  const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  const discountOfferList=()=>[
-  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 문의 양식을 열면 받을 수 있어요'},
+  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요'},
   {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'스탠다드 제외 · 공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
  ]
