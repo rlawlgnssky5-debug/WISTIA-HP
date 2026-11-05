@@ -88,6 +88,14 @@
     if (control.closest(".footer,.solo16j-footer")) return "detail_footer";
     return (control.id || control.classList[0] || control.closest("section")?.id || "inquiry_link").replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 40);
   }
+  // app.js cancels these and only opens the consult-choice dialog. The inquiry form is not open yet.
+  function opensChoiceDialogOnly(control) {
+    return control.id === "floatingKakaoChat" || !!control.matches?.(".ed-hero-consult, .product-inquiry > a, .consult-choice-direct");
+  }
+  function buttonLabel(control) {
+    const source = control.querySelector?.("strong")?.textContent || control.textContent || "";
+    return source.trim().replace(/\s+/g, " ").slice(0, 40);
+  }
   document.addEventListener("click", safe(event => {
     const control = event.target.closest?.("a,button,input,select,textarea");
     if (!control || control.disabled) return;
@@ -104,6 +112,7 @@
       }
       return;
     }
+    if (opensChoiceDialogOnly(control)) return;
     const raw = control.getAttribute("href");
     let opens = control.hasAttribute("data-inquiry-jump");
     if (raw) {
@@ -111,7 +120,7 @@
       const target = url.hash.startsWith("#/") ? url.hash.slice(1).split("?")[0] : url.pathname;
       opens ||= url.origin === location.origin && (/^\/event\//.test(target) || /^\/contact\/?$/.test(target));
     }
-    if (opens) emit("inquiry_open", { button_location: locationOf(control), button_label: control.textContent.trim().replace(/\s+/g, " ").slice(0, 40) });
+    if (opens) emit("inquiry_open", { button_location: locationOf(control), button_label: buttonLabel(control) });
   }), true);
   for (const type of ["input", "change", "blur"]) document.addEventListener(type, safe(event => {
     const control = event.target, form = control.closest?.("#contactInquiryForm");
