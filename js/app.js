@@ -1,4 +1,4 @@
-﻿const KAKAO_FALLBACK = "http://pf.kakao.com/_GbExjX/chat"
+﻿const KAKAO_FALLBACK = "https://pf.kakao.com/_GbExjX/chat"
 
 const KAKAO_STUDIO_PLACE_URL = "https://map.kakao.com/?q=%EC%9C%84%EC%8A%A4%ED%8B%B0%EC%95%84&itemId=389994210"
 
@@ -898,7 +898,7 @@ function renderLegacyHome(requested="role"){
   service:{number:"02",title:"무엇을 준비하시나요?",description:"예식에서 상영할 영상을 선택해 주세요",name:"finderMoment",items:[["ceremony","축가 순서에 상영할 영상","축가를 따로 섭외하지 않고, 우리가 직접 부른 영상을 축가 시간에 상영해요"]]},
   people:{number:"03",title:"혼자 준비하시나요, 두 분이 함께 준비하시나요?",description:"노래를 녹음하고 영상에 참여하는 인원을 선택해 주세요",name:"finderPeople",items:[["one","1인 · 혼자 준비해요","신랑 또는 신부 한 분이 노래하고 준비하는 경우"],["two","2인 · 두 분이 함께 준비해요","신랑신부 두 분이 함께 노래하고 준비하는 경우"]]}
  }
- const config=configs[stage],back=stage==="service"?"#/":"#/find/service"
+ const config=configs[stage],back="/"
  const editorialHero="" // Never restore the rejected AI portrait hero
  const editorialStory=stage==="role"?'<section class="editorial-home-story"><div class="editorial-story-heading"><span class="eyebrow">WEDDING SONG SPECIALISTS</span><h2>직접 부르는 축가,<br>1인과 듀엣을 같은 타입로</h2><p>경기도 부천의 웨딩 축가 전문 스튜디오<br>내 목소리를 미리 준비하는 AR 축가 사전녹음과<br>우리의 이야기를 담는 AR 축가 듀엣을 만납니다</p><a class="text-link" href="/info/faq">위스티아는 어떤 곳인가요? <span aria-hidden="true">↗</span></a></div><figure><img src="assets/img/process-no-people/06.svg" alt="축가 음원 보정과 믹싱 작업" loading="lazy"><figcaption>AR 축가 사전녹음 — 내 목소리를 미리 녹음해 당일 축가를 더 안정적으로</figcaption></figure><figure><img src="assets/img/wedding/04-recording-making.webp" alt="축가 영상 녹음 제작 현장" loading="lazy"><figcaption>AR 축가 듀엣 — 두 분이 함께 부르는 축가</figcaption></figure><a class="editorial-location-link" href="#/info/location"><span>경기도 부천 · 웨딩 축가 전문 스튜디오</span><span>오시는 길 ↗</span></a></section>':''
  const headingTag=stage==="role"?"h2":"h1"
@@ -1928,10 +1928,11 @@ function setPageMeta({title,description,image,robots=""}){
  }else robotsTag?.remove();
 }
 function routePath(){return location.pathname.replace(/\/$/,"")||"/"}
+function legacyHomePath(path){const clean=String(path||"/").split("?")[0].replace(/\/$/,"")||"/";return ["/detail/solo","/detail/solo.html","/detail/duo","/detail/duo.html","/find/service","/find/service.html"].includes(clean)?"/":""}
 function cleanHashRoute(){
  if(!location.hash.startsWith("#/"))return false;
  const path=location.hash.slice(1);
- history.replaceState(history.state,"",path+location.search);
+ history.replaceState(history.state,"",(legacyHomePath(path.split("?")[0])||path)+location.search);
  return true;
 }
 function navigationTarget(path){const target=new URL(path,location.href);for(const [key,value] of new URLSearchParams(location.search))if(!target.searchParams.has(key))target.searchParams.append(key,value);return target.pathname+target.search+target.hash}
@@ -2034,7 +2035,7 @@ function initSoloMapZoom(){
  initSoloDialog(dialog)
 }
 function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
- if(routePath()==='/detail/solo')history.replaceState(history.state,'','/'+location.search)
+ if(legacyHomePath(routePath()))history.replaceState(history.state,'','/'+location.search)
  if(!isLiveRoute(routePath())){location.reload();return}
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")

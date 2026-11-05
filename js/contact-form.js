@@ -28,7 +28,8 @@
  }
  function displayDate(value){const date=parseDate(value);return date?date.getUTCFullYear()+'년 '+(date.getUTCMonth()+1)+'월 '+date.getUTCDate()+'일 ('+weekdays[date.getUTCDay()]+')':'날짜를 선택해 주세요'}
  function isoDate(date){return date.toISOString().slice(0,10)}
- function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||[0,4,5,6].includes(date.getUTCDay()))}
+ function bookingHorizon(today=calendarToday()){const year=Number(today.slice(0,4));return {minYear:year,maxYear:year+1,last:String(year+1)+'-12-31'}}
+ function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||value<=bookingHorizon(today).last&&[0,4,5,6].includes(date.getUTCDay()))}
  function selectableBookingDate(value,key){
   if(!selectableDate(value,key))return false
   if(key!=='bookingDate')return true
@@ -84,11 +85,14 @@
  function paintCalendar(state,focusValue){
   const {calendar,input,key}=state,today=calendarToday(),yearSelect=calendar.querySelector('[data-calendar-year]'),monthSelect=calendar.querySelector('[data-calendar-month]')
   const selected=key==='bookingDate'&&input.form.dataset.wizard?(state.pendingDate??input.value):input.value
-  const minYear=Number(today.slice(0,4)),maxYear=Math.max(minYear+15,state.year)
+  const horizon=bookingHorizon(today),minYear=horizon.minYear,maxYear=key==='bookingDate'?horizon.maxYear:minYear+15
+  if(state.year>maxYear){state.year=maxYear;state.month=11}
+  if(state.year<minYear){state.year=minYear;state.month=Number(today.slice(5,7))-1}
   yearSelect.innerHTML=Array.from({length:maxYear-minYear+1},(_,i)=>'<option value="'+(minYear+i)+'">'+(minYear+i)+'년</option>').join('')
   monthSelect.innerHTML=Array.from({length:12},(_,i)=>i).filter(i=>state.year!==minYear||i>=Number(today.slice(5,7))-1).map(i=>'<option value="'+i+'">'+(i+1)+'월</option>').join('');yearSelect.value=String(state.year);monthSelect.value=String(state.month)
   calendar.querySelector('[data-calendar-month-label]').textContent=state.year+'년 '+(state.month+1)+'월'
   calendar.querySelector('[data-calendar-move="-1"]').disabled=state.year===minYear&&state.month<=Number(today.slice(5,7))-1
+  const nextMonth=calendar.querySelector('[data-calendar-move="1"]');if(nextMonth&&key==='bookingDate')nextMonth.disabled=state.year===maxYear&&state.month===11
   calendar.querySelector('[data-calendar-selection]').textContent=selected?'선택한 날짜: '+displayDate(selected).replace(/^\d+년 /,''):''
   syncEventDateClose(calendar,selected)
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
@@ -113,7 +117,9 @@
  }
  function changeMonth(state,amount){
   const date=new Date(Date.UTC(state.year,state.month+amount,1)),today=parseDate(calendarToday())
+  const horizon=bookingHorizon(calendarToday())
   if(date.getUTCFullYear()<today.getUTCFullYear()||(date.getUTCFullYear()===today.getUTCFullYear()&&date.getUTCMonth()<today.getUTCMonth()))return
+  if(state.key==='bookingDate'&&date.getUTCFullYear()>horizon.maxYear)return
   state.year=date.getUTCFullYear();state.month=date.getUTCMonth();paintCalendar(state)
  }
  function mountCalendars(form,fresh=false){

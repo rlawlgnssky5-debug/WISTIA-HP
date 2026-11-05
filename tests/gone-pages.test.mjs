@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {existsSync,readFileSync} from 'node:fs'
-import {LIVE_PATHS,goneDocument,isGonePath,soloDetailRedirect} from '../js/gone-paths.mjs'
+import {LIVE_PATHS,goneDocument,notFoundDocument,isGonePath,isUnknownPath,soloDetailRedirect} from '../js/gone-paths.mjs'
 
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8')
 
@@ -10,9 +10,16 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
   assert.equal(isGonePath(path),false,path)
   assert.equal(isGonePath(path+'/'),false,path+' trailing slash')
  }
- for(const path of ['/film','/film/extra','/privacy','/privacy/rights','/song','/before-after','/ar/self','/ar/friend','/info/about','/info/process','/detail/wedding','/detail/proposal','/detail/solo-film','/detail/duet-film','/event/wedding','/event/proposal','/event/solo-film','/event/duet-film','/choose/wedding','/choose/solo-film','/find','/find/role','/find/service','/find/people','/section/homeServices','/section/homeCases','/section/homeLocation','/section/homeProcess','/detail/solo/extra','/event/solo/making','/foo']){
+ for(const path of ['/film','/film/extra','/privacy','/privacy/rights','/song','/before-after','/ar/self','/ar/friend','/info/about','/info/process','/detail/wedding','/detail/proposal','/detail/solo-film','/detail/duet-film','/event/wedding','/event/proposal','/event/solo-film','/event/duet-film','/choose/wedding','/choose/solo-film','/find','/find/role','/find/people','/section/homeServices','/section/homeCases','/section/homeLocation','/section/homeProcess','/detail/solo/extra','/event/solo/making']){
   assert.equal(isGonePath(path),true,path)
+  assert.equal(isUnknownPath(path),false,path)
  }
+ for(const path of ['/blog','/about','/nonexist-xyz','/foo']){
+  assert.equal(isGonePath(path),false,path)
+  assert.equal(isUnknownPath(path),true,path)
+ }
+ assert.equal(isGonePath('/find/service'),false)
+ assert.equal(isUnknownPath('/find/service'),false)
  for(const path of ['/assets/img/og/wistia-og.png','/css/design.css','/js/app.js','/js/before-after.js','/api/availability','/tests/responsive-preview.html','/lib/notion-availability.mjs','/robots.txt','/sitemap.xml','/favicon.ico','/wistia-config.json','/index.html','/event/duo.html','/info/faq.html','/info/location.html']){
   assert.equal(isGonePath(path),false,path)
  }
@@ -28,6 +35,10 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  assert.match(doc,/410 Gone/)
  assert.equal(doc.trim(),'410 Gone','no soft gone page')
  assert.doesNotMatch(doc,/js\/app\.js|예요\./)
+ const missing=notFoundDocument()
+ assert.match(missing,/페이지를 찾을 수 없어요/)
+ assert.match(missing,/href="\/"/)
+ assert.doesNotMatch(missing,/410 Gone/)
  const vercel=read('vercel.json')
  assert.doesNotMatch(vercel,/privacy\.html/)
  assert.match(vercel,/"destination": "\/index.html"/)
@@ -55,6 +66,7 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  for(const path of ['/WISTIA-source-latest.zip','/AGENTS.md','/hcs-edits.js','/tmp/incoming/index.html','/Claude outputs/a.png'])assert.equal(isGonePath(path),true,path)
  const middleware=read('middleware.js')
  assert.doesNotMatch(middleware,/\b(?:import|require)\b/)
- assert.equal(middleware.match(/return `([\s\S]*?)`/)[1].replace(/\r\n/g,'\n'),goneDocument().replace(/\r\n/g,'\n'))
+ assert.match(middleware,/return `410 Gone`/)
  assert.match(middleware,/status:\s*410/)
+ assert.match(middleware,/status:\s*404/)
 })
