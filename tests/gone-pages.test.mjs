@@ -49,7 +49,7 @@ test('unlinked pages are HTTP 410 and linked pages stay',()=>{
  assert.equal(soloDetailRedirect('/event/solo'),'')
  assert.match(vercel,/\/contact/)
  const sitemap=read('sitemap.xml')
- assert.equal((sitemap.match(/<lastmod>2026-10-21<\/lastmod>/g)||[]).length,6)
+ assert.equal((sitemap.match(/<lastmod>2026-11-05<\/lastmod>/g)||[]).length,6)
  for(const loc of ['https://www.wistiastudio.com/','https://www.wistiastudio.com/event/solo','https://www.wistiastudio.com/event/duo','https://www.wistiastudio.com/events','https://www.wistiastudio.com/info/faq','https://www.wistiastudio.com/info/location'])assert.match(sitemap,new RegExp(loc.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'</loc>'))
  assert.doesNotMatch(sitemap,/\/detail\/solo</)
  assert.doesNotMatch(sitemap,/\/detail\/duo<\/loc>/)
