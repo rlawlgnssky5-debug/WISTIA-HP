@@ -377,9 +377,7 @@
   #app .ed-hero-gallery .hs-next { right:6cqw!important; }
   #app .ed-hero-gallery .hs-arrow svg { stroke:#fff!important; }
   #app .ed-hero-actions { margin:0!important; padding:0!important; }
-  #app .ed-hero-actions a { display:flex!important; align-items:center!important; justify-content:space-between!important; gap:3cqw!important; box-sizing:border-box!important; width:100%!important; padding:5cqw 7cqw!important; border:0!important; border-radius:0!important; font-family:var(--ed-font)!important; font-weight:500!important; line-height:1.5!important; text-decoration:none!important; box-shadow:none!important; }
-  #app .ed-hero-actions .ed-hero-listen { justify-content:flex-start!important; background:#fff!important; color:var(--ed-ink)!important; font-size:3.5cqw!important; }
-  #app .ed-hero-listen svg { width:3.5cqw!important; height:3.5cqw!important; flex:none!important; }
+  #app .ed-hero-actions a { display:flex!important; align-items:center!important; justify-content:center!important; gap:8px!important; box-sizing:border-box!important; width:100%!important; min-height:48px!important; padding:14px 16px!important; border:0!important; border-radius:0!important; background:var(--ed-rose)!important; color:#fff!important; font-family:var(--ed-font)!important; font-weight:600!important; font-size:15px!important; line-height:1.4!important; text-decoration:none!important; box-shadow:none!important; }
   #app .ed-hero .ed-hero-benefits { padding:0 5cqw 5cqw!important; }
   #app .ed-hero-benefits .mas-events { margin:0!important; }
 
