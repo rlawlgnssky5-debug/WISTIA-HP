@@ -57,8 +57,9 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
     '노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',
     '두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!'
   ])assert.ok(pricing.includes(line),line)
-  assert.match(pricing,/picked\.key==='D'\?'':esc\(picked\.guide\|\|picked\.title\)/)
-  assert.match(read('css/type-guide.css'),/\[data-package-key="D"\] \{\s*display: none !important/)
+  assert.match(pricing,/'<i>'\+esc\(picked\.name\)\+'<\/i>'\+save/)
+  assert.doesNotMatch(pricing,/picked\.key==='D'\?'':esc\(picked\.guide/)
+  assert.match(read('css/type-guide.css'),/\[data-package-selection-details\] \{\s*display: none !important/)
   assert.doesNotMatch(css,/\.ox-step:nth-child|data-ox="coral"[\s\S]{0,180}background:\s*#f[0-9a-f]{5}/i)
 })
 
