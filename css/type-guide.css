@@ -119,6 +119,9 @@
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wf-type-table .wf-tt-price strong {
     font-size: 9px !important;
   }
+  html body #app .ed-hero .ed-hero-benefits {
+    padding-top: 24px !important;
+  }
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
