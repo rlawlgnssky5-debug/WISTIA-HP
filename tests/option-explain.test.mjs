@@ -53,7 +53,7 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
   assert.match(read('js/svg-interface.js'),/!section\.matches\('\.mas-selection,\.option-explain'\)/)
   const pricing=read('js/package-pricing.js')
   for(const line of [
-    '50분 녹음과 음정·박자 보정만 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',
+    '50분 녹음과 정밀 믹싱·마스터링이 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',
     '1시간 30분의 여유로운 녹음부터 믹싱·마스터링까지! 완성도 높은 축가를 위한 올인원 패키지예요',
     '노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',
     '두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!'

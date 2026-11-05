@@ -1,14 +1,14 @@
 (function(global){
  'use strict'
  const packages={
-  A:{key:'A',name:'STANDARD',title:'50분 녹음에 음정·박자 보정만 필요하다면?',guide:'50분 녹음과 음정·박자 보정만 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
-  B:{key:'B',name:'DELUXE',title:'녹음부터 정밀 믹싱·마스터링까지 한 번에 해결하고 싶다면?',guide:'1시간 30분의 여유로운 녹음부터 믹싱·마스터링까지! 완성도 높은 축가를 위한 올인원 패키지예요',price:170000,minutes:90,individual:210000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  C:{key:'C',name:'PREMIUM',title:'넉넉한 녹음 시간에 완성도 높은 패키지를 원한다면?',guide:'노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',price:220000,minutes:150,individual:270000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
-  // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 기본 믹싱 + 마스터링, list price 300,000 (정밀 믹싱 +20,000 added to list prices 2026-10-27 04:52)
-  D:{key:'D',name:'DUET',title:'두 사람이 함께 특별한 축가를 완성하고 싶다면?',guide:'두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!',price:240000,minutes:150,individual:300000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
+  A:{key:'A',name:'STANDARD',title:'50분 녹음에 정밀 믹싱·마스터링이 필요하다면?',guide:'50분 녹음과 정밀 믹싱·마스터링이 필요하다면? 기본에 충실한 스탠다드를 추천드려요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:true,delivery:'녹음일 기준 7일 이내 전달'},
+  B:{key:'B',name:'DELUXE',title:'녹음부터 정밀 믹싱·마스터링까지 한 번에 해결하고 싶다면?',guide:'1시간 30분의 여유로운 녹음부터 믹싱·마스터링까지! 완성도 높은 축가를 위한 올인원 패키지예요',price:170000,minutes:90,individual:210000,saving:40000,tuning:true,mixing:true,delivery:'녹음일 기준 7일 이내 전달'},
+  C:{key:'C',name:'PREMIUM',title:'넉넉한 녹음 시간에 완성도 높은 패키지를 원한다면?',guide:'노래에 조금 자신이 없는 분들을 위한 패키지! 2시간 30분의 넉넉한 녹음 시간으로 한 소절씩 여유롭게 완성해 보세요!',price:220000,minutes:150,individual:270000,saving:50000,tuning:true,mixing:true,delivery:'녹음일 기준 7일 이내 전달'},
+  // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 정밀 믹싱 + 마스터링, list price 300,000
+  D:{key:'D',name:'DUET',title:'두 사람이 함께 특별한 축가를 완성하고 싶다면?',guide:'두 분이 함께 부르는 축가라면? 2시간 30분의 넉넉한 녹음 시간에 믹싱·마스터링까지 포함된 듀엣 전용 올인원 패키지예요!',price:240000,minutes:150,individual:300000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'녹음일 기준 7일 이내 전달'}
  }
  const options=[
-  {key:'tuning',label:'음정·박자 보정',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
+  {key:'tuning',label:'음정·박자 보정',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요'},
   {key:'detailMix',label:'마스터링',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
   {key:'precisionMix',label:'정밀 믹싱',price:20000,detail:'기본 믹싱보다 목소리와 MR의 밸런스를 세밀하게 맞춰 드려요'},
   {key:'extraHour',label:'녹음 1시간 추가',price:60000,detail:'선택한 타입의 녹음 시간에 1시간을 더해 드려요'},
@@ -46,8 +46,8 @@
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  const discountOfferList=()=>[
   {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 문의 양식을 열면 받을 수 있어요'},
-  {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
-  {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
+  {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'스탠다드 제외 · 공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
+  {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
  ]
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
  function isPublicHoliday(date){return validDate(date)&&(publicHolidays.has(date)||Number(date.slice(0,4))>=2026&&fixedHolidays.has(date.slice(5)))}
@@ -72,14 +72,14 @@
  }
  function quote(input={},reference=today(),preview=false){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
-  // Pitch correction is inside every type price, including STANDARD 90,000. Keep A's same-day delivery (tuning flag stays false).
-  const pitchIncluded=p.tuning||p.key==='A'
-  const slowDelivery=p.tuning||v.options.includes('tuning')&&!pitchIncluded
-  const entries=options.filter(o=>v.options.includes(o.key)&&!(pitchIncluded&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)).map(o=>({...o}))
+  // STANDARD 90,000 includes 정밀 믹싱·마스터링 only. 음정·박자 보정 stays a paid option. Every discount is 0 on STANDARD; paid add-ons still add.
+  const pitchIncluded=!!p.tuning
+  const discountsAllowed=p.key!=='A'
+  const entries=options.filter(o=>v.options.includes(o.key)&&!(pitchIncluded&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
-  if(v.firstVisit&&p.key!=='A')discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
-  if(validDate(v.bookingDate)){
+  if(discountsAllowed&&v.firstVisit)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
+  if(discountsAllowed&&validDate(v.bookingDate)){
    if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 할인 (13~16시 시작)',amount:10000})
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
@@ -87,13 +87,11 @@
   const baseMinutes=p.minutes+(v.options.includes('extraHour')?60:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
   const packageLine=p.individual>p.price?[{key:'package',label:'패키지 할인',amount:p.individual-p.price}]:[]
-  return {v,package:p,base:p.price,list:p.individual,packageDiscount:p.individual-p.price,allDiscounts:[...packageLine,...discounts],options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
+  return {v,package:p,base:p.price,list:p.individual,packageDiscount:p.individual-p.price,allDiscounts:[...packageLine,...discounts],options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':p.delivery}
  }
  function features(p){
-  const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
-  // Spec row order: 인원 / 녹음 시간 / 음정·박자 보정 / 믹싱 / 마스터링 / 디렉팅 / 전달
-  const deluxe=p.key!=='A'
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : 포함','믹싱 : '+(deluxe?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(deluxe?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : '+when]
+  // 전달 is the same for every type, so the comparison table does not repeat it
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(p.tuning?'포함':'미포함'),'믹싱 : '+(p.mixing?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(p.mixing?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : 녹음일 기준 7일 이내']
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -149,7 +147,7 @@
  function typeTable(root){const P=api,cards=root?.querySelector('.package-cards'),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));if(!cards)return;let wrap=root.querySelector('.wf-type-table');const keys=['A','B','C','D'],ck='<svg viewBox="0 0 24 24" class="wf-tt-ck" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',dash='<span class="wf-tt-dash" aria-label="미포함"></span>'
   if(!wrap){const feat=k=>{const f=P.features(P.packageFor(k)).slice(1),v=l=>(f.find(x=>x.startsWith(l))||'').split(' : ')[1]||'';return{people:v('인원'),time:v('녹음 시간'),tune:v('음정')==='포함',mix:v('믹싱').includes('정밀'),master:v('마스터링')==='포함',deliver:v('전달')}}
    const price=k=>{const c=cards.querySelector('.package-card[data-tier="'+k+'"]'),was=c?.querySelector('.package-card-was s')?.textContent||'',now=c?.querySelector('.package-card-price')?.textContent||'';return '<span class="wf-tt-price">'+(was?'<s>'+esc(was)+'</s>':'')+'<strong>'+esc(now)+'</strong></span>'}
-   const rows=[['인원',k=>esc(feat(k).people)],['녹음 시간',k=>esc(feat(k).time)],['디렉팅',()=>ck],['음정·박자 보정',k=>feat(k).tune?ck:dash],['정밀 믹싱',k=>feat(k).mix?ck:dash],['마스터링',k=>feat(k).master?ck:dash],['전달',k=>esc(feat(k).deliver.replace(/^영업일 (\d+일) 이내$/,'$1'))]]
+   const rows=[['인원',k=>esc(feat(k).people)],['녹음 시간',k=>esc(feat(k).time)],['디렉팅',()=>ck],['음정·박자 보정',k=>feat(k).tune?ck:dash],['정밀 믹싱',k=>feat(k).mix?ck:dash],['마스터링',k=>feat(k).master?ck:dash]]
    cards.insertAdjacentHTML('afterend','<div class="wf-type-table"><table><thead><tr><th scope="col" class="wf-tt-corner">타입</th>'+keys.map(k=>'<th scope="col" data-tt="'+k+'" role="button" tabindex="0" aria-pressed="false"><i class="wf-tt-radio">'+ck+'</i><b>'+esc(P.packageFor(k).name)+'</b>'+price(k)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(([l,f])=>'<tr><th scope="row">'+l+'</th>'+keys.map(k=>{const v=f(k),lv=/<(svg|span)/.test(v)||l==='전달'?0:[...new Set(keys.map(f))].indexOf(v);return '<td data-tt="'+k+'"'+(lv>0?' class="wf-tt-up'+(l==='인원'?2:Math.min(lv,2))+'"':'')+'>'+v+'</td>'}).join('')+'</tr>').join('')+'</tbody></table><p class="wf-tt-when" aria-live="polite"></p></div>')
    wrap=root.querySelector('.wf-type-table')
    const pick=e=>{const c=e.target.closest('[data-tt]');if(!c||(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' '))return;e.preventDefault();const y=global.scrollY,input=cards.querySelector('.package-card[data-tier="'+c.dataset.tt+'"] input');if(!input||input.checked)return;input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));global.requestAnimationFrame(()=>global.scrollTo(0,y))}
