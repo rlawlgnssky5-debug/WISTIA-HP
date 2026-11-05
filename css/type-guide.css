@@ -4,10 +4,10 @@
 @layer wistia-site-fixes {
   html body #app .mobile-ar-solo > #packageSelection.type-unify {
     margin: 14px 12px 18px !important;
-    padding: 8px 0 18px !important;
+    padding: 0 0 18px !important;
     background: #fef4eb !important;
     border: 1px solid #e7c8d0 !important;
-    border-radius: 28px !important;
+    border-radius: 180px 180px 28px 28px / 84px 84px 28px 28px !important;
     box-shadow: none !important;
     overflow: hidden !important;
     --ed-surface: #fef4eb;
@@ -62,9 +62,39 @@
     max-width: 100% !important;
     margin-left: 0 !important;
   }
-  /* Under the type table every type keeps the title and, when there is one, the savings pill. */
-  html body #app :is(#packageSelection, .wistia-wizard [data-wf-step="0"]) [data-package-selection-details] {
+  /* Homepage table note stays the title and savings pill. The inquiry form still shows its price card. */
+  html body #app #packageSelection [data-package-selection-details] {
     display: none !important;
+  }
+  html body #app .wistia-wizard .wf-people {
+    margin: 4px 0 12px !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-pair {
+    gap: 8px !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-pair .wf-choice > span {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 8px 8px !important;
+    gap: 1px 6px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-choice svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-choice b {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-choice small {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  html body #app .wistia-wizard .wf-people .wf-choice strong {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
   }
 }
 html { scroll-behavior: smooth; }
