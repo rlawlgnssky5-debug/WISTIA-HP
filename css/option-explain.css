@@ -1,8 +1,8 @@
 /* Homepage option steps. Transparent mascots share one frame; the status
    bubble sits beside the image, outside its box. */
 .option-explain{
-  margin:0 0 4px;
-  padding:12px 3.5cqw 2px;
+  margin:0 0 2px;
+  padding:4px 3.5cqw 0;
   width:100%;
   max-width:none;
   background:#fff;
@@ -11,7 +11,7 @@
   overflow:visible;
 }
 html body #app .option-explain>h2{
-  margin:0 0 6px!important;
+  margin:0 0 2px!important;
   padding:0!important;
   text-align:left!important;
   font-family:Pretendard,"Pretendard Variable",sans-serif;
@@ -45,7 +45,7 @@ html body #app .option-explain>h2{
   width:auto;
   max-width:calc(100% - 92px);
   height:auto;
-  max-height:104px;
+  max-height:72px;
   flex:0 1 auto;
   margin:0;
   padding:0;
@@ -59,8 +59,8 @@ html body #app .option-explain>h2{
 .ox-status{
   position:relative;
   flex:0 0 auto;
-  margin:6px 0 0;
-  padding:3px 8px 4px;
+  margin:2px 0 0;
+  padding:2px 7px 2px;
   border:1.5px solid var(--ox);
   border-radius:999px;
   background:#fff;
@@ -94,8 +94,8 @@ html body #app .option-explain>h2{
   width:100%;
   max-width:none;
   min-height:0;
-  margin:2px 0 0;
-  padding:8px 12px 9px;
+  margin:0;
+  padding:5px 12px 6px;
   border-radius:14px;
   background:#F8F1F3;
   box-shadow:none;
@@ -114,7 +114,7 @@ html body #app .option-explain>h2{
   display:flex;
   align-items:center;
   gap:6px;
-  margin:0 0 3px;
+  margin:0 0 1px;
 }
 .ox-badge{
   display:inline-flex;
@@ -145,16 +145,16 @@ html body #app .option-explain>h2{
   font-family:Pretendard,"Pretendard Variable",sans-serif;
   font-size:12.5px;
   font-weight:400;
-  line-height:1.4;
+  line-height:1.32;
   letter-spacing:-.03em;
   word-break:keep-all;
   overflow-wrap:break-word;
 }
 .ox-down{
-  margin:2px 0 0;
+  margin:0;
   text-align:center;
   color:#c4b0b6;
-  font-size:13px;
+  font-size:12px;
   line-height:1;
 }
 .package-guide-sub{

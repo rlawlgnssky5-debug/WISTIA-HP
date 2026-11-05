@@ -23,11 +23,11 @@ test('homepage option steps use transparent pngs and sit above the type table',(
     '음원의 음압·다이내믹·주파수 밸런스를 정교하게 조율해',
     '선명도와 깊이를 높이고, 최종 음원으로 마무리합니다'
   ])assert.ok(block.includes(line),line)
-  assert.match(block,/assets\/img\/option-explain\/opt-tune\.jpg/)
-  assert.match(block,/assets\/img\/option-explain\/opt-mix\.jpg/)
-  assert.match(block,/assets\/img\/option-explain\/opt-master\.jpg/)
+  assert.match(block,/assets\/img\/option-explain\/opt-tune\.png/)
+  assert.match(block,/assets\/img\/option-explain\/opt-mix\.png/)
+  assert.match(block,/assets\/img\/option-explain\/opt-master\.png/)
   assert.doesNotMatch(block,/송송/)
-  assert.doesNotMatch(block,/\.png/)
+  assert.doesNotMatch(block,/\.jpg/)
   assert.match(app,/어떤 타입이 나에게 맞을까요\?/)
   assert.match(app,/나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!/)
   const hook=app.match(/function homeTypeBlock\(key\)\{[^}]+\}/)[0]
@@ -41,8 +41,8 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
   assert.match(css,/\.ox-figure\{[^}]*display:flex/)
   assert.match(css,/\.ox-status\{[^}]*flex:0 0 auto/)
   assert.match(css,/\.ox-figure img\{[^}]*background:transparent/)
-  assert.match(css,/\.ox-figure img\{[^}]*max-height:104px/)
-  assert.match(css,/\.ox-card\{[^}]*padding:8px 12px 9px/)
+  assert.match(css,/\.ox-figure img\{[^}]*max-height:72px/)
+  assert.match(css,/\.ox-card\{[^}]*padding:5px 12px 6px/)
   assert.match(read('js/svg-interface.js'),/!section\.matches\('\.mas-selection,\.option-explain'\)/)
   const pricing=read('js/package-pricing.js')
   for(const line of [
@@ -55,18 +55,26 @@ test('status bubble is outside the image and no mascot gets its own plate',()=>{
   assert.doesNotMatch(css,/\.ox-step:nth-child|data-ox="coral"[\s\S]{0,180}background:\s*#f[0-9a-f]{5}/i)
 })
 
-test('mascot jpgs keep a clean white background',()=>{
+test('mascot pngs are transparent at the corners and opaque on the face',()=>{
   const report=execFileSync('python3',['-c',`
 from PIL import Image
 from pathlib import Path
 root=Path('assets/img/option-explain')
-for name in ['opt-tune.jpg','opt-mix.jpg','opt-master.jpg']:
-    im=Image.open(root/name).convert('RGB')
+for name in ['opt-tune.png','opt-mix.png','opt-master.png']:
+    im=Image.open(root/name).convert('RGBA')
     w,h=im.size
     for x,y in ((0,0),(w-1,0),(0,h-1),(w-1,h-1)):
-        r,g,b=im.getpixel((x,y))
-        assert min(r,g,b)>=250, f'{name} {x},{y} {(r,g,b)}'
+        assert im.getpixel((x,y))[3]==0, f'{name} corner {x},{y}'
+    cream=False
+    for y in range(int(h*0.2), int(h*0.5)):
+        for x in range(int(w*0.35), int(w*0.65)):
+            r,g,b,a=im.getpixel((x,y))
+            if a>200 and r>220 and g>200 and b>180:
+                cream=True
+                break
+        if cream: break
+    assert cream, name+' missing cream face'
     print(name,'ok',w,h)
 `],{cwd:new URL('..',import.meta.url),encoding:'utf8'})
-  assert.match(report,/opt-master.jpg ok/)
+  assert.match(report,/opt-master.png ok/)
 })

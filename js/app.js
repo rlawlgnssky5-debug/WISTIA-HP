@@ -1276,9 +1276,9 @@ function packageInformation(key,packageKey){
 function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'?'모든 타입에 포함':o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function optionExplainSection(){
  const steps=[
-  ['rose','01','튜닝중~','음정·박자 보정','한 음, 한 박자까지 수작업으로 정교하게 다듬어','목소리의 자연스러움은 살리고 노래의 완성도를 높입니다','assets/img/option-explain/opt-tune.jpg',1024,1024],
-  ['gold','02','믹싱중~','정밀 믹싱','목소리의 음색·질감을 세밀하게 다듬고 반주와 균형을 맞춰,','더 풍성하고 조화로운 사운드로 완성합니다','assets/img/option-explain/opt-mix.jpg',1024,1024],
-  ['coral','03','마스터링중~','마스터링','음원의 음압·다이내믹·주파수 밸런스를 정교하게 조율해','선명도와 깊이를 높이고, 최종 음원으로 마무리합니다','assets/img/option-explain/opt-master.jpg',1024,1024]
+  ['rose','01','튜닝중~','음정·박자 보정','한 음, 한 박자까지 수작업으로 정교하게 다듬어','목소리의 자연스러움은 살리고 노래의 완성도를 높입니다','assets/img/option-explain/opt-tune.png',949,793],
+  ['gold','02','믹싱중~','정밀 믹싱','목소리의 음색·질감을 세밀하게 다듬고 반주와 균형을 맞춰,','더 풍성하고 조화로운 사운드로 완성합니다','assets/img/option-explain/opt-mix.png',904,796],
+  ['coral','03','마스터링중~','마스터링','음원의 음압·다이내믹·주파수 밸런스를 정교하게 조율해','선명도와 깊이를 높이고, 최종 음원으로 마무리합니다','assets/img/option-explain/opt-master.png',849,771]
  ]
  const items=steps.map(([tone,num,status,title,line1,line2,src,w,h],index)=>{
   const step='<article class="ox-step" data-ox="'+tone+'"><div class="ox-figure"><img src="'+src+'" alt="" width="'+w+'" height="'+h+'" decoding="async"><p class="ox-status">'+status+'</p></div><div class="ox-card"><p class="ox-head"><span class="ox-badge">'+num+'</span><strong>'+title+'</strong></p><p class="ox-copy">'+line1+'<br>'+line2+'</p></div></article>'
