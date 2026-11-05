@@ -32,7 +32,9 @@ test('homepage option steps use transparent pngs and sit above the type table',(
   assert.match(app,/나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!/)
   const hook=app.match(/function homeTypeBlock\(key\)\{[^}]+\}/)[0]
   assert.match(hook,/class="type-unify"/)
-  assert.match(hook,/typeGuideSection\(\)\+packageSalesSection/)
+  assert.match(hook,/packageSalesSection\(key\)/)
+  assert.doesNotMatch(hook,/typeGuideSection\(\)/)
+  assert.doesNotMatch(hook,/type-final\.webp/)
   assert.doesNotMatch(hook,/optionExplainSection\(\)/)
   assert.match(app,/function typeGuideSection\(\)\{return '<img class="type-unify-poster"/)
   assert.match(app,/assets\/img\/type-guide\/type-final\.webp/)
