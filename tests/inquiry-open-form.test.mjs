@@ -76,10 +76,20 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     const page = await context.newPage();
     const origin = `http://wistia.localhost:${port}`;
     await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
-    await page.locator(".ed-hero-listen", { hasText: "보정 전후 들어보기" }).waitFor({ state: "visible" });
     await page.locator(".ed-hero-price-jump", { hasText: "타입·가격 바로 보기" }).waitFor({ state: "visible" });
+    assert.equal(await page.locator(".ed-hero-listen").count(), 0);
     assert.equal(await page.locator(".ed-hero-consult").count(), 0);
     assert.equal(await page.locator(".ed-hero-actions").getByRole("link", { name: /AR 축가/ }).count(), 0);
+    assert.equal(await page.locator(".ed-hero-actions a").count(), 1);
+    const heroBar = await page.locator(".ed-hero-price-jump").evaluate(el => {
+      const bar = el.getBoundingClientRect();
+      const strip = el.parentElement.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      return { bar: bar.width, strip: strip.width, bg: style.backgroundColor, color: style.color };
+    });
+    assert.ok(heroBar.bar >= heroBar.strip - 1, "price jump fills the hero action strip");
+    assert.equal(heroBar.bg, "rgb(157, 89, 108)");
+    assert.equal(heroBar.color, "rgb(255, 255, 255)");
     const vid = await page.evaluate(() => localStorage.getItem("wistia_vid"));
     assert.match(vid, /^wv_[a-f0-9]{16,64}$/);
 
@@ -96,15 +106,6 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     assert.equal(snap.dialog, false);
     assert.equal(snap.path, "/");
 
-    await page.locator(".ed-hero-listen").click();
-    await page.waitForFunction(() => {
-      const target = document.querySelector("#arcTuning");
-      const header = document.querySelector("#siteHeader")?.getBoundingClientRect().bottom || 0;
-      if (!target) return false;
-      const box = target.getBoundingClientRect();
-      return box.top < header + 320 && box.bottom > header + 40;
-    });
-    assert.equal(new URL(page.url()).pathname, "/");
     await page.locator(".ed-hero-price-jump").click();
     await alignedWithType();
     snap = await pixelSnapshot(page);

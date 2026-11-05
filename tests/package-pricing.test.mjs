@@ -16,6 +16,11 @@ test('type table blurb follows the selected header tier color',()=>{
  assert.match(css,/\.wf-tt-when\{[^}]*color:var\(--wf-tt,#5A3A40\)/)
  assert.match(css,/\.wf-tt-when i\{[^}]*color:var\(--wf-tt,#A65A6C\)/)
  assert.match(css,/\.wf-tt-when\{[^}]*background:var\(--wf-tt-bg,#FBE9EE\)/)
+ assert.match(js,/class="wf-tt-save"/)
+ assert.match(css,/\.wf-tt-save\{[^}]*border-radius:999px/)
+ assert.match(css,/\.wf-tt-save\{[^}]*background:var\(--wf-tt-bg,#FBE9EE\)/)
+ assert.match(css,/\.wf-tt-save\{[^}]*color:var\(--wf-tt,#5A3A40\)/)
+ assert.doesNotMatch(js,/<br>개별 옵션 추가보다/)
 })
 test('first-use coupon is only for DELUXE PREMIUM DUET, including restored STANDARD selections',()=>{
  for(const firstVisit of ['1',true])for(const yearEndCoupon of ['1',true]){

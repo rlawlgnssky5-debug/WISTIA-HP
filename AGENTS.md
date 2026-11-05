@@ -1,5 +1,13 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-05 — 히어로 가격 바 한 줄, 절약 문장 알약
+
+- 홈 히어로 액션에서 `보정 전후 들어보기`와 `ed-hero-listen`을 뺀다. `타입·가격 바로 보기`만 남기고 한 줄 전체 너비의 로즈 `#9d596c` 바로 둔다. `↘`와 `#packageSelection` 이동은 유지한다
+- `ed-hero-consult`와 `AR 축가 상담하기/자세히 보기` 히어로 버튼은 다시 넣지 않는다. `/events`의 `AR 축가 상담하기` → `/`는 그대로다
+- 본문의 보정 전후 듣기는 유지한다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
+- 타입 표 아래 `wf-tt-when`의 `…저렴하게!` 문장만 DELUXE·PREMIUM·DUET에서 알약(`wf-tt-save`)으로 표시한다. STANDARD는 절약이 없어 알약이 없다. 글자색 `--wf-tt`와 칸 배경 `--wf-tt-bg`는 타입 색 그대로다
+- 앱·canvas-780·가격 스크립트·inquiry-ux-51·히어로 번들 캐시는 `20261105-hero-price-pill-1`이다
+
 ## 2026-11-05 — 타입 표 아래 안내 문구 색
 
 - 타입 비교표 아래 `wf-tt-when` 안내(타입 이름과 한 줄 설명)는 표 헤더와 같은 단계 색을 쓴다. STANDARD `#4A3238`, DELUXE `#A65A6C`, PREMIUM `#D99A00`, DUET `#E0705A`
