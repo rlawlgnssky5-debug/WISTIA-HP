@@ -1335,7 +1335,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
  const detailParts=document.createElement('template');detailParts.innerHTML=details
  const tuning=detailParts.content.querySelector('#arcTuning')
- tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 진행</p>')
+ tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM·DUET에 포함되거나 음정·박자 보정을 고를 때 진행</p>')
  const benefitIcons=['microphone','tune','clock']
  detailParts.content.querySelectorAll('.package-notices>ul>li').forEach((item,index)=>{item.insertAdjacentHTML('afterbegin','<span class="ed-benefit-icon" aria-hidden="true">'+studioIcon(benefitIcons[index%benefitIcons.length])+'</span>')})
  const map=detailParts.content.querySelector('[data-solo-map]')
