@@ -1,10 +1,12 @@
 # 위스티아 홈페이지 작업 지침
 
-## 2026-11-05 — 타입 포스터 교체, DUET 안내, POINT 폭
+## 2026-11-05 — 포스터와 타입 표를 한 아치로
 
-- 홈 타입 포스터는 승인본 `type-final.webp`(782×1472)로 바꾼다. 섹션 순서는 그대로다
-- 타입 비교 아래 DUET 안내만 이름과 `개별 옵션 추가보다 패키지로 60,000원 저렴하게!` 알약이다. 긴 설명은 넣지 않는다. STANDARD·DELUXE·PREMIUM 문구와 가격은 그대로다
-- POINT 01–04 좌우 안쪽 여백은 8px다. 앱·가격·포스터 CSS 캐시는 `20261105-type-poster-2`이다
+- 홈에서 `옵션 설명!`은 그리지 않는다. `assets/img/option-explain/` 이미지와 `optionExplainSection()`은 남긴다
+- 승인 포스터 `type-final.webp`(782×1472)와 반응형 타입 표는 `.type-unify#packageSelection` 한 칸이다. 배경 `#fef4eb`, 위쪽 아치, 로즈 테두리 `#e7c8d0`. 표는 지우지 않는다
+- DUET 안내만 이름과 `개별 옵션 추가보다 패키지로 60,000원 저렴하게!` 알약이다
+- POINT 01–04 좌우 여백은 4px, FAQ와 오시는 길은 22px다. 히어로 `타입·가격 바로 보기`는 `#packageSelection`으로 부드럽게 이동한다. 푸터는 `© WISTIA. All rights reserved.` `/events` 하단은 `AR 축가 자세히 보기`이고 `/`로 간다
+- 앱·포스터 CSS 캐시는 `20261105-type-poster-6`이다. 픽셀·GA4·CAPI·InquiryOpen·wistia_vid·가격은 바꾸지 않는다
 
 ## 2026-11-05 — 홈 타입 안내 포스터
 
