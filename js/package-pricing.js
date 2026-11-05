@@ -9,8 +9,8 @@
  }
  const options=[
   {key:'tuning',label:'음정·박자 보정',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요'},
-  {key:'detailMix',label:'마스터링',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
-  {key:'precisionMix',label:'정밀 믹싱',price:20000,detail:'기본 믹싱보다 목소리와 MR의 밸런스를 세밀하게 맞춰 드려요'},
+  {key:'detailMix',label:'마스터링',price:20000,detail:'음압과 톤을 정리해 최종 음원으로 마무리해요'},
+  {key:'precisionMix',label:'정밀 믹싱',price:20000,detail:'목소리와 반주의 밸런스를 세밀하게 맞춰 드려요'},
   {key:'extraHour',label:'녹음 1시간 추가',price:60000,detail:'선택한 타입의 녹음 시간에 1시간을 더해 드려요'},
   {key:'rush',label:'3일 이내 받기',price:30000,detail:'녹음일 기준 3일 이내에 음원을 받아요',messageLabel:'3일 이내 전달 (녹음일 기준)'},
  ]
@@ -76,7 +76,7 @@
   const pitchIncluded=!!p.tuning
   const discountsAllowed=p.key!=='A'
   const entries=options.filter(o=>v.options.includes(o.key)&&!(pitchIncluded&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))).map(o=>({...o}))
-  if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
+  if(duet&&!p.duet)entries.unshift({key:'duet',label:'녹음 1인 추가',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(discountsAllowed&&v.firstVisit)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
   if(discountsAllowed&&validDate(v.bookingDate)){
@@ -91,7 +91,7 @@
  }
  function features(p){
   // 전달 is the same for every type, so the comparison table does not repeat it
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(p.tuning?'포함':'미포함'),'믹싱 : '+(p.mixing?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(p.mixing?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : 녹음일 기준 7일 이내']
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(p.tuning?'포함':'미포함'),'믹싱 : '+(p.mixing?'정밀 믹싱 포함':'미포함'),'마스터링 : '+(p.mixing?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : 녹음일 기준 7일 이내']
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -115,21 +115,21 @@
   const dates=[reference,addMonths(reference,1),addMonths(reference,2)]
   return Math.min(...dates.flatMap(start=>Array.from({length:14},(_,i)=>new Date(Date.parse(start+'T12:00:00Z')+i*864e5).toISOString().slice(0,10))).map(bookingDate=>quote({package:p.key,people,firstVisit:claimedCoupons().firstVisit?'1':'',yearEndCoupon:claimedCoupons().yearEndCoupon?'1':'',bookingDate,timeStart:'13:00'},reference,true).total))
  }
- function priceLines(p,reference=today(),bookingDate='',people=''){
+ function priceLines(p,reference=today(),bookingDate='',people='',timeStart=''){
   // r72: STANDARD (no package saving) still shows its price box; it was empty since r68 hid the rest of the card
   const got=claimedCoupons(),date=bookingDate||couponDisplayDate(reference)
-  const q=quote({package:p.key,people,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date},reference,true)
+  const q=quote({package:p.key,people,firstVisit:got.firstVisit?'1':'',yearEndCoupon:got.yearEndCoupon?'1':'',bookingDate:date,timeStart},reference,true)
   const has=key=>q.discounts.some(d=>d.key===key),now=q.total,best=bestCouponPrice(p,reference,people)
   const down=amount=>'<span class="price-down-pill" aria-label="'+money(amount)+' 할인">'+money(amount)+' ↓</span>'
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
-  const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)));const duetAdd=q.options.find(o=>o.key==='duet');if(duetAdd)rows.push(line('is-date','2인(듀엣곡)으로 변경',0,'+'+money(duetAdd.price)))
+  const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)));const duetAdd=q.options.find(o=>o.key==='duet');if(duetAdd)rows.push(line('is-date','녹음 1인 추가',0,'+'+money(duetAdd.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
   q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
   rows.push(line('is-now','현재 적용가',Math.max(0,p.individual-now),money(now)))
   if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
   return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
  }
- function selectionDetails(key,bookingDate='',people=''){
+ function selectionDetails(key,bookingDate='',people='',timeStart=''){
   const p=packageFor(key)
   const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?'tune':item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
@@ -138,7 +138,7 @@
    const kind=icon(item),enhanced=p.key!=='A'&&!item.startsWith('전달')&&!baseRows.includes(item)
    return '<li data-feature-icon="'+kind+'"'+(enhanced?' data-feature-enhanced="true"':'')+'><span class="package-feature-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+featurePaths[kind]+'</svg></span><span class="package-feature-copy">'+item+'</span>'+(enhanced?'<b class="package-feature-up" aria-hidden="true">UP</b>':'')+'</li>'
   }).join('')
-  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+(p.guide||p.title)+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate,people)
+  return '<div class="package-selected-head"><span class="package-selected-letter">'+p.name.charAt(0)+'</span><h3>'+(p.guide||p.title)+'</h3>'+(p.individual>p.price?'<span class="package-selected-cheaper">개별 옵션 추가보다 패키지로 '+money(p.individual-p.price)+' 저렴하게!</span>':'')+'</div><p class="package-selected-meta">1곡 기준'+' · 녹음 '+hoursText(p.minutes)+'</p><ul class="package-selected-features">'+featureRows+'</ul>'+priceLines(p,today(),bookingDate,people,timeStart)
  }
  function cards(selected='A',mode='detail'){
   const key=packageFor(selected).key
@@ -155,9 +155,9 @@
   const s=cards.querySelector('input[type="radio"]:checked')?.value||'';keys.forEach(k=>{const c=cards.querySelector('.package-card[data-tier="'+k+'"] .package-card-price'),t=wrap.querySelector('thead [data-tt="'+k+'"] .wf-tt-price strong');if(c&&t&&t.textContent!==c.textContent)t.textContent=c.textContent});wrap.querySelectorAll('[data-tt]').forEach(e=>{const on=e.dataset.tt===s;e.classList.toggle('is-on',on);if(e.tagName==='TH')e.setAttribute('aria-pressed',String(on))})
   const when=wrap.querySelector('.wf-tt-when'),picked=s?P.packageFor(s):null,save=picked&&picked.individual>picked.price?'<span class="wf-tt-save">개별 옵션 추가보다 패키지로 '+esc(P.money(picked.individual-picked.price))+' 저렴하게!</span>':'',html=picked?'<i>'+esc(picked.name)+'</i>'+save:'<i>이럴 때</i>타입을 골라 주세요';if(s)when.dataset.tt=s;else delete when.dataset.tt;if(when.innerHTML!==html)when.innerHTML=html}
  function syncSelection(root,key){
-  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||'',people=root.querySelector('input[name="people"]:checked')?.value||''
+  const p=packageFor(key),panel=root.querySelector('[data-package-selection-details]'),bookingDate=root.querySelector('[name="bookingDate"]')?.value||'',people=root.querySelector('input[name="people"]:checked')?.value||'',timeStart=root.querySelector('[name="timeStart"]')?.value||''
   root.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('is-selected',!!card.querySelector('input:checked')))
-  if(panel&&(panel.dataset.packageKey!==p.key||panel.dataset.couponDate!==bookingDate||(panel.dataset.people||'')!==people)){panel.innerHTML=selectionDetails(p.key,bookingDate,people);panel.dataset.packageKey=p.key;panel.dataset.couponDate=bookingDate;panel.dataset.people=people}
+  if(panel&&(panel.dataset.packageKey!==p.key||panel.dataset.couponDate!==bookingDate||(panel.dataset.people||'')!==people||(panel.dataset.timeStart||'')!==timeStart)){panel.innerHTML=selectionDetails(p.key,bookingDate,people,timeStart);panel.dataset.packageKey=p.key;panel.dataset.couponDate=bookingDate;panel.dataset.people=people;panel.dataset.timeStart=timeStart}
   refreshCardPrices(root,bookingDate)
  }
  const selectionRoots=new WeakSet()

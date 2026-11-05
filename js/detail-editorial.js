@@ -118,14 +118,14 @@
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
-        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 STANDARD·DELUXE·PREMIUM 중 골라 주세요'], ['여유로운 녹음 시간', 'PREMIUM은 2시간 녹음으로 준비할 수 있어요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
+        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['보정은 타입마다 달라요', '스탠다드는 음정·박자 보정이 옵션이고, 정밀 믹싱·마스터링은 모든 타입에 있어요'], ['여유로운 녹음 시간', 'PREMIUM과 DUET은 2시간 30분 녹음이에요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
     },
     engineer() {
       return '<section class="ed-section ed-engineer" data-svg-title="off">' +
         '<svg class="ed-sound-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 18v-3a11 11 0 0 1 22 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="16" width="6" height="12" rx="3" fill="currentColor"/><rect x="23" y="16" width="6" height="12" rx="3" fill="currentColor"/></svg>' +
         heading('SOUND', '<span>같은 소스여도,</span><b class="ed-title">사운드 완성도는 달라집니다</b>') +
         '<div class="ed-credit"><p class="ed-eyebrow">사운드 완성</p><div class="ed-broadcast-logo"><img src="assets/editorial/sound-vinyl-reference.webp" alt="싱어게인2" width="800" height="1200" loading="lazy" decoding="async"></div></div>' +
-        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>직접 수작업 보정부터<br>믹싱·마스터링까지 완성합니다</p></section>'
+        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>정밀 믹싱과 마스터링으로<br>사운드를 완성합니다</p></section>'
     }
   }
   if (typeof module === 'object' && module.exports) module.exports = editorial
