@@ -73,15 +73,16 @@ test('selectable options precede included disabled options after repeated type c
  let moves=0
  const fieldset={querySelectorAll(){return order.map(key=>rows.get(key))},appendChild(row){moves++;order.splice(order.indexOf(row.dataset.wfOption),1);order.push(row.dataset.wfOption)}}
  const form={querySelector:s=>s==='.package-extra-options'?fieldset:s==='input[name="tuning"]'?rows.get('tuning').input:rows.get(s.match(/data-wf-option="([^"]+)"/)?.[1])}
- for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','tuning','detailMix','precisionMix','extraHour','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']]]){
+ for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','detailMix','precisionMix','extraHour','tuning','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']]]){
   const previous=order.join(','),beforeMoves=moves
   window.WistiaWizard.syncOptions(form,pricing.quote({package:key}))
   if(previous===expected.join(','))assert.equal(moves,beforeMoves,'unchanged rows must retain checkbox focus during updates')
   assert.deepEqual(order,expected)
   assert.equal(rows.get('extraHour').input.disabled,false)
-  for(const option of ['tuning','detailMix']){
-   assert.equal(rows.get(option).input.disabled,key!=='A')
-   if(key!=='A'){assert.equal(rows.get(option).input.checked,false);assert.equal(rows.get(option).strong.textContent,'패키지에 포함되어 있어요')}
-  }
+  assert.equal(rows.get('tuning').input.disabled,true)
+  assert.equal(rows.get('tuning').input.checked,false)
+  assert.equal(rows.get('tuning').strong.textContent,'패키지에 포함되어 있어요')
+  assert.equal(rows.get('detailMix').input.disabled,key!=='A')
+  if(key!=='A'){assert.equal(rows.get('detailMix').input.checked,false);assert.equal(rows.get('detailMix').strong.textContent,'패키지에 포함되어 있어요')}
  }
 })

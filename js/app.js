@@ -388,7 +388,7 @@ const INFO_PAGES = {
 const INFO_FAQ_GROUPS=[
  {title:"녹음 전 준비",description:"곡을 고르는 순간부터 함께 준비해요",items:[
   ["곡을 아직 정하지 못했는데 상담받아도 될까요?","물론이에요 마음에 두고 계신 노래나 전하고 싶은 분위기만 알려주셔도 좋아요 목소리와 음역에 맞는 곡을 함께 고민해 드릴게요"],
-  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>2주 전까지</strong> 녹음하시는 걸 추천드려요<br>STANDARD 기본 구성은 당일, DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 <strong>영업일 7일 이내</strong>에 전달해 드려요<br>수정과 리허설 시간도 여유 있게 준비해 주세요"],
+  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>2주 전까지</strong> 녹음하시는 걸 추천드려요<br>STANDARD 기본 구성은 당일, DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 <strong>영업일 7일 이내</strong>에 전달해 드려요<br>수정과 리허설 시간도 여유 있게 준비해 주세요"],
   ["곡의 키는 어떻게 정하면 될까요?","원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요"],
   ["녹음 전에 무엇을 준비하면 좋을까요?","<strong>따로 준비하실 건 없어요!</strong><br>몸만 편하게 오시면 나머지는 저희가 다 준비해 드려요"]
  ]},
@@ -403,7 +403,7 @@ const INFO_FAQ_GROUPS=[
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","미리 녹음한 목소리와 현장 목소리가<br>어우러지도록 비율을 맞춰요<br>녹음 당일 <strong>직접 리허설</strong>해 보고 확인하실 수 있어요"]
  ]},
  {title:"완성본 전달과 수정",description:"완성된 음원을 받고 본식에 전달하는 방법이에요",items:[
-  ["완성된 음원은 언제 받을 수 있나요?","STANDARD 기본 구성은 녹음 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 영업일 7일 이내에 전달해 드려요"],
+  ["완성된 음원은 언제 받을 수 있나요?","STANDARD 기본 구성은 녹음 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 영업일 7일 이내에 전달해 드려요"],
   ["완성본을 듣고 수정하고 싶은 부분이 있으면 어떡하나요?","편하게 말씀해 주세요 수정은 상담에서 안내해요"],
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달받으신 본식용 AR 음원을 예식장 담당자에게 보내 주세요 예식장에서 사용하는 파일 형식과 재생 환경도 미리 확인해 알려주시면 좋아요 본식 전에 파일이 잘 재생되는지 꼭 확인해 주세요"]
  ]},
@@ -1142,7 +1142,7 @@ function soloChatFaq(){
   ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>'],
   ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','STANDARD 기본 구성은 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 영업일 7일 이내에 전달해 드려요'],
+  ['완성 음원은 언제 받을 수 있나요?','STANDARD 기본 구성은 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 영업일 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
@@ -1270,13 +1270,13 @@ function selectedPackage(){return window.WistiaPackages.packageFor(new URLSearch
 function packageInquiryHref(key,packageKey=selectedPackage().key){return '/event/'+key+'?package='+packageKey}
 function packageInformation(key,packageKey){
  const p=window.WistiaPackages.packageFor(packageKey),duet=key==='duo'
- const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['보컬 튜닝',p.tuning?'음정·박자 보정 포함':'추가 선택'],['마스터링',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
+ const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['음정·박자 보정',p.tuning||p.key==='A'?'포함':'추가 선택'],['마스터링',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
  return '<h2>선택한 상품정보</h2><dl>'+rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escapeHtml(value)+'</dd></div>').join('')+'</dl>'
 }
-function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'||o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
+function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'?'모든 타입에 포함':o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">내게 맞는 녹음 타입을<br>골라보세요</h2>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
-function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 <span class="process-keep">보컬 튜닝</span>과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, <span class="process-keep">DELUXE·PREMIUM</span> 또는 <span class="process-keep">보컬 튜닝</span> 선택 시 <span class="process-keep">영업일 7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
+function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 <span class="process-keep">음정·박자 보정</span>과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, <span class="process-keep">DELUXE·PREMIUM</span> 또는 <span class="process-keep">음정·박자 보정</span> 선택 시 <span class="process-keep">영업일 7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
@@ -1322,7 +1322,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
  const detailParts=document.createElement('template');detailParts.innerHTML=details
  const tuning=detailParts.content.querySelector('#arcTuning')
- tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 진행</p>')
+ tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 진행</p>')
  const benefitIcons=['microphone','tune','clock']
  detailParts.content.querySelectorAll('.package-notices>ul>li').forEach((item,index)=>{item.insertAdjacentHTML('afterbegin','<span class="ed-benefit-icon" aria-hidden="true">'+studioIcon(benefitIcons[index%benefitIcons.length])+'</span>')})
  const map=detailParts.content.querySelector('[data-solo-map]')

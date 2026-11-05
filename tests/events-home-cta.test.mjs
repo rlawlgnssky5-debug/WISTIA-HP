@@ -10,6 +10,6 @@ assert.doesNotMatch(app,/ed-hero-consult" data-package-inquiry|ed-hero-consult[^
 assert.match(app,/if\(el\.matches\('\.product-inquiry > a'\)&&!el\.closest\('\.wistia-events'\)\)\{e\.preventDefault\(\);showKakaoInquiryDialog\(el\.getAttribute\('href'\)\);return\}/)
 assert.doesNotMatch(app,/matches\('\.product-inquiry > a,\.ed-hero-consult'\)/)
 for (const page of ['index.html','events.html','contact.html','event/solo.html','event/duo.html','info/faq.html','info/location.html']) {
- assert.match(readFileSync(new URL('../'+page,import.meta.url),'utf8'),/js\/app\.js\?v=20261105-coupon-popup-1/)
+ assert.match(readFileSync(new URL('../'+page,import.meta.url),'utf8'),/js\/app\.js\?v=20261105-standard-pitch-1/)
 }
 console.log('Home hero scrolls to the type section; events consult button still links home')

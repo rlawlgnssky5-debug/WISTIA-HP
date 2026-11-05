@@ -1,14 +1,14 @@
 (function(global){
  'use strict'
  const packages={
-  A:{key:'A',name:'STANDARD',title:'음정·박자 보정은 필요 없어요!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
+  A:{key:'A',name:'STANDARD',title:'녹음 + 음정·박자 보정!',price:90000,minutes:50,individual:90000,saving:0,tuning:false,mixing:false,delivery:'당일 음원 전달'},
   B:{key:'B',name:'DELUXE',title:'음정·박자 보정이 필요해요!',price:170000,minutes:90,individual:210000,saving:40000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   C:{key:'C',name:'PREMIUM',title:'음정 박자 보정 + 1시간 녹음 추가!',price:220000,minutes:150,individual:270000,saving:50000,tuning:true,mixing:true,delivery:'영업일 7일 이내 전달'},
   // DUET bundles 2인 + 2시간 30분 녹음 + 보정 + 기본 믹싱 + 마스터링, list price 300,000 (정밀 믹싱 +20,000 added to list prices 2026-10-27 04:52)
   D:{key:'D',name:'DUET',title:'둘이 함께 부르는 듀엣 녹음!',price:240000,minutes:150,individual:300000,saving:60000,tuning:true,mixing:true,duet:true,delivery:'영업일 7일 이내 전달'}
  }
  const options=[
-  {key:'tuning',label:'보컬 튜닝',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
+  {key:'tuning',label:'음정·박자 보정',price:40000,detail:'음정과 박자를 자연스럽게 다듬어 드려요 · 영업일 7일 이내 전달'},
   {key:'detailMix',label:'마스터링',price:20000,detail:'목소리의 음색과 톤을 MR에 맞게 세밀하게 다듬어 드려요'},
   {key:'precisionMix',label:'정밀 믹싱',price:20000,detail:'기본 믹싱보다 목소리와 MR의 밸런스를 세밀하게 맞춰 드려요'},
   {key:'extraHour',label:'녹음 1시간 추가',price:60000,detail:'선택한 타입의 녹음 시간에 1시간을 더해 드려요'},
@@ -72,9 +72,10 @@
  }
  function quote(input={},reference=today(),preview=false){
   const v=normalize(input),p=packageFor(v.package),duet=v.people==='1'
-  // 3일 이내 받기 only applies when the delivery would otherwise be 영업일 7일 이내 (A without tuning is already same-day)
-  const slowDelivery=p.tuning||v.options.includes('tuning')
-  const entries=options.filter(o=>v.options.includes(o.key)&&!(p.tuning&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)&&!(p.duet&&o.key==='extraHour')).map(o=>({...o}))
+  // Pitch correction is inside every type price, including STANDARD 90,000. Keep A's same-day delivery (tuning flag stays false).
+  const pitchIncluded=p.tuning||p.key==='A'
+  const slowDelivery=p.tuning||v.options.includes('tuning')&&!pitchIncluded
+  const entries=options.filter(o=>v.options.includes(o.key)&&!(pitchIncluded&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))&&!(o.key==='rush'&&!slowDelivery)).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'2인(듀엣곡)으로 변경',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(v.firstVisit&&p.key!=='A')discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
@@ -83,7 +84,7 @@
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  const baseMinutes=p.minutes+(v.options.includes('extraHour')&&!p.duet?60:0)
+  const baseMinutes=p.minutes+(v.options.includes('extraHour')?60:0)
   const paybacks=[...(input.paybackBlog==='1'||input.paybackBlog===true?[{key:'blog',label:'네이버 블로그 리뷰',amount:30000}]:[]),...(input.paybackReaction==='1'||input.paybackReaction===true?[{key:'reaction',label:'본식 현장 영상 제공',amount:30000}]:[])]
   const packageLine=p.individual>p.price?[{key:'package',label:'패키지 할인',amount:p.individual-p.price}]:[]
   return {v,package:p,base:p.price,list:p.individual,packageDiscount:p.individual-p.price,allDiscounts:[...packageLine,...discounts],options:entries,optionTotal,discounts,discount,total:p.price+optionTotal-discount,baseMinutes,minutes:baseMinutes,promo:false,paybacks,payback:paybacks.reduce((sum,item)=>sum+item.amount,0),delivery:slowDelivery?(entries.some(o=>o.key==='rush')?'녹음일 기준 3일 이내 전달':packages.B.delivery):packages.A.delivery}
@@ -91,8 +92,8 @@
  function features(p){
   const when=p.delivery.replace(/ ?음원 전달$| 전달$/,'')
   // Spec row order: 인원 / 녹음 시간 / 음정·박자 보정 / 믹싱 / 마스터링 / 디렉팅 / 전달
-  const tuned=p.key!=='A'
-  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : '+(tuned?'포함':'미포함'),'믹싱 : '+(tuned?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(tuned?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : '+when]
+  const deluxe=p.key!=='A'
+  return [(p.duet?'2인·1곡':'1인·1곡'),'인원 : '+(p.duet?'2인':'1인'),'녹음 시간 : '+hoursText(p.minutes),'음정·박자 보정 : 포함','믹싱 : '+(deluxe?'정밀 믹싱 포함':'기본 믹싱'),'마스터링 : '+(deluxe?'포함':'미포함'),'디렉팅 : 1:1 맞춤 디렉팅','전달 : '+when]
  }
  const featurePaths={
   record:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v2a6 6 0 0 0 12 0v-2M12 19v3M8 22h8"/>',
@@ -104,7 +105,7 @@
   person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
   people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
- const shortTitles={A:'기본 녹음',B:'+ 보컬 보정',C:'+ 보컬 보정 + 녹음 1시간',D:'+ 보컬 보정 + 녹음 1시간 + 1인 추가'}
+ const shortTitles={A:'녹음 + 음정·박자 보정',B:'+ 보컬 보정',C:'+ 보컬 보정 + 녹음 1시간',D:'+ 보컬 보정 + 녹음 1시간 + 1인 추가'}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
  // A received limited coupon applies before a recording date is chosen as well
@@ -132,7 +133,7 @@
  }
  function selectionDetails(key,bookingDate=''){
   const p=packageFor(key)
-  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?(p.key==='A'?'untuned':'tune'):item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
+  const icon=item=>item.startsWith('인원')?(p.duet?'people':'person'):item.startsWith('전달')?'file':item.startsWith('음정')?'tune':item==='마스터링 : 미포함'?'unmixed':item.includes('믹싱')||item.startsWith('마스터링')?'mix':'record'
   // One rule for every row: mark it when its value differs from the A card (same label, different value)
   const baseRows=features(packageFor('A')).slice(1)
   const featureRows=features(p).slice(1).map(item=>{
