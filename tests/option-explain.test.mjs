@@ -31,7 +31,11 @@ test('homepage option steps use transparent pngs and sit above the type table',(
   assert.match(app,/어떤 타입이 나에게 맞을까요\?/)
   assert.match(app,/나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!/)
   const hook=app.match(/function homeTypeBlock\(key\)\{[^}]+\}/)[0]
-  assert.match(hook,/key==='solo'\?optionExplainSection\(\):''/)
+  assert.match(hook,/key==='solo'\?optionExplainSection\(\)\+typeGuideSection\(\):''/)
+  assert.match(app,/function typeGuideSection\(\)\{return '<section class="type-guide"/)
+  assert.match(app,/assets\/img\/type-guide\/type-final\.webp/)
+  assert.match(app,/alt="어떤 타입이 나한테 맞을까\?"/)
+  assert.doesNotMatch(wizard,/type-guide|type-final/)
   assert.match(hook,/packageSalesSection\(key\)/)
   assert.match(app,/insertAdjacentHTML\('afterend',homeTypeBlock\(key\)\)/)
   assert.doesNotMatch(wizard,/옵션 설명!|튜닝중~|ox-status/)
