@@ -9,7 +9,7 @@
  function discoveryField(){return '<fieldset><legend>처음에 위스티아를 어디서 보고 오셨나요? (선택)</legend><div class="wf-sources">'+sources.map(source=>'<label class="wf-choice"><input type="radio" name="discovery" value="'+source+'"><span'+(source==='지인 추천'?' class="wf-source-label"':'')+'>'+(source==='지인 추천'?'<span class="wf-source-main">기타</span> <small class="wf-source-sub">(지인 추천 등)</small>':source)+'</span></label>').join('')+'</div></fieldset>'}
  function checkRow(name,label,amount,description=''){return '<label class="wf-check-row"><input type="checkbox" '+(name?'name="'+name+'" value="1"':'data-wf-people-add')+'><span class="wf-check-box">'+icon('check')+'</span><span class="wf-check-label">'+esc(label)+(description?'<small>'+esc(description)+'</small>':'')+'</span><strong>+'+money(amount)+'</strong></label>'}
  const tipText={people:'듀엣 패키지로 하면 더 가성비 있어요!',tuning:'패키지로 하면 더 가성비 있어요!',detailMix:'패키지로 하면 더 가성비 있어요!',precisionMix:'패키지로 하면 더 가성비 있어요!',extraHour:'패키지로 하면 더 가성비 있어요!'}
- function firstVisitField(){return '<div class="wf-welcome">'+global.WistiaPackages.couponClaimCard('firstVisit')+global.WistiaPackages.couponClaimCard('yearEndCoupon')+'</div>'}
+ function firstVisitField(){return '<input type="checkbox" name="firstVisit" value="1" hidden aria-hidden="true">'}
  function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><small>녹음 날짜 기준</small></div>'}
  function bookingDateField(){return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')}
  function render(key){
@@ -38,7 +38,7 @@
   // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
   const v=values(form),q=global.WistiaPackages.quote(v),details=Object.fromEntries(rows(form)),notes=String(v.specialNotes||'').trim().replace(/\r\n?/g,'\n')
   const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
-  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정',q.package.mixing?'정밀 믹싱':'기본 믹싱','마스터링']:['기본 믹싱'])]
+  const included=['1:1 디렉팅','음정·박자 보정',...(q.package.mixing?['정밀 믹싱','마스터링']:['기본 믹싱'])]
   const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
   const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
@@ -67,7 +67,7 @@
   {const input=form.querySelector('[name="firstVisit"]');if(input){input.disabled=q.package.key==='A';if(input.disabled)input.checked=false}}
   {const row=form.querySelector('[data-wf-option="people"]'),input=row?.querySelector('[data-wf-people-add]');if(input){input.checked=q.v.people==='1';input.disabled=!!q.package.duet;row.classList.toggle('is-included',input.disabled);row.querySelector('strong').textContent=input.disabled?'패키지에 포함되어 있어요':'+30,000원'}}
   {const box=form.querySelector('[data-year-end-coupon]');if(box&&!global.WistiaPackages.yearEndActive()){const input=box.querySelector('input');if(input)input.checked=false;box.remove()}else if(box){const input=box.querySelector('input'),standard=q.package.key==='A';input.disabled=standard;if(standard)input.checked=false;box.classList.toggle('is-disabled',standard)}}
-  for(const key of ['tuning','detailMix','precisionMix','extraHour']){const row=form.querySelector('[data-wf-option="'+key+'"]');if(!row)continue;const input=row.querySelector('input'),included=key==='tuning'?q.package.tuning:key==='detailMix'||key==='precisionMix'?q.package.mixing:!!q.package.duet;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);const tip=form.querySelector('[data-wf-tip="'+key+'"]');if(tip)tip.hidden=included||key==='extraHour'&&q.package.key==='C';row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
+  for(const key of ['tuning','detailMix','precisionMix','extraHour']){const row=form.querySelector('[data-wf-option="'+key+'"]');if(!row)continue;const input=row.querySelector('input'),included=key==='tuning'?q.package.tuning||q.package.key==='A':key==='detailMix'||key==='precisionMix'?q.package.mixing:false;input.disabled=included;if(included)input.checked=false;row.classList.toggle('is-included',included);const tip=form.querySelector('[data-wf-tip="'+key+'"]');if(tip)tip.hidden=included||key==='extraHour'&&q.package.key==='C';row.querySelector('strong').textContent=included?'패키지에 포함되어 있어요':'+'+money(global.WistiaPackages.options.find(o=>o.key===key).price)}
   {const row=form.querySelector('[data-wf-option="rush"]');if(row){const input=row.querySelector('input'),sameDay=!q.package.tuning&&!form.querySelector('input[name="tuning"]')?.checked;input.disabled=sameDay;if(sameDay)input.checked=false;row.classList.toggle('is-same-day',sameDay);row.querySelector('strong').textContent=sameDay?'당일 전달 포함':'+'+money(global.WistiaPackages.options.find(o=>o.key==='rush').price)}}
   const fieldset=form.querySelector('.package-extra-options'),rows=['people',...global.WistiaPackages.options.map(option=>option.key)].map(key=>form.querySelector('[data-wf-option="'+key+'"]'))
   const ordered=rows.filter(row=>!row.querySelector('input').disabled).concat(rows.filter(row=>row.querySelector('input').disabled)),current=[...fieldset.querySelectorAll('[data-wf-option]')]
@@ -152,6 +152,26 @@
   // After a tapped date, bring the time list into view once the buttons are ready
   if(form.dataset.wfRevealTimes&&known&&!loading&&list.querySelector('[data-wf-time]')){delete form.dataset.wfRevealTimes;global.requestAnimationFrame(()=>reveal(form,timeTop(form),list.querySelector('[data-wf-time]')))}
  }
+ function offerFirstVisit(form){
+  if(!global.document||form.dataset.firstVisitOffered==='1')return
+  if(global.WistiaPackages.readCouponClaims().firstVisit===true)return
+  form.dataset.firstVisitOffered='1'
+  const doc=global.document,wrap=doc.createElement('div')
+  wrap.className='wf-first-popup'
+  wrap.innerHTML='<div class="wf-first-card" role="dialog" aria-modal="true" aria-labelledby="wf-first-title"><img src="/assets/editorial/welcome-gift-rose.webp" alt="" width="88" height="88"><p class="wf-first-kicker">처음 만나는 위스티아의 선물</p><h2 id="wf-first-title">첫 이용 20,000원 할인</h2><p class="wf-first-only">DELUXE · PREMIUM · DUET ONLY</p><p class="wf-first-note">스탠다드에는 적용되지 않아요. 받으면 이 문의 금액에서 바로 빠져요.</p><div class="wf-first-actions"><button type="button" class="wf-first-dismiss">나중에</button><button type="button" class="wf-first-take">쿠폰 받기</button></div></div>'
+  const close=()=>{wrap.remove();doc.removeEventListener('keydown',onKey,true)}
+  const onKey=event=>{if(event.key==='Escape'){event.preventDefault();close()}}
+  wrap.querySelector('.wf-first-dismiss').addEventListener('click',close)
+  wrap.querySelector('.wf-first-take').addEventListener('click',()=>{
+   global.WistiaPackages.setCouponClaim('firstVisit',true)
+   try{global.wistiaAnalytics?.trackCouponClaim?.('first_visit')}catch{}
+   try{global.wistiaMeta?.trackCouponClaim?.('first_visit')}catch{}
+   close()
+  })
+  doc.addEventListener('keydown',onKey,true)
+  doc.body.appendChild(wrap)
+  wrap.querySelector('.wf-first-take').focus({preventScroll:true})
+ }
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false,onPeople};states.set(form,state)
   global.WistiaPackages.mountSelection(form)
@@ -183,7 +203,7 @@
   global.addEventListener('resize',()=>{fitOptionText(form);scrollDownButton(form)});global.addEventListener('scroll',()=>scrollDownButton(form),{passive:true});global.document.fonts?.ready.then(()=>fitOptionText(form))
   form.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled)return;if(button.hasAttribute('data-wf-scroll-down')){global.scrollBy({top:Math.round(global.innerHeight*.3),behavior:'smooth'});return}if(button.hasAttribute('data-wf-change-date')){timeMode(form,false);form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(button.dataset.wfTime){const time=form.querySelector('#contact-time');time.value=button.dataset.wfTime;time.dispatchEvent(new Event('change',{bubbles:true}));syncTimes(form)}if(button.hasAttribute('data-wf-goto'))navigate(form,Number(button.dataset.wfGoto));if(button.hasAttribute('data-wf-next'))navigate(form,state.step+1);if(button.hasAttribute('data-wf-prev')){if(state.step===1&&form.dataset.wfTimeMode){timeMode(form,false);form.querySelector('[data-wf-date-view]')?.scrollIntoView({block:'start'});return}if(state.step===0){const url=new URL('/',global.location.href);url.search=global.location.search;url.searchParams.set('package',quote(form).package.key);global.history.pushState({...global.history.state,wistiaDepth:(global.history.state?.wistiaDepth||0)+1},'',url.pathname+url.search);global.dispatchEvent(new global.PopStateEvent('popstate'))}else navigate(form,state.step-1)}})
   form.addEventListener('submit',async event=>{event.preventDefault();event.stopPropagation();if(state.step!==LAST||form.dataset.copyPending)return;const button=form.querySelector('[type="submit"]');form.dataset.copyPending='true';button.disabled=true;try{await global.WistiaBooking.refresh();if(!form.isConnected)return;for(const step of [1])if(!validate(form,step)){state.step=step;update(form);const err=form.querySelector('[data-wf-error="bookingDate"]:not([hidden]),[data-wf-error="timeStart"]:not([hidden])');if(err){const time=err.dataset.wfError==='timeStart';popup(err.textContent,()=>{(time?form.querySelector('[data-wf-selected-date]'):form.querySelector('[data-wf-step="1"] h2')).focus({preventScroll:true});reveal(form,form.querySelector(time?'[data-wf-time-view]':'[data-wf-date-view]'),err)})}else form.querySelector('[data-wf-step="'+step+'"] h2').focus();return}await onSubmit(text(form))}finally{delete form.dataset.copyPending;button.disabled=false}})
-  Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
+  Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form);offerFirstVisit(form)
  }
  function bookingKey(form){return 'ar-'+quote(form).minutes}
  global.WistiaWizard={currentStep:form=>[1,2,3,4][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,syncOptions,text,quote,rows,range,bookingKey}

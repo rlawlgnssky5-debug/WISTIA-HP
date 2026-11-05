@@ -79,31 +79,50 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     await page.locator(".ed-hero-consult").waitFor({ state: "visible" });
     const vid = await page.evaluate(() => localStorage.getItem("wistia_vid"));
     assert.match(vid, /^wv_[a-f0-9]{16,64}$/);
+    assert.equal((await page.locator(".ed-hero-consult").innerText()).replace(/\s+/g, " ").trim(), "AR 축가 자세히 보기");
 
+    const alignedWithType = () => page.waitForFunction(() => {
+      const target = document.querySelector("#packageSelection");
+      const header = document.querySelector("#siteHeader")?.getBoundingClientRect().bottom || 0;
+      return !!target && Math.abs(target.getBoundingClientRect().top - header - 12) < 8;
+    });
     await page.locator(".ed-hero-consult").click();
-    await page.locator("#mediaDialog .consult-choice-dialog").waitFor({ state: "visible" });
+    await alignedWithType();
     let snap = await pixelSnapshot(page);
+    assert.equal(snap.inquiryOpen, 0, "hero detail button must not emit InquiryOpen");
+    assert.equal(snap.inquiry_open, 0);
+    assert.equal(snap.kakao, 0);
+    assert.equal(snap.form, false);
+    assert.equal(snap.dialog, false);
+    assert.equal(snap.path, "/");
+
+    await page.locator(".ed-hero-listen").click();
+    await page.waitForFunction(() => {
+      const target = document.querySelector("#arcTuning");
+      const header = document.querySelector("#siteHeader")?.getBoundingClientRect().bottom || 0;
+      if (!target) return false;
+      const box = target.getBoundingClientRect();
+      return box.top < header + 320 && box.bottom > header + 40;
+    });
+    assert.equal(new URL(page.url()).pathname, "/");
+    await page.locator(".ed-hero-price-jump").click();
+    await alignedWithType();
+    snap = await pixelSnapshot(page);
+    assert.equal(snap.form, false);
+    assert.equal(snap.dialog, false);
+    assert.equal(snap.kakao, 0);
+    assert.equal(snap.path, "/");
+
+    await page.locator("#floatingKakaoChat").click();
+    await page.locator("#mediaDialog .consult-choice-dialog").waitFor({ state: "visible" });
+    snap = await pixelSnapshot(page);
     assert.equal(snap.inquiryOpen, 0, "choice dialog must not emit InquiryOpen");
     assert.equal(snap.inquiry_open, 0);
     assert.equal(snap.form, false);
     assert.equal(snap.dialog, true);
     assert.match(await page.locator("#mediaDialog h2").innerText(), /어떤 상담이 편하신가요/);
-
     const kakaoHref = await page.locator("#mediaDialog .consult-choice-direct").getAttribute("href");
     assert.match(kakaoHref, /^https:\/\/pf\.kakao\.com\/_GbExjX\/chat/);
-    const popupPromise = page.waitForEvent("popup", { timeout: 8000 });
-    await page.locator("#mediaDialog .consult-choice-direct").click();
-    const popup = await popupPromise;
-    await popup.close();
-    await page.waitForFunction(() => document.querySelector("#mediaDialog")?.open !== true);
-    snap = await pixelSnapshot(page);
-    assert.equal(snap.inquiryOpen, 0, "Kakao choice must not emit InquiryOpen");
-    assert.equal(snap.inquiry_open, 0);
-    assert.equal(snap.kakao, 0, "consult-choice Kakao is not the Contact or floating Kakao path");
-    assert.equal(snap.form, false);
-    assert.equal(new URL(page.url()).pathname, "/");
-
-    await page.locator(".ed-hero-consult").click();
     await page.locator("#mediaDialog .consult-choice-form").click();
     await page.locator("#contactInquiryForm").waitFor({ state: "visible" });
     await page.waitForTimeout(500);

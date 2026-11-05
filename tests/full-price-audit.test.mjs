@@ -9,14 +9,14 @@ const ref='2026-10-29',cases=[['',0,false],['2026-10-29',0,true],['2026-10-30',0
 test('independent approved-price oracle checks every type, option combination, people, coupon and boundary time',()=>{
  let checked=0
  for(const [tier,p] of Object.entries(tiers))for(let bits=0;bits<32;bits++)for(const people of ['0','1'])for(const first of [false,true])for(const limited of [false,true])for(const [date,advance,weekday] of cases)for(const time of ['','12:59','13:00','16:00','16:01']){
-  const selected=optionKeys.filter((_,i)=>bits&(1<<i)),slow=tier!=='A'||selected.includes('tuning')
-  const payable=selected.filter(k=>!(tier!=='A'&&['tuning','detailMix','precisionMix'].includes(k))&&!(tier==='D'&&k==='extraHour')&&!(k==='rush'&&!slow))
+  const selected=optionKeys.filter((_,i)=>bits&(1<<i)),slow=tier!=='A'
+  const payable=selected.filter(k=>k!=='tuning'&&!(tier!=='A'&&['detailMix','precisionMix'].includes(k))&&!(k==='rush'&&!slow))
   const optionTotal=payable.reduce((sum,k)=>sum+fees[optionKeys.indexOf(k)],people==='1'&&tier!=='D'?30000:0)
-  const weekdayAmount=weekday&&['13:00','16:00'].includes(time)?10000:0,limitedAmount=limited&&tier!=='A'?20000:0
+  const weekdayAmount=weekday&&['13:00','16:00'].includes(time)?10000:0,limitedAmount=0
   const expected=p.price+optionTotal-(first&&tier!=='A'?20000:0)-limitedAmount-advance-weekdayAmount
   const q=pricing.quote({package:tier,people,options:selected,firstVisit:first,yearEndCoupon:limited,bookingDate:date,timeStart:time,paybackBlog:true,paybackReaction:true},ref)
   assert.equal(q.total,expected,JSON.stringify({tier,people,selected,first,limited,date,time}))
-  assert.equal(q.optionTotal,optionTotal);assert.equal(q.minutes,p.minutes+(selected.includes('extraHour')&&tier!=='D'?60:0));assert.equal(q.payback,60000)
+  assert.equal(q.optionTotal,optionTotal);assert.equal(q.minutes,p.minutes+(selected.includes('extraHour')?60:0));assert.equal(q.payback,60000)
   assert.equal(q.delivery,slow?(payable.includes('rush')?'녹음일 기준 3일 이내 전달':'영업일 7일 이내 전달'):'당일 음원 전달')
   checked++
  }

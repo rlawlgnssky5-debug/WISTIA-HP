@@ -28,7 +28,7 @@ test('duet changes people, not the selected recording time',()=>{
  for(const p of ['A','B','C']){const result=q({package:p,people:'1'});assert.equal(result.total,pricing.packages[p].price+30000);assert.equal(result.minutes,pricing.packages[p].minutes)}
 })
 test('one additional hour costs 60000, including a further hour after C',()=>{
- assert.deepEqual(['A','B','C'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[150000,110],[230000,150],[280000,210]])
+ assert.deepEqual(['A','B','C','D'].map(p=>{const r=q({package:p,options:['extraHour']});return [r.total,r.minutes]}),[[150000,110],[230000,150],[280000,210],[300000,210]])
 })
 test('removed 100% AR option is not offered or charged from legacy selections',()=>{
  assert.equal(pricing.options.some(o=>o.key==='lipsync'),false)

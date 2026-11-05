@@ -388,7 +388,7 @@ const INFO_PAGES = {
 const INFO_FAQ_GROUPS=[
  {title:"녹음 전 준비",description:"곡을 고르는 순간부터 함께 준비해요",items:[
   ["곡을 아직 정하지 못했는데 상담받아도 될까요?","물론이에요 마음에 두고 계신 노래나 전하고 싶은 분위기만 알려주셔도 좋아요 목소리와 음역에 맞는 곡을 함께 고민해 드릴게요"],
-  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>2주 전까지</strong> 녹음하시는 걸 추천드려요<br>STANDARD 기본 구성은 당일, DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 <strong>영업일 7일 이내</strong>에 전달해 드려요<br>수정과 리허설 시간도 여유 있게 준비해 주세요"],
+  ["결혼식 며칠 전에 녹음하면 좋을까요?","결혼식 <strong>2주 전까지</strong> 녹음하시는 걸 추천드려요<br>STANDARD 기본 구성은 당일, DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 <strong>영업일 7일 이내</strong>에 전달해 드려요<br>수정과 리허설 시간도 여유 있게 준비해 주세요"],
   ["곡의 키는 어떻게 정하면 될까요?","원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요"],
   ["녹음 전에 무엇을 준비하면 좋을까요?","<strong>따로 준비하실 건 없어요!</strong><br>몸만 편하게 오시면 나머지는 저희가 다 준비해 드려요"]
  ]},
@@ -403,7 +403,7 @@ const INFO_FAQ_GROUPS=[
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","미리 녹음한 목소리와 현장 목소리가<br>어우러지도록 비율을 맞춰요<br>녹음 당일 <strong>직접 리허설</strong>해 보고 확인하실 수 있어요"]
  ]},
  {title:"완성본 전달과 수정",description:"완성된 음원을 받고 본식에 전달하는 방법이에요",items:[
-  ["완성된 음원은 언제 받을 수 있나요?","STANDARD 기본 구성은 녹음 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 영업일 7일 이내에 전달해 드려요"],
+  ["완성된 음원은 언제 받을 수 있나요?","STANDARD 기본 구성은 녹음 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 영업일 7일 이내에 전달해 드려요"],
   ["완성본을 듣고 수정하고 싶은 부분이 있으면 어떡하나요?","편하게 말씀해 주세요 수정은 상담에서 안내해요"],
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달받으신 본식용 AR 음원을 예식장 담당자에게 보내 주세요 예식장에서 사용하는 파일 형식과 재생 환경도 미리 확인해 알려주시면 좋아요 본식 전에 파일이 잘 재생되는지 꼭 확인해 주세요"]
  ]},
@@ -925,7 +925,7 @@ function paybackSection(items,maximum){
 }
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
- const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+[['위스티아 첫 이용','20,000원 할인','DELUXE · PREMIUM · DUET ONLY · 처음 이용하신다면 문의 양식에서 첫 이용을 선택해 주세요','gift'],['목·금 오후 1~4시 시작','10,000원 할인','공휴일 제외 · 해당 요일과 시작 시간을 선택하면 자동 반영돼요','clock'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정','calendar']].map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+ const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+[['위스티아 첫 이용','20,000원 할인','DELUXE · PREMIUM · DUET ONLY · 문의 양식을 열면 받을 수 있어요','gift'],['목·금 오후 1~4시 시작','10,000원 할인','공휴일 제외 · 해당 요일과 시작 시간을 선택하면 자동 반영돼요','clock'],['녹음일 1개월 이후','10,000원 할인','예약하는 날에서 한 달 이후의 녹음 일정','calendar']].map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
  app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+paybackSection(items,maximum)+'<a class="ev2-cta ev2-consult" href="/">AR 축가 상담하기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></section>'+footer()
 }
 let contactQuote=null
@@ -1142,7 +1142,7 @@ function soloChatFaq(){
   ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>'],
   ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','STANDARD 기본 구성은 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 보컬 튜닝 선택 시 영업일 7일 이내에 전달해 드려요'],
+  ['완성 음원은 언제 받을 수 있나요?','STANDARD 기본 구성은 당일 전달해 드려요<br>DELUXE·PREMIUM·DUET 또는 음정·박자 보정 선택 시 영업일 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
@@ -1247,10 +1247,10 @@ function mobileArNotices(story=false){
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
 function mobileDetailEvents(){
- const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 문의 양식에서 첫 이용 선택',weekday:'공휴일 제외 · 녹음 시작 시간 기준',advance1:'사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
+ const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 문의 양식을 열면 받을 수 있어요',weekday:'공휴일 제외 · 녹음 시작 시간 기준',advance1:'사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
  const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
  const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
- return '<div class="ed-benefit-lists">'+window.WistiaPackages.couponClaimCard('firstVisit','detail','/assets/editorial/welcome-gift-rose.webp')+window.WistiaPackages.couponClaimCard('yearEndCoupon','detail')+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
+ return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
@@ -1270,13 +1270,13 @@ function selectedPackage(){return window.WistiaPackages.packageFor(new URLSearch
 function packageInquiryHref(key,packageKey=selectedPackage().key){return '/event/'+key+'?package='+packageKey}
 function packageInformation(key,packageKey){
  const p=window.WistiaPackages.packageFor(packageKey),duet=key==='duo'
- const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['보컬 튜닝',p.tuning?'음정·박자 보정 포함':'추가 선택'],['마스터링',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
+ const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['기본 믹싱','목소리와 MR의 밸런스·울림 조절'],['음정·박자 보정',p.tuning||p.key==='A'?'포함':'추가 선택'],['마스터링',p.mixing?'음색·톤 조절 서비스 포함':'추가 선택'],['음원 전달',p.delivery]]
  return '<h2>선택한 상품정보</h2><dl>'+rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escapeHtml(value)+'</dd></div>').join('')+'</dl>'
 }
-function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'||o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
+function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'?'모든 타입에 포함':o.key==='detailMix'||o.key==='precisionMix'?'DELUXE·PREMIUM에는 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle">내게 맞는 녹음 타입을<br>골라보세요</h2>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
-function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 <span class="process-keep">보컬 튜닝</span>과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, <span class="process-keep">DELUXE·PREMIUM</span> 또는 <span class="process-keep">보컬 튜닝</span> 선택 시 <span class="process-keep">영업일 7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>STANDARD 기본 구성은 당일 전달<br>DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 영업일 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>수정</strong><span>수정은 상담에서 안내해요</span></li></ul></section>'}
+function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','기본 믹싱을 진행하고, 선택한 구성에 따라 <span class="process-keep">음정·박자 보정</span>과 마스터링을 더해요'],['검수·전달','STANDARD 기본 구성은 당일, <span class="process-keep">DELUXE·PREMIUM</span> 또는 <span class="process-keep">음정·박자 보정</span> 선택 시 <span class="process-keep">영업일 7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
@@ -1316,13 +1316,13 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-consult" data-package-inquiry href="'+packageInquiryHref(key)+'">AR 축가 상담하기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a><a class="ed-hero-listen" href="#arcTuning" data-ar-section="arcTuning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 4 13 8-13 8Z"/></svg>보정 전후 들어보기</a><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+mobileDetailEvents(null)+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-consult" href="#packageSelection" data-ar-section="packageSelection">AR 축가 자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a><a class="ed-hero-listen" href="#arcTuning" data-ar-section="arcTuning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 4 13 8-13 8Z"/></svg>보정 전후 들어보기</a><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+mobileDetailEvents(null)+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
  const detailParts=document.createElement('template');detailParts.innerHTML=details
  const tuning=detailParts.content.querySelector('#arcTuning')
- tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM 또는 보컬 튜닝 선택 시 진행</p>')
+ tuning?.insertAdjacentHTML('afterbegin','<p class="package-point-note">보컬 보정 전후 예시 · DELUXE·PREMIUM 또는 음정·박자 보정 선택 시 진행</p>')
  const benefitIcons=['microphone','tune','clock']
  detailParts.content.querySelectorAll('.package-notices>ul>li').forEach((item,index)=>{item.insertAdjacentHTML('afterbegin','<span class="ed-benefit-icon" aria-hidden="true">'+studioIcon(benefitIcons[index%benefitIcons.length])+'</span>')})
  const map=detailParts.content.querySelector('[data-solo-map]')
@@ -2111,7 +2111,7 @@ document.addEventListener("click",e=>{
  const el=e.target.closest("a,button,summary[data-process-step]");if(!el)return;
  if(el.id==='floatingKakaoChat'){e.preventDefault();showKakaoInquiryDialog(inquiryPathForPage());return}
  if(el.matches('.faq-category-nav a')){e.preventDefault();const heading=document.getElementById(el.getAttribute('href').slice(1));if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})}return}
- if(el.matches('.product-inquiry > a,.ed-hero-consult')&&!el.closest('.wistia-events')){e.preventDefault();showKakaoInquiryDialog(el.getAttribute('href'));return}
+ if(el.matches('.product-inquiry > a')&&!el.closest('.wistia-events')){e.preventDefault();showKakaoInquiryDialog(el.getAttribute('href'));return}
  if(el.hasAttribute('data-copy-address')){copyLocationAddress(el);return}
  if(el.hasAttribute("data-inquiry-jump")){e.preventDefault();jumpToInquiry();return}
  if(el.hasAttribute('data-booking-refresh')){window.WistiaBooking?.refresh();return}

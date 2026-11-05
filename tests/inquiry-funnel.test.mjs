@@ -140,8 +140,8 @@ const choiceClicks = lifecycle();
 const clickable = (fields) => ({ id: "", classList: [], textContent: "", hasAttribute: () => false, closest: () => null, matches: () => false, getAttribute: () => null, ...fields });
 const hero = clickable({
   classList: ["ed-hero-consult"],
-  textContent: "AR 축가 상담하기",
-  getAttribute: name => name === "href" ? "/event/solo?package=standard" : null,
+  textContent: "AR 축가 자세히 보기",
+  getAttribute: name => name === "href" ? "#packageSelection" : null,
   matches: selector => selector.includes(".ed-hero-consult")
 });
 const productInquiry = clickable({
@@ -188,7 +188,8 @@ const funnelSource = read("inquiry-funnel.js"), appSource = read("app.js");
 assert.match(funnelSource, /control\.id === "floatingKakaoChat"/);
 assert.match(funnelSource, /\.ed-hero-consult, \.product-inquiry > a, \.consult-choice-direct/);
 assert.match(appSource, /el\.id==='floatingKakaoChat'/);
-assert.match(appSource, /\.product-inquiry > a,\.ed-hero-consult/);
+assert.match(appSource, /class="ed-hero-consult" href="#packageSelection" data-ar-section="packageSelection">AR 축가 자세히 보기/);
+assert.doesNotMatch(appSource, /\.product-inquiry > a,\.ed-hero-consult/);
 for (const flow of [opening, closed, left, success]) {
   const ga = flow.calls.filter(call => !call[0].startsWith("meta:"));
   const meta = flow.calls.filter(call => call[0].startsWith("meta:")).map(([name, params]) => [name.slice(5), params]);
