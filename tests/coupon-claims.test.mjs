@@ -9,6 +9,8 @@ test('first visit stores a short-lived choice but limited inventory cannot be cl
  const {api,items}=setup({'unrelated':'keep'});api.setCouponClaim('firstVisit',true);api.setCouponClaim('yearEndCoupon',true)
  const saved=JSON.parse(items.get(key));assert.deepEqual(Object.keys(saved).sort(),['savedAt','selections','version']);assert.deepEqual(saved.selections,{firstVisit:true});assert.equal(items.get('unrelated'),'keep')
  api.setCouponClaim('firstVisit',false);assert.equal(api.readCouponClaims().firstVisit,false);assert.equal(api.readCouponClaims().yearEndCoupon,undefined)
+ const dismissed=setup();dismissed.api.dismissFirstVisitPrompt();assert.equal(dismissed.api.firstVisitPromptClosed(),true);assert.equal(dismissed.api.readCouponClaims().firstVisit,undefined);assert.equal(JSON.parse(dismissed.items.get(key)).dismissed,true)
+ dismissed.api.setCouponClaim('firstVisit',true);assert.equal(JSON.parse(dismissed.items.get(key)).dismissed,true);assert.equal(dismissed.api.readCouponClaims().firstVisit,true)
  api.setCouponClaim('__proto__',true);assert.equal(Object.hasOwn(JSON.parse(items.get(key)).selections,'__proto__'),false)
 })
 test('coupon choices ignore expired, corrupt, future and nonboolean storage',()=>{

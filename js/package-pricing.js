@@ -184,16 +184,24 @@
  function yearEndBookingBanner(){if(!yearEndActive())return '';return '<div class="welcome-gift year-end-ticket" data-year-end-gift><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+yearEndCopy.label+'</small><strong>20,000원 할인</strong><em><span class="year-end-products">'+yearEndCopy.products+'</span></em></div></div>'}
  const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=24*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
  let memoryClaims=null
- function readCouponClaims(){
+ function couponRecord(){
   let data=memoryClaims
   try{const raw=global.localStorage?.getItem(couponStorageKey);if(raw)data=JSON.parse(raw)}catch{}
-  const result=!data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>=couponLifetime?{}:Object.fromEntries(couponKeys.filter(key=>typeof data.selections?.[key]==='boolean').map(key=>[key,data.selections[key]]))
+  return data
+ }
+ function couponRecordCurrent(data=couponRecord()){return !data||data.version!==1||!Number.isFinite(data.savedAt)||Date.now()-data.savedAt<0||Date.now()-data.savedAt>=couponLifetime?null:data}
+ function readCouponClaims(){
+  const data=couponRecord()
+  const current=couponRecordCurrent(data)
+  const result=current?Object.fromEntries(couponKeys.filter(key=>typeof current.selections?.[key]==='boolean').map(key=>[key,current.selections[key]])):{}
   // An expired first-use claim reads as not received so its 20,000 drops out everywhere
   if(data&&data.version===1&&Number.isFinite(data.savedAt)&&Date.now()-data.savedAt>=couponLifetime&&data.selections?.firstVisit===true)result.firstVisit=false
   if(global.document)result.yearEndCoupon=yearEndActive()&&limitedClaimed()
   return result
  }
- function writeCouponClaims(selections){memoryClaims={version:1,savedAt:Date.now(),selections:Object.fromEntries(couponKeys.filter(key=>typeof selections[key]==='boolean').map(key=>[key,selections[key]]))};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
+ function writeCouponClaims(selections){const dismissed=couponRecordCurrent()?.dismissed===true;memoryClaims={version:1,savedAt:Date.now(),selections:Object.fromEntries(couponKeys.filter(key=>typeof selections[key]==='boolean').map(key=>[key,selections[key]])),...(dismissed?{dismissed:true}:{})};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
+ function firstVisitPromptClosed(){return readCouponClaims().firstVisit===true||couponRecordCurrent()?.dismissed===true}
+ function dismissFirstVisitPrompt(){const current=couponRecordCurrent();const selections=current?Object.fromEntries(couponKeys.filter(key=>typeof current.selections?.[key]==='boolean').map(key=>[key,current.selections[key]])):{};memoryClaims={version:1,savedAt:Date.now(),selections,dismissed:true};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
  function couponClaimCard(key,mode='form',imageSrc){
   if(key==='yearEndCoupon'||!couponKeys.includes(key))return ''
   const year=key==='yearEndCoupon',title=year?yearEndCopy.label:'첫 이용 쿠폰',banner=year?yearEndBookingBanner():firstVisitBanner(imageSrc)
@@ -289,7 +297,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' 원가 '+money(pkg.individual))})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon,firstVisitPromptClosed,dismissFirstVisitPrompt}
  // WistiaLimitedCoupon refreshes server inventory and expires received coupons after 24h
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
