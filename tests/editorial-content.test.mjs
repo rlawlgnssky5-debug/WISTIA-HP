@@ -38,6 +38,8 @@ test('percentage slider positions snap to the nearest available recording', () =
 test('key, tuning, ratio and engineering sections preserve the original visible information', () => {
   for (const name of ['key', 'tuningHeader', 'ratioHeader', 'engineer', 'preparation']) assert.equal(typeof editorial[name], 'function', name)
   const text = visibleText(editorial.key() + editorial.tuningHeader() + editorial.ratioHeader() + editorial.engineer() + editorial.preparation())
-  for (const copy of ['음원 편집 · 키 조절', '0원', '원하는 길이로 자르고 자연스럽게 이어요.', '원곡 키', '내 키', '-2', '내 목소리에 맞는 높이로 조절해요.', '노래의 감정은 그대로, 내 목소리에 맞게', '곡·MR 보내기', '키 상담', '내 키로 녹음', '음정·박자가 흔들려도', '자연스럽게 다듬어 드려요', '내 목소리 그대로, 어색한 부분만', '음정·박자·호흡을 섬세하게 보정합니다', '내 목소리에 맞게', 'AR 비율을 골라보세요', '같은 노래를 라이브와 AR 비율별로', '직접 비교해 들어보세요.', '같은 소스여도,', '사운드 완성도는 달라집니다', '〈싱어게인2〉 방송 음악 작업 참여 엔지니어가', '직접 수작업 보정부터', '믹싱·마스터링까지 완성합니다']) assert.ok(text.includes(copy), copy)
-  for (const copy of ['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요', '필요한 보정과 믹싱 선택', '목소리와 준비 상황에 맞춰 A·B·C 중 골라 주세요', '여유로운 녹음 시간', 'C는 2시간 녹음으로 준비할 수 있어요']) assert.ok(text.includes(copy), copy)
+  for (const copy of ['음원 편집 · 키 조절', '0원', '원하는 길이로 자르고 자연스럽게 이어요', '원곡 키 0', '내 키 -2', '내 목소리에 맞는 높이로 조절해요', '노래의 감정은 그대로, 내 목소리에 맞게', '곡·MR 보내기', '키 상담', '내 키로 녹음', '음정·박자가 흔들려도', '자연스럽게 다듬어 드려요', '내 목소리 그대로, 어색한 부분만', '음정·박자·호흡을 섬세하게 보정합니다', '위스티아는 전 비율 다 드립니다', '같은 소스여도,', '사운드 완성도는 달라집니다', '〈싱어게인2〉 방송 음악 작업 참여 엔지니어가', '정밀 믹싱과 마스터링으로', '사운드를 완성합니다', '구간별 녹음과 1:1 디렉팅', '보정은 타입마다 달라요', '여유로운 녹음 시간']) assert.ok(text.includes(copy), copy)
+  assert.equal(text.includes('기본 믹싱'), false)
+  assert.equal(text.includes('수작업 보정부터'), false)
+  assert.equal(text.includes('필요한 보정과 믹싱 선택'), false)
 })

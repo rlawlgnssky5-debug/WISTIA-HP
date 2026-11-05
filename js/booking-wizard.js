@@ -17,7 +17,7 @@
   const sections=[
    '<h3 class="package-heading package-guide-title">어떤 타입이 나에게 맞을까요?</h3><p class="package-guide-sub">나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!</p>'+global.WistiaPackages.cards(selected,'wizard')+firstVisitField()+'<fieldset class="wf-people"><legend>녹음 인원</legend><p class="wf-tip is-right" data-wf-tip="people">'+tipText.people+'</p><div class="wf-pair">'+['<b>1인</b><small>1인·1곡 기준</small>','<b>듀엣곡으로 변경</b><small>2인 1곡 기준</small><strong>+30,000원</strong>'].map((label,i)=>'<label class="wf-choice"><input type="radio" name="people" value="'+i+'"'+(String(i)===(key==='duo'?'1':'0')?' checked':'')+'><span>'+icon('people')+label+'</span></label>').join('')+'</div></fieldset>'+discoveryField(),
    '<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<p class="wf-discount-banner" data-wf-weekday-note>목·금 13~16시 시작은 10,000원 할인돼요</p><div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>50분 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
-   '<p class="wf-option-guide">필요한 옵션만 선택해 주세요</p><fieldset class="wf-option package-extra-options"><legend>추가 옵션</legend><div data-wf-option="people">'+checkRow('','녹음 1인 추가 (듀엣곡으로 변경)',30000,'2인 1곡 기준')+'</div>'+global.WistiaPackages.options.map(o=>'<div data-wf-option="'+o.key+'">'+(tipText[o.key]?'<p class="wf-tip" data-wf-tip="'+o.key+'">'+tipText[o.key]+'</p>':'')+checkRow(o.key,o.label,o.price,o.detail)+'</div>').join('')+'</fieldset>',
+   '<p class="wf-option-guide">필요한 옵션만 선택해 주세요</p><fieldset class="wf-option package-extra-options"><legend>추가 옵션</legend><div data-wf-option="people">'+checkRow('','녹음 1인 추가',30000,'2인 1곡 기준')+'</div>'+global.WistiaPackages.options.map(o=>'<div data-wf-option="'+o.key+'">'+(tipText[o.key]?'<p class="wf-tip" data-wf-tip="'+o.key+'">'+tipText[o.key]+'</p>':'')+checkRow(o.key,o.label,o.price,o.detail)+'</div>').join('')+'</fieldset>',
    '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><div class="wf-review" data-wf-review></div><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다</p>'
   ]
   return '<section class="wistia-wizard"><h1>문의양식 작성</h1><p class="wf-draft-note" data-wf-draft-note>작성 내용은 이 브라우저에 24시간 동안 임시 저장돼요</p><form id="contactInquiryForm" data-wizard="true" data-booking-calendar-opened="true" novalidate><ol class="wf-progress" aria-label="문의 단계">'+steps.map((title,i)=>'<li data-wf-progress="'+i+'"><button type="button" data-wf-goto="'+i+'" aria-label="'+(i+1)+'단계 '+title+'"><span>'+(i+1)+'</span><small>'+title+'</small></button></li>').join('')+'</ol><p class="wf-step-label" data-wf-step-label aria-live="polite"></p>'+sections.map((body,i)=>'<section class="wf-step" data-wf-step="'+i+'"'+(i?' hidden':'')+'><h2 tabindex="-1">'+titles[i]+'</h2>'+body+'</section>').join('')+'<div class="wf-nav"><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 카카오톡 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
@@ -38,8 +38,8 @@
   // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
   const v=values(form),q=global.WistiaPackages.quote(v),details=Object.fromEntries(rows(form)),notes=String(v.specialNotes||'').trim().replace(/\r\n?/g,'\n')
   const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
-  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['정밀 믹싱','마스터링']:['기본 믹싱'])]
-  const addedName={duet:'2인(듀엣곡) 변경',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
+  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['정밀 믹싱','마스터링']:[])]
+  const addedName={duet:'녹음 1인 추가',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
   const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
@@ -96,9 +96,13 @@
   const weekdayCopy=standard?'<span class="wf-weekday-copy">스탠다드는 할인이 적용되지 않아요</span>':holiday?'<span class="wf-weekday-copy">공휴일은 목·금 시간대 할인이 적용되지 않아요</span>':'<span class="wf-weekday-copy"><small class="wf-time-discount wf-event-badge">이벤트</small> 목·금 13~16시 시작은 <strong>10,000원 할인</strong>돼요</span><small class="wf-weekday-condition">'+(weekdayApplied?'할인 적용 · ':'')+'공휴일 제외</small>'
   if(weekday.innerHTML!==weekdayCopy)weekday.innerHTML=weekdayCopy
   weekday.classList.toggle('is-applied',weekdayApplied)
-  if(state.lastWeekday===false&&weekdayApplied)flashDiscount(form,10000)
-  state.lastWeekday=weekdayApplied
-  if(state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(state.step===1&&!q.v.timeStart?note:weekday)}
+  const dateNow=q.v.bookingDate||'',timeNow=q.v.timeStart||''
+  const dateTouch=state.lastDate!==undefined&&state.step===1&&(state.lastDate!==dateNow||state.lastTime!==timeNow)
+  const freshWeekday=dateTouch&&state.lastWeekday===false&&weekdayApplied
+  const freshAdvance=dateTouch&&state.lastAdvance===false&&!!advance
+  if(freshWeekday||freshAdvance)flashDiscount(form,(freshWeekday?10000:0)+(freshAdvance?advance.amount:0))
+  state.lastWeekday=weekdayApplied;state.lastAdvance=!!advance;state.lastDate=dateNow;state.lastTime=timeNow
+  if(dateTouch&&state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(weekdayApplied?weekday:note)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   syncOptions(form,q)
   global.WistiaPackages.syncCouponControls(form)
