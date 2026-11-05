@@ -125,7 +125,7 @@
         '<svg class="ed-sound-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 18v-3a11 11 0 0 1 22 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="16" width="6" height="12" rx="3" fill="currentColor"/><rect x="23" y="16" width="6" height="12" rx="3" fill="currentColor"/></svg>' +
         heading('SOUND', '<span>같은 소스여도,</span><b class="ed-title">사운드 완성도는 달라집니다</b>') +
         '<div class="ed-credit"><p class="ed-eyebrow">사운드 완성</p><div class="ed-broadcast-logo"><img src="assets/editorial/sound-vinyl-reference.webp" alt="싱어게인2" width="800" height="1200" loading="lazy" decoding="async"></div></div>' +
-        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>정밀 믹싱과 마스터링으로<br>사운드를 완성합니다</p></section>'
+        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>음정·박자 보정은 타입과 옵션에 맞추고<br>정밀 믹싱·마스터링으로 마무리합니다</p></section>'
     }
   }
   if (typeof module === 'object' && module.exports) module.exports = editorial
