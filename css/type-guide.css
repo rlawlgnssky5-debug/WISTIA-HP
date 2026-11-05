@@ -8,11 +8,31 @@ html body #app .type-guide{
   box-shadow:none!important;
   overflow:hidden;
 }
-/* POINT 01–04 use the content column. Side padding stays small. */
-html body #app .mobile-ar-solo > :is(#arcRecording,#arcKey,#arcTuning,#soloPoint04){
-  padding-inline:8px!important;
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#packageSelection{scroll-margin-top:76px}
+/* POINT 01–04 fill the content column. Later padding shorthands must not restore the side gap. */
+html body #app#app#app#app#app#app#app#app .mobile-ar-solo :is(#arcRecording,#arcKey,#arcTuning,#soloPoint04){
+  padding-left:4px!important;
+  padding-right:4px!important;
 }
-html body #app .mobile-ar-solo > #arcKey{--ed-key-gutter:8px}
+html body #app#app#app#app#app#app#app#app .mobile-ar-solo #arcKey{--ed-key-gutter:4px}
+/* FAQ white cards and the directions map sit in from the content edges. */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(#arcFaq.solo-faq,.solo-map){
+  padding-left:22px!important;
+  padding-right:22px!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-faq-group{
+  margin-left:10px!important;
+  margin-right:10px!important;
+  padding-left:22px!important;
+  padding-right:22px!important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-map-art img{
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+}
 html body #app .type-guide img{
   display:block!important;
   width:100%!important;
