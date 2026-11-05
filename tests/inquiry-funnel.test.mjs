@@ -133,7 +133,62 @@ const link = {
 opening.fire("click", { closest: () => link });
 assert.equal(count(opening, "inquiry_open"), 1);
 assert.equal(opening.calls.find(call => call[0] === "inquiry_open")[1].button_location, "detail_footer_fixed");
+assert.equal(opening.calls.find(call => call[0] === "inquiry_open")[1].button_label, "문의양식 작성");
 assert.doesNotMatch(JSON.stringify(opening.calls), /PRIVATE/);
+
+const choiceClicks = lifecycle();
+const clickable = (fields) => ({ id: "", classList: [], textContent: "", hasAttribute: () => false, closest: () => null, matches: () => false, getAttribute: () => null, ...fields });
+const hero = clickable({
+  classList: ["ed-hero-consult"],
+  textContent: "AR 축가 상담하기",
+  getAttribute: name => name === "href" ? "/event/solo?package=standard" : null,
+  matches: selector => selector.includes(".ed-hero-consult")
+});
+const productInquiry = clickable({
+  textContent: "카카오톡 문의",
+  getAttribute: name => name === "href" ? "/event/duo" : null,
+  matches: selector => selector.includes(".product-inquiry > a")
+});
+const floating = clickable({
+  id: "floatingKakaoChat",
+  getAttribute: name => name === "href" ? "/contact" : null
+});
+const kakaoChoice = clickable({
+  classList: ["consult-choice-direct"],
+  textContent: "일단 상담부터 받을래요!",
+  getAttribute: name => name === "href" ? "https://pf.kakao.com/_GbExjX/chat" : null,
+  matches: selector => selector.includes(".consult-choice-direct")
+});
+const formChoice = clickable({
+  classList: ["consult-choice-card", "consult-choice-form"],
+  textContent: "문의 양식 작성하고 상담받을래요!인원과 일정을 미리 적어 주시면 상담에 도움이 돼요",
+  querySelector: selector => selector === "strong" ? { textContent: "문의 양식 작성하고 상담받을래요!" } : null,
+  getAttribute: name => name === "href" ? "/event/solo" : null,
+  closest: selector => selector === ".consult-choice-form" ? formChoice : null
+});
+const packageLink = clickable({
+  classList: ["package-inquiry-link"],
+  textContent: "선택한 구성으로 문의양식 작성",
+  getAttribute: name => name === "href" ? "/event/solo?package=deluxe" : null
+});
+for (const control of [hero, productInquiry, floating, kakaoChoice]) choiceClicks.fire("click", { closest: () => control });
+assert.equal(count(choiceClicks, "inquiry_open"), 0);
+choiceClicks.fire("click", { closest: () => formChoice });
+assert.equal(count(choiceClicks, "inquiry_open"), 1);
+const formOpen = choiceClicks.calls.find(call => call[0] === "inquiry_open")[1];
+assert.equal(formOpen.button_location, "consult_choice_form");
+assert.equal(formOpen.button_label, "문의 양식 작성하고 상담받을래요!");
+choiceClicks.fire("click", { closest: () => packageLink });
+assert.equal(count(choiceClicks, "inquiry_open"), 2);
+const packageOpen = choiceClicks.calls.filter(call => call[0] === "inquiry_open").at(-1)[1];
+assert.equal(packageOpen.button_location, "package-inquiry-link");
+assert.equal(packageOpen.button_label, "선택한 구성으로 문의양식 작성");
+assert.doesNotMatch(JSON.stringify(choiceClicks.calls), /package=|standard|deluxe|pf\.kakao/);
+const funnelSource = read("inquiry-funnel.js"), appSource = read("app.js");
+assert.match(funnelSource, /control\.id === "floatingKakaoChat"/);
+assert.match(funnelSource, /\.ed-hero-consult, \.product-inquiry > a, \.consult-choice-direct/);
+assert.match(appSource, /el\.id==='floatingKakaoChat'/);
+assert.match(appSource, /\.product-inquiry > a,\.ed-hero-consult/);
 for (const flow of [opening, closed, left, success]) {
   const ga = flow.calls.filter(call => !call[0].startsWith("meta:"));
   const meta = flow.calls.filter(call => call[0].startsWith("meta:")).map(([name, params]) => [name.slice(5), params]);
