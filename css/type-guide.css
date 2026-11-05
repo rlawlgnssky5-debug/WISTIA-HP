@@ -62,6 +62,10 @@
     max-width: 100% !important;
     margin-left: 0 !important;
   }
+  /* DUET blurb is the title and the savings pill. The price breakdown stays for the other types. */
+  html body #app :is(#packageSelection, .wistia-wizard [data-wf-step="0"]) [data-package-selection-details][data-package-key="D"] {
+    display: none !important;
+  }
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
