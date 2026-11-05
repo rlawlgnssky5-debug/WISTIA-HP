@@ -1,5 +1,11 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-05 — 홈 타입 안내 이미지
+
+- 홈(`/`, solo)의 `옵션 설명!` 바로 아래, `내게 맞는 녹음 타입을 골라보세요` 바로 위에 승인 포스터 `assets/img/type-guide/type-final.webp` 한 장을 둔다
+- 문의 마법사와 `/detail/duo`에는 넣지 않는다. 옵션 설명 문구·가격·픽셀·GA4·CAPI·InquiryOpen·wistia_vid는 바꾸지 않는다
+- 앱 캐시는 `20261105-type-guide-1`이다
+
 ## 2026-11-05 — 홈 옵션 설명 섹션
 
 - 홈(`/`, solo)의 타입 비교 `#packageSelection` 바로 위에 `옵션 설명!`을 둔다. 문의 마법사와 `/detail/duo`에는 넣지 않는다

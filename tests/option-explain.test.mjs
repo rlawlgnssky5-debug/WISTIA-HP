@@ -29,7 +29,11 @@ test('homepage option steps use transparent pngs and sit above the type table',(
   assert.doesNotMatch(block,/송송/)
   assert.doesNotMatch(block,/\.jpg/)
   const hook=app.match(/function homeTypeBlock\(key\)\{[^}]+\}/)[0]
-  assert.match(hook,/key==='solo'\?optionExplainSection\(\):''/)
+  assert.match(hook,/key==='solo'\?optionExplainSection\(\)\+typeGuideSection\(\):''/)
+  assert.match(app,/function typeGuideSection\(\)\{return '<section class="type-guide"/)
+  assert.match(app,/assets\/img\/type-guide\/type-final\.webp/)
+  assert.match(app,/alt="어떤 타입이 나한테 맞을까\?"/)
+  assert.doesNotMatch(wizard,/type-guide|type-final/)
   assert.match(hook,/packageSalesSection\(key\)/)
   assert.match(app,/insertAdjacentHTML\('afterend',homeTypeBlock\(key\)\)/)
   assert.doesNotMatch(wizard,/옵션 설명!|튜닝중~|ox-status/)
