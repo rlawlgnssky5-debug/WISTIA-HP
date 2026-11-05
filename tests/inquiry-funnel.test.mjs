@@ -138,12 +138,6 @@ assert.doesNotMatch(JSON.stringify(opening.calls), /PRIVATE/);
 
 const choiceClicks = lifecycle();
 const clickable = (fields) => ({ id: "", classList: [], textContent: "", hasAttribute: () => false, closest: () => null, matches: () => false, getAttribute: () => null, ...fields });
-const hero = clickable({
-  classList: ["ed-hero-consult"],
-  textContent: "AR 축가 상담하기",
-  getAttribute: name => name === "href" ? "/event/solo?package=standard" : null,
-  matches: selector => selector.includes(".ed-hero-consult")
-});
 const productInquiry = clickable({
   textContent: "카카오톡 문의",
   getAttribute: name => name === "href" ? "/event/duo" : null,
@@ -171,7 +165,7 @@ const packageLink = clickable({
   textContent: "선택한 구성으로 문의양식 작성",
   getAttribute: name => name === "href" ? "/event/solo?package=deluxe" : null
 });
-for (const control of [hero, productInquiry, floating, kakaoChoice]) choiceClicks.fire("click", { closest: () => control });
+for (const control of [productInquiry, floating, kakaoChoice]) choiceClicks.fire("click", { closest: () => control });
 assert.equal(count(choiceClicks, "inquiry_open"), 0);
 choiceClicks.fire("click", { closest: () => formChoice });
 assert.equal(count(choiceClicks, "inquiry_open"), 1);
@@ -186,9 +180,11 @@ assert.equal(packageOpen.button_label, "선택한 구성으로 문의양식 작�
 assert.doesNotMatch(JSON.stringify(choiceClicks.calls), /package=|standard|deluxe|pf\.kakao/);
 const funnelSource = read("inquiry-funnel.js"), appSource = read("app.js");
 assert.match(funnelSource, /control\.id === "floatingKakaoChat"/);
-assert.match(funnelSource, /\.ed-hero-consult, \.product-inquiry > a, \.consult-choice-direct/);
+assert.match(funnelSource, /\.product-inquiry > a, \.consult-choice-direct/);
+assert.doesNotMatch(funnelSource, /ed-hero-consult/);
 assert.match(appSource, /el\.id==='floatingKakaoChat'/);
-assert.match(appSource, /\.product-inquiry > a,\.ed-hero-consult/);
+assert.match(appSource, /\.product-inquiry > a/);
+assert.doesNotMatch(appSource, /ed-hero-consult/);
 for (const flow of [opening, closed, left, success]) {
   const ga = flow.calls.filter(call => !call[0].startsWith("meta:"));
   const meta = flow.calls.filter(call => call[0].startsWith("meta:")).map(([name, params]) => [name.slice(5), params]);

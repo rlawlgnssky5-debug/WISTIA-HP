@@ -90,7 +90,7 @@
   }
   // app.js cancels these and only opens the consult-choice dialog. The inquiry form is not open yet.
   function opensChoiceDialogOnly(control) {
-    return control.id === "floatingKakaoChat" || !!control.matches?.(".ed-hero-consult, .product-inquiry > a, .consult-choice-direct");
+    return control.id === "floatingKakaoChat" || !!control.matches?.(".product-inquiry > a, .consult-choice-direct");
   }
   function buttonLabel(control) {
     const source = control.querySelector?.("strong")?.textContent || control.textContent || "";

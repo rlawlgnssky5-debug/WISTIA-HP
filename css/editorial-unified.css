@@ -378,8 +378,6 @@
   #app .ed-hero-gallery .hs-arrow svg { stroke:#fff!important; }
   #app .ed-hero-actions { margin:0!important; padding:0!important; }
   #app .ed-hero-actions a { display:flex!important; align-items:center!important; justify-content:space-between!important; gap:3cqw!important; box-sizing:border-box!important; width:100%!important; padding:5cqw 7cqw!important; border:0!important; border-radius:0!important; font-family:var(--ed-font)!important; font-weight:500!important; line-height:1.5!important; text-decoration:none!important; box-shadow:none!important; }
-  #app .ed-hero-actions .ed-hero-consult { background:#a9637a!important; color:#fff!important; font-size:5cqw!important; }
-  #app .ed-hero-consult svg { width:5cqw!important; height:5cqw!important; flex:none!important; }
   #app .ed-hero-actions .ed-hero-listen { justify-content:flex-start!important; background:#fff!important; color:var(--ed-ink)!important; font-size:3.5cqw!important; }
   #app .ed-hero-listen svg { width:3.5cqw!important; height:3.5cqw!important; flex:none!important; }
   #app .ed-hero .ed-hero-benefits { padding:0 5cqw 5cqw!important; }

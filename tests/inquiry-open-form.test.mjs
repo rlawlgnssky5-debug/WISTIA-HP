@@ -76,11 +76,14 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     const page = await context.newPage();
     const origin = `http://wistia.localhost:${port}`;
     await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
-    await page.locator(".ed-hero-consult").waitFor({ state: "visible" });
+    await page.locator(".ed-hero-listen", { hasText: "보정 전후 들어보기" }).waitFor({ state: "visible" });
+    await page.locator(".ed-hero-price-jump", { hasText: "타입·가격 바로 보기" }).waitFor({ state: "visible" });
+    assert.equal(await page.locator(".ed-hero-consult").count(), 0);
+    assert.equal(await page.locator(".ed-hero-actions").getByRole("link", { name: /AR 축가/ }).count(), 0);
     const vid = await page.evaluate(() => localStorage.getItem("wistia_vid"));
     assert.match(vid, /^wv_[a-f0-9]{16,64}$/);
 
-    await page.locator(".ed-hero-consult").click();
+    await page.locator("#floatingKakaoChat").click();
     await page.locator("#mediaDialog .consult-choice-dialog").waitFor({ state: "visible" });
     let snap = await pixelSnapshot(page);
     assert.equal(snap.inquiryOpen, 0, "choice dialog must not emit InquiryOpen");
@@ -103,7 +106,7 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     assert.equal(snap.form, false);
     assert.equal(new URL(page.url()).pathname, "/");
 
-    await page.locator(".ed-hero-consult").click();
+    await page.locator("#floatingKakaoChat").click();
     await page.locator("#mediaDialog .consult-choice-form").click();
     await page.locator("#contactInquiryForm").waitFor({ state: "visible" });
     await page.waitForTimeout(500);
