@@ -1361,7 +1361,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const firstNotice=key==='solo'?window.WistiaPackages.firstVisitEventCard?.()||'':''
  const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
  const couponStack=firstNotice+monthlyNotice
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageTypeComparison" data-ar-section="packageTypeComparison">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1429,6 +1429,7 @@ function initArCommerceDetail(){
  const packageRoot=document.querySelector('#packageSelection')
  window.WistiaPackages.mountSelection(packageRoot)
  window.WistiaPackages.typeTable?.(packageRoot)
+ packageRoot?.querySelector('.wf-type-table')?.setAttribute('id','packageTypeComparison')
  packageRoot?.addEventListener('change',event=>{
   if(event.target.name!=='detailPackage')return
   const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)

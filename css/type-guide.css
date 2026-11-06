@@ -115,7 +115,7 @@
   }
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wf-type-table thead th[data-tt] b {
     white-space: nowrap !important;
-    font-size: 8.5px !important;
+    font-size: clamp(10px, 2.7vw, 12px) !important;
     line-height: 1.1 !important;
     letter-spacing: -0.07em !important;
   }
@@ -129,7 +129,7 @@
     font-size: 8px !important;
   }
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wf-type-table .wf-tt-price strong {
-    font-size: 9px !important;
+    font-size: clamp(10px, 3.1vw, 13px) !important;
   }
   html body #app .ed-hero .ed-hero-benefits {
     padding-top: 24px !important;
@@ -140,3 +140,5 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
 }
 #packageSelection { scroll-margin-top: 76px; }
+
+#packageTypeComparison { scroll-margin-top: 76px; }
