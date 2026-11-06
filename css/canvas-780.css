@@ -401,6 +401,9 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 
 /* r19: same right inset on every page on phones (events/faq/location were 16px) */
 @media (max-width: 779px) { html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill { right: 12px !important; left: auto !important; } }
+@media (max-width: 779px) {
+  html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z) #floatingKakaoChat.floating-kakao-pill.is-clear-table { right: auto !important; left: 12px !important; }
+}
 
 @layer wistia-site-fixes {
   /* r20: smaller tier names; only the name text gets a tier colour (gray-brown / rose / gold), card styling unchanged */

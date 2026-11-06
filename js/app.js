@@ -34,7 +34,7 @@ const PRODUCTS = {
     included: ["녹음 및 1대1 디렉팅", "정밀 믹싱", "선택한 타입에 따른 음정·박자 보정 및 마스터링", "최종 음원 전달"],
     faq: [
       ["AR 음원은 어떻게 사용하나요", "예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요."],
-      ["내 목소리 비율은 어떻게 정하나요", "녹음 당일 <strong>여러 비율을 직접 들어 보고</strong><br>AR에 맞춰 불러 봐요.<br>현장 목소리와 가장 잘 어우러지는 비율로 정해 드려요."],
+      ["내 목소리 비율은 어떻게 정하나요", "위스티아는 <strong>전 비율을 다 드려요.</strong><br>녹음 당일 들어 보시고<br>본식에서 쓸 비율을 함께 정해요."],
       ["어떤 파일을 받나요", "예식장에서 사용할 본식용 AR과 선택한 작업이 반영된 완성 음원을 전달해요"]
     ]
   },
@@ -399,7 +399,7 @@ const INFO_FAQ_GROUPS=[
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 미리 알아두세요",items:[
   ["AR 축가는 본식 현장에서 어떻게 하면 되나요?","예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요"],
-  ["AR에 들어가는 제 목소리 비율은 어떻게 정하나요?","녹음 당일 여러 비율을 직접 들어 보고 골라요"],
+  ["AR에 들어가는 제 목소리 비율은 어떻게 정하나요?","위스티아는 전 비율을 다 드려요. 녹음 당일 들어 보시고 본식에서 쓸 비율을 함께 정해요"],
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","미리 녹음한 목소리와 현장 목소리가<br>어우러지도록 비율을 맞춰요<br>녹음 당일 <strong>직접 리허설</strong>해 보고 확인하실 수 있어요"]
  ]},
  {title:"완성본 전달과 수정",description:"완성된 음원을 받고 본식에 전달하는 방법이에요",items:[
@@ -1250,7 +1250,7 @@ function mobileArNotices(story=false){
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
 function mobileDetailEvents(){
- const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요',advance1:'스탠다드 제외 · 사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
+ const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 별도 받기 없이 자동 적용',advance1:'스탠다드 제외 · 사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
  const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
  const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
  return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
@@ -1332,8 +1332,10 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
+ const firstNotice=key==='solo'?window.WistiaPackages.firstVisitEventCard?.()||'':''
  const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(monthlyNotice?'<div class="ed-monthly-slot" data-monthly-event-slot>'+monthlyNotice+'</div>':'')+mobileDetailEvents()+'</div></section>'
+ const couponStack=firstNotice+monthlyNotice
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1965,6 +1967,13 @@ function initCompactKakao(){
   button.style.removeProperty('translate')
   button.classList.remove('is-content-overlap')
   button.removeAttribute('tabindex')
+  button.classList.remove('is-clear-table')
+  const br=button.getBoundingClientRect()
+  const hit=[...document.querySelectorAll('.wf-type-table')].some(table=>{
+   const r=table.getBoundingClientRect()
+   return r.width&&r.bottom>br.top&&r.top<br.bottom&&r.right>br.left&&r.left<br.right
+  })
+  button.classList.toggle('is-clear-table',hit)
  }
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint)}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule)

@@ -153,28 +153,8 @@
   // After a tapped date, bring the time list into view once the buttons are ready
   if(form.dataset.wfRevealTimes&&known&&!loading&&list.querySelector('[data-wf-time]')){delete form.dataset.wfRevealTimes;global.requestAnimationFrame(()=>reveal(form,timeTop(form),list.querySelector('[data-wf-time]')))}
  }
- let firstVisitPromptShown=false
- function offerFirstVisit(){
-  if(!global.document||firstVisitPromptShown||global.document.querySelector('.wf-first-popup'))return
-  if(global.WistiaPackages.firstVisitPromptClosed?.())return
-  firstVisitPromptShown=true
-  const doc=global.document,wrap=doc.createElement('div')
-  wrap.className='wf-first-popup'
-  wrap.innerHTML='<div class="wf-first-card" role="dialog" aria-modal="true" aria-labelledby="wf-first-title"><button type="button" class="wf-first-x" aria-label="닫기">×</button><img src="/assets/editorial/welcome-gift-rose.webp" alt="" width="88" height="88"><p class="wf-first-kicker">처음 만나는 위스티아의 선물</p><h2 id="wf-first-title">첫 이용 20,000원 할인</h2><p class="wf-first-only">DELUXE · PREMIUM · DUET ONLY</p><div class="wf-first-actions"><button type="button" class="wf-first-take">쿠폰 받기</button></div></div>'
-  const close=()=>{wrap.remove();doc.removeEventListener('keydown',onKey,true);if(!doc.querySelector('.wf-popup'))doc.documentElement.classList.remove('wf-popup-open')}
-  const onKey=event=>{if(event.key==='Escape'){event.preventDefault();global.WistiaPackages.dismissFirstVisitPrompt?.();close()}}
-  wrap.querySelector('.wf-first-x').addEventListener('click',()=>{global.WistiaPackages.dismissFirstVisitPrompt?.();close()})
-  wrap.querySelector('.wf-first-take').addEventListener('click',()=>{
-   global.WistiaPackages.setCouponClaim('firstVisit',true)
-   try{global.wistiaAnalytics?.trackCouponClaim?.('first_visit')}catch{}
-   try{global.wistiaMeta?.trackCouponClaim?.('first_visit')}catch{}
-   close()
-  })
-  doc.addEventListener('keydown',onKey,true)
-  doc.documentElement.classList.add('wf-popup-open')
-  doc.body.appendChild(wrap)
-  wrap.querySelector('.wf-first-take').focus({preventScroll:true})
- }
+
+ function offerFirstVisit(){}
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:values(form).people==='1'?'duo':'solo',draftReady:false,onPeople};states.set(form,state)
   global.WistiaPackages.mountSelection(form)
