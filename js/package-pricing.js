@@ -44,10 +44,22 @@
  const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'수령 후 24시간 이내 사용',products:'DELUXE · PREMIUM · DUET ONLY'}
  const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
- const discountOfferList=()=>[
-  {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요'},
-  {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
+ // One row per month. Change this list when the event changes; prices and pages read it.
+ const monthlyEvents=[
+  {year:2026,month:11,name:'11월 이벤트 쿠폰',amount:20000,packages:['C','D'],detail:'PREMIUM · DUET · 11월에 예약하면 자동 적용 · 녹음일이 11월이 아니어도 돼요'}
  ]
+ function activeMonthlyEvent(reference=today()){
+  if(!validDate(reference))return null
+  const year=Number(reference.slice(0,4)),month=Number(reference.slice(5,7))
+  return monthlyEvents.find(event=>event.year===year&&event.month===month)||null
+ }
+ const discountOfferList=()=>{
+  const event=activeMonthlyEvent()
+  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요'}]
+  if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
+  offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
+  return offers
+ }
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
  function isPublicHoliday(date){return validDate(date)&&(publicHolidays.has(date)||Number(date.slice(0,4))>=2026&&fixedHolidays.has(date.slice(5)))}
  function addMonths(date,months){
@@ -74,6 +86,8 @@
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'녹음 1인 추가',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
   if(discountsAllowed&&v.firstVisit)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
+  const monthly=discountsAllowed?activeMonthlyEvent(reference):null
+  if(monthly&&monthly.packages.includes(p.key))discounts.push({key:'monthly',label:monthly.name,amount:monthly.amount})
   if(discountsAllowed&&validDate(v.bookingDate)){
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
@@ -118,6 +132,7 @@
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
   const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)));const duetAdd=q.options.find(o=>o.key==='duet');if(duetAdd)rows.push(line('is-date','녹음 1인 추가',0,'+'+money(duetAdd.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
+  const monthlyLine=q.discounts.find(d=>d.key==='monthly');if(monthlyLine)rows.push(line('is-coupon',monthlyLine.label,0,'−'+money(monthlyLine.amount)))
   q.discounts.filter(d=>d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
   rows.push(line('is-now','현재 적용가',Math.max(0,p.individual-now),money(now)))
   if(best<now)rows.push(line('is-best','사전 예약 할인까지 최대',now-best,money(best)))
@@ -289,7 +304,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' 원가 '+money(pkg.individual))})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon,firstVisitPromptClosed,dismissFirstVisitPrompt}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,activeMonthlyEvent,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon,firstVisitPromptClosed,dismissFirstVisitPrompt}
  // WistiaLimitedCoupon refreshes server inventory and expires received coupons after 24h
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
