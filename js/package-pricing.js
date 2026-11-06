@@ -60,7 +60,7 @@
  }
  const discountOfferList=()=>{
   const event=activeMonthlyEvent()
-  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요'}]
+  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 별도 받기 없이 자동 적용'}]
   if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
   offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
   return offers
@@ -90,7 +90,7 @@
   const entries=options.filter(o=>v.options.includes(o.key)&&!(pitchIncluded&&o.key==='tuning')&&!(p.mixing&&(o.key==='detailMix'||o.key==='precisionMix'))).map(o=>({...o}))
   if(duet&&!p.duet)entries.unshift({key:'duet',label:'녹음 1인 추가',price:30000,detail:'인원 추가 · 2인·1곡'})
   const discounts=[]
-  if(discountsAllowed&&v.firstVisit)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
+  if(discountsAllowed)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
   const monthly=discountsAllowed?activeMonthlyEvent(reference):null
   if(monthly&&monthly.packages.includes(p.key))discounts.push({key:'monthly',label:monthly.name,amount:monthly.amount})
   if(discountsAllowed&&validDate(v.bookingDate)){
@@ -200,6 +200,9 @@
   const products=event.packages.map(key=>packages[key].name).join(' · ')
   return '<div class="coupon-claim-card is-received" data-monthly-event-card="'+event.year+'-'+String(event.month).padStart(2,'0')+'"><div class="welcome-gift year-end-ticket"><img src="'+yearEndImage+'" alt="" width="64" height="64" loading="lazy" decoding="async"><div><small>'+event.name+'</small><strong>'+money(event.amount)+' 할인</strong><em><span class="year-end-products">'+products+'</span></em><em>'+(event.until||'')+'</em></div></div><div class="coupon-claim-action"><span class="coupon-claim-hint">쿠폰을 받았어요</span><button type="button" class="coupon-claim-button" aria-pressed="true" aria-disabled="true" tabindex="-1" style="pointer-events:none;cursor:default"><span data-coupon-button-copy>받기 완료</span><b data-coupon-check aria-hidden="true">✓</b></button></div></div>'
  }
+ function firstVisitEventCard(imageSrc){
+  return '<div class="coupon-claim-card is-received" data-first-visit-card>'+firstVisitBanner(imageSrc)+'<div class="coupon-claim-action"><span class="coupon-claim-hint">쿠폰을 받았어요</span><button type="button" class="coupon-claim-button" aria-pressed="true" aria-disabled="true" tabindex="-1" style="pointer-events:none;cursor:default"><span data-coupon-button-copy>받기 완료</span><b data-coupon-check aria-hidden="true">✓</b></button></div></div>'
+ }
  const couponStorageKey='wistia:coupon-claims:v1',couponLifetime=24*60*60*1000,couponKeys=['firstVisit','yearEndCoupon']
  let memoryClaims=null
  function couponRecord(){
@@ -222,6 +225,7 @@
  function dismissFirstVisitPrompt(){const current=couponRecordCurrent();const selections=current?Object.fromEntries(couponKeys.filter(key=>typeof current.selections?.[key]==='boolean').map(key=>[key,current.selections[key]])):{};memoryClaims={version:1,savedAt:Date.now(),selections,dismissed:true};try{global.localStorage?.setItem(couponStorageKey,JSON.stringify(memoryClaims))}catch{}}
  function couponClaimCard(key,mode='form',imageSrc){
   if(key==='yearEndCoupon'||!couponKeys.includes(key))return ''
+  if(key==='firstVisit')return firstVisitEventCard(imageSrc)
   const year=key==='yearEndCoupon',title=year?yearEndCopy.label:'첫 이용 쿠폰',banner=year?yearEndBookingBanner():firstVisitBanner(imageSrc)
   return '<div class="coupon-claim-card" data-coupon-card="'+key+'"'+(year?' data-year-end-coupon':'')+'>'+banner+'<div class="coupon-claim-action"><span class="coupon-claim-hint">여기를 눌러주세요 →</span><button type="button" class="coupon-claim-button" data-coupon-claim="'+key+'" aria-label="'+title+'" aria-pressed="false"><span data-coupon-button-copy>쿠폰 받기</span><b data-coupon-check aria-hidden="true" hidden>✓</b></button>'+(mode==='form'?'<input type="checkbox" name="'+key+'" value="1" hidden aria-hidden="true">':'')+'</div>'+(year?'<div class="limited-coupon-timer" data-coupon-timer hidden role="group" aria-label="쿠폰 사용 남은 시간" aria-live="off"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><span data-coupon-timer-label>쿠폰 사용 남은 시간</span></span><strong data-coupon-timer-value>24:00:00</strong></div>':'')+'</div>'
  }
@@ -315,7 +319,7 @@
   root.append(burst);setTimeout(()=>burst.remove(),1600)
  }
  function refreshCardPrices(root,bookingDate=''){root.querySelectorAll('[data-package-coupon-price]').forEach(el=>{const pkg=packageFor(el.dataset.packageCouponPrice),amt=money(cardCouponPrice(pkg,today(),bookingDate));if(el.textContent!==amt)el.textContent=amt;const radio=el.closest('label.package-card')?.querySelector('input[type=radio]');if(radio)radio.setAttribute('aria-label',pkg.name+' '+pkg.title+' 원가 '+money(pkg.individual))})}
- const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,activeMonthlyEvent,monthlyEventCard,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon,firstVisitPromptClosed,dismissFirstVisitPrompt}
+ const api={packages,options,money,packageFor,normalize,quote,features,cards,typeTable,selectionDetails,syncSelection,mountSelection,discountsHtml,get discountOffers(){return discountOfferList()},isPublicHoliday,addMonths,today,advanceDiscount,weekdayDiscount,activeMonthlyEvent,monthlyEventCard,firstVisitEventCard,firstVisitBanner,yearEndBookingBanner,yearEndImage,mountYearEndBanners,yearEndCopy,celebrate,hoursText,yearEndActive,yearEndEligible,priceLines,cardCouponPrice,bestDate,bestCouponPrice,couponClaimCard,readCouponClaims,setCouponClaim,restoreCouponClaims,mountCouponClaims,syncCouponControls,celebrateCoupon,firstVisitPromptClosed,dismissFirstVisitPrompt}
  // WistiaLimitedCoupon refreshes server inventory and expires received coupons after 24h
  if(typeof module==='object'&&module.exports)module.exports=api
  global.WistiaPackages=api
