@@ -62,42 +62,47 @@ test('removed verse and lyric draft selections cannot affect the quote',()=>{
  assert.equal(q({options:['lyrics-video','extra-verse'],lyricVideo:'1',extraVerse:'1'}).total,90000)
  assert.equal(pricing.options.some(o=>/가사|1절/.test(o.label)),false)
 })
-test('weekday discount is one condition, Thursday/Friday 13:00 through 16:00',()=>{
- for(const timeStart of ['13:00','14:00','15:00','16:00'])assert.equal(q({bookingDate:'2026-10-23',timeStart}).discount,10000)
- for(const [bookingDate,timeStart] of [['2026-10-23','12:59'],['2026-10-23','16:01'],['2026-10-24','14:00'],['2026-10-23','']])assert.equal(q({bookingDate,timeStart}).discount,0)
+test('weekday and time-slot discounts are not charged',()=>{
+ for(const timeStart of ['09:00','13:00','14:00','15:00','16:00','20:00','']){
+  assert.equal(q({bookingDate:'2026-10-23',timeStart}).discount,0)
+  assert.equal(q({bookingDate:'2026-10-24',timeStart}).discount,0)
+  assert.equal(q({bookingDate:'2026-10-25',timeStart}).discount,0)
+ }
+ assert.equal(pricing.weekdayDiscount('2026-10-23','13:00'),0)
 })
-test('one-month and two-month discounts are mutually exclusive calendar intervals',()=>{
- assert.equal(q({bookingDate:'2026-11-21'}).discount,0)
- assert.equal(q({bookingDate:'2026-11-22'}).discount,10000)
- assert.equal(q({bookingDate:'2026-12-21'}).discount,10000)
- const result=q({bookingDate:'2026-12-22'});assert.equal(result.discount,20000);assert.equal(result.discounts.length,1)
+test('one-month advance is 10,000 and a later month does not add another 20,000',()=>{
+ assert.equal(q({package:'B',bookingDate:'2026-11-21'}).discount,0)
+ assert.equal(q({package:'B',bookingDate:'2026-11-22'}).discount,10000)
+ assert.equal(q({package:'B',bookingDate:'2026-12-21'}).discount,10000)
+ const result=q({package:'B',bookingDate:'2026-12-22'});assert.equal(result.discount,10000);assert.equal(result.discounts.length,1)
+ assert.equal(result.discounts[0].key,'advance1')
  assert.equal(pricing.addMonths('2026-01-31',1),'2026-02-28')
 })
-test('public holidays never receive the Thursday/Friday time discount',()=>{
+test('public holidays still do not add a time discount, and advance stays 10,000',()=>{
  for(const date of ['2026-01-01','2026-05-01','2026-07-17','2026-09-24','2026-09-25','2026-10-09','2026-12-25','2027-01-01','2027-05-13','2027-09-16','2028-01-27','2028-01-28','2028-05-05','2028-10-05','2031-12-25']){
   assert.equal(pricing.isPublicHoliday(date),true,date)
-  for(const time of ['13:00','14:00','15:00','16:00'])assert.equal(pricing.weekdayDiscount(date,time),0,date+' '+time)
+  assert.equal(pricing.weekdayDiscount(date,'13:00'),0,date)
  }
  const christmas=q({package:'C',firstVisit:'1',bookingDate:'2026-12-25',timeStart:'13:00'})
- assert.equal(christmas.discount,40000);assert.equal(christmas.total,180000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
- assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,170000)
- assert.equal(pricing.weekdayDiscount('2027-05-14','13:00'),10000)
+ assert.equal(christmas.discount,30000);assert.equal(christmas.total,190000);assert.ok(!christmas.discounts.some(d=>d.key==='weekday'))
+ assert.equal(q({package:'C',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'13:00'}).total,190000)
+ assert.equal(pricing.weekdayDiscount('2027-05-14','13:00'),0)
  for(const date of ['','invalid','2026-02-31','2026-12-24'])assert.equal(pricing.isPublicHoliday(date),false)
 })
 
 test('calendar and time hint helpers match quote thresholds and reject invalid inputs',()=>{
- for(const [date,amount] of [['2026-11-21',0],['2026-11-22',10000],['2026-12-21',10000],['2026-12-22',20000]])assert.equal(pricing.advanceDiscount(date,'2026-10-22')?.amount||0,amount)
+ for(const [date,amount] of [['2026-11-21',0],['2026-11-22',10000],['2026-12-21',10000],['2026-12-22',10000]])assert.equal(pricing.advanceDiscount(date,'2026-10-22')?.amount||0,amount)
  assert.equal(pricing.advanceDiscount('2026-02-31','2026-01-31'),null)
  assert.equal(pricing.advanceDiscount('2026-02-28','2026-01-31').amount,10000)
- assert.equal(pricing.advanceDiscount('2026-03-31','2026-01-31').amount,20000)
+ assert.equal(pricing.advanceDiscount('2026-03-31','2026-01-31').amount,10000)
  assert.equal(pricing.advanceDiscount('', '2026-10-22'),null)
- assert.equal(pricing.weekdayDiscount('2026-10-23','13:00'),10000)
+ assert.equal(pricing.weekdayDiscount('2026-10-23','13:00'),0)
  for(const args of [['2026-10-23','16:01'],['2026-10-24','14:00'],['invalid','14:00'],['2026-10-23','']])assert.equal(pricing.weekdayDiscount(...args),0)
  assert.equal(q({eventDate:'2027-01-10',bookingDate:'2026-10-24'}).discount,0,'advance discount uses recording date, not wedding date')
 })
 test('approved discounts combine for eligible packages without inventing a payback cap',()=>{
  const result=q({package:'B',firstVisit:'1',bookingDate:'2026-12-24',timeStart:'14:00',paybackBlog:'1',paybackReaction:'1'})
- assert.equal(result.discount,50000);assert.equal(result.total,120000);assert.equal(result.payback,60000)
+ assert.equal(result.discount,30000);assert.equal(result.total,140000);assert.equal(result.payback,60000)
  assert.equal(q({paybackBlog:'1',paybackReaction:'1'}).total,90000)
 })
 test('recording length follows the package and extra hour, with no promo minutes',()=>{
@@ -142,17 +147,24 @@ test('limited coupon combines with first visit and date discounts without the re
  assert.equal(pricing.bestCouponPrice(pricing.packages.B,'2026-11-10'),100000)
 })
 
-test('maximum discount example stays independent of the chosen recording date and actual quote',()=>{
- for(const [key,total] of [['B',100000],['C',150000],['D',170000]]){
-  for(const date of ['','2026-10-30','2026-11-27','2026-12-25','2027-01-02']){
-   const html=pricing.priceLines(pricing.packages[key],'2026-10-29',date),best=html.slice(html.indexOf('<div class="is-best">'))
-   assert.ok(best.includes('<dd>'+pricing.money(total)+'</dd>'),key+' '+date)
-   assert.ok(best.includes('30,000원 ↓'))
+test('maximum example is only the unused one-month advance, with no weekday amount',()=>{
+ for(const [key,price] of [['B',170000],['C',220000],['D',240000]]){
+  for(const date of ['','2026-10-30','2026-11-27']){
+   const html=pricing.priceLines(pricing.packages[key],'2026-10-29',date)
+   assert.match(html,/사전 예약 할인까지 최대/)
+   assert.match(html,new RegExp('<dd>'+pricing.money(price-10000)+'</dd>'))
+   assert.match(html,/10,000원 ↓/)
+   assert.doesNotMatch(html,/목·금|13~16/)
+  }
+  for(const date of ['2026-12-25','2027-01-02']){
+   const html=pricing.priceLines(pricing.packages[key],'2026-10-29',date)
+   assert.equal(html.includes('is-best'),false,key+' '+date)
+   assert.match(html,/160,000원|210,000원|230,000원|현재 적용가/)
   }
  }
  const actual=pricing.quote({package:'B',firstVisit:'1',yearEndCoupon:'1',bookingDate:'2026-10-30',timeStart:'13:00'},'2026-10-29')
- assert.equal(actual.total,120000)
- assert.equal(actual.discounts.some(d=>d.key==='advance1'||d.key==='advance2'),false)
+ assert.equal(actual.total,150000)
+ assert.equal(actual.discounts.some(d=>d.key==='weekday'||d.key==='advance1'),false)
 })
 
 test('received limited coupon works before date selection and for October and January visits',()=>{
