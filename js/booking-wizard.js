@@ -14,8 +14,7 @@
  function bookingDateField(){return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')}
  function render(key){
   const selected=global.WistiaPackages.packageFor(new URLSearchParams(global.location.search).get('package')).key
-  const monthly=global.WistiaPackages.activeMonthlyEvent?.()
-  const monthlyNote=monthly?'<div class="wf-monthly-note"><span class="wf-monthly-pill">PREMIUM·DUET 11월 이벤트 중 · 20,000원 할인!</span></div>':''
+  const monthlyNote='<div data-wf-monthly-note></div>'
   const sections=[
    '<h3 class="package-heading package-guide-title">어떤 타입이 나에게 맞을까요?</h3><p class="package-guide-sub">나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!</p>'+monthlyNote+global.WistiaPackages.cards(selected,'wizard')+firstVisitField()+'<fieldset class="wf-people"><legend>녹음 인원</legend><p class="wf-tip is-right" data-wf-tip="people">'+tipText.people+'</p><div class="wf-pair">'+['<b>1인</b><small>1인·1곡 기준</small>','<b>듀엣곡으로 변경</b><small>2인 1곡 기준</small><strong>+30,000원</strong>'].map((label,i)=>'<label class="wf-choice"><input type="radio" name="people" value="'+i+'"'+(String(i)===(key==='duo'?'1':'0')?' checked':'')+'><span>'+icon('people')+label+'</span></label>').join('')+'</div></fieldset>'+discoveryField(),
    '<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>50분 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
@@ -87,10 +86,14 @@
  // '밑으로 내리기' floats just above the 이전/다음 단계 bar on step 1 and hides once the end of the step is in view
  function scrollDownButton(form){let btn=form.querySelector('[data-wf-scroll-down]');if(!btn){form.insertAdjacentHTML('beforeend','<button type="button" class="wf-scroll-down" data-wf-scroll-down>밑으로 내리기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>');btn=form.querySelector('[data-wf-scroll-down]')}const step=form.querySelector('[data-wf-step="0"]'),next=form.querySelector('[data-wf-next]'),vh=global.innerHeight;let barTop=vh;for(let n=next;n&&n!==form;n=n.parentElement)if(getComputedStyle(n).position==='fixed'){barTop=n.getBoundingClientRect().top;break}const show=!!step&&!step.hidden&&step.getBoundingClientRect().bottom>barTop-8;if(show){btn.style.setProperty('bottom',Math.round(vh-barTop+10)+'px','important');btn.style.removeProperty('display')}else btn.style.setProperty('display','none','important')}
  function typeTable(form){global.WistiaPackages.typeTable?.(form.querySelector('[data-wf-step="0"]'));const people=form.querySelector('.wf-people'),detail=form.querySelector('[data-wf-step="0"] [data-package-selection-details]');if(people&&detail&&detail.nextElementSibling!==people)detail.after(people)}
- function update(form,{save=true}={}){
+ function update(form,{save=true,track=true}={}){
   const state=states.get(form);if(!state)return
   syncDuet(form,state)
   const q=quote(form);global.WistiaPackages.syncSelection(form,q.package.key);typeTable(form)
+  const monthly=global.WistiaPackages.activeMonthlyEvent()
+  const monthlyNote=form.querySelector('[data-wf-monthly-note]')
+  const monthlyCopy=monthly?monthly.packages.map(key=>global.WistiaPackages.packageFor(key).name).join('·')+' '+monthly.month+'월 이벤트 중 · '+money(monthly.amount)+' 할인!':''
+  if(monthlyNote.textContent!==monthlyCopy)monthlyNote.innerHTML=monthlyCopy?'<div class="wf-monthly-note"><span class="wf-monthly-pill">'+esc(monthlyCopy)+'</span></div>':''
   const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.innerHTML='<b class="wf-tier-name" data-tier="'+q.package.key+'">'+q.package.name+'</b> <span class="wf-location-session">1곡 · '+global.WistiaPackages.hoursText(q.minutes)+'</span>'
   const standard=q.package.key==='A',advance=standard?null:global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
   const legend=form.querySelector('.wf-earlybird-legend');if(legend){if(!legend._wfBase)legend._wfBase=legend.innerHTML;const next=standard?'<p class="earlybird-one"><strong>스탠다드</strong><span>할인 제외</span></p>':legend._wfBase;if(legend.innerHTML!==next)legend.innerHTML=next}
@@ -104,14 +107,14 @@
   syncOptions(form,q)
   global.WistiaPackages.syncCouponControls(form)
   const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=(q.allDiscounts||q.discounts).map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
-  form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state);trackPriceView(q)
+  form.dataset.bookingMinutes=String(q.minutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state);if(track)trackPriceView(q)
   form.querySelector('[data-wf-review]').innerHTML=reviewHtml(form,q)
   form.dataset.wfCurrentStep=String(state.step);if(!form.dataset.wfTimeMode)timeMode(form,false);form.querySelectorAll('[data-wf-step]').forEach(s=>s.hidden=Number(s.dataset.wfStep)!==state.step);fitOptionText(form);scrollDownButton(form)
   form.querySelectorAll('[data-wf-progress]').forEach(li=>{const i=Number(li.dataset.wfProgress),active=i===state.step,done=i<state.step;li.classList.toggle('is-current',active);li.classList.toggle('is-complete',done);const button=li.querySelector('button');button.querySelector('span').innerHTML=done?icon('check'):String(i+1);if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')})
   form.querySelector('[data-wf-step-label]').textContent=(state.step+1)+' / '+steps.length+'단계';form.querySelector('[data-wf-next]').hidden=state.step===LAST;form.querySelector('[type="submit"]').hidden=state.step!==LAST
   form.querySelector('[data-wf-recording-range]').textContent=q.v.timeStart?'녹음 시간 · '+range(q.v.timeStart,q.minutes):'시작 시간을 골라 주세요'
   syncSchedule(form);global.WistiaContact?.repaintCalendars?.(form);if(save)persistDraft(form)
-  try{global.WistiaInquiryFunnel?.view(form)}catch{}
+  if(track)try{global.WistiaInquiryFunnel?.view(form)}catch{}
  }
  function persistDraft(form){const state=states.get(form);if(!state?.draftReady||!global.WistiaBookingDraft)return;const saved=global.WistiaBookingDraft.save(state.draftKey,{flow:'recording-v2',fields:values(form),step:[0,1,3,4][state.step]+(state.step===1&&form.querySelector('#contact-time')?.value?1:0),view:state.step===1&&form.querySelector('#contact-time')?.value?'time':'date'});form.closest('.wistia-wizard').querySelector('[data-wf-draft-note]').textContent=saved?'작성 내용은 이 브라우저에 24시간 동안 임시 저장돼요':'이 브라우저에서는 임시 저장이 제한되어 있어요'}
  function restoreDraft(form,state,onPeople){
@@ -189,5 +192,8 @@
   Promise.resolve(global.WistiaBooking.mount(form,bookingKey(form))).then(()=>{if(!form.isConnected)return;if(state.step>1&&!validate(form,1)){state.step=1;update(form)}});update(form)
  }
  function bookingKey(form){return 'ar-'+quote(form).minutes}
+ global.addEventListener('wistia:price-date-change',()=>{
+  global.document.querySelectorAll('form[data-wizard]').forEach(form=>update(form,{save:false,track:false}))
+ })
  global.WistiaWizard={currentStep:form=>[1,2,3,4][states.get(form)?.step??0]??1,render,mount,syncTimes,syncSchedule,syncOptions,text,quote,rows,range,bookingKey,offerFirstVisit}
 })(window)

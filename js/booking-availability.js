@@ -56,13 +56,24 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
  // Requests are shared per date (a re-mount, product switch or repeated change never drops
  // the only in-flight response) and always settle within timeoutMs.
- const timeoutMs=8000,cacheMs=30000,cache=new Map(),inflight=new Map()
- const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Set(),dateFailures=new Set()
+ const timeoutMs=11000,cacheMs=30000,cache=new Map(),inflight=new Map()
+ const rangeCache=new Map(),rangeInflight=new Map(),rangeFailures=new Map(),dateFailures=new Set()
  const selectedDates=new WeakMap()
  let activeForm=null,activeKey='solo',generation=0
  const pendingMessage='예약 가능 시간을 확인하고 있습니다'
  const fallbackMessage='일정 자동 확인이 어렵습니다 · 희망 시간으로 문의하시면 카카오톡에서 가능 여부를 확인합니다'
  function validBlocks(blocks){return Array.isArray(blocks)&&blocks.every(block=>Number.isFinite(Date.parse(block.start))&&Number.isFinite(Date.parse(block.end))&&Date.parse(block.end)>Date.parse(block.start))}
+ async function requestAvailability(query,signal){
+  for(let attempt=0;attempt<2;attempt++){
+   signal.throwIfAborted()
+   let response
+   try{response=await fetch('/api/availability?'+query,{signal,cache:'no-store',credentials:'same-origin'})}
+   catch(error){if(signal.aborted||attempt||!(error instanceof TypeError))throw error}
+   if(response?.ok)return response.json()
+   if(attempt||(response&&![408,429,500,502,503,504].includes(response.status)))throw Error('unavailable')
+   await new Promise(resolve=>setTimeout(resolve,250))
+  }
+ }
  // Freshness controls requests, not whether validated closures remain visible.
  function calendarBlocks(from,to){return rangeCache.get(from+':'+to)?.blocks??null}
  function calendarRangeFailed(from,to){return rangeFailures.has(from+':'+to)}
@@ -71,10 +82,12 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   const id=from+':'+to,hit=rangeCache.get(id)
   if(!fresh&&hit&&!rangeFailures.has(id)&&Date.now()-hit.at<cacheMs)return hit.blocks
   if(rangeInflight.has(id))return rangeInflight.get(id)
+  // Form re-mounts can ask for the same month again during an outage.
+  if(!fresh&&rangeFailures.has(id)&&Date.now()-rangeFailures.get(id)<5000)throw Error('unavailable')
   const controller=new AbortController();let timer
-  const request=(async()=>{const response=await fetch('/api/availability?from='+from+'&to='+to,{signal:controller.signal,cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('unavailable');const payload=await response.json();if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response');return payload.blocks})()
+  const request=requestAvailability('from='+from+'&to='+to,controller.signal).then(payload=>{if(!payload.ok||payload.from!==from||payload.to!==to||!validBlocks(payload.blocks))throw Error('invalid response');return payload.blocks})
   const timeout=new Promise((resolve,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'))},timeoutMs)})
-  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});rangeFailures.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeFailures.add(id);global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
+  const promise=Promise.race([request,timeout]).then(blocks=>{rangeCache.set(id,{blocks,at:Date.now()});rangeFailures.delete(id);global.WistiaContact?.refreshCalendarRange?.(from,to);return blocks},error=>{rangeFailures.set(id,Date.now());global.WistiaContact?.refreshCalendarRange?.(from,to);throw error}).finally(()=>{clearTimeout(timer);rangeInflight.delete(id)})
   rangeInflight.set(id,promise);return promise
  }
  function controls(){if(!activeForm)return null;const ui={date:activeForm.querySelector('#contact-bookingDate'),time:activeForm.querySelector('#contact-time'),status:activeForm.querySelector('[data-booking-status]'),error:activeForm.querySelector('[data-contact-date-error="bookingDate"]')};return ui.date&&ui.time&&ui.status&&ui.error?ui:null}
@@ -126,9 +139,7 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   const controller=new AbortController(),entry={controller,fresh}
   let timer
   const request=(async()=>{
-   const response=await fetch('/api/availability?date='+encodeURIComponent(date),{signal:controller.signal,cache:'no-store',credentials:'same-origin'})
-   if(!response.ok)throw Error('unavailable')
-   const payload=await response.json()
+   const payload=await requestAvailability('date='+encodeURIComponent(date),controller.signal)
    if(!payload.ok||payload.date!==date||!Array.isArray(payload.blocks)||payload.blocks.some(block=>!Number.isFinite(Date.parse(block.start))||!Number.isFinite(Date.parse(block.end))||Date.parse(block.end)<=Date.parse(block.start)))throw Error('invalid response')
    return payload.blocks
   })()

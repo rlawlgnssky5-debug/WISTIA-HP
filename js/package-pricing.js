@@ -263,7 +263,25 @@
   }));syncCouponControls(root)
  }
  function setCouponClaim(key,selected){if(!couponKeys.includes(key))return;if(key==='yearEndCoupon')return;writeCouponClaims({...readCouponClaims(),[key]:!!selected});syncCouponClaims(global.document);refreshPricePanels()}
- function refreshPricePanels(){if(!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{panel.innerHTML=selectionDetails(panel.dataset.packageKey,panel.dataset.couponDate||'')});refreshCardPrices(global.document)}
+ function refreshPricePanels(){if(!global.document)return;global.document.querySelectorAll('[data-package-selection-details]').forEach(panel=>{const {packageKey,couponDate,people,timeStart}=panel.dataset;panel.innerHTML=selectionDetails(packageKey,couponDate||'',people||'',timeStart||'')});refreshCardPrices(global.document)}
+ if(global.document&&global.setTimeout){
+  let priceDate=today(),midnightTimer
+  const refreshAtDateChange=()=>{
+   const date=today()
+   if(date!==priceDate){
+    priceDate=date
+    refreshPricePanels()
+    global.document.querySelectorAll('.package-picker').forEach(typeTable)
+    global.dispatchEvent(new global.Event('wistia:price-date-change'))
+   }
+   global.clearTimeout(midnightTimer)
+   const nextMidnight=Date.parse(date+'T00:00:00+09:00')+86400000
+   midnightTimer=global.setTimeout(refreshAtDateChange,Math.max(0,nextMidnight-Date.now()))
+  }
+  refreshAtDateChange()
+  global.addEventListener('pageshow',refreshAtDateChange)
+  global.document.addEventListener('visibilitychange',()=>{if(!global.document.hidden)refreshAtDateChange()})
+ }
  function restoreCouponClaims(form){
   const claims=readCouponClaims();let seeded=false
   couponKeys.forEach(key=>{const input=form.querySelector('[name="'+key+'"]');if(!input)return;const allowed=packageFor(form.querySelector('[name="package"]:checked')?.value).key!=='A'&&(key!=='yearEndCoupon'||yearEndActive());if(Object.hasOwn(claims,key)){input.checked=claims[key]&&allowed}else{claims[key]=input.checked;input.checked=input.checked&&allowed;seeded=true}})

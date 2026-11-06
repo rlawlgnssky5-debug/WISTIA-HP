@@ -582,7 +582,7 @@ function priceBar(key,purpose=""){
  return ''
 }
 function sentenceBreaks(text){return String(text).replace(/(요|니다)\s+(?=\S)/g,'$1<br>')}
-function faq(items){return '<div class="faq-list">'+items.map(([q,a],i)=>'<details><summary>Q'+(i+1)+'. '+q+'<span aria-hidden="true">+</span></summary><p>'+sentenceBreaks(a)+'</p></details>').join("")+'</div>'}
+function faq(items){return '<div class="faq-list">'+items.map(([q,a,monthly],i)=>'<details'+(monthly?' data-monthly-faq':'')+'><summary>Q'+(i+1)+'. '+q+'<span aria-hidden="true">+</span></summary><p>'+sentenceBreaks(a)+'</p></details>').join("")+'</div>'}
 function packageItem(item){return ({
  "녹음 및 1대1 디렉팅":"1:1 레코딩 · 보컬 디렉팅",
  "두 사람 녹음 및 1대1 디렉팅":"2인 레코딩 · 보컬 디렉팅",
@@ -914,7 +914,7 @@ function renderInfoPage(key){
  const locationContent='<div class="wistia-location lc2"><div class="lc2-card lc2-addr"><span class="lc2-badge">'+studioIcon('pin')+'WISTIA STUDIO</span><h2 class="studio-address" data-svg-title="off">'+address+'</h2><p class="lc2-sub">7호선 부천시청역 1번 출구</p><div class="lc2-btns"><a class="lc2-n" href="https://map.naver.com/p/search/'+enc+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a class="lc2-k" href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a><button class="lc2-c location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">주소복사</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p></div><div class="lc2-card lc2-map"><figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure><div class="lc2-cap"><span>부천시청역 1번 출구 → 위스티아 스튜디오</span></div></div><div class="lc2-side"><h3 data-svg-title="off" class="lc2-sec">교통편 안내</h3><div class="lc2-card lc2-rows"><div class="lc2-row">'+ic(studioIcon('train'))+'<div><h4 data-svg-title="off">지하철로 오실 때</h4><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p><div class="lc2-steps"><span>1번 출구</span><i>›</i><span>도보 이동</span><i>›</i><span>2층 스튜디오</span></div></div></div><div class="lc2-row">'+ic(studioIcon('car'))+'<div><h4 data-svg-title="off">차량으로 오실 때</h4><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p></div></div><div class="lc2-row">'+ic('<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>')+'<div><h4 data-svg-title="off">주차 안내</h4><p>시의회 옆 공영주차장 · 주차 요금 별도<br>주차비 지원은 어렵습니다</p></div></div></div></div></div>'
  const directionsMap='<figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure>'
  const monthlyEvent=window.WistiaPackages.activeMonthlyEvent?.()
- const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&monthlyEvent?{...group,items:[["이번 달 이벤트 쿠폰은 어떻게 적용되나요?","<strong>"+monthlyEvent.name+" "+monthlyEvent.amount.toLocaleString("ko-KR")+"원</strong>은 PREMIUM·DUET에 자동으로 적용돼요. 홈에는 받기 완료로 안내되어 있고, 따로 누르지 않아도 금액에서 빠져요<br>"+(monthlyEvent.until||"이번 달")+" 예약하면 녹음일이 다른 달이어도 적용되고, 그 시각이 지나면 금액과 안내에서 사라져요<br>STANDARD·DELUXE에는 적용되지 않아요"],...group.items]}:group)
+ const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&monthlyEvent?{...group,items:[["이번 달 이벤트 쿠폰은 어떻게 적용되나요?","<strong>"+monthlyEvent.name+" "+monthlyEvent.amount.toLocaleString("ko-KR")+"원</strong>은 PREMIUM·DUET에 자동으로 적용돼요. 홈에는 받기 완료로 안내되어 있고, 따로 누르지 않아도 금액에서 빠져요<br>"+(monthlyEvent.until||"이번 달")+" 예약하면 녹음일이 다른 달이어도 적용되고, 그 시각이 지나면 금액과 안내에서 사라져요<br>STANDARD·DELUXE에는 적용되지 않아요",true],...group.items]}:group)
  const faqContent='<div class="info-faq">'+faqGroups.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><div><h2 id="infoFaqGroup'+index+'"><span class="faq-group-q" aria-hidden="true"><svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><circle cx="10" cy="10" r="10" fill="#b98a8e"/><circle cx="9.6" cy="9.4" r="4.3" fill="none" stroke="#fff" stroke-width="2"/><path d="M11.3 11.4l3 3" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></span>'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','선택한 타입에 맞춰 목소리를 완성해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent:aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
@@ -925,10 +925,13 @@ function paybackSection(items,maximum){
  const cards=items.map(item=>'<article class="pb-card"><header><h3 data-svg-title="off">'+escapeHtml(item.label)+'</h3><strong>'+won(item.discount)+'</strong></header>'+PAYBACK_EVENT_GUIDE[item.key].map(([title,lines])=>title==='참여 방법'?'<div class="pb-steps"><h4 data-svg-title="off">'+escapeHtml(title)+'</h4><ol>'+lines.map(line=>'<li>'+escapeHtml(line)+'</li>').join('')+'</ol></div>':title?'<div class="pb-eligibility"><h4 data-svg-title="off">'+escapeHtml(title)+'</h4><p>'+lines.map(escapeHtml).join('<br>')+'</p></div>':'<p class="pb-description">'+lines.map(escapeHtml).join('<br>')+'</p>').join('')+'</article>').join('')
  return '<section class="events-payback pb-clean" aria-labelledby="paybackTitle"><header class="pb-heading"><p class="ev2-k">PAYBACK</p><h2 id="paybackTitle">후기 참여 페이백 이벤트</h2><p>소중한 경험을 나눠주신 분께 감사의 마음을 돌려드려요</p></header><div class="pb-summary"><span>두 가지 모두 참여 시</span><strong>총 '+won(maximum)+' 페이백</strong><p>각 이벤트는 하나씩 참여하셔도 괜찮아요</p></div><div class="pb-cards">'+cards+'</div><aside class="pb-refund"><strong>참여 자료와 조건 확인 후 환급해 드려요</strong><p>결제 금액에서 미리 차감하지 않으며<br>확인 후 카카오톡으로 환급 절차를 안내해 드립니다</p></aside></section>'
 }
+function eventsDiscounts(){
+ const iconFor={first:'gift',monthly:'gift',advance1:'calendar'}
+ return '<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+window.WistiaPackages.discountOffers.map((item,i)=>[item.label,window.WistiaPackages.money(item.discount)+' 할인',item.detail,iconFor[item.key]||'calendar']).map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+}
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
- const iconFor={first:'gift',monthly:'gift',advance1:'calendar'}
- const discounts='<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+window.WistiaPackages.discountOffers.map((item,i)=>[item.label,window.WistiaPackages.money(item.discount)+' 할인',item.detail,iconFor[item.key]||'calendar']).map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+ const discounts=eventsDiscounts()
  app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+paybackSection(items,maximum)+'<a class="ev2-cta ev2-consult" href="/">AR 축가 자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></section>'+footer()
 }
 let contactQuote=null
@@ -1249,12 +1252,35 @@ function mobileArNotices(story=false){
  return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'녹음일 기준 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'')+'</small></div></li><li><strong>수정</strong><div><b>상담에서 안내해요</b><small>원하는 부분을 모아서 알려 주세요</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><address class="studio-address" data-svg-title="off">경기도 부천시 석천로170번길 19, 부광프라자 2층</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
-function mobileDetailEvents(){
+function mobileBenefitList(type){
  const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 별도 받기 없이 자동 적용',advance1:'스탠다드 제외 · 사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
- const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
- const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
+ const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type)
+ return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'
+}
+function mobileDetailEvents(){
+ const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+mobileBenefitList(type)+'</div></details>'
  return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
 }
+window.addEventListener('wistia:price-date-change',()=>{
+ const slot=document.querySelector('[data-monthly-event-slot]')
+ const monthly=window.WistiaPackages.monthlyEventCard()
+ const old=slot?.querySelector('[data-monthly-event-card]')
+ if(old&&old.outerHTML!==monthly)old.outerHTML=monthly
+ else if(slot&&!old&&monthly)slot.insertAdjacentHTML('beforeend',monthly)
+ const discounts=document.querySelector('.events-discounts')
+ if(discounts)discounts.outerHTML=eventsDiscounts()
+ const list=document.querySelector('[data-benefit-type="discount"]')
+ if(list)list.outerHTML=mobileBenefitList('discount')
+ const faqItem=document.querySelector('[data-monthly-faq]')
+ if(faqItem&&!monthly){
+  const parent=faqItem.parentElement
+  faqItem.remove()
+  parent.querySelectorAll('summary').forEach((summary,i)=>{
+   const label=summary.firstChild
+   if(label?.nodeType===3)label.textContent=label.textContent.replace(/^Q\d+\./,'Q'+(i+1)+'.')
+  })
+ }
+})
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
  function mobileStudioBrand(){return '<div class="mas-brand">'+img('assets/img/wistia-logo-transparent-q88.webp','위스티아')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></div>'}
