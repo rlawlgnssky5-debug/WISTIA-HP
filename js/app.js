@@ -1316,7 +1316,7 @@ function optionExplainSection(){
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2><p class="package-guide-sub">나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!</p>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성</a></section>'}
-function typeGuideSection(){return '<img class="type-unify-poster" src="assets/img/type-guide/type-final.webp?v=20261105-poster-text-1" width="782" height="1472" alt="어떤 타입이 나한테 맞을까?" decoding="async" loading="lazy">'}
+function typeGuideSection(){return '<div class="type-poster-art"><img class="type-unify-poster" src="assets/img/type-guide/type-final.webp?v=20261105-poster-text-1" width="782" height="1472" alt="어떤 타입이 나한테 맞을까?" decoding="async" loading="lazy"><div class="type-poster-standard"><span><b>50분</b> 녹음과 정밀 믹싱·마스터링이 필요하다면?</span><span>기본에 충실한 스탠다드를 추천드려요!</span></div></div>'}
 function homeTypeBlock(key){const sales=packageSalesSection(key);return key==='solo'?'<section class="type-unify" id="packageSelection" data-svg-title="off" aria-label="어떤 타입이 나한테 맞을까?">'+typeGuideSection()+sales.replace(' id="packageSelection"','').replace(' aria-labelledby="packageSelectionTitle"','').replace('<h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2><p class="package-guide-sub">나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!</p>',''):sales}
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>모든 타입은 녹음일 기준 7일 이내 전달<br>3일 이내 받기는 별도 옵션</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>할인</strong><span>스탠다드는 모든 할인에서 제외</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','정밀 믹싱·마스터링을 진행하고, 스탠다드의 <span class="process-keep">음정·박자 보정</span>은 옵션이에요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
@@ -1361,7 +1361,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const firstNotice=key==='solo'?window.WistiaPackages.firstVisitEventCard?.()||'':''
  const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
  const couponStack=firstNotice+monthlyNotice
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageTypeComparison" data-ar-section="packageTypeComparison">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1429,7 +1429,6 @@ function initArCommerceDetail(){
  const packageRoot=document.querySelector('#packageSelection')
  window.WistiaPackages.mountSelection(packageRoot)
  window.WistiaPackages.typeTable?.(packageRoot)
- packageRoot?.querySelector('.wf-type-table')?.setAttribute('id','packageTypeComparison')
  packageRoot?.addEventListener('change',event=>{
   if(event.target.name!=='detailPackage')return
   const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)
@@ -1452,7 +1451,10 @@ function initArCommerceDetail(){
  root.querySelectorAll('[data-ar-section]').forEach(link=>link.addEventListener('click',event=>{
   event.preventDefault();const target=document.getElementById(link.dataset.arSection)
   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
-  if(target)target.scrollIntoView({behavior,block:'start'})
+  if(target&&link.classList.contains('ed-hero-price-jump')){
+   const headerBottom=document.getElementById('siteHeader')?.getBoundingClientRect().bottom||0
+   window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-Math.max(0,headerBottom)-20,behavior})
+  }else if(target)target.scrollIntoView({behavior,block:'start'})
   root.querySelectorAll('.arc-tabs a').forEach(item=>{if(item.dataset.arSection===link.dataset.arSection)item.setAttribute('aria-current','location');else item.removeAttribute('aria-current')})
  }))
 }

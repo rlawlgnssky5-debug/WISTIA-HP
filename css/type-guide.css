@@ -141,4 +141,32 @@ html { scroll-behavior: smooth; }
 }
 #packageSelection { scroll-margin-top: 76px; }
 
-#packageTypeComparison { scroll-margin-top: 76px; }
+/* The poster's Standard copy is live text aligned to its original card. */
+.type-poster-art {
+  position: relative;
+  container-type: inline-size;
+}
+.type-poster-standard {
+  position: absolute;
+  inset: 45.52% 7.8% auto 39.9%;
+  box-sizing: border-box;
+  min-height: 5.3%;
+  padding: .35cqw 0 0 .9cqw;
+  background: #fffffb;
+  color: #242424;
+  font: 700 2.72cqw/1.68 Pretendard, sans-serif;
+  letter-spacing: -.045em;
+}
+.type-poster-standard span { display: block; white-space: nowrap; }
+.type-poster-standard b { color: #a9555b; font-weight: inherit; }
+
+#app .ed-monthly-slot {
+  display: grid;
+  row-gap: clamp(12px, 2vw, 18px);
+}
+
+@layer wistia-site-fixes {
+  html body #app .info-page-faq #infoPageTitle {
+    padding-inline-start: 12px !important;
+  }
+}

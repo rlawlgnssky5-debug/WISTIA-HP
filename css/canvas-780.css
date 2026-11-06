@@ -674,7 +674,7 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 @layer wistia-site-fixes{html body #app#app#app#app#app .package-picker .package-card .package-card-subtitle{white-space:normal!important;word-break:keep-all!important;overflow-wrap:normal!important;text-wrap:balance!important;line-height:1.35!important;text-align:center!important}}
 @layer wistia-site-fixes{html body #app#app#app#app#app .package-picker .package-card .package-card-sub-item{white-space:nowrap!important;display:inline!important}}
 @layer wistia-site-fixes{
-html body #app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title{display:flex!important;align-items:center!important;gap:12px!important;font-size:16.5px!important;line-height:1.25!important}
+html body #app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title{display:flex!important;align-items:center!important;gap:18px!important;font-size:16.5px!important;line-height:1.25!important}
 html body #app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title .svg-title-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:28px!important;height:28px!important;transform:none!important;margin:0!important;align-self:center!important;flex:0 0 28px!important;line-height:0!important}
 html body #app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title .svg-title-icon svg{display:block!important;width:28px!important;height:28px!important;transform:none!important}
 html body #app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-title .svg-section-text{line-height:1.25!important;display:block!important;font-size:17px!important}
