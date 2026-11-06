@@ -1249,12 +1249,11 @@ function mobileArNotices(story=false){
  return '<section class="arc-section arc-notices mas-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong><div><b>'+(story?'약 14일':'녹음일 기준 7일 이내')+'</b><small>'+(story?'촬영·자료 전달 완료 후':'')+'</small></div></li><li><strong>수정</strong><div><b>상담에서 안내해요</b><small>원하는 부분을 모아서 알려 주세요</small></div></li></ul></section><section class="arc-section mas-location" aria-labelledby="masLocationTitle"><header>'+mobileArDesignIcon('pin')+'<h2 id="masLocationTitle">오시는 길</h2></header><address class="studio-address" data-svg-title="off">경기도 부천시 석천로170번길 19, 부광프라자 2층</address><dl><div><dt>지하철</dt><dd>부천시청역 1번 출구<br>도보 약 300m</dd></div><div><dt>주차</dt><dd>스튜디오 바로 옆 공영주차장<small>주차 요금 별도 · 주차비 지원 불가</small></dd></div></dl><div class="wistia-location-links mas-map-links"><a href="https://map.naver.com/p/search/'+address+'" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a></div></section>'
 }
 // Read-only disclosure shares the calculator's approved benefit names, amounts and conditions.
-function mobileDetailEvents(showMonthly){
+function mobileDetailEvents(){
  const short={yearEnd:window.WistiaPackages.yearEndCopy.visit+' · '+window.WistiaPackages.yearEndCopy.products,first:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요',advance1:'스탠다드 제외 · 사전 예약 · 예약하는 날에서 1개월 이후 녹음',blog:'일 방문자 100명 이상 블로그 · 가이드대로 후기 공개 · 확인 후 환급',reaction:'얼굴 공개·인스타 게시 동의 · 현장 영상 전달 · 확인 후 환급'}
  const list=type=>{const items=type==='discount'?window.WistiaPackages.discountOffers:EVENTS.filter(event=>(event.type||'discount')===type);return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'}
  const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+list(type)+'</div></details>'
- const monthly=showMonthly?window.WistiaPackages.monthlyEventCard?.()||'':''
- return '<div class="ed-benefit-lists">'+monthly+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
+ return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
 }
 function mobileDetailReviews(){return soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')}
 function mobileDetailFooter(){return footer()}
@@ -1333,7 +1332,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+mobileDetailEvents(key==='solo')+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1346,8 +1345,10 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  if(map)map.insertAdjacentHTML('afterend',homeTypeBlock(key))
  else detailParts.content.append(document.createRange().createContextualFragment(homeTypeBlock(key)))
  details=detailParts.innerHTML
+ const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
+ (monthlyNotice?'<div class="ed-monthly-slot" data-monthly-event-slot>'+monthlyNotice+'</div>':'')+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
  '<span id="arcDetails" hidden></span>'+details+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
