@@ -1332,7 +1332,8 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+mobileDetailEvents()+'</div></section>'
+ const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(monthlyNotice?'<div class="ed-monthly-slot" data-monthly-event-slot>'+monthlyNotice+'</div>':'')+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1345,10 +1346,8 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  if(map)map.insertAdjacentHTML('afterend',homeTypeBlock(key))
  else detailParts.content.append(document.createRange().createContextualFragment(homeTypeBlock(key)))
  details=detailParts.innerHTML
- const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
- (monthlyNotice?'<div class="ed-monthly-slot" data-monthly-event-slot>'+monthlyNotice+'</div>':'')+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
  '<span id="arcDetails" hidden></span>'+details+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
