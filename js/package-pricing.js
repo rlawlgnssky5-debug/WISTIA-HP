@@ -46,7 +46,6 @@
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  const discountOfferList=()=>[
   {key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 홈 첫 화면에서 받을 수 있어요'},
-  {key:'weekday',label:'목·금 오후 1~4시 시작',discount:10000,detail:'스탠다드 제외 · 공휴일 제외 · 녹음 시작 시간 기준으로 적용돼요'},
   {key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'}
  ]
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
@@ -61,11 +60,7 @@
   if(date>=addMonths(reference,1))return {key:'advance1',label:'사전 예약 할인 (1개월 이후)',amount:10000}
   return null
  }
- function weekdayDiscount(date,time){
-  if(!validDate(date)||isPublicHoliday(date)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time||''))return 0
-  const day=new Date(date+'T12:00:00Z').getUTCDay(),[h,m]=time.split(':').map(Number)
-  return [4,5].includes(day)&&h*60+m>=780&&h*60+m<=960?10000:0
- }
+ function weekdayDiscount(){return 0}
  function normalize(input={}){
   const selected=Array.isArray(input.options)?input.options:options.filter(o=>input[o.key]==='1'||input[o.key]===true).map(o=>o.key)
   return {...input,package:packageFor(input.package).key,people:packageFor(input.package).duet||input.people==='1'||input.people===2?'1':'0',options:[...new Set(selected.filter(key=>options.some(o=>o.key===key)))],firstVisit:input.firstVisit==='1'||input.firstVisit===true,yearEndCoupon:input.yearEndCoupon==='1'||input.yearEndCoupon===true}
@@ -80,7 +75,6 @@
   const discounts=[]
   if(discountsAllowed&&v.firstVisit)discounts.push({key:'first',label:'첫 이용 쿠폰',amount:20000})
   if(discountsAllowed&&validDate(v.bookingDate)){
-   if(weekdayDiscount(v.bookingDate,v.timeStart))discounts.push({key:'weekday',label:'목·금 할인 (13~16시 시작)',amount:10000})
    const advance=advanceDiscount(v.bookingDate,reference);if(advance)discounts.push(advance)
   }
   const optionTotal=entries.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
@@ -124,9 +118,9 @@
   const line=(cls,label,amount,value)=>'<div class="'+cls+'"><div class="price-line-main"><dt><span class="package-price-label">'+label+'</span>'+(amount?down(amount):'')+'</dt><dd>'+value+'</dd></div></div>'
   const rows=[line('is-list','원가',0,money(p.individual))];if(p.individual>p.price)rows.push(line('is-pkg','패키지 할인',0,'−'+money(p.individual-p.price)));const duetAdd=q.options.find(o=>o.key==='duet');if(duetAdd)rows.push(line('is-date','녹음 1인 추가',0,'+'+money(duetAdd.price)))
   if(has('first'))rows.push(line('is-coupon','첫 이용 쿠폰',0,'−'+money(20000)))
-  q.discounts.filter(d=>d.key==='weekday'||d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
+  q.discounts.filter(d=>d.key.startsWith('advance')).forEach(d=>rows.push(line('is-date',d.label,0,'−'+money(d.amount))))
   rows.push(line('is-now','현재 적용가',Math.max(0,p.individual-now),money(now)))
-  if(best<now)rows.push(line('is-best','목·금·사전 예약 할인까지 최대',now-best,money(best)))
+  if(best<now)rows.push(line('is-best','사전 예약 할인까지 최대',now-best,money(best)))
   return '<dl class="package-price-lines">'+rows.join('')+'</dl>'
  }
  function selectionDetails(key,bookingDate='',people='',timeStart=''){

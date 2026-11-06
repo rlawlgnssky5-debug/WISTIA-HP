@@ -16,7 +16,7 @@
   const selected=global.WistiaPackages.packageFor(new URLSearchParams(global.location.search).get('package')).key
   const sections=[
    '<h3 class="package-heading package-guide-title">어떤 타입이 나에게 맞을까요?</h3><p class="package-guide-sub">나에게 맞는 타입을 선택하고, 패키지 할인 혜택까지 챙겨보세요!</p>'+global.WistiaPackages.cards(selected,'wizard')+firstVisitField()+'<fieldset class="wf-people"><legend>녹음 인원</legend><p class="wf-tip is-right" data-wf-tip="people">'+tipText.people+'</p><div class="wf-pair">'+['<b>1인</b><small>1인·1곡 기준</small>','<b>듀엣곡으로 변경</b><small>2인 1곡 기준</small><strong>+30,000원</strong>'].map((label,i)=>'<label class="wf-choice"><input type="radio" name="people" value="'+i+'"'+(String(i)===(key==='duo'?'1':'0')?' checked':'')+'><span>'+icon('people')+label+'</span></label>').join('')+'</div></fieldset>'+discoveryField(),
-   '<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<p class="wf-discount-banner" data-wf-weekday-note>목·금 13~16시 시작은 10,000원 할인돼요</p><div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>50분 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
+   '<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>50분 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
    '<p class="wf-option-guide">필요한 옵션만 선택해 주세요</p><fieldset class="wf-option package-extra-options"><legend>추가 옵션</legend><div data-wf-option="people">'+checkRow('','녹음 1인 추가',30000,'2인 1곡 기준')+'</div>'+global.WistiaPackages.options.map(o=>'<div data-wf-option="'+o.key+'">'+(tipText[o.key]?'<p class="wf-tip" data-wf-tip="'+o.key+'">'+tipText[o.key]+'</p>':'')+checkRow(o.key,o.label,o.price,o.detail)+'</div>').join('')+'</fieldset>',
    '<label class="wf-field">특이사항 (선택)<textarea name="specialNotes" rows="4" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을 편하게 적어 주세요"></textarea></label><div class="wf-review" data-wf-review></div><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p><p class="wf-copy-note">작성한 내용이 복사되면 카카오톡 채팅창에 붙여넣어 보내주세요</p><p class="wf-privacy">입력한 내용은 홈페이지 서버에 저장하거나 자동으로 전송하지 않습니다</p>'
   ]
@@ -41,7 +41,7 @@
   const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['정밀 믹싱','마스터링']:[])]
   const addedName={duet:'녹음 1인 추가',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
-  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='weekday'?'목·금 할인 (13~16시 시작)':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
+  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
   // One blank line after the title and exactly one between sections; no trailing spaces or commas
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.minutes).replace('~',' ~ '),'',
@@ -92,17 +92,12 @@
   const locationDuration=form.querySelector('[data-wf-location-duration]');if(locationDuration)locationDuration.innerHTML='<b class="wf-tier-name" data-tier="'+q.package.key+'">'+q.package.name+'</b> <span class="wf-location-session">1곡 · '+global.WistiaPackages.hoursText(q.minutes)+'</span>'
   const standard=q.package.key==='A',advance=standard?null:global.WistiaPackages.advanceDiscount(q.v.bookingDate),note=form.querySelector('[data-wf-advance-note]');note.hidden=!advance;note.textContent=advance?money(advance.amount)+' 할인 적용돼요!':'';note.classList.toggle('is-applied',!!advance)
   const legend=form.querySelector('.wf-earlybird-legend');if(legend){if(!legend._wfBase)legend._wfBase=legend.innerHTML;const next=standard?'<p class="earlybird-one"><strong>스탠다드</strong><span>할인 제외</span></p>':legend._wfBase;if(legend.innerHTML!==next)legend.innerHTML=next}
-  const weekday=form.querySelector('[data-wf-weekday-note]'),holiday=global.WistiaPackages.isPublicHoliday(q.v.bookingDate),weekdayApplied=!standard&&!!global.WistiaPackages.weekdayDiscount(q.v.bookingDate,q.v.timeStart)
-  const weekdayCopy=standard?'<span class="wf-weekday-copy">스탠다드는 할인이 적용되지 않아요</span>':holiday?'<span class="wf-weekday-copy">공휴일은 목·금 시간대 할인이 적용되지 않아요</span>':'<span class="wf-weekday-copy"><small class="wf-time-discount wf-event-badge">이벤트</small> 목·금 13~16시 시작은 <strong>10,000원 할인</strong>돼요</span><small class="wf-weekday-condition">'+(weekdayApplied?'할인 적용 · ':'')+'공휴일 제외</small>'
-  if(weekday.innerHTML!==weekdayCopy)weekday.innerHTML=weekdayCopy
-  weekday.classList.toggle('is-applied',weekdayApplied)
   const dateNow=q.v.bookingDate||'',timeNow=q.v.timeStart||''
   const dateTouch=state.lastDate!==undefined&&state.step===1&&(state.lastDate!==dateNow||state.lastTime!==timeNow)
-  const freshWeekday=dateTouch&&state.lastWeekday===false&&weekdayApplied
   const freshAdvance=dateTouch&&state.lastAdvance===false&&!!advance
-  if(freshWeekday||freshAdvance)flashDiscount(form,(freshWeekday?10000:0)+(freshAdvance?advance.amount:0))
-  state.lastWeekday=weekdayApplied;state.lastAdvance=!!advance;state.lastDate=dateNow;state.lastTime=timeNow
-  if(dateTouch&&state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(weekdayApplied?weekday:note)}
+  if(freshAdvance)flashDiscount(form,advance.amount)
+  state.lastAdvance=!!advance;state.lastDate=dateNow;state.lastTime=timeNow
+  if(dateTouch&&state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(note)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   syncOptions(form,q)
   global.WistiaPackages.syncCouponControls(form)
@@ -129,12 +124,11 @@
   const v=values(form);if(step===1){const date=form.querySelector('#contact-bookingDate'),valid=v.bookingDateMode==='date'&&global.WistiaContact.calendar.selectableDate(v.bookingDate,'bookingDate'),message=valid?(date.validationMessage||''):'녹음 날짜를 골라주세요';mark(form,'bookingDate',message,2);if(message)return false
   const time=form.querySelector('#contact-time'),timeMessage=!v.timeStart||time.selectedOptions[0]?.disabled||form.dataset.scheduleState==='loading'?'시작 시간을 골라주세요':'';mark(form,'timeStart',timeMessage,2);return !timeMessage}return true
  }
- // Short pop on the next-button price plus a '할인 적용!' tag when the 목·금 discount kicks in
+ // Short pop on the next-button price plus a '할인 적용!' tag when the 1개월 이후 discount starts
  function flashDiscount(form,amount){const button=form.querySelector('[data-wf-next]');if(!button)return;button.classList.remove('wf-price-pop');void button.offsetWidth;button.classList.add('wf-price-pop');button.querySelector('.wf-discount-flash')?.remove();const tag=global.document.createElement('span');tag.className='wf-discount-flash';tag.setAttribute('aria-hidden','true');tag.textContent=money(amount)+' 할인 적용!';button.appendChild(tag);clearTimeout(button._wfFlash);button._wfFlash=setTimeout(()=>{button.classList.remove('wf-price-pop');tag.remove()},1700)}
  // Scroll so el sits below the fixed header and its bottom (or anchor's) clears the fixed 이전/다음 bar
  // After a date is tapped the time card takes the calendar's place; leaving it shows the calendar again with the date still selected
- // The 목·금 callout sits above the time card, so the time view starts there when it is shown
- function timeTop(form){const note=form.querySelector('[data-wf-weekday-note]');return note&&note.offsetHeight?note:form.querySelector('[data-wf-time-view]')}
+ function timeTop(form){return form.querySelector('[data-wf-time-view]')}
  function timeMode(form,on){const view=form.querySelector('[data-wf-date-view]'),times=form.querySelector('[data-wf-time-view]');if(!view||!times)return;if(on)form.dataset.wfTimeMode='1';else delete form.dataset.wfTimeMode;const note=form.querySelector('[data-wf-weekday-note]');for(const child of view.children)if(child===note){if(on)child.style.removeProperty('display');else child.style.setProperty('display','none','important')}else if(child!==times){if(on)child.style.setProperty('display','none','important');else child.style.removeProperty('display')}if(on)times.style.removeProperty('display');else times.style.setProperty('display','none','important');const back=times.querySelector('[data-wf-change-date]');if(back){if(on)back.style.setProperty('display','inline-flex','important');else back.style.removeProperty('display')}const heading=times.querySelector('[data-wf-selected-date]');if(heading){if(on){heading.setAttribute('role','button');heading.setAttribute('aria-label',heading.textContent+' 날짜 다시 선택');heading.style.cursor='pointer'}else{heading.removeAttribute('role');heading.removeAttribute('aria-label');heading.style.removeProperty('cursor')}}if(on)global.requestAnimationFrame(()=>timeTop(form).scrollIntoView({block:'start'}))}
  function reveal(form,el,anchor){if(!el)return;const doc=global.document,vh=global.innerHeight,fixed=node=>{for(;node&&node!==doc.body;node=node.parentElement){const p=getComputedStyle(node).position;if(p==='fixed'||p==='sticky')return node}return null}
   let top=0;const head=fixed(doc.elementFromPoint(global.innerWidth/2,2));if(head&&!form.contains(head))top=Math.max(0,head.getBoundingClientRect().bottom)
@@ -152,8 +146,7 @@
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.wfTime:null
   const known=!date.disabled&&!!date.value,loading=form.dataset.scheduleState==='loading';list.hidden=!known||loading;list.closest('[data-time-scroll-wrap]').hidden=!known||loading;time.closest('label').hidden=true;time.disabled=!known
   const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'녹음 날짜를 먼저 골라 주세요';form.querySelector('[data-time-help]').hidden=true;form.querySelector('[data-wf-duration]').textContent=global.WistiaPackages.hoursText(quote(form).minutes)+' 진행'
-  const standardTime=global.WistiaPackages.packageFor(form.querySelector('input[name="package"]:checked')?.value).key==='A'
-  list.setAttribute('aria-busy',String(loading));list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>{const discount=!standardTime&&!loading&&!o.disabled&&global.WistiaPackages.weekdayDiscount(date.value,o.value);return '<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(loading?' disabled':o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'>'+(discount?'<small class="wf-time-discount">−1만원</small>':'')+'<strong>'+o.value+'</strong>'+(!loading&&o.disabled?'<small>마감</small>':'')+'</button>'}).join('');update(form)
+  list.setAttribute('aria-busy',String(loading));list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(loading?' disabled':o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(!loading&&o.disabled?'<small>마감</small>':'')+'</button>').join('');update(form)
   if(focused)list.querySelector('[data-wf-time="'+focused+'"]:not(:disabled)')?.focus({preventScroll:true})
   // After a tapped date, bring the time list into view once the buttons are ready
   if(form.dataset.wfRevealTimes&&known&&!loading&&list.querySelector('[data-wf-time]')){delete form.dataset.wfRevealTimes;global.requestAnimationFrame(()=>reveal(form,timeTop(form),list.querySelector('[data-wf-time]')))}
