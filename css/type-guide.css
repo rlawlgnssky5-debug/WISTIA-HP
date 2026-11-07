@@ -336,10 +336,24 @@ html body #app .package-picker .package-card-price {
 html body #app .package-picker .package-card-subtitle,
 html body #app .package-picker .package-card-sub-item {
   margin-top: 10px !important;
-  font-size: 10px !important;
+  font-size: 9px !important;
   line-height: 1.35 !important;
   color: #8A7578 !important;
-  letter-spacing: -0.04em !important;
+  letter-spacing: -0.06em !important;
+  text-align: left !important;
+}
+html body #app .package-picker .package-card-subtitle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  margin-inline: auto !important;
+  gap: 2px !important;
+}
+html body #app .package-picker .package-card-sub-item {
+  display: block !important;
+  margin-top: 0 !important;
 }
 html body #app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
 html body #app .package-picker .package-card[data-tier="B"] :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
