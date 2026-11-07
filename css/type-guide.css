@@ -46,6 +46,16 @@
   }
   html body #app .mobile-ar-solo > #arcKey {
     --ed-key-gutter: 4px;
+    padding: 0 !important;
+  }
+  html body #app #arcKey .ed-key-poster {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 0 var(--ed-section-round, 28px) var(--ed-section-round, 28px) !important;
   }
   html body #app .mobile-ar-solo > :is(#arcFaq.solo-faq, .solo-map) {
     padding-left: 22px !important;

@@ -37,8 +37,21 @@ test('percentage slider positions snap to the nearest available recording', () =
 
 test('key, tuning, ratio and engineering sections preserve the original visible information', () => {
   for (const name of ['key', 'tuningHeader', 'ratioHeader', 'engineer', 'preparation']) assert.equal(typeof editorial[name], 'function', name)
-  const text = visibleText(editorial.key() + editorial.tuningHeader() + editorial.ratioHeader() + editorial.engineer() + editorial.preparation())
-  for (const copy of ['음원 편집 · 키 조절', '0원', '원하는 길이로 자르고 자연스럽게 이어요', '원곡 키 0', '내 키 -2', '내 목소리에 맞는 높이로 조절해요', '노래의 감정은 그대로, 내 목소리에 맞게', '음정·박자가 흔들려도', '자연스럽게 다듬어 드려요', '위스티아는 전 비율 다 드립니다', '같은 소스여도,', '사운드 완성도는 달라집니다', '〈싱어게인2〉 방송 음악 작업 참여 엔지니어가', '음정·박자 보정은 타입과 옵션에 맞추고', '정밀 믹싱·마스터링으로 마무리합니다', '구간별 녹음과 1:1 디렉팅', '보정은 타입마다 달라요', '여유로운 녹음 시간']) assert.ok(text.includes(copy), copy)
+  const keyHtml = editorial.key()
+  assert.match(keyHtml, /id="arcKey"/)
+  assert.match(keyHtml, /point02-edit-key-free\.webp\?v=20261108-point02-free-1/)
+  assert.match(keyHtml, /width="1170"/)
+  assert.match(keyHtml, /height="1506"/)
+  const keyAlt = (keyHtml.match(/alt="([^"]+)"/) || [])[1] || ''
+  for (const copy of ['POINT 02', '음원 편집 · 키 조절', '노래의 감정은 그대로, 내 목소리에 맞게', '무료', '원하는 길이로 자르고 자연스럽게 이어요', '내 목소리에 맞는 높이로 조절해요']) {
+    assert.ok(keyAlt.includes(copy), copy)
+  }
+  assert.equal(keyHtml.includes('0원'), false)
+  assert.equal(keyHtml.includes('key-wave-ribbon'), false)
+  assert.equal(keyHtml.includes('원곡 키 0'), false)
+  assert.equal(keyHtml.includes('내 키 -2'), false)
+  const text = visibleText(editorial.tuningHeader() + editorial.ratioHeader() + editorial.engineer() + editorial.preparation())
+  for (const copy of ['음정·박자가 흔들려도', '자연스럽게 다듬어 드려요', '위스티아는 전 비율 다 드립니다', '같은 소스여도,', '사운드 완성도는 달라집니다', '〈싱어게인2〉 방송 음악 작업 참여 엔지니어가', '음정·박자 보정은 타입과 옵션에 맞추고', '정밀 믹싱·마스터링으로 마무리합니다', '구간별 녹음과 1:1 디렉팅', '보정은 타입마다 달라요', '여유로운 녹음 시간']) assert.ok(text.includes(copy), copy)
   assert.equal(text.includes('기본 믹싱'), false)
   assert.equal(text.includes('수작업 보정부터'), false)
   assert.equal(text.includes('필요한 보정과 믹싱 선택'), false)
