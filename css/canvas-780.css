@@ -944,25 +944,27 @@ html body #app#app#app#app#app#app#app .info-page-faq .faq-list summary{padding:
 .wf-first-take:focus-visible,.wf-first-x:focus-visible{outline:2px solid #8d3d55;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.wf-first-take::after{animation:none;opacity:0}}
 
-html body #app#app#app#app#app .package-picker .package-card-was,
-html body #app#app#app#app#app .package-picker .package-card-was s {
+@layer wistia-site-fixes {
+html body #app#app#app#app#app .package-picker .package-card .package-card-was,
+html body #app#app#app#app#app .package-picker .package-card .package-card-was s {
   font-size: 13px !important;
   line-height: 1.25 !important;
   font-weight: 600 !important;
   color: #B39A9E !important;
 }
-html body #app#app#app#app#app .package-picker .package-card-price {
+html body #app#app#app#app#app .package-picker .package-card .package-card-price {
   font-size: 16px !important;
 }
-html body #app#app#app#app#app .package-picker .package-card-subtitle {
+html body #app#app#app#app#app .package-picker .package-card .package-card-subtitle {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   gap: 2px !important;
   white-space: normal !important;
 }
-html body #app#app#app#app#app .package-picker .package-card-sub-item {
+html body #app#app#app#app#app .package-picker .package-card .package-card-sub-item {
   display: block !important;
   margin-top: 0 !important;
   white-space: nowrap !important;
+}
 }
