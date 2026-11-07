@@ -1,17 +1,17 @@
 /* Compact home offers are declared before the existing site layers */
 @layer wistia-home-benefits {
   #siteHeader[data-home-event-rows] {
-    height: calc(52px + var(--event-height)) !important;
-    min-height: calc(52px + var(--event-height)) !important;
+    height: calc(40px + var(--event-height)) !important;
+    min-height: calc(40px + var(--event-height)) !important;
   }
   #siteHeader[data-home-event-rows="2"] { --event-height: 64px; }
   #siteHeader[data-home-event-rows="1"] { --event-height: 32px; }
   body:has(#siteHeader[data-home-event-rows="2"]) {
-    --event-header-height: 116px;
+    --event-header-height: 104px;
     padding-top: var(--event-header-height) !important;
   }
   body:has(#siteHeader[data-home-event-rows="1"]) {
-    --event-header-height: 84px;
+    --event-header-height: 72px;
     padding-top: var(--event-header-height) !important;
   }
   body:has(#siteHeader[data-home-event-rows]) #mainMenu {
@@ -19,8 +19,8 @@
     max-height: calc(100dvh - var(--event-header-height)) !important;
   }
   @media (min-width: 780px) {
-    body:has(#siteHeader[data-home-event-rows="2"]) { --event-header-height: 232px; }
-    body:has(#siteHeader[data-home-event-rows="1"]) { --event-header-height: 168px; }
+    body:has(#siteHeader[data-home-event-rows="2"]) { --event-header-height: 208px; }
+    body:has(#siteHeader[data-home-event-rows="1"]) { --event-header-height: 144px; }
   }
   #siteHeader .ed-event-ribbon {
     box-sizing: border-box !important;
