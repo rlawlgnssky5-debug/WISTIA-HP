@@ -947,13 +947,16 @@ html body #app#app#app#app#app#app#app .info-page-faq .faq-list summary{padding:
 @layer wistia-site-fixes {
 html body #app#app#app#app#app .package-picker .package-card .package-card-was,
 html body #app#app#app#app#app .package-picker .package-card .package-card-was s {
-  font-size: 13px !important;
+  font-size: 11px !important;
   line-height: 1.25 !important;
   font-weight: 600 !important;
   color: #B39A9E !important;
 }
 html body #app#app#app#app#app .package-picker .package-card .package-card-price {
-  font-size: 16px !important;
+  font-size: 13px !important;
+  letter-spacing: -0.05em !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
 }
 html body #app#app#app#app#app .package-picker .package-card .package-card-subtitle {
   display: flex !important;
@@ -998,4 +1001,16 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-sub-i
   font-size: 9px !important;
   letter-spacing: -0.06em !important;
   line-height: 1.35 !important;
+}
+
+html body #app#app#app#app#app .package-picker .package-card .package-card-was,
+html body #app#app#app#app#app .package-picker .package-card .package-card-was s {
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
+html body #app#app#app#app#app .package-picker .package-card .package-card-price {
+  font-size: 13px !important;
+  letter-spacing: -0.05em !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
 }
