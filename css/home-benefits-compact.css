@@ -1,5 +1,35 @@
 /* Compact home offers are declared before the existing site layers */
 @layer wistia-home-benefits {
+  #app .ed-event-ribbon {
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    min-height: 36px !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    background: #a55772 !important;
+    color: #fff !important;
+  }
+  #app .ed-event-ribbon .ed-event-tag {
+    flex: 0 0 auto !important;
+    padding: 3px 7px !important;
+    border-radius: 20px !important;
+    background: #ffffff25 !important;
+    font: 750 9px/1.3 Pretendard, sans-serif !important;
+    letter-spacing: .03em !important;
+  }
+  #app .ed-event-ribbon .ed-event-copy {
+    min-width: 0 !important;
+    font: 650 clamp(9px, 2.8vw, 11px)/1.4 Pretendard, sans-serif !important;
+    letter-spacing: -.035em !important;
+    white-space: nowrap !important;
+  }
+  #app .ed-event-ribbon-slot:not(:empty) + .ed-hero-price-jump {
+    border-top: 0 !important;
+    border-radius: 0 0 16px 16px !important;
+  }
   #app .ed-hero-price-jump {
     display: flex !important;
     align-items: center !important;
