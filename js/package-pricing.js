@@ -116,7 +116,7 @@
   person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
   people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 13.6a6.5 6.5 0 0 1 3.5 6.4"/>'
  }
- const shortTitles={A:'녹음 50분',B:'음정 박자 보정',C:'음정 박자 보정|시간 1시간 추가',D:'음정 박자 보정|시간 1시간 추가|1명 추가'}
+ const shortTitles={A:'녹음 50분',B:'+ 음정 박자 보정',C:'+ 음정 박자 보정|+ 시간 1시간 추가',D:'+ 음정 박자 보정|+ 시간 1시간 추가|+ 1명 추가'}
  // Best case uses the real quote rules: first Thursday or Friday at 13:00, two months ahead, not a public holiday
  function bestDate(reference=today()){let d=addMonths(reference,2);for(let i=0;i<14;i++){const day=new Date(d+'T12:00:00Z').getUTCDay();if((day===4||day===5)&&!isPublicHoliday(d))return d;d=new Date(Date.parse(d+'T12:00:00Z')+864e5).toISOString().slice(0,10)}return d}
  // A received limited coupon applies before a recording date is chosen as well
