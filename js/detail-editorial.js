@@ -102,11 +102,8 @@
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
-        '<header class="ed-heading" data-svg-title="off"><span class="ed-point">POINT 02</span><h2>음원 편집 · <b class="ed-title">키 조절</b></h2><p class="ed-description">노래의 감정은 그대로, 내 목소리에 맞게</p></header>' +
-        '<div class="ed-free"><strong>0<span>원</span></strong></div>' +
-        '<div class="ed-key-artwork"><div class="ed-key-services"><article><span class="ed-key-service-number" aria-hidden="true">01</span><h3>음원 편집</h3><p>원하는 길이로 자르고<br>자연스럽게 이어요</p><span class="ed-key-connector" aria-hidden="true"></span></article>' +
-        '<article><span class="ed-key-service-number" aria-hidden="true">02</span><h3>키 조절</h3><p>내 목소리에 맞는<br>높이로 조절해요</p><span class="ed-key-connector" aria-hidden="true"></span></article></div>' +
-        '<figure class="ed-key-ribbon"><img src="assets/editorial/key-wave-ribbon.webp" alt="음원 파형이 이어지고 음표의 높이가 바뀌는 리본" width="1170" height="780" loading="lazy" decoding="async"><svg class="ed-key-scissors" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11 20.5 25 5M21 20.5 7 5"/></svg><svg class="ed-key-curve" viewBox="0 0 100 46" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 31C30 3 66 7 94 32M83 28l11 4-4-11"/></svg></figure><p class="ed-key-example">원곡 키 0 <span aria-hidden="true">→</span> 내 키 -2</p></div></section>'
+        '<img class="ed-key-poster" src="assets/editorial/point02-edit-key-free.webp?v=20261108-point02-free-1" alt="POINT 02 음원 편집 · 키 조절. 노래의 감정은 그대로, 내 목소리에 맞게. 무료. 01 음원 편집: 원하는 길이로 자르고 자연스럽게 이어요. 02 키 조절: 내 목소리에 맞는 높이로 조절해요." width="1170" height="1506" loading="lazy" decoding="async">' +
+        '</section>'
     },
     tuningHeader() {
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요')

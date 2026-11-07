@@ -40,6 +40,8 @@
   #app .ed-recording-benefits li:nth-child(3) { left:0!important; top:84%!important; }
   #app .ed-recording-benefits li>span { font-size:14px!important; color:inherit!important; font-weight:600!important; }
   #app #arcKey { --ed-key-gutter:16px; overflow:hidden!important; }
+  #app .mobile-ar-solo > #arcKey { padding:0!important; }
+  #app #arcKey .ed-key-poster { display:block!important; width:100%!important; max-width:100%!important; height:auto!important; margin:0!important; border:0!important; border-radius:0 0 var(--ed-section-round,28px) var(--ed-section-round,28px)!important; }
   #app .ed-free { text-align:center!important; margin:0 0 28px!important; }
   #app .ed-free>strong { display:block!important; font-family:var(--ed-font)!important; font-size:clamp(84px,22cqw,172px)!important; line-height:1!important; font-weight:500!important; letter-spacing:-.055em!important; color:#b7788c!important; }
   #app .ed-free>strong>span { font-family:var(--ed-font)!important; font-size:.3em!important; margin-left:5px!important; }
@@ -302,6 +304,7 @@
     #app #arcKey { --ed-key-gutter:54px; }
     #app .mobile-ar-solo { width:100%!important; margin-inline:0!important; }
     #app .mobile-ar-solo > :is(.ed-section,.arc-point-ratio,.package-notices,.solo-faq,.solo-map,.package-section) { padding-inline:54px!important; }
+    #app .mobile-ar-solo > #arcKey { padding:0!important; }
     #app .ed-worries { margin-bottom:56px!important; }
     #app .ed-recording-benefits li { font-size:13px!important; gap:8px!important; }
   }
