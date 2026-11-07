@@ -1264,6 +1264,14 @@ function homeEventRibbon(){
  const copy=event.month+'월 예약 · '+products+' '+window.WistiaPackages.money(event.amount)+' 할인'
  return '<aside class="ed-event-ribbon" aria-label="이달의 할인 이벤트"><span class="ed-event-tag">EVENT</span><span class="ed-event-copy">'+escapeHtml(copy)+'</span></aside>'
 }
+function syncHomeEventRibbon(){
+ const header=document.getElementById('siteHeader')
+ let slot=header?.querySelector('[data-home-event-ribbon]')
+ if(routePath()!=='/'){slot?.remove();return}
+ if(!header)return
+ if(!slot){slot=document.createElement('div');slot.className='ed-event-ribbon-slot';slot.setAttribute('data-home-event-ribbon','');header.append(slot)}
+ slot.innerHTML=homeEventRibbon()
+}
 function mobileDetailEvents(){
  const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
  const panel=type=>'<div class="mas-event-content" id="homeBenefit-'+type+'" data-benefit-panel="'+type+'" hidden>'+mobileBenefitList(type)+'</div>'
@@ -1277,8 +1285,7 @@ document.addEventListener('click',event=>{
  root.querySelectorAll('[data-benefit-panel]').forEach(panel=>panel.hidden=!open||panel.dataset.benefitPanel!==type)
 })
 window.addEventListener('wistia:price-date-change',()=>{
- const ribbon=document.querySelector('[data-home-event-ribbon]')
- if(ribbon)ribbon.innerHTML=homeEventRibbon()
+ syncHomeEventRibbon()
  const slot=document.querySelector('[data-monthly-event-slot]')
  const monthly=window.WistiaPackages.monthlyEventCard()
  const old=slot?.querySelector('[data-monthly-event-card]')
@@ -1378,7 +1385,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const firstNotice=key==='solo'?window.WistiaPackages.firstVisitEventCard?.()||'':''
  const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
  const couponStack=firstNotice+monthlyNotice
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><div class="ed-event-ribbon-slot" data-home-event-ribbon>'+homeEventRibbon()+'</div><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -2108,6 +2115,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
  if(home)renderDetail("solo");else if(type==="contact")renderContactPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(info)renderInfoPage(key);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
+ syncHomeEventRibbon()
  window.WistiaGuide?.destroy?.()
  document.querySelector('#guideLayer')?.remove()
  prepareSvgPlayerControls()
