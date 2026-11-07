@@ -278,4 +278,13 @@ html { scroll-behavior: smooth; }
   html body #app .ed-engineer .ed-description strong {
     color: #3c3034 !important;
   }
+  html body #app .wf-type-table .wf-tt-when:empty,
+  html body #app .wf-type-table .wf-tt-when[hidden] {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
 }
