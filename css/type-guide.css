@@ -357,7 +357,7 @@ html body #app .package-picker .package-card-sub-item {
   display: block !important;
   margin-top: 0 !important;
 }
-html body #app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #8a7a72 !important; }
 html body #app .package-picker .package-card[data-tier="B"] :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
 html body #app .package-picker .package-card[data-tier="C"] :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
 html body #app .package-picker .package-card[data-tier="D"] :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
@@ -373,7 +373,7 @@ html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :ha
 html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
 html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
 html body #app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
-html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #8a7a72 !important; }
 html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
 html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
 html body #app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
