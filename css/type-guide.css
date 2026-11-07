@@ -321,17 +321,19 @@ html body #app .package-picker .package-card-name {
 }
 html body #app .package-picker .package-card-was,
 html body #app .package-picker .package-card-was s {
-  font-size: 13px !important;
+  font-size: 11px !important;
   line-height: 1.25 !important;
   color: #B39A9E !important;
   font-weight: 600 !important;
 }
 html body #app .package-picker .package-card-price {
   margin-top: 2px !important;
-  font-size: 16px !important;
+  font-size: 13px !important;
   font-weight: 800 !important;
-  letter-spacing: -0.04em !important;
+  letter-spacing: -0.05em !important;
   line-height: 1.25 !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
 }
 html body #app .package-picker .package-card-subtitle,
 html body #app .package-picker .package-card-sub-item {
