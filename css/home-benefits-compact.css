@@ -4,14 +4,14 @@
     height: calc(52px + var(--event-height)) !important;
     min-height: calc(52px + var(--event-height)) !important;
   }
-  #siteHeader[data-home-event-rows="2"] { --event-height: 84px; }
-  #siteHeader[data-home-event-rows="1"] { --event-height: 42px; }
+  #siteHeader[data-home-event-rows="2"] { --event-height: 64px; }
+  #siteHeader[data-home-event-rows="1"] { --event-height: 32px; }
   body:has(#siteHeader[data-home-event-rows="2"]) {
-    --event-header-height: 136px;
+    --event-header-height: 116px;
     padding-top: var(--event-header-height) !important;
   }
   body:has(#siteHeader[data-home-event-rows="1"]) {
-    --event-header-height: 94px;
+    --event-header-height: 84px;
     padding-top: var(--event-header-height) !important;
   }
   body:has(#siteHeader[data-home-event-rows]) #mainMenu {
@@ -19,8 +19,8 @@
     max-height: calc(100dvh - var(--event-header-height)) !important;
   }
   @media (min-width: 780px) {
-    body:has(#siteHeader[data-home-event-rows="2"]) { --event-header-height: 272px; }
-    body:has(#siteHeader[data-home-event-rows="1"]) { --event-header-height: 188px; }
+    body:has(#siteHeader[data-home-event-rows="2"]) { --event-header-height: 232px; }
+    body:has(#siteHeader[data-home-event-rows="1"]) { --event-header-height: 168px; }
   }
   #siteHeader .ed-event-ribbon {
     box-sizing: border-box !important;
@@ -40,9 +40,9 @@
     align-items: center !important;
     column-gap: 7px !important;
     box-sizing: border-box !important;
-    height: 42px !important;
+    height: 32px !important;
     margin: 0 !important;
-    padding: 5px 0 !important;
+    padding: 0 !important;
   }
   #siteHeader .ed-event-row + .ed-event-row {
     border-top: 1px dashed #e4c9c5 !important;
@@ -53,8 +53,8 @@
   }
   #siteHeader .ed-event-message {
     min-width: 0 !important;
-    display: grid !important;
-    row-gap: 2px !important;
+    display: flex !important;
+    align-items: center !important;
   }
   #siteHeader .ed-event-question {
     font: 650 11px/1.3 Pretendard, sans-serif !important;
@@ -63,10 +63,7 @@
     white-space: nowrap !important;
   }
   #siteHeader .ed-event-message small {
-    font: 500 7.5px/1.2 Pretendard, sans-serif !important;
-    color: #9b7c7b !important;
-    letter-spacing: .01em !important;
-    white-space: nowrap !important;
+    display: none !important;
   }
   #siteHeader .ed-event-discount {
     font: 800 13px/1.2 Pretendard, sans-serif !important;
