@@ -93,8 +93,7 @@
       return ratio < 40 ? 30 : ratio < 60 ? 50 : ratio < 85 ? 70 : 100
     },
     recording() {
-      return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '이런 고민, 있으셨죠?') +
-        '<ul><li>축가를 부탁할 사람이 마땅치 않아요</li><li>노래를 잘 못해도 괜찮을까요?</li><li>하객들 앞에서 노래하려니 너무 떨려요</li><li>미리 녹음하면 티가 나지 않을까요?</li></ul></section>' +
+      return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off"><ul><li>축가를 부탁할 사람이 마땅치 않아요</li><li>노래를 잘 못해도 괜찮을까요?</li><li>하객들 앞에서 노래하려니 너무 떨려요</li><li>미리 녹음하면 티가 나지 않을까요?</li></ul><div class="ed-worry-heading"><span class="ed-worry-quote ed-worry-quote-open" aria-hidden="true">“</span><h2>이런 고민,<br>있으셨죠?</h2><span class="ed-worry-quote ed-worry-quote-close" aria-hidden="true">”</span></div></section>' +
         '<section class="arc-point arc-point-recording ed-section" id="arcRecording" data-svg-title="off">' +
         heading('RECORDING POINT · POINT 01', '<span>한 곡을 한 번에?</span>한 소절씩 녹음하세요', '어려운 구간을 나누어 녹음하고<br>1:1 디렉팅으로 차근차근 맞춰갑니다') +
         '<div class="ed-recording-scene"><figure class="ed-photo"><img src="assets/editorial/recording-studio-portrait.webp" alt="녹음용 콘덴서 마이크와 팝 필터를 담은 스튜디오 이미지" width="1122" height="1402" loading="lazy" decoding="async"></figure>' +
@@ -109,17 +108,14 @@
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요')
     },
     ratioHeader() {
-      return heading('LIVE &amp; AR MIX · POINT 04', '<span>비율 고민하지 마세요</span><b class="ed-title">위스티아는<br>전 비율 다 드립니다!</b>', '위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요')
+      return heading('LIVE &amp; AR MIX · POINT 04', '<span>비율 고민하지 마세요!</span><b class="ed-title punch">30% 50% 70% 100% 비율 모두 다 드립니다!</b>', '그날 컨디션에 맞게 골라 쓰세요 :)')
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
         [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['보정은 타입마다 달라요', '스탠다드는 음정·박자 보정이 옵션이고, 정밀 믹싱·마스터링은 모든 타입에 있어요'], ['여유로운 녹음 시간', 'PREMIUM과 DUET은 2시간 30분 녹음이에요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
     },
     engineer() {
-      return '<section class="ed-section ed-engineer" data-svg-title="off">' +
-        '<div class="ed-broadcast-logo"><img src="assets/img/ar-detail/broadcast-singagain-on-light.webp" alt="싱어게인2" width="1600" height="533" loading="lazy" decoding="async"></div>' +
-        heading('SOUND', '같은 소스여도, <b class="ed-title">사운드 완성도는 달라집니다</b>') +
-        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>음정·박자 보정은 타입과 옵션에 맞추고<br>정밀 믹싱·마스터링으로 마무리합니다</p></section>'
+      return ''
     }
   }
   if (typeof module === 'object' && module.exports) module.exports = editorial

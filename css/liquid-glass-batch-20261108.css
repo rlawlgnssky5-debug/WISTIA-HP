@@ -1,0 +1,995 @@
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap");
+
+@layer wistia-site-fixes {
+
+/* Approved liquid-glass batch (items 2-5, 7-12). Loaded last and left unlayered
+   so it can beat the earlier wistia-site-fixes layer. */
+
+html body:has(.ed-hero) {
+  padding-top: 0 !important;
+}
+
+html body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader {
+  position: absolute !important;
+  top: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  z-index: 40 !important;
+  color: #5a3d46 !important;
+}
+
+html body:has(.ed-hero) #siteHeader[data-home-event-rows],
+html body:has(.ed-hero) #siteHeader[data-home-event-rows="1"],
+html body:has(.ed-hero) #siteHeader[data-home-event-rows="2"] {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+html body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader .header-inner {
+  height: 48px !important;
+  min-height: 48px !important;
+  margin: 12px 12px 0 !important;
+  padding: 0 14px !important;
+  width: auto !important;
+  max-width: none !important;
+  border-radius: 22px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,.14)) !important;
+  border: 1px solid rgba(255,255,255,.55) !important;
+  box-shadow: 0 8px 28px rgba(40,16,24,.16), inset 0 1px 0 rgba(255,255,255,.7) !important;
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+
+html body:has(.ed-hero) #siteHeader .wordmark {
+  color: #5a3d46 !important;
+}
+
+html body:has(.ed-hero) #siteHeader .wordmark img {
+  filter: none !important;
+}
+
+html body:has(.ed-hero) #siteHeader #menuToggle {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.16)) !important;
+  border: 1px solid rgba(255,255,255,.55) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72) !important;
+  color: #5a3d46 !important;
+}
+
+html body:has(.ed-hero) #mainMenu {
+  top: 72px !important;
+  max-height: calc(100dvh - 72px) !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-ribbon {
+  display: grid !important;
+  gap: 6px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 8px 12px 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  color: #5a3d46 !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-row {
+  display: grid !important;
+  grid-template-columns: 22px minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  column-gap: 8px !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 0 8px 0 10px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(180deg, rgba(255,232,238,.50), rgba(236,168,186,.28)) !important;
+  border: 1px solid rgba(255,255,255,.45) !important;
+  box-shadow: 0 8px 20px rgba(80,24,40,.12), inset 0 1px 0 rgba(255,255,255,.55) !important;
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-row + .ed-event-row {
+  border-top: 0 !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-icon,
+html body:has(.ed-hero) #siteHeader .ed-event-star {
+  display: grid !important;
+  place-items: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #8F4D63 !important;
+  font-size: 0 !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-question {
+  font: 650 13px/1.3 Pretendard, sans-serif !important;
+  color: #5a3d46 !important;
+  letter-spacing: -.03em !important;
+  white-space: nowrap !important;
+}
+
+html body:has(.ed-hero) #siteHeader .ed-event-discount {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 6px 10px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,236,241,.42)) !important;
+  border: 1px solid rgba(255,255,255,.70) !important;
+  color: #8F4D63 !important;
+  font: 800 12px/1.2 Pretendard, sans-serif !important;
+  letter-spacing: -.03em !important;
+  white-space: nowrap !important;
+}
+
+html body #app .ed-hero-copy {
+  top: 56.9cqw !important;
+}
+
+html body #app .ed-hero-gallery .hs-arrow,
+html body #app .mas-gallery-viewport .hs-arrow {
+  display: grid !important;
+  top: 54.9cqw !important;
+  bottom: auto !important;
+  margin-top: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.14)) !important;
+  border: 1px solid rgba(255,255,255,.55) !important;
+  box-shadow: 0 6px 16px rgba(40,16,24,.16), inset 0 1px 0 rgba(255,255,255,.7) !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+html body #app .ed-hero-gallery .hs-arrow svg {
+  stroke: #fff !important;
+}
+
+html body #app .ed-hero-actions .ed-hero-price-jump {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-height: 52px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 12px 16px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.50), rgba(255,236,241,.22)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  color: #8F4D63 !important;
+  font: 700 15px/1.4 Pretendard, sans-serif !important;
+  box-shadow: 0 10px 24px rgba(92,48,62,.10), inset 0 1px 0 rgba(255,255,255,.82) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+html body #app .ed-hero-actions .ed-hero-price-jump svg {
+  width: 12px !important;
+  height: 12px !important;
+  stroke: currentColor !important;
+}
+
+/* 4. Worry bubbles first, quoted title below, no English */
+html body #app .ed-worries {
+  margin: 0 !important;
+  padding: 28px 18px 36px !important;
+  background: #f7e6ea !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+html body #app .ed-worries .ed-heading {
+  display: none !important;
+}
+
+html body #app .ed-worries ul {
+  display: grid !important;
+  gap: 16px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body #app .ed-worries li {
+  align-self: start !important;
+  max-width: max-content !important;
+  width: auto !important;
+  padding: 12px 16px !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  box-shadow: 0 6px 16px rgba(96,67,75,.06) !important;
+  color: #3c3034 !important;
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
+  letter-spacing: -.03em !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}
+
+html body #app .ed-worries li:nth-child(even) {
+  align-self: end !important;
+  background: #f3c9d4 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html body #app .ed-worries li::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: -8px !important;
+  left: 18px !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: inherit !important;
+  clip-path: polygon(0 0, 100% 0, 0 100%) !important;
+  transform: none !important;
+  right: auto !important;
+}
+
+html body #app .ed-worries li:nth-child(even)::after {
+  left: auto !important;
+  right: 18px !important;
+  clip-path: polygon(0 0, 100% 0, 100% 100%) !important;
+  transform: none !important;
+}
+
+html body #app .ed-worry-heading {
+  position: relative !important;
+  margin: 32px 8px 0 !important;
+  text-align: center !important;
+}
+
+html body #app .ed-worry-heading h2 {
+  margin: 0 !important;
+  color: #2d1c24 !important;
+  font-size: 34px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.045em !important;
+  line-height: 1.25 !important;
+}
+
+html body #app .ed-worry-quote {
+  position: absolute !important;
+  color: #d7a3b2 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 42px !important;
+  line-height: 1 !important;
+}
+
+html body #app .ed-worry-quote-open { left: 4px !important; top: -10px !important; }
+html body #app .ed-worry-quote-close { right: 4px !important; bottom: -16px !important; }
+
+/* 5. POINT 04: AR MIX in the hub, percentage just above and 16px right */
+html body #app #soloPoint04 .ed-heading .ed-title {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-family: "Gowun Batang", Georgia, serif !important;
+  font-weight: 400 !important;
+  text-align: center !important;
+}
+
+html body #app #soloPoint04 .ed-heading .ed-title > span {
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.02em !important;
+  white-space: nowrap !important;
+  color: #2d1c24 !important;
+}
+
+html body #app #soloPoint04 .ed-heading .punch,
+html body #app #soloPoint04 .ed-heading .ed-title .punch {
+  font-family: "Gowun Batang", Georgia, serif !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.04em !important;
+  white-space: nowrap !important;
+  color: #2d1c24 !important;
+  box-shadow: inset 0 -.26em #efd5dc !important;
+}
+
+html body #app #soloPoint04 .ed-heading .ed-copy {
+  font-family: "Gowun Dodum", sans-serif !important;
+  font-size: 14px !important;
+  color: #8a6a74 !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-adjust {
+  margin: 8px 0 12px !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-dial {
+  position: relative !important;
+  display: block !important;
+  width: min(378px, 100%) !important;
+  max-width: 100% !important;
+  aspect-ratio: auto !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  isolation: auto !important;
+  background: transparent !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-dial::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-disc {
+  display: block !important;
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  z-index: 0 !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-disc img {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  left: auto !important;
+  top: auto !important;
+  opacity: 1 !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-dial output,
+html body #app #soloPoint04 .ed-ratio-dial .ed-ratio-pct {
+  position: absolute !important;
+  top: 39.15% !important;
+  left: 50% !important;
+  transform: translateX(calc(-50% + 16px)) !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border: 0 !important;
+  color: #8F4D63 !important;
+  font-family: Pretendard, sans-serif !important;
+  font-size: 72px !important;
+  font-weight: 650 !important;
+  letter-spacing: -.04em !important;
+  line-height: .92 !important;
+  white-space: nowrap !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-dial output small {
+  font-size: 30px !important;
+  font-weight: 500 !important;
+  margin-left: 3px !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-dial > span.ed-ratio-mix,
+html body #app #soloPoint04 .ed-ratio-mix {
+  position: absolute !important;
+  top: 67.72% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  color: #8F4D63 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  white-space: nowrap !important;
+}
+
+html body #app #soloPoint04 .solo-p4-ratio {
+  border-radius: 16px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,244,247,.22) 48%, rgba(243,201,212,.16)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.84), 0 6px 14px rgba(50,36,32,.05) !important;
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+}
+
+html body #app #soloPoint04 .solo-p4-ratio.is-on,
+html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] {
+  background: linear-gradient(160deg, rgba(255,236,241,.70), rgba(243,201,212,.38)) !important;
+  border-color: rgba(255,255,255,.78) !important;
+  color: #8F4D63 !important;
+}
+
+html body #app #soloPoint04 .solo-p4-hint {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+html body #app #soloPoint04 .solo-p4-hint-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  color: #8F4D63 !important;
+}
+
+html body #app #soloPoint04 .solo-p4-hint-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+html body #app #soloPoint04 .ed-ratio-track input[type="range"]::-webkit-slider-thumb {
+  background: linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,236,241,.55)) !important;
+  border: 1px solid rgba(255,255,255,.8) !important;
+  box-shadow: 0 2px 8px rgba(92,48,62,.18) !important;
+}
+
+/* 7. Process: ivory timeline with numbered glass rail */
+html body #app #arcProcess.package-process-timeline,
+html body #app #arcProcess {
+  margin: 0 !important;
+  padding: 44px 20px 38px !important;
+  background:
+    radial-gradient(ellipse 70% 42% at 80% 12%, rgba(255,255,255,.88), transparent 68%),
+    radial-gradient(ellipse 60% 36% at 8% 88%, rgba(236,228,224,.70), transparent 70%),
+    linear-gradient(180deg, #f7f4f2 0%, #efeae7 100%) !important;
+  border: 0 !important;
+}
+
+html body #app #arcProcess h2 {
+  text-align: center !important;
+  margin: 0 0 28px !important;
+  color: #2d1c24 !important;
+  font-size: 26px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.045em !important;
+}
+
+html body #app #arcProcess .package-process-list {
+  position: relative !important;
+  display: grid !important;
+  gap: 0 !important;
+  counter-reset: none !important;
+}
+
+html body #app #arcProcess .package-process-list::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 21px !important;
+  top: 22px !important;
+  bottom: 22px !important;
+  width: 2px !important;
+  border-radius: 2px !important;
+  background: linear-gradient(180deg, rgba(143,77,99,.18), rgba(143,77,99,.42) 50%, rgba(143,77,99,.18)) !important;
+}
+
+html body #app #arcProcess .package-process-list li {
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr) !important;
+  column-gap: 12px !important;
+  row-gap: 0 !important;
+  align-items: start !important;
+  padding: 0 0 14px !important;
+  background: none !important;
+}
+
+html body #app #arcProcess .package-process-list li:last-child {
+  padding-bottom: 0 !important;
+}
+
+html body #app #arcProcess .package-process-list li::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app #arcProcess .process-num {
+  position: relative !important;
+  z-index: 2 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  color: #8F4D63 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.02em !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.70), rgba(255,255,255,.34) 48%, rgba(236,228,224,.28)) !important;
+  border: 1px solid rgba(255,255,255,.78) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.92), 0 4px 12px rgba(50,36,32,.08) !important;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+html body #app #arcProcess .process-card {
+  position: relative !important;
+  padding: 14px 16px 15px !important;
+  border-radius: 20px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,255,255,.22) 50%, rgba(236,228,224,.16)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.84), 0 8px 20px rgba(50,36,32,.06) !important;
+  backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+  -webkit-backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+}
+
+html body #app #arcProcess .process-card strong,
+html body #app #arcProcess .package-process-list strong {
+  display: block !important;
+  margin: 0 !important;
+  color: #2d1c24 !important;
+  font-size: 16px !important;
+  font-weight: 750 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+html body #app #arcProcess .process-card p,
+html body #app #arcProcess .package-process-list p {
+  margin: 6px 0 0 !important;
+  color: #6d5c61 !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+/* 9. Split poster and picker: no shared peach arch */
+html body #app .mobile-ar-solo > #packageSelection.type-unify {
+  margin: 8px 0 0 !important;
+  padding: 16px 12px 22px !important;
+  background:
+    radial-gradient(ellipse 70% 36% at 82% 18%, rgba(255,255,255,.90), transparent 68%),
+    radial-gradient(ellipse 60% 30% at 10% 78%, rgba(236,228,224,.75), transparent 70%),
+    linear-gradient(180deg, #f7f4f2 0%, #efeae7 100%) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+html body #app .type-unify .type-poster-art,
+html body #app .type-unify-poster {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 24px !important;
+}
+
+html body #app .type-unify .package-section {
+  margin-top: 18px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html body #app .package-picker .package-cards {
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,255,255,.22) 48%, rgba(236,228,224,.16)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.84), 0 8px 20px rgba(50,36,32,.06) !important;
+  backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+  -webkit-backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+}
+
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked))::after,
+html body #app .package-picker .package-card-check {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) {
+  background: linear-gradient(160deg, rgba(247,241,228,.62), rgba(247,241,228,.28)) !important;
+}
+html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) {
+  background: linear-gradient(160deg, rgba(248,232,237,.70), rgba(248,232,237,.32)) !important;
+}
+html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) {
+  background: linear-gradient(160deg, rgba(248,240,223,.70), rgba(248,240,223,.32)) !important;
+}
+html body #app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) {
+  background: linear-gradient(160deg, rgba(231,243,238,.70), rgba(231,243,238,.32)) !important;
+}
+
+html body #app .package-selected-detail {
+  position: relative !important;
+  margin-top: 14px !important;
+  padding: 20px 16px 16px !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,255,255,.22) 48%, rgba(236,228,224,.16)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.84), 0 8px 20px rgba(50,36,32,.06) !important;
+  backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+  -webkit-backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+}
+
+html body #app .package-inquiry-link,
+html body #app #packageSelection .package-inquiry-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 50px !important;
+  margin-top: 14px !important;
+  padding: 0 18px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,244,247,.22) 48%, rgba(243,201,212,.18)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  color: #8F4D63 !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.84), 0 8px 20px rgba(50,36,32,.06) !important;
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+}
+
+/* 10. Letter beside savings pill, headline below; champagne-gold UP */
+html body #app .package-selected-head {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  overflow: visible !important;
+}
+
+html body #app .package-selected-topline {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+html body #app .package-selected-letter {
+  flex: 0 0 auto !important;
+  font-size: 40px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+}
+
+html body #app [data-package-key="A"] .package-selected-letter { color: #8a7a72 !important; }
+html body #app [data-package-key="B"] .package-selected-letter { color: #C45C74 !important; }
+html body #app [data-package-key="C"] .package-selected-letter { color: #D99A00 !important; }
+html body #app [data-package-key="D"] .package-selected-letter { color: #3AA39A !important; }
+
+html body #app .package-selected-head > h3,
+html body #app .package-selected-head h3 {
+  margin: 0 !important;
+  color: #2d1c24 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.04em !important;
+}
+
+html body #app .package-selected-cheaper,
+html body #app .package-selected-head .package-selected-cheaper,
+html body #app .package-selected-topline .package-selected-cheaper {
+  display: inline-flex !important;
+  align-items: center !important;
+  max-width: calc(100% - 50px) !important;
+  margin: 0 !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.58), rgba(255,244,247,.34) 46%, rgba(243,201,212,.28)) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(70,32,48,.08) !important;
+  color: #8F4D63 !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.04em !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+}
+
+html body #app .package-selected-cheaper::before {
+  content: none !important;
+}
+
+html body #app .package-selected-features li[data-feature-enhanced="true"] {
+  margin: 3px -8px !important;
+  padding: 9px 8px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(160deg, rgba(255,252,240,.50), rgba(246,228,186,.26)) !important;
+  border: 1px solid rgba(212,176,92,.28) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+
+html body #app .package-feature-chg {
+  color: #B88912 !important;
+  font-weight: 800 !important;
+}
+
+html body #app .package-feature-up {
+  margin-left: auto !important;
+  padding: 4px 9px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,252,236,.70), rgba(244,214,140,.40)) !important;
+  border: 1px solid rgba(214,176,86,.48) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8) !important;
+  color: #9A7010 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .06em !important;
+  line-height: 1.2 !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+/* 11. Wizard November pill */
+html body #app .wf-monthly-note {
+  margin: 0 0 12px !important;
+}
+
+html body #app .wf-monthly-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 8px 14px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.58), rgba(255,244,247,.34) 46%, rgba(243,201,212,.22)) !important;
+  border: 1px solid rgba(143,77,99,.28) !important;
+  color: #8F4D63 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.03em !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.86) !important;
+}
+
+/* Higher-specificity overrides so stacked #app IDs and leftover layers cannot
+   pull the approved lock back to the old header, arrow, CD, or sale-pill look. */
+html:root body:has(.ed-hero),
+html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows]),
+html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows="1"]),
+html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows="2"]),
+html:root body:has(.ed-hero main#app#app#app#app) {
+  padding-top: 0 !important;
+  --event-header-height: 0px;
+}
+
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader {
+  position: absolute !important;
+  top: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  color: #5a3d46 !important;
+}
+
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader .header-inner {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader .ed-event-row {
+  height: 42px !important;
+}
+
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader .wordmark,
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader .wordmark span {
+  color: #5a3d46 !important;
+}
+
+html:root body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader#siteHeader .wordmark img {
+  filter: none !important;
+}
+
+html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-copy {
+  top: 56.9cqw !important;
+}
+
+html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-gallery .hs-arrow,
+html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mas-gallery-viewport .hs-arrow {
+  top: 54.9cqw !important;
+  bottom: auto !important;
+  margin-top: 0 !important;
+}
+
+html:root body #app#app#app#app#app #soloPoint04 .ed-ratio-dial output,
+html:root body #app#app#app#app#app #soloPoint04 .ed-ratio-dial .ed-ratio-pct {
+  position: absolute !important;
+  top: 39.15% !important;
+  left: 50% !important;
+  transform: translateX(calc(-50% + 16px)) !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border: 0 !important;
+  color: #8F4D63 !important;
+  font-family: Pretendard, sans-serif !important;
+  font-size: 72px !important;
+  font-weight: 650 !important;
+  letter-spacing: -.04em !important;
+  line-height: .92 !important;
+  white-space: nowrap !important;
+}
+
+html:root body #app#app#app#app#app #soloPoint04 .ed-ratio-dial output small {
+  font-size: 30px !important;
+  font-weight: 500 !important;
+}
+
+html:root body #app#app#app#app#app #soloPoint04 .ed-ratio-dial > span.ed-ratio-mix,
+html:root body #app#app#app#app#app #soloPoint04 .ed-ratio-mix {
+  position: absolute !important;
+  top: 67.72% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  color: #8F4D63 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  white-space: nowrap !important;
+}
+
+html:root body #app#app#app#app#app#app#app#app .package-selected-cheaper,
+html:root body #app#app#app#app#app#app#app#app .package-selected-head .package-selected-cheaper,
+html:root body #app#app#app#app#app#app#app#app .package-selected-head > .package-selected-cheaper,
+html:root body #app#app#app#app#app#app#app#app .package-selected-topline .package-selected-cheaper {
+  display: inline-flex !important;
+  align-items: center !important;
+  grid-column: auto !important;
+  margin: 0 !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.58), rgba(255,244,247,.34) 46%, rgba(243,201,212,.28)) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(70,32,48,.08) !important;
+  color: #8F4D63 !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+}
+
+html:root body #app#app#app#app#app#app#app#app .package-selected-cheaper::before {
+  content: none !important;
+  display: none !important;
+}
+
+html:root body #app#app#app#app .package-feature-chg {
+  color: #B88912 !important;
+  font-weight: 800 !important;
+}
+
+html:root body #app#app#app#app .package-feature-up {
+  margin-left: auto !important;
+  padding: 4px 9px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(160deg, rgba(255,252,236,.70), rgba(244,214,140,.40)) !important;
+  border: 1px solid rgba(214,176,86,.48) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8) !important;
+  color: #9A7010 !important;
+}
+
+html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .package-inquiry-link,
+html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app #packageSelection .package-inquiry-link {
+  background: linear-gradient(160deg, rgba(255,255,255,.50), rgba(255,244,247,.22) 48%, rgba(243,201,212,.18)) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  color: #8F4D63 !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.84), 0 8px 20px rgba(50,36,32,.06) !important;
+}
+}
+
+/* Compact home-benefits is declared first, so its !important wins over other
+   layers. Repeat the approved lock here to beat the wine circle and 32px rows. */
+@layer wistia-home-benefits {
+  html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows]),
+  html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows="1"]),
+  html:root body:has(.ed-hero):has(#siteHeader[data-home-event-rows="2"]) {
+    padding-top: 0 !important;
+    --event-header-height: 0px;
+  }
+
+  html:root body:has(.ed-hero) #siteHeader[data-home-event-rows],
+  html:root body:has(.ed-hero) #siteHeader[data-home-event-rows="1"],
+  html:root body:has(.ed-hero) #siteHeader[data-home-event-rows="2"] {
+    height: auto !important;
+    min-height: 0 !important;
+    --event-height: auto;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  html:root body:has(.ed-hero) #siteHeader .ed-event-ribbon {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  html:root body:has(.ed-hero) #siteHeader .ed-event-row {
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    column-gap: 8px !important;
+    height: 42px !important;
+    margin: 0 !important;
+    padding: 0 8px 0 10px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, rgba(255,232,238,.50), rgba(236,168,186,.28)) !important;
+    border: 1px solid rgba(255,255,255,.45) !important;
+    box-shadow: 0 8px 20px rgba(80,24,40,.12), inset 0 1px 0 rgba(255,255,255,.55) !important;
+  }
+
+  html:root body:has(.ed-hero) #siteHeader .ed-event-row + .ed-event-row {
+    border-top: 0 !important;
+  }
+
+  html:root body #app .ed-hero-price-jump,
+  html:root body #app .ed-hero-actions .ed-hero-price-jump {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    min-height: 52px !important;
+    padding: 12px 16px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.50), rgba(255,236,241,.22)) !important;
+    border: 1px solid rgba(255,255,255,.62) !important;
+    box-shadow: 0 10px 24px rgba(92,48,62,.10), inset 0 1px 0 rgba(255,255,255,.82) !important;
+    color: #8F4D63 !important;
+    font: 700 15px/1.4 Pretendard, sans-serif !important;
+  }
+
+  html:root body #app .ed-hero-price-jump > span,
+  html:root body #app .ed-hero-actions .ed-hero-price-jump > span {
+    display: inline !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font: inherit !important;
+    place-items: unset !important;
+  }
+}
