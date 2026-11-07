@@ -373,8 +373,8 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 @layer wistia-site-fixes {
   html body #app#app#app#app .package-card-was { white-space: normal !important; font-size: 11.5px !important; text-align: center !important; }
   html body #app#app#app#app .package-card-was small { display: block !important; font-size: 10px !important; margin-bottom: 1px !important; }
-  html body #app#app#app#app .package-card.is-selected .package-card-was, html body #app#app#app#app .package-card.is-selected .package-card-was small { color: rgba(255,255,255,.85) !important; }
-  html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: rgba(255,255,255,.85) !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-was, html body #app#app#app#app .package-card.is-selected .package-card-was small { color: #9b8d90 !important; }
+  html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: #b98591 !important; }
 }
 
 @layer wistia-site-fixes {
@@ -421,13 +421,13 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   html body #app#app#app#app .package-card[data-tier="A"] { --tier: #8a7a72; }
   html body #app#app#app#app .package-card[data-tier="B"] { --tier: #c0607e; }
   html body #app#app#app#app .package-card[data-tier="C"] { --tier: #b8862b; }
-  html body #app#app#app#app .package-card.is-selected { background: transparent !important; background-image: none !important; color: #3c3034 !important; outline: none !important; box-shadow: inset 0 0 0 1.5px var(--tier) !important; }
+  html body #app#app#app#app .package-card.is-selected { color: #3c3034 !important; outline: none !important; box-shadow: none !important; }
   html body #app#app#app#app .package-card.is-selected:focus-within { outline: none !important; }
   html body #app#app#app#app .package-card.is-selected :is(.package-card-body,.package-card-price) { color: #3c3034 !important; }
   html body #app#app#app#app .package-card.is-selected .package-card-subtitle { color: #867878 !important; }
   html body #app#app#app#app .package-card.is-selected :is(.package-card-was,.package-card-was small) { color: #9b8d90 !important; }
   html body #app#app#app#app .package-card.is-selected .package-card-was s { text-decoration-color: #b98591 !important; }
-  html body #app#app#app#app .package-card.is-selected::after { color: var(--tier) !important; }
+  html body #app#app#app#app .package-card.is-selected::after { content: none !important; display: none !important; }
 }
 
 @layer wistia-site-fixes {
@@ -439,7 +439,7 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
   /* the home/detail block is zoomed 1.78x on PC, so its sizes are given in pre-zoom px */
   @media (min-width: 780px) {
     html body #app#app#app#app #packageSelection .package-card .package-card-name { font-size: 12px !important; }
-    html body #app#app#app#app #packageSelection .package-card.is-selected { box-shadow: inset 0 0 0 .9px var(--tier) !important; }
+    html body #app#app#app#app #packageSelection .package-card.is-selected { box-shadow: none !important; }
   }
   html body #app#app#app#app .package-card:has(input:focus-visible) { box-shadow: inset 0 0 0 2px var(--tier, #c0607e) !important; }
 }
@@ -555,7 +555,7 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z
 }
 @layer wistia-site-fixes {
 @media (max-width:779px){
-  html body #app#app#app#app .package-picker .package-card:is(.is-selected,:has(input:checked))::after{top:2px!important;right:2px!important;width:12px!important;height:12px!important;font-size:9px!important}
+  html body #app#app#app#app .package-picker .package-card:is(.is-selected,:has(input:checked))::after{content:none!important;display:none!important}
   html body #app#app#app#app .package-picker .package-card-body{padding-top:15px!important}
 }
 }
@@ -1015,18 +1015,27 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-price
   max-width: 100% !important;
 }
 
+@layer wistia-site-fixes {
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) {
   outline: none !important;
   outline-offset: 0 !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+  background-image: none !important;
 }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) { background: #F7F1E4 !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
+html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) :is(.package-card-was, .package-card-was small) { color: #9b8d90 !important; }
+html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) .package-card-was s { text-decoration-color: #b98591 !important; }
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked))::after,
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked))::before {
   content: none !important;
   display: none !important;
+}
 }
