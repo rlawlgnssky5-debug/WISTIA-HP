@@ -1258,9 +1258,17 @@ function mobileBenefitList(type){
  return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'
 }
 function mobileDetailEvents(){
- const disclosure=(type,title,description)=>'<details class="mas-event-disclosure" data-benefit-list="'+type+'"><summary><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><span><strong>'+title+'</strong><small>'+description+'</small></span><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></summary><div class="mas-event-content">'+mobileBenefitList(type)+'</div></details>'
- return '<div class="ed-benefit-lists">'+disclosure('discount','할인 목록','예약 시 받을 수 있는 할인 혜택을 확인해 보세요')+disclosure('payback','페이백 목록','후기 참여 후 돌려받는 혜택을 확인해 보세요')+'</div>'
+ const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
+ const panel=type=>'<div class="mas-event-content" id="homeBenefit-'+type+'" data-benefit-panel="'+type+'" hidden>'+mobileBenefitList(type)+'</div>'
+ return '<div class="ed-benefit-lists">'+toggle('discount','할인 목록')+toggle('payback','페이백 목록')+panel('discount')+panel('payback')+'</div>'
 }
+document.addEventListener('click',event=>{
+ const button=event.target.closest('[data-benefit-toggle]')
+ if(!button)return
+ const root=button.closest('.ed-benefit-lists'),open=button.getAttribute('aria-expanded')!=='true',type=button.dataset.benefitToggle
+ root.querySelectorAll('[data-benefit-toggle]').forEach(toggle=>toggle.setAttribute('aria-expanded',String(open&&toggle===button)))
+ root.querySelectorAll('[data-benefit-panel]').forEach(panel=>panel.hidden=!open||panel.dataset.benefitPanel!==type)
+})
 window.addEventListener('wistia:price-date-change',()=>{
  const slot=document.querySelector('[data-monthly-event-slot]')
  const monthly=window.WistiaPackages.monthlyEventCard()
