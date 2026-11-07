@@ -1259,18 +1259,23 @@ function mobileBenefitList(type){
 }
 function homeEventRibbon(){
  const event=window.WistiaPackages.activeMonthlyEvent()
- if(!event)return ''
- const products=event.packages.map(key=>window.WistiaPackages.packageFor(key).name).join('·')
- const copy=event.month+'월 예약 · '+products+' '+window.WistiaPackages.money(event.amount)+' 할인'
- return '<aside class="ed-event-ribbon" aria-label="이달의 할인 이벤트"><span class="ed-event-tag">EVENT</span><span class="ed-event-copy">'+escapeHtml(copy)+'</span></aside>'
+ const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==='first')
+ const row=(kind,question,amount,products,prefix='')=>{
+  const discount=amount%10000===0?(amount/10000)+'만원':window.WistiaPackages.money(amount)
+  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">✦</span><div class="ed-event-message"><span class="ed-event-question">'+escapeHtml(question)+'</span><small>'+escapeHtml(products)+'</small></div><strong class="ed-event-discount">'+escapeHtml(prefix+discount+' 할인!')+'</strong></div>'
+ }
+ const monthly=event?row('monthly',event.month+'월에 예약하면?',event.amount,event.packages.map(key=>window.WistiaPackages.packageFor(key).name).join(' · ')):''
+ const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'DELUXE · PREMIUM · DUET','첫이용 '):''
+ return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+monthly+welcome+'</aside>'
 }
 function syncHomeEventRibbon(){
  const header=document.getElementById('siteHeader')
  let slot=header?.querySelector('[data-home-event-ribbon]')
- if(routePath()!=='/'){slot?.remove();return}
+ if(routePath()!=='/'){slot?.remove();if(header)delete header.dataset.homeEventRows;return}
  if(!header)return
  if(!slot){slot=document.createElement('div');slot.className='ed-event-ribbon-slot';slot.setAttribute('data-home-event-ribbon','');header.append(slot)}
  slot.innerHTML=homeEventRibbon()
+ header.dataset.homeEventRows=String(slot.querySelectorAll('[data-event-row]').length)
 }
 function mobileDetailEvents(){
  const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
@@ -1286,11 +1291,7 @@ document.addEventListener('click',event=>{
 })
 window.addEventListener('wistia:price-date-change',()=>{
  syncHomeEventRibbon()
- const slot=document.querySelector('[data-monthly-event-slot]')
  const monthly=window.WistiaPackages.monthlyEventCard()
- const old=slot?.querySelector('[data-monthly-event-card]')
- if(old&&old.outerHTML!==monthly)old.outerHTML=monthly
- else if(slot&&!old&&monthly)slot.insertAdjacentHTML('beforeend',monthly)
  const discounts=document.querySelector('.events-discounts')
  if(discounts)discounts.outerHTML=eventsDiscounts()
  const list=document.querySelector('[data-benefit-type="discount"]')
@@ -1382,10 +1383,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const firstNotice=key==='solo'?window.WistiaPackages.firstVisitEventCard?.()||'':''
- const monthlyNotice=key==='solo'?window.WistiaPackages.monthlyEventCard?.()||'':''
- const couponStack=firstNotice+monthlyNotice
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div><div class="package-brand-summary ed-hero-benefits">'+(couponStack?'<div class="ed-monthly-slot" data-monthly-event-slot>'+couponStack+'</div>':'')+mobileDetailEvents()+'</div></section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'<div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">타입·가격 바로 보기 <span aria-hidden="true">↘</span></a></div></section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
