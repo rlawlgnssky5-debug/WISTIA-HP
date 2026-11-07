@@ -797,7 +797,7 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-subti
 /* Round 43: card main price = coupon-applied; no package mid price */
 html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{display:none!important}
 html body #app#app#app#app#app .package-picker .package-card .package-card-price{font-weight:800!important}
-html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name,.package-card-price){color:#C4A04A!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name,.package-card-price){color:#8a7a72!important}
 html body #app#app#app#app#app .package-picker .package-card[data-tier="B"] :is(.package-card-name,.package-card-price){color:#C45C74!important}
 html body #app#app#app#app#app .package-picker .package-card[data-tier="C"] :is(.package-card-name,.package-card-price){color:#D99A00!important}
 html body #app#app#app#app#app .package-picker .package-card[data-tier="D"] :is(.package-card-name,.package-card-price){color:#3AA39A!important}
@@ -1030,7 +1030,7 @@ html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.
 html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
-html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #8a7a72 !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="B"] :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="C"] :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="D"] :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
