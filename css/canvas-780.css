@@ -70,13 +70,13 @@
 }
 /* Approved inquiry/event polish: preserve prices, order and the 780px canvas */
 @layer wistia-site-fixes{
-html:root body:has(main#app#app#app){padding-top:52px!important}
-html body #siteHeader#siteHeader#siteHeader#siteHeader,html body #siteHeader#siteHeader#siteHeader#siteHeader .header-inner{height:52px!important;min-height:52px!important}
-html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark{min-height:44px!important}
-html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark img{height:28px!important;width:auto!important}
-html body #siteHeader#siteHeader#siteHeader#siteHeader #menuToggle{min-width:44px!important;min-height:44px!important;height:44px!important}
-html body #mainMenu#mainMenu#mainMenu{top:52px!important;max-height:calc(100dvh - 52px)!important;overflow-y:auto!important}
-@media(min-width:780px){html:root body:has(main#app#app#app){padding-top:104px!important}html body #mainMenu#mainMenu#mainMenu{top:104px!important;max-height:calc(100dvh - 104px)!important}}
+html:root body:has(main#app#app#app){padding-top:40px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader,html body #siteHeader#siteHeader#siteHeader#siteHeader .header-inner{height:40px!important;min-height:40px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark{min-height:32px!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader .wordmark img{height:24px!important;width:auto!important}
+html body #siteHeader#siteHeader#siteHeader#siteHeader #menuToggle{min-width:36px!important;min-height:36px!important;height:36px!important}
+html body #mainMenu#mainMenu#mainMenu{top:40px!important;max-height:calc(100dvh - 40px)!important;overflow-y:auto!important}
+@media(min-width:780px){html:root body:has(main#app#app#app){padding-top:80px!important}html body #mainMenu#mainMenu#mainMenu{top:80px!important;max-height:calc(100dvh - 80px)!important}}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-actions{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ed-hero-actions .ed-hero-price-jump{box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:0!important;min-height:48px!important;width:100%!important;margin:0!important;padding:12px 16px!important;background:#9d596c!important;color:#fff!important;border:0!important;font:600 14px/1.4 Pretendard,sans-serif!important;white-space:nowrap!important;text-decoration:none!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app #packageSelection{scroll-margin-top:68px!important}
