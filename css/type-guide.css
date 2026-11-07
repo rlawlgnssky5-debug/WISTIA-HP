@@ -73,9 +73,9 @@
     margin-left: 0 !important;
     transform: none !important;
   }
-  /* Homepage table note stays the title and savings pill. The inquiry form still shows its price card. */
+  /* Homepage type picker shows the selected card's detail panel under the cards. */
   html body #app #packageSelection [data-package-selection-details] {
-    display: none !important;
+    display: grid !important;
   }
   html body #app .wistia-wizard .wf-people {
     margin: 4px 0 12px !important;
@@ -387,4 +387,8 @@ html body #app .package-picker .package-selected-detail > .package-selected-feat
 }
 html body #app .package-picker .package-selected-detail > .package-price-lines {
   display: none !important;
+}
+html body #app #packageSelection [data-package-selection-details],
+html body #app #packageSelection .package-selected-detail {
+  display: grid !important;
 }
