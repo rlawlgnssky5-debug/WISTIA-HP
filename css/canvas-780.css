@@ -796,8 +796,11 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-subti
 @layer wistia-site-fixes{
 /* Round 43: card main price = coupon-applied; no package mid price */
 html body #app#app#app#app#app .package-picker .package-card .package-card-coupon{display:none!important}
-html body #app#app#app#app#app .package-picker .package-card .package-card-price{color:#d9667f!important;font-weight:800!important}
-html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] .package-card-price{color:#c4892a!important}
+html body #app#app#app#app#app .package-picker .package-card .package-card-price{font-weight:800!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name,.package-card-price){color:#C4A04A!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="B"] :is(.package-card-name,.package-card-price){color:#C45C74!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="C"] :is(.package-card-name,.package-card-price){color:#D99A00!important}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="D"] :is(.package-card-name,.package-card-price){color:#3AA39A!important}
 html body #app#app#app#app#app .package-picker .package-card .package-card-was.is-empty{visibility:hidden!important;min-height:1.2em!important;display:block!important;line-height:1.2!important}
 }
 
@@ -1027,10 +1030,10 @@ html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.
 html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
 html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
-html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
-html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
-html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
-html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="B"] :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="C"] :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="D"] :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) :is(.package-card-was, .package-card-was small) { color: #9b8d90 !important; }
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) .package-card-was s { text-decoration-color: #b98591 !important; }
 html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked))::after,
