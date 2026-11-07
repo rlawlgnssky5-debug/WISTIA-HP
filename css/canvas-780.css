@@ -1014,3 +1014,19 @@ html body #app#app#app#app#app .package-picker .package-card .package-card-price
   white-space: nowrap !important;
   max-width: 100% !important;
 }
+
+html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked)) {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+html body #app#app#app#app#app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) { background: #F7F1E4 !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
+html body #app#app#app#app#app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
+html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked))::after,
+html body #app#app#app#app#app .package-picker .package-card:is(.is-selected, :has(input:checked))::before {
+  content: none !important;
+  display: none !important;
+}

@@ -362,14 +362,17 @@ html body #app .package-picker .package-card[data-tier="B"] :is(.package-card-na
 html body #app .package-picker .package-card[data-tier="C"] :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
 html body #app .package-picker .package-card[data-tier="D"] :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
 html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) {
-  background: #FFFBFA !important;
   color: inherit !important;
-  outline: 1.5px solid #C9B0A8 !important;
-  outline-offset: -6px !important;
-  border-radius: 14px !important;
+  outline: none !important;
+  outline-offset: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
   z-index: 1 !important;
 }
+html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) { background: #F7F1E4 !important; }
+html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) { background: #F8E8ED !important; }
+html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) { background: #F8F0DF !important; }
+html body #app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) { background: #E7F3EE !important; }
 html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
 html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
 html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
@@ -382,19 +385,8 @@ html body #app .package-picker .package-card:is(.is-selected, :has(input:checked
   background: #e5c8c3 !important;
 }
 html body #app .package-picker .package-card:is(.is-selected, :has(input:checked))::after {
-  content: "✓" !important;
-  position: absolute !important;
-  top: 7px !important;
-  right: 8px !important;
-  display: block !important;
-  width: auto !important;
-  height: auto !important;
-  border-radius: 0 !important;
-  background: none !important;
-  color: #B08980 !important;
-  font-size: 11px !important;
-  line-height: 13px !important;
-  font-weight: 700 !important;
+  content: none !important;
+  display: none !important;
 }
 html body #app .package-picker .package-selected-detail > .package-selected-head,
 html body #app .package-picker .package-selected-detail > .package-selected-meta,
