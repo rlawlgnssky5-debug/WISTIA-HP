@@ -1266,7 +1266,7 @@ function homeEventRibbon(){
  }
  const monthly=event?row('monthly',event.month+'월에 예약하면?',event.amount,event.packages.map(key=>window.WistiaPackages.packageFor(key).name).join(' · ')):''
  const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'DELUXE · PREMIUM · DUET','첫이용 '):''
- return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+monthly+welcome+'</aside>'
+ return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+welcome+monthly+'</aside>'
 }
 function syncHomeEventRibbon(){
  const header=document.getElementById('siteHeader')

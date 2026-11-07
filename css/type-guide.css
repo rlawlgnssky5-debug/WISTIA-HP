@@ -288,3 +288,103 @@ html { scroll-behavior: smooth; }
     overflow: hidden !important;
   }
 }
+
+/* Restore the original 4-card picker look (approved 2026-11-08). Unlayered so it beats the comparison-table hides and the filled selected state. */
+html body #app .package-picker .package-cards,
+html body #app #packageSelection .package-cards,
+html body #app .wistia-wizard [data-wf-step="0"] .package-cards {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border: 1.5px solid #E8D2CE !important;
+  border-radius: 16px !important;
+  background: #FFFBFA !important;
+  overflow: hidden !important;
+}
+html body #app .wf-type-table {
+  display: none !important;
+}
+html body #app .package-picker .package-card {
+  background: transparent !important;
+  color: #3c3034 !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+}
+html body #app .package-picker .package-card-body {
+  padding: 16px 4px 14px !important;
+}
+html body #app .package-picker .package-card-name {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.3 !important;
+}
+html body #app .package-picker .package-card-was,
+html body #app .package-picker .package-card-was s {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  color: #C4B0B3 !important;
+  font-weight: 500 !important;
+}
+html body #app .package-picker .package-card-price {
+  margin-top: 2px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.25 !important;
+}
+html body #app .package-picker .package-card-subtitle,
+html body #app .package-picker .package-card-sub-item {
+  margin-top: 10px !important;
+  font-size: 10px !important;
+  line-height: 1.35 !important;
+  color: #8A7578 !important;
+  letter-spacing: -0.04em !important;
+}
+html body #app .package-picker .package-card[data-tier="A"] :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app .package-picker .package-card[data-tier="B"] :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
+html body #app .package-picker .package-card[data-tier="C"] :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
+html body #app .package-picker .package-card[data-tier="D"] :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) {
+  background: #FFFBFA !important;
+  color: inherit !important;
+  outline: 1.5px solid #C9B0A8 !important;
+  outline-offset: -6px !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  z-index: 1 !important;
+}
+html body #app .package-picker .package-card[data-tier="A"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C4A04A !important; }
+html body #app .package-picker .package-card[data-tier="B"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #C45C74 !important; }
+html body #app .package-picker .package-card[data-tier="C"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #D99A00 !important; }
+html body #app .package-picker .package-card[data-tier="D"]:is(.is-selected, :has(input:checked)) :is(.package-card-name, .package-card-price) { color: #3AA39A !important; }
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) .package-card-subtitle,
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) .package-card-sub-item {
+  color: #8A7578 !important;
+}
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked)) .package-card-subtitle::before {
+  background: #e5c8c3 !important;
+}
+html body #app .package-picker .package-card:is(.is-selected, :has(input:checked))::after {
+  content: "✓" !important;
+  position: absolute !important;
+  top: 7px !important;
+  right: 8px !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: #B08980 !important;
+  font-size: 11px !important;
+  line-height: 13px !important;
+  font-weight: 700 !important;
+}
+html body #app .package-picker .package-selected-detail > .package-selected-head,
+html body #app .package-picker .package-selected-detail > .package-selected-meta,
+html body #app .package-picker .package-selected-detail > .package-selected-features {
+  display: revert !important;
+}
+html body #app .package-picker .package-selected-detail > .package-price-lines {
+  display: none !important;
+}
