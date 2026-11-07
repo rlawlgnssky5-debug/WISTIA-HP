@@ -1366,7 +1366,7 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
 details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/section>/,'<section class="arc-point arc-point-key mas-key-editorial" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT 02</span><h2>음원 편집 · 키 조절 무료</h2><p>원하는 곡과 MR을 먼저 보내주세요<br>편한 키와 녹음 방향을 함께 확인합니다</p></header><img class="mas-key-caption-image" src="assets/img/studio-3d/key-shift-caption.webp?v=20261013-detail-polish-16f" alt="같은 멜로디의 키를 내 음역에 맞게 조절합니다, 피아노와 음표 3D 안내 · 노래의 감정은 그대로, 내 목소리에 맞게" loading="lazy" decoding="async"></section>')
  if(key==='solo'||key==='duo'){
   details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'')
-  details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,WistiaEditorial.preparation()+'<div class="arc-engineer">')
+  details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,'<div class="arc-engineer">')
   details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,WistiaEditorial.engineer()+'<section class="arc-section arc-process"')
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
