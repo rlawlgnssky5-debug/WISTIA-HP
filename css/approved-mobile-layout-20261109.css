@@ -1,0 +1,165 @@
+@layer wistia-approved-layout {
+  :root {--layout-gutter:clamp(22px,calc(11.282051vw - 16px),72px)}
+  /* Backgrounds fill the canvas; only inner content and photographs are inset */
+  html body main#app {box-sizing:border-box!important;width:100%!important;max-width:780px!important;margin-inline:auto!important}
+  #app > :not(script):not(template), #app .mobile-ar-solo {box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:0!important}
+  #app, #app *, #siteHeader, #siteHeader *, #mainMenu, #mainMenu * {zoom:1!important}
+  #app .mobile-ar-solo {background:#fff!important}
+  #app .mobile-ar-solo > :is(.arc-reviews,.ed-section,.arc-point,.package-notices,.solo-faq,.solo-map) {box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:0!important}
+  #app .mobile-ar-solo > :is(.ed-section,.arc-point,.package-notices,.solo-faq,.solo-map) {padding-inline:var(--layout-gutter)!important}
+  #app .mobile-ar-solo > .ed-hero {padding-inline:0!important;margin-inline:0!important;background:#fff!important}
+  #app .ed-hero-gallery {box-sizing:border-box!important;width:calc(100% - 2 * var(--layout-gutter))!important;margin-inline:auto!important}
+  #app .ed-hero-gallery .mas-gallery-viewport {height:auto!important;aspect-ratio:100/137!important}
+  #app .ed-hero-copy {right:24px!important}
+  #app .ed-hero-copy h1, #app .ed-hero-copy h1 strong {font-size:20px!important;line-height:1.3!important}
+  #app .ed-hero-copy>p {font-size:12px!important}
+  #app .ed-hero-copy .ed-hero-description {font-size:13px!important}
+  #app .mobile-ar-solo > #arcRecording {padding-inline:0!important}
+  #app #arcRecording .ed-heading {padding-inline:var(--layout-gutter)!important}
+  #app .ed-recording-scene {box-sizing:border-box!important;width:calc(100% - 2 * var(--layout-gutter))!important;max-width:none!important;margin-inline:auto!important}
+  #app .ed-photo {box-sizing:border-box!important;width:100%!important;margin:0!important;padding:4px!important;outline:none!important;border:1px solid #d8aab7!important;background:transparent!important}
+  #app .ed-recording-benefits li {font-size:12px!important;line-height:1.4!important;padding:8px 10px!important;max-width:calc(100% - 16px)!important}
+  #app .ed-recording-benefits li:nth-child(1), #app .ed-recording-benefits li:nth-child(3) {left:8px!important}
+  #app .ed-recording-benefits li:nth-child(2) {right:8px!important}
+  #app .mobile-ar-solo > #arcKey {padding-inline:0!important}
+  #app #arcKey .ed-key-poster {width:calc(100% - 2 * var(--layout-gutter))!important;max-width:none!important;margin-inline:auto!important}
+  #app .mobile-ar-solo > #packageSelection.type-sections {box-sizing:border-box!important;width:calc(100% - 2 * var(--layout-gutter))!important;margin-inline:auto!important}
+  #app #packageSelection > .type-pricing-section {padding-inline:8px!important}
+  #app :is(#packageSelection,.wistia-wizard) .package-selected-detail {padding-inline:12px!important}
+  #app .wistia-wizard, #app .info-page {box-sizing:border-box!important;margin-inline:0!important;padding-inline:var(--layout-gutter)!important;width:100%!important;max-width:100%!important}
+  #app .wistia-wizard form {margin-inline:0!important;padding-inline:0!important}
+  #siteHeader {box-sizing:border-box!important;width:min(100%,780px)!important;max-width:780px!important}
+  #siteHeader .header-inner, #siteHeader:not([data-home-event-rows]) .header-inner {padding-inline:var(--layout-gutter)!important;max-width:none!important}
+  #siteHeader[data-home-event-rows] {padding-inline:0!important}
+  #siteHeader .ed-event-ribbon-slot {margin-inline:0!important}
+  #siteHeader .ed-event-ribbon {padding-inline:var(--layout-gutter)!important}
+  #siteHeader .ed-event-row {column-gap:4px!important;grid-template-columns:17px minmax(0,1fr) auto!important}
+  #siteHeader .ed-event-message {gap:4px!important}
+  #siteHeader .ed-event-label {letter-spacing:-.055em!important}
+  #siteHeader .ed-event-question, #siteHeader .ed-event-discount {letter-spacing:-.065em!important}
+  #siteHeader .ed-event-discount {padding-inline:4px!important}
+  body:has(main#app) {padding-top:40px!important}
+  body:has(#siteHeader[data-home-event-rows]) {--event-header-height:104px!important;padding-top:104px!important}
+  body:has(#siteHeader[data-home-event-rows="1"]) {--event-header-height:76px!important;padding-top:76px!important}
+  #mainMenu {--menu-header-height:40px!important}
+  body:has(#siteHeader[data-home-event-rows]) #mainMenu {--menu-header-height:var(--event-header-height)!important}
+  #app .solo-footer-inquiry, #app .wf-nav {box-sizing:border-box!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:calc(min(100vw,780px) - 2 * var(--layout-gutter))!important;max-width:none!important}
+  #app :is(p,li,dd,address) {font-size:13px!important}
+  #app :is(h1,h2,.rv5-title,.ed-heading h2,.package-notices>h2,.solo-faq-heading h2,.solo-map>h2,.info-page-intro h1) {font-size:20px!important;line-height:1.45!important}
+  #app :is(h3,h4) {font-size:14px!important;line-height:1.5!important}
+  #app :is(small,.ed-eyebrow,.ed-point,.rv5-eye) {font-size:11px!important;line-height:1.5!important}
+  #app :is(.ed-description,.ed-worries li,.ed-key-services p,.ed-key-closing) {font-size:13px!important;line-height:1.7!important}
+  #app :is(.package-feature-copy,.package-selected-meta,.package-card-subtitle) {font-size:12px!important}
+  #app :is(.package-card-name,.package-card-price) {font-size:11px!important;letter-spacing:-.045em!important}
+  #app .package-selected-head h3 {font-size:clamp(11px,3.3vw,14px)!important;white-space:normal!important}
+  #app .package-selected-letter {font-size:20px!important}
+  #app .package-selected-cheaper {font-size:11px!important;padding-inline:5px!important}
+  #app .package-feature-up {font-size:11px!important;padding-inline:2px!important}
+  /* A readable central review card, without compressed inner columns */
+  #app .arc-reviews, #app .ed-reviews {width:100%!important;max-width:none!important;margin-inline:0!important;padding-inline:0!important}
+  #app .ed-reviews .rv5-in {padding:40px 0 30px!important}
+  #app .ed-review-heading {padding-inline:var(--layout-gutter)!important;margin-bottom:20px!important}
+  #app .ed-review-track {--review-card:72%!important;--review-gap:12px!important;height:330px!important}
+  #app .ed-review-slide {transform:none!important}
+  #app .ed-review-card {padding:18px 16px 16px!important}
+  #app .ed-review-slide:not(.is-current) .ed-review-card {padding-inline:16px!important}
+  #app .ed-review-slide:not(.is-current) .ed-review-card>* {width:auto!important;max-width:none!important}
+  #app .ed-review-card h3 {font-size:14px!important;line-height:1.5!important;margin-bottom:12px!important}
+  #app .ed-review-card>p {font-size:12px!important;line-height:1.75!important;margin-bottom:12px!important;word-break:normal!important;overflow-wrap:break-word!important}
+  #app .ed-review-card footer {gap:8px!important;padding-top:12px!important}
+  #app .ed-review-card footer>div {display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:2px!important;min-width:0!important}
+  #app .ed-review-card footer :is(b,span,button) {font-size:11px!important;line-height:1.5!important;white-space:nowrap!important}
+  #app .ed-review-card footer>div>span {display:block!important;margin:0!important}
+  #app .ed-review-card footer button {min-height:32px!important;padding:6px 10px!important;gap:4px!important}
+  #app .ed-review-controls {gap:24px!important}
+  #app #arcProcess .package-process-list li {grid-template-columns:30px minmax(0,1fr)!important;column-gap:8px!important}
+  #app #arcProcess .package-process-list li::before {width:30px!important;height:30px!important}
+  #app #arcProcess .package-process-list li::after {left:38px!important}
+  #app #arcProcess .package-process-list::before {left:15px!important}
+  #app .type-poster-standard {font-size:11px!important;line-height:1.3!important;padding:0!important}
+  #app .type-poster-standard span {white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
+  #app .solo-map :is(small,address,p) {white-space:normal!important;overflow-wrap:anywhere!important}
+  #app .studio-address {font-size:16px!important;line-height:1.55!important;white-space:normal!important;overflow-wrap:anywhere!important}
+  /* Blend the baked poster background into the full-width section */
+  #app .mobile-ar-solo > #arcKey {--ed-surface:#faf6f5!important;--ed-next-surface:#faf6f5!important;background:#faf6f5!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+  #app #arcKey::before {background:#faf6f5!important;border-radius:0!important;box-shadow:none!important}
+  #app #arcKey .ed-key-poster {border:0!important;border-radius:0!important;box-shadow:none!important}
+  /* Visible selection without changing the size of the selected tile */
+  #app .package-picker .package-card {position:relative!important;--choice-ink:#8a7a72;--choice-fill:#f2e8da}
+  #app .package-picker .package-card[data-tier="B"] {--choice-ink:#b95476;--choice-fill:#f8dfeb}
+  #app .package-picker .package-card[data-tier="C"] {--choice-ink:#ad800a;--choice-fill:#fff0bc}
+  #app .package-picker .package-card[data-tier="D"] {--choice-ink:#278e83;--choice-fill:#d7f0e6}
+  #app .package-picker .package-card-body {padding:12px 2px!important}
+  #app .package-picker .package-card-subtitle {width:100%!important;max-width:100%!important;align-items:flex-start!important;gap:5px!important;text-align:left!important}
+  #app .package-picker .package-card-sub-item {position:relative!important;box-sizing:border-box!important;display:flex!important;flex-wrap:wrap!important;justify-content:flex-start!important;align-content:flex-start!important;gap:0 2px!important;width:100%!important;max-width:100%!important;min-height:0!important;font-size:10px!important;line-height:1.55!important;text-align:left!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:normal!important;letter-spacing:-.04em!important}
+  #app .package-picker .package-card-sub-item>span {display:inline-block!important;white-space:nowrap!important;font-size:10px!important;line-height:1.55!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus] {padding-left:8px!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus]::before {content:'+'!important;position:absolute!important;left:0!important;top:0!important;font-size:10px!important;line-height:1.55!important}
+  #app .package-picker .package-card-check {display:none!important;visibility:hidden!important}
+  #app .package-picker .package-card:is(.is-selected,:has(input:checked)) {border-radius:12px!important;background:linear-gradient(140deg,#ffffffb3,var(--choice-fill))!important;box-shadow:inset 0 0 0 2px var(--choice-ink),inset 0 1px 0 #fff!important}
+  #app .package-picker .package-card:is(.is-selected,:has(input:checked))::before {display:none!important}
+  #app .package-picker .package-card::after {content:none!important;display:none!important}
+  /* Compact hero controls and move the event copy closer to the left edge */
+  #app .ed-hero-actions {left:16px!important;right:16px!important;bottom:12px!important}
+  #app .ed-hero-price-jump {height:38px!important;min-height:38px!important;padding:7px 12px!important;font-size:12px!important;gap:5px!important}
+  #app .ed-hero-price-jump>span, #app .ed-hero-price-jump svg {width:14px!important;height:14px!important}
+  #app .ed-hero-gallery .hs-controls {height:38px!important;padding:1px!important;right:12px!important;top:12px!important}
+  #app .ed-hero-gallery .hs-arrow {width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:9px!important}
+  #app .ed-hero-gallery .hs-arrow svg {width:16px!important;height:16px!important}
+  #app .ed-hero-gallery .hs-controls::after {top:11px!important;bottom:11px!important}
+  #siteHeader .ed-event-ribbon {padding-inline:max(10px,calc(var(--layout-gutter) - 12px))!important}
+  #siteHeader .ed-event-row {grid-template-columns:20px minmax(0,1fr) auto!important}
+  #siteHeader .ed-event-star {width:20px!important;min-width:20px!important;text-align:left!important}
+  #siteHeader .ed-event-discount {font-size:10px!important;line-height:1.3!important;padding:2px 4px!important}
+  /* Straight section boundaries and photographs, without arch-shaped clipping */
+  #app .mobile-ar-solo {--ed-section-round:0px!important}
+  #app .mobile-ar-solo>section,
+  #app .mobile-ar-solo>section::before,
+  #app .mobile-ar-solo>section::after,
+  #app :is(.ed-reviews,.ed-reviews .rv5-in,.ed-photo,.ed-photo img,.ed-recording-scene,#arcKey .ed-key-poster) {border-radius:0!important;clip-path:none!important}
+  #app #packageSelection>.type-guide-section {border-radius:0!important;padding-top:0!important;clip-path:none!important}
+  #app .package-picker .package-card-sub-item {flex-wrap:nowrap!important;gap:0 2px!important;font-size:var(--layout-feature-size,10px)!important;white-space:nowrap!important}
+  #app .package-picker .package-card-sub-item>span {flex:0 0 auto!important;font-size:var(--layout-feature-size,10px)!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus] {padding-left:6px!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus]::before {font-size:var(--layout-feature-size,10px)!important}
+  #app .package-picker .package-card[data-tier="A"] .package-card-sub-item {padding-left:0!important;justify-content:center!important;text-align:center!important}
+  #app .package-selected-detail[data-package-key="A"] .package-selected-cheaper {display:none!important}
+  #app .package-selected-features li:last-child {border-bottom:0!important;box-shadow:none!important}
+  #app .wistia-wizard form:has(.package-card[data-tier="A"] input:checked) .wf-earlybird-legend {display:none!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included)>.wf-check-row {display:grid!important;grid-template-columns:18px minmax(0,1fr) auto!important;column-gap:7px!important;row-gap:3px!important;padding:12px 10px!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included) .wf-check-box {grid-column:1!important;grid-row:1 / span 2!important;width:18px!important;height:18px!important;align-self:center!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included) .wf-check-label {display:contents!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included) .layout-option-title {grid-column:2!important;grid-row:1!important;font-size:12px!important;white-space:nowrap!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included) .wf-check-row>strong {grid-column:3!important;grid-row:1!important;align-self:center!important;font-size:11px!important;padding:3px 6px!important;white-space:nowrap!important}
+  #app .wistia-wizard [data-wf-option]:not(.is-included) .wf-check-label small {grid-column:2 / 4!important;grid-row:2!important;display:block!important;margin:0!important;font-size:11px!important;line-height:1.5!important;white-space:nowrap!important;letter-spacing:-.035em!important}
+  #app .type-poster-standard {font-size:2.72cqw!important;line-height:1.68!important;padding:.35cqw 0 0 .9cqw!important}
+  #app .type-poster-standard span {white-space:nowrap!important;overflow-wrap:normal!important}
+  #app .wistia-wizard .wf-location-bar {display:grid!important;grid-template-columns:12px minmax(0,1fr) auto!important;column-gap:5px!important;row-gap:3px!important;padding-block:10px!important}
+  #app .wistia-wizard .wf-location-bar>svg {grid-column:1!important;grid-row:1 / span 2!important;width:12px!important;height:16px!important;min-width:12px!important;align-self:center!important}
+  #app .wistia-wizard .wf-location-bar>div {display:contents!important}
+  #app .wistia-wizard .wf-location-bar>div>strong {grid-column:2!important;grid-row:1!important;min-width:0!important;font-size:10px!important;line-height:1.5!important;letter-spacing:-.04em!important;white-space:nowrap!important}
+  #app .wistia-wizard .wf-location-bar>div>small {grid-column:2 / 4!important;grid-row:2!important;min-width:0!important;font-size:10px!important;line-height:1.5!important;letter-spacing:-.035em!important;white-space:nowrap!important}
+  #app .wistia-wizard [data-wf-location-duration] {grid-column:3!important;grid-row:1!important;justify-self:end!important;display:flex!important;flex-flow:row nowrap!important;align-items:center!important;gap:3px!important;white-space:nowrap!important}
+  #app .wistia-wizard [data-wf-location-duration]>* {display:inline!important;width:auto!important;margin:0!important;padding:0!important}
+  #app .wistia-wizard [data-wf-location-duration], #app .wistia-wizard [data-wf-location-duration] * {font-size:10px!important;line-height:1.5!important;letter-spacing:-.035em!important;white-space:nowrap!important}
+  /* The first-view product heading is the sole enlarged type exception */
+  #app .ed-hero-copy h1, #app .ed-hero-copy h1 strong {font-size:clamp(30px,8.2vw,46px)!important;line-height:1.18!important;font-weight:800!important}
+  #app #arcProcess>h2 {text-align:center!important;padding-inline:0!important}
+  #app #arcProcess .package-process-list li,
+  #app #arcProcess .package-process-list li>strong,
+  #app #arcProcess .package-process-list li>p {text-align:center!important}
+  #app .mobile-ar-solo>#arcProcess {--ed-surface:#ede9e5!important;--ed-next-surface:#f5e0e9!important;background:#ede9e5!important}
+  #app .mobile-ar-solo>#arcFaq {--ed-surface:#f5e0e9!important;--ed-next-surface:#fff!important;background:#f5e0e9!important}
+  #app .mobile-ar-solo>#soloPoint04 {--ed-surface:#faedf2!important;--ed-next-surface:#ede9e5!important;background:#faedf2!important}
+  #app .type-poster-standard, #app .type-poster-standard * {font-weight:800!important}
+  #siteHeader .header-inner, #siteHeader:not([data-home-event-rows]) .header-inner {padding-inline:max(10px,calc(var(--layout-gutter) - 12px))!important}
+  #siteHeader .ed-event-ribbon {padding-inline:0!important;background:transparent!important}
+  #siteHeader .ed-event-row {padding-inline:max(10px,calc(var(--layout-gutter) - 12px))!important}
+  #siteHeader .ed-event-row[data-event-row="first"] {background:linear-gradient(110deg,#f9e1eceb,#f4d4e2d9)!important}
+  #siteHeader .ed-event-row:not([data-event-row="first"]) {background:linear-gradient(110deg,#eee9fbea,#e1def5d9)!important}
+  #siteHeader .ed-event-row:not([data-event-row="first"]) :is(.ed-event-label,.ed-event-discount) {color:#795692!important}
+  #siteHeader .ed-event-row:not([data-event-row="first"]) .ed-event-keyword {color:#775397!important;box-shadow:inset 0 -.25em #cbbce680!important}
+  #siteHeader .header-inner, #siteHeader:not([data-home-event-rows]) .header-inner {padding-inline:max(6px,calc(var(--layout-gutter) - 22px))!important}
+  #app .package-selected-head .package-selected-letter {grid-row:1!important;align-self:center!important}
+  #app .package-selected-head>.package-selected-cheaper {grid-row:1!important;align-self:center!important;margin-block:0!important}
+}
