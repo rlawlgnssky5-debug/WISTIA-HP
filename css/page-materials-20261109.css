@@ -1,0 +1,68 @@
+@layer wistia-page-materials {
+  /* The existing home header is reused by every route in this preview */
+  #siteHeader .header-inner {height:40px!important;min-height:40px!important}
+  #app :is(.info-page-location,.info-page-faq,.wistia-wizard) {padding-top:28px!important;padding-bottom:110px!important}
+  #app :is(.info-page-location,.info-page-faq) .info-page-intro {margin-bottom:26px!important;padding-bottom:0!important}
+  #app :is(.info-page-location,.info-page-faq) .info-page-intro>p {max-width:32em!important;margin-inline:auto!important;line-height:1.8!important;word-break:keep-all!important;overflow-wrap:normal!important}
+
+  /* Clay: thick, softly moulded cream surfaces on a warm rose canvas */
+  #app .info-page-location {background:#f2e8e3!important;color:#58423f!important}
+  #app .info-page-location .lc2-card {border:1px solid #fffaf4!important;border-radius:26px!important;background:linear-gradient(140deg,#fffaf3,#f7eae3)!important;box-shadow:inset 4px 4px 8px #ffffffcf,inset -4px -4px 9px #d9bcb155,9px 12px 24px #b68c7c2b!important;overflow:hidden!important}
+  #app .info-page-location .lc2-addr {padding:22px 20px!important}
+  #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid #fff6f1!important;background:#efcdd0!important;color:#92546a!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 4px #c694a34d,3px 4px 8px #b4869630!important;font-size:11px!important}
+  #app .info-page-location .studio-address {display:block!important;margin:18px 0 8px!important;font-size:clamp(16px,4.6vw,20px)!important;line-height:1.65!important;font-weight:750!important;color:#503c39!important;letter-spacing:-.04em!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .material-address-street {display:flex!important;flex-wrap:wrap!important;gap:0 .35em!important}
+  #app .material-address-part {display:inline-block!important;white-space:nowrap!important}
+  #app .material-address-building {display:block!important;margin-top:2px!important;font-size:14px!important;font-weight:600!important;color:#8f6a65!important}
+  #app .info-page-location .lc2-sub {font-size:12px!important;line-height:1.6!important;color:#977d73!important}
+  #app .info-page-location .lc2-btns {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin-top:20px!important}
+  #app .info-page-location .lc2-btns :is(a,button) {min-width:0!important;min-height:42px!important;padding:8px 3px!important;border-radius:15px!important;border:1px solid #fff8!important;background:#f3ddd4!important;color:#8c5863!important;font-size:11px!important;white-space:nowrap!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #cfab9e66,3px 5px 8px #b58c7c25!important}
+  #app .info-page-location .lc2-btns .lc2-n {background:#d99eaf!important;color:#6b3b50!important;border-color:#efbecb!important;box-shadow:inset 2px 2px 4px #ffd6e1aa,inset -2px -3px 5px #b8758f66,3px 5px 8px #b58c7c30!important}
+  #app .info-page-location .lc2-map {padding:8px!important}
+  #app .info-page-location .lc2-map figure {border-radius:19px!important;overflow:hidden!important}
+  #app .info-page-location .lc2-cap {border:0!important;padding:13px 8px 8px!important;font-size:11px!important;word-break:keep-all!important;text-align:center!important}
+  #app .info-page-location .lc2-row {padding:19px 14px!important;gap:12px!important;border-bottom:1px solid #dfc8bf80!important}
+  #app .info-page-location .lc2-row:last-child {border-bottom:0!important}
+  #app .info-page-location .lc2-row>:first-child {width:34px!important;height:34px!important;min-width:34px!important;border-radius:13px!important;background:#efd1cd!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c09b9470,3px 4px 7px #b58c7c20!important}
+  #app .info-page-location .lc2-row>div {min-width:0!important}
+  #app .info-page-location .lc2-row p {font-size:12px!important;line-height:1.75!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .info-page-location .lc2-steps {display:flex!important;flex-wrap:nowrap!important;gap:4px!important;font-size:10px!important}
+  #app .info-page-location .lc2-steps span {padding:6px 4px!important;border-radius:10px!important;background:#f0d5cf!important;box-shadow:inset 1px 1px 2px #fff8,2px 3px 5px #bd968b20!important;font-size:10px!important}
+
+  /* Neumorphism: raised groups and softly recessed open answers */
+  #app .info-page-faq {background:#eee9ec!important;color:#5b4d56!important}
+  #app .info-page-faq .info-faq-group {padding:21px 18px!important;margin-bottom:28px!important;border:1px solid #ffffff30!important;border-radius:24px!important;background:#eee9ec!important;box-shadow:9px 9px 18px #d0c8ce,-9px -9px 18px #fff!important}
+  #app .info-page-faq .faq-group-heading {margin-bottom:4px!important;padding-bottom:18px!important;border-bottom:1px solid #d7ced55c!important}
+  #app .info-page-faq .faq-group-heading h2 {font-size:17px!important;color:#695360!important}
+  #app .info-page-faq .faq-group-heading p {font-size:12px!important;line-height:1.75!important;margin-left:0!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .info-page-faq .faq-group-q {display:inline-grid!important;place-items:center!important;width:26px!important;height:26px!important;min-width:26px!important;margin-right:8px!important;border-radius:50%!important;box-shadow:3px 3px 6px #cfc7cd,-3px -3px 6px #fff!important}
+  #app .info-page-faq .faq-list details {margin:0!important;padding:16px 0!important;border:0!important;border-bottom:1px solid #d5cdd459!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+  #app .info-page-faq .faq-list details:last-child {border-bottom:0!important}
+  #app .info-page-faq .faq-list summary {display:grid!important;grid-template-columns:minmax(0,1fr) 24px!important;column-gap:10px!important;align-items:center!important;padding:0!important;min-height:32px!important;font-size:13px!important;line-height:1.7!important;word-break:keep-all!important;overflow-wrap:normal!important;color:#66525f!important}
+  #app .info-page-faq .faq-list summary>span:last-child {display:grid!important;place-items:center!important;width:24px!important;height:24px!important;min-width:24px!important;border-radius:50%!important;box-shadow:3px 3px 6px #d1c8cf,-3px -3px 6px #fff!important;color:#a66e88!important;font-size:17px!important}
+  #app .info-page-faq .faq-list details>p {margin:14px 0 0!important;padding:16px 14px!important;border-radius:16px!important;background:#eee9ec!important;box-shadow:inset 4px 4px 8px #d4cbd2,inset -4px -4px 8px #fff!important;font-size:12px!important;line-height:1.85!important;color:#796574!important;word-break:keep-all!important;overflow-wrap:normal!important}
+
+  /* Liquid glass: translucent layers over a visible blush/lilac canvas */
+  #app .wistia-wizard {background:radial-gradient(ellipse at 0% 8%,#f0c7dd99,transparent 40%),radial-gradient(ellipse at 100% 38%,#d6d6f3aa,transparent 45%),linear-gradient(145deg,#f9f3f6,#eeeaf4 55%,#faf3ee)!important}
+  #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-review,.wf-schedule,.contact-calendar) {border:1px solid #fffffff2!important;background:linear-gradient(135deg,#ffffffad,#ffffff4d)!important;box-shadow:inset 0 1px 1px #fff,0 12px 30px #7f668c14!important;backdrop-filter:blur(20px) saturate(140%)!important;-webkit-backdrop-filter:blur(20px) saturate(140%)!important}
+  #app .wistia-wizard .wf-schedule {border-radius:22px!important;padding:16px 12px!important}
+  #app .wistia-wizard .wf-location-bar {padding:10px 8px!important;border:1px solid #ffffffdd!important;border-radius:14px!important;background:linear-gradient(130deg,#ffffff9c,#ffffff40)!important;box-shadow:inset 0 1px 0 #fff,0 3px 12px #88708b0a!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
+  #app .wistia-wizard .wf-schedule .wf-schedule {padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important}
+  #app .wistia-wizard .wf-choice>span,
+  #app .wistia-wizard .wf-check-row,
+  #app .wistia-wizard :is([data-wf-time],.calendar-day,.calendar-nav,.calendar-header button),
+  #app .wistia-wizard .wf-field textarea {border-color:#fffffff0!important;background:linear-gradient(140deg,#ffffffad,#ffffff50)!important;box-shadow:inset 0 1px 0 #fff,0 4px 14px #8b6a8a0e!important;backdrop-filter:blur(14px) saturate(135%)!important;-webkit-backdrop-filter:blur(14px) saturate(135%)!important}
+  #app .wistia-wizard .wf-choice:has(input:checked)>span,
+  #app .wistia-wizard .wf-check-row:has(input:checked) {border-color:#bc7d9d!important;background:linear-gradient(135deg,#e4b1c9cc,#d4bfdcdb)!important;color:#6b3652!important;box-shadow:inset 0 1px 1px #ffffffb3,0 5px 15px #a76a9025!important}
+  #app .wistia-wizard .wf-choice:has(input:checked)>span *,
+  #app .wistia-wizard .wf-check-row:has(input:checked) .wf-check-label * {color:inherit!important}
+  #app .wistia-wizard [data-wf-time].is-selected {border-color:#a96e92!important;background:linear-gradient(135deg,#e4b1c9cc,#d4bfdcdb)!important;color:#6b3652!important}
+  #app .wistia-wizard .is-included .wf-check-row {background:#ffffff57!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app .wistia-wizard .wf-nav {padding:10px!important;border:1px solid #fffffff2!important;border-radius:23px!important;background:linear-gradient(120deg,#ffffffba,#f5e9f2a6)!important;box-shadow:inset 0 1px 0 #fff,0 -4px 22px #78617d17!important;backdrop-filter:blur(24px) saturate(150%)!important;-webkit-backdrop-filter:blur(24px) saturate(150%)!important}
+  #app .wistia-wizard .wf-nav [data-wf-next] {border:1px solid #ffffffb3!important;border-radius:15px!important;background:linear-gradient(130deg,#955477f2,#80608ff2)!important;box-shadow:inset 0 1px 0 #ffffff80,0 4px 12px #92688b25!important}
+  #app .wistia-wizard .wf-nav [data-wf-prev] {border:1px solid #ffffffed!important;border-radius:15px!important;background:#ffffff70!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app :is(.info-page-location,.info-page-faq,.wistia-wizard) :is(a,button,summary,input,textarea):focus-visible {outline:2px solid #a56b8d!important;outline-offset:3px!important}
+  @media(prefers-reduced-transparency:reduce) {
+    #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-review,.wf-schedule,.wf-check-row) {background:#fcf8fc!important;backdrop-filter:none!important}
+  }
+}

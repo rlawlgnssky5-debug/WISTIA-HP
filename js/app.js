@@ -1271,7 +1271,6 @@ function homeEventRibbon(){
 function syncHomeEventRibbon(){
  const header=document.getElementById('siteHeader')
  let slot=header?.querySelector('[data-home-event-ribbon]')
- if(routePath()!=='/'){slot?.remove();if(header)delete header.dataset.homeEventRows;return}
  if(!header)return
  if(!slot){slot=document.createElement('div');slot.className='ed-event-ribbon-slot';slot.setAttribute('data-home-event-ribbon','');header.append(slot)}
  slot.innerHTML=homeEventRibbon()
