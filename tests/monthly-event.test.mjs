@@ -77,7 +77,7 @@ test('the homepage notice says the coupon is already received and is not a claim
   assert.match(app, /ed-monthly-slot[\s\S]{0,160}mobileDetailEvents\(\)/)
   assert.doesNotMatch(app, /ed-monthly-slot[\s\S]{0,40}arc-reviews/)
   assert.match(app, /받기 완료/)
-  assert.match(wizard, /11월에 예약시 → 2만원 할인!/)
+  assert.match(wizard, /PREMIUM·DUET 11월 이벤트 중 · 20,000원 할인!/)
   assert.doesNotMatch(wizard, /이미 적용돼 있어요/)
   assert.match(readFileSync(new URL('../js/package-pricing.js', import.meta.url), 'utf8'), /\['인원'[\s\S]*?\['녹음 시간'[\s\S]*?\['음정·박자 보정'[\s\S]*?\['디렉팅'/)
 })
