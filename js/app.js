@@ -1262,7 +1262,7 @@ function homeEventRibbon(){
  const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==='first')
  const row=(kind,question,amount,products,prefix='')=>{
   const discount=amount%10000===0?(amount/10000)+'만원':window.WistiaPackages.money(amount)
-  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">이벤트 '+(kind==='first'?'1':'2')+'</small><span class="ed-event-question">'+escapeHtml(question)+'</span></div><strong class="ed-event-discount">'+escapeHtml(prefix+discount+' 할인!')+'</strong></div>'
+  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">이벤트 '+(kind==='first'?'1':'2')+'</small><span class="ed-event-question">'+escapeHtml(question).replace(kind==='first'?/처음/g:/\d+월|예약/g,'<strong class="ed-event-keyword">$&</strong>')+'</span></div><strong class="ed-event-discount">'+escapeHtml(prefix+discount+' 할인!')+'</strong></div>'
  }
  const monthly=event?row('monthly',event.month+'월에 예약하면?',event.amount,event.packages.map(key=>window.WistiaPackages.packageFor(key).name).join(' · ')):''
  const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'DELUXE · PREMIUM · DUET','첫이용 '):''

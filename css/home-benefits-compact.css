@@ -69,6 +69,7 @@
   #siteHeader .ed-event-message {min-width:0!important;display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important}
   #siteHeader .ed-event-label {flex:0 0 auto!important;font:650 8px/1.4 Pretendard,sans-serif!important;color:#9a557d!important;letter-spacing:-.2px!important}
   #siteHeader .ed-event-question {font:700 10.5px/1.4 Pretendard,sans-serif!important;color:#644b5e!important;letter-spacing:-.35px!important;white-space:nowrap!important}
+  #siteHeader .ed-event-keyword {font:inherit!important;font-weight:850!important;color:#a43f69!important;box-shadow:inset 0 -.25em #e8b5cb80!important}
   #siteHeader .ed-event-discount {font:750 10.5px/1.4 Pretendard,sans-serif!important;letter-spacing:-.4px!important;color:#a04f71!important;white-space:nowrap!important;padding:3px 6px!important;border:1px solid #fff!important;border-radius:14px!important;background:linear-gradient(135deg,#ffffffb3,#f9e8f266)!important;box-shadow:inset 0 1px 0 #fff,0 3px 10px #9276aa0d!important}
   @media(max-width:350px) {
     #siteHeader .ed-event-row {grid-template-columns:17px minmax(0,1fr) auto!important;column-gap:4px!important}
