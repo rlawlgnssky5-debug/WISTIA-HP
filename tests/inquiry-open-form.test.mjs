@@ -76,7 +76,7 @@ test("InquiryOpen fires only when the inquiry form opens", { skip: chromium ? fa
     const page = await context.newPage();
     const origin = `http://wistia.localhost:${port}`;
     await page.goto(origin + "/", { waitUntil: "domcontentloaded" });
-    await page.locator(".ed-hero-price-jump", { hasText: "가격 바로 보기" }).waitFor({ state: "visible" });
+    await page.locator(".ed-hero-price-jump", { hasText: "타입·가격 바로 보기" }).waitFor({ state: "visible" });
     assert.equal(await page.locator(".ed-hero-listen").count(), 0);
     assert.equal(await page.locator(".ed-hero-consult").count(), 0);
     assert.equal(await page.locator(".ed-hero-actions").getByRole("link", { name: /AR 축가/ }).count(), 0);
