@@ -202,15 +202,16 @@ html body #app .mas-gallery-viewport .hs-arrow {
   height: 36px !important;
   min-height: 36px !important;
   border-radius: 50% !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.14)) !important;
-  border: 1px solid rgba(255,255,255,.55) !important;
-  box-shadow: 0 6px 16px rgba(40,16,24,.16), inset 0 1px 0 rgba(255,255,255,.7) !important;
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: linear-gradient(160deg, rgba(255,255,255,.70) 0%, rgba(255,244,247,.40) 42%, rgba(243,201,212,.26) 100%) !important;
+  border: 1px solid rgba(255,255,255,.64) !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.88), 0 8px 24px rgba(70, 32, 48, .10) !important;
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+  color: #3a2430 !important;
 }
 
 html body #app .ed-hero-gallery .hs-arrow svg {
-  stroke: #fff !important;
+  stroke: #3a2430 !important;
 }
 
 html body #app .ed-hero-actions .ed-hero-price-jump {
@@ -241,11 +242,28 @@ html body #app .ed-hero-actions .ed-hero-price-jump svg {
 
 /* 4. Worry bubbles first, quoted title below, no English */
 html body #app .ed-worries {
+  position: relative !important;
   margin: 0 !important;
-  padding: 28px 18px 36px !important;
-  background: #f7e6ea !important;
+  padding: 36px 16px 40px !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(120% 70% at 80% 0%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 50%),
+    linear-gradient(180deg, #fff6f4 0%, #f7e4ea 48%, #f3dce4 100%) !important;
   border: 0 !important;
   border-radius: 0 !important;
+}
+
+html body #app .ed-worries::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.55) 0 6px, transparent 7px),
+    radial-gradient(circle at 88% 18%, rgba(217,171,185,.35) 0 3px, transparent 4px),
+    radial-gradient(circle at 12% 72%, rgba(217,171,185,.28) 0 2px, transparent 3px),
+    radial-gradient(circle at 84% 64%, rgba(255,255,255,.5) 0 4px, transparent 5px) !important;
 }
 
 html body #app .ed-worries .ed-heading {
@@ -253,84 +271,143 @@ html body #app .ed-worries .ed-heading {
 }
 
 html body #app .ed-worries ul {
-  display: grid !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
   gap: 16px !important;
   max-width: none !important;
+  width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  list-style: none !important;
 }
 
 html body #app .ed-worries li {
-  align-self: start !important;
-  max-width: max-content !important;
-  width: auto !important;
-  padding: 12px 16px !important;
-  border: 0 !important;
-  border-radius: 18px !important;
-  background: #fff !important;
-  box-shadow: 0 6px 16px rgba(96,67,75,.06) !important;
-  color: #3c3034 !important;
-  font-size: 13.5px !important;
-  line-height: 1.45 !important;
+  position: relative !important;
+  display: block !important;
+  align-self: flex-start !important;
+  justify-self: start !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin: 0 auto 0 0 !important;
+  padding: 13px 16px 14px !important;
+  border: 1px solid rgba(217,171,185,.48) !important;
+  border-radius: 22px !important;
+  background: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(143,77,99,.08) !important;
+  color: #5a3542 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
   letter-spacing: -.03em !important;
   white-space: nowrap !important;
   word-break: keep-all !important;
 }
 
 html body #app .ed-worries li:nth-child(even) {
-  align-self: end !important;
+  align-self: flex-end !important;
+  justify-self: end !important;
+  margin: 0 0 0 auto !important;
   background: #f3c9d4 !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  border: 1px solid rgba(196,92,116,.22) !important;
+  box-shadow: 0 6px 18px rgba(143,77,99,.08) !important;
 }
 
 html body #app .ed-worries li::after {
   content: "" !important;
   position: absolute !important;
-  bottom: -8px !important;
-  left: 18px !important;
-  width: 14px !important;
-  height: 14px !important;
-  background: inherit !important;
-  clip-path: polygon(0 0, 100% 0, 0 100%) !important;
-  transform: none !important;
+  bottom: -9px !important;
+  left: 22px !important;
   right: auto !important;
+  width: 16px !important;
+  height: 10px !important;
+  background: #ffffff !important;
+  clip-path: path("M0 0 C 3 1, 6 6, 8 10 C 10 6, 13 2, 16 0 Z") !important;
+  transform: none !important;
+  filter: drop-shadow(0 2px 1px rgba(143,77,99,.06)) !important;
 }
 
 html body #app .ed-worries li:nth-child(even)::after {
   left: auto !important;
-  right: 18px !important;
-  clip-path: polygon(0 0, 100% 0, 100% 100%) !important;
+  right: 22px !important;
+  background: #f3c9d4 !important;
+  clip-path: path("M0 0 C 3 1, 6 6, 8 10 C 10 6, 13 2, 16 0 Z") !important;
   transform: none !important;
 }
 
 html body #app .ed-worry-heading {
   position: relative !important;
-  margin: 32px 8px 0 !important;
+  z-index: 1 !important;
+  margin: 28px 10px 0 !important;
+  padding: 28px 36px 30px !important;
   text-align: center !important;
 }
 
 html body #app .ed-worry-heading h2 {
   margin: 0 !important;
-  color: #2d1c24 !important;
-  font-size: 34px !important;
-  font-weight: 750 !important;
+  color: #8f4d63 !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
   letter-spacing: -.045em !important;
-  line-height: 1.25 !important;
+  line-height: 1.28 !important;
+  word-break: keep-all !important;
 }
 
 html body #app .ed-worry-quote {
   position: absolute !important;
-  color: #d7a3b2 !important;
+  color: #d4a3b3 !important;
   font-family: Georgia, "Times New Roman", serif !important;
-  font-size: 42px !important;
+  font-size: 52px !important;
+  font-weight: 700 !important;
   line-height: 1 !important;
+  width: 28px !important;
+  text-align: center !important;
 }
 
-html body #app .ed-worry-quote-open { left: 4px !important; top: -10px !important; }
-html body #app .ed-worry-quote-close { right: 4px !important; bottom: -16px !important; }
+html body #app .ed-worry-quote-open { left: 8px !important; top: 0 !important; }
+html body #app .ed-worry-quote-close { right: 8px !important; bottom: 0 !important; }
 
 /* 5. POINT 04: AR MIX in the hub, percentage just above and 16px right */
+html body #app #soloPoint04 {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 58%, rgba(243,201,212,.45), transparent 72%),
+    linear-gradient(180deg, #fffaf8 0%, #fff6f4 38%, #f7e8ee 100%) !important;
+}
+
+html body #app #soloPoint04 .ed-heading {
+  text-align: center !important;
+}
+
+html body #app #soloPoint04 .ed-eyebrow {
+  text-align: center !important;
+  margin: 0 0 14px !important;
+  color: #b06b7e !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+}
+
+html body #app #soloPoint04 .ed-point {
+  display: table !important;
+  margin: 0 auto 22px !important;
+  padding: 7px 16px !important;
+  border-radius: 999px !important;
+  color: #8F4D63 !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  letter-spacing: .06em !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.70) 0%, rgba(255,244,247,.40) 42%, rgba(243,201,212,.26) 100%) !important;
+  border: 1px solid rgba(255,255,255,.64) !important;
+  box-shadow: inset 0 1.2px 0 rgba(255,255,255,.88), inset 0 -1px 0 rgba(255,255,255,.16), 0 8px 24px rgba(70, 32, 48, .10) !important;
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+}
+
 html body #app #soloPoint04 .ed-heading .ed-title {
   display: flex !important;
   flex-direction: column !important;
@@ -468,10 +545,21 @@ html body #app #soloPoint04 .solo-p4-ratio {
 }
 
 html body #app #soloPoint04 .solo-p4-ratio.is-on,
-html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] {
-  background: linear-gradient(160deg, rgba(255,236,241,.70), rgba(243,201,212,.38)) !important;
-  border-color: rgba(255,255,255,.78) !important;
-  color: #8F4D63 !important;
+html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"],
+html body #app #soloPoint04 button.solo-p4-ratio.is-on,
+html body #app #soloPoint04 button.solo-p4-ratio[aria-pressed="true"] {
+  background: linear-gradient(155deg, rgba(255,232,238,.78) 0%, rgba(232,150,172,.52) 52%, rgba(196,92,116,.55) 100%) !important;
+  border: 1px solid rgba(255,220,228,.7) !important;
+  color: #fff !important;
+}
+
+html body #app #soloPoint04 .solo-p4-ratio.is-on b,
+html body #app #soloPoint04 .solo-p4-ratio.is-on span,
+html body #app #soloPoint04 .solo-p4-ratio.is-on small,
+html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] b,
+html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] span,
+html body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] small {
+  color: #fff !important;
 }
 
 html body #app #soloPoint04 .solo-p4-hint {
@@ -1104,5 +1192,64 @@ html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#
     color: inherit !important;
     font: inherit !important;
     place-items: unset !important;
+  }
+
+  html:root body #app .ed-worries {
+    position: relative !important;
+    padding: 36px 16px 40px !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(120% 70% at 80% 0%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 50%),
+      linear-gradient(180deg, #fff6f4 0%, #f7e4ea 48%, #f3dce4 100%) !important;
+  }
+  html:root body #app .ed-worries ul {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  html:root body #app .ed-worries li {
+    align-self: flex-start !important;
+    justify-self: start !important;
+    width: fit-content !important;
+    margin: 0 auto 0 0 !important;
+    background: #ffffff !important;
+    color: #5a3542 !important;
+    border: 1px solid rgba(217,171,185,.48) !important;
+    border-radius: 22px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+  }
+  html:root body #app .ed-worries li:nth-child(even) {
+    align-self: flex-end !important;
+    justify-self: end !important;
+    margin: 0 0 0 auto !important;
+    background: #f3c9d4 !important;
+    border: 1px solid rgba(196,92,116,.22) !important;
+  }
+  html:root body #app .ed-worry-heading h2 {
+    color: #8f4d63 !important;
+    font-size: 36px !important;
+    font-weight: 800 !important;
+  }
+  html:root body #app #soloPoint04 {
+    background:
+      radial-gradient(ellipse 90% 50% at 50% 58%, rgba(243,201,212,.45), transparent 72%),
+      linear-gradient(180deg, #fffaf8 0%, #fff6f4 38%, #f7e8ee 100%) !important;
+  }
+  html:root body #app #soloPoint04 .ed-point {
+    display: table !important;
+    margin: 0 auto 22px !important;
+    padding: 7px 16px !important;
+    border-radius: 999px !important;
+    color: #8F4D63 !important;
+    background: linear-gradient(160deg, rgba(255,255,255,.70) 0%, rgba(255,244,247,.40) 42%, rgba(243,201,212,.26) 100%) !important;
+    border: 1px solid rgba(255,255,255,.64) !important;
+  }
+  html:root body #app #soloPoint04 .solo-p4-ratio.is-on,
+  html:root body #app #soloPoint04 .solo-p4-ratio[aria-pressed="true"] {
+    background: linear-gradient(155deg, rgba(255,232,238,.78) 0%, rgba(232,150,172,.52) 52%, rgba(196,92,116,.55) 100%) !important;
+    border: 1px solid rgba(255,220,228,.7) !important;
+    color: #fff !important;
   }
 }
