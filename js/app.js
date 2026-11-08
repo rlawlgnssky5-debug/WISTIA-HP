@@ -1368,7 +1368,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  if(key==='solo'||key==='duo'){
   details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'')
   details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,'<div class="arc-engineer">')
-  details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,WistiaEditorial.engineer()+'<section class="arc-section arc-process"')
+  details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,'<section class="arc-section arc-process"')
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap().replace(/<section class="arc-section arc-notices solo-notice">[\s\S]*?<\/section>/,''))
