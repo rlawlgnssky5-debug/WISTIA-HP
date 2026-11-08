@@ -14,7 +14,7 @@ assert.match(app,/가격 바로 보기/)
 assert.match(app,/if\(el\.matches\('\.product-inquiry > a'\)&&!el\.closest\('\.wistia-events'\)\)\{e\.preventDefault\(\);showKakaoInquiryDialog\(el\.getAttribute\('href'\)\);return\}/)
 for (const page of ['index.html','events.html','contact.html','event/solo.html','event/duo.html','info/faq.html','info/location.html']) {
  const html=readFileSync(new URL('../'+page,import.meta.url),'utf8')
- assert.match(html,/js\/app\.js\?v=20261108-glass-batch-7/)
+ assert.match(html,/js\/app\.js\?v=20261108-glass-batch-8/)
  assert.match(html,/js\/inquiry-funnel\.js\?v=20261105-merge-152-1/)
  assert.match(html,/css\/canvas-780\.css\?v=20261108-type-select-4/)
  assert.match(html,/js\/package-pricing\.js\?v=20261108-glass-batch-1/)
