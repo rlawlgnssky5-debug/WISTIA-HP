@@ -128,23 +128,23 @@
   #app #arcProcess .package-process-list {gap:14px!important;margin:0!important}
   #app #arcProcess .package-process-list li {padding:0!important;row-gap:4px!important}
   #app #arcProcess .package-process-list li > p {line-height:1.55!important;margin:0!important}
-  #app #packageSelection .package-card {height:auto!important;min-height:0!important}
-  #app #packageSelection .package-card-body {padding:9px 1px!important;min-height:0!important}
-  #app #packageSelection .package-card-name {font-size:clamp(9.5px,2.8cqw,11.5px)!important;line-height:1.3!important}
-  #app #packageSelection .package-card-price {font-size:clamp(10px,3.2cqw,12.5px)!important;line-height:1.35!important;margin-top:3px!important}
-  #app #packageSelection .package-selected-detail {box-sizing:border-box!important;padding:16px!important;row-gap:0!important}
-  #app #packageSelection .package-selected-head {display:grid!important;grid-template-columns:28px minmax(0,1fr)!important;column-gap:10px!important;row-gap:5px!important;align-items:center!important;margin:0!important}
-  #app #packageSelection .package-selected-letter {grid-column:1!important;grid-row:1 / span 2!important;align-self:start!important;width:auto!important;min-width:0!important;font-size:30px!important;line-height:1.1!important;margin:0!important;padding:0!important;border:0!important}
-  #app #packageSelection .package-selected-head h3 {grid-column:2!important;grid-row:1!important;margin:0!important;font-size:14px!important;line-height:1.4!important;white-space:normal!important}
-  #app #packageSelection .package-selected-head > .package-selected-cheaper {grid-column:2!important;grid-row:2!important;max-width:100%!important;margin:0!important;padding:3px 7px!important;font-size:10.5px!important;line-height:1.35!important;white-space:normal!important;box-shadow:none!important}
-  #app #packageSelection .package-selected-meta {margin:8px 0 10px!important;font-size:12px!important;line-height:1.4!important}
-  #app #packageSelection .package-selected-features {display:grid!important;gap:0!important;padding:0!important;margin:0!important}
-  #app #packageSelection .package-selected-features li {box-sizing:border-box!important;display:grid!important;grid-template-columns:28px minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important;min-height:44px!important;height:auto!important;margin:0!important;padding:7px 0!important}
-  #app #packageSelection .package-selected-features li::before {content:none!important;display:none!important}
-  #app #packageSelection .package-feature-mark {display:grid!important;place-items:center!important;width:28px!important;height:28px!important;margin:0!important;padding:0!important}
-  #app #packageSelection .package-feature-mark svg {width:18px!important;height:18px!important}
-  #app #packageSelection .package-feature-copy {min-width:0!important;font-size:12px!important;line-height:1.45!important;white-space:normal!important}
-  #app #packageSelection .package-feature-up {margin:0!important;padding:2px 5px!important;font-size:9px!important;line-height:1.3!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-card {height:auto!important;min-height:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-card-body {padding:9px 1px!important;min-height:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-card-name {font-size:clamp(9.5px,2.8cqw,11.5px)!important;line-height:1.3!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-card-price {font-size:clamp(10px,3.2cqw,12.5px)!important;line-height:1.35!important;margin-top:3px!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-detail {box-sizing:border-box!important;padding:16px!important;row-gap:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-head {display:grid!important;grid-template-columns:28px minmax(0,1fr)!important;column-gap:10px!important;row-gap:5px!important;align-items:center!important;margin:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-letter {grid-column:1!important;grid-row:1 / span 2!important;align-self:start!important;width:auto!important;min-width:0!important;font-size:30px!important;line-height:1.1!important;margin:0!important;padding:0!important;border:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-head h3 {grid-column:2!important;grid-row:1!important;margin:0!important;font-size:14px!important;line-height:1.4!important;white-space:normal!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-head > .package-selected-cheaper {grid-column:2!important;grid-row:2!important;max-width:100%!important;margin:0!important;padding:3px 7px!important;font-size:10.5px!important;line-height:1.35!important;white-space:normal!important;box-shadow:none!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-meta {margin:8px 0 10px!important;font-size:12px!important;line-height:1.4!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features {display:grid!important;gap:0!important;padding:0!important;margin:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li {box-sizing:border-box!important;display:grid!important;grid-template-columns:28px minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important;min-height:44px!important;height:auto!important;margin:0!important;padding:7px 0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li::before {content:none!important;display:none!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-mark {display:grid!important;place-items:center!important;width:28px!important;height:28px!important;margin:0!important;padding:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-mark svg {width:18px!important;height:18px!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-copy {min-width:0!important;font-size:12px!important;line-height:1.45!important;white-space:normal!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-up {margin:0!important;padding:2px 5px!important;font-size:9px!important;line-height:1.3!important}
   /* Match the supplied rose and pearl glass references, at compact heights */
   #app .mobile-ar-solo #soloPoint04 {
     --ed-surface:#fff7f8;--ed-next-surface:#f4f0ed;
@@ -169,30 +169,30 @@
   #app #arcProcess .package-process-list li > strong {position:relative!important;z-index:1!important;padding:9px 10px 0!important;margin:0!important;font-size:14px!important;line-height:1.4!important;color:#40343a!important}
   #app #arcProcess .package-process-list li > p {position:relative!important;z-index:1!important;padding:0 10px 9px!important;margin:0!important;font-size:12px!important;line-height:1.5!important;color:#7e7376!important}
   #app .mobile-ar-solo #packageSelection {--ed-surface:#fef4eb;background:#fef4eb!important}
-  #app #packageSelection.type-unify > .package-section {background:linear-gradient(130deg,#eee9e5,#f8f5f2 65%,#fff)!important}
-  #app #packageSelection .package-cards {overflow:hidden!important;border:1px solid #ffffffe6!important;border-radius:18px!important;background:linear-gradient(130deg,#ffffffdb,#ffffff80)!important;box-shadow:inset 0 1px 0 #fff,0 5px 18px #79677214!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-  #app #packageSelection .package-card-body {border-radius:0!important}
-  #app #packageSelection .package-card:is(.is-selected,:has(input:checked)) {background:linear-gradient(130deg,#ffffffb3,#f5ece466)!important;box-shadow:inset 0 1px 0 #fff!important}
-  #app #packageSelection .package-selected-detail {border:1px solid #ffffffe6!important;border-radius:22px!important;background:linear-gradient(135deg,#fffffff0,#ffffffa6 55%,#faf6f2bf)!important;box-shadow:inset 0 1px 1px #fff,0 7px 22px #79677214!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-  #app #packageSelection .package-selected-letter {color:#9c8983!important}
-  #app #packageSelection [data-package-key="D"] .package-selected-letter {color:#3aa39a!important}
-  #app #packageSelection .package-selected-head {grid-template-columns:26px minmax(0,1fr)!important;grid-template-rows:30px auto!important;row-gap:5px!important;column-gap:8px!important}
-  #app #packageSelection [data-package-key] .package-selected-head h3 {grid-column:1 / -1!important;grid-row:2!important;font-size:clamp(12px,3.6cqw,14px)!important;line-height:1.4!important;white-space:nowrap!important;letter-spacing:-.04em!important}
-  #app #packageSelection .package-selected-letter {grid-row:1!important}
-  #app #packageSelection .package-selected-head > .package-selected-cheaper {grid-row:1!important;align-self:center!important;background:linear-gradient(130deg,#fff,#f9e9f180)!important;border:1px solid #fff!important;border-radius:999px!important;box-shadow:inset 0 1px 0 #fff,0 4px 12px #a7768b12!important;color:#9a4e6d!important;font-size:clamp(9.5px,2.7cqw,11px)!important;white-space:nowrap!important;letter-spacing:-.04em!important}
-  #app #packageSelection .package-selected-basic {color:#8e7a73!important;background:linear-gradient(130deg,#fff,#f7f0e7b3)!important}
-  #app #packageSelection .package-selected-basic::before {content:'✦ '!important;color:#bfa784!important}
-  #app #packageSelection .package-selected-meta {color:#998d8d!important}
-  #app #packageSelection [data-package-key="B"] {--up-ink:#b95476;--up-border:#e8b7c9;--up-start:#fff8fb;--up-end:#f8e3ec}
-  #app #packageSelection [data-package-key="C"] {--up-ink:#ad800a;--up-border:#e6cb87;--up-start:#fffdf4;--up-end:#f8efcf}
-  #app #packageSelection [data-package-key="D"] {--up-ink:#278e83;--up-border:#aed8cd;--up-start:#f6fffc;--up-end:#dff3eb}
-  #app #packageSelection .package-selected-features li {grid-template-columns:28px minmax(0,1fr) 28px!important;box-sizing:border-box!important;height:44px!important;min-height:44px!important;margin:0!important;padding:6px 8px!important;border:1px solid transparent!important;border-bottom-color:#ead8d380!important;color:#5f5258!important}
-  #app #packageSelection .package-selected-features li:not([data-feature-enhanced="true"]) .package-feature-copy {grid-column:2 / -1!important}
-  #app #packageSelection .package-feature-mark {border:1px solid #ffffffcc!important;border-radius:50%!important;background:linear-gradient(130deg,#fff,#fcf0ed66)!important;color:#ae6b86!important;box-shadow:inset 0 1px 0 #fff!important}
-  #app #packageSelection .package-selected-features li[data-feature-enhanced="true"] {grid-template-columns:28px minmax(0,1fr) 28px!important;height:44px!important;min-height:44px!important;margin:0!important;padding:6px 8px!important;border:1px solid var(--up-border)!important;border-radius:13px!important;background:linear-gradient(130deg,var(--up-start),var(--up-end))!important;color:#514447!important;box-shadow:inset 0 1px 0 #fff!important}
-  #app #packageSelection .package-selected-features li[data-feature-enhanced="true"] .package-feature-mark {border-color:var(--up-border)!important;background:linear-gradient(130deg,#fff,var(--up-end))!important;color:var(--up-ink)!important}
-  #app #packageSelection .package-selected-features li[data-feature-enhanced="true"] .package-feature-copy {font-weight:700!important}
-  #app #packageSelection .package-feature-copy strong {font:inherit!important;color:var(--up-ink)!important}
-  #app #packageSelection .package-feature-up {box-sizing:border-box!important;width:28px!important;border:1px solid var(--up-border)!important;border-radius:999px!important;background:linear-gradient(130deg,#fff,var(--up-end))!important;box-shadow:inset 0 1px 0 #fff!important;color:var(--up-ink)!important;text-align:center!important}
-  #app #packageSelection .package-inquiry-link {border:1px solid #fff!important;border-radius:999px!important;background:linear-gradient(130deg,#ffffffe6,#fff4f780)!important;color:#a35978!important;box-shadow:inset 0 1px 0 #fff,0 5px 16px #84667412!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  #app :is(#packageSelection, .wistia-wizard).type-unify > .package-section {background:linear-gradient(130deg,#eee9e5,#f8f5f2 65%,#fff)!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-cards {overflow:hidden!important;border:1px solid #ffffffe6!important;border-radius:18px!important;background:linear-gradient(130deg,#ffffffdb,#ffffff80)!important;box-shadow:inset 0 1px 0 #fff,0 5px 18px #79677214!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  #app :is(#packageSelection, .wistia-wizard) .package-card-body {border-radius:0!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-card:is(.is-selected,:has(input:checked)) {background:linear-gradient(130deg,#ffffffb3,#f5ece466)!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-detail {border:1px solid #ffffffe6!important;border-radius:22px!important;background:linear-gradient(135deg,#fffffff0,#ffffffa6 55%,#faf6f2bf)!important;box-shadow:inset 0 1px 1px #fff,0 7px 22px #79677214!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-letter {color:#9c8983!important}
+  #app :is(#packageSelection, .wistia-wizard) [data-package-key="D"] .package-selected-letter {color:#3aa39a!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-head {grid-template-columns:26px minmax(0,1fr)!important;grid-template-rows:30px auto!important;row-gap:5px!important;column-gap:8px!important}
+  #app :is(#packageSelection, .wistia-wizard) [data-package-key] .package-selected-head h3 {grid-column:1 / -1!important;grid-row:2!important;font-size:clamp(12px,3.6cqw,14px)!important;line-height:1.4!important;white-space:nowrap!important;letter-spacing:-.04em!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-letter {grid-row:1!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-head > .package-selected-cheaper {grid-row:1!important;align-self:center!important;background:linear-gradient(130deg,#fff,#f9e9f180)!important;border:1px solid #fff!important;border-radius:999px!important;box-shadow:inset 0 1px 0 #fff,0 4px 12px #a7768b12!important;color:#9a4e6d!important;font-size:clamp(9.5px,2.7cqw,11px)!important;white-space:nowrap!important;letter-spacing:-.04em!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-basic {color:#8e7a73!important;background:linear-gradient(130deg,#fff,#f7f0e7b3)!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-basic::before {content:'✦ '!important;color:#bfa784!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-meta {color:#998d8d!important}
+  #app :is(#packageSelection, .wistia-wizard) [data-package-key="B"] {--up-ink:#b95476;--up-border:#e8b7c9;--up-start:#fff8fb;--up-end:#f8e3ec}
+  #app :is(#packageSelection, .wistia-wizard) [data-package-key="C"] {--up-ink:#ad800a;--up-border:#e6cb87;--up-start:#fffdf4;--up-end:#f8efcf}
+  #app :is(#packageSelection, .wistia-wizard) [data-package-key="D"] {--up-ink:#278e83;--up-border:#aed8cd;--up-start:#f6fffc;--up-end:#dff3eb}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li {grid-template-columns:28px minmax(0,1fr) 28px!important;box-sizing:border-box!important;height:44px!important;min-height:44px!important;margin:0!important;padding:6px 8px!important;border:1px solid transparent!important;border-bottom-color:#ead8d380!important;color:#5f5258!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li:not([data-feature-enhanced="true"]) .package-feature-copy {grid-column:2 / -1!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-mark {border:1px solid #ffffffcc!important;border-radius:50%!important;background:linear-gradient(130deg,#fff,#fcf0ed66)!important;color:#ae6b86!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li[data-feature-enhanced="true"] {grid-template-columns:28px minmax(0,1fr) 28px!important;height:44px!important;min-height:44px!important;margin:0!important;padding:6px 8px!important;border:1px solid var(--up-border)!important;border-radius:13px!important;background:linear-gradient(130deg,var(--up-start),var(--up-end))!important;color:#514447!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li[data-feature-enhanced="true"] .package-feature-mark {border-color:var(--up-border)!important;background:linear-gradient(130deg,#fff,var(--up-end))!important;color:var(--up-ink)!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-selected-features li[data-feature-enhanced="true"] .package-feature-copy {font-weight:700!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-copy strong {font:inherit!important;color:var(--up-ink)!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-feature-up {box-sizing:border-box!important;width:28px!important;border:1px solid var(--up-border)!important;border-radius:999px!important;background:linear-gradient(130deg,#fff,var(--up-end))!important;box-shadow:inset 0 1px 0 #fff!important;color:var(--up-ink)!important;text-align:center!important}
+  #app :is(#packageSelection, .wistia-wizard) .package-inquiry-link {border:1px solid #fff!important;border-radius:999px!important;background:linear-gradient(130deg,#ffffffe6,#fff4f780)!important;color:#a35978!important;box-shadow:inset 0 1px 0 #fff,0 5px 16px #84667412!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 }
