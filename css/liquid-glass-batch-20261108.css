@@ -226,6 +226,16 @@ html body #app .ed-hero .hs-slide {
   height: 100% !important;
 }
 
+
+html body #app .ed-hero .mas-gallery-viewport::after,
+html body #app .ed-hero-gallery .mas-gallery-viewport::after {
+  background:
+    linear-gradient(180deg, rgba(40,20,30,.22) 0%, rgba(40,20,30,.06) 16%, transparent 30%),
+    linear-gradient(180deg, transparent 50%, rgba(32,16,24,.22) 74%, rgba(28,14,22,.46) 100%),
+    linear-gradient(90deg, rgba(30,16,22,.34) 0%, transparent 42%) !important;
+  z-index: 1 !important;
+}
+
 html body #app .ed-hero .mas-gallery-viewport img,
 html body #app .ed-hero .mas-gallery-viewport video,
 html body #app .ed-hero .hs-slide img,
@@ -1449,6 +1459,14 @@ html body #app .type-november-pill {
     min-height: 184.61538cqw !important;
     overflow: hidden !important;
   }
+  html:root body #app .ed-hero .mas-gallery-viewport::after,
+  html:root body #app .ed-hero-gallery .mas-gallery-viewport::after {
+    background:
+      linear-gradient(180deg, rgba(40,20,30,.22) 0%, rgba(40,20,30,.06) 16%, transparent 30%),
+      linear-gradient(180deg, transparent 50%, rgba(32,16,24,.22) 74%, rgba(28,14,22,.46) 100%),
+      linear-gradient(90deg, rgba(30,16,22,.34) 0%, transparent 42%) !important;
+  }
+
   html:root body #app .ed-hero-actions {
     position: absolute !important;
     left: 16px !important;
