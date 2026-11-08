@@ -34,35 +34,61 @@ html body:has(.ed-hero) #siteHeader#siteHeader#siteHeader#siteHeader .header-inn
   height: 48px !important;
   min-height: 48px !important;
   margin: 12px 12px 0 !important;
-  padding: 0 14px !important;
+  padding: 0 8px 0 12px !important;
   width: auto !important;
   max-width: none !important;
   border-radius: 22px !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,.14)) !important;
-  border: 1px solid rgba(255,255,255,.55) !important;
-  box-shadow: 0 8px 28px rgba(40,16,24,.16), inset 0 1px 0 rgba(255,255,255,.7) !important;
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  overflow: hidden !important;
+  isolation: isolate !important;
+  position: relative !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.70) 0%, rgba(255,244,247,.40) 42%, rgba(243,201,212,.26) 100%) !important;
+  border: 1px solid rgba(255,255,255,.64) !important;
+  box-shadow:
+    inset 0 1.2px 0 rgba(255,255,255,.88),
+    inset 0 -1px 0 rgba(255,255,255,.16),
+    inset 1px 0 0 rgba(255,210,222,.22),
+    inset -1px 0 0 rgba(190,220,255,.12),
+    0 8px 24px rgba(70, 32, 48, .16) !important;
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+}
+html body:has(.ed-hero) #siteHeader .header-inner::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(122deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.16) 24%, transparent 48%) !important;
+  pointer-events: none !important;
+}
+html body:has(.ed-hero) #siteHeader .header-inner::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 70% !important;
+  height: 80% !important;
+  right: -18% !important;
+  top: -42% !important;
+  background: radial-gradient(circle, rgba(255,255,255,.5) 0%, rgba(255,230,236,.12) 42%, transparent 70%) !important;
+  pointer-events: none !important;
 }
 
-html body:has(.ed-hero) #siteHeader .wordmark {
-  color: #5a3d46 !important;
+html body:has(.ed-hero) #siteHeader .wordmark,
+html body:has(.ed-hero) #siteHeader .wordmark span {
+  color: #2d1c24 !important;
 }
 
 html body:has(.ed-hero) #siteHeader .wordmark img {
-  filter: none !important;
+  filter: brightness(0) opacity(.78) !important;
 }
 
 html body:has(.ed-hero) #siteHeader #menuToggle {
-  width: 36px !important;
-  min-width: 36px !important;
-  height: 36px !important;
-  min-height: 36px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
   border-radius: 50% !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.16)) !important;
-  border: 1px solid rgba(255,255,255,.55) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.72) !important;
-  color: #5a3d46 !important;
+  background: linear-gradient(160deg, rgba(255,255,255,.55), rgba(255,255,255,.18)) !important;
+  border: 1px solid rgba(255,255,255,.64) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 8px rgba(70,32,48,.08) !important;
+  color: #2d1c24 !important;
 }
 
 html body:has(.ed-hero) #mainMenu {
@@ -85,18 +111,28 @@ html body:has(.ed-hero) #siteHeader .ed-event-ribbon {
 
 html body:has(.ed-hero) #siteHeader .ed-event-row {
   display: grid !important;
-  grid-template-columns: 22px minmax(0, 1fr) auto !important;
+  grid-template-columns: 28px minmax(0, 1fr) auto !important;
   align-items: center !important;
   column-gap: 8px !important;
   height: 42px !important;
   margin: 0 !important;
-  padding: 0 8px 0 10px !important;
-  border-radius: 16px !important;
-  background: linear-gradient(180deg, rgba(255,232,238,.50), rgba(236,168,186,.28)) !important;
-  border: 1px solid rgba(255,255,255,.45) !important;
-  box-shadow: 0 8px 20px rgba(80,24,40,.12), inset 0 1px 0 rgba(255,255,255,.55) !important;
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  padding: 0 10px 0 8px !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  position: relative !important;
+  background: linear-gradient(155deg, rgba(255,232,238,.78) 0%, rgba(232,150,172,.48) 52%, rgba(196,92,116,.42) 100%) !important;
+  border: 1px solid rgba(255,220,228,.7) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 8px 20px rgba(142, 55, 82, .16) !important;
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+html body:has(.ed-hero) #siteHeader .ed-event-row::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(120deg, rgba(255,255,255,.45) 0%, transparent 36%) !important;
+  pointer-events: none !important;
 }
 
 html body:has(.ed-hero) #siteHeader .ed-event-row + .ed-event-row {
@@ -107,40 +143,49 @@ html body:has(.ed-hero) #siteHeader .ed-event-icon,
 html body:has(.ed-hero) #siteHeader .ed-event-star {
   display: grid !important;
   place-items: center !important;
-  width: 18px !important;
-  height: 18px !important;
-  color: #8F4D63 !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 9px !important;
+  background: linear-gradient(165deg, #d37a90, #8F4D63) !important;
+  color: #fff !important;
   font-size: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 4px 10px rgba(143,77,99,.25) !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 html body:has(.ed-hero) #siteHeader .ed-event-icon svg {
   width: 16px !important;
   height: 16px !important;
   fill: none !important;
-  stroke: currentColor !important;
+  stroke: #fff !important;
   stroke-width: 1.8 !important;
   stroke-linecap: round !important;
   stroke-linejoin: round !important;
 }
 
 html body:has(.ed-hero) #siteHeader .ed-event-question {
-  font: 650 13px/1.3 Pretendard, sans-serif !important;
-  color: #5a3d46 !important;
+  font: 750 13.5px/1.3 Pretendard, sans-serif !important;
+  color: #2d1c24 !important;
   letter-spacing: -.03em !important;
   white-space: nowrap !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 html body:has(.ed-hero) #siteHeader .ed-event-discount {
   display: inline-flex !important;
   align-items: center !important;
-  padding: 6px 10px !important;
+  padding: 4px 8px !important;
   border-radius: 999px !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,236,241,.42)) !important;
-  border: 1px solid rgba(255,255,255,.70) !important;
-  color: #8F4D63 !important;
-  font: 800 12px/1.2 Pretendard, sans-serif !important;
+  background: #8F4D63 !important;
+  border: 0 !important;
+  color: #fff !important;
+  font: 800 11.5px/1.2 Pretendard, sans-serif !important;
   letter-spacing: -.03em !important;
   white-space: nowrap !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 html body #app .ed-hero-copy {
@@ -941,18 +986,86 @@ html:root body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#
     border: 0 !important;
   }
 
+  html:root body:has(.ed-hero) #siteHeader#siteHeader .header-inner {
+    height: 48px !important;
+    min-height: 48px !important;
+    margin: 12px 12px 0 !important;
+    padding: 0 8px 0 12px !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    background: linear-gradient(160deg, rgba(255,255,255,.70) 0%, rgba(255,244,247,.40) 42%, rgba(243,201,212,.26) 100%) !important;
+    border: 1px solid rgba(255,255,255,.64) !important;
+    box-shadow:
+      inset 0 1.2px 0 rgba(255,255,255,.88),
+      inset 0 -1px 0 rgba(255,255,255,.16),
+      0 8px 24px rgba(70, 32, 48, .16) !important;
+    backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+    -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.1);
+  }
+  html:root body:has(.ed-hero) #siteHeader .wordmark,
+  html:root body:has(.ed-hero) #siteHeader .wordmark span {
+    color: #2d1c24 !important;
+  }
+  html:root body:has(.ed-hero) #siteHeader .wordmark img {
+    filter: brightness(0) opacity(.78) !important;
+  }
+  html:root body:has(.ed-hero) #siteHeader #menuToggle {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(160deg, rgba(255,255,255,.55), rgba(255,255,255,.18)) !important;
+    border: 1px solid rgba(255,255,255,.64) !important;
+    color: #2d1c24 !important;
+  }
   html:root body:has(.ed-hero) #siteHeader .ed-event-row {
     display: grid !important;
-    grid-template-columns: 22px minmax(0, 1fr) auto !important;
+    grid-template-columns: 28px minmax(0, 1fr) auto !important;
     align-items: center !important;
     column-gap: 8px !important;
     height: 42px !important;
     margin: 0 !important;
-    padding: 0 8px 0 10px !important;
-    border-radius: 16px !important;
-    background: linear-gradient(180deg, rgba(255,232,238,.50), rgba(236,168,186,.28)) !important;
-    border: 1px solid rgba(255,255,255,.45) !important;
-    box-shadow: 0 8px 20px rgba(80,24,40,.12), inset 0 1px 0 rgba(255,255,255,.55) !important;
+    padding: 0 10px 0 8px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    background: linear-gradient(155deg, rgba(255,232,238,.78) 0%, rgba(232,150,172,.48) 52%, rgba(196,92,116,.42) 100%) !important;
+    border: 1px solid rgba(255,220,228,.7) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 8px 20px rgba(142, 55, 82, .16) !important;
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+  }
+  html:root body:has(.ed-hero) #siteHeader .ed-event-icon,
+  html:root body:has(.ed-hero) #siteHeader .ed-event-star {
+    display: grid !important;
+    place-items: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 9px !important;
+    background: linear-gradient(165deg, #d37a90, #8F4D63) !important;
+    color: #fff !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 4px 10px rgba(143,77,99,.25) !important;
+  }
+  html:root body:has(.ed-hero) #siteHeader .ed-event-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke: #fff !important;
+    fill: none !important;
+  }
+  html:root body:has(.ed-hero) #siteHeader .ed-event-question {
+    font: 750 13.5px/1.3 Pretendard, sans-serif !important;
+    color: #2d1c24 !important;
+  }
+  html:root body:has(.ed-hero) #siteHeader .ed-event-discount,
+  html:root body:has(.ed-hero) #siteHeader [data-event-row="monthly"] .ed-event-discount {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 4px 8px !important;
+    border-radius: 999px !important;
+    background: #8F4D63 !important;
+    border: 0 !important;
+    color: #fff !important;
+    font: 800 11.5px/1.2 Pretendard, sans-serif !important;
   }
 
   html:root body:has(.ed-hero) #siteHeader .ed-event-row + .ed-event-row {
