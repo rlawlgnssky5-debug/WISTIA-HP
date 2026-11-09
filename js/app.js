@@ -1165,7 +1165,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<a class="solo-footer-inquiry" href="/event/'+key+'"><span>문의양식 작성</span></a>'
+ return footer()+'<div class="home-dock" aria-label="예약과 공유"><div class="home-offer" hidden><a data-home-offer-link><span></span><span aria-hidden="true">›</span></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><button type="button" data-home-share><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="5" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.5 10.5 7-4m-7 7 7 4"/></svg><span>공유하기</span></button><a data-package-inquiry href="'+packageInquiryHref(key)+'">문의양식 작성하기</a></div><p role="status" class="home-share-status"></p></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1370,7 +1370,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap().replace(/<section class="arc-section arc-notices solo-notice">[\s\S]*?<\/section>/,''))
-  details=details.replace(/(?:<div class="solo-footer-clean">)?<footer class="footer shell">[\s\S]*?<\/footer>(?:<\/div>)?/,soloFooter(key))
+  details=details.replace(/(?:<div class="solo-footer-clean">)?<footer class="footer shell">[\s\S]*?<\/footer>(?:<\/div>)?/,'')
  }else{
   details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,mobileArProcess(key))
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
@@ -1404,7 +1404,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
- '<span id="arcDetails" hidden></span>'+details+
+ '<details class="home-story" id="arcDetails"><summary><span class="home-story-more">스토리 더보기</span><span class="home-story-less">스토리 접기</span></summary>'+details+'</details>'+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 let mobileGalleryCleanup=()=>{}
@@ -1446,9 +1446,40 @@ function initMobileArGallery(){
  })
  mobileGalleryCleanup=()=>cleanups.forEach(cleanup=>cleanup())
 }
-let welcomeGiftObserver
+let welcomeGiftObserver, homeDockCleanup
+function initHomeDock(root){
+ const dock=root.querySelector('.home-dock')
+ if(!dock)return
+ const banner=dock.querySelector('.home-offer'),link=banner.querySelector('a')
+ const status=dock.querySelector('[role="status"]')
+ let pastHero=false,dismissed=false
+ function refreshOffer(){
+  const event=window.WistiaPackages.activeMonthlyEvent(),current=selectedPackage().key
+  const tier=event?(event.packages.includes(current)?current:event.packages[0]):(current==='A'?'B':current)
+  link.href=packageInquiryHref(root.dataset.arProduct,tier)
+  link.firstElementChild.textContent=event?'첫이용 '+event.month+'월 할인 받고 예약하기':'첫이용 할인 받고 예약하기'
+  banner.hidden=dismissed||!pastHero
+ }
+ const observer=new IntersectionObserver(([entry])=>{pastHero=entry.boundingClientRect.bottom<=0;refreshOffer()})
+ observer.observe(root.querySelector('.ed-hero'))
+ window.addEventListener('wistia:price-date-change',refreshOffer)
+ root.querySelector('#packageSelection')?.addEventListener('change',refreshOffer)
+ homeDockCleanup=()=>{observer.disconnect();window.removeEventListener('wistia:price-date-change',refreshOffer)}
+ banner.querySelector('button').addEventListener('click',()=>{dismissed=true;refreshOffer()})
+ dock.querySelector('[data-home-share]').addEventListener('click',async()=>{
+  const url='https://www.wistiastudio.com/'
+  status.textContent=''
+  try{if(navigator.share){await navigator.share({title:'위스티아 스튜디오',url});return}}
+  catch(error){if(error.name==='AbortError')return}
+  try{await navigator.clipboard.writeText(url);status.textContent='링크를 복사했어요'}
+  catch{window.prompt('공유할 링크를 복사해 주세요',url)}
+ })
+ refreshOffer()
+}
+
 function initArCommerceDetail(){
  welcomeGiftObserver?.disconnect()
+ homeDockCleanup?.()
  const gift=document.querySelector('.welcome-gift')
  if(gift&&'IntersectionObserver' in window){welcomeGiftObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){window.WistiaPackages.celebrate(gift);welcomeGiftObserver.disconnect()}},{threshold:.4});welcomeGiftObserver.observe(gift)}
  const packageRoot=document.querySelector('#packageSelection')
@@ -1464,6 +1495,7 @@ function initArCommerceDetail(){
  })
  document.querySelectorAll('[data-detail-person]').forEach(button=>button.addEventListener('click',()=>{const y=window.scrollY,next=button.dataset.detailPerson==='solo'?'/':'/detail/'+button.dataset.detailPerson;history.replaceState(history.state,'',next+location.search);route({preserveScroll:true});window.scrollTo({top:y,behavior:'instant'})}))
  const root=document.querySelector('.ar-commerce-detail');if(!root)return
+ initHomeDock(root)
  root.querySelectorAll('[data-ar-time]').forEach(button=>button.addEventListener('click',()=>{
   const key=button.dataset.arTime,product=PRODUCTS[key];root.dataset.arProduct=key
   updateArCustomerVideo(root,key)
@@ -1476,6 +1508,7 @@ function initArCommerceDetail(){
  }))
  root.querySelectorAll('[data-ar-section]').forEach(link=>link.addEventListener('click',event=>{
   event.preventDefault();let target=document.getElementById(link.dataset.arSection)
+  const story=target?.closest('.home-story');if(story)story.open=true
   if(link.dataset.heroPackage&&target){
    target.querySelector('.package-card[data-tier="'+link.dataset.heroPackage+'"]')?.click()
    target=target.querySelector('.package-cards')||target
