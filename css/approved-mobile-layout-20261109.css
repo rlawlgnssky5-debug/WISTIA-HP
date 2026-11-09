@@ -72,10 +72,6 @@
   #app .ed-review-card footer>div>span {display:block!important;margin:0!important}
   #app .ed-review-card footer button {min-height:32px!important;padding:6px 10px!important;gap:4px!important}
   #app .ed-review-controls {gap:24px!important}
-  #app #arcProcess .package-process-list li {grid-template-columns:30px minmax(0,1fr)!important;column-gap:8px!important}
-  #app #arcProcess .package-process-list li::before {width:30px!important;height:30px!important}
-  #app #arcProcess .package-process-list li::after {left:38px!important}
-  #app #arcProcess .package-process-list::before {left:15px!important}
   #app .type-poster-standard {font-size:11px!important;line-height:1.3!important;padding:0!important}
   #app .type-poster-standard span {white-space:normal!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
   #app .solo-map :is(small,address,p) {white-space:normal!important;overflow-wrap:anywhere!important}
@@ -144,13 +140,99 @@
   #app .wistia-wizard [data-wf-location-duration], #app .wistia-wizard [data-wf-location-duration] * {font-size:10px!important;line-height:1.5!important;letter-spacing:-.035em!important;white-space:nowrap!important}
   /* The first-view product heading is the sole enlarged type exception */
   #app .ed-hero-copy h1, #app .ed-hero-copy h1 strong {font-size:clamp(30px,8.2vw,46px)!important;line-height:1.18!important;font-weight:800!important}
-  #app #arcProcess>h2 {text-align:center!important;padding-inline:0!important}
-  #app #arcProcess .package-process-list li,
+  #app .mobile-ar-solo>#arcWorries {--ed-surface:#f5e6e9!important;--ed-next-surface:#fff!important;background:linear-gradient(155deg,#f8ecef,#f2dfe5)!important;padding-block:clamp(34px,7vw,54px)!important}
+  #app #arcWorries::before {background:inherit!important}
+  #app #arcWorries .ed-heading {margin-bottom:24px!important}
+  #app #arcWorries ul {gap:14px!important}
+  #app #arcWorries li {padding:12px 15px!important;border:1px solid #e5c9d3!important;background:#fffafc!important;color:#4e303c!important;font-size:clamp(14px,3.8vw,17px)!important;font-weight:650!important;line-height:1.6!important;box-shadow:0 4px 11px #87596c12!important}
+  #app #arcWorries li:nth-child(even) {background:#eac9d6!important;border-color:#e0bac9!important}
+  #app .mobile-ar-solo>#arcProcess {--ed-surface:#f9f0eb!important;--ed-next-surface:#fffdfc!important;background:var(--ed-surface)!important;padding-block:clamp(34px,6vw,54px)!important}
+  #app #arcProcess>h2 {text-align:center!important;padding-inline:0!important;margin:0 0 22px!important}
+  #app #arcProcess .package-process-list {grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+  #app #arcProcess .package-process-list::before,
+  #app #arcProcess .package-process-list li::after {content:none!important}
+  #app #arcProcess .package-process-list li {display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;min-width:0!important;padding:clamp(12px,3.6vw,22px)!important;border:1px solid #ead6ce!important;border-radius:18px!important;background:#fffbf7!important;text-align:left!important;box-shadow:0 3px 9px #9d76680c!important}
+  #app #arcProcess .package-process-list li::before {position:static!important;display:inline-grid!important;place-items:center!important;align-self:flex-start!important;width:30px!important;height:30px!important;border:0!important;border-radius:10px!important;background:#f3dce3!important;color:#803c55!important;font-family:inherit!important;font-size:12px!important;line-height:1!important;font-weight:700!important;margin:0!important}
   #app #arcProcess .package-process-list li>strong,
-  #app #arcProcess .package-process-list li>p {text-align:center!important}
-  #app .mobile-ar-solo>#arcProcess {--ed-surface:#ede9e5!important;--ed-next-surface:#f5e0e9!important;background:#ede9e5!important}
-  #app .mobile-ar-solo>#arcFaq {--ed-surface:#f5e0e9!important;--ed-next-surface:#fff!important;background:#f5e0e9!important}
-  #app .mobile-ar-solo>#soloPoint04 {--ed-surface:#faedf2!important;--ed-next-surface:#ede9e5!important;background:#faedf2!important}
+  #app #arcProcess .package-process-list li>p {align-self:stretch!important;padding:0!important;margin:0!important;text-align:left!important}
+  #app #arcProcess .package-process-list li>strong {font-size:15px!important}
+  #app #arcProcess .package-process-list li>p {color:#695452!important;font-size:12px!important;line-height:1.65!important;word-break:keep-all!important;overflow-wrap:break-word!important}
+  #app .mobile-ar-solo>#arcFaq {--ed-surface:#fffdfc!important;--ed-next-surface:#fff!important;background:var(--ed-surface)!important}
+  #app .mobile-ar-solo>#soloPoint04 {--ed-surface:#fcf8f3!important;--ed-next-surface:#f9f0eb!important;background:var(--ed-surface)!important}
+  #app #arcFaq details {border:1px solid #ead8dd!important}
+  #app .ed-review-track {height:auto!important}
+  #app .ed-review-card {height:auto!important;min-height:132px!important}
+  #app .ed-review-card h3 {font-size:clamp(14px,3.6cqw,18px)!important}
+  #app .ed-review-card footer button {min-height:44px!important}
+  #app .solo-review-dialog {box-sizing:border-box!important;width:min(580px,calc(100vw - 24px))!important;max-width:none!important;max-height:calc(100dvh - 24px)!important;padding:12px!important;overflow:auto!important}
+  #app .solo-review-dialog .solo-dialog-close {display:block!important;position:sticky!important;top:0!important;z-index:1!important;margin:0 0 8px auto!important}
+  #app .solo-review-capture {position:relative;width:100%;margin:0}
+  #app .solo-review-capture img {display:block!important;width:100%!important;height:auto!important;max-height:none!important;margin:0!important}
+  #app .solo-review-highlight {position:absolute;box-sizing:border-box;pointer-events:none;border:2px solid #c34f79!important;border-radius:5px;box-shadow:0 0 0 1px #fff9}
+  /* Home: opaque clay for reading surfaces, glass for the controls layered over them */
+  #app .mobile-ar-solo {
+    --home-clay:linear-gradient(145deg,#fffcf8,#f8e9e1);
+    --home-clay-shadow:inset 3px 3px 7px #ffffffd9,inset -3px -4px 8px #bc8c8429,0 5px 13px #936a6321;
+    --home-glass:linear-gradient(125deg,#fffffff2,#fce6efa8 60%,#fffaf5e0);
+    --home-glass-shadow:inset 0 1px 1px #fff,0 4px 14px #8f5a7224;
+  }
+  #app .mobile-ar-solo :is(.ed-review-card,#arcProcess .package-process-list li,#arcFaq details,.package-cards,.package-selected-detail,.ed-map-art) {
+    border:1px solid #fffaf7!important;
+    background:var(--home-clay)!important;
+    box-shadow:var(--home-clay-shadow)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  #app .mobile-ar-solo .ed-review-card h3 {color:#54313e!important;font-weight:700!important}
+  #app .mobile-ar-solo .ed-review-card footer {border-top-color:#e9ccd5!important}
+  #app .mobile-ar-solo .ed-review-card footer :is(b,span) {color:#745b63!important}
+  #app .mobile-ar-solo #arcProcess .package-process-list li::before {
+    background:linear-gradient(140deg,#f9e6eb,#edcad8)!important;
+    box-shadow:inset 2px 2px 3px #fff8,inset -2px -2px 4px #a8697b25!important;
+  }
+  #app .mobile-ar-solo .ed-worries li {
+    box-shadow:inset 1px 1px 3px #fff9,0 5px 12px #87596c1c!important;
+  }
+  #app .mobile-ar-solo #packageSelection>.type-pricing-section {
+    background:linear-gradient(150deg,#f0e3db,#fcf5ee 66%,#fffaf7)!important;
+  }
+  #app .mobile-ar-solo .ed-map-art {border-radius:14px!important}
+  #app .mobile-ar-solo :is(.ed-hero-price-jump,.package-inquiry-link,.ed-review-slide.is-current [data-review-full],.solo-p4-ratio,.bap-tabs) {
+    border:1px solid #ffffffed!important;
+    background:var(--home-glass)!important;
+    box-shadow:var(--home-glass-shadow)!important;
+    backdrop-filter:blur(16px) saturate(145%)!important;
+    -webkit-backdrop-filter:blur(16px) saturate(145%)!important;
+  }
+  #app .mobile-ar-solo .ed-hero-price-jump {color:#6e354d!important}
+  #app .mobile-ar-solo .ed-hero-gallery .hs-controls {
+    border-color:#ffffffa6!important;
+    background:linear-gradient(125deg,#322733a8,#65505e63)!important;
+    backdrop-filter:blur(16px) saturate(145%)!important;
+    -webkit-backdrop-filter:blur(16px) saturate(145%)!important;
+  }
+  #app .mobile-ar-solo #soloPoint04 .solo-p4-ratio.is-on {
+    border-color:#d2a0b2!important;
+    background:linear-gradient(145deg,#ffecf3,#e8b3c8)!important;
+    color:#673147!important;
+  }
+  #app .mobile-ar-solo #soloPoint04 .solo-p4-ratio.is-on :is(b,span,small) {color:inherit!important}
+  #app .mobile-ar-solo #soloPoint04 .solo-p4-ratio.is-on::before {background:#9b536f!important}
+  #app #soloPoint04 .ed-ratio-dial>output,
+  #app #soloPoint04 .ed-ratio-dial>span:not(.ed-ratio-disc) {
+    position:absolute!important;left:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;white-space:nowrap!important;
+  }
+  #app #soloPoint04 .ed-ratio-dial>output {top:54%!important;left:calc(50% + 7px)!important;transform:translate(-50%,-50%) scale(2.65)!important}
+  #app #soloPoint04 .ed-ratio-dial>output small {margin-left:1px!important}
+  /* The hub is at 70% of the source image and lands at 95% of the dial after cropping. */
+  #app #soloPoint04 .ed-ratio-dial>span:not(.ed-ratio-disc) {top:95%!important;color:#684b57!important}
+  #app #soloPoint04 .ed-ratio-disc {
+    mask-image:radial-gradient(ellipse 19% 32% at 50% 93%,#0009 22%,transparent 100%),linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%)!important;
+  }
+  @media(prefers-reduced-transparency:reduce) {
+    #app .mobile-ar-solo :is(.ed-hero-price-jump,.package-inquiry-link,.ed-review-slide.is-current [data-review-full],.solo-p4-ratio,.bap-tabs) {background:#fff5f7!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+    #app .mobile-ar-solo .ed-hero-gallery .hs-controls {background:#45363e!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  }
   #app .type-poster-standard, #app .type-poster-standard * {font-weight:800!important}
   #siteHeader .header-inner, #siteHeader:not([data-home-event-rows]) .header-inner {padding-inline:max(10px,calc(var(--layout-gutter) - 12px))!important}
   #siteHeader .ed-event-ribbon {padding-inline:0!important;background:transparent!important}

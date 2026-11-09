@@ -2085,8 +2085,26 @@ let editorialReviewsCleanup=null
 function initSoloReviewLightbox(){
  const root=document.querySelector('[data-solo-reviews]');if(!root)return
  const dialog=root.querySelector('dialog');if(!dialog)return
- const ensureImage=()=>dialog.querySelector('img')||dialog.appendChild(Object.assign(document.createElement('img'),{alt:'카카오톡 후기 원문'}))
- root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{const image=ensureImage();image.src=button.dataset.reviewFull;image.alt=button.getAttribute('aria-label')||'후기 원문';dialog.showModal()}))
+ const capture=document.createElement('figure')
+ capture.className='solo-review-capture'
+ dialog.setAttribute('aria-label','카카오톡 후기 원본')
+ const image=document.createElement('img'),highlight=document.createElement('span')
+ highlight.className='solo-review-highlight'
+ highlight.setAttribute('aria-hidden','true')
+ capture.append(image,highlight)
+ dialog.append(capture)
+ root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{
+  const item=WistiaReviewSources[Number(button.closest('[data-review-slide-index]').dataset.reviewSlideIndex)]
+  image.alt=item?.body||'카카오톡 후기 원문'
+  image.src=button.dataset.reviewFull
+  highlight.hidden=!item?.highlight
+  if(item?.highlight){
+   const [left,top,width,height]=item.highlight
+   Object.assign(highlight.style,{left:left+'%',top:top+'%',width:width+'%',height:height+'%'})
+  }
+  dialog.showModal()
+  dialog.scrollTop=0
+ }))
  initSoloDialog(dialog)
 }
 function initSoloMapZoom(){
