@@ -142,8 +142,8 @@
   #app .wistia-wizard [data-wf-location-duration], #app .wistia-wizard [data-wf-location-duration] * {font-size:10px!important;line-height:1.5!important;letter-spacing:-.035em!important;white-space:nowrap!important}
   #app .ed-hero .ed-hero-overview {
     box-sizing:border-box;
-    padding:21px var(--layout-gutter) 25px;
-    border-bottom:clamp(8px,2.23vw,16px) solid #f2f5f8!important;
+    padding:21px var(--layout-gutter) 24px;
+    border-bottom:12px solid #eff3f6!important;
     background:#fff;
     color:#3d2c34;
     text-align:left;
@@ -162,11 +162,17 @@
   #app .ed-hero .ed-hero-types a {min-width:0!important;min-height:48px!important;display:grid!important;align-content:center!important;gap:2px!important;padding:6px 1px!important;box-sizing:border-box!important;text-align:center!important;white-space:nowrap!important;border:1px solid #eadce2!important;border-radius:10px!important;background:#fff!important;color:#654655!important;text-decoration:none!important;line-height:1.35!important}
   #app .ed-hero .ed-hero-types a[aria-current] {border-color:#ba7c96!important;background:#f7e7ef!important;color:#773851!important}
   #app .ed-hero .ed-hero-types :is(b,strong) {font-size:11px!important;font-variant-numeric:tabular-nums}
-  #app .ed-hero-benefits {display:grid;grid-template-columns:13.4% minmax(0,1fr);column-gap:0;margin:22px calc(min(3vw,23px) - var(--layout-gutter)) 0;padding:0 0 12px;align-items:start}
-  #app .ed-hero .ed-hero-benefits h2 {margin:0!important;font-size:13px!important;line-height:23px!important;color:#8b95a1!important;text-align:left!important}
+  #app .ed-hero .ed-hero-benefits {
+    display:grid;
+    grid-template-columns:clamp(54px,17vw,66px) minmax(0,1fr);
+    margin:16px calc(clamp(12px,3.6vw,20px) - var(--layout-gutter)) 0!important;
+    padding:0!important;
+    align-items:start;
+  }
+  #app .ed-hero .ed-hero-benefits h2 {margin:0!important;font-size:13px!important;line-height:24px!important;color:#83909d!important;text-align:left!important}
   #app .ed-hero-benefits ul {display:grid;gap:10px;margin:0;padding:0;list-style:none}
-  #app .ed-hero-benefits li {display:flex;align-items:center;gap:6px;min-height:23px;color:#4e5968;font-size:13px;line-height:1.55}
-  #app .ed-benefit-symbol {display:grid;place-items:center;flex:0 0 20px;height:20px;border-radius:5px;background:#f2f5f8;font-size:13px}
+  #app .ed-hero-benefits li {display:flex;align-items:center;gap:9px;min-height:24px;color:#4e5968;font-size:13px;line-height:1.45}
+  #app .ed-benefit-symbol {display:grid;place-items:center;flex:0 0 23px;height:23px;border-radius:5px;background:#f2f5f8;font-size:13px}
   #app .ed-hero .ed-hero-benefits strong {color:#191f28!important;white-space:nowrap}
   #app .ed-hero .ed-hero-benefits li:first-child strong {color:#8a4260!important}
   #app .mobile-ar-solo>#arcWorries {--ed-surface:#f5e6e9!important;--ed-next-surface:#fff!important;background:linear-gradient(155deg,#f8ecef,#f2dfe5)!important;padding-block:clamp(34px,7vw,54px)!important}
