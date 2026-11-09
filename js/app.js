@@ -1165,7 +1165,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<div class="home-dock" aria-label="예약과 공유"><div class="home-offer" hidden><a data-home-offer-link><span></span><span aria-hidden="true">›</span></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><button type="button" data-home-share><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="5" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.5 10.5 7-4m-7 7 7 4"/></svg><span>공유하기</span></button><a data-package-inquiry href="'+packageInquiryHref(key)+'">문의양식 작성하기</a></div><p role="status" class="home-share-status"></p></div>'
+ return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><span></span><svg class="home-offer-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m4 2 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><a data-package-inquiry href="'+packageInquiryHref(key)+'">문의양식 작성하기</a></div></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1456,13 +1456,12 @@ function initHomeDock(root){
  const dock=root.querySelector('.home-dock')
  if(!dock)return
  const banner=dock.querySelector('.home-offer'),link=banner.querySelector('a')
- const status=dock.querySelector('[role="status"]')
  let pastHero=false,dismissed=false
  function refreshOffer(){
   const event=window.WistiaPackages.activeMonthlyEvent(),current=selectedPackage().key
   const tier=event?(event.packages.includes(current)?current:event.packages[0]):(current==='A'?'B':current)
   link.href=packageInquiryHref(root.dataset.arProduct,tier)
-  link.firstElementChild.textContent=event?'첫이용 '+event.month+'월 할인 받고 예약하기':'첫이용 할인 받고 예약하기'
+  link.firstElementChild.textContent=event?'첫이용 + '+event.month+'월 할인 받고 예약하기':'첫이용 할인 받고 예약하기'
   banner.hidden=dismissed||!pastHero
  }
  const observer=new IntersectionObserver(([entry])=>{pastHero=entry.boundingClientRect.bottom<=0;refreshOffer()})
@@ -1471,14 +1470,6 @@ function initHomeDock(root){
  root.querySelector('#packageSelection')?.addEventListener('change',refreshOffer)
  homeDockCleanup=()=>{observer.disconnect();window.removeEventListener('wistia:price-date-change',refreshOffer)}
  banner.querySelector('button').addEventListener('click',()=>{dismissed=true;refreshOffer()})
- dock.querySelector('[data-home-share]').addEventListener('click',async()=>{
-  const url='https://www.wistiastudio.com/'
-  status.textContent=''
-  try{if(navigator.share){await navigator.share({title:'위스티아 스튜디오',url});return}}
-  catch(error){if(error.name==='AbortError')return}
-  try{await navigator.clipboard.writeText(url);status.textContent='링크를 복사했어요'}
-  catch{window.prompt('공유할 링크를 복사해 주세요',url)}
- })
  refreshOffer()
 }
 

@@ -6,16 +6,16 @@
 .home-story[open]>summary{display:none}
 .home-story-close{width:calc(100% - 32px);margin-bottom:56px}
 .home-dock{position:fixed;z-index:1000;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,780px);padding:0 0 env(safe-area-inset-bottom);background:#fff;border-top:1px solid #eddde3;box-shadow:0 -6px 25px #49223714;color:#633a4b}
-.home-dock-row{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:8px;padding:7px 12px}
+.home-dock-row{padding:7px 12px}
 .home-dock button{cursor:pointer;font:inherit}
-.home-dock-row button{border:0;background:none;color:inherit;min-height:46px;display:grid;justify-items:center;align-content:center;gap:2px;font-size:10px}
-.home-dock-row button svg{width:22px;height:22px}
-.home-dock-row>a{display:grid;place-items:center;min-height:46px;padding:0 8px;border-radius:8px;background:#99576e;color:#fff;text-decoration:none;font-size:15px;font-weight:750;white-space:nowrap}
-.home-offer{position:absolute;bottom:100%;left:12px;right:12px;margin-bottom:8px;display:flex;align-items:center;min-height:44px;border-radius:10px;background:#573543;color:white;box-shadow:0 3px 12px #49223729}
+.home-dock-row>a{display:grid;place-items:center;min-height:46px;padding:0 8px;border-radius:8px;background:#f6e3eb;border:1px solid #e3bacb;color:#683648;text-decoration:none;font-size:15px;font-weight:750;white-space:nowrap}
+.home-offer{position:absolute;bottom:100%;left:12px;right:12px;margin-bottom:5px;display:flex;align-items:center;min-height:44px;border-radius:10px;background:#f9f0eb;border:1px solid #ead6d1;color:#65414a;box-shadow:0 3px 12px #49223729}
 .home-offer[hidden]{display:none}
-.home-offer a{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:10px 10px 10px 13px;color:inherit;text-decoration:none;font-size:clamp(11px,3.5vw,15px);font-weight:700;white-space:nowrap}
-.home-offer button{width:42px;height:44px;border:0;background:none;color:white;font-size:22px}
-.home-share-status:not(:empty){position:absolute;right:12px;bottom:100%;margin:0 0 8px;padding:8px 12px;border-radius:8px;background:#573543;color:#fff;font-size:12px}
+.home-offer a{display:flex;align-items:center;gap:4px;flex:1;min-width:0;padding:7px 6px 7px 11px;color:inherit;text-decoration:none;font-size:clamp(11px,3.5vw,15px);font-weight:700;white-space:nowrap}
+.home-offer-chevron{flex:none;color:inherit}
+.home-offer button{display:grid;place-items:center;flex:0 0 42px;height:44px;padding:0;line-height:1;border:0;background:none;color:inherit;font-size:22px}
 body.menu-open .home-dock,body:has(dialog[open]) .home-dock{visibility:hidden}
 body:has(.home-dock) #app{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
 body:has(.home-dock) #floatingKakao{display:none!important}
+html body #app#app#app#app#app#app#app#app#app#app .home-dock-row>a{color:#683648!important;-webkit-text-fill-color:#683648!important}
+html body #app#app#app#app#app#app#app#app#app#app .home-offer,html body #app#app#app#app#app#app#app#app#app#app .home-offer :is(a,span,button){color:#65414a!important;-webkit-text-fill-color:#65414a!important}
