@@ -1397,14 +1397,11 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  const tuning=detailParts.content.querySelector('#arcTuning')
   const benefitIcons=['microphone','tune','clock']
  detailParts.content.querySelectorAll('.package-notices>ul>li').forEach((item,index)=>{item.insertAdjacentHTML('afterbegin','<span class="ed-benefit-icon" aria-hidden="true">'+studioIcon(benefitIcons[index%benefitIcons.length])+'</span>')})
- const map=detailParts.content.querySelector('[data-solo-map]')
- if(map)map.insertAdjacentHTML('afterend',homeTypeBlock(key))
- else detailParts.content.append(document.createRange().createContextualFragment(homeTypeBlock(key)))
  details=detailParts.innerHTML
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
- '<details class="home-story" id="arcDetails"><summary>스토리 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>스토리 접기</button></details>'+soloFooter(key)+
+ '<details class="home-story" id="arcDetails"><summary>스토리 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>스토리 접기</button></details>'+homeTypeBlock(key)+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 let mobileGalleryCleanup=()=>{}
@@ -1507,7 +1504,6 @@ function initArCommerceDetail(){
   const story=target?.closest('.home-story');if(story)story.open=true
   if(link.dataset.heroPackage&&target){
    target.querySelector('.package-card[data-tier="'+link.dataset.heroPackage+'"]')?.click()
-   target=target.querySelector('.package-cards')||target
   }
   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
   if(target&&(link.classList.contains('ed-hero-price-jump')||link.dataset.heroPackage)){
