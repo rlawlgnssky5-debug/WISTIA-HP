@@ -283,20 +283,6 @@
   #app .package-selected-head .package-selected-letter {grid-row:1!important;align-self:center!important}
   #app .package-selected-head>.package-selected-cheaper {grid-row:1!important;align-self:center!important;margin-block:0!important}
 }
-/* The directions section is inside the collapsible home story. */
-#app .home-directions{box-sizing:border-box;width:100%;padding:32px clamp(14px,4vw,32px);background:#faf3f1}
-#app .home-directions-inner{box-sizing:border-box;max-width:640px;margin-inline:auto;padding:clamp(12px,4vw,24px);border:1px solid #efdadb;border-radius:20px;background:#fffdfb}
-#app .home-directions header{text-align:center;margin-bottom:16px}
-#app .home-directions header p{margin:0 0 5px;color:#915469;font-size:11px;letter-spacing:.14em;font-weight:700}
-#app .home-directions header h2{margin:0;font-size:20px}
-#app .home-directions-map{display:block;width:100%;height:auto;max-width:100%;border-radius:12px}
-#app .home-directions-guide{margin:10px 0 12px}
-#app .home-directions-guide>div{display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;align-items:start;padding:10px 0}
-#app .home-directions-guide>div+div{border-top:1px solid #f1e4e4}
-#app .home-directions-guide dt{display:grid;place-items:center;min-height:25px;padding:0 3px;border-radius:20px;background:#f5e6ea;color:#855064;font-size:11px;font-weight:700}
-#app .home-directions-guide dd{margin:0;min-width:0;text-align:left}
-#app .home-directions-guide strong{display:block;font-size:14px;line-height:1.5;word-break:keep-all}
-#app .home-directions-guide p{margin:2px 0 0;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
-#app .home-directions-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-#app .home-directions-links a{display:grid;place-items:center;min-height:44px;padding:4px;border:1px solid #b67d8f;border-radius:9px;background:#f6e7eb;text-align:center;text-decoration:none;font-size:13px;font-weight:700}
-#app .home-directions-links a:first-child{background:#efd9e0}
+
+#app .mobile-ar-solo .home-story > .solo-map {box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:0!important}
+#app .home-map-inset{box-sizing:border-box;width:calc(100% - 32px);max-width:520px;margin-inline:auto}

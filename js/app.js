@@ -1157,12 +1157,11 @@ function soloChatFaq(){
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=20261105-notice-7d-1','예약 전에 확인하세요. 납기는 녹음일 기준 7일 이내, 빠른 작업은 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
-  '<section class="home-directions" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><div class="home-directions-inner">'+
-   '<header><p>HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2></header>'+
-   '<img class="home-directions-map" src="/assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역 1번 출구와 위스티아 스튜디오 위치 안내 지도" width="1443" height="1041" loading="lazy" decoding="async">'+
-   '<dl class="home-directions-guide"><div><dt>지하철</dt><dd><strong>부천시청역 1번 출구</strong><p>도보 약 300m</p></dd></div><div><dt>주소</dt><dd><strong>위스티아 스튜디오</strong><p>'+address+'</p></dd></div><div><dt>주차</dt><dd><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></dd></div></dl>'+
-   '<div class="home-directions-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+
-  '</div></section>'
+  '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>'+
+  '<div class="home-map-inset"><div class="ed-map-art"><img src="assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="1443" height="1041" loading="lazy" decoding="async"></div>'+
+  '<div class="ed-map-route"><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="22" rx="5"/><path d="M8 14h16M11 25l-3 4m13-4 3 4M12 21h.01M20 21h.01"/></svg></span><strong>부천시청역 1번 출구</strong></div><div class="ed-map-walk"><span aria-hidden="true"></span><p>도보 약 300m</p></div><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a10 10 0 0 0-10 10c0 7 10 18 10 18s10-11 10-18A10 10 0 0 0 16 2Zm0 6a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg></span><div><strong>위스티아 스튜디오</strong><p>'+address+'</p></div></div></div>'+
+  '<div class="ed-map-parking ed-map-stop"><span class="ed-map-icon" aria-hidden="true">P</span><div><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></div></div>'+
+  '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div></div>'+'</section>'
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
