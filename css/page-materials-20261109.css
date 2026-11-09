@@ -17,7 +17,7 @@
   #app .info-page-location .lc2-card,
   #app .wistia-events.ev2 :is(.evd-card,.pb-card,.pb-summary,.pb-refund),
   #app .info-page-faq .info-faq-group,
-  #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-schedule,.wf-review-group) {
+  #app .wistia-wizard :is(.wf-schedule,.wf-review-group) {
     border:1px solid #fffaf4!important;
     border-radius:26px!important;
     background:var(--clay-surface)!important;
@@ -68,13 +68,15 @@
   #app .info-page-faq .faq-list details>p {margin:14px 0 0!important;padding:16px 14px!important;border-radius:16px!important;background:#f3e0de!important;box-shadow:inset 2px 2px 6px #b98b852b!important;font-size:12px!important;line-height:1.85!important;color:#796574!important;word-break:keep-all!important;overflow-wrap:normal!important}
 
   #app > .wistia-wizard {margin-top:0!important}
-  #app .wistia-wizard :is(.package-cards,.package-selected-detail) {
-    border-color:#f4fff9!important;
-    background:linear-gradient(145deg,#f9fcf9,#dceae3)!important;
-    box-shadow:inset 3px 3px 7px #fffdfcdb,inset -3px -4px 8px #5f927837,0 5px 13px #93647723!important;
+  #app .wistia-wizard .package-picker {
+    box-sizing:border-box!important;
+    padding:16px 8px 18px!important;
+    border:1px solid #ffffffe6!important;
+    border-radius:24px!important;
+    background:linear-gradient(150deg,#f0e3db,#fcf5ee 66%,#fffaf7)!important;
+    box-shadow:inset 0 1px 0 #fff,0 6px 20px #79677210!important;
   }
   #app .wistia-wizard .package-cards {padding:clamp(6px,1.2vw,10px)!important;overflow:visible!important}
-  #app .wistia-wizard .package-card[data-tier="A"] {--choice-fill:#ccded5!important}
   #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-schedule,.contact-calendar,.wf-review-group,.wf-location-bar,.wf-choice>span,.wf-check-row,[data-wf-time],.calendar-day,.calendar-nav,.calendar-header button,.wf-field textarea,.wf-nav) {backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #app .wistia-wizard .wf-review {background:transparent!important;border:0!important;box-shadow:none!important}
   #app .wistia-wizard .wf-schedule {border-radius:22px!important;padding:16px 12px!important}

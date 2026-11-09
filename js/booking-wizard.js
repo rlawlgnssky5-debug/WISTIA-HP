@@ -85,7 +85,12 @@
  function fitOptionText(){/* titles and descriptions wrap in CSS; shrinking them onto one line clipped the price and the included pill */}
  // '밑으로 내리기' floats just above the 이전/다음 단계 bar on step 1 and hides once the end of the step is in view
  function scrollDownButton(form){let btn=form.querySelector('[data-wf-scroll-down]');if(!btn){form.insertAdjacentHTML('beforeend','<button type="button" class="wf-scroll-down" data-wf-scroll-down>밑으로 내리기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button>');btn=form.querySelector('[data-wf-scroll-down]')}const step=form.querySelector('[data-wf-step="0"]'),next=form.querySelector('[data-wf-next]'),vh=global.innerHeight;let barTop=vh;for(let n=next;n&&n!==form;n=n.parentElement)if(getComputedStyle(n).position==='fixed'){barTop=n.getBoundingClientRect().top;break}const show=!!step&&!step.hidden&&step.getBoundingClientRect().bottom>barTop-8;if(show){btn.style.setProperty('bottom',Math.round(vh-barTop+10)+'px','important');btn.style.removeProperty('display')}else btn.style.setProperty('display','none','important')}
- function typeTable(form){global.WistiaPackages.typeTable?.(form.querySelector('[data-wf-step="0"]'));const people=form.querySelector('.wf-people'),detail=form.querySelector('[data-wf-step="0"] [data-package-selection-details]');if(people&&detail&&detail.nextElementSibling!==people)detail.after(people)}
+ function typeTable(form){
+  const step=form.querySelector('[data-wf-step="0"]')
+  global.WistiaPackages.typeTable?.(step)
+  const people=step.querySelector('.wf-people'),picker=step.querySelector('.package-picker')
+  if(people&&picker&&picker.nextElementSibling!==people)picker.after(people)
+ }
  function update(form,{save=true,track=true}={}){
   const state=states.get(form);if(!state)return
   syncDuet(form,state)
