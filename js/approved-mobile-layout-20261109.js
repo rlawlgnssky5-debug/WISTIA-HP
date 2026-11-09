@@ -28,16 +28,16 @@
     }
     for(const e of document.querySelectorAll('.package-card-sub-item')){
       if(e.clientWidth<=0)continue;
-      e.style.setProperty('--layout-feature-size','10px');
+      e.style.setProperty('--layout-feature-size','8.5px');
       const css=getComputedStyle(e),parts=[...e.children],available=e.clientWidth-parseFloat(css.paddingLeft)-parseFloat(css.paddingRight),required=parts.reduce((sum,x)=>sum+x.getBoundingClientRect().width,0)+Math.max(0,parts.length-1)*2;
-      if(required>available)e.style.setProperty('--layout-feature-size',Math.floor(10*available/required*10)/10+'px');
+      if(required>available)e.style.setProperty('--layout-feature-size',Math.floor(8.5*available/required*10)/10+'px');
     }
     for(const root of document.querySelectorAll('#app,#siteHeader,#mainMenu')){
       for(const e of [root,...root.querySelectorAll('*')]){
         if(e.namespaceURI?.includes('svg')||!Array.from(e.childNodes).some(n=>n.nodeType===3&&n.textContent.trim()))continue;
         const s=getComputedStyle(e);if(s.display==='none')continue;
         const size=parseFloat(s.fontSize);if(!Number.isFinite(size))continue;
-        if(e.closest('.package-card-sub-item,.type-poster-standard,.wf-location-bar,.ed-hero-copy h1'))continue;
+        if(e.closest('.package-cards,.package-selected-cheaper,.type-poster-standard,.wf-location-bar,.ed-hero-copy h1'))continue;
         const clamped=Math.max(e.closest('.ed-event-discount')?10:11,Math.min(20,size));
         if(Math.abs(size-clamped)>.01)e.style.setProperty('font-size',clamped+'px','important');
       }
