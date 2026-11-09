@@ -1145,23 +1145,24 @@ function soloReviewGrid(){
 }
 function soloChatFaq(){
  const questions=[
-  ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요</strong>'],
-  ['어려운 부분은 다시 부를 수 있나요?','어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
-  ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 받기는 별도 옵션이에요'],
-  ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
-  ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
+  ['노래를 잘 못해도 괜찮을까요?','물론이에요! 한 소절씩 나누어 녹음하고, 옆에서 1:1 맞춤 디렉팅으로 차근차근 도와드려요'],
+  ['어려운 부분은 다시 부를 수 있나요?','네! 어려운 구간은 충분히 반복해서 녹음할 수 있어요<br>마음에 드는 결과가 나올 수 있도록 함께 맞춰가요'],
+  ['원곡의 키가 너무 높은데 괜찮을까요?','원곡의 키가 높거나 낮아도 괜찮아요<br>녹음 전 직접 불러보면서 목소리에 가장 편안한 키로 조절해 드려요'],
+  ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일로부터 7영업일 이내에 전달해 드려요<br>3일 이내 빠른 전달도 별도 옵션으로 가능해요'],
+  ['본식에서는 어떻게 사용하나요?','예식장에서 완성된 AR 음원을 재생하고, 그 위에 직접 노래하시면 돼요<br>본식 전 예식장 담당자에게 음원을 전달하고, 재생 및 마이크 리허설 가능 여부를 확인해 주세요'],
+  ['녹음한 목소리의 비율도 고를 수 있나요?','네! 보컬 밸런스를 30%, 50%, 70%, 100% 등 다양한 비율로 모두 준비해 드려요<br>본식 당일 컨디션에 맞춰 가장 편안한 버전을 선택하시면 돼요']
  ]
- return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q'+(index+1)+'. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map((line,lineIndex)=>'<p'+(lineIndex===0?' class="solo-faq-lead"':'')+'>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
+ return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q'+(index+1)+'. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map(line=>'<p>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
 function soloNoticeAndMap(){
  const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=20261105-notice-7d-1','예약 전에 확인하세요. 납기는 녹음일 기준 7일 이내, 빠른 작업은 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
-  '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>'+
-  '<div class="ed-map-art"><img src="assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="1443" height="1041" loading="lazy" decoding="async"></div>'+
-  '<div class="ed-map-route"><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="22" rx="5"/><path d="M8 14h16M11 25l-3 4m13-4 3 4M12 21h.01M20 21h.01"/></svg></span><strong>부천시청역 1번 출구</strong></div><div class="ed-map-walk"><span aria-hidden="true"></span><p>도보 약 300m</p></div><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a10 10 0 0 0-10 10c0 7 10 18 10 18s10-11 10-18A10 10 0 0 0 16 2Zm0 6a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg></span><div><strong>위스티아 스튜디오</strong><p>'+address+'</p></div></div></div>'+
-  '<div class="ed-map-parking ed-map-stop"><span class="ed-map-icon" aria-hidden="true">P</span><div><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></div></div>'+
-  '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+'</section>'
+  '<section class="home-directions" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><div class="home-directions-inner">'+
+   '<header><p>HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2></header>'+
+   '<img class="home-directions-map" src="/assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역 1번 출구와 위스티아 스튜디오 위치 안내 지도" width="1443" height="1041" loading="lazy" decoding="async">'+
+   '<dl class="home-directions-guide"><div><dt>지하철</dt><dd><strong>부천시청역 1번 출구</strong><p>도보 약 300m</p></dd></div><div><dt>주소</dt><dd><strong>위스티아 스튜디오</strong><p>'+address+'</p></dd></div><div><dt>주차</dt><dd><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></dd></div></dl>'+
+   '<div class="home-directions-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div>'+
+  '</div></section>'
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
