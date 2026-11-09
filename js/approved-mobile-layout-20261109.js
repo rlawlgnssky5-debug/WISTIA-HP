@@ -26,11 +26,12 @@
       const small=e.querySelector('small'),key=e.closest('[data-wf-option]').dataset.wfOption;
       if(small&&optionDescriptions[key])small.textContent=optionDescriptions[key];
     }
+    const featureSize=7.5;
     for(const e of document.querySelectorAll('.package-card-sub-item')){
       if(e.clientWidth<=0)continue;
-      e.style.setProperty('--layout-feature-size','8.5px');
+      e.style.setProperty('--layout-feature-size',featureSize+'px');
       const css=getComputedStyle(e),parts=[...e.children],available=e.clientWidth-parseFloat(css.paddingLeft)-parseFloat(css.paddingRight),required=parts.reduce((sum,x)=>sum+x.getBoundingClientRect().width,0)+Math.max(0,parts.length-1)*2;
-      if(required>available)e.style.setProperty('--layout-feature-size',Math.floor(8.5*available/required*10)/10+'px');
+      if(required>available)e.style.setProperty('--layout-feature-size',Math.floor(featureSize*available/required*10)/10+'px');
     }
     for(const root of document.querySelectorAll('#app,#siteHeader,#mainMenu')){
       for(const e of [root,...root.querySelectorAll('*')]){
