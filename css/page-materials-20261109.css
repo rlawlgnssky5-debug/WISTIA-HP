@@ -6,8 +6,26 @@
   #app :is(.info-page-location,.info-page-faq) .info-page-intro>p {max-width:32em!important;margin-inline:auto!important;line-height:1.8!important;word-break:keep-all!important;overflow-wrap:normal!important}
 
   /* Clay: thick, softly moulded cream surfaces on a warm rose canvas */
-  #app .info-page-location {background:#f2e8e3!important;color:#58423f!important}
-  #app .info-page-location .lc2-card {border:1px solid #fffaf4!important;border-radius:26px!important;background:linear-gradient(140deg,#fffaf3,#f7eae3)!important;box-shadow:inset 4px 4px 8px #ffffffcf,inset -4px -4px 9px #d9bcb155,9px 12px 24px #b68c7c2b!important;overflow:hidden!important}
+  #app :is(.info-page-location,.wistia-events.ev2) {background:#f2e8e3!important;color:#58423f!important}
+  #app .info-page-location .lc2-card,
+  #app .wistia-events.ev2 :is(.evd-card,.pb-card,.pb-summary,.pb-refund) {
+    border:1px solid #fffaf4!important;
+    border-radius:26px!important;
+    background:linear-gradient(140deg,#fffaf3,#f7eae3)!important;
+    box-shadow:inset 4px 4px 8px #ffffffcf,inset -4px -4px 9px #d9bcb155,9px 12px 24px #b68c7c2b!important;
+  }
+  #app .info-page-location .lc2-card {overflow:hidden!important}
+  #app .wistia-events.ev2 :is(.ev2-hero,.events-discounts,.events-payback) {background:transparent!important}
+  #app .wistia-events.ev2 .pb-summary {background:linear-gradient(140deg,#f9e4e6,#edc8d2)!important}
+  #app .wistia-events.ev2 .pb-refund {padding:16px 18px!important}
+  #app .wistia-events.ev2 .pb-eligibility {background:#f3ddd4!important}
+  #app .wistia-events.ev2 :is(.evd-icon,.ev2-cta) {
+    border:1px solid #fff8!important;
+    border-radius:15px!important;
+    background:#efcdd0!important;
+    color:#6b3b50!important;
+    box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c694a34d,3px 5px 8px #b58c7c25!important;
+  }
   #app .info-page-location .lc2-addr {padding:22px 20px!important}
   #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid #fff6f1!important;background:#efcdd0!important;color:#92546a!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 4px #c694a34d,3px 4px 8px #b4869630!important;font-size:11px!important}
   #app .info-page-location .studio-address {display:block!important;margin:18px 0 8px!important;font-size:clamp(16px,4.6vw,20px)!important;line-height:1.65!important;font-weight:750!important;color:#503c39!important;letter-spacing:-.04em!important;word-break:keep-all!important;overflow-wrap:normal!important}
