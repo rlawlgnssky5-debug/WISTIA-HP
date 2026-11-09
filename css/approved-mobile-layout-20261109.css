@@ -1,5 +1,6 @@
 @layer wistia-approved-layout {
   :root {--layout-gutter:clamp(22px,calc(11.282051vw - 16px),72px)}
+  html.phone-preview-shell .phone-preview-frame {width:min(390px,100vw)!important;height:min(844px,100dvh)!important}
   /* Backgrounds fill the canvas; only inner content and photographs are inset */
   html body main#app {box-sizing:border-box!important;width:100%!important;max-width:780px!important;margin-inline:auto!important}
   #app > :not(script):not(template), #app .mobile-ar-solo {box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:0!important}
@@ -8,12 +9,13 @@
   #app .mobile-ar-solo > :is(.arc-reviews,.ed-section,.arc-point,.package-notices,.solo-faq,.solo-map) {box-sizing:border-box!important;width:100%!important;max-width:100%!important;margin-inline:0!important}
   #app .mobile-ar-solo > :is(.ed-section,.arc-point,.package-notices,.solo-faq,.solo-map) {padding-inline:var(--layout-gutter)!important}
   #app .mobile-ar-solo > .ed-hero {padding-inline:0!important;margin-inline:0!important;background:#fff!important}
-  #app .ed-hero-gallery {box-sizing:border-box!important;width:calc(100% - 2 * var(--layout-gutter))!important;margin-inline:auto!important}
-  #app .ed-hero-gallery .mas-gallery-viewport {height:auto!important;aspect-ratio:100/137!important}
-  #app .ed-hero-copy {right:24px!important}
-  #app .ed-hero-copy h1, #app .ed-hero-copy h1 strong {font-size:20px!important;line-height:1.3!important}
-  #app .ed-hero-copy>p {font-size:12px!important}
-  #app .ed-hero-copy .ed-hero-description {font-size:13px!important}
+  #app .ed-hero-gallery {box-sizing:border-box!important;width:100%!important;margin-inline:auto!important}
+  #app .ed-hero .ed-hero-gallery .mas-gallery-viewport {height:auto!important;aspect-ratio:16/9!important}
+  #app .ed-hero .ed-hero-gallery .hs-photo {object-fit:cover!important;object-position:50% 46%!important}
+  #app .ed-hero .ed-hero-gallery .hs-landscape .hs-photo {object-position:center!important}
+  #app .ed-hero .ed-hero-gallery .mas-gallery-viewport::after {background:linear-gradient(0deg,#25192366,transparent 28%)!important}
+  #app .ed-hero .ed-hero-gallery .hs-count {inset:auto 12px 11px auto!important;background:#342630b3!important}
+  #app .ed-hero .ed-hero-gallery .hs-dots {inset:auto auto 5px 12px!important}
   #app .mobile-ar-solo > #arcRecording {padding-inline:0!important}
   #app #arcRecording .ed-heading {padding-inline:var(--layout-gutter)!important}
   #app .ed-recording-scene {box-sizing:border-box!important;width:calc(100% - 2 * var(--layout-gutter))!important;max-width:none!important;margin-inline:auto!important}
@@ -138,8 +140,35 @@
   #app .wistia-wizard [data-wf-location-duration] {grid-column:3!important;grid-row:1!important;justify-self:end!important;display:flex!important;flex-flow:row nowrap!important;align-items:center!important;gap:3px!important;white-space:nowrap!important}
   #app .wistia-wizard [data-wf-location-duration]>* {display:inline!important;width:auto!important;margin:0!important;padding:0!important}
   #app .wistia-wizard [data-wf-location-duration], #app .wistia-wizard [data-wf-location-duration] * {font-size:10px!important;line-height:1.5!important;letter-spacing:-.035em!important;white-space:nowrap!important}
-  /* The first-view product heading is the sole enlarged type exception */
-  #app .ed-hero-copy h1, #app .ed-hero-copy h1 strong {font-size:clamp(30px,8.2vw,46px)!important;line-height:1.18!important;font-weight:800!important}
+  #app .ed-hero .ed-hero-overview {
+    box-sizing:border-box;
+    padding:21px var(--layout-gutter) 25px;
+    border-bottom:clamp(8px,2.23vw,16px) solid #f2f5f8!important;
+    background:#fff;
+    color:#3d2c34;
+    text-align:left;
+  }
+  #app .ed-hero-overview .ed-hero-brand {display:flex;align-items:center;gap:9px;margin:0 0 10px;color:#85485f;font:700 12px/1.4 Georgia,serif;letter-spacing:.12em}
+  #app .ed-hero-overview .ed-hero-brand span {padding:3px 7px;border-radius:6px;background:#f6e8ee;font:600 11px/1.35 Pretendard,sans-serif;letter-spacing:0}
+  #app .ed-hero .ed-hero-overview h1 {margin:0!important;color:#39272f!important;font-size:clamp(24px,6.7vw,39px)!important;line-height:1.22!important;font-weight:800!important;letter-spacing:-.055em!important;text-align:left!important}
+  #app .ed-hero-overview .ed-hero-lead {margin:8px 0 16px!important;color:#674e58;font-size:13px;line-height:1.65;word-break:keep-all;text-align:left!important}
+  #app .ed-hero-essentials {padding:12px 14px;border:1px solid #deb9c8;border-radius:15px;background:linear-gradient(135deg,#fffafa,#f9edf2)}
+  #app .ed-hero .ed-hero-essentials h2 {margin:0 0 8px!important;font-size:14px!important;font-weight:750!important;color:#66394c!important;text-align:left!important}
+  #app .ed-hero-essentials ul {display:grid;gap:6px;margin:0;padding:0;list-style:none}
+  #app .ed-hero-essentials li {display:flex;align-items:center;gap:7px;color:#553e48;font-size:12px;line-height:1.5;word-break:keep-all}
+  #app .ed-hero-essentials svg {width:15px;height:15px;flex:none;color:#a75c78}
+  #app .ed-hero .ed-hero-overview .ed-hero-actions {position:static!important;margin:14px 0 0!important;padding:0!important}
+  #app .ed-hero-types {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:0 0 9px}
+  #app .ed-hero .ed-hero-types a {min-width:0!important;min-height:48px!important;display:grid!important;align-content:center!important;gap:2px!important;padding:6px 1px!important;box-sizing:border-box!important;text-align:center!important;white-space:nowrap!important;border:1px solid #eadce2!important;border-radius:10px!important;background:#fff!important;color:#654655!important;text-decoration:none!important;line-height:1.35!important}
+  #app .ed-hero .ed-hero-types a[aria-current] {border-color:#ba7c96!important;background:#f7e7ef!important;color:#773851!important}
+  #app .ed-hero .ed-hero-types :is(b,strong) {font-size:11px!important;font-variant-numeric:tabular-nums}
+  #app .ed-hero-benefits {display:grid;grid-template-columns:13.4% minmax(0,1fr);column-gap:0;margin:22px calc(min(3vw,23px) - var(--layout-gutter)) 0;padding:0 0 12px;align-items:start}
+  #app .ed-hero .ed-hero-benefits h2 {margin:0!important;font-size:13px!important;line-height:23px!important;color:#8b95a1!important;text-align:left!important}
+  #app .ed-hero-benefits ul {display:grid;gap:10px;margin:0;padding:0;list-style:none}
+  #app .ed-hero-benefits li {display:flex;align-items:center;gap:6px;min-height:23px;color:#4e5968;font-size:13px;line-height:1.55}
+  #app .ed-benefit-symbol {display:grid;place-items:center;flex:0 0 20px;height:20px;border-radius:5px;background:#f2f5f8;font-size:13px}
+  #app .ed-hero .ed-hero-benefits strong {color:#191f28!important;white-space:nowrap}
+  #app .ed-hero .ed-hero-benefits li:first-child strong {color:#8a4260!important}
   #app .mobile-ar-solo>#arcWorries {--ed-surface:#f5e6e9!important;--ed-next-surface:#fff!important;background:linear-gradient(155deg,#f8ecef,#f2dfe5)!important;padding-block:clamp(34px,7vw,54px)!important}
   #app #arcWorries::before {background:inherit!important}
   #app #arcWorries .ed-heading {margin-bottom:24px!important}

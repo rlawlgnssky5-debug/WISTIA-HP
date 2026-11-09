@@ -1340,8 +1340,7 @@ function optionExplainSection(){
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
 function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성<span class="package-inquiry-arrow" aria-hidden="true">→</span></a></section>'}
-function typeGuideSection(){return '<div class="type-poster-art"><img class="type-unify-poster" src="assets/img/type-guide/type-final.webp?v=20261105-poster-text-1" width="782" height="1472" alt="어떤 타입이 나한테 맞을까?" decoding="async" loading="lazy"><div class="type-poster-standard"><span><b>50분</b> 녹음과 정밀 믹싱·마스터링이 필요하다면?</span><span>기본에 충실한 스탠다드를 추천드려요!</span></div></div>'}
-function homeTypeBlock(key){const sales=packageSalesSection(key);return key==='solo'?'<div class="type-sections" id="packageSelection" data-svg-title="off"><section class="type-guide-section type-unify" aria-label="어떤 타입이 나한테 맞을까?">'+typeGuideSection()+'</section><div class="type-select-prompt"><span aria-hidden="true">👇</span><p>타입을 선택해 주세요</p><span aria-hidden="true">👇</span></div>'+sales.replace('class="package-section"','class="package-section type-pricing-section"').replace(' id="packageSelection"','').replace(' aria-labelledby="packageSelectionTitle"',' aria-label="타입별 가격과 구성 선택"').replace('<h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2>','')+'</div>':sales}
+function homeTypeBlock(key){const sales=packageSalesSection(key);return key==='solo'?'<div class="type-sections" id="packageSelection" data-svg-title="off"><div class="type-select-prompt"><span aria-hidden="true">👇</span><p>타입을 선택해 주세요</p><span aria-hidden="true">👇</span></div>'+sales.replace('class="package-section"','class="package-section type-pricing-section"').replace(' id="packageSelection"','').replace(' aria-labelledby="packageSelectionTitle"',' aria-label="타입별 가격과 구성 선택"').replace('<h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2>','')+'</div>':sales}
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>모든 타입은 녹음일 기준 7일 이내 전달<br>3일 이내 받기는 별도 옵션</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>할인</strong><span>스탠다드는 모든 할인에서 제외</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','정밀 믹싱·마스터링을 진행하고, 스탠다드의 <span class="process-keep">음정·박자 보정</span>은 옵션이에요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
@@ -1349,8 +1348,8 @@ function mobileArSoloDetail(p,desktopHtml,key='solo'){
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
  const galleryOrder=duet?['duo','solo']:['solo','duo']
  // Hero: owner-approved studio facility photo slider (no video). Add more {src,alt} entries here to add slides.
- const galleryPhotos=[['/assets/img/hero-slides/1-bride-solo-600.webp 600w, /assets/img/hero-slides/1-bride-solo-940.webp 940w','/assets/img/hero-slides/1-bride-solo-940.webp',940,1670,'본식에서 AR 축가를 부르는 신부'],['/assets/img/studio-facility/facility-820.webp 820w, /assets/img/studio-facility/facility-1640.webp 1640w','/assets/img/studio-facility/facility-1640.webp',1640,923,'위스티아 스튜디오 내부, 소파와 녹음 부스, 마이크'],['/assets/img/hero-slides/3-bride-to-groom-600.webp 600w, /assets/img/hero-slides/3-bride-to-groom-940.webp 940w','/assets/img/hero-slides/3-bride-to-groom-940.webp',940,1670,'신랑에게 축가를 부르는 신부'],['/assets/img/hero-slides/4-bride-back-600.webp 600w, /assets/img/hero-slides/4-bride-back-940.webp 940w','/assets/img/hero-slides/4-bride-back-940.webp',940,1670,'신랑을 바라보며 노래하는 신부의 뒷모습'],['/assets/img/hero-slides/5-groom-solo-600.webp 600w, /assets/img/hero-slides/5-groom-solo-940.webp 940w','/assets/img/hero-slides/5-groom-solo-940.webp',940,1670,'본식에서 AR 축가를 부르는 신랑']].map(([srcset,src,w,h,alt])=>({srcset,src,w,h,alt}))
- const galleryVideos=galleryPhotos.map((photo,index)=>'<div class="mas-gallery-slide hs-slide'+(photo.w>photo.h?' hs-landscape':'')+(index===0?' is-current':'')+'" id="masPhotoSlide'+index+'" data-mobile-slide role="group" aria-roledescription="slide" aria-label="'+(index+1)+' / '+galleryPhotos.length+'">'+(photo.w>photo.h?'<img class="hs-blur-backdrop" src="'+photo.src+'" alt="" aria-hidden="true" loading="lazy" decoding="async">':'')+(index===0?'<picture class="hs-picture">':'')+'<img class="hs-photo" src="'+photo.src+'" srcset="'+photo.srcset+'" sizes="(min-width: 780px) 780px, 100vw" width="'+photo.w+'" height="'+photo.h+'" alt="'+photo.alt+'" '+(index===0?'fetchpriority="high" decoding="async"':'loading="lazy" decoding="async"')+' draggable="false">'+(index===0?'</picture>':'')+'</div>').join('')
+ const galleryPhotos=[['/assets/img/hero-slides/1-bride-wedding-special-780.webp 780w, /assets/img/hero-slides/1-bride-wedding-special-1560.webp 1560w','/assets/img/hero-slides/1-bride-wedding-special-780.webp',1560,880,'노래에 자신 없어서 직접 부르는 축가를 망설였다면? 본식에서 축가를 부르는 신부'],['/assets/img/hero-slides/2-recording-room-soft-820.webp 820w, /assets/img/hero-slides/2-recording-room-soft-1640.webp 1640w','/assets/img/hero-slides/2-recording-room-soft-1640.webp',1640,923,'1:1 맞춤 디렉팅에 최적화된 Recording Room, 위스티아 녹음실'],['/assets/img/hero-slides/3-bride-to-groom-wide-780.webp 780w, /assets/img/hero-slides/3-bride-to-groom-wide-1560.webp 1560w','/assets/img/hero-slides/3-bride-to-groom-wide-780.webp',1560,878,'신랑에게 축가를 부르는 신부'],['/assets/img/hero-slides/4-bride-back-wide-780.webp 780w, /assets/img/hero-slides/4-bride-back-wide-1560.webp 1560w','/assets/img/hero-slides/4-bride-back-wide-780.webp',1560,878,'신랑을 바라보며 노래하는 신부의 뒷모습']].map(([srcset,src,w,h,alt])=>({srcset,src,w,h,alt}))
+ const galleryVideos=galleryPhotos.map((photo,index)=>'<div class="mas-gallery-slide hs-slide'+(photo.w>photo.h?' hs-landscape':'')+(index===0?' is-current':'')+'" id="masPhotoSlide'+index+'" data-mobile-slide role="group" aria-roledescription="slide" aria-label="'+(index+1)+' / '+galleryPhotos.length+'">'+(index!==0&&photo.w>photo.h?'<img class="hs-blur-backdrop" src="'+photo.src+'" alt="" aria-hidden="true" loading="lazy" decoding="async">':'')+(index===0?'<picture class="hs-picture">':'')+'<img class="hs-photo" src="'+photo.src+'" srcset="'+photo.srcset+'" sizes="(min-width: 780px) 780px, 100vw" width="'+photo.w+'" height="'+photo.h+'" alt="'+photo.alt+'" '+(index===0?'fetchpriority="high" decoding="async" style="object-fit:contain!important;object-position:center!important;transform:none!important"':'loading="lazy" decoding="async"')+' draggable="false">'+(index===0?'</picture>':'')+'</div>').join('')
  const info=[['상품','AR 축가 사전녹음'],['인원 · 곡수',people+'인 · 1곡'],['녹음시간',hours+'시간 <small>안내·연습·부가 시간 포함</small>'],['포함 작업','녹음 · 보컬 디렉팅 · 정밀 믹싱 · 마스터링 · 음정·박자 보정은 타입별'],['전달 파일','본식용 AR · 완성 음원'],['제작 기간','녹음일 기준 7일 이내']]
  const variants=['solo','duo'].map(option=>'<button type="button" class="wistia-person-button" data-detail-person="'+option+'" aria-pressed="'+(option===key)+'">'+(option==='duo'?'2인':'1인')+'</button>').join('')
  // Reuse the existing media, POINTs, FAQ and notices without duplicating player IDs.
@@ -1377,12 +1376,20 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  }
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
- const heroCopy='<div class="ed-hero-copy"><p>내 목소리로 미리 준비하는</p><h1 id="arcProductTitle">AR 축가<br><strong>사전녹음</strong></h1><p class="ed-hero-description">본식의 감동은 그대로,<br>더 편안한 마음으로</p></div>'
- const gallery='<div class="mas-gallery hs-gallery ed-hero-gallery" aria-label="위스티아 스튜디오 사진" aria-roledescription="carousel" data-mobile-gallery data-mobile-gallery-start="0"><div class="mas-gallery-viewport"><div class="mas-gallery-track hs-track" tabindex="0" aria-label="스튜디오 사진, 좌우로 넘겨 보세요">'+galleryVideos+'</div>'+heroCopy+(galleryPhotos.length>1?'<div class="hs-controls" role="group" aria-label="사진 넘기기"><button type="button" class="hs-arrow hs-prev" data-hs-step="-1" aria-label="이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hs-arrow hs-next" data-hs-step="1" aria-label="다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>':'')+'<span class="mas-gallery-count hs-count" aria-live="polite">01 / 05</span><div class="ed-hero-actions"><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">가격 바로 보기 <span aria-hidden="true">'+studioIcon('chevron')+'</span></a></div></div>'+'</div>'
+ const heroPackages=window.WistiaPackages
+ const selectedHeroPackage=heroPackages.packageFor(new URLSearchParams(location.search).get('package')).key
+ const heroTypes=Object.values(heroPackages.packages).map(item=>
+  '<a href="#packageSelection" data-ar-section="packageSelection" data-hero-package="'+item.key+'"'+(item.key===selectedHeroPackage?' aria-current="true"':'')+'><b>'+item.name+'</b><strong data-package-coupon-price="'+item.key+'">'+heroPackages.money(heroPackages.cardCouponPrice(item))+'</strong></a>'
+ ).join('')
+ const heroBenefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">이벤트</h2><ul>'+heroPackages.discountOffers.map(offer=>'<li><span class="ed-benefit-symbol" aria-hidden="true">'+({first:'&#127873;',monthly:'&#10024;',advance1:'&#128197;'}[offer.key]||'&#10022;')+'</span><span>'+offer.label+' <strong>'+heroPackages.money(offer.discount)+' 할인</strong></span></li>').join('')+'</ul></section>'
+ const heroCopy='<div class="ed-hero-overview"><p class="ed-hero-brand">WISTIA <span>웨딩 축가 전문 스튜디오</span></p><h1 id="arcProductTitle">AR 축가 사전녹음</h1><p class="ed-hero-lead">내 목소리로 미리 준비하는 축가, 본식에서는 더 편안하게</p>'+
+  '<section class="ed-hero-essentials" aria-labelledby="heroEssentialsTitle"><h2 id="heroEssentialsTitle">한눈에 보는 녹음 안내</h2><ul><li>'+studioIcon('microphone')+'<span>한 소절씩 녹음 · 1:1 디렉팅</span></li><li>'+studioIcon('tune')+'<span>MR 편집 · 키 조절 무료</span></li><li>'+studioIcon('check')+'<span>음정부터 박자까지 섬세한 보컬 보정</span></li></ul></section>'+
+  '<div class="ed-hero-actions"><nav class="ed-hero-types" aria-label="녹음 타입 바로 선택">'+heroTypes+'</nav><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">가격 바로 보기 <span aria-hidden="true">'+studioIcon('chevron')+'</span></a></div>'+heroBenefits+'</div>'
+ const gallery='<div class="mas-gallery hs-gallery ed-hero-gallery" aria-label="위스티아 스튜디오 사진" aria-roledescription="carousel" data-mobile-gallery data-mobile-gallery-start="0"><div class="mas-gallery-viewport"><div class="mas-gallery-track hs-track" tabindex="0" aria-label="스튜디오 사진, 좌우로 넘겨 보세요">'+galleryVideos+'</div>'+'<span class="mas-gallery-count hs-count" aria-live="polite">01 / 04</span></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
  const shot=key==='duo'?'assets/16j/duo/':'assets/detail-solo-16j/'
- const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+'</section>'
+ const intro='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+heroCopy+'</section>'
  details=details.replace(/<img[^>]*src="assets\/detail\/point03-bottom\.webp[^>]*>/,'')
  details=details.replace(/href="\/event\/(solo|duo)"/g,(_,product)=>'href="'+packageInquiryHref(product)+'"')
  // Keep POINT 01 recording → 02 key → 03 tuning → 04 ratio in the original order
@@ -1407,19 +1414,17 @@ function initMobileArGallery(){
   const track=gallery.querySelector('.mas-gallery-track'),slides=[...gallery.querySelectorAll('.mas-gallery-slide')]
   if(!track||slides.length<2)return
   if(!gallery.querySelector('.hs-dots'))gallery.querySelector('.mas-gallery-viewport').insertAdjacentHTML('beforeend','<div class="hs-dots" role="group" aria-label="사진 선택">'+slides.map((slide,i)=>'<button type="button" data-mobile-video-slide="'+i+'" aria-label="'+(i+1)+'번째 사진 보기" aria-controls="'+slide.id+'" aria-pressed="'+(i===0)+'"></button>').join('')+'</div>')
-  const dots=[...gallery.querySelectorAll('[data-mobile-video-slide]')],arrows=[...gallery.querySelectorAll('[data-hs-step]')],count=gallery.querySelector('.hs-count')
+  const dots=[...gallery.querySelectorAll('[data-mobile-video-slide]')],count=gallery.querySelector('.hs-count')
   let current=Number(gallery.dataset.mobileGalleryStart)||0,drag=null,scrollTimer=0
   const show=index=>{
    current=Math.max(0,Math.min(slides.length-1,index))
    dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===current)))
    slides.forEach((slide,i)=>{slide.classList.toggle('is-current',i===current);if(i!==current)slide.querySelector('video')?.pause()})
-   arrows.forEach(arrow=>arrow.disabled=Number(arrow.dataset.hsStep)<0?current===0:current===slides.length-1)
    if(count)count.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0')
   }
   const select=(index,smooth=true)=>{show(index);track.scrollTo({left:slides[current].offsetLeft-slides[0].offsetLeft,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'})}
   const listen=(el,name,fn,options)=>{el.addEventListener(name,fn,options);cleanups.push(()=>el.removeEventListener(name,fn,options))}
   dots.forEach(dot=>listen(dot,'click',()=>select(Number(dot.dataset.mobileVideoSlide))))
-  arrows.forEach(arrow=>listen(arrow,'click',()=>select(current+Number(arrow.dataset.hsStep))))
   listen(track,'keydown',event=>{if(['ArrowRight','ArrowLeft','Home','End'].includes(event.key)){event.preventDefault();select(event.key==='Home'?0:event.key==='End'?slides.length-1:current+(event.key==='ArrowRight'?1:-1))}})
   listen(track,'scroll',()=>{clearTimeout(scrollTimer);if(!drag)scrollTimer=setTimeout(()=>show(Math.round(track.scrollLeft/Math.max(track.clientWidth,1))),80)},{passive:true})
   // Native touch scrolling preserves vertical page scroll and pinch zoom
@@ -1455,6 +1460,7 @@ function initArCommerceDetail(){
   url.searchParams.set('package',p.key);history.replaceState(history.state,'',url.pathname+url.search)
   window.WistiaPackages.syncSelection(packageRoot,p.key)
   document.querySelectorAll('[data-package-inquiry],.solo-footer-inquiry').forEach(a=>a.href=packageInquiryHref(key,p.key))
+  document.querySelectorAll('[data-hero-package]').forEach(a=>{if(a.dataset.heroPackage===p.key)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})
  })
  document.querySelectorAll('[data-detail-person]').forEach(button=>button.addEventListener('click',()=>{const y=window.scrollY,next=button.dataset.detailPerson==='solo'?'/':'/detail/'+button.dataset.detailPerson;history.replaceState(history.state,'',next+location.search);route({preserveScroll:true});window.scrollTo({top:y,behavior:'instant'})}))
  const root=document.querySelector('.ar-commerce-detail');if(!root)return
@@ -1469,9 +1475,13 @@ function initArCommerceDetail(){
   root.querySelectorAll('[data-ar-price-link]').forEach(item=>item.href='/event/'+key)
  }))
  root.querySelectorAll('[data-ar-section]').forEach(link=>link.addEventListener('click',event=>{
-  event.preventDefault();const target=document.getElementById(link.dataset.arSection)
+  event.preventDefault();let target=document.getElementById(link.dataset.arSection)
+  if(link.dataset.heroPackage&&target){
+   target.querySelector('.package-card[data-tier="'+link.dataset.heroPackage+'"]')?.click()
+   target=target.querySelector('.package-cards')||target
+  }
   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
-  if(target&&link.classList.contains('ed-hero-price-jump')){
+  if(target&&(link.classList.contains('ed-hero-price-jump')||link.dataset.heroPackage)){
    const headerBottom=document.getElementById('siteHeader')?.getBoundingClientRect().bottom||0
    window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-Math.max(0,headerBottom)-20,behavior})
   }else if(target)target.scrollIntoView({behavior,block:'start'})

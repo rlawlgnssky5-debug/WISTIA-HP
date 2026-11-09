@@ -3,8 +3,8 @@
 <head>
   <link rel="stylesheet" href="/css/page-materials-20261109.css?v=20261110-picker-parity-1">
   <script src="/js/page-materials-20261109.js?v=20261109-materials-1" defer></script>
-  <link rel="stylesheet" href="/css/approved-mobile-layout-20261109.css?v=20261110-picker-parity-1">
-  <script src="/js/approved-mobile-layout-20261109.js?v=20261109-review-summary-1" defer></script>
+  <link rel="stylesheet" href="/css/approved-mobile-layout-20261109.css?v=20261110-first-screen-8">
+  <script src="/js/approved-mobile-layout-20261109.js?v=20261110-first-screen-1" defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <base href="/">
@@ -18,8 +18,14 @@
     if (new URLSearchParams(location.search).get('preview') === 'phone') {
       document.documentElement.classList.add('phone-preview-shell')
       addEventListener('DOMContentLoaded', () => {
-        const frameUrl = `${location.pathname}?v=20261014-detail-polish-16j12&frame=1${location.hash || '#/'}`
-        document.body.innerHTML = `<iframe class="phone-preview-frame" src="${frameUrl}" title="휴대폰 디자인 미리보기"></iframe>`
+        const frameUrl = new URL(location.href)
+        frameUrl.searchParams.delete('preview')
+        frameUrl.searchParams.set('frame', '1')
+        const frame = document.createElement('iframe')
+        frame.className = 'phone-preview-frame'
+        frame.title = '휴대폰 디자인 미리보기'
+        frame.src = frameUrl.href
+        document.body.replaceChildren(frame)
       })
     }
   </script>
@@ -253,7 +259,7 @@
   <script src="js/detail-pc-background.js?v=20261024-site-fixes-1" defer></script>
   <script src="js/review-sources.js?v=20261110-home-hybrid-1" defer></script>
   <script src="js/detail-editorial.js?v=20261109-review-palette-1" defer></script>
-  <script src="js/app.js?v=20261109-review-palette-1" defer></script>
+  <script src="js/app.js?v=20261110-four-home-slides" defer></script>
   <meta property="og:image" content="https://www.wistiastudio.com/assets/img/og/wistia-og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -262,8 +268,7 @@
   <meta name="twitter:description" content="부천 AR 축가 사전녹음 위스티아 · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.wistiastudio.com/assets/img/og/wistia-og.png">
-  <link rel="preload" as="image" href="/assets/img/hero-slides/1-bride-solo-600.webp" media="(max-width: 900px)" fetchpriority="high">
-  <link rel="preload" as="image" href="/assets/img/hero-slides/1-bride-solo-940.webp" media="(min-width: 901px)" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/img/hero-slides/1-bride-wedding-special-780.webp" imagesrcset="/assets/img/hero-slides/1-bride-wedding-special-780.webp 780w, /assets/img/hero-slides/1-bride-wedding-special-1560.webp 1560w" imagesizes="(min-width: 780px) 780px, 100vw" fetchpriority="high">
 </head>
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2825959717777272&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
