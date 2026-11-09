@@ -1404,7 +1404,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
- '<details class="home-story" id="arcDetails"><summary><span class="home-story-more">스토리 더보기</span><span class="home-story-less">스토리 접기</span></summary>'+details+'</details>'+soloFooter(key)+
+ '<details class="home-story" id="arcDetails"><summary>스토리 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>스토리 접기</button></details>'+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 let mobileGalleryCleanup=()=>{}
@@ -1448,6 +1448,11 @@ function initMobileArGallery(){
 }
 let welcomeGiftObserver, homeDockCleanup
 function initHomeDock(root){
+ const story=root.querySelector('.home-story')
+ story?.querySelector('[data-home-story-close]').addEventListener('click',()=>{
+  story.open=false
+  story.querySelector('summary').focus()
+ })
  const dock=root.querySelector('.home-dock')
  if(!dock)return
  const banner=dock.querySelector('.home-offer'),link=banner.querySelector('a')
