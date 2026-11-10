@@ -62,7 +62,7 @@
   const event=activeMonthlyEvent()
   const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'50분 제외 · 별도 신청 없이 자동 적용'}]
   if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
-  offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
+  offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'50분 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
   return offers
  }
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
@@ -237,7 +237,7 @@
    const key=button.dataset.couponClaim,form=button.closest('form'),input=form?.querySelector('[name="'+key+'"]'),selected=input?input.checked:claims[key]===true,card=button.closest('[data-coupon-card]'),standard=!!form&&packageFor(form.querySelector('[name="package"]:checked')?.value).key==='A',date=form?.querySelector('[name="bookingDate"]')?.value||''
    button.disabled=standard||!!input?.disabled;button.setAttribute('aria-pressed',String(selected&&!button.disabled));button.querySelector('[data-coupon-button-copy]').textContent=button.disabled?'대상 상품 전용':selected?'받기 완료':'쿠폰 받기';button.querySelector('[data-coupon-check]').hidden=!selected||button.disabled
    card.classList.toggle('is-received',selected&&!button.disabled);card.classList.toggle('is-disabled',button.disabled)
-   card.querySelector('.coupon-claim-hint').textContent=button.disabled?'스탠다드 적용 제외':selected&&key==='yearEndCoupon'&&date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':selected?'쿠폰을 받았어요':'여기를 눌러주세요 →'
+   card.querySelector('.coupon-claim-hint').textContent=button.disabled?'50분 적용 제외':selected&&key==='yearEndCoupon'&&date&&!yearEndEligible(date)?'선택한 날짜는 적용 제외':selected?'쿠폰을 받았어요':'여기를 눌러주세요 →'
    if(key==='yearEndCoupon'){
     const state=global.WistiaLimitedCoupon?.state||{},owned=limitedClaimed(),received=state.received===true,locked=received&&(state.inCooldown||!state.canClaim&&!state.closed),expired=locked&&!owned,closed=state.ready&&state.closed&&!locked
     button.disabled=standard||locked||closed||state.busy||!state.ready&&!state.error
@@ -246,7 +246,7 @@
     button.querySelector('[data-coupon-check]').hidden=!locked
     card.classList.toggle('is-received',locked);card.classList.toggle('is-expired',expired);card.classList.toggle('is-disabled',!locked&&button.disabled)
     const stock=state.ready?state.remaining+'장 남음':state.error?'수량 확인 필요':'잔여 수량 확인 중'
-    const note=locked?'쿠폰을 받았어요':closed?'쿠폰이 마감되었어요':state.error?'잠시 후 다시 눌러주세요':standard?'스탠다드 적용 제외':''
+    const note=locked?'쿠폰을 받았어요':closed?'쿠폰이 마감되었어요':state.error?'잠시 후 다시 눌러주세요':standard?'50분 적용 제외':''
     card.querySelector('.coupon-claim-hint').innerHTML='<span data-limited-stock role="status">'+stock+'</span>'+(note?'<span class="limited-coupon-note">'+note+'</span>':'')
     // Stock ran out (remaining 0 or campaign closed): remove the coupon card unless this browser still holds an unexpired one
     const soldOut=state.ready&&(state.closed||state.remaining<=0)&&!owned;if(soldOut)card.style.setProperty('display','none','important');else card.style.removeProperty('display');card.toggleAttribute('data-sold-out',soldOut)
