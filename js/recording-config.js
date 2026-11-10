@@ -35,8 +35,8 @@
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
  function editor(v,{delivery=true}={}){
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
-  const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small><b>'+Math.round((list-rate)/list*100)+'%</b> <del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
-  const work=field('03','음원 작업',options.map(([key,label,copy])=>'<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+label+'</strong> '+(key==='recordingMaster'?'<small data-rc-event hidden>11월 이벤트</small>':'')+'<small>'+copy+'</small><small data-rc-regular>+40,000원</small>'+(key==='recordingMaster'?'<small data-rc-free hidden><del>40,000원</del> <b>0원</b></small>':'')+'</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>').join(''))
+  const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small class="rc-rate-was"><b class="rc-rate-pct">'+Math.round((list-rate)/list*100)+'%</b><del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
+  const work=field('03','음원 작업',options.map(([key,label,copy])=>'<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+label+'</strong> '+(key==='recordingMaster'?'<small data-rc-event hidden>✨ 11월 이벤트</small>':'')+'<small>'+copy+'</small><small data-rc-regular>+40,000원</small>'+(key==='recordingMaster'?'<small data-rc-free hidden><del>40,000원</del> <b>0원</b></small>':'')+'</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>').join(''))
   return '<div class="recording-config">'+people+duration+work+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
@@ -62,8 +62,8 @@
   row.querySelector('[data-rc-event]').hidden=!offer
  }
  function summary(q){
-  const row=(label,value)=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>'
-  return '<dl class="rc-summary">'+row('선택한 구성',money(q.list+q.optionTotal))+q.discounts.map(d=>row(d.label,'−'+money(d.amount))).join('')+row('최종 금액','<strong>'+money(q.total)+'</strong>')+'</dl>'
+  const row=(label,value,cls)=>'<div class="'+cls+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
+  return '<dl class="rc-summary">'+row('선택한 구성',money(q.list+q.optionTotal),'rc-sum-list')+q.discounts.map(d=>row(d.key==='monthly'?'<span class="rc-sum-event">✨ '+d.label+'</span>':d.label,'−'+money(d.amount),'rc-sum-discount'+(d.key==='monthly'?' is-event':''))).join('')+row('최종 금액','<strong data-rc-total>'+money(q.total)+'</strong>','rc-sum-total')+'</dl>'
  }
  function firstVisit(){return prices.readCouponClaims().firstVisit!==false}
  function preferences(form){
