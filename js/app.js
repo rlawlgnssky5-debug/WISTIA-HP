@@ -1261,10 +1261,10 @@ function homeEventRibbon(){
  const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==='first')
  const row=(kind,question,amount,prefix='',copy)=>{
   const discount=amount%10000===0?(amount/10000)+'만원':window.WistiaPackages.money(amount)
-  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">이벤트 '+(kind==='first'?'1':'2')+'</small><span class="ed-event-question">'+escapeHtml(question).replace(kind==='first'?/처음/g:/\d+월|예약/g,'<strong class="ed-event-keyword">$&</strong>')+'</span></div><strong class="ed-event-discount">'+escapeHtml(copy||prefix+discount+' 할인!')+'</strong></div>'
+  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">EVENT '+(kind==='first'?'01':'02')+'</small><span class="ed-event-question">'+escapeHtml(question).replace(kind==='first'?/처음/g:/\d+월|예약/g,'<strong class="ed-event-keyword">$&</strong>')+'</span></div><strong class="ed-event-discount">'+escapeHtml(copy||prefix+discount+' 할인')+'</strong></div>'
  }
- const monthly=window.WistiaRecording?.monthly()?row('monthly','11월에 예약하면?',0,'','마스터링 무료!'):''
- const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'첫이용 '):''
+ const monthly=window.WistiaRecording?.monthly()?row('monthly','11월에 예약하면?',0,'','마스터링 무료'):''
+ const welcome=first?row('first','지금, 위스티아가 처음이라면?',first.discount,'첫 이용 '):''
  return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+welcome+monthly+'</aside>'
 }
 function syncHomeEventRibbon(){
