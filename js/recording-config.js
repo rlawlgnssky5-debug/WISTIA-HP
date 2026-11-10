@@ -24,7 +24,7 @@
   const discounts=[]
   if(list!==rate)discounts.push({key:'recording',label:'녹음 시간 할인',amount:list-rate})
   if(offer)discounts.push({key:'monthly',label:'11월 마스터링 서비스',amount:40000})
-  if(!offer&&minutes===50&&!duet&&v.tuning!=='1'&&v.recordingMix==='1'&&v.recordingMaster==='1')discounts.push({key:'standard',label:'믹싱·마스터링 묶음가 적용',amount:40000})
+  // 2026-11-11 지훈: 50분에는 할인 없음 (믹싱·마스터링 묶음가 −40,000원 제거, 이 할인은 50분에만 있었음)
   if(minutes!==50)discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
   const advance=minutes===50?null:prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)

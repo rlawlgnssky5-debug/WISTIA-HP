@@ -60,7 +60,7 @@
  }
  const discountOfferList=()=>{
   const event=activeMonthlyEvent()
-  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 별도 받기 없이 자동 적용'}]
+  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'50분 제외 · 별도 신청 없이 자동 적용'}]
   if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
   offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
   return offers
