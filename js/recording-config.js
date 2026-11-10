@@ -17,7 +17,7 @@
   return v
  }
  function quote(v,date=prices.today()){
-  const minutes=Number(v.recordingMinutes)||50, {list,rate}=times[minutes]||times[50], duet=v.people==='1', offer=monthly(date)
+  const minutes=Number(v.recordingMinutes)||50, {list,rate}=times[minutes]||times[50], duet=v.people==='1', offer=monthly(date)&&minutes!==50 // 2026-11-11 지훈: 50분에는 마스터링 이벤트 없음
   const selected=options.filter(([key])=>key==='recordingMaster'&&offer||v[key]==='1').map(([key,label])=>({key,label,price:40000}))
   if(duet)selected.unshift({key:'duet',label:'녹음 1인 추가',price:40000})
   if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})
@@ -25,7 +25,7 @@
   if(list!==rate)discounts.push({key:'recording',label:'녹음 시간 할인',amount:list-rate})
   if(offer)discounts.push({key:'monthly',label:'11월 마스터링 서비스',amount:40000})
   if(!offer&&minutes===50&&!duet&&v.tuning!=='1'&&v.recordingMix==='1'&&v.recordingMaster==='1')discounts.push({key:'standard',label:'믹싱·마스터링 묶음가 적용',amount:40000})
-  if(minutes!==50&&(v.firstVisit==='1'||v.firstVisit===true))discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
+  if(minutes!==50)discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
   const advance=minutes===50?null:prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
@@ -53,7 +53,7 @@
   return field('04','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
  }
  function sync(form,date=prices.today()){
-  const row=form.querySelector('[data-rc-work="recordingMaster"]'), no=row.querySelector('input[value="0"]'), offer=monthly(date)
+  const row=form.querySelector('[data-rc-work="recordingMaster"]'), no=row.querySelector('input[value="0"]'), offer=monthly(date)&&form.elements.recordingMinutes?.value!=='50'
   if(offer&&!no.disabled){row.dataset.previous=form.elements.recordingMaster.value;form.elements.recordingMaster.value='1'}
   if(!offer&&no.disabled)form.elements.recordingMaster.value=row.dataset.previous||'0'
   no.disabled=offer
