@@ -102,7 +102,9 @@
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
-        '<img class="ed-key-poster" src="assets/editorial/point02-edit-key-free.webp?v=20261108-point02-free-1" alt="POINT 02 음원 편집 · 키 조절. 노래의 감정은 그대로, 내 목소리에 맞게. 무료. 01 음원 편집: 원하는 길이로 자르고 자연스럽게 이어요. 02 키 조절: 내 목소리에 맞는 높이로 조절해요." width="1170" height="1506" loading="lazy" decoding="async">' +
+        '<div class="hg-key"><header class="ed-heading" data-svg-title="off"><span class="ed-point">POINT 02</span><h2>음원 편집 · <b class="ed-title">키 조절</b></h2><p class="ed-description">노래의 감정은 그대로, 내 목소리에 맞게</p></header>' +
+        '<p class="hg-key-free"><b>무료</b></p>' +
+        '<ul class="hg-key-cards"><li class="hg-key-card"><small>01</small><strong>음원 편집</strong><p>원하는 길이로 자르고<br>자연스럽게 이어요</p></li><li class="hg-key-card"><small>02</small><strong>키 조절</strong><p>내 목소리에 맞는<br>높이로 조절해요</p></li></ul></div>' +
         '</section>'
     },
     tuningHeader() {

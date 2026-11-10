@@ -1,0 +1,190 @@
+/* 2026-11-10 홈 상세(후기 ~ 오시는 길) 리퀴드 글래스 · 좌우 여백 · 글꼴 통일 (미리보기)
+   범위: .arc-reviews, #arcDetails 안의 섹션들. 타입 포스터·선택표(#packageSelection) 아래, 히어로, 카카오 버튼, 하단 문의 띠는 건드리지 않음. */
+/* 이 레이어는 index.html 맨 위에서 먼저 선언되어, 기존 레이어의 !important보다 이 범위에서만 우선합니다. */
+@layer wistia-home-detail-glass {
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope {
+  --hg-gutter: 20px;
+  --hg-ink: #3c3034;
+  --hg-muted: #76696e;
+  --hg-accent: #9d596c;
+  --hg-radius: 18px;
+  --hg-glass: linear-gradient(125deg, rgba(255,255,255,.95), rgba(252,230,239,.66) 60%, rgba(255,250,245,.88));
+  --hg-glass-strong: linear-gradient(145deg, rgba(255,236,243,.96), rgba(236,190,208,.86));
+  --hg-border: 1px solid rgba(255,255,255,.93);
+  --hg-shadow: inset 0 1px 1px #fff, 0 6px 18px rgba(143,90,114,.13);
+  --hg-blur: blur(16px) saturate(1.45);
+}
+
+/* ---------- 1. 공통 배경 · 여백 · 글꼴 ---------- */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails {
+  background-color: #fbf3f5 !important;
+  background-image: none !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails {
+  background-image:
+    radial-gradient(420px 420px at 100% 900px, rgba(247,220,230,.6), rgba(247,220,230,0) 70%),
+    radial-gradient(420px 420px at 0% 2300px, rgba(250,234,224,.7), rgba(250,234,224,0) 70%),
+    radial-gradient(420px 420px at 100% 3500px, rgba(247,220,230,.6), rgba(247,220,230,0) 70%) !important;
+  background-repeat: no-repeat !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 36px var(--hg-gutter) !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews { padding: 36px 0 30px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews .rv5-in { padding: 0 !important; }
+
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews *,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section * {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+}
+
+/* ---------- 2. 글자 크기 단계 (eyebrow · 제목 · 부제 · 본문) ---------- */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-eye,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-eyebrow,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-heading > p {
+  font-size: 11px !important; font-weight: 600 !important; letter-spacing: .16em !important;
+  line-height: 1.5 !important; color: var(--hg-accent) !important; margin: 0 0 10px !important; text-align: center !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-point {
+  display: inline-block !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: .06em !important;
+  line-height: 1.4 !important; color: var(--hg-accent) !important; padding: 4px 13px !important; margin: 0 0 14px !important;
+  border-radius: 999px !important; background: var(--hg-glass) !important; border: var(--hg-border) !important;
+  box-shadow: var(--hg-shadow) !important; -webkit-backdrop-filter: var(--hg-blur) !important; backdrop-filter: var(--hg-blur) !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-title,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section h2 {
+  font-size: 20px !important; line-height: 1.45 !important; font-weight: 700 !important; letter-spacing: -.01em !important;
+  color: var(--hg-ink) !important; text-align: center !important; margin: 0 0 6px !important; word-break: keep-all !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section h2 > span {
+  display: block !important; font-size: 20px !important; font-weight: 400 !important; line-height: 1.45 !important; margin: 0 0 4px !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section h2 .ed-title,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section h2 strong,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-title strong {
+  font-size: 20px !important; font-weight: 700 !important; line-height: 1.45 !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 h2 .ed-title { font-size: 16px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-description {
+  font-size: 14px !important; line-height: 1.6 !important; font-weight: 400 !important; color: var(--hg-muted) !important;
+  margin: 12px 0 0 !important; text-align: center !important; word-break: keep-all !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-heading { padding: 0 !important; margin: 0 0 24px !important; text-align: center !important; }
+
+/* ---------- 3. 리퀴드 글래스 카드 ---------- */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-player,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-panel,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq details,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .home-map-inset {
+  background: var(--hg-glass) !important;
+  border: var(--hg-border) !important;
+  border-radius: var(--hg-radius) !important;
+  box-shadow: var(--hg-shadow) !important;
+  -webkit-backdrop-filter: var(--hg-blur) !important;
+  backdrop-filter: var(--hg-blur) !important;
+}
+
+/* 후기: 화살표·점은 여백 안 (슬라이드가 움직이는 카드라 블러는 끔) */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-controls { padding: 0 var(--hg-gutter) !important; box-sizing: border-box !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card h3 { font-size: 15px !important; font-weight: 700 !important; line-height: 1.5 !important; color: var(--hg-ink) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card footer b,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card footer span { font-size: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card button { font-size: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-arrow { background: var(--hg-glass) !important; border: var(--hg-border) !important; box-shadow: var(--hg-shadow) !important; }
+
+/* 고민 말풍선 */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries ul { padding: 0 !important; margin: 0 !important; gap: 14px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li { font-size: 15px !important; font-weight: 600 !important; line-height: 1.45 !important; color: var(--hg-ink) !important; padding: 12px 16px !important; max-width: 86% !important; box-sizing: border-box !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li:nth-child(even) { background: var(--hg-glass-strong) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li::after { display: none !important; }
+
+/* POINT 01 사진 */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-recording-scene { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo { padding: 6px !important; overflow: hidden !important; margin: 0 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo img { border-radius: 13px !important; width: 100% !important; height: auto !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-recording-benefits li {
+  font-size: 13px !important; font-weight: 600 !important; border-radius: 999px !important;
+  background: rgba(157,89,108,.82) !important; border: 1px solid rgba(255,255,255,.55) !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.45), 0 6px 16px rgba(96,67,75,.18) !important;
+  -webkit-backdrop-filter: var(--hg-blur) !important; backdrop-filter: var(--hg-blur) !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-recording-benefits li:nth-child(2) { background: rgba(255,255,255,.88) !important; }
+
+/* POINT 02 (HTML 카드) */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key { text-align: center !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free {
+  display: flex !important; align-items: center !important; gap: 14px !important; margin: 22px 0 !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::before, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::after { content: "" !important; flex: 1 !important; height: 1px !important; background: rgba(157,89,108,.25) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free b {
+  font-size: 22px !important; font-weight: 800 !important; letter-spacing: .08em !important; color: var(--hg-accent) !important;
+  padding: 8px 26px !important; border-radius: 999px !important; background: var(--hg-glass-strong) !important;
+  border: var(--hg-border) !important; box-shadow: var(--hg-shadow) !important;
+}
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-cards { list-style: none !important; display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; padding: 0 !important; margin: 0 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card { text-align: left !important; padding: 16px 14px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card small { display: block !important; font-size: 11px !important; font-weight: 600 !important; letter-spacing: .06em !important; color: var(--hg-accent) !important; margin-bottom: 6px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card strong { display: block !important; font-size: 16px !important; font-weight: 700 !important; color: var(--hg-ink) !important; margin-bottom: 6px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card p { text-align: left !important; font-size: 13px !important; line-height: 1.55 !important; color: var(--hg-muted) !important; margin: 0 !important; word-break: keep-all !important; }
+
+/* POINT 03 보정 전·후 플레이어 */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning #wistiaBeforeAfter,
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .wistia-ba-layout { background: transparent !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-player { padding: 18px 16px 18px !important; box-sizing: border-box !important; width: 100% !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-body { background: transparent !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-controls { margin: 4px 0 14px !important; padding: 0 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge { margin: 0 0 6px !important; background: rgba(255,255,255,.7) !important; border: 1px solid rgba(217,102,127,.45) !important; font-size: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-wave { width: 100% !important; border-radius: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tabs { margin: 14px 0 0 !important; width: 100% !important; box-sizing: border-box !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab strong { font-size: 15px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab small { font-size: 11px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-time { font-size: 12px !important; }
+
+/* POINT 04 비율 */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-panel { padding: 16px 14px 18px !important; box-sizing: border-box !important; width: 100% !important; overflow: hidden !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-adjust { margin: 0 0 12px !important; width: 100% !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-dial { max-width: 100% !important; overflow: hidden !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-track { padding: 0 4px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-buttons { gap: 8px !important; padding: 0 !important; margin: 0 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-ratio { border-radius: 14px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-hint { font-size: 13px !important; margin: 14px 0 0 !important; text-align: center !important; }
+
+/* 과정 */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list { gap: 12px !important; padding: 0 !important; margin: 0 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li { padding: 16px 14px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li strong { font-size: 15px !important; font-weight: 700 !important; color: var(--hg-ink) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li p { font-size: 13px !important; line-height: 1.55 !important; color: var(--hg-muted) !important; }
+
+/* FAQ */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-list { padding: 0 !important; margin: 0 !important; display: grid !important; gap: 10px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq details { margin: 0 !important; overflow: hidden !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq summary { padding: 16px !important; font-size: 15px !important; font-weight: 600 !important; color: var(--hg-ink) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq summary span { font-size: 15px !important; font-weight: 600 !important; line-height: 1.45 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq details[open] summary span { font-weight: 700 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-answer { padding: 0 16px 16px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-answer p { font-size: 14px !important; line-height: 1.6 !important; color: var(--hg-muted) !important; }
+
+/* 오시는 길 (아래 여백은 기존 그대로) */
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section.solo-map { padding-bottom: 96px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .home-map-inset { padding: 8px 8px 16px !important; margin: 0 !important; box-sizing: border-box !important; width: 100% !important; overflow: hidden !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-art { border-radius: 12px !important; overflow: hidden !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-route, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-parking { padding-left: 8px !important; padding-right: 8px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-stop strong { font-size: 14px !important; font-weight: 700 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-stop p, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-walk p { font-size: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .solo-map-links { padding: 0 8px !important; gap: 8px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .solo-map-links a { font-size: 14px !important; font-weight: 650 !important; }
+}

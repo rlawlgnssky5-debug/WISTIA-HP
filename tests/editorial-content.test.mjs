@@ -39,12 +39,9 @@ test('key, tuning, ratio and engineering sections preserve the original visible 
   for (const name of ['key', 'tuningHeader', 'ratioHeader', 'engineer', 'preparation']) assert.equal(typeof editorial[name], 'function', name)
   const keyHtml = editorial.key()
   assert.match(keyHtml, /id="arcKey"/)
-  assert.match(keyHtml, /point02-edit-key-free\.webp\?v=20261108-point02-free-1/)
-  assert.match(keyHtml, /width="1170"/)
-  assert.match(keyHtml, /height="1506"/)
-  const keyAlt = (keyHtml.match(/alt="([^"]+)"/) || [])[1] || ''
+  const keyText = keyHtml.replace(/<br>/g, ' ').replace(/<[^>]+>/g, '')
   for (const copy of ['POINT 02', '음원 편집 · 키 조절', '노래의 감정은 그대로, 내 목소리에 맞게', '무료', '원하는 길이로 자르고 자연스럽게 이어요', '내 목소리에 맞는 높이로 조절해요']) {
-    assert.ok(keyAlt.includes(copy), copy)
+    assert.ok(keyText.includes(copy), copy)
   }
   assert.equal(keyHtml.includes('0원'), false)
   assert.equal(keyHtml.includes('key-wave-ribbon'), false)
