@@ -4,30 +4,30 @@
 @layer wistia-home-detail-glass {
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope {
   --hg-gutter: 20px;
-  --hg-ink: #3c3034;
-  --hg-muted: #76696e;
-  --hg-accent: #9d596c;
+  --hg-ink: #1A1A1A;
+  --hg-muted: #645354;
+  --hg-accent: #9D4047;
   --hg-radius: 18px;
-  --hg-glass: linear-gradient(125deg, rgba(255,255,255,.95), rgba(252,230,239,.66) 60%, rgba(255,250,245,.88));
-  --hg-glass-strong: linear-gradient(145deg, rgba(255,236,243,.96), rgba(236,190,208,.86));
+  --hg-glass: linear-gradient(125deg, #fffdfc, #FDF6F4 60%, #fff9f7);
+  --hg-glass-strong: linear-gradient(145deg, #FDF6F4, #F1C5C2);
   --hg-border: 1px solid rgba(255,255,255,.93);
-  --hg-shadow: inset 0 1px 1px #fff, 0 6px 18px rgba(143,90,114,.13);
+  --hg-shadow: inset 0 1px 1px #fff, 0 6px 18px rgba(119,56,58,.13);
   --hg-blur: blur(16px) saturate(1.45);
 }
 
 /* ---------- 1. 공통 배경 · 여백 · 글꼴 ---------- */
 /* 섹션마다 다른 배경 (이웃 섹션끼리 같은 색 없음) */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails { background: #FBF7F1 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews { background: #FBF7F1 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcWorries { background: #F8E8ED !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcRecording { background: #F3ECE4 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey { background: #F1E6F0 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcTuning { background: #FBF7F1 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 { background: #EBD3DB !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcProcess { background: #F3ECE4 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcFaq { background: #F8E8ED !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section.solo-map { background: #FBF7F1 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails { background: #FDF6F4 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews { background: #FDF6F4 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcWorries { background: #F8E5E5 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcRecording { background: #FAEDEA !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey { background: #F7DDDC !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcTuning { background: #FDF6F4 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 { background: linear-gradient(155deg, #FAECEA, #FDF6F4) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcProcess { background: #FAEDEA !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcFaq { background: #FDF6F4 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section.solo-map { background: #FAEDEA !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews,
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > section {
   box-shadow: none !important;
@@ -117,7 +117,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo img { border-radius: 13px !important; width: 100% !important; height: auto !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-recording-benefits li {
   font-size: 13px !important; font-weight: 600 !important; border-radius: 999px !important;
-  background: rgba(157,89,108,.82) !important; border: 1px solid rgba(255,255,255,.55) !important;
+  background: #9D4047 !important; border: 1px solid rgba(255,255,255,.55) !important;
   box-shadow: inset 0 1px 1px rgba(255,255,255,.45), 0 6px 16px rgba(96,67,75,.18) !important;
   -webkit-backdrop-filter: var(--hg-blur) !important; backdrop-filter: var(--hg-blur) !important;
 }
@@ -128,7 +128,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free {
   display: flex !important; align-items: center !important; gap: 14px !important; margin: 22px 0 !important;
 }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::before, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::after { content: "" !important; flex: 1 !important; height: 1px !important; background: rgba(157,89,108,.25) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::before, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free::after { content: "" !important; flex: 1 !important; height: 1px !important; background: #EDC3C7 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-free b {
   font-size: 22px !important; font-weight: 800 !important; letter-spacing: .08em !important; color: var(--hg-accent) !important;
   padding: 8px 26px !important; border-radius: 999px !important; background: var(--hg-glass-strong) !important;
@@ -146,7 +146,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-player { padding: 18px 16px 18px !important; box-sizing: border-box !important; width: 100% !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-body { background: transparent !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-controls { margin: 4px 0 14px !important; padding: 0 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge { margin: 0 0 6px !important; background: rgba(255,255,255,.7) !important; border: 1px solid rgba(217,102,127,.45) !important; font-size: 12px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge { margin: 0 0 6px !important; background: rgba(255,255,255,.7) !important; border: 1px solid #DE6E6F !important; font-size: 12px !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-wave { width: 100% !important; border-radius: 12px !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tabs { margin: 14px 0 0 !important; width: 100% !important; box-sizing: border-box !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab strong { font-size: 15px !important; }
@@ -188,17 +188,17 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .solo-map-links a { font-size: 14px !important; font-weight: 650 !important; }
 
 /* 밝은 배경에서 작은 글자 대비 보강 */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-eye, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-eyebrow, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-heading > p { color: #8a4a5d !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-eye, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-eyebrow, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-heading > p { color: var(--hg-accent) !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-description { color: #64585d !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-track, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-track * { color: #5f4a52 !important; }
 
 /* 카드 안 작은 글자 대비 보강 (색만 진하게) */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-time, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-time * { color: #6f6166 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab.active { background: #9d596c !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab.active { background: #9D4047 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab:not(.active), html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab:not(.active) * { color: #6f5f66 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge b, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge u { color: #a8445e !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-walk p { color: #8a4a5d !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-icon { background-color: #9d596c !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free b { color: #84455a !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge b, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge u { color: var(--hg-accent) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-walk p { color: var(--hg-accent) !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-icon { background-color: #9D4047 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free b { color: var(--hg-accent) !important; }
 @media (max-width: 374px) { html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 h2 .ed-title { font-size: 15.5px !important; } }
 }
