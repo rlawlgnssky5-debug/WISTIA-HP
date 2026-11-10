@@ -252,7 +252,7 @@
    if(key==='time')return timeField()+discoveryField()+'<label class="contact-field contact-notes-field" for="contact-specialNotes"><span>특이사항이나 궁금한 점 (선택)</span><textarea id="contact-specialNotes" name="specialNotes" rows="3" maxlength="2000" ></textarea></label>'
    const id='contact-'+key
    let input
-   if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['AR 축가 사전녹음'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
+   if(key==='service')input=embedded?'<input id="'+id+'" name="service" value="'+escape(quote?.service||'상담 후 결정')+'" readonly><em>위의 상품 선택에 따라 함께 변경됩니다</em>':'<select id="'+id+'" name="'+key+'" required><option value="">서비스를 선택해 주세요</option>'+['축가 AR 사전 녹음'].map(value=>'<option'+(quote?.service===value?' selected':'')+'>'+value+'</option>').join('')+'</select>'
    else if(key==='source')input='<select id="'+id+'" name="source"><option value="" disabled selected>선택해 주세요</option>'+sourceChoices.map(value=>'<option>'+value+'</option>').join('')+'</select>'
    else input='<input id="'+id+'" name="'+key+'" type="text" maxlength="200" autocomplete="off" placeholder="'+hint+'"'+(key==='source'?' list="contact-sources"':'')+'>'
    return '<label class="contact-field" for="'+id+'"><span'+(key==='source'&&integrated?' class="sr-only"':'')+'>'+label+(key==='service'?'<small>필수</small>':'')+'</span>'+input+(key==='time'?'<em>방문 가능 시간 편하게 적어주세요</em>':'')+'</label>'

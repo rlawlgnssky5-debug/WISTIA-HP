@@ -41,7 +41,7 @@
  // The retired November–December recording restriction must not affect limited coupons
  const yearEndActive=(reference=today())=>validDate(reference)
  const yearEndEligible=(date,reference=today())=>yearEndActive(reference)&&(!date||validDate(date)&&date>=reference)
- const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'수령 후 24시간 이내 사용',products:'DELUXE · PREMIUM · DUET ONLY'}
+ const yearEndCopy={label:'선착순 한정 수량 쿠폰',visit:'수령 후 24시간 이내 사용',products:'DELUXE · PREMIUM · DUET 전용'}
  const limitedClaimed=()=>global.WistiaLimitedCoupon?.isUsable?global.WistiaLimitedCoupon.isUsable():global.WistiaLimitedCoupon?.state.claimed===true
  const limitedAvailable=()=>yearEndActive()&&(!global.document||limitedClaimed()||global.WistiaLimitedCoupon?.state.ready&&global.WistiaLimitedCoupon.state.canClaim===true)
  // One row per month. Change this list when the event changes; prices and pages read it.
@@ -60,7 +60,7 @@
  }
  const discountOfferList=()=>{
   const event=activeMonthlyEvent()
-  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET ONLY · 별도 받기 없이 자동 적용'}]
+  const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'DELUXE · PREMIUM · DUET 전용 · 별도 신청 없이 자동 적용'}]
   if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
   offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'스탠다드 제외 · 예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
   return offers
