@@ -69,7 +69,7 @@ const PRODUCTS = {
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
     faq: [
       ["DUET 상품은 몇 명이 이용하나요", "1곡 기준 두 분이 이용해요 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요"],
-      ["두 사람이 함께 녹음할 수 있나요", "인원에서 2인 (듀엣곡)을 선택하시면 2인 1곡으로 준비해요<br>1인 기준 구성에 40,000원이 추가돼요"],
+      ["두 사람이 함께 녹음할 수 있나요", "듀엣으로 변경하면 2인·1곡으로 준비해요 STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분이에요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·정밀 믹싱·마스터링 포함 240,000원이에요"],
       ["어떤 파일을 받나요", "예식장에서 사용할 AR과 선택한 작업이 반영된 완성 음원을 전달해요"]
     ]
   },
@@ -913,7 +913,8 @@ function renderInfoPage(key){
  const enc=encodeURIComponent(mapAddress),ic=(d)=>'<span class="lc2-ic" aria-hidden="true">'+d+'</span>'
  const locationContent='<div class="wistia-location lc2"><div class="lc2-card lc2-addr"><span class="lc2-badge">'+studioIcon('pin')+'WISTIA STUDIO</span><h2 class="studio-address" data-svg-title="off">'+address+'</h2><p class="lc2-sub">7호선 부천시청역 1번 출구</p><div class="lc2-btns"><a class="lc2-n" href="https://map.naver.com/p/search/'+enc+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a class="lc2-k" href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a><button class="lc2-c location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">주소복사</button></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p></div><div class="lc2-card lc2-map"><figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure><div class="lc2-cap"><span>부천시청역 1번 출구 → 위스티아 스튜디오</span></div></div><div class="lc2-side"><h3 data-svg-title="off" class="lc2-sec">교통편 안내</h3><div class="lc2-card lc2-rows"><div class="lc2-row">'+ic(studioIcon('train'))+'<div><h4 data-svg-title="off">지하철로 오실 때</h4><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p><div class="lc2-steps"><span>1번 출구</span><i>›</i><span>도보 이동</span><i>›</i><span>2층 스튜디오</span></div></div></div><div class="lc2-row">'+ic(studioIcon('car'))+'<div><h4 data-svg-title="off">차량으로 오실 때</h4><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p></div></div><div class="lc2-row">'+ic('<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>')+'<div><h4 data-svg-title="off">주차 안내</h4><p>시의회 옆 공영주차장 · 주차 요금 별도<br>주차비 지원은 어렵습니다</p></div></div></div></div></div>'
  const directionsMap='<figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure>'
- const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&window.WistiaRecording?.monthly()?{...group,items:[["이번 달 이벤트 할인은 어떻게 적용되나요?","11월 30일까지 예약하시면 모든 녹음 시간에 마스터링을 무료로 제공해 드려요<br>별도로 쿠폰을 받으실 필요는 없어요",true],...group.items]}:group)
+ const monthlyEvent=window.WistiaPackages.activeMonthlyEvent?.()
+ const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&monthlyEvent?{...group,items:[["이번 달 이벤트 할인은 어떻게 적용되나요?",monthlyEvent.name.replace("쿠폰","할인")+" "+monthlyEvent.amount.toLocaleString("ko-KR")+"원은<br>PREMIUM·DUET 타입에 자동 적용돼요<br>별도로 쿠폰을 받으실 필요는 없어요<br><br>"+(monthlyEvent.until||"이번 달")+" 예약하시면<br>녹음일이 다른 달이어도 할인받으실 수 있어요<br>STANDARD·DELUXE는 할인 대상이 아니에요",true],...group.items]}:group)
  const faqContent='<div class="info-faq">'+faqGroups.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><div><h2 id="infoFaqGroup'+index+'"><span class="faq-group-q" aria-hidden="true"><svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><circle cx="10" cy="10" r="10" fill="#b98a8e"/><circle cx="9.6" cy="9.4" r="4.3" fill="none" stroke="#fff" stroke-width="2"/><path d="M11.3 11.4l3 3" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></span>'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','선택한 타입에 맞춰 목소리를 완성해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent:aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
@@ -926,9 +927,7 @@ function paybackSection(items,maximum){
 }
 function eventsDiscounts(){
  const iconFor={first:'gift',monthly:'gift',advance1:'calendar'}
- const offers=window.WistiaPackages.discountOffers.filter(item=>item.key!=='monthly')
- if(window.WistiaRecording?.monthly())offers.splice(1,0,{key:'monthly',label:'11월 마스터링 이벤트',discount:40000,detail:'11월 30일까지 예약 시 모든 녹음 시간에 적용',display:'마스터링 무료'})
- return '<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+offers.map(item=>[item.label,item.display||window.WistiaPackages.money(item.discount)+' 할인',item.detail,iconFor[item.key]||'calendar']).map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
+ return '<section class="events-discounts" aria-labelledby="discountsTitle"><p class="ev2-k">DISCOUNTS</p><h2 id="discountsTitle">할인 이벤트</h2>'+'<div class="events-discount-list">'+window.WistiaPackages.discountOffers.map((item,i)=>[item.label,window.WistiaPackages.money(item.discount)+' 할인',item.detail,iconFor[item.key]||'calendar']).map(([title,amount,note,icon],i)=>'<article class="evd-card"><span class="evd-icon" aria-hidden="true">'+(title===window.WistiaPackages.yearEndCopy.label?'<img src="'+window.WistiaPackages.yearEndImage+'" alt="" width="40" height="40" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'+{gift:'<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7z"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'}[icon]+'</svg>')+'</span><p class="evd-no">'+['첫 번째','두 번째','세 번째','네 번째','다섯 번째','여섯 번째'][i]+'</p><h3 data-svg-title="off">'+title+'</h3><strong>'+amount+'</strong><p>'+note+'</p></article>').join('')+'</div></section>'
 }
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
@@ -1166,7 +1165,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.film/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><span></span><svg class="home-offer-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m4 2 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
+ return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><span></span><svg class="home-offer-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m4 2 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><a data-package-inquiry href="'+packageInquiryHref(key)+'">문의양식 작성하기</a></div></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1259,13 +1258,14 @@ function mobileBenefitList(type){
  return '<ul class="ed-benefit-items" data-benefit-type="'+type+'">'+items.map(event=>'<li><span class="ebi-text"><strong>'+escapeHtml(event.label)+'</strong><small>'+escapeHtml(short[event.key]||event.detail)+'</small></span><b class="ebi-pill">'+(type==='payback'?'+':'−')+won(event.discount)+'</b></li>').join('')+'</ul>'
 }
 function homeEventRibbon(){
+ const event=window.WistiaPackages.activeMonthlyEvent()
  const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==='first')
- const row=(kind,question,amount,prefix='',copy)=>{
+ const row=(kind,question,amount,products,prefix='')=>{
   const discount=amount%10000===0?(amount/10000)+'만원':window.WistiaPackages.money(amount)
-  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">이벤트 '+(kind==='first'?'1':'2')+'</small><span class="ed-event-question">'+escapeHtml(question).replace(kind==='first'?/처음/g:/\d+월|예약/g,'<strong class="ed-event-keyword">$&</strong>')+'</span></div><strong class="ed-event-discount">'+escapeHtml(copy||prefix+discount+' 할인!')+'</strong></div>'
+  return '<div class="ed-event-row" data-event-row="'+kind+'"><span class="ed-event-star" aria-hidden="true">'+(kind==='first'?'🎁':'🎉')+'</span><div class="ed-event-message"><small class="ed-event-label">이벤트 '+(kind==='first'?'1':'2')+'</small><span class="ed-event-question">'+escapeHtml(question).replace(kind==='first'?/처음/g:/\d+월|예약/g,'<strong class="ed-event-keyword">$&</strong>')+'</span></div><strong class="ed-event-discount">'+escapeHtml(prefix+discount+' 할인!')+'</strong></div>'
  }
- const monthly=window.WistiaRecording?.monthly()?row('monthly','11월에 예약하면?',0,'','마스터링 무료!'):''
- const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'첫이용 '):''
+ const monthly=event?row('monthly',event.month+'월에 예약하면?',event.amount,event.packages.map(key=>window.WistiaPackages.packageFor(key).name).join(' · ')):''
+ const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'DELUXE · PREMIUM · DUET','첫이용 '):''
  return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+welcome+monthly+'</aside>'
 }
 function syncHomeEventRibbon(){
@@ -1339,8 +1339,10 @@ function optionExplainSection(){
  }).join('')
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
-function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달<br>3일 이내 전달은 +30,000원</span></li><li><strong>녹음 시간</strong><span>50분, 1시간 30분, 2시간 30분 중 선택</span></li><li><strong>할인</strong><span>50분은 첫 이용·사전 예약 할인에서 제외</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','선택하신 구성에 맞춰 음정·박자 보정, 정밀 믹싱, 마스터링을 진행해요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+function packageSalesSection(key){const p=selectedPackage();return '<section data-svg-title="off" class="package-section" id="packageSelection" aria-labelledby="packageSelectionTitle"><h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2>'+window.WistiaPackages.cards(p.key)+'<a class="package-inquiry-link" data-package-inquiry href="'+packageInquiryHref(key)+'">선택한 구성으로 문의양식 작성<span class="package-inquiry-arrow" aria-hidden="true">→</span></a></section>'}
+function homeTypeBlock(key){const sales=packageSalesSection(key);return key==='solo'?'<div class="type-sections" id="packageSelection" data-svg-title="off"><div class="type-select-prompt"><span aria-hidden="true">👇</span><p>타입을 선택해 주세요</p><span aria-hidden="true">👇</span></div>'+sales.replace('class="package-section"','class="package-section type-pricing-section"').replace(' id="packageSelection"','').replace(' aria-labelledby="packageSelectionTitle"',' aria-label="타입별 가격과 구성 선택"').replace('<h2 id="packageSelectionTitle" class="package-guide-title">어떤 타입이 나에게 맞을까요?</h2>','')+'</div>':sales}
+function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>모든 타입은 녹음일 기준 7일 이내 전달<br>3일 이내 받기는 별도 옵션</span></li><li><strong>녹음 시간</strong><span>STANDARD는 50분, DELUXE는 1시간 30분, PREMIUM은 2시간 30분</span></li><li><strong>할인</strong><span>스탠다드는 모든 할인에서 제외</span></li></ul></section>'}
+function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','정밀 믹싱·마스터링을 진행하고, 스탠다드의 <span class="process-keep">음정·박자 보정</span>은 옵션이에요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
@@ -1374,10 +1376,15 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  }
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
- const heroBenefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">이벤트</h2><ul><li><span class="ed-benefit-symbol" aria-hidden="true">🎁</span><span>첫 이용 고객 <strong>20,000원 할인</strong></span></li>'+(window.WistiaRecording.monthly()?'<li><span class="ed-benefit-symbol" aria-hidden="true">✨</span><span>11월에 예약하면 <strong>마스터링 무료</strong></span></li>':'')+'<li><span class="ed-benefit-symbol" aria-hidden="true">📅</span><span>녹음일 1개월 이후 <strong>10,000원 할인</strong></span></li></ul></section>'
+ const heroPackages=window.WistiaPackages
+ const selectedHeroPackage=heroPackages.packageFor(new URLSearchParams(location.search).get('package')).key
+ const heroTypes=Object.values(heroPackages.packages).map(item=>
+  '<a href="#packageSelection" data-ar-section="packageSelection" data-hero-package="'+item.key+'"'+(item.key===selectedHeroPackage?' aria-current="true"':'')+'><b>'+item.name+'</b><strong data-package-coupon-price="'+item.key+'">'+heroPackages.money(heroPackages.cardCouponPrice(item))+'</strong></a>'
+ ).join('')
+ const heroBenefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">이벤트</h2><ul>'+heroPackages.discountOffers.map(offer=>'<li><span class="ed-benefit-symbol" aria-hidden="true">'+({first:'&#127873;',monthly:'&#10024;',advance1:'&#128197;'}[offer.key]||'&#10022;')+'</span><span>'+offer.label+' <strong>'+heroPackages.money(offer.discount)+' 할인</strong></span></li>').join('')+'</ul></section>'
  const heroCopy='<div class="ed-hero-overview"><p class="ed-hero-brand">WISTIA <span>웨딩 축가 전문 스튜디오</span></p><h1 id="arcProductTitle">AR 축가 사전녹음</h1><p class="ed-hero-lead">내 목소리로 미리 준비하는 축가, 본식에서는 더 편안하게</p>'+
   '<section class="ed-hero-essentials" aria-labelledby="heroEssentialsTitle"><h2 id="heroEssentialsTitle">한눈에 보는 녹음 안내</h2><ul><li>'+studioIcon('microphone')+'<span>한 소절씩 녹음 · 1:1 디렉팅</span></li><li>'+studioIcon('tune')+'<span>MR 편집 · 키 조절 무료</span></li><li>'+studioIcon('check')+'<span>음정부터 박자까지 섬세한 보컬 보정</span></li></ul></section>'+
-  '<div class="ed-hero-actions">'+window.WistiaRecording.shortcuts(window.WistiaRecording.selection(new URLSearchParams(location.search),duet))+'</div>'+heroBenefits+'</div>'
+  '<div class="ed-hero-actions"><nav class="ed-hero-types" aria-label="녹음 타입 바로 선택">'+heroTypes+'</nav><a class="ed-hero-price-jump" href="#packageSelection" data-ar-section="packageSelection">가격 바로 보기 <span aria-hidden="true">'+studioIcon('chevron')+'</span></a></div>'+heroBenefits+'</div>'
  const gallery='<div class="mas-gallery hs-gallery ed-hero-gallery" aria-label="위스티아 스튜디오 사진" aria-roledescription="carousel" data-mobile-gallery data-mobile-gallery-start="0"><div class="mas-gallery-viewport"><div class="mas-gallery-track hs-track" tabindex="0" aria-label="스튜디오 사진, 좌우로 넘겨 보세요">'+galleryVideos+'</div>'+'<span class="mas-gallery-count hs-count" aria-live="polite">01 / '+String(galleryPhotos.length).padStart(2,'0')+'</span></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 사전녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
  const selection='<section class="mas-selection" aria-labelledby="masSelectionTitle"><h2 id="masSelectionTitle" class="solo-selection-title">'+mobileArDesignIcon('people')+'인원 선택</h2>'+variants+'</section>'
@@ -1394,7 +1401,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
- '<details class="home-story" id="arcDetails"><summary>스토리 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>스토리 접기</button></details>'+soloFooter(key)+
+ '<details class="home-story" id="arcDetails"><summary>스토리 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>스토리 접기</button></details>'+homeTypeBlock(key)+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 let mobileGalleryCleanup=()=>{}
@@ -1446,41 +1453,19 @@ function initHomeDock(root){
  const dock=root.querySelector('.home-dock')
  if(!dock)return
  const banner=dock.querySelector('.home-offer'),link=banner.querySelector('a')
- const recording=window.WistiaRecording
- const selected=recording.selection(new URLSearchParams(location.search),root.dataset.arProduct==='duo')
- const timeButtons=root.querySelectorAll('[data-hero-recording]')
- let reachedReviews=false,dismissed=false,frame=0
+ let pastHero=false,dismissed=false
  function refreshOffer(){
-  const href=recording.inquiryHref(selected)
-  link.href=href
-  dock.querySelector('[data-package-inquiry]').href=href
-  link.firstElementChild.textContent=recording.monthly()?'첫 이용 할인 + 11월 마스터링 무료':'첫 이용 할인 받고 예약하기'
-  banner.hidden=dismissed||!reachedReviews
+  const event=window.WistiaPackages.activeMonthlyEvent(),current=selectedPackage().key
+  const tier=event?(event.packages.includes(current)?current:event.packages[0]):(current==='A'?'B':current)
+  link.href=packageInquiryHref(root.dataset.arProduct,tier)
+  link.firstElementChild.textContent=event?'첫이용 + '+event.month+'월 할인 받고 예약하기':'첫이용 할인 받고 예약하기'
+  banner.hidden=dismissed||!pastHero
  }
- function checkReviews(){
-  frame=0
-  const reviewLabel=root.querySelector('.arc-reviews .rv5-eye')
-  const dockTop=dock.getBoundingClientRect().top
-  const visibleBottom=dockTop>0?Math.min(dockTop,window.innerHeight):window.innerHeight
-  const reached=!!reviewLabel&&reviewLabel.getBoundingClientRect().bottom<=visibleBottom
-  if(reached!==reachedReviews){reachedReviews=reached;refreshOffer()}
- }
- function scheduleCheck(){if(!frame)frame=requestAnimationFrame(checkReviews)}
- window.addEventListener('scroll',scheduleCheck,{passive:true})
- window.addEventListener('resize',scheduleCheck)
+ const observer=new IntersectionObserver(([entry])=>{pastHero=entry.boundingClientRect.bottom<=0;refreshOffer()})
+ observer.observe(root.querySelector('.ed-hero'))
  window.addEventListener('wistia:price-date-change',refreshOffer)
- homeDockCleanup=()=>{
-  cancelAnimationFrame(frame)
-  window.removeEventListener('scroll',scheduleCheck)
-  window.removeEventListener('resize',scheduleCheck)
-  window.removeEventListener('wistia:price-date-change',refreshOffer)
- }
- scheduleCheck()
- timeButtons.forEach(button=>button.addEventListener('click',()=>{
-  selected.recordingMinutes=button.dataset.heroRecording
-  timeButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)))
-  refreshOffer()
- }))
+ root.querySelector('#packageSelection')?.addEventListener('change',refreshOffer)
+ homeDockCleanup=()=>{observer.disconnect();window.removeEventListener('wistia:price-date-change',refreshOffer)}
  banner.querySelector('button').addEventListener('click',()=>{dismissed=true;refreshOffer()})
  refreshOffer()
 }
@@ -1490,6 +1475,17 @@ function initArCommerceDetail(){
  homeDockCleanup?.()
  const gift=document.querySelector('.welcome-gift')
  if(gift&&'IntersectionObserver' in window){welcomeGiftObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){window.WistiaPackages.celebrate(gift);welcomeGiftObserver.disconnect()}},{threshold:.4});welcomeGiftObserver.observe(gift)}
+ const packageRoot=document.querySelector('#packageSelection')
+ window.WistiaPackages.mountSelection(packageRoot)
+ window.WistiaPackages.typeTable?.(packageRoot)
+ packageRoot?.addEventListener('change',event=>{
+  if(event.target.name!=='detailPackage')return
+  const p=window.WistiaPackages.packageFor(event.target.value),key=document.querySelector('[data-ar-product]')?.dataset.arProduct||'solo',url=new URL(location.href)
+  url.searchParams.set('package',p.key);history.replaceState(history.state,'',url.pathname+url.search)
+  window.WistiaPackages.syncSelection(packageRoot,p.key)
+  document.querySelectorAll('[data-package-inquiry],.solo-footer-inquiry').forEach(a=>a.href=packageInquiryHref(key,p.key))
+  document.querySelectorAll('[data-hero-package]').forEach(a=>{if(a.dataset.heroPackage===p.key)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})
+ })
  document.querySelectorAll('[data-detail-person]').forEach(button=>button.addEventListener('click',()=>{const y=window.scrollY,next=button.dataset.detailPerson==='solo'?'/':'/detail/'+button.dataset.detailPerson;history.replaceState(history.state,'',next+location.search);route({preserveScroll:true});window.scrollTo({top:y,behavior:'instant'})}))
  const root=document.querySelector('.ar-commerce-detail');if(!root)return
  initHomeDock(root)
@@ -1506,8 +1502,14 @@ function initArCommerceDetail(){
  root.querySelectorAll('[data-ar-section]').forEach(link=>link.addEventListener('click',event=>{
   event.preventDefault();let target=document.getElementById(link.dataset.arSection)
   const story=target?.closest('.home-story');if(story)story.open=true
+  if(link.dataset.heroPackage&&target){
+   target.querySelector('.package-card[data-tier="'+link.dataset.heroPackage+'"]')?.click()
+  }
   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
-  if(target)target.scrollIntoView({behavior,block:'start'})
+  if(target&&(link.classList.contains('ed-hero-price-jump')||link.dataset.heroPackage)){
+   const headerBottom=document.getElementById('siteHeader')?.getBoundingClientRect().bottom||0
+   window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-Math.max(0,headerBottom)-20,behavior})
+  }else if(target)target.scrollIntoView({behavior,block:'start'})
   root.querySelectorAll('.arc-tabs a').forEach(item=>{if(item.dataset.arSection===link.dataset.arSection)item.setAttribute('aria-current','location');else item.removeAttribute('aria-current')})
  }))
 }
@@ -1688,7 +1690,7 @@ function eventProductOptions(key,purpose=""){return [...(PRODUCT_OPTIONS[key]||[
 function calculate(){
  if(['solo','duo'].includes(currentEventProduct)){
   const form=document.querySelector('form[data-wizard]'),v=form?Object.fromEntries(new FormData(form)):{package:selectedPackage().key,people:currentEventProduct==='duo'?'1':'0',options:[...selectedOptions]}
-  const q=form?window.WistiaRecording.quote({...v,firstVisit:window.WistiaRecording.firstVisit()}):window.WistiaPackages.quote(v),chosen=EVENTS.filter(e=>selectedEvents.has(e.key)||v[e.key==='blog'?'paybackBlog':'paybackReaction']==='1'),payback=chosen.reduce((sum,e)=>sum+e.discount,0)
+  const q=window.WistiaPackages.quote(v),chosen=EVENTS.filter(e=>selectedEvents.has(e.key)||v[e.key==='blog'?'paybackBlog':'paybackReaction']==='1'),payback=chosen.reduce((sum,e)=>sum+e.discount,0)
   const product={...PRODUCTS[currentEventProduct],normal:q.base,title:q.package.name+' · '+(q.v.people==='1'?'듀엣':'1인')}
   return {product,chosen,discount:q.discount,payback,minutes:q.minutes,optionEntries:q.options.map(o=>({...o,total:o.price,quantity:1})),songOption:null,formatUpgrade:0,optionPrice:q.optionTotal,finalPrice:q.total,effectivePrice:q.total}
  }

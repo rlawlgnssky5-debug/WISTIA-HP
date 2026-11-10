@@ -11,12 +11,9 @@
   const input=data?.fields||{},parts=data?.wedding||{}
   return {version:1,flow:'recording-v2',step:Number.isInteger(data?.step)?Math.max(0,Math.min(4,data.step)):0,view:data?.view==='time'?'time':'date',fields:{
    package:['A','B','C','D'].includes(input.package)?input.package:'A',people:input.people==='1'?'1':'0',discovery:sources.includes(input.discovery)?input.discovery:'',
-   recordingMinutes:['50','90','150'].includes(input.recordingMinutes)?input.recordingMinutes:'',
-   recordingMix:input.recordingMix==='1'?'1':input.recordingMix==='0'?'0':'',
-   recordingMaster:input.recordingMaster==='1'?'1':input.recordingMaster==='0'?'0':'',
    bookingDate:date(input.bookingDate),
    timeStart:/^(?:1[3-9]|2[0-3]):00$/.test(input.timeStart)?input.timeStart:'',
-   tuning:input.tuning==='1'?'1':input.recordingMinutes?'0':'',detailMix:input.detailMix==='1'?'1':'',precisionMix:input.precisionMix==='1'?'1':'',extraHour:input.extraHour==='1'?'1':'',rush:input.rush==='1'?'1':'0',firstVisit:input.firstVisit==='1'?'1':'',yearEndCoupon:input.yearEndCoupon==='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
+   tuning:input.tuning==='1'?'1':'',detailMix:input.detailMix==='1'?'1':'',precisionMix:input.precisionMix==='1'?'1':'',extraHour:input.extraHour==='1'?'1':'',rush:input.rush==='1'?'1':'',firstVisit:input.firstVisit==='1'?'1':'',yearEndCoupon:input.yearEndCoupon==='1'?'1':'',specialNotes:typeof input.specialNotes==='string'?input.specialNotes.slice(0,2000):''
   },wedding:{year:'',month:'',day:''}}
  }
  function read(key){
