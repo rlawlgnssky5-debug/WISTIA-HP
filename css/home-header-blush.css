@@ -1,0 +1,111 @@
+/* This layer precedes the layout layers so the ribbon can keep its existing box sizes. */
+@layer wistia-home-header-blush {
+  #siteHeader[data-home-event-rows] {
+    background: linear-gradient(155deg, #fffefa 8%, #f0eef6 57%, #fff7f4 100%) !important;
+    box-shadow: inset 0 -1px #ebd4cf !important;
+  }
+
+  #siteHeader[data-home-event-rows] .wordmark span,
+  #siteHeader[data-home-event-rows] #menuToggle svg {
+    color: #50342f !important;
+  }
+
+  #siteHeader[data-home-event-rows] #menuToggle svg {
+    stroke: currentColor !important;
+  }
+
+  #siteHeader[data-home-event-rows] #menuToggle::before {
+    background: linear-gradient(145deg, #fff, #fbf7f8b3) !important;
+    box-shadow: 0 2px 8px #4f332c0e !important;
+  }
+
+  #siteHeader .ed-event-ribbon {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #siteHeader .ed-event-row {
+    position: relative;
+    isolation: isolate;
+    background: transparent !important;
+    border-color: transparent !important;
+    border-radius: 999px !important;
+  }
+
+  #siteHeader .ed-event-row::before {
+    content: "";
+    position: absolute;
+    inset: 1px 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--event-art), linear-gradient(105deg, #fbefef, #fbf2f0 51%, #f7e6e4);
+    box-shadow: inset 0 0 0 1px #e8b9b95e;
+    pointer-events: none;
+  }
+
+  #siteHeader [data-event-row="first"] {
+    --event-art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 44'%3E%3Cg fill='%23e9a2a3' fill-opacity='.26'%3E%3Cellipse cx='57' cy='30' rx='9' ry='18' transform='rotate(-35 57 30)'/%3E%3Cellipse cx='72' cy='24' rx='9' ry='20' transform='rotate(12 72 24)'/%3E%3Cellipse cx='87' cy='33' rx='9' ry='18' transform='rotate(52 87 33)'/%3E%3Cellipse cx='44' cy='39' rx='8' ry='17' transform='rotate(-67 44 39)'/%3E%3Cellipse cx='99' cy='40' rx='7' ry='15' transform='rotate(68 99 40)'/%3E%3C/g%3E%3Ccircle cx='71' cy='44' r='5' fill='%23efc28d' fill-opacity='.6'/%3E%3C/svg%3E") 76% bottom / auto 100% no-repeat;
+    --event-symbol: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23b65f63'%3E%3Cpath d='M3 11h8v11H5a2 2 0 0 1-2-2zm10 0h8v9a2 2 0 0 1-2 2h-6zM2 7h9v3H2zm11 0h9v3h-9z'/%3E%3Cpath d='M12 7C7 7 5 5.5 5 3.8 5 2.5 6.1 2 7.3 2 9 2 10.4 4 12 7zm0 0c5 0 7-1.5 7-3.2C19 2.5 17.9 2 16.7 2 15 2 13.6 4 12 7z' fill='none' stroke='%23b65f63' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+
+  #siteHeader [data-event-row="monthly"] {
+    --event-art: radial-gradient(ellipse 52% 165% at 52% 165%, #efd4d1 98%, #fff8f6 99%, transparent 100%);
+    --event-symbol: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23b65f63'%3E%3Cpath d='m2 22 4-15 11 11z'/%3E%3Cpath d='M8 6 7 3m5 5c0-3 1-4 3-5m0 10c2-3 4-4 7-3m-3 6 3 1m-3-12 2-2' fill='none' stroke='%23b65f63' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='m5 13 6 7m-7-4 4 5' fill='none' stroke='%23f7d7d5' stroke-width='1'/%3E%3C/svg%3E");
+  }
+
+  #siteHeader .ed-event-star {
+    position: relative;
+    color: transparent !important;
+  }
+
+  #siteHeader .ed-event-star::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--event-symbol) left center / contain no-repeat;
+  }
+
+  #siteHeader .ed-event-star::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    width: 1px;
+    background: #d78a8d70;
+  }
+
+  #siteHeader .ed-event-label {
+    position: relative;
+    isolation: isolate;
+    color: #884448 !important;
+  }
+
+  #siteHeader .ed-event-label::before {
+    content: "";
+    position: absolute;
+    inset: -1px -2px;
+    z-index: -1;
+    border-radius: 999px;
+    background: #f1d7d8;
+  }
+
+  #siteHeader .ed-event-question,
+  #siteHeader .ed-event-keyword {
+    color: #4a2c27 !important;
+    box-shadow: none !important;
+  }
+
+  #siteHeader .ed-event-discount {
+    color: #8c3d43 !important;
+    background: #fff8f6 !important;
+    border-color: #d68d90 !important;
+    box-shadow: none !important;
+  }
+
+  #siteHeader [data-event-row="first"] .ed-event-discount {
+    color: #fff !important;
+    background: linear-gradient(105deg, #a9575c, #a45155) !important;
+    border-color: transparent !important;
+  }
+}
