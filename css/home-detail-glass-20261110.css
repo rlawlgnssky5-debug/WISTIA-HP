@@ -22,7 +22,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews #reviews { background: #FBF7F1 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcWorries { background: #F8E8ED !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcRecording { background: #F3ECE4 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey { background: #6E3446 !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey { background: #F1E6F0 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcTuning { background: #FBF7F1 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 { background: #EBD3DB !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcProcess { background: #F3ECE4 !important; }
@@ -71,7 +71,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .rv5-title strong {
   font-size: 20px !important; font-weight: 700 !important; line-height: 1.45 !important;
 }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 h2 .ed-title { font-size: 16px !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 h2 .ed-title { font-size: 17px !important; font-weight: 700 !important; white-space: nowrap !important; letter-spacing: -.025em !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-description {
   font-size: 14px !important; line-height: 1.6 !important; font-weight: 400 !important; color: var(--hg-muted) !important;
   margin: 12px 0 0 !important; text-align: center !important; word-break: keep-all !important;
@@ -192,17 +192,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-description { color: #64585d !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-track, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .ed-ratio-track * { color: #5f4a52 !important; }
 
-/* 짙은 와인 띠 (POINT 02): 제목은 흰 글자, 카드는 더 불투명한 밝은 유리 */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey h2, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey h2 .ed-title { color: #fff !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey h2 .ed-title { box-shadow: inset 0 -5px 0 rgba(255,255,255,.28) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .ed-description { color: rgba(255,255,255,.86) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .ed-point { color: #6E3446 !important; background: rgba(255,255,255,.92) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free::before, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free::after { background: rgba(255,255,255,.35) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free b { color: #6E3446 !important; background: linear-gradient(145deg, #fff, #f6dde6) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-card { background: linear-gradient(125deg, rgba(255,255,255,.97), rgba(252,232,240,.92)) !important; box-shadow: inset 0 1px 1px #fff, 0 10px 24px rgba(30,8,16,.28) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-card small { color: #8a4a5d !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-card p { color: #5f5257 !important; }
-
 /* 카드 안 작은 글자 대비 보강 (색만 진하게) */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-time, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-time * { color: #6f6166 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-tab.active { background: #9d596c !important; }
@@ -210,4 +199,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge b, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-badge u { color: #a8445e !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-walk p { color: #8a4a5d !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .ed-map-icon { background-color: #9d596c !important; }
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #arcKey .hg-key-free b { color: #84455a !important; }
+@media (max-width: 374px) { html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails > #soloPoint04 h2 .ed-title { font-size: 15.5px !important; } }
 }
