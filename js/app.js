@@ -4,7 +4,7 @@ const KAKAO_STUDIO_PLACE_URL = "https://map.kakao.com/?q=%EC%9C%84%EC%8A%A4%ED%8
 
 const PRODUCTS = {
   solo: {
-    key: "solo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 · 1인 · STANDARD·DELUXE·PREMIUM",
+    key: "solo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 · 1인 · 녹음 50분·1시간 30분·2시간 30분",
     sub: "미리 완성한 목소리를 AR로 함께 틀어 본식에서는 더 안정적으로, 녹음한 노래는 오래도록 남깁니다",
     normal: 90000,
     resultVideo: "assets/video/groom-wedding-song-ar.mp4",
@@ -39,7 +39,7 @@ const PRODUCTS = {
     ]
   },
   duo: {
-    key: "duo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 · 듀엣 · STANDARD·DELUXE·PREMIUM",
+    key: "duo", category: "song", kicker: "WEDDING SONG AR", title: "AR 축가 · 듀엣 · 녹음 50분·1시간 30분·2시간 30분",
     sub: "두 분이 함께 부르는 1곡을 선택한 타입의 녹음 시간과 작업 구성에 맞춰 준비합니다",
     normal: 90000,
     resultVideo: "assets/video/duo-wedding-song-ar.mp4",
@@ -68,7 +68,7 @@ const PRODUCTS = {
     ],
     included: ["두 사람 녹음 및 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "최종 음원 전달"],
     faq: [
-      ["DUET 상품은 몇 명이 이용하나요", "1곡 기준 두 분이 이용해요 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요"],
+      ["두 사람이 함께 녹음할 수 있나요", "인원에서 2인 (듀엣곡)을 선택하시면 2인 1곡으로 준비해요<br>1인 기준 구성에 40,000원이 추가돼요"],
       ["두 사람이 함께 녹음할 수 있나요", "인원에서 2인 (듀엣곡)을 선택하시면 2인 1곡으로 준비해요<br>1인 기준 구성에 40,000원이 추가돼요"],
       ["어떤 파일을 받나요", "예식장에서 사용할 AR과 선택한 작업이 반영된 완성 음원을 전달해요"]
     ]
@@ -163,7 +163,7 @@ const PRODUCTS = {
     ],
     included: ["두 사람 녹음 및 1대1 디렉팅", "파트 · 화음 구성", "음정 · 박자 보정", "믹싱 · 마스터링", "녹음 메이킹 및 립싱크 촬영", "영상 편집", "축가 상영용 최종본과 완성 음원 전달"],
     faq: [
-      ["AR 축가와 듀엣은 어떻게 다른가요", "둘 다 같은 STANDARD·DELUXE·PREMIUM예요 듀엣은 선택한 타입에 듀엣 변경 30,000원을 더하고 녹음 시간은 그대로예요 DUET 패키지는 2인 1곡, 녹음 2시간 30분, 보정·정밀 믹싱·마스터링 포함 240,000원이에요"],
+      ["AR 축가와 듀엣은 어떻게 다른가요", "인원에서 2인 (듀엣곡)을 선택하시면 2인 1곡으로 준비해요<br>1인 기준 구성에 40,000원이 추가돼요"],
       ["듀엣에는 어떤 구성이 포함되나요", "1곡 기준으로 두 분이 함께 준비해요 선택한 타입의 녹음 시간과 작업 구성을 유지해요"],
       ["어떤 파일을 받나요", "본식 축가 순서에 상영할 영상과 두 분이 함께 부른 완성 음원을 전달합니다"],
       ["완성까지 얼마나 걸리나요", "기본 제작 기간은 촬영과 자료 전달이 완료된 뒤 약 14일입니다"]
@@ -395,7 +395,7 @@ const INFO_FAQ_GROUPS=[
  {title:"녹음 당일",description:"처음이어도 편안하게 부르실 수 있도록 도와드려요",items:[
   ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","그럼요! 처음이셔도 괜찮아요<br><br>어려운 부분은 한 소절씩 나누어 녹음하고<br>1:1 맞춤 디렉팅으로 함께 완성해 드려요<br><br>부담 없이 편안하게 노래해 주세요"],
   ["녹음은 현장에서 어떻게 진행되나요?","먼저 곡과 키를 확인하고<br>가볍게 연습한 뒤 녹음을 시작해요<br><br>한 구간씩 나누어 녹음하며<br>어려운 부분은 다시 부르실 수 있어요<br><br>연습과 디렉팅도 선택하신 타입의<br>녹음 시간에 포함돼요"],
-  ["녹음 시간이 부족하면 추가할 수 있나요?","네, 1시간 추가 비용은 60,000원이에요<br><br>다만 당일 연장은 다음 예약 상황에 따라<br>어려울 수 있어 미리 신청하시길 추천드려요<br><br>DUET 타입은 시간 추가가 어려워요"]
+  ["녹음 시간이 부족하면 추가할 수 있나요?","네, 1시간 추가 비용은 60,000원이에요<br><br>다만 당일 연장은 다음 예약 상황에 따라<br>어려울 수 있어 미리 신청하시길 추천드려요"]
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 안내해 드려요",items:[
   ["AR 축가는 본식에서 어떻게 진행하나요?","예식장에서 미리 녹음한 AR을 재생하고<br>그 위에 직접 노래하시면 돼요<br><br>본식 전에 담당자에게 음원을 전달하고<br>재생 상태와 마이크를 미리 확인해 주세요"],
@@ -417,8 +417,8 @@ const SERVICE_META = {
   wedding:{type:"OUR STORY",label:"AR 축가 듀엣",use:"식전 또는 축가 순서",who:"참여 인원 상담 후 결정",result:"이야기가 있는 영상 + 완성 음원",short:"우리의 노래와 이야기를 담는 웨딩 영상",image:"assets/img/wedding/02-interview.webp"},
   "duet-film":{type:"OUR DUET",label:"듀엣 축가 영상",use:"본식 축가 순서",who:"신랑신부 두 사람",result:"본식에서 바로 상영하는 듀엣 축가 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"우리 둘의 노래로 채우는 축가 시간",image:"assets/img/song-film/duet-video-cover.jpg"},
   "solo-film":{type:"A SONG FOR YOU",label:"AR 축가",use:"본식 축가 순서",who:"한 사람 또는 두 사람",result:"본식에서 바로 상영하는 녹음 메이킹 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"직접 부른 노래를 녹음 장면과 함께 영상으로",image:"assets/img/solo-film/solo-film-cover-v2.webp"},
-  solo:{type:"직접 부르는 축가",label:"AR 축가 · 1인 · STANDARD·DELUXE·PREMIUM",use:"현장에서 직접 노래",who:"1곡 기준 · 1인",result:"본식용 AR + 완성 음원",short:"STANDARD·DELUXE·PREMIUM로 준비하는 1인 축가",image:"assets/img/song/solo.webp"},
-  duo:{type:"직접 부르는 축가",label:"AR 축가 · 듀엣 · STANDARD·DELUXE·PREMIUM +30,000원",use:"현장에서 직접 노래",who:"1곡 기준 · 2인",result:"본식용 AR + 완성 음원",short:"선택한 타입에 듀엣 변경 30,000원을 더해요",image:"assets/img/song/duo.webp"},
+  solo:{type:"직접 부르는 축가",label:"AR 축가 · 1인 · 녹음 50분·1시간 30분·2시간 30분",use:"현장에서 직접 노래",who:"1곡 기준 · 1인",result:"본식용 AR + 완성 음원",short:"녹음 50분·1시간 30분·2시간 30분 중 골라 준비하는 1인 축가",image:"assets/img/song/solo.webp"},
+  duo:{type:"직접 부르는 축가",label:"AR 축가 · 듀엣 · 1인 기준 구성 +40,000원",use:"현장에서 직접 노래",who:"1곡 기준 · 2인",result:"본식용 AR + 완성 음원",short:"선택한 타입에 듀엣 변경 30,000원을 더해요",image:"assets/img/song/duo.webp"},
   proposal:{type:"ONLY FOR YOU",label:"프로포즈 · 답프로포즈",use:"둘만의 고백 순간",who:"마음을 전하는 한 사람",result:"프로포즈 상영용 영상 + 보컬 보정·믹싱을 마친 완성 음원",short:"말로 다 전하지 못한 마음을 한 편의 영상으로",image:"assets/img/proposal-video-cover.jpg"}
 }
 const FILM_FORMAT_PRODUCTS = new Set(["wedding","duet-film","solo-film","proposal"])
@@ -894,7 +894,7 @@ function renderLegacyHome(requested="role"){
  Object.values(visuals.role).forEach(visual=>visual[1]="")
  visuals.role.making[2]="STORY FILM"
  const configs={
-  role:{number:"",title:"어떤 순간을 남기고 싶으신가요?",description:"1인 축가와 듀엣 중 선택해 주세요",name:"finderRole",items:[["singer","축가 AR 사전 녹음",'<b class="finder-product-hook">결혼식에서 직접 축가를 부른다면</b><br>내 목소리를 미리 녹음해<br>당일 축가를 더 안정적으로'],["making","AR 축가 듀엣",'<b class="finder-product-hook">두 분이 함께 축가를 부른다면</b><br>같은 STANDARD·DELUXE·PREMIUM에<br>듀엣 변경 30,000원을 더해요']]},
+  role:{number:"",title:"어떤 순간을 남기고 싶으신가요?",description:"1인 축가와 듀엣 중 선택해 주세요",name:"finderRole",items:[["singer","축가 AR 사전 녹음",'<b class="finder-product-hook">결혼식에서 직접 축가를 부른다면</b><br>내 목소리를 미리 녹음해<br>당일 축가를 더 안정적으로'],["making","AR 축가 듀엣",'<b class="finder-product-hook">두 분이 함께 축가를 부른다면</b><br>1인 기준 구성에<br>40,000원을 더해요']]},
   service:{number:"02",title:"무엇을 준비하시나요?",description:"예식에서 상영할 영상을 선택해 주세요",name:"finderMoment",items:[["ceremony","축가 순서에 상영할 영상","축가를 따로 섭외하지 않고, 우리가 직접 부른 영상을 축가 시간에 상영해요"]]},
   people:{number:"03",title:"혼자 준비하시나요, 두 분이 함께 준비하시나요?",description:"노래를 녹음하고 영상에 참여하는 인원을 선택해 주세요",name:"finderPeople",items:[["one","1인 · 혼자 준비해요","신랑 또는 신부 한 분이 노래하고 준비하는 경우"],["two","2인 · 두 분이 함께 준비해요","신랑신부 두 분이 함께 노래하고 준비하는 경우"]]}
  }
@@ -1035,7 +1035,7 @@ function detailPersonTabs(key){
 }
 function soloTopCta(key="solo"){const song=["solo","duo"].includes(key),copy=song?"1시간·2시간 AR 축가, 이벤트 가격 확인하기":"식전·축가 영상, 이벤트 가격 확인하기";return '<div class="solo-top-cta"><a href="#/event/'+key+'" aria-label="'+copy+'로 이동">'+copy+' <b aria-hidden="true">→</b></a></div>'}
 function initSoloTopCta(){const bar=document.querySelector(".solo-top-cta");if(!bar)return;bar.classList.remove("is-stuck");bar.previousElementSibling?.classList.contains("solo-top-cta-sentinel")&&bar.previousElementSibling.remove()}
-const SOLO_PERSON_ITEMS=[{key:"solo",title:"1인",desc:"1곡 기준 · STANDARD·DELUXE·PREMIUM"},{key:"duo",title:"듀엣",desc:"1곡 기준 · 듀엣 변경 30,000원"}]
+const SOLO_PERSON_ITEMS=[{key:"solo",title:"1인",desc:"1곡 기준 · 녹음 50분·1시간 30분·2시간 30분"},{key:"duo",title:"듀엣",desc:"1곡 기준 · 듀엣 변경 30,000원"}]
 function soloPersonTabs(key){const activeIndex=SOLO_PERSON_ITEMS.findIndex(item=>item.key===key);return '<section class="shell solo-person-picker" aria-label="녹음 시간 선택"><div class="solo-person-tabs" role="tablist" aria-label="AR 축가 1시간·2시간 선택" data-active="'+Math.max(activeIndex,0)+'">'+SOLO_PERSON_ITEMS.map((item,i)=>{const active=item.key===key;return '<a class="solo-person-tab'+(active?' is-active':'')+'" role="tab" aria-selected="'+active+'" tabindex="'+(active?"0":"-1")+'" href="'+(item.key==='solo'?'#/':'#/detail/'+item.key)+'" data-solo-person-tab="'+i+'"><strong>'+item.title+'</strong><span>'+item.desc+'</span></a>'}).join("")+'<span class="solo-person-indicator" aria-hidden="true"></span></div></section>'}
 function initSoloPersonTabs(){const tabs=document.querySelector(".solo-person-tabs");if(!tabs)return;const links=[...tabs.querySelectorAll("[data-solo-person-tab]")];links.forEach((link,i)=>{link.addEventListener("keydown",e=>{if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();const next=links[(i+(e.key==="ArrowRight"?1:-1)+links.length)%links.length];links.forEach(l=>l.tabIndex=-1);next.tabIndex=0;next.focus()})})}
 const DETAIL_PRODUCT_FAMILIES={
@@ -1216,7 +1216,7 @@ function arCommerceDetail(p,key="solo"){
   :'<section class="arc-point arc-point-tuning" aria-label="보컬 보정 전후 듣기">'+detailPointSection(wistiaBeforeAfterSection(),'03')+'</section>'
  const media='<div class="arc-product-media ar-hook-media"><img class="ar-hook-fallback" src="'+customerVideo.poster+'" alt="'+customerVideo.label+'" fetchpriority="high"><video loop playsinline preload="metadata" poster="'+customerVideo.poster+'" aria-label="'+customerVideo.label+'"><source src="'+customerVideo.src+'" type="video/mp4"></video><button class="ar-hook-video-control" type="button" data-ar-video-toggle aria-label="영상 재생"><span class="ar-icon-play">▶</span><span class="ar-icon-pause">Ⅱ</span></button><span class="arc-media-note">고객님이 직접 보내주신 본식 영상</span></div>'
  const desktopHtml='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail" data-ar-product="'+key+'">'+
- '<section class="arc-product" aria-labelledby="arcProductTitle">'+media+'<div class="arc-summary"><p class="arc-kicker">WISTIA · 경기도 부천</p><h1 id="arcProductTitle">위스티아 AR 축가<br><span data-ar-format>'+(key==='duo'?'DUET(2인)':'SOLO(1인)')+'</span> · <span data-ar-hours>'+hours+'</span>시간</h1><p class="arc-hook">축가, 직접 부르세요!<br>목소리는 미리 준비하세요</p><div class="arc-price" data-price-block><span>1곡 기준 · 기본 가격</span><strong><span data-ar-price>'+amount+'</span><small>원</small></strong></div><div class="arc-options" role="group" aria-label="녹음 시간 선택"><button type="button" data-ar-time="solo" aria-pressed="'+(key==='solo')+'"><b>SOLO(1인)</b><span>STANDARD·DELUXE·PREMIUM</span></button><button type="button" data-ar-time="duo" aria-pressed="'+(key==='duo')+'"><b>DUET(2인)</b><span>듀엣 변경 30,000원</span></button></div><p class="arc-included">보컬 디렉팅 · 음정·박자 보정<br>믹싱·마스터링 포함</p><div class="arc-actions">'+action('가격·옵션 확인')+action('카카오톡 상담',true)+'</div><p class="arc-online-note">사이트 결제 없이 상담으로 일정과 구성을 확인합니다</p></div></section>'+
+ '<section class="arc-product" aria-labelledby="arcProductTitle">'+media+'<div class="arc-summary"><p class="arc-kicker">WISTIA · 경기도 부천</p><h1 id="arcProductTitle">위스티아 AR 축가<br><span data-ar-format>'+(key==='duo'?'DUET(2인)':'SOLO(1인)')+'</span> · <span data-ar-hours>'+hours+'</span>시간</h1><p class="arc-hook">축가, 직접 부르세요!<br>목소리는 미리 준비하세요</p><div class="arc-price" data-price-block><span>1곡 기준 · 기본 가격</span><strong><span data-ar-price>'+amount+'</span><small>원</small></strong></div><div class="arc-options" role="group" aria-label="녹음 시간 선택"><button type="button" data-ar-time="solo" aria-pressed="'+(key==='solo')+'"><b>SOLO(1인)</b><span>녹음 50분·1시간 30분·2시간 30분</span></button><button type="button" data-ar-time="duo" aria-pressed="'+(key==='duo')+'"><b>DUET(2인)</b><span>듀엣 변경 30,000원</span></button></div><p class="arc-included">보컬 디렉팅 · 음정·박자 보정<br>믹싱·마스터링 포함</p><div class="arc-actions">'+action('가격·옵션 확인')+action('카카오톡 상담',true)+'</div><p class="arc-online-note">사이트 결제 없이 상담으로 일정과 구성을 확인합니다</p></div></section>'+
  '<nav class="arc-tabs" aria-label="상품 상세 메뉴">'+[['arcDetails','상세정보'],['reviews','실제 후기'],['arcFaq','자주 묻는 질문'],['arcProcess','진행 안내']].map(([id,title])=>'<a href="#'+id+'" data-ar-section="'+id+'">'+title+'</a>').join('')+'</nav>'+
  '<section class="arc-point arc-package" id="arcDetails"><header><span class="arc-kicker">상품 기본 구성</span><h2>녹음부터 완성 음원까지<br><mark>기본 구성에 포함</mark></h2><p>보컬 디렉팅, 수작업 보정, 믹싱·마스터링<br>본식용 AR과 완성 음원을 전달합니다</p></header>'+productPackageOverview(key).replace(key==='duo'?'녹음 120분':'녹음 60분','녹음 <span data-ar-minutes>'+(key==='duo'?'120':'60')+'</span>분')+'</section>'+
  '<section class="arc-empathy arc-section" id="arcEmpathy"><span class="arc-kicker">축가가 걱정되신다면</span><h2>노래 실력보다<br><mark>내 목소리가 먼저입니다</mark></h2><p>떨려서 음정이 흔들릴까 봐, 가사를 놓칠까 봐<br>혼자 걱정하지 마세요</p><div class="arc-emphasis">미리 녹음한 내 목소리가<br>본식에서 함께합니다</div><p>내 목소리가 담긴 AR을 재생하며 직접 부르는 축가<br>마음은 직접 전하고, 목소리는 미리 준비합니다</p></section>'+
@@ -1231,7 +1231,7 @@ function arCommerceDetail(p,key="solo"){
  '<div class="arc-engineer">'+arExpertStory('solo')+'</div>'+
  '<section class="arc-section arc-process" id="arcProcess"><span class="arc-kicker">진행 순서</span><h2>준비부터 전달까지<br>이렇게 진행합니다</h2><ol>'+[['상담·예약','원하는 곡, 녹음 시간과 본식 일정을 확인합니다'],['방문·녹음','경기도 부천 스튜디오에서 구간별 녹음과 1:1 디렉팅을 진행합니다'],['보정·완성','음정·박자를 수작업으로 다듬고 믹싱·마스터링을 진행합니다'],['음원 전달','본식용 AR과 완성 음원을 받고 예식장 담당자와 재생을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><div><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')+'</ol></section>'+
  '<section class="arc-section arc-faq" id="arcFaq"><h2>자주 묻는 질문</h2>'+faq(questions)+'</section>'+
- '<section class="arc-section arc-time-guide"><span class="arc-kicker">인원과 녹음 시간</span><h2>혼자 또는 함께,<br>인원에 맞게 선택하세요</h2><div class="arc-time-cards"><article><h3>SOLO(1인)</h3><strong>90,000원</strong><p>1곡 기준 · STANDARD·DELUXE·PREMIUM</p></article><article><h3>DUET(2인)</h3><strong>30,000원</strong><p>듀엣 변경 · 녹음 시간 유지</p></article></div><p>SOLO는 1인, DUET은 2인 녹음 상품입니다<br>표시 시간에는 안내·연습·부가 시간이 포함됩니다</p></section>'+
+ '<section class="arc-section arc-time-guide"><span class="arc-kicker">인원과 녹음 시간</span><h2>혼자 또는 함께,<br>인원에 맞게 선택하세요</h2><div class="arc-time-cards"><article><h3>SOLO(1인)</h3><strong>90,000원</strong><p>1곡 기준 · 녹음 50분·1시간 30분·2시간 30분</p></article><article><h3>DUET(2인)</h3><strong>30,000원</strong><p>듀엣 변경 · 녹음 시간 유지</p></article></div><p>SOLO는 1인, DUET은 2인 녹음 상품입니다<br>표시 시간에는 안내·연습·부가 시간이 포함됩니다</p></section>'+
  '<section class="arc-section arc-notices"><span class="arc-kicker">BEFORE YOU BOOK</span><h2>예약 전에 확인하세요</h2><ul><li><strong>납기</strong> <span>녹음일 기준 7일 이내</span></li><li><strong>수정</strong> <span>수정은 상담에서 안내해요</span></li><li><strong>추가 옵션</strong> <span>녹음 1시간 추가 60,000원<br>100% 립싱크 20,000원</span></li><li><strong>본식 사용</strong> <span>예식장 담당자와 음원 재생·리허설을 사전에 확인해 주세요<br>현장 음향에 따라 들리는 느낌은 달라질 수 있습니다</span></li></ul><a href="/info/location" class="arc-location-link">경기도 부천 스튜디오 오시는 길 →</a></section>'+
  '<section class="arc-section arc-final"><h2>축가는 직접,<br>준비는 위스티아와 함께</h2><p>선택한 구성과 가격을 복사한 뒤<br>카카오톡에서 일정을 확인하세요</p><div class="arc-actions">'+action('가격·옵션 확인')+'</div></section>'+footer()+
  '<aside class="arc-bottom" aria-label="상품 가격과 상담"><span><small>AR 축가 · <span data-ar-hours>'+hours+'</span>시간</small><b><span data-ar-price>'+amount+'</span>원</b></span>'+action('가격 보기')+action('카카오톡 상담',true)+'</aside></div>'
@@ -1326,7 +1326,7 @@ function packageInformation(key,packageKey){
  const rows=[['상품',p.name+' | '+p.title],['인원·곡수',(duet?'2':'1')+'인·1곡'],['녹음 시간',(window.WistiaPackages?.hoursText?.(p.minutes)||p.minutes+'분')+' + 1:1 디렉팅'],['정밀 믹싱',p.mixing?'포함':'추가 선택'],['음정·박자 보정',p.tuning?'포함':'추가 선택'],['마스터링',p.mixing?'포함':'추가 선택'],['음원 전달','녹음일 기준 7일 이내']]
  return '<h2>선택한 상품정보</h2><dl>'+rows.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+escapeHtml(value)+'</dd></div>').join('')+'</dl>'
 }
-function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.key==='tuning'?'스탠다드는 추가 선택 · DELUXE·PREMIUM·DUET에는 포함':o.key==='detailMix'||o.key==='precisionMix'?'모든 타입에 포함':o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
+function packageOptionsGuide(){return '<section data-svg-title="off" class="package-options-guide"><h3>추가 옵션</h3><ul>'+[['듀엣으로 변경',30000,'2인·1곡 · 선택한 타입의 녹음 시간 유지'],...window.WistiaPackages.options.map(o=>[o.label,o.price,o.detail])].map(([name,price,description])=>'<li><b>'+name+' — '+won(price)+'</b>'+(description?'<small>'+description+'</small>':'')+'</li>').join('')+'</ul></section>'}
 function optionExplainSection(){
  const steps=[
   ['rose','01','튜닝중~','음정·박자 보정','한 음, 한 박자까지 수작업으로 정교하게 다듬어','목소리의 자연스러움은 살리고 노래의 완성도를 높입니다','assets/img/option-explain/opt-tune.png',949,793],
@@ -1454,7 +1454,7 @@ function initHomeDock(root){
   const href=recording.inquiryHref(selected)
   link.href=href
   dock.querySelector('[data-package-inquiry]').href=href
-  link.firstElementChild.textContent=recording.monthly()?'첫 이용 할인 + 11월 마스터링 무료':'첫 이용 할인 받고 예약하기'
+  link.firstElementChild.textContent=recording.monthly()?'첫 이용 할인 + 11월 마스터링 무료 · 50분 제외':'첫 이용 할인 받고 예약하기'
   banner.hidden=dismissed||!reachedReviews
  }
  function checkReviews(){
@@ -1711,7 +1711,7 @@ function bookingBaseSection(key){
  const service=["solo","duo"].includes(key)?"solo":key
  const services=[["solo","축가 AR 사전 녹음"]]
  const serviceSelect='<label class="booking-product-select" for="bookingService"><span class="sr-only">상품</span><select id="bookingService" name="quoteProduct" data-product-select>'+services.map(([value,label])=>'<option value="'+value+'"'+(service===value?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'
- const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1인</strong><small>1곡 기준 · STANDARD 50분 · DELUXE 1시간 30분 · PREMIUM 2시간 30분</small></span><b>STANDARD·DELUXE·PREMIUM</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>듀엣(2인)</strong><small>1곡 기준 · 선택한 타입 시간 유지</small></span><b>듀엣 변경 30,000원</b></label></div></div>':bookingFilmFormatSection(key)
+ const people=inquiryUndecided?'':["solo","duo"].includes(key)?'<div class="booking-base-choice"><p>1곡 기준 · 녹음 인원과 시간</p><div class="calculator-option-list"><label class="option-choice"><input type="radio" name="arDuration" data-base-product="solo" '+(key==="solo"?'checked':'')+'><span><strong>1인</strong><small>1곡 기준 · 녹음 50분 · 1시간 30분 · 2시간 30분</small></span><b>1인 기본</b></label><label class="option-choice"><input type="radio" name="arDuration" data-base-product="duo" '+(key==="duo"?'checked':'')+'><span><strong>듀엣(2인)</strong><small>1곡 기준 · 선택한 타입 시간 유지</small></span><b>듀엣 변경 30,000원</b></label></div></div>':bookingFilmFormatSection(key)
  const note=key==="wedding"||key==="duet-film"?'<p class="booking-base-note">2인 기준</p>':''
  return '<section class="booking-base calculator-step consultation-step"><span class="booking-step">01</span><h2>상품 선택</h2><p>원하시는 상품을 선택해 주세요</p>'+serviceSelect+people+note+'<div class="booking-base-amount"'+(inquiryUndecided?' hidden':'')+'><span>기본 가격</span><strong id="basePrice"></strong></div></section>'
 }
@@ -1995,11 +1995,11 @@ function initMetaEngagementTracking(pagePath,pricePage){
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer))}
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
-const HOME_PAGE_META={title:"부천·인천 축가 AR · 축가 녹음 · 셀프 축가 | 위스티아",description:"부천·인천 축가 AR 녹음 스튜디오 위스티아 · 셀프 축가를 위한 축가 AR(AR 축가) 사전녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"}
+const HOME_PAGE_META={title:"부천·인천 축가 AR · 축가 녹음 · 셀프 축가 | 위스티아",description:"부천·인천 축가 AR 녹음 스튜디오 위스티아 · 셀프 축가를 위한 축가 AR(AR 축가) 사전 녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"}
 const EVENT_SOLO_TITLE="축가 AR 예약 문의 · 축가 녹음 가격 확인 | 부천 위스티아"
 const LIVE_ROUTES=new Set(["/","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
-const ROUTE_META={"/": ["부천·인천 축가 AR · 축가 녹음 · 셀프 축가 | 위스티아", "부천·인천 축가 AR 녹음 스튜디오 위스티아 · 셀프 축가를 위한 축가 AR(AR 축가) 사전녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"], "/event/solo": ["축가 AR 예약 문의 · 축가 녹음 가격 확인 | 부천 위스티아", "부천·인천 축가 AR 사전녹음 예약 문의 · 타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요 · STANDARD 90,000원부터"], "/event/duo": ["듀엣 축가 AR 녹음 문의 · 2인 축가 사전녹음 | 부천 위스티아", "두 사람이 함께 부르는 2인·1곡 듀엣 축가 AR 사전녹음 문의 · 녹음 날짜와 시작 시간, 추가 옵션을 고르면 예상 금액과 문의 내용을 카카오톡으로 보낼 수 있어요 · 부천·인천 축가 AR 녹음 위스티아"], "/contact": ["축가 AR 녹음 문의 양식 | 부천·인천 위스티아", "축가 AR 녹음 문의 · 타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/events": ["축가 AR 녹음 후기 이벤트 · 최대 60,000원 페이백 | 부천 위스티아", "위스티아 축가 AR 녹음 후기 참여 이벤트 · 네이버 블로그 리뷰와 본식 현장 영상 각 30,000원, 최대 60,000원 · 참여 조건을 확인하고 후기를 남기면 카카오톡으로 환급을 안내해 드려요"], "/info/faq": ["축가 AR 본식 사용법 · 축가 녹음 자주 묻는 질문 | 부천 위스티아", "부천·인천 축가 AR 녹음 스튜디오 위스티아 FAQ · 곡 선택과 녹음 준비부터 축가 AR 본식 사용, 보컬 비율, 완성 음원 전달과 수정, 스튜디오 위치·주차까지 확인해 보세요"], "/info/location": ["오시는 길 · 부천시청역 1번 출구 축가 AR 녹음 스튜디오 | 위스티아", "위스티아는 경기도 부천시 석천로170번길 19, 부광프라자 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m, 바로 옆 공영주차장(유료) 이용 가능 · 인천·시흥·김포 인근 축가 AR 녹음"]}
+const ROUTE_META={"/": ["부천·인천 축가 AR · 축가 녹음 · 셀프 축가 | 위스티아", "부천·인천 축가 AR 녹음 스튜디오 위스티아 · 셀프 축가를 위한 축가 AR(AR 축가) 사전 녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"], "/event/solo": ["축가 AR 예약 문의 · 축가 녹음 가격 확인 | 부천 위스티아", "부천·인천 축가 AR 사전 녹음 예약 문의 · 인원·녹음 시간·음원 작업, 녹음 날짜와 시작 시간을 3단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요 · 50분 50,000원부터"], "/event/duo": ["듀엣 축가 AR 녹음 문의 · 2인 축가 사전 녹음 | 부천 위스티아", "두 사람이 함께 부르는 2인·1곡 듀엣 축가 AR 사전 녹음 문의 · 녹음 날짜와 시작 시간, 추가 옵션을 고르면 예상 금액과 문의 내용을 카카오톡으로 보낼 수 있어요 · 부천·인천 축가 AR 녹음 위스티아"], "/contact": ["축가 AR 녹음 문의 양식 | 부천·인천 위스티아", "축가 AR 녹음 문의 · 인원·녹음 시간·음원 작업, 녹음 날짜와 시작 시간을 3단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/events": ["축가 AR 녹음 후기 이벤트 · 최대 60,000원 페이백 | 부천 위스티아", "위스티아 축가 AR 녹음 후기 참여 이벤트 · 네이버 블로그 리뷰와 본식 현장 영상 각 30,000원, 최대 60,000원 · 참여 조건을 확인하고 후기를 남기면 카카오톡으로 환급을 안내해 드려요"], "/info/faq": ["축가 AR 본식 사용법 · 축가 녹음 자주 묻는 질문 | 부천 위스티아", "부천·인천 축가 AR 녹음 스튜디오 위스티아 FAQ · 곡 선택과 녹음 준비부터 축가 AR 본식 사용, 보컬 비율, 완성 음원 전달과 수정, 스튜디오 위치·주차까지 확인해 보세요"], "/info/location": ["오시는 길 · 부천시청역 1번 출구 축가 AR 녹음 스튜디오 | 위스티아", "위스티아는 경기도 부천시 석천로170번길 19, 부광프라자 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m, 바로 옆 공영주차장(유료) 이용 가능 · 인천·시흥·김포 인근 축가 AR 녹음"]}
 function setPageMeta({title,description,image,robots=""}){
  {const fixed=ROUTE_META[location.pathname.replace(/\/$/,"")||"/"];if(fixed){title=fixed[0];description=fixed[1]}}
  document.title=title;

@@ -115,7 +115,7 @@
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
-        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['보정은 타입마다 달라요', '스탠다드는 음정·박자 보정이 옵션이고, 정밀 믹싱·마스터링은 모든 타입에 있어요'], ['여유로운 녹음 시간', 'PREMIUM과 DUET은 2시간 30분 녹음이에요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
+        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['음원 작업은 골라서', '음정·박자 보정, 정밀 믹싱, 마스터링을 필요한 만큼 선택해요'], ['여유로운 녹음 시간', '50분, 1시간 30분, 2시간 30분 중에서 골라요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
     },
     engineer() {
       return '<section class="ed-section ed-engineer" data-svg-title="off">' +
