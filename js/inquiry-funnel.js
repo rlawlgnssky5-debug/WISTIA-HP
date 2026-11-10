@@ -16,7 +16,7 @@
     activeForm = form; lastStep = step(form); formPath = path();
     if (viewed.get(form) === lastStep) return;
     viewed.set(form, lastStep);
-    emit("inquiry_step_view", { step: lastStep, step_total: form.dataset.wizard ? 4 : 1, ...stepChoice(form, lastStep) });
+    emit("inquiry_step_view", { step: lastStep, step_total: Number(form.dataset.stepTotal) || (form.dataset.wizard ? 4 : 1), ...stepChoice(form, lastStep) });
   }
   function start(form) {
     view(form);

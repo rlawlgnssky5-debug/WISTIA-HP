@@ -1,0 +1,68 @@
+#app .recording-config {background:#fdf6f4;color:#1a1a1a;border:1px solid #e7d8d4;border-radius:14px;padding:clamp(12px,4vw,22px);margin-block:12px;text-align:left}
+#app .recording-config fieldset {min-width:0;border:0;margin:0 0 16px;padding:0}
+#app .recording-config fieldset:last-child {margin-bottom:0}
+#app .recording-config legend {font-size:15px;font-weight:750;margin-bottom:7px;padding:0}
+#app .recording-config legend i {font-family:Georgia,serif;color:#793546;margin-right:4px}
+#app .recording-config small {font-size:11px;color:#665457}
+#app .recording-config label {position:relative;cursor:pointer}
+#app .recording-config input {position:absolute;opacity:0;width:1px;height:1px}
+#app .recording-config label:has(:focus-visible) {outline:2px solid #793546;outline-offset:-2px}
+#app .recording-config label:has(:disabled) {opacity:.58;cursor:default}
+#app .rc-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#app .rc-pair label {display:grid;place-content:center;text-align:center;background:#fffdfb;border:1px solid #e7d8d4;border-radius:10px;min-height:48px;padding:4px}
+#app .rc-pair label:has(:checked),#app .rc-times label:has(:checked) {background:#faecea;color:#793546;box-shadow:inset 0 0 0 1px #a65e6b}
+#app .rc-times {background:#fffdfb;border:1px solid #e7d8d4;border-radius:10px;overflow:hidden}
+#app .rc-times label {display:flex;align-items:center;justify-content:space-between;min-height:50px;gap:5px;padding:7px 10px;font-size:14px}
+#app .rc-times label+label,#app .rc-work {border-top:1px solid #e7d8d4}
+#app .rc-rate {display:grid;justify-items:end;white-space:nowrap;font-variant-numeric:tabular-nums}
+#app .rc-rate b,#app [data-rc-free] b {color:#793546}
+#app .rc-work {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;padding:8px 0}
+#app .rc-work small:not([hidden]) {display:block}
+#app .rc-work [data-rc-event]:not([hidden]) {display:inline-block;white-space:nowrap;padding:1px 4px;border-radius:4px;color:#793546;background:#f4e2e4}
+#app .recording-config [hidden] {display:none!important}
+#app .rc-toggle {display:flex;gap:2px;background:#f2e8e6;border-radius:8px;padding:3px;white-space:nowrap}
+#app .rc-toggle label {display:grid;place-content:center;min-height:34px;padding:0 6px;font-size:11px}
+#app .rc-toggle label:has(:checked) {background:#fffdfb;border-radius:5px;font-weight:750;color:#793546}
+#app .rc-summary {margin:12px 0;padding:10px 12px;background:#fffdfb;border:1px solid #e7d8d4;border-radius:10px}
+#app .rc-summary div {display:flex;justify-content:space-between;gap:8px;padding:3px 0;font-size:13px}
+#app .rc-summary dd {margin:0;white-space:nowrap}
+#app .rc-summary div:last-child {border-top:1px solid #e7d8d4;margin-top:5px;padding-top:7px;color:#793546}
+#app .ed-hero-actions .rc-shortcuts {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+@layer wistia-approved-layout {
+  #app .ed-hero .ed-hero-types.rc-shortcuts {padding-top:10px;gap:8px!important;background:transparent!important;box-shadow:none!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts button {
+    position:relative;display:grid!important;align-content:center!important;min-width:0;min-height:100px!important;
+    border:1px solid #eadce2!important;background:#fff!important;color:#654655!important;font:inherit;white-space:nowrap;cursor:pointer;padding:14px clamp(7px,2.8vw,16px) 10px!important;
+    justify-items:start!important;text-align:left!important;gap:3px!important;border-radius:16px!important;
+  }
+  #app .ed-hero .ed-hero-types.rc-shortcuts button[aria-pressed="true"] {border-color:#ba7c96!important;background:#f7e7ef!important;color:#773851!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts button b {font-size:clamp(11px,3.15vw,14px)!important;font-weight:650!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts button strong {
+    font-size:clamp(15px,4.7vw,22px)!important;line-height:1.2!important;color:#793546!important;
+  }
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-unit {font-size:.65em!important;color:inherit!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-original {font-size:clamp(10px,2.9vw,12px)!important;color:#705b5f!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-badge {
+    position:absolute;top:0;left:50%;transform:translate(-50%,-50%);padding:3px 7px;
+    border-radius:999px;background:#793546;color:#fff!important;font-size:11px!important;font-weight:750!important;line-height:1.2!important;
+  }
+}
+
+@layer wistia-approved-layout {
+  #app .wistia-wizard .rc-step-title {position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;margin:0!important;padding:0!important}
+  #app .wistia-wizard [data-wf-step="0"] .recording-config {background:#fdf6f4!important;border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important;padding:16px 14px 12px!important}
+  #app .wistia-wizard .recording-config legend i {display:inline-grid;place-items:center;min-width:25px;height:21px;border-radius:5px;background:#f7e6e3;color:#793546}
+  #app .wistia-wizard .rc-times label {display:grid!important;grid-template-columns:15px minmax(0,1fr) minmax(100px,max-content);min-height:52px;gap:8px}
+  #app .wistia-wizard .rc-times label > span:first-of-type {justify-self:start;text-align:left!important}
+  #app .wistia-wizard .rc-times label::before {content:"";border:1px solid #98737b;border-radius:50%;width:13px;height:13px}
+  #app .wistia-wizard .rc-times label:has(:checked) {box-shadow:inset 3px 0 #a65e6b}
+  #app .wistia-wizard .rc-times label:has(:checked)::before {background:#8a4152;box-shadow:inset 0 0 0 3px #fff4f3;border-color:#8a4152}
+  #app .wistia-wizard .rc-times .rc-rate {justify-self:end;text-align:right;gap:3px}
+  #app .wistia-wizard .rc-rate small {display:grid;grid-template-columns:28px 1fr;gap:5px;align-items:baseline;text-align:right}
+  #app .wistia-wizard .rc-rate del {min-width:62px;text-align:right}
+  #app .wistia-wizard .rc-pair label:has(:checked) {border-color:#a65e6b}
+  #app .wistia-wizard .rc-work {border-top:0;border-bottom:1px solid #e7d8d4}
+  #app .wistia-wizard .rc-work > div > strong {font-size:14px}
+  #app .wistia-wizard .rc-toggle {border:1px solid #eadbd8}
+  #app .wistia-wizard .rc-toggle label:has(:checked) {box-shadow:0 1px 4px #56343822}
+}
