@@ -138,7 +138,7 @@
     transform: translateY(-.1em) rotate(45deg);
   }
 
-  @media (min-width: 560px) {
+  @media (min-width: 700px) {
     #siteHeader .ed-event-row {
       --event-edge: 4.1%;
       --event-icon-size: 21px;
