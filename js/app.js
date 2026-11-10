@@ -1997,11 +1997,11 @@ function initMetaEngagementTracking(pagePath,pricePage){
  return ()=>{window.removeEventListener("scroll",onScroll);timers.forEach(timer=>window.clearTimeout(timer))}
 }
 const SEO_HOME=window.WISTIA_SEO.home,SEO_DETAIL=window.WISTIA_SEO.detail,SEO_EVENT=window.WISTIA_SEO.event;
-const HOME_PAGE_META={title:"부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천 AR 축가 사전녹음 위스티아 · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구"}
-const EVENT_SOLO_TITLE="문의양식 | 위스티아 축가 사전녹음 가격"
+const HOME_PAGE_META={title:"부천·인천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아",description:"부천·인천 축가 녹음 스튜디오 위스티아 · 셀프 축가를 위한 AR 축가 사전녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"}
+const EVENT_SOLO_TITLE="축가 녹음 예약 문의 · AR 축가 가격 확인 | 부천 위스티아"
 const LIVE_ROUTES=new Set(["/","/event/solo","/event/duo","/contact","/events","/info/faq","/info/location"])
 function isLiveRoute(path){const clean=String(path||"/").split("?")[0].split("#")[0].replace(/\/$/,"")||"/";return LIVE_ROUTES.has(clean)}
-const ROUTE_META={"/": ["부천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아", "부천 AR 축가 사전녹음 위스티아 · 한 구간씩 1:1 맞춤 디렉팅, 티 나지 않는 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구"], "/event/solo": ["문의 양식 | 위스티아 AR 축가 사전녹음", "타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/event/duo": ["듀엣 문의 양식 | 위스티아 AR 축가 사전녹음", "2인·1곡 듀엣 녹음 문의 · 녹음 날짜와 시작 시간, 추가 옵션을 고르면 예상 금액과 문의 내용을 카카오톡으로 보낼 수 있어요"], "/contact": ["문의 양식 | 위스티아 AR 축가 사전녹음", "타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/events": ["후기 참여 이벤트 | 위스티아", "위스티아 후기 참여 이벤트 · 참여 조건을 확인하고 후기를 남기면 카카오톡으로 환급을 안내해 드려요"], "/info/faq": ["자주 묻는 질문 | 위스티아", "곡 선택과 녹음 준비부터 AR 본식 사용, 완성 음원 전달과 수정, 스튜디오 방문까지 편하게 확인해 보세요"], "/info/location": ["오시는 길 | 경기도 부천 위스티아", "위스티아는 경기도 부천시 석천로170번길 19, 부광프라자 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m"]}
+const ROUTE_META={"/": ["부천·인천 축가 녹음 · AR 축가 사전녹음 · 셀프 축가 | 위스티아", "부천·인천 축가 녹음 스튜디오 위스티아 · 셀프 축가를 위한 AR 축가 사전녹음, 한 구간씩 1:1 맞춤 디렉팅과 자연스러운 보컬 보정, 30·50·70·100% 모든 비율 제공 · 부천시청역 1번 출구 도보 약 300m (인천·시흥·김포 인근)"], "/event/solo": ["축가 녹음 예약 문의 · AR 축가 가격 확인 | 부천 위스티아", "부천·인천 AR 축가 사전녹음 예약 문의 · 타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요 · STANDARD 90,000원부터"], "/event/duo": ["듀엣 축가 녹음 문의 · 2인 AR 축가 사전녹음 | 부천 위스티아", "두 사람이 함께 부르는 2인·1곡 듀엣 축가 사전녹음 문의 · 녹음 날짜와 시작 시간, 추가 옵션을 고르면 예상 금액과 문의 내용을 카카오톡으로 보낼 수 있어요 · 부천·인천 축가 녹음 위스티아"], "/contact": ["축가 녹음 문의 양식 | 부천·인천 위스티아", "타입, 녹음 날짜와 시작 시간, 추가 옵션을 4단계로 고르면 예상 금액과 문의 내용을 카카오톡으로 바로 보낼 수 있어요"], "/events": ["축가 녹음 후기 이벤트 · 최대 60,000원 페이백 | 부천 위스티아", "위스티아 축가 녹음 후기 참여 이벤트 · 네이버 블로그 리뷰와 본식 현장 영상 각 30,000원, 최대 60,000원 · 참여 조건을 확인하고 후기를 남기면 카카오톡으로 환급을 안내해 드려요"], "/info/faq": ["축가 녹음 자주 묻는 질문 · AR 축가 본식 사용법 | 부천 위스티아", "부천·인천 축가 녹음 스튜디오 위스티아 FAQ · 곡 선택과 녹음 준비부터 AR 축가 본식 사용, 보컬 비율, 완성 음원 전달과 수정, 스튜디오 위치·주차까지 확인해 보세요"], "/info/location": ["오시는 길 · 부천시청역 1번 출구 축가 녹음 스튜디오 | 위스티아", "위스티아는 경기도 부천시 석천로170번길 19, 부광프라자 2층에 있어요 · 부천시청역 1번 출구에서 도보 약 300m, 바로 옆 공영주차장(유료) 이용 가능 · 인천·시흥·김포 인근 AR 축가 녹음"]}
 function setPageMeta({title,description,image,robots=""}){
  {const fixed=ROUTE_META[location.pathname.replace(/\/$/,"")||"/"];if(fixed){title=fixed[0];description=fixed[1]}}
  document.title=title;
@@ -2014,7 +2014,7 @@ function setPageMeta({title,description,image,robots=""}){
  if(robots){
   if(!robotsTag){robotsTag=document.createElement("meta");robotsTag.setAttribute("name","robots");document.head.appendChild(robotsTag)}
   robotsTag.setAttribute("content",robots);
- }else robotsTag?.remove();
+ }else if(robotsTag)robotsTag.setAttribute("content","index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
 }
 function routePath(){return location.pathname.replace(/\/$/,"")||"/"}
 function legacyHomePath(path){const clean=String(path||"/").split("?")[0].replace(/\/$/,"")||"/";return ["/detail/solo","/detail/solo.html","/detail/duo","/detail/duo.html","/find/service","/find/service.html"].includes(clean)?"/":""}
@@ -2124,6 +2124,7 @@ function initSoloReviewLightbox(){
  capture.className='solo-review-capture'
  dialog.setAttribute('aria-label','카카오톡 후기 원본')
  const image=document.createElement('img'),highlight=document.createElement('span')
+ image.alt='위스티아 카카오톡 축가 후기 원본'
  highlight.className='solo-review-highlight'
  highlight.setAttribute('aria-hidden','true')
  capture.append(image,highlight)

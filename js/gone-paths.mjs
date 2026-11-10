@@ -42,14 +42,14 @@ const RETIRED_PATHS = new Set([
 function isStaticAsset(path) {
   if (path.split('/').some(part => part.startsWith('.'))) return true
   if (/^\/(?:assets|css|js|api|tests|lib)(?:\/|$)/.test(path)) return true
-  if (path === '/robots.txt' || path === '/sitemap.xml' || path === '/favicon.ico' || path === '/wistia-config.json') return true
+  if (path === '/robots.txt' || path === '/sitemap.xml' || path === '/favicon.ico' || path === '/wistia-config.json' || path === '/4b00b68f4bc3ad46fe8137c51fbcf8b3.txt') return true
   return false
 }
 
 function isUnpublishedFile(path) {
   if (/\.(?:zip|md)$/i.test(path)) return true
   if (path.startsWith('/Claude outputs/') || path.startsWith('/tmp/')) return true
-  if (/^\/[^/]+\.[^/]+$/.test(path) && !['/robots.txt', '/sitemap.xml', '/favicon.ico', '/wistia-config.json', '/index.html', '/contact.html', '/events.html'].includes(path)) return true
+  if (/^\/[^/]+\.[^/]+$/.test(path) && !['/robots.txt', '/sitemap.xml', '/favicon.ico', '/wistia-config.json', '/index.html', '/contact.html', '/events.html', '/4b00b68f4bc3ad46fe8137c51fbcf8b3.txt'].includes(path)) return true
   return false
 }
 

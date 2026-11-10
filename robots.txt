@@ -1,10 +1,22 @@
-﻿# WISTIA — www.wistiastudio.com
+# WISTIA 위스티아 스튜디오 — www.wistiastudio.com
+# 모든 검색엔진 허용 (Google, Naver Yeti, Daum, Bing, 기타)
 User-agent: *
 Allow: /
 
-Allow: /assets/
-Allow: /css/
-Allow: /js/
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Daum
+Allow: /
+
+User-agent: Daumoa
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://www.wistiastudio.com/sitemap.xml
 
