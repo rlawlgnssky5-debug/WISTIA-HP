@@ -1,0 +1,23 @@
+// Cloudflare Workers config for www.wistiastudio.com (Vercel ignores this file).
+// Deploy: npx wrangler deploy   (runs scripts/build-cloudflare.mjs first)
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "wistia",
+  "main": "dist/cloudflare/src/cloudflare/worker.mjs",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "build": { "command": "node scripts/build-cloudflare.mjs" },
+  "assets": {
+    "directory": "dist/cloudflare/assets",
+    "binding": "ASSETS",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "none"
+  },
+  "observability": { "enabled": true },
+  "workers_dev": true,
+  "preview_urls": false
+  // Secrets (set with `npx wrangler secret put NAME`, never commit values):
+  //   NOTION_BOOKING_TOKEN, NOTION_BOOKING_DATA_SOURCE_ID, NOTION_TOKEN (optional), NOTION_CALENDAR_DB_ID (optional)
+  //   META_CAPI_TOKEN or META_CONVERSIONS_ACCESS_TOKEN, META_TEST_EVENT_CODE (optional), META_GRAPH_VERSION (optional)
+  //   SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY (only reported by /api/health)
+}
