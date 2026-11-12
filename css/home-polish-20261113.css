@@ -6,11 +6,13 @@
 /* 상세 내용은 접지 않고 바로 이어서 보여 준다 */
 html body #app .mobile-ar-solo .home-story { display: block !important; }
 
-/* 후기 카드: 카카오톡 원본 캡처를 카드 위쪽에 미리 보여 준다 (누르면 기존 원본 보기 창) */
+/* 후기 카드: 카카오톡 원본 캡처를 카드 위쪽에 보여 주고, 핵심 문장은 빨간 박스로 표시한다.
+   높이는 JS(fitThumb)가 이미지 비율에 맞춰 최대 168px로 정하고, 세로로 긴 캡처는 박스가 가운데 오도록 올린다 */
 html body #app .ed-review-card .ed-review-thumb {
+  position: relative !important;
   display: block !important;
   width: 100% !important;
-  height: 168px !important;
+  height: 168px;
   margin: 0 0 14px !important;
   padding: 0 !important;
   border: 0 !important;
@@ -18,13 +20,30 @@ html body #app .ed-review-card .ed-review-thumb {
   overflow: hidden !important;
   background: #f6e6e6 !important;
   cursor: zoom-in !important;
+  container-type: inline-size !important;
 }
-html body #app .ed-review-card .ed-review-thumb img {
+html body #app .ed-review-card .ed-review-frame {
+  position: absolute !important;
+  left: 0 !important;
+  width: 100% !important;
+  top: min(0px, max(calc(168px - 100cqw * var(--ratio, 1)), calc(84px - 100cqw * var(--ratio, 1) * var(--hl-cy, 0)))) !important;
+}
+html body #app .ed-review-card .ed-review-frame img {
   display: block !important;
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: top center !important;
+  height: auto !important;
+  max-width: none !important;
+  object-fit: initial !important;
+}
+html body #app .ed-review-card .ed-review-hl {
+  position: absolute !important;
+  box-sizing: border-box !important;
+  margin: -3px 0 0 -3px !important;
+  padding: 3px !important;
+  border: 2.5px solid #e03a3a !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 0 2px #ffffffb3 !important;
+  pointer-events: none !important;
 }
 html body #app .ed-review-card .ed-review-thumb:focus-visible {
   outline: 2px solid #9d596c !important;
