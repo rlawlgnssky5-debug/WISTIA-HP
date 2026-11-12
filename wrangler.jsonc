@@ -15,7 +15,7 @@
   },
   "observability": { "enabled": true },
   "workers_dev": true,
-  "preview_urls": false
+  "preview_urls": true
   // Secrets (set with `npx wrangler secret put NAME`, never commit values):
   //   NOTION_BOOKING_TOKEN, NOTION_BOOKING_DATA_SOURCE_ID, NOTION_TOKEN (optional), NOTION_CALENDAR_DB_ID (optional)
   //   META_CAPI_TOKEN or META_CONVERSIONS_ACCESS_TOKEN, META_TEST_EVENT_CODE (optional), META_GRAPH_VERSION (optional)
