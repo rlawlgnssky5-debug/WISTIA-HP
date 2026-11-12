@@ -62,4 +62,8 @@ html body #app:has(> .solo-detail-scope.mobile-ar-solo) { padding-bottom: 0 !imp
 #siteHeader[data-home-event-rows="0"] { --event-height: 0px !important; height: 56px !important; min-height: 56px !important; }
 body:has(#siteHeader[data-home-event-rows="0"]) { --event-header-height: 56px !important; padding-top: 56px !important; }
 body:has(#siteHeader[data-home-event-rows="0"]) #mainMenu { --menu-header-height: 56px !important; }
+
+/* 오시는 길 카드: PC(780px 칸)에서 왼쪽에 붙어 있던 카드를 가운데로, 아래 빈 여백 96px → 48px */
+html body #app .solo-map > .home-map-inset { margin-inline: auto !important; width: 100% !important; max-width: 640px !important; }
+html body #app .mobile-ar-solo .solo-map { padding-bottom: 48px !important; }
 }
