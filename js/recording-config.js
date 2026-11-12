@@ -2,9 +2,9 @@
  const prices=global.WistiaPackages, money=prices.money
  const times={50:{list:50000,rate:50000},90:{list:90000,rate:80000},150:{list:150000,rate:120000}}
  const audioOptions=[
-  ['tuning','음정·박자 보정','틀어진 음정과 박자를 자연스럽게 보정해요',40000],
-  ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요',40000],
-  ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요',40000]
+  ['tuning','음정·박자 보정','틀어진 음정과 박자를 자연스럽게 보정해요',40000,'🎵'],
+  ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요',40000,'🎚️'],
+  ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요',40000,'🎧']
  ]
  const makingRecordingMinutes=30, makingFilmingMinutes=30
  const makingOption=['makingVideo','녹음 메이킹 영상 추가','녹음 '+makingRecordingMinutes+'분 + 촬영 '+makingFilmingMinutes+'분 · 총 1시간 추가',80000]
@@ -37,9 +37,9 @@
  }
  const radio=(key,value,current,copy)=>'<label><input type="radio" name="'+key+'" value="'+value+'"'+(current===value?' checked':'')+'>'+copy+'</label>'
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
- function optionRow([key,label,copy,price],v){
+ function optionRow([key,label,copy,price,icon],v){
   const master=key==='recordingMaster',fee=money(price)
-  return '<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+label+'</strong> '+
+  return '<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+(icon?'<span aria-hidden="true">'+icon+'</span>&nbsp;':'')+label+'</strong> '+
     (master?'<small data-rc-event hidden>✨ 11월 이벤트</small>':'')+
     '<small>'+copy+'</small><small data-rc-regular>+'+fee+'</small>'+
     (master?'<small data-rc-free hidden><del>'+fee+'</del> <b>0원</b></small>':'')+
