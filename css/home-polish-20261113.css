@@ -1,0 +1,41 @@
+/* 2026-11-13 홈 다듬기: 상세 내용 항상 펼침, 후기 카드 썸네일, 페이지 끝 여백 정리.
+   가격·할인 계산·추적 코드·문의 흐름은 건드리지 않는다. */
+/* 이 레이어는 index.html 맨 위에서 가장 먼저 선언되어, !important 규칙이 다른 레이어보다 우선한다 */
+@layer wistia-home-polish {
+
+/* 상세 내용은 접지 않고 바로 이어서 보여 준다 */
+html body #app .mobile-ar-solo .home-story { display: block !important; }
+
+/* 후기 카드: 카카오톡 원본 캡처를 카드 위쪽에 미리 보여 준다 (누르면 기존 원본 보기 창) */
+html body #app .ed-review-card .ed-review-thumb {
+  display: block !important;
+  width: 100% !important;
+  height: 168px !important;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  background: #f6e6e6 !important;
+  cursor: zoom-in !important;
+}
+html body #app .ed-review-card .ed-review-thumb img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: top center !important;
+}
+html body #app .ed-review-card .ed-review-thumb:focus-visible {
+  outline: 2px solid #9d596c !important;
+  outline-offset: 2px !important;
+}
+
+/* 점 15개 대신 "01 / 15" 숫자만 남긴다 */
+html body #app .ed-reviews .ed-review-dots { display: none !important; }
+html body #app .ed-reviews .ed-review-position p { margin: 0 !important; }
+
+/* 페이지 끝: 하단 고정 버튼 자리는 푸터 안(padding 96px)에서 한 번만 확보한다 */
+html body #app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) { padding-bottom: 0 !important; }
+html body #app:has(> .solo-detail-scope.mobile-ar-solo) { padding-bottom: 0 !important; }
+}

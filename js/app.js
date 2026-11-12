@@ -1265,7 +1265,7 @@ function homeEventRibbon(){
  }
  const monthly=window.WistiaRecording?.monthly()?row('monthly','11월에 예약하면?',0,'','마스터링 무료!'):''
  const welcome=first?row('first','위스티아가 처음이라면?',first.discount,'첫이용 '):''
- return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+welcome+monthly+'</aside>'
+ return '<aside class="ed-event-ribbon" aria-label="위스티아 할인 이벤트">'+(welcome||monthly)+'</aside>'
 }
 function syncHomeEventRibbon(){
  const header=document.getElementById('siteHeader')
@@ -1427,7 +1427,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
- '<details class="home-story" id="arcDetails"><summary>상세 내용 더보기</summary>'+details+'<button type="button" class="home-story-close" data-home-story-close>상세 내용 접기</button></details>'+soloFooter(key)+
+ '<div class="home-story" id="arcDetails">'+details+'</div>'+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'
 }
 let mobileGalleryCleanup=()=>{}
@@ -1472,7 +1472,7 @@ function initMobileArGallery(){
 let welcomeGiftObserver, homeDockCleanup
 function initHomeDock(root){
  const story=root.querySelector('.home-story')
- story?.querySelector('[data-home-story-close]').addEventListener('click',()=>{
+ story?.querySelector('[data-home-story-close]')?.addEventListener('click',()=>{
   story.open=false
   story.querySelector('summary').focus()
  })
@@ -1538,7 +1538,7 @@ function initArCommerceDetail(){
  }))
  root.querySelectorAll('[data-ar-section]').forEach(link=>link.addEventListener('click',event=>{
   event.preventDefault();let target=document.getElementById(link.dataset.arSection)
-  const story=target?.closest('.home-story');if(story)story.open=true
+  const story=target?.closest('details.home-story');if(story)story.open=true
   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'
   if(target)target.scrollIntoView({behavior,block:'start'})
   root.querySelectorAll('.arc-tabs a').forEach(item=>{if(item.dataset.arSection===link.dataset.arSection)item.setAttribute('aria-current','location');else item.removeAttribute('aria-current')})
