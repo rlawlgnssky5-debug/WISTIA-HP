@@ -38,4 +38,9 @@ html body #app .ed-reviews .ed-review-position p { margin: 0 !important; }
 /* 페이지 끝: 하단 고정 버튼 자리는 푸터 안(padding 96px)에서 한 번만 확보한다 */
 html body #app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) { padding-bottom: 0 !important; }
 html body #app:has(> .solo-detail-scope.mobile-ar-solo) { padding-bottom: 0 !important; }
+
+/* 상단 이벤트 띠 없음: 밝은 유리 헤더는 그대로 두고 띠 높이만 0으로 */
+#siteHeader[data-home-event-rows="0"] { --event-height: 0px !important; height: 56px !important; min-height: 56px !important; }
+body:has(#siteHeader[data-home-event-rows="0"]) { --event-header-height: 56px !important; padding-top: 56px !important; }
+body:has(#siteHeader[data-home-event-rows="0"]) #mainMenu { --menu-header-height: 56px !important; }
 }

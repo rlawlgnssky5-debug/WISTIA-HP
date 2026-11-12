@@ -1271,9 +1271,9 @@ function syncHomeEventRibbon(){
  const header=document.getElementById('siteHeader')
  let slot=header?.querySelector('[data-home-event-ribbon]')
  if(!header)return
- if(!slot){slot=document.createElement('div');slot.className='ed-event-ribbon-slot';slot.setAttribute('data-home-event-ribbon','');header.append(slot)}
- slot.innerHTML=homeEventRibbon()
- header.dataset.homeEventRows=String(slot.querySelectorAll('[data-event-row]').length)
+ // 2026-11-13: 상단 이벤트 띠는 쓰지 않는다. 이벤트는 가격 아래 목록에서 안내한다
+ slot?.remove()
+ header.dataset.homeEventRows='0'
 }
 function mobileDetailEvents(){
  const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
