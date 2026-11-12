@@ -109,6 +109,7 @@
   let configurationChanged=false
   if(params.has('package')||recording.keys.some(key=>params.has(key))){
    const selected=recording.selection(params,state.draftKey==='duo')
+   if(!params.has('makingVideo'))selected.makingVideo=fields.makingVideo
    configurationChanged=recording.keys.some(key=>fields[key]!==selected[key])
    Object.assign(fields,selected)
   }
@@ -161,6 +162,13 @@
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
    if(el.name==='people')onPeople(el.value==='1'?'duo':'solo')
+   if(el.name==='makingVideo'){
+    const url=new URL(global.location.href)
+    if(url.searchParams.has(el.name)){
+     url.searchParams.set(el.name,el.value)
+     global.history.replaceState(global.history.state,'',url)
+    }
+   }
    if(['bookingDateMode','bookingDate','timeStart'].includes(el.name))global.WistiaContact.update(el)
    if(el.name==='bookingDate'){mark(form,'bookingDate','');mark(form,'timeStart','');timeMode(form,!!el.value&&!event.wistiaCouponSync)}
    if(el.name==='timeStart')mark(form,'timeStart','')

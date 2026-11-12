@@ -150,7 +150,7 @@
     --schedule-shadow: 0 10px 25px #6b354314;
     --schedule-radius: 18px;
     --schedule-cell: transparent;
-    --schedule-cell-border: transparent;
+    --schedule-cell-border: #e5d2d9;
     --schedule-cell-radius: 8px;
     --schedule-time: #fffdfc;
     --schedule-selected: #87465e;
@@ -186,6 +186,25 @@
   #app .wistia-wizard .recording-config legend i {
     background: #f4e7eb !important;
     color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .recording-config fieldset:has([name="people"]) > legend {
+    display: flex !important;
+    align-items: center;
+    gap: 7px;
+    width: 100% !important;
+  }
+  #app .wistia-wizard .recording-config fieldset:has([name="people"]) > legend::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--schedule-line);
+  }
+  #app .wistia-wizard .rc-making-photo {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    margin: 0 auto 8px;
+    border-radius: var(--schedule-cell-radius);
   }
   #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair label, .rc-times, .rc-toggle) {
     background: var(--schedule-time) !important;
@@ -312,7 +331,7 @@
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time]):disabled {
     color: var(--schedule-muted) !important;
     background: #7859650b !important;
-    border-color: transparent !important;
+    border-color: var(--schedule-line) !important;
     opacity: 1 !important;
   }
   #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):disabled small {

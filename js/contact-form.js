@@ -98,7 +98,9 @@
   const summary=calendar.parentElement.querySelector('[data-calendar-summary]');summary.textContent=input.value?'선택한 날짜: '+displayDate(input.value).replace(calendarToday().slice(0,4)+'년 ',''):'';summary.hidden=!input.value||!calendar.hidden
   const grid=calendar.querySelector('[data-calendar-grid]')
   const from=isoDate(new Date(Date.UTC(state.year,state.month,1))),to=isoDate(new Date(Date.UTC(state.year,state.month+1,0))),booking=global.WistiaBooking
-  const picked=input.form?.querySelector('input[name="package"]:checked'),discounts=key!=='bookingDate'||!picked||global.WistiaPackages?.packageFor?.(picked.value)?.key!=='A'
+  const picked=input.form?.querySelector('input[name="package"]:checked')
+  const minutes=input.form?.elements.recordingMinutes?.value
+  const discounts=minutes?minutes!=='50':!picked||global.WistiaPackages?.packageFor?.(picked.value)?.key!=='A'
   grid.innerHTML=calendarCells(state.year,state.month,key,selected,today,key==='bookingDate'?booking?.calendarBlocks(from,to)??null:null,booking?.calendarKey()||'solo',booking?.calendarRangeFailed?.(from,to)||false,discounts)
   const rangeStatus=calendar.querySelector('[data-calendar-range-status]')
   if(rangeStatus){const failed=booking?.calendarRangeFailed?.(from,to),unknown=booking?.calendarBlocks(from,to)==null;rangeStatus.hidden=!failed&&!unknown;rangeStatus.textContent=failed?'일정 자동 확인이 어려워요 · 희망 날짜를 선택해 문의해 주세요':'예약 가능한 날짜를 불러오고 있어요'}

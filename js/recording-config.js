@@ -1,15 +1,17 @@
 (function (global) {
  const prices=global.WistiaPackages, money=prices.money
  const times={50:{list:50000,rate:50000},90:{list:90000,rate:80000},150:{list:150000,rate:120000}}
- const options=[
-  ['tuning','음정·박자 보정','틀어진 음정과 박자를 자연스럽게 보정해요'],
-  ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요'],
-  ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요']
+ const audioOptions=[
+  ['tuning','음정·박자 보정','틀어진 음정과 박자를 자연스럽게 보정해요',40000],
+  ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요',40000],
+  ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요',40000]
  ]
+ const makingOption=['makingVideo','녹음 메이킹 영상 추가','녹음하는 모습을 영상으로 담아 드려요',100000]
+ const options=[...audioOptions,makingOption]
  const keys=['people','recordingMinutes',...options.map(o=>o[0]),'rush']
  const monthly=(date=prices.today())=>date.startsWith('2026-11')
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier&&tier!=='A'?'1':'0',recordingMix:tier?'1':'0',recordingMaster:tier?'1':'0',rush:'0'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier&&tier!=='A'?'1':'0',recordingMix:tier?'1':'0',recordingMaster:tier?'1':'0',makingVideo:'0',rush:'0'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
@@ -18,7 +20,7 @@
  }
  function quote(v,date=prices.today()){
   const minutes=Number(v.recordingMinutes)||50, {list,rate}=times[minutes]||times[50], duet=v.people==='1', offer=monthly(date)&&minutes!==50 // 2026-11-11 지훈: 50분에는 마스터링 이벤트 없음
-  const selected=options.filter(([key])=>key==='recordingMaster'&&offer||v[key]==='1').map(([key,label])=>({key,label,price:40000}))
+  const selected=options.filter(([key])=>key==='recordingMaster'&&offer||v[key]==='1').map(([key,label,,price])=>({key,label,price}))
   if(duet)selected.unshift({key:'duet',label:'녹음 1인 추가',price:40000})
   if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})
   const discounts=[]
@@ -33,11 +35,21 @@
  }
  const radio=(key,value,current,copy)=>'<label><input type="radio" name="'+key+'" value="'+value+'"'+(current===value?' checked':'')+'>'+copy+'</label>'
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
+ function optionRow([key,label,copy,price],v){
+  const master=key==='recordingMaster',fee=money(price)
+  return '<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+label+'</strong> '+
+    (master?'<small data-rc-event hidden>✨ 11월 이벤트</small>':'')+
+    '<small>'+copy+'</small><small data-rc-regular>+'+fee+'</small>'+
+    (master?'<small data-rc-free hidden><del>'+fee+'</del> <b>0원</b></small>':'')+
+    '</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+
+    radio(key,'1',v[key],'필요')+radio(key,'0',v[key],'필요 없음')+'</div></div>'
+ }
  function editor(v,{delivery=true}={}){
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small class="rc-rate-was"><b class="rc-rate-pct">'+Math.round((list-rate)/list*100)+'%</b><del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
-  const work=field('03','음원 작업',options.map(([key,label,copy])=>'<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+label+'</strong> '+(key==='recordingMaster'?'<small data-rc-event hidden>✨ 11월 이벤트</small>':'')+'<small>'+copy+'</small><small data-rc-regular>+40,000원</small>'+(key==='recordingMaster'?'<small data-rc-free hidden><del>40,000원</del> <b>0원</b></small>':'')+'</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>').join(''))
-  return '<div class="recording-config">'+people+duration+work+(delivery?deliveryField(v):'')+'</div>'
+  const work=field('03','음원 작업',audioOptions.map(option=>optionRow(option,v)).join(''))
+  const making=field('04','추가 옵션','<img class="rc-making-photo" src="/assets/img/wedding/04-recording-making.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="719">'+optionRow(makingOption,v))
+  return '<div class="recording-config">'+people+duration+work+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(v){
@@ -50,7 +62,7 @@
   return '<div class="ed-hero-types rc-shortcuts" role="group" aria-label="녹음 시간 선택">'+cards.join('')+'</div>'
  }
  function deliveryField(v){
-  return field('04','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
+  return field('05','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
  }
  function sync(form,date=prices.today()){
   const row=form.querySelector('[data-rc-work="recordingMaster"]'), no=row.querySelector('input[value="0"]'), offer=monthly(date)&&form.elements.recordingMinutes?.value!=='50'
@@ -73,7 +85,10 @@
  }
  function query(v){
   const params=new URLSearchParams()
-  for(const key of keys)params.set(key,v[key]||'0')
+  for(const key of keys){
+   if(key==='makingVideo'&&v[key]!=='1')continue
+   params.set(key,v[key]||'0')
+  }
   return params.toString()
  }
  global.WistiaRecording={keys,monthly,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,sync,summary,query,firstVisit,preferences}
