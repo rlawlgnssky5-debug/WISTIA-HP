@@ -281,8 +281,7 @@
     grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
     gap: 4px !important;
   }
-  #app .wistia-wizard [data-calendar-day],
-  #app .wistia-wizard [data-wf-time] {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time]) {
     min-width: 0 !important;
     min-height: 44px !important;
     padding: 2px !important;
@@ -293,7 +292,7 @@
     color: var(--schedule-ink) !important;
     font-variant-numeric: tabular-nums;
   }
-  #app .wistia-wizard [data-wf-time] {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-wf-time] {
     min-height: 48px !important;
     background: var(--schedule-time) !important;
     border-color: var(--schedule-line) !important;
@@ -306,7 +305,7 @@
     color: inherit !important;
     font-size: 14px !important;
   }
-  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):disabled {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time]):disabled {
     color: var(--schedule-muted) !important;
     background: #7859650b !important;
     border-color: transparent !important;
@@ -316,13 +315,13 @@
     color: inherit !important;
     font-size: 10px !important;
   }
-  #app .wistia-wizard [data-calendar-day][aria-current="date"]:not([aria-pressed="true"]) {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][aria-current="date"]:not([aria-pressed="true"]) {
     border-color: var(--schedule-accent) !important;
   }
-  #app .wistia-wizard [data-calendar-day][data-discount]:not(:disabled) {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled) {
     box-shadow: inset 0 -2px var(--schedule-accent) !important;
   }
-  #app .wistia-wizard :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
     color: var(--schedule-selected-ink) !important;
     background: var(--schedule-selected) !important;
     border-color: var(--schedule-accent) !important;
