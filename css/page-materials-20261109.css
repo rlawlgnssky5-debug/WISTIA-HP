@@ -135,3 +135,213 @@
   html:has(.wistia-wizard form[data-wf-current-step="1"]) {overflow-anchor:none!important;scroll-behavior:auto!important}
   #app .wistia-wizard [data-wf-date-view] {overflow-anchor:none!important}
 }
+
+@layer wistia-page-materials {
+  #app .wistia-wizard {
+    --schedule-ink: #473139;
+    --schedule-muted: #78626a;
+    --schedule-accent: #87465e;
+    --schedule-line: #ead9de;
+    --schedule-surface: #fffaf8;
+    --schedule-shadow: 0 10px 25px #6b354314;
+    --schedule-radius: 18px;
+    --schedule-cell: transparent;
+    --schedule-cell-border: transparent;
+    --schedule-cell-radius: 8px;
+    --schedule-time: #fffdfc;
+    --schedule-selected: #87465e;
+    --schedule-selected-ink: #fff;
+    --schedule-gutter: clamp(10px, 3vw, 23px);
+  }
+
+  #app .wistia-wizard :is([data-wf-step="0"] .recording-config, [data-wf-step="0"] .rc-summary, [data-wf-step="2"] .wf-review-group, [data-wf-step="1"] [data-wf-date-view]) {
+    background: var(--schedule-surface) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-radius) !important;
+    box-shadow: var(--schedule-shadow) !important;
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard .wf-progress li:not(:last-child)::after {
+    background: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard .wf-progress button > span {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .wf-progress :is(.is-current, .is-complete) button > span {
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+    color: var(--schedule-selected-ink) !important;
+  }
+  #app .wistia-wizard .wf-step > h2,
+  #app .wistia-wizard .recording-config legend {
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard .recording-config legend i {
+    background: #f4e7eb !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair label, .rc-times, .rc-toggle) {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-times label, .rc-work, .rc-summary > div) {
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label:has(input:checked) {
+    background: #f6e7ed !important;
+    border-color: var(--schedule-accent) !important;
+    color: var(--schedule-accent) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-review-head {
+    background: transparent !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-review-group :is(dl > div, .wf-review-options li) {
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] :is(.wf-review-options li, .wf-notes-field textarea) {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-final-total {
+    background: #f6e7ed !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard :is(.wf-final-total dd, .rc-sum-total strong) {
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .wf-nav {
+    background: var(--schedule-surface) !important;
+    border-color: var(--schedule-line) !important;
+    border-radius: var(--schedule-radius) !important;
+    box-shadow: var(--schedule-shadow) !important;
+  }
+  #app .wistia-wizard .wf-nav :is([data-wf-next], .wf-submit) {
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+    color: var(--schedule-selected-ink) !important;
+  }
+  #app .wistia-wizard .wf-nav [data-wf-prev] {
+    background: var(--schedule-time) !important;
+    border-color: var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] {
+    padding: var(--schedule-gutter) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] :is(.contact-calendar, [data-wf-time-view]) {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .wf-earlybird-legend {
+    margin-bottom: 8px !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .contact-date-bookingDate {
+    margin-block: 4px 0 !important;
+  }
+  #app .wistia-wizard .calendar-caption {
+    padding-bottom: 0 !important;
+  }
+  #app .wistia-wizard .wf-schedule-heading {
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard :is(.calendar-caption strong, [data-wf-selected-date], .contact-time-field legend) {
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard :is(.calendar-caption [data-calendar-selection], .calendar-weekdays span, .calendar-legend span) {
+    color: var(--schedule-muted) !important;
+  }
+  #app .wistia-wizard :is([data-calendar-move], .calendar-month-selects select, [data-wf-change-date]) {
+    min-height: 40px !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    background: var(--schedule-time) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .calendar-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+  }
+  #app .wistia-wizard [data-calendar-day],
+  #app .wistia-wizard [data-wf-time] {
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 2px !important;
+    border: 1px solid var(--schedule-cell-border) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    background: var(--schedule-cell) !important;
+    box-shadow: none !important;
+    color: var(--schedule-ink) !important;
+    font-variant-numeric: tabular-nums;
+  }
+  #app .wistia-wizard [data-wf-time] {
+    min-height: 48px !important;
+    background: var(--schedule-time) !important;
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard .calendar-time-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+  #app .wistia-wizard [data-wf-time] strong {
+    color: inherit !important;
+    font-size: 14px !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):disabled {
+    color: var(--schedule-muted) !important;
+    background: #7859650b !important;
+    border-color: transparent !important;
+    opacity: 1 !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):disabled small {
+    color: inherit !important;
+    font-size: 10px !important;
+  }
+  #app .wistia-wizard [data-calendar-day][aria-current="date"]:not([aria-pressed="true"]) {
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-calendar-day][data-discount]:not(:disabled) {
+    box-shadow: inset 0 -2px var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
+    color: var(--schedule-selected-ink) !important;
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):focus-visible {
+    outline: 2px solid var(--schedule-accent) !important;
+    outline-offset: 1px !important;
+  }
+  #app .wistia-wizard form[data-wf-current-step="1"] .wf-nav {
+    position: static !important;
+  }
+
+  #app .wistia-wizard .calendar-weekdays {
+    padding-bottom: 7px !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+  }
+  @media (min-width: 360px) {
+    #app .wistia-wizard .calendar-time-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+  }
+}
