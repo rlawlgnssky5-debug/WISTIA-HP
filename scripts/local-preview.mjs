@@ -5,10 +5,12 @@ import {isGonePath,isUnknownPath,goneDocument,notFoundDocument,soloDetailRedirec
 const root=resolve(import.meta.dirname,'..')
 const port=Number(process.env.WISTIA_PREVIEW_PORT||4174)
 const availabilityHandler=(await import('../api/availability.js')).default
+const calendarPreviewPaths=new Set(['/contact','/event/solo','/event/duo'])
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.mp4':'video/mp4','.mp3':'audio/mpeg','.wav':'audio/wav','.m4a':'audio/mp4','.woff2':'font/woff2'}
 createServer(async(req,res)=>{
  try{
   const requestUrl=new URL(req.url,'http://localhost')
+  const calendarPreview=calendarPreviewPaths.has(requestUrl.pathname)&&requestUrl.searchParams.has('calendarDesign')
   const home=soloDetailRedirect(requestUrl.pathname)
   if(home){res.writeHead(301,{Location:home+requestUrl.search,'Cache-Control':'no-store'}).end();return}
   let path=decodeURIComponent(requestUrl.pathname)
@@ -39,7 +41,14 @@ createServer(async(req,res)=>{
   let file=resolve(root,'.'+path)
   if(!file.startsWith(root+sep)){res.writeHead(403).end();return}
   try{if(!(await stat(file)).isFile())throw Error()}catch{if(extname(path)!=='.html'){res.writeHead(404).end();return}file=resolve(root,'index.html')}
-  const data=await readFile(file)
+  let data=await readFile(file)
+  if(calendarPreview){
+   data=Buffer.from(data.toString('utf8').replace('<head>',`<head>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/tests/calendar-design-preview.css">
+    <script src="/tests/calendar-design-preview.js" defer></script>`))
+   res.setHeader('Content-Security-Policy',"connect-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'none'")
+  }
   if(req.headers.range){
    const match=/^bytes=(\d+)-(\d*)$/.exec(req.headers.range)
    if(match){
