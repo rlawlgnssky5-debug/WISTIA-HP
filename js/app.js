@@ -2151,16 +2151,22 @@ let editorialReviewsCleanup=null
 function initSoloReviewLightbox(){
  const root=document.querySelector('[data-solo-reviews]');if(!root)return
  const dialog=root.querySelector('dialog');if(!dialog)return
- const capture=document.createElement('figure')
- capture.className='solo-review-capture'
- dialog.setAttribute('aria-label','카카오톡 후기 원본')
- const image=document.createElement('img'),highlight=document.createElement('span')
- image.alt='위스티아 카카오톡 축가 후기 원본'
- highlight.className='solo-review-highlight'
- highlight.setAttribute('aria-hidden','true')
- capture.append(image,highlight)
- dialog.append(capture)
- root.querySelectorAll('[data-review-full]').forEach(button=>button.addEventListener('click',()=>{
+ let image,highlight
+ const prepareCapture=()=>{
+  const capture=document.createElement('figure')
+  capture.className='solo-review-capture'
+  dialog.setAttribute('aria-label','카카오톡 후기 원본')
+  image=document.createElement('img');highlight=document.createElement('span')
+  image.alt='위스티아 카카오톡 축가 후기 원본'
+  highlight.className='solo-review-highlight'
+  highlight.setAttribute('aria-hidden','true')
+  capture.append(image,highlight)
+  dialog.append(capture)
+  initSoloDialog(dialog)
+ }
+ root.addEventListener('click',event=>{
+  const button=event.target.closest('[data-review-full]');if(!button)return
+  if(!image)prepareCapture()
   const item=WistiaReviewSources[Number(button.closest('[data-review-slide-index]').dataset.reviewSlideIndex)]
   image.alt=item?.body||'카카오톡 후기 원문'
   image.src=button.dataset.reviewFull
@@ -2171,16 +2177,30 @@ function initSoloReviewLightbox(){
   }
   dialog.showModal()
   dialog.scrollTop=0
- }))
- initSoloDialog(dialog)
+ })
 }
 function initSoloMapZoom(){
  const root=document.querySelector('[data-solo-map]');if(!root)return
  const dialog=root.querySelector('dialog');if(!dialog)return
+ root.querySelector('[data-map-zoom]')?.addEventListener('click',()=>initSoloDialog(dialog),{once:true})
  root.querySelector('[data-map-zoom]')?.addEventListener('click',()=>dialog.showModal())
- initSoloDialog(dialog)
+}
+let inquiryLoading
+function loadInquiryScripts(){
+ if(window.WistiaWizard)return Promise.resolve()
+ inquiryLoading??=Promise.all([...document.querySelectorAll("[data-inquiry-script]")].map(entry=>new Promise((resolve,reject)=>{
+  const script=document.createElement("script");script.async=false;script.src=entry.dataset.inquiryScript
+  script.onload=resolve;script.onerror=reject;document.head.append(script)
+ })))
+ return inquiryLoading
 }
 function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
+ const entry=routePath()
+ if(!window.WistiaWizard&&document.querySelector("[data-inquiry-script]")&&["/contact","/event/solo","/event/duo"].includes(entry)){
+  const destination=location.href
+  void loadInquiryScripts().then(()=>{if(location.href===destination)route({preserveScroll,reuseEventForm,scrollAnchor})},()=>{if(location.href===destination)location.reload()})
+  return
+ }
  if(legacyHomePath(routePath()))history.replaceState(history.state,'','/'+location.search)
  if(!isLiveRoute(routePath())){location.reload();return}
  window.WistiaMotion?.destroy()
@@ -2344,7 +2364,10 @@ window.addEventListener('pageshow',event=>{if(event.persisted)void checkPageBuil
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)void checkPageBuild()})
 async function init(){
  if(!document.querySelector("#siteHeader")||!document.querySelector("#app"))return
- // Render with the existing account defaults before the optional configuration request.
+ // Keep the HTML hero visible until its replacement can use the full styles.
+ await Promise.all([...document.querySelectorAll("link[data-home-style]")].map(link=>link.rel==="stylesheet"||link.dataset.homeStyleFailed?Promise.resolve():new Promise(resolve=>{
+  link.addEventListener("load",resolve,{once:true});link.addEventListener("error",resolve,{once:true})
+ })))
  header();route()
  try{const r=await fetch("wistia-config.json",{cache:"no-store",signal:AbortSignal.timeout(2500)});if(r.ok)config={...config,...await r.json()}}catch{}
 }

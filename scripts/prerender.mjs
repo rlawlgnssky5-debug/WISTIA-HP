@@ -6,7 +6,10 @@ import { expandBundledHtml, buildCssBundles } from './build-css-bundle.mjs'
 const require = createRequire(import.meta.url)
 const seo = require('../js/seo-meta.js')
 const root = resolve(import.meta.dirname, '..')
-const template = expandBundledHtml(readFileSync(resolve(root, 'index.html'), 'utf8'))
+const template = expandBundledHtml(readFileSync(resolve(root, 'index.html'), 'utf8')
+  .replace(/^[\t ]*<!-- home-first-paint:start -->[\s\S]*?<!-- home-first-paint:end -->\r?\n/gm, '')
+  .replace(/<link rel="preload" as="style" data-home-style[^>]+><noscript>(<link rel="stylesheet"[^>]+>)<\/noscript>/g, '$1')
+  .replace(/<template data-inquiry-script="([^"]+)"><\/template>/g, '<script src="$1" defer></script>'))
 const origin = 'https://wistiastudio.com'
 const products = ['solo', 'duo']
 
