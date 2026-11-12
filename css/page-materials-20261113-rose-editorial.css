@@ -1,0 +1,370 @@
+@layer wistia-page-materials {
+  /* The existing home header is reused by every route in this preview */
+  #siteHeader .header-inner {height:40px!important;min-height:40px!important}
+  #app :is(.info-page-location,.info-page-faq,.wistia-wizard) {padding-top:28px!important;padding-bottom:110px!important}
+  #app :is(.info-page-location,.info-page-faq) .info-page-intro {margin-bottom:26px!important;padding-bottom:0!important}
+  #app :is(.info-page-location,.info-page-faq) .info-page-intro>p {max-width:32em!important;margin-inline:auto!important;line-height:1.8!important;word-break:keep-all!important;overflow-wrap:normal!important}
+
+  /* Clay: thick, softly moulded cream surfaces on a warm rose canvas */
+  #app :is(.info-page-location,.info-page-faq,.wistia-events.ev2,.wistia-wizard) {
+    --clay-surface:linear-gradient(140deg,#fffaf3,#f7eae3);
+    --clay-shadow:inset 4px 4px 8px #ffffffcf,inset -4px -4px 9px #d9bcb155,5px 7px 16px #b68c7c24;
+    --clay-control:linear-gradient(145deg,#fffaf6,#f4e5dd);
+    --clay-control-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #cfab9e55,2px 4px 7px #b58c7c22;
+    --clay-selected:linear-gradient(145deg,#f5d8e1,#e7b7c7);
+    background:#f2e8e3!important;color:#58423f!important;
+  }
+  #app .info-page-location .lc2-card,
+  #app .wistia-events.ev2 :is(.evd-card,.pb-card,.pb-summary,.pb-refund),
+  #app .info-page-faq .info-faq-group,
+  #app .wistia-wizard :is(.wf-schedule,.wf-review-group) {
+    border:1px solid #fffaf4!important;
+    border-radius:26px!important;
+    background:var(--clay-surface)!important;
+    box-shadow:var(--clay-shadow)!important;
+  }
+  #app .info-page-location .lc2-card {overflow:hidden!important}
+  #app .wistia-events.ev2 :is(.ev2-hero,.events-discounts,.events-payback) {background:transparent!important}
+  #app .wistia-events.ev2 .pb-summary {background:linear-gradient(140deg,#f9e4e6,#edc8d2)!important}
+  #app .wistia-events.ev2 .pb-refund {padding:16px 18px!important}
+  #app .wistia-events.ev2 .pb-eligibility {background:#f3ddd4!important}
+  #app .wistia-events.ev2 :is(.evd-icon,.ev2-cta) {
+    border:1px solid #fff8!important;
+    border-radius:15px!important;
+    background:#efcdd0!important;
+    color:#6b3b50!important;
+    box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c694a34d,3px 5px 8px #b58c7c25!important;
+  }
+  #app .info-page-location .lc2-addr {padding:22px 20px!important}
+  #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid #fff6f1!important;background:#efcdd0!important;color:#92546a!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 4px #c694a34d,3px 4px 8px #b4869630!important;font-size:11px!important}
+  #app .info-page-location .studio-address {display:block!important;margin:18px 0 8px!important;font-size:clamp(16px,4.6vw,20px)!important;line-height:1.65!important;font-weight:750!important;color:#503c39!important;letter-spacing:-.04em!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .material-address-street {display:flex!important;flex-wrap:wrap!important;gap:0 .35em!important}
+  #app .material-address-part {display:inline-block!important;white-space:nowrap!important}
+  #app .material-address-building {display:block!important;margin-top:2px!important;font-size:14px!important;font-weight:600!important;color:#8f6a65!important}
+  #app .info-page-location .lc2-sub {font-size:12px!important;line-height:1.6!important;color:#977d73!important}
+  #app .info-page-location .lc2-btns {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin-top:20px!important}
+  #app .info-page-location .lc2-btns :is(a,button) {min-width:0!important;min-height:42px!important;padding:8px 3px!important;border-radius:15px!important;border:1px solid #fff8!important;background:#f3ddd4!important;color:#8c5863!important;font-size:11px!important;white-space:nowrap!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #cfab9e66,3px 5px 8px #b58c7c25!important}
+  #app .info-page-location .lc2-btns .lc2-n {background:#d99eaf!important;color:#6b3b50!important;border-color:#efbecb!important;box-shadow:inset 2px 2px 4px #ffd6e1aa,inset -2px -3px 5px #b8758f66,3px 5px 8px #b58c7c30!important}
+  #app .info-page-location .lc2-map {padding:8px!important}
+  #app .info-page-location .lc2-map figure {border-radius:19px!important;overflow:hidden!important}
+  #app .info-page-location .lc2-cap {border:0!important;padding:13px 8px 8px!important;font-size:11px!important;word-break:keep-all!important;text-align:center!important}
+  #app .info-page-location .lc2-row {padding:19px 14px!important;gap:12px!important;border-bottom:1px solid #dfc8bf80!important}
+  #app .info-page-location .lc2-row:last-child {border-bottom:0!important}
+  #app .info-page-location .lc2-row>:first-child {width:34px!important;height:34px!important;min-width:34px!important;border-radius:13px!important;background:#efd1cd!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c09b9470,3px 4px 7px #b58c7c20!important}
+  #app .info-page-location .lc2-row>div {min-width:0!important}
+  #app .info-page-location .lc2-row p {font-size:12px!important;line-height:1.75!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .info-page-location .lc2-steps {display:flex!important;flex-wrap:nowrap!important;gap:4px!important;font-size:10px!important}
+  #app .info-page-location .lc2-steps span {padding:6px 4px!important;border-radius:10px!important;background:#f0d5cf!important;box-shadow:inset 1px 1px 2px #fff8,2px 3px 5px #bd968b20!important;font-size:10px!important}
+
+  #app .info-page-faq .info-faq-group {padding:21px 18px!important;margin-bottom:24px!important}
+  #app .info-page-faq .faq-group-heading {margin-bottom:4px!important;padding-bottom:18px!important;border-bottom:1px solid #d7ced55c!important}
+  #app .info-page-faq .faq-group-heading h2 {font-size:17px!important;color:#695360!important}
+  #app .info-page-faq .faq-group-heading p {font-size:12px!important;line-height:1.75!important;margin-left:0!important;word-break:keep-all!important;overflow-wrap:normal!important}
+  #app .info-page-faq .faq-group-q {display:inline-grid!important;place-items:center!important;width:26px!important;height:26px!important;min-width:26px!important;margin-right:8px!important;border-radius:10px!important;background:#d6a0b0!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .info-page-faq .faq-list details {margin:0!important;padding:16px 0!important;border:0!important;border-bottom:1px solid #d5cdd459!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+  #app .info-page-faq .faq-list details:last-child {border-bottom:0!important}
+  #app .info-page-faq .faq-list summary {display:grid!important;grid-template-columns:minmax(0,1fr) 24px!important;column-gap:10px!important;align-items:center!important;padding:0!important;min-height:32px!important;font-size:13px!important;line-height:1.7!important;word-break:keep-all!important;overflow-wrap:normal!important;color:#66525f!important}
+  #app .info-page-faq .faq-list summary>span:last-child {display:grid!important;place-items:center!important;width:24px!important;height:24px!important;min-width:24px!important;border-radius:9px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important;color:#87536a!important;font-size:17px!important}
+  #app .info-page-faq .faq-list details>p {margin:14px 0 0!important;padding:16px 14px!important;border-radius:16px!important;background:#f3e0de!important;box-shadow:inset 2px 2px 6px #b98b852b!important;font-size:12px!important;line-height:1.85!important;color:#796574!important;word-break:keep-all!important;overflow-wrap:normal!important}
+
+  #app > .wistia-wizard {margin-top:0!important}
+  #app .wistia-wizard .package-picker {
+    box-sizing:border-box!important;
+    padding:16px 8px 18px!important;
+    border:1px solid #ffffffe6!important;
+    border-radius:24px!important;
+    background:linear-gradient(150deg,#f0e3db,#fcf5ee 66%,#fffaf7)!important;
+    box-shadow:inset 0 1px 0 #fff,0 6px 20px #79677210!important;
+  }
+  #app .wistia-wizard .package-cards {padding:clamp(6px,1.2vw,10px)!important;overflow:visible!important}
+  #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-schedule,.contact-calendar,.wf-review-group,.wf-location-bar,.wf-choice>span,.wf-check-row,[data-wf-time],.calendar-day,.calendar-nav,.calendar-header button,.wf-field textarea,.wf-nav) {backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  #app .wistia-wizard .wf-review {background:transparent!important;border:0!important;box-shadow:none!important}
+  #app .wistia-wizard .wf-schedule {border-radius:22px!important;padding:16px 12px!important}
+  #app .wistia-wizard .wf-location-bar {padding:10px 8px!important;border:1px solid #fffaf4!important;border-radius:14px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-schedule .wf-schedule {padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+  #app .wistia-wizard .wf-choice>span,
+  #app .wistia-wizard .wf-check-row,
+  #app .wistia-wizard :is([data-wf-time],.calendar-day,.calendar-nav,.calendar-header button):not(:disabled),
+  #app .wistia-wizard .wf-field textarea {border-color:#fffaf4!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-choice:has(input:checked)>span,
+  #app .wistia-wizard .wf-check-row:has(input:checked:not(:disabled)),
+  #app .wistia-wizard :is([data-wf-time],[data-calendar-day])[aria-pressed="true"]:not(:disabled) {border-color:#bc7d9d!important;background:var(--clay-selected)!important;color:#6b3652!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-choice:has(input:checked)>span *,
+  #app .wistia-wizard .wf-check-row:has(input:checked:not(:disabled)) .wf-check-label * {color:inherit!important}
+  #app .wistia-wizard .is-included .wf-check-row {background:#f1e3dc!important;box-shadow:inset 0 1px 0 #fff!important}
+  #app .wistia-wizard .is-included .wf-check-box svg {visibility:hidden!important}
+  #app .wistia-wizard .wf-nav {padding:10px!important;border:1px solid #fffaf4!important;border-radius:23px!important;background:var(--clay-surface)!important;box-shadow:var(--clay-shadow)!important}
+  #app .wistia-wizard .wf-nav [data-wf-next] {border:1px solid #aa687c!important;border-radius:15px!important;background:linear-gradient(145deg,#a35e74,#87495e)!important;box-shadow:inset 1px 2px 4px #d69aaa80,inset -2px -3px 6px #63374755!important}
+  #app .wistia-wizard .wf-nav [data-wf-prev] {border:1px solid #fffaf4!important;border-radius:15px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app :is(.info-page-location,.info-page-faq,.wistia-wizard) :is(a,button,summary,input,textarea):focus-visible {outline:2px solid #a56b8d!important;outline-offset:3px!important}
+
+}
+
+@layer wistia-page-materials {
+  #app .package-picker .package-card-body {padding:9px 2px!important}
+  #app .package-picker .package-card-name {font-size:10px!important;line-height:1.35!important}
+  #app .package-picker .package-card-price {font-size:10px!important;line-height:1.4!important}
+  #app .package-picker .package-card-was, #app .package-picker .package-card-was * {font-size:9px!important;line-height:1.5!important}
+  #app .package-picker .package-card-subtitle {gap:4px!important}
+  #app .package-selected-head>.package-selected-cheaper {font-size:9.5px!important;line-height:1.4!important;padding:3px 5px!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus] {padding-left:8px!important}
+  #app .package-picker .package-card-sub-item[data-layout-plus]::before {left:2px!important}
+  #app .type-select-prompt {display:flex!important;align-items:center!important;justify-content:center!important;gap:6px;margin:22px 0 0!important;padding:0!important;white-space:nowrap}
+  #app .type-select-prompt p {margin:0!important;font-size:13px!important;font-weight:700!important;line-height:1.5!important;color:#9c5c7a!important}
+  #app .type-select-prompt>span {font-size:16px!important;line-height:1.2!important}
+  #app .mobile-ar-solo .ed-map-art {max-width:520px!important;margin-inline:auto!important}
+  #app .mobile-ar-solo :is(.ed-map-route,.ed-map-parking,.solo-map-links) {max-width:520px!important;margin-inline:auto!important}
+  #app .mobile-ar-solo .ed-map-route {margin-top:24px!important}
+  #app .mobile-ar-solo .ed-map-parking {margin-top:22px!important}
+  #app .mobile-ar-solo :is(.ed-map-stop,.ed-map-walk) {gap:10px!important}
+  #app .mobile-ar-solo .ed-map-walk {min-height:34px!important}
+  #app .mobile-ar-solo .ed-map-walk>span {width:26px!important;flex-basis:26px!important}
+  #app .mobile-ar-solo .ed-map-walk>span::after {width:7px!important;height:7px!important}
+  #app .mobile-ar-solo .ed-map-icon {width:26px!important;height:26px!important;flex-basis:26px!important;font-size:13px!important}
+  #app .mobile-ar-solo .ed-map-icon svg {width:16px!important;height:16px!important}
+  #app .mobile-ar-solo .ed-map-stop strong {font-size:clamp(13px,3.3vw,16px)!important}
+  #app .mobile-ar-solo .ed-map-stop p {font-size:12px!important}
+  #app .mobile-ar-solo .ed-map-walk p {font-size:12px!important}
+  #app .mobile-ar-solo .solo-map-links {margin-top:18px!important;gap:10px!important}
+  #app .mobile-ar-solo .solo-map-links a {min-height:44px!important;padding:8px 10px!important;font-size:13px!important}
+  #app #packageSelection>.type-pricing-section {margin-top:12px!important}
+  #siteHeader[data-home-event-rows] {height:calc(40px + var(--event-height))!important;min-height:calc(40px + var(--event-height))!important;padding-block:0!important;border-bottom:0!important;box-shadow:none!important}
+  body:has(#siteHeader[data-home-event-rows]) {--event-header-height:96px!important;padding-top:96px!important}
+  body:has(#siteHeader[data-home-event-rows="1"]) {--event-header-height:68px!important;padding-top:68px!important}
+  #siteHeader .ed-event-row:last-child {border-bottom:1px solid #ffffffbd!important}
+  html:has(.wistia-wizard form[data-wf-current-step="1"]) {overflow-anchor:none!important;scroll-behavior:auto!important}
+  #app .wistia-wizard [data-wf-date-view] {overflow-anchor:none!important}
+}
+
+@layer wistia-page-materials {
+  html:has(#app .wistia-wizard),
+  html:has(#app .wistia-wizard) body {
+    color-scheme: only light !important;
+  }
+  #app .wistia-wizard {
+    --schedule-ink: #473139;
+    --schedule-muted: #78626a;
+    --schedule-accent: #87465e;
+    --schedule-line: #ead9de;
+    --schedule-surface: #fffaf8;
+    --schedule-shadow: 0 10px 25px #6b354314;
+    --schedule-radius: 18px;
+    --schedule-cell: transparent;
+    --schedule-cell-border: transparent;
+    --schedule-cell-radius: 8px;
+    --schedule-time: #fffdfc;
+    --schedule-selected: #87465e;
+    --schedule-selected-ink: #fff;
+    --schedule-gutter: clamp(10px, 3vw, 23px);
+  }
+
+  #app .wistia-wizard :is([data-wf-step="0"] .recording-config, [data-wf-step="0"] .rc-summary, [data-wf-step="2"] .wf-review-group, [data-wf-step="1"] [data-wf-date-view]) {
+    background: var(--schedule-surface) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-radius) !important;
+    box-shadow: var(--schedule-shadow) !important;
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard .wf-progress li:not(:last-child)::after {
+    background: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard .wf-progress button > span {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .wf-progress :is(.is-current, .is-complete) button > span {
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+    color: var(--schedule-selected-ink) !important;
+  }
+  #app .wistia-wizard .wf-step > h2,
+  #app .wistia-wizard .recording-config legend {
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard .recording-config legend i {
+    background: #f4e7eb !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair label, .rc-times, .rc-toggle) {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-times label, .rc-work, .rc-summary > div) {
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label:has(input:checked) {
+    background: #f6e7ed !important;
+    border-color: var(--schedule-accent) !important;
+    color: var(--schedule-accent) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-review-head {
+    background: transparent !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-review-group :is(dl > div, .wf-review-options li) {
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] :is(.wf-review-options li, .wf-notes-field textarea) {
+    background: var(--schedule-time) !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="2"] .wf-final-total {
+    background: #f6e7ed !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard :is(.wf-final-total dd, .rc-sum-total strong) {
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .wf-nav {
+    background: var(--schedule-surface) !important;
+    border-color: var(--schedule-line) !important;
+    border-radius: var(--schedule-radius) !important;
+    box-shadow: var(--schedule-shadow) !important;
+  }
+  #app .wistia-wizard .wf-nav :is([data-wf-next], .wf-submit) {
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+    color: var(--schedule-selected-ink) !important;
+  }
+  #app .wistia-wizard .wf-nav [data-wf-prev] {
+    background: var(--schedule-time) !important;
+    border-color: var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] {
+    padding: var(--schedule-gutter) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] :is(.contact-calendar, [data-wf-time-view]) {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .wf-earlybird-legend {
+    margin-bottom: 8px !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .contact-date-bookingDate {
+    margin-block: 4px 0 !important;
+  }
+  #app .wistia-wizard .calendar-caption {
+    padding-bottom: 0 !important;
+  }
+  #app .wistia-wizard .wf-schedule-heading {
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard :is(.calendar-caption strong, [data-wf-selected-date], .contact-time-field legend) {
+    color: var(--schedule-ink) !important;
+  }
+  #app .wistia-wizard :is(.calendar-caption [data-calendar-selection], .calendar-weekdays span, .calendar-legend span) {
+    color: var(--schedule-muted) !important;
+  }
+  #app .wistia-wizard :is([data-calendar-move], .calendar-month-selects select, [data-wf-change-date]) {
+    min-height: 40px !important;
+    border: 1px solid var(--schedule-line) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    background: var(--schedule-time) !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard .calendar-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time]) {
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 2px !important;
+    border: 1px solid var(--schedule-cell-border) !important;
+    border-radius: var(--schedule-cell-radius) !important;
+    background: var(--schedule-cell) !important;
+    box-shadow: none !important;
+    color: var(--schedule-ink) !important;
+    font-variant-numeric: tabular-nums;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-wf-time] {
+    min-height: 48px !important;
+    background: var(--schedule-time) !important;
+    border-color: var(--schedule-line) !important;
+  }
+  #app .wistia-wizard .calendar-time-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+  #app .wistia-wizard [data-wf-time] strong {
+    color: inherit !important;
+    font-size: 14px !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time]):disabled {
+    color: var(--schedule-muted) !important;
+    background: #7859650b !important;
+    border-color: transparent !important;
+    opacity: 1 !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):disabled small {
+    color: inherit !important;
+    font-size: 10px !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][aria-current="date"]:not([aria-pressed="true"]) {
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled) {
+    padding-bottom: 15px !important;
+    box-shadow: inset 0 -2px var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled)::after {
+    right: auto !important;
+    width: max-content !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
+    color: var(--schedule-selected-ink) !important;
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-calendar-day][aria-pressed="true"]:not(:disabled) > span {
+    color: inherit !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .calendar-legend .legend-selected {
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard :is([data-calendar-day], [data-wf-time]):focus-visible {
+    outline: 2px solid var(--schedule-accent) !important;
+    outline-offset: 1px !important;
+  }
+  #app .wistia-wizard form[data-wf-current-step="1"] .wf-nav {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin: 16px 0 0 !important;
+  }
+  #app .wistia-wizard form[data-wf-current-step="1"] .wf-nav:has([data-wf-next-hint]:not([hidden])) {
+    margin-top: 44px !important;
+  }
+
+  #app .wistia-wizard .calendar-weekdays {
+    padding-bottom: 7px !important;
+    border-bottom: 1px solid var(--schedule-line) !important;
+  }
+  @media (min-width: 360px) {
+    #app .wistia-wizard .calendar-time-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+  }
+}
