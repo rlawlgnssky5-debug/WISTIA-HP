@@ -184,7 +184,7 @@
     color: var(--schedule-ink) !important;
   }
   #app .wistia-wizard .recording-config legend i {
-    background: #ecd3de !important;
+    background: #87465e12 !important;
     color: var(--schedule-accent) !important;
   }
   #app .wistia-wizard .recording-config > fieldset > legend {
@@ -195,7 +195,19 @@
     width: 100% !important;
     padding: 5px 9px !important;
     border-radius: var(--schedule-cell-radius);
-    background: #f4e5eb;
+    background: var(--rc-heading-color, #f3dfe9);
+  }
+  #app .wistia-wizard .recording-config > fieldset:nth-of-type(2) {
+    --rc-heading-color: #f3e8d6;
+  }
+  #app .wistia-wizard .recording-config > fieldset:nth-of-type(3) {
+    --rc-heading-color: #eae4f1;
+  }
+  #app .wistia-wizard .recording-config > fieldset:nth-of-type(4) {
+    --rc-heading-color: #f5e0dc;
+  }
+  #app .wistia-wizard .recording-config > fieldset:nth-of-type(5) {
+    --rc-heading-color: #ece7e3;
   }
   #app .wistia-wizard .rc-making-photo {
     display: block;
@@ -214,11 +226,22 @@
   #app .wistia-wizard [data-wf-step="0"] :is(.rc-times label, .rc-work, .rc-summary > div) {
     border-color: var(--schedule-line) !important;
   }
-  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label:has(input:checked) {
-    background: #f6e7ed !important;
-    border-color: var(--schedule-accent) !important;
-    color: var(--schedule-accent) !important;
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label {
+    background: var(--schedule-time) !important;
+    color: var(--schedule-ink) !important;
     box-shadow: none !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] .rc-toggle label {
+    border-radius: 5px;
+    font-weight: 500 !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label:has(input:checked) {
+    outline: 1.5px solid var(--schedule-accent) !important;
+    outline-offset: -1.5px !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair, .rc-times, .rc-toggle) label:has(input:focus-visible) {
+    outline: 2px solid var(--schedule-accent) !important;
+    outline-offset: -3px !important;
   }
   #app .wistia-wizard [data-wf-step="2"] .wf-review-head {
     background: transparent !important;

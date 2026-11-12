@@ -48,7 +48,7 @@
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small class="rc-rate-was"><b class="rc-rate-pct">'+Math.round((list-rate)/list*100)+'%</b><del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
   const work=field('03','음원 작업',audioOptions.map(option=>optionRow(option,v)).join(''))
-  const making=field('04','영상 작업','<img class="rc-making-photo" src="/assets/img/wedding/04-recording-making.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="719">'+optionRow(makingOption,v))
+  const making=field('04','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
   return '<div class="recording-config">'+people+duration+work+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
