@@ -184,19 +184,18 @@
     color: var(--schedule-ink) !important;
   }
   #app .wistia-wizard .recording-config legend i {
-    background: #f4e7eb !important;
+    background: #ecd3de !important;
     color: var(--schedule-accent) !important;
   }
-  #app .wistia-wizard .recording-config fieldset:has([name="people"]) > legend {
+  #app .wistia-wizard .recording-config > fieldset > legend {
+    box-sizing: border-box;
     display: flex !important;
     align-items: center;
     gap: 7px;
     width: 100% !important;
-  }
-  #app .wistia-wizard .recording-config fieldset:has([name="people"]) > legend::after {
-    content: "";
-    flex: 1;
-    border-top: 1px solid var(--schedule-line);
+    padding: 5px 9px !important;
+    border-radius: var(--schedule-cell-radius);
+    background: #f4e5eb;
   }
   #app .wistia-wizard .rc-making-photo {
     display: block;
@@ -343,11 +342,18 @@
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled) {
     padding-bottom: 15px !important;
-    box-shadow: inset 0 -2px var(--schedule-accent) !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled)::after {
     right: auto !important;
     width: max-content !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--schedule-accent) !important;
+    font-weight: 700 !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-calendar-day][data-discount][aria-pressed="true"]:not(:disabled)::after {
+    color: inherit !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
     color: var(--schedule-selected-ink) !important;
