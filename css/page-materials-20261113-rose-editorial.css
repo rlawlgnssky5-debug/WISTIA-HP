@@ -243,6 +243,25 @@
     outline: 2px solid var(--schedule-accent) !important;
     outline-offset: -3px !important;
   }
+  #app .wistia-wizard [data-wf-step="0"] .rc-toggle label:has(input[value="1"]) {
+    --rc-choice-tint: #f8eaf0;
+    --rc-choice-selected: #efd3df;
+    --rc-choice-ink: #75354d;
+  }
+  #app .wistia-wizard [data-wf-step="0"] .rc-toggle label:has(input[value="0"]) {
+    --rc-choice-tint: #f0edeb;
+    --rc-choice-selected: #e2dcda;
+    --rc-choice-ink: #554b4e;
+  }
+  #app .wistia-wizard [data-wf-step="0"] .rc-toggle label:has(input) {
+    background: var(--rc-choice-tint) !important;
+    color: var(--rc-choice-ink) !important;
+  }
+  #app .wistia-wizard [data-wf-step="0"] .rc-toggle label:has(input:checked) {
+    background: var(--rc-choice-selected) !important;
+    outline-color: var(--rc-choice-ink) !important;
+    font-weight: 750 !important;
+  }
   #app .wistia-wizard [data-wf-step="2"] .wf-review-head {
     background: transparent !important;
     border-bottom: 1px solid var(--schedule-line) !important;
