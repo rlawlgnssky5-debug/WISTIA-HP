@@ -1340,7 +1340,41 @@ function optionExplainSection(){
 }
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달<br>3일 이내 전달은 +30,000원</span></li><li><strong>녹음 시간</strong><span>50분, 1시간 30분, 2시간 30분 중 선택</span></li><li><strong>할인</strong><span>50분은 첫 이용·사전 예약 할인에서 제외</span></li></ul></section>'}
 function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','선택하신 구성에 맞춰 음정·박자 보정, 정밀 믹싱, 마스터링을 진행해요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+// Keep the home controls styled when client-side navigation starts on another page.
+function ensureHomeControlStyles(){
+ if(document.getElementById('wistia-home-control-styles'))return
+ const style=document.createElement('style')
+ style.id='wistia-home-control-styles'
+ style.textContent=`
+.home-story>summary,.home-story-close{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;margin:16px 16px 26px;border:1px solid #b48192;border-radius:8px;background:#fff;color:#683c4d;font-size:15px;font-weight:700}
+.home-story>summary::-webkit-details-marker{display:none}
+.home-story>summary::after,.home-story-close::after{content:"";width:8px;height:8px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-4px}
+.home-story-close::after{transform:rotate(225deg);margin-top:4px}
+.home-story[open]>summary{display:none}
+.home-story-close{width:calc(100% - 32px);margin-bottom:56px}
+.home-dock{position:fixed;z-index:1000;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,780px);padding:0 0 env(safe-area-inset-bottom);background:#fff;border-top:1px solid #eddde3;box-shadow:0 -6px 25px #49223714;color:#633a4b}
+.home-dock-row{padding:7px 12px}
+.home-dock button{cursor:pointer;font:inherit}
+.home-dock-row>a{display:grid;place-items:center;min-height:46px;padding:0 8px;border-radius:8px;background:#f6e3eb;border:1px solid #e3bacb;color:#683648;text-decoration:none;font-size:15px;font-weight:750;white-space:nowrap}
+.home-offer{position:absolute;bottom:100%;left:12px;right:12px;margin-bottom:5px;display:flex;align-items:center;min-height:44px;border-radius:10px;background:#f9f0eb;border:1px solid #ead6d1;color:#65414a;box-shadow:0 3px 12px #49223729}
+.home-offer[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){
+ .home-offer:not([hidden]){animation:home-offer-reveal 280ms ease-out both}
+ @keyframes home-offer-reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+}
+.home-offer a{display:flex;align-items:center;gap:4px;flex:1;min-width:0;padding:7px 6px 7px 11px;color:inherit;text-decoration:none;font-size:clamp(11px,3.5vw,15px);font-weight:700;white-space:nowrap}
+.home-offer-chevron{flex:none;color:inherit}
+.home-offer button{display:grid;place-items:center;flex:0 0 42px;height:44px;padding:0;line-height:1;border:0;background:none;color:inherit;font-size:22px}
+body.menu-open .home-dock,body:has(dialog[open]) .home-dock{visibility:hidden}
+body:has(.home-dock) #app{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
+body:has(.home-dock) #floatingKakao{display:none!important}
+html body #app#app#app#app#app#app#app#app#app#app .home-dock-row>a{color:#683648!important;-webkit-text-fill-color:#683648!important}
+html body #app#app#app#app#app#app#app#app#app#app .home-offer,html body #app#app#app#app#app#app#app#app#app#app .home-offer :is(a,span,button){color:#65414a!important;-webkit-text-fill-color:#65414a!important}
+`
+ document.head.append(style)
+}
 function mobileArSoloDetail(p,desktopHtml,key='solo'){
+ ensureHomeControlStyles()
  // SOLO and DUET share one compact mobile sales layout while desktop keeps its existing renderer.
  const duet=key==='duo',people=duet?'2':'1',hours=duet?'2':'1',format=duet?'DUET':'SOLO',eventPrice=Math.max(0,p.normal-EVENTS.reduce((total,event)=>total+event.discount,0))
  const galleryOrder=duet?['duo','solo']:['solo','duo']
