@@ -319,10 +319,22 @@
     border-color: var(--schedule-accent) !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled) {
+    padding-bottom: 15px !important;
     box-shadow: inset 0 -2px var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] [data-calendar-day][data-discount]:not(:disabled)::after {
+    right: auto !important;
+    width: max-content !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
     color: var(--schedule-selected-ink) !important;
+    background: var(--schedule-selected) !important;
+    border-color: var(--schedule-accent) !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] [data-calendar-day][aria-pressed="true"]:not(:disabled) > span {
+    color: inherit !important;
+  }
+  #app .wistia-wizard [data-wf-step="1"] .calendar-legend .legend-selected {
     background: var(--schedule-selected) !important;
     border-color: var(--schedule-accent) !important;
   }
@@ -331,7 +343,15 @@
     outline-offset: 1px !important;
   }
   #app .wistia-wizard form[data-wf-current-step="1"] .wf-nav {
-    position: static !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin: 16px 0 0 !important;
+  }
+  #app .wistia-wizard form[data-wf-current-step="1"] .wf-nav:has([data-wf-next-hint]:not([hidden])) {
+    margin-top: 44px !important;
   }
 
   #app .wistia-wizard .calendar-weekdays {
