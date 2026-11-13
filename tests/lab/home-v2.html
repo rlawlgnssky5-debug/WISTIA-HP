@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>홈 첫 화면 시안 v2 | 위스티아</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<style>
+:root{
+  --veil:#FCF9F9;      /* 배경: 베일처럼 아주 옅은 분홍빛 흰색 */
+  --ink:#3A2329;       /* 본문·제목 */
+  --rose:#A65A6C;      /* 위스티아 로즈 (기존 브랜드) */
+  --blush:#F2DDE2;     /* 파형 바탕, 옅은 면 */
+  --mauve:#8A6F75;     /* 보조 글자 */
+  --rec:#D2384A;       /* 녹음 표시등. 딱 한 곳에만 */
+  --serif:"Gowun Batang","Nanum Myeongjo",serif;
+  --sans:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--veil);color:var(--ink);font:400 16px/1.6 var(--sans);letter-spacing:-.01em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--rose);outline-offset:3px;border-radius:6px}
+
+.page{max-width:780px;margin:0 auto;background:#fff;min-height:100vh}
+.top{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 20px}
+.top .brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.top .brand img{width:28px;height:28px;display:block}
+.top .brand span{font:400 19px/1 Georgia,"Times New Roman",serif;letter-spacing:.12em}
+.top a.ask{font-size:14px;font-weight:600;color:var(--rose);text-decoration:none;padding:10px 4px}
+
+/* ---------- 첫 화면 ---------- */
+.hero{display:grid;grid-template-columns:1fr;gap:0}
+.photo{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;background:var(--blush)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block}
+.photo::after{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(58,35,41,.72),rgba(58,35,41,0))}
+.headline{position:absolute;left:22px;right:22px;bottom:22px;z-index:1;margin:0;color:#fff;
+  font:700 clamp(30px,8.6vw,40px)/1.28 var(--serif);letter-spacing:-.03em;word-break:keep-all}
+.headline span{display:block}
+
+.voice{padding:26px 22px 8px}
+.voice-q{margin:0 0 14px;font-size:15px;color:var(--mauve);word-break:keep-all}
+.voice-q b{color:var(--ink);font-weight:600}
+
+.wave-wrap{position:relative;height:88px;border-radius:14px;background:var(--blush);overflow:hidden;cursor:pointer;touch-action:manipulation}
+.wave-wrap canvas{position:absolute;inset:0;width:100%;height:100%}
+.wave-state{position:absolute;left:12px;top:10px;z-index:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.82);padding:3px 9px 3px 8px;border-radius:999px}
+.wave-state i{width:7px;height:7px;border-radius:50%;background:var(--mauve)}
+.is-playing .wave-state i{background:var(--rec);animation:blink 1.2s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+.player{display:flex;align-items:center;gap:12px;margin-top:14px}
+.play{flex:none;width:52px;height:52px;border-radius:50%;border:0;background:var(--ink);color:#fff;display:grid;place-items:center;cursor:pointer}
+.play svg{width:20px;height:20px}
+.ab{flex:1;display:grid;grid-template-columns:1fr 1fr;background:var(--blush);border-radius:999px;padding:4px;position:relative}
+.ab button{position:relative;z-index:1;border:0;background:none;font:600 15px/1 var(--sans);color:var(--mauve);height:44px;border-radius:999px;cursor:pointer;transition:color .25s}
+.ab button[aria-pressed="true"]{color:#fff}
+.ab .knob{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--rose);transition:transform .35s cubic-bezier(.3,.7,.2,1)}
+.ab[data-mode="after"] .knob{transform:translateX(100%)}
+.time{margin:10px 0 0;font-size:13px;color:var(--mauve);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between}
+.err{margin:8px 0 0;font-size:13px;color:var(--rec)}
+
+/* ---------- 소개와 문의 ---------- */
+.about{padding:30px 22px 34px}
+.about h2{margin:0 0 10px;font:700 22px/1.4 var(--serif);letter-spacing:-.02em;word-break:keep-all}
+.about p{margin:0 0 14px;max-width:34em;color:#5a4147;word-break:keep-all}
+.price{display:flex;align-items:baseline;gap:8px;margin:20px 0 22px;padding-top:18px;border-top:1px solid var(--blush)}
+.price strong{font-size:26px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.price span{font-size:14px;color:var(--mauve)}
+.ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ctas a{display:flex;align-items:center;justify-content:center;height:54px;border-radius:12px;font-weight:600;font-size:16px;text-decoration:none}
+.ctas .primary{background:var(--rose);color:#fff}
+.ctas .kakao{background:#FEE500;color:#191600}
+
+/* ---------- PC: 사진은 세로 그대로 왼쪽, 목소리는 오른쪽 ---------- */
+@media (min-width:760px){
+  .hero{grid-template-columns:330px 1fr;align-items:end;gap:0 34px;padding:10px 34px 0}
+  .photo{aspect-ratio:9/14;border-radius:18px}
+  .headline{position:static;color:var(--ink);font-size:38px;margin:0 0 26px}
+  .photo::after{display:none}
+  .hero-right{padding-bottom:6px}
+  .voice{padding:0}
+  .about{padding:44px 34px 48px}
+}
+@media (max-width:759px){ .hero-right .headline{display:none} }
+@media (min-width:760px){ .photo .headline{display:none} }
+
+/* 첫 진입 한 번만: 제목이 차례로 올라오고 파형이 왼쪽부터 그려짐 */
+@media (prefers-reduced-motion:no-preference){
+  .headline span{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .headline span+span{animation-delay:.18s}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <a class="brand" href="/" aria-label="위스티아 홈"><img src="/assets/img/wistia-logo-small.webp" alt="" width="28" height="28"><span>WISTIA</span></a>
+    <a class="ask" href="/contact.html">문의하기</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="h1">
+      <figure class="photo">
+        <img src="/assets/img/hero-slides/1-bride-solo-940.webp" srcset="/assets/img/hero-slides/1-bride-solo-600.webp 600w, /assets/img/hero-slides/1-bride-solo-940.webp 940w" sizes="(min-width:760px) 330px, 100vw" width="940" height="1670" alt="본식에서 직접 녹음한 축가를 부르는 신부" fetchpriority="high">
+        <h1 class="headline" id="h1"><span>노래에 자신 없어도</span><span>축가는 내 목소리로</span></h1>
+      </figure>
+
+      <div class="hero-right">
+        <p class="headline" aria-hidden="true"><span>노래에 자신 없어도</span><span>축가는 내 목소리로</span></p>
+        <div class="voice" id="voice">
+          <p class="voice-q">위스티아에서 녹음한 <b>같은 목소리</b>예요. 재생 중에 보정 전과 후를 바꿔 들어보세요.</p>
+          <div class="wave-wrap" id="wave" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="wave-state"><i></i><span id="stateLabel">보정 전</span></span>
+            <canvas id="cv"></canvas>
+          </div>
+          <div class="player">
+            <button class="play" id="play" type="button" aria-label="재생">
+              <svg id="icoPlay" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3.5v13l11-6.5z"/></svg>
+              <svg id="icoPause" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" hidden><path d="M5 3h3.5v14H5zM11.5 3H15v14h-3.5z"/></svg>
+            </button>
+            <div class="ab" id="ab" data-mode="before" role="group" aria-label="보정 전후 선택">
+              <span class="knob" aria-hidden="true"></span>
+              <button type="button" data-mode="before" aria-pressed="true">보정 전</button>
+              <button type="button" data-mode="after" aria-pressed="false">보정 후</button>
+            </div>
+          </div>
+          <p class="time"><span id="tNow">0:00</span><span id="tEnd">0:20</span></p>
+          <p class="err" id="err" role="status" hidden>음원을 불러오지 못했어요. 새로고침 후 다시 눌러 주세요.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" aria-labelledby="h2">
+      <h2 id="h2">한 소절씩 같이 녹음하고, 본식에서는 편하게 부르면 돼요</h2>
+      <p>부천·인천에 있는 웨딩 축가 녹음 스튜디오예요. 엔지니어가 옆에서 한 소절씩 디렉팅하고, 녹음한 목소리는 음정과 박자를 다듬어 축가 AR로 만들어 드려요.</p>
+      <p>MR 편집과 키 조절은 따로 받지 않아요.</p>
+      <div class="price"><strong>50,000원부터</strong><span>50분 녹음 기준</span></div>
+      <div class="ctas">
+        <a class="primary" href="/contact.html">문의양식 작성하기</a>
+        <a class="kakao" href="https://pf.kakao.com/_GbExjX" target="_blank" rel="noopener">카카오톡 상담</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(()=>{
+  const SRC={before:'/assets/audio/before-after/before.mp3',after:'/assets/audio/before-after/after.mp3'};
+  const CLIP=20; // 가장 소리가 큰 20초 구간만 들려줌
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  const cv=$('cv'),wave=$('wave'),voice=$('voice'),ab=$('ab'),playBtn=$('play');
+  let ctx,buf={},peaks=null,start=0,mode='before',src=null,gains={},t0=0,offset=0,playing=false,raf=0,drawn=0;
+
+  const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+
+  async function load(){
+    ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+    if(buf.before) return;
+    const dec=async u=>{const r=await fetch(u);if(!r.ok)throw 0;return await ctx.decodeAudioData(await r.arrayBuffer())};
+    [buf.before,buf.after]=await Promise.all([dec(SRC.before),dec(SRC.after)]);
+    pickClip(); computePeaks(); drawIn();
+  }
+
+  // 보정 후 음원에서 에너지가 가장 큰 20초를 찾음
+  function pickClip(){
+    const d=buf.after.getChannelData(0),sr=buf.after.sampleRate,hop=sr/2,n=Math.floor(d.length/hop),e=[];
+    for(let i=0;i<n;i++){let s=0;for(let j=i*hop;j<(i+1)*hop;j+=64)s+=d[j]*d[j];e.push(s)}
+    const w=CLIP*2;let best=0,bi=0,acc=0;
+    for(let i=0;i<e.length;i++){acc+=e[i];if(i>=w)acc-=e[i-w];if(i>=w-1&&acc>best){best=acc;bi=i-w+1}}
+    start=Math.max(0,Math.min(bi/2,buf.after.duration-CLIP));
+  }
+  function computePeaks(){
+    const bars=Math.max(48,Math.floor(cv.clientWidth/5));peaks={};
+    for(const k of ['before','after']){
+      const d=buf[k].getChannelData(0),sr=buf[k].sampleRate,a=Math.floor(start*sr),len=Math.floor(CLIP*sr),step=Math.floor(len/bars),out=[];
+      for(let i=0;i<bars;i++){let s2=0,c=0;for(let j=0;j<step;j+=8){const v=d[a+i*step+j]||0;s2+=v*v;c++}out.push(Math.sqrt(s2/(c||1)))}
+      const sorted=[...out].sort((x,y)=>x-y),lo=sorted[Math.floor(bars*.05)],hi=sorted[Math.floor(bars*.98)]||1;
+      peaks[k]=out.map(v=>Math.max(.08,Math.min(1,(v-lo)/((hi-lo)||1))));
+    }
+  }
+  function draw(progress){
+    const dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
+    if(cv.width!==w*dpr){cv.width=w*dpr;cv.height=h*dpr}
+    const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);
+    if(!peaks)return;
+    const p=peaks[mode],n=p.length,bw=w/n,mid=h/2+8,limit=Math.floor(n*drawn);
+    for(let i=0;i<limit;i++){
+      const bh=Math.max(2,p[i]*(h-34));
+      g.fillStyle=i/n<=progress?(mode==='after'?'#A65A6C':'#3A2329'):'rgba(138,111,117,.38)';
+      g.fillRect(i*bw+1,mid-bh/2,Math.max(1.5,bw-2),bh);
+    }
+  }
+  function drawIn(){
+    if(reduce){drawn=1;draw(0);return}
+    const t=performance.now();
+    (function f(now){drawn=Math.min(1,(now-t)/900);draw(pos()/CLIP);if(drawn<1)requestAnimationFrame(f)})(t);
+  }
+
+  const pos=()=>playing?Math.min(CLIP,offset+ctx.currentTime-t0):offset;
+
+  function startAt(o){
+    stopSrc();
+    // 두 음원을 같은 시점에 동시에 재생하고 볼륨만 바꿔서 끊김 없이 전환
+    src={};for(const k of ['before','after']){
+      const s=ctx.createBufferSource(),gn=ctx.createGain();s.buffer=buf[k];gn.gain.value=k===mode?1:0;
+      s.connect(gn).connect(ctx.destination);s.start(0,start+o,CLIP-o);src[k]=s;gains[k]=gn;
+    }
+    src.after.onended=()=>{if(playing&&pos()>=CLIP-.05){playing=false;offset=0;ui()}};
+    t0=ctx.currentTime;offset=o;playing=true;ui();tick();
+  }
+  function stopSrc(){if(src){for(const k in src){try{src[k].onended=null;src[k].stop()}catch(e){}}src=null}}
+  function pause(){offset=pos();stopSrc();playing=false;ui()}
+  function setMode(m){
+    mode=m;ab.dataset.mode=m;
+    ab.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+    $('stateLabel').textContent=m==='after'?'보정 후':'보정 전';
+    if(playing){const t=ctx.currentTime;for(const k of ['before','after'])gains[k].gain.setTargetAtTime(k===m?1:0,t,.04)}
+    draw(pos()/CLIP);
+  }
+  function ui(){
+    voice.classList.toggle('is-playing',playing);
+    $('icoPlay').toggleAttribute('hidden',playing);$('icoPause').toggleAttribute('hidden',!playing);
+    playBtn.setAttribute('aria-label',playing?'일시정지':'재생');
+    $('tNow').textContent=fmt(pos());draw(pos()/CLIP);
+    wave.setAttribute('aria-valuenow',Math.round(pos()/CLIP*100));
+  }
+  function tick(){cancelAnimationFrame(raf);(function f(){ui();if(playing)raf=requestAnimationFrame(f)})()}
+
+  async function ensure(){try{await load();if(ctx.state==='suspended')await ctx.resume();return true}catch(e){$('err').hidden=false;return false}}
+
+  playBtn.addEventListener('click',async()=>{if(!await ensure())return;playing?pause():startAt(offset>=CLIP-.1?0:offset)});
+  ab.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;setMode(b.dataset.mode);if(!playing&&await ensure())startAt(offset>=CLIP-.1?0:offset)});
+  wave.addEventListener('click',async e=>{if(!await ensure())return;const r=wave.getBoundingClientRect();startAt(Math.max(0,Math.min(CLIP-.2,(e.clientX-r.left)/r.width*CLIP)))});
+  wave.addEventListener('keydown',async e=>{
+    if(!['ArrowLeft','ArrowRight',' ','Enter'].includes(e.key))return;e.preventDefault();if(!await ensure())return;
+    if(e.key===' '||e.key==='Enter'){playing?pause():startAt(offset);return}
+    const o=Math.max(0,Math.min(CLIP-.2,pos()+(e.key==='ArrowRight'?2:-2)));playing?startAt(o):(offset=o,ui());
+  });
+  addEventListener('resize',()=>{if(buf.before){computePeaks();draw(pos()/CLIP)}});
+
+  // 화면에 들어오면 파형을 미리 불러와 그려둠 (재생은 누를 때만)
+  const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();
+    // AudioContext 없이 디코드만 먼저 (iOS 대비 OfflineAudioContext 사용)
+    const oc=new (window.OfflineAudioContext||window.webkitOfflineAudioContext)(1,1,44100);
+    Promise.all(Object.values(SRC).map(u=>fetch(u).then(r=>r.arrayBuffer()).then(a=>oc.decodeAudioData(a))))
+      .then(([b,a])=>{if(!buf.before){buf.before=b;buf.after=a;pickClip();computePeaks();drawIn()}}).catch(()=>{});
+  }},{rootMargin:'200px'});
+  io.observe(wave);
+  draw(0);
+})();
+</script>
+</body>
+</html>
