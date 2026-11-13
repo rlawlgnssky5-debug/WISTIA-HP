@@ -393,11 +393,11 @@
     padding: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    color: var(--schedule-accent) !important;
-    font-weight: 700 !important;
+    color: #e4a50a !important;
+    font-weight: 800 !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-calendar-day][data-discount][aria-pressed="true"]:not(:disabled)::after {
-    color: inherit !important;
+    color: #ffd66b !important;
   }
   #app .wistia-wizard [data-wf-step="1"] [data-wf-date-view] :is([data-calendar-day], [data-wf-time])[aria-pressed="true"]:not(:disabled) {
     color: var(--schedule-selected-ink) !important;
