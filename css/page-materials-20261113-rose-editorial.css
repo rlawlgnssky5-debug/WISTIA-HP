@@ -437,3 +437,70 @@
     }
   }
 }
+
+/* 2026-11-13 음원·영상 작업 선택: "필요 없음 / 필요" 두 칸 대신 켜고 끄는 스위치(시안 1).
+   라디오 두 개(0/1)는 그대로 두고 겉모양만 바꾼다. 체크되지 않은 쪽 라벨이 스위치 전체를 덮어서
+   누르면 반대 값으로 바뀐다. 가격 계산·문의 내용·임시저장·11월 이벤트 잠금(disabled)은 기존 그대로다 */
+@layer wistia-page-materials {
+  #app .rc-work { gap: 14px !important; }
+  #app .rc-toggle,
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle {
+    position: relative !important;
+    display: block !important;
+    flex: none !important;
+    width: 52px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #e3d6d9 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    transition: background-color .2s ease;
+  }
+  #app .rc-toggle::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px #3a232940;
+    transition: transform .2s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #app .rc-toggle:has(input[value="1"]:checked),
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle:has(input[value="1"]:checked) { background: #a65a6c !important; }
+  #app .rc-toggle:has(input[value="1"]:checked)::after { transform: translateX(22px); }
+  #app .rc-toggle label,
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle label,
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle label:has(input),
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle label:has(input:checked) {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    cursor: pointer !important;
+    z-index: 1 !important;
+  }
+  #app .rc-toggle label:has(input:checked),
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle label:has(input:checked) { z-index: 0 !important; pointer-events: none !important; }
+  #app .rc-toggle label:has(input:disabled) { cursor: default !important; }
+  #app .rc-toggle input { position: absolute !important; width: 1px !important; height: 1px !important; margin: 0 !important; opacity: 0 !important; }
+  #app .rc-toggle:has(input:focus-visible),
+  #app .wistia-wizard [data-wf-step] .recording-config .rc-work .rc-toggle:has(input:focus-visible) { outline: 2px solid #a65a6c !important; outline-offset: 2px !important; }
+  #app .rc-toggle:has(input:disabled:not(:checked)) { opacity: .85; }
+  @media (prefers-reduced-motion: reduce) { #app .rc-toggle, #app .rc-toggle::after { transition: none; } }
+}
