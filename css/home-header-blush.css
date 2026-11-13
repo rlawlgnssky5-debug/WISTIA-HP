@@ -138,39 +138,4 @@
     transform: translateY(-.1em) rotate(45deg);
   }
 
-  @media (min-width: 700px) {
-    #siteHeader .ed-event-row {
-      --event-edge: 4.1%;
-      --event-icon-size: 21px;
-      grid-template-columns: 36px minmax(0, 1fr) auto !important;
-      column-gap: 13px !important;
-      padding-inline: 8.4% 6.8% !important;
-    }
-
-    #siteHeader .ed-event-message {
-      gap: 18px !important;
-    }
-
-    #siteHeader .ed-event-label {
-      min-width: 63px;
-      font-size: 11px !important;
-    }
-
-    #siteHeader .ed-event-question {
-      font-size: 14px !important;
-      letter-spacing: -.03em !important;
-    }
-
-    #siteHeader .ed-event-discount {
-      min-width: 114px;
-      padding: 1px 10px !important;
-      font-size: 12px !important;
-      letter-spacing: -.025em !important;
-      text-align: center;
-    }
-
-    #siteHeader [data-event-row="first"] .ed-event-discount {
-      min-width: 128px;
-    }
-  }
 }

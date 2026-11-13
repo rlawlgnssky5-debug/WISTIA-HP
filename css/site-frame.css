@@ -2,7 +2,7 @@
 @layer wistia-site-frame {
   :root {
     --site-frame-share: 84%;
-    --site-frame-max: 655px;
+    --site-frame-max: 420px;
     --site-content-ratio: .89;
     --site-frame: min(var(--site-frame-share), var(--site-frame-max));
     --site-content-share: calc(100% * var(--site-content-ratio));
@@ -53,6 +53,15 @@
 
   #siteHeader .ed-event-row {
     --event-edge: var(--site-gutter) !important;
+    padding-inline: calc(var(--site-gutter) + 5px) !important;
+  }
+
+  #siteHeader .ed-event-row .ed-event-question {
+    min-width: 0;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
 
   #mainMenu {
@@ -123,20 +132,6 @@
     #floatingKakaoChat.floating-kakao-pill.is-clear-table {
       right: auto !important;
       left: var(--site-content-edge) !important;
-    }
-  }
-
-  @media (max-width: 699px) {
-    #siteHeader .ed-event-row {
-      padding-inline: calc(var(--site-gutter) + 5px) !important;
-    }
-
-    #siteHeader .ed-event-row .ed-event-question {
-      min-width: 0;
-      line-height: 1.15 !important;
-      white-space: normal !important;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
     }
   }
 
