@@ -345,8 +345,8 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
   /* -1만 / -2만 mark: yellow pill */
   html body #app#app#app#app .calendar-day.earlybird-day { position: relative !important; }
   html body #app#app#app#app .calendar-day.earlybird-day::after { position: absolute !important; left: 50% !important; bottom: 2px !important; transform: translateX(-50%) !important; padding: 0 4px !important; border-radius: 999px !important; background: #FFE36E !important; color: #3a2a12 !important; font-size: 9.5px !important; font-weight: 800 !important; line-height: 1.45 !important; letter-spacing: -.03em !important; white-space: nowrap !important; box-shadow: 0 1px 2px rgba(120,90,20,.25) !important; }
-  html body #app#app#app#app .calendar-day.earlybird-one::after { content: "-1만" !important; }
-  html body #app#app#app#app .calendar-day.earlybird-two::after { content: "-2만" !important; }
+  html body #app#app#app#app .calendar-day.earlybird-one::after { content: "-1만원" !important; }
+  html body #app#app#app#app .calendar-day.earlybird-two::after { content: "-2만원" !important; }
   html body #app#app#app#app .calendar-day.earlybird-day:disabled::after { content: none !important; }
 
   /* '10,000원 할인 적용돼요!' as a small event banner */

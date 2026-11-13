@@ -371,6 +371,8 @@
     color: #cfc3c7 !important;
     font-weight: 500 !important;
   }
+  /* 50분은 사전 예약 할인이 없으므로 JS가 hidden을 주면 배너를 숨긴다 (package-pricing.css의 display:grid!important보다 우선) */
+  #app .wistia-wizard .wf-earlybird-legend[hidden] { display: none !important; }
   #app .contact-calendar [data-calendar-day]:disabled > span { color: inherit !important; font-weight: inherit !important; }
   #app .contact-calendar [data-calendar-day]:disabled small { display: none !important; }
   #app .contact-calendar .calendar-legend .legend-available { background: #fff !important; border: 1px solid var(--schedule-cell-border, #ecdfe2) !important; }
