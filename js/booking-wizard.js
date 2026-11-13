@@ -6,7 +6,7 @@
  const LAST=steps.length-1,states=new WeakMap(),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const hours=global.WistiaPackages.hoursText
- const scheduleLabel=q=>q.filmingMinutes?'예약 시간':'녹음 시간'
+ const scheduleLabel=q=>q.making?'예약 시간':'녹음 시간'
  const icon=kind=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">'+(kind==='calendar'?'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>':kind==='people'?'<circle cx="9" cy="7" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4m2-17a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 4v4"/>':'<path d="m5 12 4 4L19 6"/>')+'</svg>'
  const error=key=>'<p class="wf-error" id="wf-error-'+key+'" data-wf-error="'+key+'" role="alert" hidden></p>'
  function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><small>녹음 날짜 기준</small></div>'}
@@ -23,7 +23,7 @@
  function values(form){const v=Object.fromEntries(new FormData(form));v.firstVisit=recording.firstVisit();delete v.eventDate;delete v.eventDateMode;delete v.paybackBlog;delete v.paybackReaction;return v}
  function quote(form){const v=values(form),q=recording.quote(v);return {...q,v,options:q.options.map(o=>[o.label,o.price])}}
  function range(time,minutes=60){if(!time)return '미정';const start=Number(time.slice(0,2))*60+Number(time.slice(3)),clock=m=>(m>=1440?'다음 날 ':'')+String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');return clock(start)+'~'+clock(start+minutes)}
- function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['녹음 소요 시간',hours(q.recordingMinutes)],...(q.filmingMinutes?[['촬영 소요 시간',hours(q.filmingMinutes)],['총 소요 시간',hours(q.bookingMinutes)]]:[]),['녹음 날짜',v.bookingDate||'미정'],[scheduleLabel(q),range(v.timeStart,q.bookingMinutes)],['추가 옵션',q.options.map(o=>o[0]+' '+(o[0]==='마스터링'&&q.offer?'0원 (11월 이벤트)':'+'+money(o[1]))).join('\n')||'없음'],['할인',(q.allDiscounts||q.discounts).map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['총 금액',money(q.total)]]}
+ function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['소요 시간',hours(q.bookingMinutes)],['녹음 날짜',v.bookingDate||'미정'],[scheduleLabel(q),range(v.timeStart,q.bookingMinutes)],['추가 옵션',q.options.map(o=>o[0]+' '+(o[0]==='마스터링'&&q.offer?'0원 (11월 이벤트)':'+'+money(o[1]))).join('\n')||'없음'],['할인',(q.allDiscounts||q.discounts).map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['총 금액',money(q.total)]]}
  // Display only: the Kakao text still comes from rows() unchanged
  // 2026-11-11 지훈: 확인 단계 '추가 옵션' → '옵션', 옵션마다 한 줄 (이름 왼쪽 · 금액 오른쪽)
  function optionRows(q){
@@ -34,7 +34,7 @@
   const d=Object.fromEntries(rows(form)),row=(label,value,cls='')=>'<div'+(cls?' class="'+cls+'"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>'
   const group=(title,body,cls)=>'<section class="wf-review-group '+cls+'"><h3 class="wf-review-head">'+title+'</h3><dl>'+body+'</dl></section>'
   return group('문의 요약',row('총 금액',d['총 금액'],'wf-final-total')+(form.dataset.scheduleState==='unavailable'?row('일정 확인','자동 확인 불가 · 희망 일정 / 상담 후 확정'):'')+row('녹음 날짜',d['녹음 날짜'])+row(scheduleLabel(q),d[scheduleLabel(q)]),'is-schedule')
-   +group('상품',row('타입',q.package.name,'is-tier" data-tier="'+q.package.key)+row('인원',d['인원'])+row('녹음 소요 시간',d['녹음 소요 시간'])+(q.filmingMinutes?row('촬영 소요 시간',d['촬영 소요 시간'])+row('총 소요 시간',d['총 소요 시간']):'')+optionRows(q)+row('음원 전달',d['음원 전달']),'is-product')
+   +group('상품',row('타입',q.package.name,'is-tier" data-tier="'+q.package.key)+row('인원',d['인원'])+row('소요 시간',d['소요 시간'])+optionRows(q)+row('음원 전달',d['음원 전달']),'is-product')
    +group('할인·금액',row('선택한 구성',money(q.list+q.optionTotal),'wf-review-list')+((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount')),'is-amount')
  }
  function text(form){
@@ -49,7 +49,7 @@
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.bookingMinutes).replace('~',' ~ '),'',
    '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음']),'',
-   '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · 녹음 '+hours(q.recordingMinutes)+(q.filmingMinutes?' · 촬영 '+hours(q.filmingMinutes):''),'• 옵션 :',...included.map(item=>'- '+item),'',
+   '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · '+hours(q.bookingMinutes),'• 옵션 :',...included.map(item=>'- '+item),'',
    '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
    '💰 결제 금액','• 기본 상품 (원가) : '+money(q.list??q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
    '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total)].join('\n')
@@ -151,7 +151,7 @@
   const list=form.querySelector('[data-calendar-times]'),time=form.querySelector('#contact-time'),date=form.querySelector('#contact-bookingDate');if(!list||!time||!date)return
   const focused=list.contains(global.document.activeElement)?global.document.activeElement.dataset.wfTime:null
   const known=!date.disabled&&!!date.value,loading=form.dataset.scheduleState==='loading';list.hidden=!known||loading;list.closest('[data-time-scroll-wrap]').hidden=!known||loading;time.closest('label').hidden=true;time.disabled=!known
-  const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'녹음 날짜를 먼저 골라 주세요';form.querySelector('[data-time-help]').hidden=true;const q=quote(form);form.querySelector('[data-wf-duration]').textContent=(q.filmingMinutes?'총 ':'')+hours(q.bookingMinutes)+' 진행'
+  const hint=form.querySelector('[data-time-date-hint]');hint.hidden=known&&!loading;hint.textContent=known?'가능한 시간을 불러오고 있어요':'녹음 날짜를 먼저 골라 주세요';form.querySelector('[data-time-help]').hidden=true;const q=quote(form);form.querySelector('[data-wf-duration]').textContent=hours(q.bookingMinutes)+' 진행'
   list.setAttribute('aria-busy',String(loading));list.innerHTML=[...time.options].filter(o=>o.value.endsWith(':00')).map(o=>'<button type="button" data-wf-time="'+o.value+'" aria-pressed="'+(!o.disabled&&time.value===o.value)+'"'+(loading?' disabled':o.disabled?' class="is-closed" disabled aria-label="'+o.value+' 마감"':'')+'><strong>'+o.value+'</strong>'+(!loading&&o.disabled?'<small>마감</small>':'')+'</button>').join('');update(form)
   if(focused)list.querySelector('[data-wf-time="'+focused+'"]:not(:disabled)')?.focus({preventScroll:true})
  }

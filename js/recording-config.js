@@ -6,8 +6,9 @@
   ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요',40000,'🎚️'],
   ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요',40000,'🎧']
  ]
- const makingRecordingMinutes=30, makingFilmingMinutes=30
- const makingOption=['makingVideo','녹음 메이킹 영상 추가','녹음 '+makingRecordingMinutes+'분 + 촬영 '+makingFilmingMinutes+'분 · 총 1시간 추가',80000]
+ // 2026-11-13 지훈: 녹음 메이킹은 녹음·촬영을 나누어 안내하지 않고 예약 시간에 1시간만 더한다
+ const makingMinutes=60
+ const makingOption=['makingVideo','녹음 메이킹 영상 추가','',80000]
  const options=[...audioOptions,makingOption]
  const keys=['people','recordingMinutes',...options.map(o=>o[0]),'rush']
  const monthly=(date=prices.today())=>date.startsWith('2026-11')
@@ -21,7 +22,7 @@
  }
  function quote(v,date=prices.today()){
   const minutes=Number(v.recordingMinutes)||50, {list,rate}=times[minutes]||times[50], duet=v.people==='1', offer=monthly(date)&&minutes!==50 // 2026-11-11 지훈: 50분에는 마스터링 이벤트 없음
-  const making=v.makingVideo==='1', recordingMinutes=minutes+(making?makingRecordingMinutes:0), filmingMinutes=making?makingFilmingMinutes:0
+  const making=v.makingVideo==='1', recordingMinutes=minutes, filmingMinutes=0, extraMinutes=making?makingMinutes:0
   const selected=options.filter(([key])=>key==='recordingMaster'&&offer||v[key]==='1').map(([key,label,,price])=>({key,label,price}))
   if(duet)selected.unshift({key:'duet',label:'녹음 1인 추가',price:40000})
   if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})
@@ -33,7 +34,7 @@
   const advance=minutes===50?null:prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  return {v,minutes,recordingMinutes,filmingMinutes,bookingMinutes:recordingMinutes+filmingMinutes,offer,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',package:{key:'custom',name:'맞춤 녹음',title:'내 축가 녹음 구성'}}
+  return {v,minutes,recordingMinutes,filmingMinutes,making,bookingMinutes:recordingMinutes+extraMinutes,offer,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',package:{key:'custom',name:'맞춤 녹음',title:'내 축가 녹음 구성'}}
  }
  const radio=(key,value,current,copy)=>'<label><input type="radio" name="'+key+'" value="'+value+'"'+(current===value?' checked':'')+'>'+copy+'</label>'
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
@@ -41,7 +42,7 @@
   const master=key==='recordingMaster',fee=money(price)
   return '<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+(icon?'<span aria-hidden="true">'+icon+'</span>&nbsp;':'')+label+'</strong> '+
     (master?'<small data-rc-event hidden>✨ 11월 이벤트</small>':'')+
-    '<small>'+copy+'</small><small data-rc-regular>+'+fee+'</small>'+
+    (copy?'<small>'+copy+'</small>':'')+'<small data-rc-regular>+'+fee+'</small>'+
     (master?'<small data-rc-free hidden><del>'+fee+'</del> <b>0원</b></small>':'')+
     '</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
