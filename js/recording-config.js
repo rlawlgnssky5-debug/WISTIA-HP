@@ -54,14 +54,14 @@
   return '<div class="recording-config">'+people+duration+work+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
- function shortcuts(v){
+ function shortcuts(){
   const cards=Object.entries(times).map(([minutes,{list,rate}])=>{
    const saving=Math.round((list-rate)/list*100)
    const offer=saving?'<span class="rc-shortcut-badge">'+saving+'% 할인</span>':''
-   const original=saving?'<del class="rc-shortcut-original">'+money(list)+'</del>':''
-   return '<button type="button" data-hero-recording="'+minutes+'" aria-pressed="'+(v.recordingMinutes===minutes)+'">'+offer+'<b>'+prices.hoursText(Number(minutes))+'</b>'+original+'<strong>'+rate.toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></button>'
+   const original=saving?'<del class="rc-shortcut-original">'+money(list)+'</del><span class="rc-shortcut-arrow" aria-hidden="true">›</span>':''
+   return '<div class="rc-price-card">'+offer+'<b>'+prices.hoursText(Number(minutes))+'</b><div class="rc-shortcut-prices">'+original+'<strong>'+rate.toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></div></div>'
   })
-  return '<div class="ed-hero-types rc-shortcuts" role="group" aria-label="녹음 시간 선택">'+cards.join('')+'</div>'
+  return '<div class="ed-hero-types rc-shortcuts" role="group" aria-label="녹음 시간별 가격">'+cards.join('')+'</div>'
  }
  function deliveryField(v){
   return field('05','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')

@@ -64,6 +64,22 @@ body:has(#siteHeader[data-home-event-rows="0"]) { --compact-header-height: 40px;
 #siteHeader[data-home-event-rows="0"], #siteHeader[data-home-event-rows="0"] .header-inner { height: var(--compact-header-height) !important; min-height: var(--compact-header-height) !important; }
 body:has(#siteHeader[data-home-event-rows="0"]) #mainMenu { --menu-header-height: var(--compact-header-height) !important; top: var(--compact-header-height) !important; max-height: calc(100dvh - var(--compact-header-height)) !important; }
 
+/* Keep the fixed header, document and open menu on the same measured rows. */
+body:has(#siteHeader[data-home-event-rows]) { --compact-header-height: 40px; --home-header-height: calc(40px + var(--home-ribbon-height, 0px)); }
+body:has(#siteHeader[data-home-event-rows="1"]) { --home-ribbon-height: 38px; }
+body:has(#siteHeader[data-home-event-rows="2"]) { --home-ribbon-height: 72px; }
+body:has(#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"])) { padding-top: var(--home-header-height) !important; }
+#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"]) { height: var(--home-header-height) !important; min-height: var(--home-header-height) !important; }
+#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"]) .header-inner { height: 40px !important; min-height: 40px !important; }
+body:has(#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"])) #mainMenu { top: var(--home-header-height) !important; max-height: calc(100dvh - var(--home-header-height)) !important; }
+.home-event-strip { box-sizing:border-box; display:grid; gap:4px; padding:2px clamp(5px,2.5vw,24px) 6px; height:var(--home-ribbon-height); }
+.home-event-strip-row { box-sizing:border-box; display:grid; grid-template-columns:auto auto minmax(0,1fr) auto; align-items:center; gap:clamp(3px,1.1vw,11px); min-height:30px; padding:0 clamp(4px,1.2vw,12px); border:1px solid #edd7d8; border-radius:999px; color:#422932; background:radial-gradient(ellipse at 77% 100%,#eac2c966,transparent 52%),linear-gradient(120deg,#fcf5f3,#f7e7e9); }
+.home-event-strip-icon { font-size:clamp(12px,3.2vw,18px); }
+.home-event-strip-row small { padding:2px 4px; border-radius:999px; background:#f2d8dc; color:#824250; font-size:clamp(7px,2vw,11px); font-weight:750; white-space:nowrap; }
+.home-event-strip-title { font-size:clamp(10px,3vw,14px); font-weight:650; letter-spacing:-.055em; white-space:nowrap; }
+.home-event-strip-row strong { padding:3px clamp(4px,1.3vw,10px); border:1px solid #b96070; border-radius:999px; background:#a75163; color:#fff; font-size:clamp(9px,2.7vw,13px); letter-spacing:-.035em; white-space:nowrap; }
+.home-event-strip-row + .home-event-strip-row strong { background:#fff7f7; color:#8a394c; }
+
 /* 오시는 길 카드: PC(780px 칸)에서 왼쪽에 붙어 있던 카드를 가운데로, 아래 빈 여백 96px → 48px */
 html body #app .solo-map > .home-map-inset { margin-inline: auto !important; width: 100% !important; max-width: 640px !important; }
 html body #app .mobile-ar-solo .solo-map { padding-bottom: 48px !important; }

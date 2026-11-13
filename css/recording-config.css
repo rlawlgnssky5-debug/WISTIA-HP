@@ -30,21 +30,22 @@
 #app .ed-hero-actions .rc-shortcuts {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
 @layer wistia-approved-layout {
   #app .ed-hero .ed-hero-types.rc-shortcuts {padding-top:10px;gap:8px!important;background:transparent!important;box-shadow:none!important}
-  #app .ed-hero .ed-hero-types.rc-shortcuts button {
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-price-card {
     position:relative;display:grid!important;align-content:center!important;min-width:0;min-height:100px!important;
-    border:1px solid #eadce2!important;background:#fff!important;color:#654655!important;font:inherit;white-space:nowrap;cursor:pointer;padding:14px clamp(7px,2.8vw,16px) 10px!important;
+    border:1px solid #eadce2!important;background:linear-gradient(150deg,#fff,#fff8f8)!important;color:#432832!important;font:inherit;white-space:nowrap;padding:14px clamp(7px,2.8vw,16px) 10px!important;
     justify-items:start!important;text-align:left!important;gap:3px!important;border-radius:16px!important;
   }
-  #app .ed-hero .ed-hero-types.rc-shortcuts button[aria-pressed="true"] {border-color:#ba7c96!important;background:#f7e7ef!important;color:#773851!important}
-  #app .ed-hero .ed-hero-types.rc-shortcuts button b {font-size:clamp(11px,3.15vw,14px)!important;font-weight:650!important}
-  #app .ed-hero .ed-hero-types.rc-shortcuts button strong {
-    font-size:clamp(15px,4.7vw,22px)!important;line-height:1.2!important;color:#793546!important;
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-price-card b {font-size:clamp(11px,3.15vw,14px)!important;font-weight:650!important}
+  #app .ed-hero .ed-hero-types.rc-shortcuts .rc-price-card strong {
+    font-size:clamp(15px,4.7vw,22px)!important;line-height:1.2!important;color:#912744!important;
   }
+  #app .rc-shortcut-prices {display:flex;align-items:baseline;flex-wrap:wrap;gap:1px 5px}
+  #app .rc-shortcut-arrow {color:#912744}
   #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-unit {font-size:.65em!important;color:inherit!important}
   #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-original {font-size:clamp(10px,2.9vw,12px)!important;color:#705b5f!important}
   #app .ed-hero .ed-hero-types.rc-shortcuts .rc-shortcut-badge {
     position:absolute;top:0;left:50%;transform:translate(-50%,-50%);padding:3px 7px;
-    border-radius:999px;background:#793546;color:#fff!important;font-size:11px!important;font-weight:750!important;line-height:1.2!important;
+    border-radius:999px;background:linear-gradient(#b9566a,#922940);color:#fff!important;font-size:11px!important;font-weight:750!important;line-height:1.2!important;
   }
 }
 
