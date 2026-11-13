@@ -58,10 +58,11 @@ html body #app .ed-reviews .ed-review-position p { margin: 0 !important; }
 html body #app .solo-detail-scope.mobile-ar-solo:is([data-ar-product="solo"],[data-ar-product="duo"]) { padding-bottom: 0 !important; }
 html body #app:has(> .solo-detail-scope.mobile-ar-solo) { padding-bottom: 0 !important; }
 
-/* 상단 이벤트 띠 없음: 밝은 유리 헤더는 그대로 두고 띠 높이만 0으로 */
-#siteHeader[data-home-event-rows="0"] { --event-height: 0px !important; height: 56px !important; min-height: 56px !important; }
-body:has(#siteHeader[data-home-event-rows="0"]) { --event-header-height: 56px !important; padding-top: 56px !important; }
-body:has(#siteHeader[data-home-event-rows="0"]) #mainMenu { --menu-header-height: 56px !important; }
+/* The header, content offset and menu share the height of the single header row. */
+body:has(#siteHeader[data-home-event-rows="0"]) { --compact-header-height: 40px; --event-header-height: var(--compact-header-height) !important; padding-top: var(--compact-header-height) !important; }
+#siteHeader[data-home-event-rows="0"] { --event-height: 0px !important; }
+#siteHeader[data-home-event-rows="0"], #siteHeader[data-home-event-rows="0"] .header-inner { height: var(--compact-header-height) !important; min-height: var(--compact-header-height) !important; }
+body:has(#siteHeader[data-home-event-rows="0"]) #mainMenu { --menu-header-height: var(--compact-header-height) !important; top: var(--compact-header-height) !important; max-height: calc(100dvh - var(--compact-header-height)) !important; }
 
 /* 오시는 길 카드: PC(780px 칸)에서 왼쪽에 붙어 있던 카드를 가운데로, 아래 빈 여백 96px → 48px */
 html body #app .solo-map > .home-map-inset { margin-inline: auto !important; width: 100% !important; max-width: 640px !important; }

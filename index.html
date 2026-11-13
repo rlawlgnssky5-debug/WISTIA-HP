@@ -8,12 +8,13 @@
   <style>@layer wistia-home-detail-glass;</style>
   <!-- home-first-paint:start -->
   <style>
-body:has([data-home-first-paint]){margin:0;background:#fff;color:#39272f;font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+html body:has([data-home-first-paint]){margin:0;padding-top:0!important;background:#fff;color:#39272f;font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 body:has([data-home-first-paint]) :is(.skip-link,#floatingKakaoChat){position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}
 body:has([data-home-first-paint]) .skip-link:focus{clip-path:none;width:auto;height:auto;z-index:2}
 body:has([data-home-first-paint]) :is(#siteHeader,#app){width:100%;max-width:780px;margin-inline:auto}
+html body:has([data-home-first-paint]) #siteHeader{position:relative!important;height:40px!important;min-height:40px!important}
 .home-first-header,.home-first-hero{box-sizing:border-box}
-.home-first-header{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 14px;background:linear-gradient(120deg,#faf9fa,#efedf3);border-bottom:1px solid #f5f0f2}
+.home-first-header{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 14px;background:linear-gradient(120deg,#faf9fa,#efedf3);border-bottom:1px solid #f5f0f2}
 .home-first-brand{display:inline-flex;align-items:center;gap:12px;color:#392e35;text-decoration:none;font:24px/1 Georgia,serif;letter-spacing:.06em}
 .home-first-brand img{width:28px;height:28px;object-fit:contain}
 .home-first-menu{width:36px;height:36px;display:grid;place-items:center;color:#61495a;border:1px solid #fff;border-radius:50%;background:#ffffff70}
@@ -449,7 +450,7 @@ body:has([data-home-first-paint]) :is(#siteHeader,#app){width:100%;max-width:780
   <link rel="preload" as="style" data-home-style href="/css/home-detail-glass-20261110.css?v=20261111-soft-blush-point04" onload="this.onload=null;this.rel='stylesheet'" onerror="this.dataset.homeStyleFailed='true'"><noscript><link rel="stylesheet" href="/css/home-detail-glass-20261110.css?v=20261111-soft-blush-point04"></noscript>
   <link rel="preload" as="style" data-home-style href="/css/recording-config.css?v=20261111-10" onload="this.onload=null;this.rel='stylesheet'" onerror="this.dataset.homeStyleFailed='true'"><noscript><link rel="stylesheet" href="/css/recording-config.css?v=20261111-10"></noscript>
   <link rel="preload" as="style" data-home-style href="/css/inquiry-stepper-20261111.css?v=20261111-round2-1" onload="this.onload=null;this.rel='stylesheet'" onerror="this.dataset.homeStyleFailed='true'"><noscript><link rel="stylesheet" href="/css/inquiry-stepper-20261111.css?v=20261111-round2-1"></noscript>
-  <link rel="preload" as="style" data-home-style href="/css/home-polish-20261113.css?v=20261113-home-polish-4" onload="this.onload=null;this.rel='stylesheet'" onerror="this.dataset.homeStyleFailed='true'"><noscript><link rel="stylesheet" href="/css/home-polish-20261113.css?v=20261113-home-polish-4"></noscript>
+  <link rel="preload" as="style" data-home-style href="/css/home-polish-20261113.css?v=20261113-header-fit-1" onload="this.onload=null;this.rel='stylesheet'" onerror="this.dataset.homeStyleFailed='true'"><noscript><link rel="stylesheet" href="/css/home-polish-20261113.css?v=20261113-header-fit-1"></noscript>
 </head>
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2825959717777272&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
