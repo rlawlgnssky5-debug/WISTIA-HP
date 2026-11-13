@@ -195,19 +195,7 @@
     width: 100% !important;
     padding: 5px 9px !important;
     border-radius: var(--schedule-cell-radius);
-    background: var(--rc-heading-color, #f3dfe9);
-  }
-  #app .wistia-wizard .recording-config > fieldset:nth-of-type(2) {
-    --rc-heading-color: #f3e8d6;
-  }
-  #app .wistia-wizard .recording-config > fieldset:nth-of-type(3) {
-    --rc-heading-color: #eae4f1;
-  }
-  #app .wistia-wizard .recording-config > fieldset:nth-of-type(4) {
-    --rc-heading-color: #f5e0dc;
-  }
-  #app .wistia-wizard .recording-config > fieldset:nth-of-type(5) {
-    --rc-heading-color: #ece7e3;
+    background: #f3dfe9;
   }
   #app .wistia-wizard .rc-making-photo {
     display: block;
