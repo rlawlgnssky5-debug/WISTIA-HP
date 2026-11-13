@@ -66,23 +66,25 @@ test('Sunday duration changes and failed refresh retain closure restrictions',as
  assert.equal(f.option('16:00').disabled,false)
 })
 
-test('selectable options precede included disabled options after repeated type changes',()=>{
- const window={WistiaPackages:pricing};runInNewContext(read('booking-wizard.js'),{window})
- assert.equal(typeof window.WistiaWizard.syncOptions,'function','wizard must share option-state and DOM ordering updates')
- const order=['people','tuning','detailMix','precisionMix','extraHour','rush'],rows=new Map(order.map(key=>[key,{dataset:{wfOption:key},input:{disabled:false,checked:true},strong:{textContent:''},classList:{toggle(){}},querySelector(s){return s==='input'||s==='[data-wf-people-add]'?this.input:this.strong}}]))
- let moves=0
- const fieldset={querySelectorAll(){return order.map(key=>rows.get(key))},appendChild(row){moves++;order.splice(order.indexOf(row.dataset.wfOption),1);order.push(row.dataset.wfOption)}}
- const form={querySelector:s=>s==='.package-extra-options'?fieldset:s==='input[name="tuning"]'?rows.get('tuning').input:rows.get(s.match(/data-wf-option="([^"]+)"/)?.[1])}
- for(const [key,expected] of [['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['A',['people','detailMix','precisionMix','extraHour','tuning','rush']],['C',['people','extraHour','rush','tuning','detailMix','precisionMix']],['B',['people','extraHour','rush','tuning','detailMix','precisionMix']],['D',['extraHour','rush','people','tuning','detailMix','precisionMix']]]){
-  const previous=order.join(','),beforeMoves=moves
-  window.WistiaWizard.syncOptions(form,pricing.quote({package:key}))
-  if(previous===expected.join(','))assert.equal(moves,beforeMoves,'unchanged rows must retain checkbox focus during updates')
-  assert.deepEqual(order,expected)
-  assert.equal(rows.get('extraHour').input.disabled,false)
-  assert.equal(rows.get('tuning').input.disabled,true)
-  assert.equal(rows.get('tuning').input.checked,false)
-  assert.equal(rows.get('tuning').strong.textContent,'패키지에 포함되어 있어요')
-  assert.equal(rows.get('detailMix').input.disabled,key!=='A')
-  if(key!=='A'){assert.equal(rows.get('detailMix').input.checked,false);assert.equal(rows.get('detailMix').strong.textContent,'패키지에 포함되어 있어요')}
+test('custom recording work options use binary radios and making video adds one booking hour',()=>{
+ const window={WistiaPackages:pricing,addEventListener(){}}
+ const fields={people:'0',recordingMinutes:'90',tuning:'1',recordingMix:'0',recordingMaster:'0',makingVideo:'0',rush:'0'}
+ const context={window,FormData:class{constructor(){return Object.entries(fields)}}}
+ runInNewContext(read('recording-config.js'),context)
+ runInNewContext(read('booking-wizard.js'),context)
+ const editor=window.WistiaRecording.editor(fields)
+ for(const [key,selected] of [['tuning','1'],['recordingMix','0'],['recordingMaster','0'],['makingVideo','0']]){
+  const row=editor.split('data-rc-work="'+key+'"')[1]?.split('data-rc-work=')[0]
+  assert.ok(row,key+' has its own work option')
+  const radios=[...row.matchAll(new RegExp('<input type="radio" name="'+key+'" value="([01])"( checked)?>','g'))]
+  assert.deepEqual(radios.map(radio=>radio[1]),['0','1'])
+  assert.deepEqual(radios.filter(radio=>radio[2]).map(radio=>radio[1]),[selected])
  }
+ const form={}
+ assert.equal(window.WistiaWizard.bookingKey(form),'ar-90')
+ fields.makingVideo='1'
+ assert.equal(window.WistiaWizard.bookingKey(form),'ar-150')
+ assert.equal(Object.fromEntries(window.WistiaWizard.rows(form))['소요 시간'],pricing.hoursText(150))
+ fields.makingVideo='0'
+ assert.equal(window.WistiaWizard.bookingKey(form),'ar-90')
 })

@@ -105,15 +105,46 @@ for(const timestamp of ['missing','future','invalid'])test('removes drafts with 
  assert.equal(f.storage.get('wistia_vid'),'existing-visitor')
  assert.equal(f.storage.get('unrelated'),'keep')
 })
-test('wizard input/change handlers save drafts and both notes show 24 hours',()=>{
- const wizard=readFileSync(new URL('../js/booking-wizard.js',import.meta.url),'utf8').replace(/\r\n/g,'\n')
-  assert.match(wizard,/form\.addEventListener\('input',event=>\{if\(!event\.target\.matches\('\[data-wf-people-add\]'\)\)update\(form,\{save:!event\.wistiaCouponSync\}\)\}\)/)
- const changeHandler=wizard.split("form.addEventListener('change',event=>{")[1]?.split("form.addEventListener('input'")[0]
- assert.ok(changeHandler,'change listener exists')
- assert.match(changeHandler,/\n   update\(form,\{save:!event\.wistiaCouponSync\}\)\n/)
- assert.match(changeHandler,/WistiaBooking\.mount\(form,bookingKey\(form\)\)/)
- assert.match(wizard,/function update\(form,\{save=true\}=\{\}\)\{[\s\S]*?if\(save\)persistDraft\(form\)/)
- assert.match(wizard,/WistiaBookingDraft\.save\(state\.draftKey,/)
- assert.equal(wizard.split('작성 내용은 이 브라우저에 24시간 동안 임시 저장돼요').length-1,2)
- assert.doesNotMatch(wizard,/7일간/)
+test('wizard saves input and change events to the 24-hour browser draft',()=>{
+ const f=fixture()
+ const fields={people:'0',recordingMinutes:'50',rush:'0',specialNotes:''}
+ const nodes=new Map()
+ const handlers=new Map()
+ const form={
+  dataset:{},
+  elements:{people:{value:'0'},recordingMinutes:{value:'50'}},
+  querySelector(selector){
+   if(['[data-wf-date-view]','[data-wf-time-view]','[data-rc-total]'].includes(selector))return null
+   if(selector==='[data-rc-work="recordingMaster"]')return master
+   if(!nodes.has(selector))nodes.set(selector,{
+    value:'',classList:{toggle(){},remove(){}},insertAdjacentHTML(){},setAttribute(){},
+    querySelector:child=>child==='[data-wf-amount]'?form.querySelector(child):null
+   })
+   return nodes.get(selector)
+  },
+  querySelectorAll:()=>[],
+  addEventListener:(name,listener)=>handlers.set(name,listener)
+ }
+ const master={querySelector:()=>({disabled:false})}
+ const window={
+  WistiaBookingDraft:f.api,
+  WistiaBooking:{mount(){}},
+  addEventListener(){}
+ }
+ const context={window,FormData:class{constructor(){return Object.entries(fields)}}}
+ for(const file of ['package-pricing.js','recording-config.js','booking-wizard.js']){
+  runInNewContext(readFileSync(new URL('../js/'+file,import.meta.url),'utf8'),context)
+ }
+ window.WistiaWizard.mount({querySelector:()=>form},{onPeople(){}})
+ fields.specialNotes='updated by input'
+ handlers.get('input')({target:{name:'specialNotes'}})
+ assert.equal(f.api.read('solo').fields.specialNotes,fields.specialNotes)
+ fields.tuning='1'
+ handlers.get('change')({target:{name:'tuning'},stopPropagation(){}})
+ assert.equal(f.api.read('solo').fields.tuning,'1')
+ fields.specialNotes='synthetic sync'
+ handlers.get('input')({target:{name:'specialNotes'},wistiaCouponSync:true})
+ assert.equal(f.api.read('solo').fields.specialNotes,'updated by input')
+ f.advance(lifetime)
+ assert.equal(f.api.read('solo'),null)
 })
