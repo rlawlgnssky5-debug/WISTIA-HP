@@ -106,7 +106,7 @@
   const draft=global.WistiaBookingDraft?.read(state.draftKey);if(!draft)return
   const legacy=draft.fields.recordingMinutes?{}:recording.preset(draft.fields.package,draft.fields.people==='1')
   const fields={...legacy,...draft.fields}
-  for(const key of recording.keys)if(fields[key]===''||fields[key]===undefined)fields[key]=legacy[key]??'0'
+  for(const key of recording.keys)if(fields[key]===''||fields[key]===undefined)fields[key]=legacy[key]??recording.preset(null,state.draftKey==='duo')[key]
   const params=new URLSearchParams(global.location.search)
   let configurationChanged=false
   if(params.has('package')||recording.keys.some(key=>params.has(key))){

@@ -12,11 +12,11 @@
  const keys=['people','recordingMinutes',...options.map(o=>o[0]),'rush']
  const monthly=(date=prices.today())=>date.startsWith('2026-11')
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier&&tier!=='A'?'1':'0',recordingMix:tier?'1':'0',recordingMaster:tier?'1':'0',makingVideo:'0',rush:'0'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier?(tier==='A'?'0':'1'):'',recordingMix:tier?'1':'',recordingMaster:tier?'1':'',makingVideo:'',rush:'0'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
-  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?Object.hasOwn(times,val):['0','1'].includes(val))v[key]=val}
+  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?Object.hasOwn(times,val):['0','1'].includes(val)||val===''&&options.some(([name])=>name===key))v[key]=val}
   return v
  }
  function quote(v,date=prices.today()){
@@ -44,7 +44,7 @@
     '<small>'+copy+'</small><small data-rc-regular>+'+fee+'</small>'+
     (master?'<small data-rc-free hidden><del>'+fee+'</del> <b>0원</b></small>':'')+
     '</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+
-    radio(key,'1',v[key],'필요')+radio(key,'0',v[key],'필요 없음')+'</div></div>'
+    radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
  function editor(v,{delivery=true}={}){
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
@@ -69,7 +69,7 @@
  function sync(form,date=prices.today()){
   const row=form.querySelector('[data-rc-work="recordingMaster"]'), no=row.querySelector('input[value="0"]'), offer=monthly(date)&&form.elements.recordingMinutes?.value!=='50'
   if(offer&&!no.disabled){row.dataset.previous=form.elements.recordingMaster.value;form.elements.recordingMaster.value='1'}
-  if(!offer&&no.disabled)form.elements.recordingMaster.value=row.dataset.previous||'0'
+  if(!offer&&no.disabled)for(const input of form.elements.recordingMaster)input.checked=input.value===row.dataset.previous
   no.disabled=offer
   row.querySelector('[data-rc-regular]').hidden=offer
   row.querySelector('[data-rc-free]').hidden=!offer
@@ -82,14 +82,14 @@
  function firstVisit(){return prices.readCouponClaims().firstVisit!==false}
  function preferences(form){
   const v=Object.fromEntries(new FormData(form)), row=form.querySelector('[data-rc-work="recordingMaster"]')
-  if(row?.querySelector('input[value="0"]').disabled)v.recordingMaster=row.dataset.previous||'0'
+  if(row?.querySelector('input[value="0"]').disabled)v.recordingMaster=row.dataset.previous||''
   return v
  }
  function query(v){
   const params=new URLSearchParams()
   for(const key of keys){
-   if(key==='makingVideo'&&v[key]!=='1')continue
-   params.set(key,v[key]||'0')
+   if(v[key]==null&&options.some(([name])=>name===key))continue
+   params.set(key,v[key]??'0')
   }
   return params.toString()
  }
