@@ -74,11 +74,36 @@ body:has(#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"])) { pa
 body:has(#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"])) #mainMenu { top: var(--home-header-height) !important; max-height: calc(100dvh - var(--home-header-height)) !important; }
 .home-event-strip { box-sizing:border-box; display:grid; gap:4px; padding:2px clamp(5px,2.5vw,24px) 6px; height:var(--home-ribbon-height); }
 .home-event-strip-row { box-sizing:border-box; display:grid; grid-template-columns:auto auto minmax(0,1fr) auto; align-items:center; gap:clamp(3px,1.1vw,11px); min-height:30px; padding:0 clamp(4px,1.2vw,12px); border:1px solid #edd7d8; border-radius:999px; color:#422932; background:radial-gradient(ellipse at 77% 100%,#eac2c966,transparent 52%),linear-gradient(120deg,#fcf5f3,#f7e7e9); }
-.home-event-strip-icon { font-size:clamp(12px,3.2vw,18px); }
-.home-event-strip-row small { padding:2px 4px; border-radius:999px; background:#f2d8dc; color:#824250; font-size:clamp(7px,2vw,11px); font-weight:750; white-space:nowrap; }
-.home-event-strip-title { font-size:clamp(10px,3vw,14px); font-weight:650; letter-spacing:-.055em; white-space:nowrap; }
-.home-event-strip-row strong { padding:3px clamp(4px,1.3vw,10px); border:1px solid #b96070; border-radius:999px; background:#a75163; color:#fff; font-size:clamp(9px,2.7vw,13px); letter-spacing:-.035em; white-space:nowrap; }
-.home-event-strip-row + .home-event-strip-row strong { background:#fff7f7; color:#8a394c; }
+#siteHeader .home-event-strip-icon {
+ display:grid; place-items:center; padding-inline-end:clamp(3px,1vw,9px);
+ border-inline-end:1px solid #e8c2c6; color:#af5f68 !important;
+}
+#siteHeader .home-event-strip-icon svg { width:clamp(14px,3.4vw,20px); height:clamp(14px,3.4vw,20px); }
+#siteHeader .home-event-strip-row small {
+ padding:2px 4px; border-radius:999px; background:#f3dfe1;
+ color:#86444c !important; font-size:clamp(7px,2vw,11px); font-weight:750; white-space:nowrap;
+}
+#siteHeader .home-event-strip-title {
+ color:#382124 !important; font-size:clamp(10px,3vw,14px); font-weight:650;
+ letter-spacing:-.055em; white-space:nowrap;
+}
+#siteHeader .home-event-strip-benefit {
+ display:inline-flex; align-items:center; gap:clamp(3px,1vw,8px); padding:3px clamp(4px,1.3vw,10px);
+ border:1px solid #ab5e68; border-radius:999px; background:#a85762; color:#fff !important;
+ font-size:clamp(9px,2.7vw,13px); font-weight:700; letter-spacing:-.035em; white-space:nowrap; text-decoration:none;
+}
+#siteHeader .home-event-strip-benefit span { color:inherit !important; font-size:inherit; line-height:1; }
+#siteHeader .home-event-strip-row + .home-event-strip-row .home-event-strip-benefit {
+ background:#fff6f6; color:#893c48 !important;
+}
+#siteHeader .home-event-strip-row + .home-event-strip-row {
+ background:linear-gradient(158deg,transparent 63%,#fff9f9 63.5%,#f3e0e3 67%,transparent 86%),linear-gradient(120deg,#fcf5f3,#f7e7e9);
+}
+@media (max-width:350px) {
+ .home-event-strip { padding-inline:5px; }
+ #siteHeader .home-event-strip-row small { padding-inline:3px; }
+}
+#heroBenefitsTitle { scroll-margin-top:calc(var(--home-header-height, 112px) + 12px); }
 
 /* 오시는 길 카드: PC(780px 칸)에서 왼쪽에 붙어 있던 카드를 가운데로, 아래 빈 여백 96px → 48px */
 html body #app .solo-map > .home-map-inset { margin-inline: auto !important; width: 100% !important; max-width: 640px !important; }

@@ -520,6 +520,7 @@ const STUDIO_ICON_PATHS={
  pin:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/>',
  check:'<path d="m5 12 4.5 4.5L19 7"/>',
  send:'<path d="m3 4 19 8-19 8 4-8-4-8ZM7 12h15"/>',
+ confetti:'<path d="m3 21 3.8-11 7.2 7.2L3 21Zm7-10 2-3m3 4 3-2m-3-5 1-2m3 4 2-1M9 6l-1-2m10 12 3-1"/>',
  gift:'<path d="M4 10h16v11H4ZM3 7h18v3H3ZM12 7v14"/><path d="M12 7C7 7 5 6 5 4.5A2.5 2.5 0 0 1 9 2.6L12 7Zm0 0c5 0 7-1 7-2.5a2.5 2.5 0 0 0-4-1.9L12 7Z"/>',
  swap:'<path d="M3 8h17m-4-4 4 4-4 4M21 16H4m4-4-4 4 4 4"/>',
  play:'<path d="m7 4 14 8-14 8Z" fill="currentColor" stroke="none"/>',
@@ -1264,12 +1265,12 @@ function syncHomeEventRibbon(){
  const rows=[]
  if(routePath()==="/"){
   const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==="first")
-  if(first)rows.push(["🎁","01","지금, 위스티아가 처음이라면?","첫 이용 "+(first.discount/10000)+"만원 할인"])
-  if(window.WistiaRecording.monthly())rows.push(["🎉","02","11월에 예약하면?","마스터링 무료"])
+  if(first)rows.push(["gift","01","지금, 위스티아가 처음이라면?","첫 이용 "+(first.discount/10000)+"만원 할인"])
+  if(window.WistiaRecording.monthly())rows.push(["confetti","02","11월에 예약하면?","마스터링 무료"])
  }
  header.dataset.homeEventRows=String(rows.length)
  if(rows.length)header.insertAdjacentHTML("beforeend",'<aside class="home-event-strip" aria-label="위스티아 할인 이벤트">'+rows.map(([icon,number,title,benefit])=>
-  '<div class="home-event-strip-row"><span class="home-event-strip-icon" aria-hidden="true">'+icon+'</span><small>EVENT '+number+'</small><span class="home-event-strip-title">'+title+'</span><strong>'+benefit+'</strong></div>').join("")+'</aside>')
+  '<div class="home-event-strip-row"><span class="home-event-strip-icon" aria-hidden="true">'+studioIcon(icon)+'</span><small>EVENT '+number+'</small><span class="home-event-strip-title">'+title+'</span><a class="home-event-strip-benefit" href="#heroBenefitsTitle">'+benefit+'<span aria-hidden="true">&rsaquo;</span></a></div>').join("")+'</aside>')
 }
 function mobileDetailEvents(){
  const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
