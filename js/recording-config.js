@@ -1,6 +1,6 @@
 (function (global) {
  const prices=global.WistiaPackages, money=prices.money
- const times={50:{list:50000,rate:50000,tier:'BASIC'},90:{list:90000,rate:80000,tier:'STANDARD'},150:{list:150000,rate:120000,tier:'PREMIUM'}}
+ const times={50:{list:50000,rate:50000},90:{list:90000,rate:80000},150:{list:150000,rate:120000}}
  const audioOptions=[
   ['tuning','음정·박자 보정','틀어진 음정과 박자를 자연스럽게 보정해요',40000,'🎵'],
   ['recordingMix','정밀 믹싱','목소리를 더욱 선명하고 풍성하게 만들어요',40000,'🎚️'],
@@ -56,11 +56,11 @@
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
-  const cards=Object.entries(times).map(([minutes,{list,rate,tier}])=>{
+  const cards=Object.entries(times).map(([minutes,{list,rate}])=>{
    const saving=Math.round((list-rate)/list*100)
    const offer=saving?'<span class="rc-shortcut-badge">'+saving+'% 할인</span>':''
    const original=saving?'<del class="rc-shortcut-original">'+money(list)+'</del><span class="rc-shortcut-arrow" aria-hidden="true">›</span>':''
-   return '<div class="rc-price-card">'+offer+'<span class="rc-shortcut-tier">'+tier+'</span><b>'+prices.hoursText(Number(minutes))+'</b><div class="rc-shortcut-prices">'+original+'<strong>'+rate.toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></div></div>'
+   return '<div class="rc-price-card">'+offer+'<b>'+prices.hoursText(Number(minutes))+'</b><div class="rc-shortcut-prices">'+original+'<strong>'+rate.toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></div></div>'
   })
   return '<div class="ed-hero-types rc-shortcuts" role="group" aria-label="녹음 시간별 가격">'+cards.join('')+'</div>'
  }

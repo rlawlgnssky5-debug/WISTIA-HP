@@ -521,7 +521,6 @@ const STUDIO_ICON_PATHS={
  check:'<path d="m5 12 4.5 4.5L19 7"/>',
  send:'<path d="m3 4 19 8-19 8 4-8-4-8ZM7 12h15"/>',
  confetti:'<path d="m3 21 3.8-11 7.2 7.2L3 21Zm7-10 2-3m3 4 3-2m-3-5 1-2m3 4 2-1M9 6l-1-2m10 12 3-1"/>',
- sparkles:'<path d="M14 2c0 5-2 7-7 7 5 0 7 2 7 7 0-5 2-7 7-7-5 0-7-2-7-7ZM6 12c0 3-1 4-4 4 3 0 4 1 4 4 0-3 1-4 4-4-3 0-4-1-4-4Zm13 3v6m-3-3h6"/>',
  gift:'<path d="M4 10h16v11H4ZM3 7h18v3H3ZM12 7v14"/><path d="M12 7C7 7 5 6 5 4.5A2.5 2.5 0 0 1 9 2.6L12 7Zm0 0c5 0 7-1 7-2.5a2.5 2.5 0 0 0-4-1.9L12 7Z"/>',
  swap:'<path d="M3 8h17m-4-4 4 4-4 4M21 16H4m4-4-4 4 4 4"/>',
  play:'<path d="m7 4 14 8-14 8Z" fill="currentColor" stroke="none"/>',
@@ -1405,13 +1404,9 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,mobileArNotices())
  }
  const mobileReviews=soloReviewCarousel().replace('<span data-solo-kicker>고객 후기</span>','').replace('<p data-solo-sub>카카오톡으로 받은 후기 원문 그대로예요</p>','').replace(/<div class="review-carousel-controls">[\s\S]*?<\/div>/,'')
- const heroBenefit=(icon,title,offer)=>'<li>'+studioIcon(icon)+'<span class="ed-benefit-copy"><span>'+title+'</span><span><strong>'+offer+'</strong></span></span></li>'
- const heroBenefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">'+studioIcon('gift')+'이벤트</h2><ul>'+
-  heroBenefit('gift','첫 이용 고객','20,000원 할인')+
-  (window.WistiaRecording.monthly()?heroBenefit('sparkles','11월에 예약하면','마스터링 무료'):'')+
-  heroBenefit('calendar','녹음일 1개월 이후','10,000원 할인')+'</ul></section>'
- const heroCopy='<div class="ed-hero-overview"><div class="ed-hero-intro"><p class="ed-hero-brand">WISTIA <span>웨딩 축가 전문 스튜디오</span></p><h1 id="arcProductTitle">축가 AR 사전 녹음</h1><p class="ed-hero-lead">내 목소리로 미리 준비하는 축가, 본식에서는 더 편안하게</p></div>'+
-  '<section class="ed-hero-essentials" aria-labelledby="heroEssentialsTitle"><h2 id="heroEssentialsTitle">한눈에 보는 <span class="ed-guide-detail">녹음 안내</span></h2><ul><li>'+studioIcon('microphone')+'<span>한 소절씩 녹음 <span class="ed-guide-detail">· 1:1 디렉팅</span></span></li><li>'+studioIcon('tune')+'<span>MR 편집 <span class="ed-guide-detail">· 키 조절 무료</span></span></li><li>'+studioIcon('check')+'<span>음정부터 박자까지 섬세한 보컬 보정</span></li></ul></section>'+
+ const heroBenefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">이벤트</h2><ul><li><span class="ed-benefit-symbol" aria-hidden="true">🎁</span><span>첫 이용 고객 <strong>20,000원 할인</strong></span></li>'+(window.WistiaRecording.monthly()?'<li><span class="ed-benefit-symbol" aria-hidden="true">✨</span><span>11월에 예약하면 <strong>마스터링 무료</strong></span></li>':'')+'<li><span class="ed-benefit-symbol" aria-hidden="true">📅</span><span>녹음일 1개월 이후 <strong>10,000원 할인</strong></span></li></ul></section>'
+ const heroCopy='<div class="ed-hero-overview"><p class="ed-hero-brand">WISTIA <span>웨딩 축가 전문 스튜디오</span></p><h1 id="arcProductTitle">축가 AR 사전 녹음</h1><p class="ed-hero-lead">내 목소리로 미리 준비하는 축가, 본식에서는 더 편안하게</p>'+
+  '<section class="ed-hero-essentials" aria-labelledby="heroEssentialsTitle"><h2 id="heroEssentialsTitle">한눈에 보는 녹음 안내</h2><ul><li>'+studioIcon('microphone')+'<span>한 소절씩 녹음 · 1:1 디렉팅</span></li><li>'+studioIcon('tune')+'<span>MR 편집 · 키 조절 무료</span></li><li>'+studioIcon('check')+'<span>음정부터 박자까지 섬세한 보컬 보정</span></li></ul></section>'+
   '<div class="ed-hero-actions">'+window.WistiaRecording.shortcuts()+'</div>'+heroBenefits+'</div>'
  const gallery='<div class="mas-gallery hs-gallery ed-hero-gallery" aria-label="위스티아 스튜디오 사진" aria-roledescription="carousel" data-mobile-gallery data-mobile-gallery-start="0"><div class="mas-gallery-viewport"><div class="mas-gallery-track hs-track" tabindex="0" aria-label="스튜디오 사진, 좌우로 넘겨 보세요">'+galleryVideos+'</div>'+'<span class="mas-gallery-count hs-count" aria-live="polite">01 / '+String(galleryPhotos.length).padStart(2,'0')+'</span></div></div>'
  const summary=mobileStudioBrand()+'<h1 id="arcProductTitle">축가 AR 사전 녹음<br><span>'+format+' · '+people+'인</span></h1><p class="mas-description">'+(duet?'우리 목소리로':'내 목소리로')+' 완성하는 본식 AR 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>정밀 믹싱·마스터링</span></p><p class="mas-price"><strong>'+p.normal.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · '+people+'인 · '+hours+'시간)</span></p>'
