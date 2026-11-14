@@ -118,3 +118,17 @@ body:has(#siteHeader[data-home-event-rows]:not([data-home-event-rows="0"])) #mai
 html body #app .solo-map > .home-map-inset { margin-inline: auto !important; width: 100% !important; max-width: 640px !important; }
 html body #app .mobile-ar-solo .solo-map { padding-bottom: 48px !important; }
 }
+
+/* POINT 05 · 녹음 메이킹 (2026-11-15) — POINT 01의 아치 사진·로즈 알약 톤을 따르되 가로 사진은 자르지 않는다 */
+@layer wistia-home-polish {
+  html body #app .ed-making-scene { max-width: 460px !important; margin: 26px auto 0 !important; padding: 0 11px !important; box-sizing: border-box !important; }
+  html body #app .ed-making-photo { margin: 0 !important; border-radius: 18px !important; overflow: hidden !important; outline: 1px solid #d8aab7 !important; outline-offset: 6px !important; box-shadow: 0 14px 28px #60434b12 !important; }
+  html body #app .ed-making-photo img { display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 50% 40% !important; }
+  html body #app .ed-making-benefits { list-style: none !important; display: grid !important; gap: 8px !important; margin: 22px 0 0 !important; padding: 0 !important; }
+  html body #app .ed-making-benefits li { display: flex !important; align-items: center !important; gap: 8px !important; padding: 11px 14px !important; border-radius: 24px !important; background: #fff !important; border: 1px solid #ecd7dc !important; color: var(--ed-rose, #9d4e62) !important; font-size: 13px !important; font-weight: 600 !important; line-height: 1.4 !important; }
+  html body #app .ed-making-benefits li:first-child { background: var(--ed-rose, #9d4e62) !important; border-color: transparent !important; color: #fff !important; }
+  html body #app .ed-making-benefits li span { font-weight: 800 !important; }
+  html body #app .ed-making-price { display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 8px !important; margin: 18px 0 0 !important; }
+  html body #app .ed-making-price strong { font-size: 20px !important; font-weight: 800 !important; color: var(--ed-rose, #9d4e62) !important; letter-spacing: -.02em !important; }
+  html body #app .ed-making-price span { font-size: 13px !important; color: #8d7a80 !important; }
+}

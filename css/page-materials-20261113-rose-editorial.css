@@ -5,52 +5,52 @@
   #app :is(.info-page-location,.info-page-faq) .info-page-intro {margin-bottom:26px!important;padding-bottom:0!important}
   #app :is(.info-page-location,.info-page-faq) .info-page-intro>p {max-width:32em!important;margin-inline:auto!important;line-height:1.8!important;word-break:keep-all!important;overflow-wrap:normal!important}
 
-  /* Clay: thick, softly moulded cream surfaces on a warm rose canvas */
+  /* 2026-11-15: 모든 페이지 카드를 같은 평평한 크림 카드로 통일 (볼록한 클레이 효과 제거). 기준: 문의양식 큰 카드 #fffaf8 · 1px #ead9de · 옅은 그림자 */
   #app :is(.info-page-location,.info-page-faq,.wistia-events.ev2,.wistia-wizard) {
-    --clay-surface:linear-gradient(140deg,#fffaf3,#f7eae3);
-    --clay-shadow:inset 4px 4px 8px #ffffffcf,inset -4px -4px 9px #d9bcb155,5px 7px 16px #b68c7c24;
-    --clay-control:linear-gradient(145deg,#fffaf6,#f4e5dd);
-    --clay-control-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #cfab9e55,2px 4px 7px #b58c7c22;
-    --clay-selected:linear-gradient(145deg,#f5d8e1,#e7b7c7);
+    --clay-surface:#fffaf8;
+    --clay-shadow:0 10px 25px #6b354314;
+    --clay-control:#fffaf8;
+    --clay-control-shadow:none;
+    --clay-selected:#f5d8e1;
     background:#f2e8e3!important;color:#58423f!important;
   }
   #app .info-page-location .lc2-card,
   #app .wistia-events.ev2 :is(.evd-card,.pb-card,.pb-summary,.pb-refund),
   #app .info-page-faq .info-faq-group,
   #app .wistia-wizard :is(.wf-schedule,.wf-review-group) {
-    border:1px solid #fffaf4!important;
+    border:1px solid #ead9de!important;
     border-radius:26px!important;
     background:var(--clay-surface)!important;
     box-shadow:var(--clay-shadow)!important;
   }
   #app .info-page-location .lc2-card {overflow:hidden!important}
   #app .wistia-events.ev2 :is(.ev2-hero,.events-discounts,.events-payback) {background:transparent!important}
-  #app .wistia-events.ev2 .pb-summary {background:linear-gradient(140deg,#f9e4e6,#edc8d2)!important}
+  #app .wistia-events.ev2 .pb-summary {background:#f9e4e6!important}
   #app .wistia-events.ev2 .pb-refund {padding:16px 18px!important}
   #app .wistia-events.ev2 .pb-eligibility {background:#f3ddd4!important}
   #app .wistia-events.ev2 :is(.evd-icon,.ev2-cta) {
-    border:1px solid #fff8!important;
+    border:1px solid transparent!important;
     border-radius:15px!important;
     background:#efcdd0!important;
     color:#6b3b50!important;
-    box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c694a34d,3px 5px 8px #b58c7c25!important;
+    box-shadow:none!important;
   }
   #app .info-page-location .lc2-addr {padding:22px 20px!important}
-  #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid #fff6f1!important;background:#efcdd0!important;color:#92546a!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 4px #c694a34d,3px 4px 8px #b4869630!important;font-size:11px!important}
+  #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid transparent!important;background:#efcdd0!important;color:#92546a!important;box-shadow:none!important;font-size:11px!important}
   #app .info-page-location .studio-address {display:block!important;margin:18px 0 8px!important;font-size:clamp(16px,4.6vw,20px)!important;line-height:1.65!important;font-weight:750!important;color:#503c39!important;letter-spacing:-.04em!important;word-break:keep-all!important;overflow-wrap:normal!important}
   #app .material-address-street {display:flex!important;flex-wrap:wrap!important;gap:0 .35em!important}
   #app .material-address-part {display:inline-block!important;white-space:nowrap!important}
   #app .material-address-building {display:block!important;margin-top:2px!important;font-size:14px!important;font-weight:600!important;color:#8f6a65!important}
   #app .info-page-location .lc2-sub {font-size:12px!important;line-height:1.6!important;color:#977d73!important}
   #app .info-page-location .lc2-btns {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin-top:20px!important}
-  #app .info-page-location .lc2-btns :is(a,button) {min-width:0!important;min-height:42px!important;padding:8px 3px!important;border-radius:15px!important;border:1px solid #fff8!important;background:#f3ddd4!important;color:#8c5863!important;font-size:11px!important;white-space:nowrap!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #cfab9e66,3px 5px 8px #b58c7c25!important}
-  #app .info-page-location .lc2-btns .lc2-n {background:#d99eaf!important;color:#6b3b50!important;border-color:#efbecb!important;box-shadow:inset 2px 2px 4px #ffd6e1aa,inset -2px -3px 5px #b8758f66,3px 5px 8px #b58c7c30!important}
+  #app .info-page-location .lc2-btns :is(a,button) {min-width:0!important;min-height:42px!important;padding:8px 3px!important;border-radius:15px!important;border:1px solid transparent!important;background:#f3ddd4!important;color:#8c5863!important;font-size:11px!important;white-space:nowrap!important;box-shadow:none!important}
+  #app .info-page-location .lc2-btns .lc2-n {background:#d99eaf!important;color:#6b3b50!important;border-color:#efbecb!important;box-shadow:none!important}
   #app .info-page-location .lc2-map {padding:8px!important}
   #app .info-page-location .lc2-map figure {border-radius:19px!important;overflow:hidden!important}
   #app .info-page-location .lc2-cap {border:0!important;padding:13px 8px 8px!important;font-size:11px!important;word-break:keep-all!important;text-align:center!important}
   #app .info-page-location .lc2-row {padding:19px 14px!important;gap:12px!important;border-bottom:1px solid #dfc8bf80!important}
   #app .info-page-location .lc2-row:last-child {border-bottom:0!important}
-  #app .info-page-location .lc2-row>:first-child {width:34px!important;height:34px!important;min-width:34px!important;border-radius:13px!important;background:#efd1cd!important;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 5px #c09b9470,3px 4px 7px #b58c7c20!important}
+  #app .info-page-location .lc2-row>:first-child {width:34px!important;height:34px!important;min-width:34px!important;border-radius:13px!important;background:#efd1cd!important;box-shadow:none!important}
   #app .info-page-location .lc2-row>div {min-width:0!important}
   #app .info-page-location .lc2-row p {font-size:12px!important;line-height:1.75!important;word-break:keep-all!important;overflow-wrap:normal!important}
   #app .info-page-location .lc2-steps {display:flex!important;flex-wrap:nowrap!important;gap:4px!important;font-size:10px!important}
@@ -71,21 +71,21 @@
   #app .wistia-wizard .package-picker {
     box-sizing:border-box!important;
     padding:16px 8px 18px!important;
-    border:1px solid #ffffffe6!important;
+    border:1px solid #ead9de!important;
     border-radius:24px!important;
-    background:linear-gradient(150deg,#f0e3db,#fcf5ee 66%,#fffaf7)!important;
-    box-shadow:inset 0 1px 0 #fff,0 6px 20px #79677210!important;
+    background:#fffaf8!important;
+    box-shadow:0 10px 25px #6b354314!important;
   }
   #app .wistia-wizard .package-cards {padding:clamp(6px,1.2vw,10px)!important;overflow:visible!important}
   #app .wistia-wizard :is(.package-cards,.package-selected-detail,.wf-schedule,.contact-calendar,.wf-review-group,.wf-location-bar,.wf-choice>span,.wf-check-row,[data-wf-time],.calendar-day,.calendar-nav,.calendar-header button,.wf-field textarea,.wf-nav) {backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #app .wistia-wizard .wf-review {background:transparent!important;border:0!important;box-shadow:none!important}
   #app .wistia-wizard .wf-schedule {border-radius:22px!important;padding:16px 12px!important}
-  #app .wistia-wizard .wf-location-bar {padding:10px 8px!important;border:1px solid #fffaf4!important;border-radius:14px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-location-bar {padding:10px 8px!important;border:1px solid #ead9de!important;border-radius:14px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
   #app .wistia-wizard .wf-schedule .wf-schedule {padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
   #app .wistia-wizard .wf-choice>span,
   #app .wistia-wizard .wf-check-row,
   #app .wistia-wizard :is([data-wf-time],.calendar-day,.calendar-nav,.calendar-header button):not(:disabled),
-  #app .wistia-wizard .wf-field textarea {border-color:#fffaf4!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-field textarea {border-color:#ead9de!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
   #app .wistia-wizard .wf-choice:has(input:checked)>span,
   #app .wistia-wizard .wf-check-row:has(input:checked:not(:disabled)),
   #app .wistia-wizard :is([data-wf-time],[data-calendar-day])[aria-pressed="true"]:not(:disabled) {border-color:#bc7d9d!important;background:var(--clay-selected)!important;color:#6b3652!important;box-shadow:var(--clay-control-shadow)!important}
@@ -93,9 +93,9 @@
   #app .wistia-wizard .wf-check-row:has(input:checked:not(:disabled)) .wf-check-label * {color:inherit!important}
   #app .wistia-wizard .is-included .wf-check-row {background:#f1e3dc!important;box-shadow:inset 0 1px 0 #fff!important}
   #app .wistia-wizard .is-included .wf-check-box svg {visibility:hidden!important}
-  #app .wistia-wizard .wf-nav {padding:10px!important;border:1px solid #fffaf4!important;border-radius:23px!important;background:var(--clay-surface)!important;box-shadow:var(--clay-shadow)!important}
-  #app .wistia-wizard .wf-nav [data-wf-next] {border:1px solid #aa687c!important;border-radius:15px!important;background:linear-gradient(145deg,#a35e74,#87495e)!important;box-shadow:inset 1px 2px 4px #d69aaa80,inset -2px -3px 6px #63374755!important}
-  #app .wistia-wizard .wf-nav [data-wf-prev] {border:1px solid #fffaf4!important;border-radius:15px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
+  #app .wistia-wizard .wf-nav {padding:10px!important;border:1px solid #ead9de!important;border-radius:23px!important;background:var(--clay-surface)!important;box-shadow:var(--clay-shadow)!important}
+  #app .wistia-wizard .wf-nav [data-wf-next] {border:1px solid #aa687c!important;border-radius:15px!important;background:#96536a!important;box-shadow:none!important}
+  #app .wistia-wizard .wf-nav [data-wf-prev] {border:1px solid #ead9de!important;border-radius:15px!important;background:var(--clay-control)!important;box-shadow:var(--clay-control-shadow)!important}
   #app :is(.info-page-location,.info-page-faq,.wistia-wizard) :is(a,button,summary,input,textarea):focus-visible {outline:2px solid #a56b8d!important;outline-offset:3px!important}
 
 }

@@ -113,6 +113,14 @@
         '<ul class="hg-key-cards"><li class="hg-key-card"><small>01</small><strong>음원 편집</strong><p>원하는 길이로 자르고<br>자연스럽게 이어요</p></li><li class="hg-key-card"><small>02</small><strong>키 조절</strong><p>내 목소리에 맞는<br>높이로 조절해요</p></li></ul></div>' +
         '</section>'
     },
+    making() {
+      // 2026-11-13 지훈: 녹음 메이킹은 예약 시간 +1시간, +80,000원 (문의양식 '녹음 메이킹 영상 추가' 스위치)
+      return '<section class="arc-point arc-point-making ed-section" id="arcMaking" data-svg-title="off">' +
+        heading('RECORDING MAKING · POINT 05', '<span>노래하는 모습도</span>영상으로 남겨 드려요', '직접 노래를 부르고 완성해 가는<br>실제 녹음 과정을 촬영합니다') +
+        '<div class="ed-making-scene"><figure class="ed-making-photo"><img src="assets/img/film-types/recording-making-film.webp" alt="녹음실에서 헤드폰을 쓰고 함께 노래하는 두 사람의 녹음 메이킹 장면" width="1600" height="836" loading="lazy" decoding="async"></figure>' +
+        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>녹음실 메이킹 컷과 인서트 컷 촬영</li><li><span aria-hidden="true">+</span>예약 시간에 1시간만 더하면 돼요</li><li><span aria-hidden="true">+</span>문의양식에서 스위치 하나로 추가</li></ul></div>' +
+        '<p class="ed-making-price"><strong>+80,000원</strong><span>녹음 메이킹 영상 추가</span></p></section>'
+    },
     tuningHeader() {
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요')
     },
