@@ -7,6 +7,39 @@
   <link rel="stylesheet" href="/css/approved-mobile-layout-20261109.css?v=20261110-hint-float-1">
   <script src="/js/approved-mobile-layout-20261109.js?v=20261115-making-nums" defer></script>
   <meta charset="utf-8">
+  <script data-wistia-error-logger>(function(){try{
+// 2026-11-15 WISTIA 오류 모니터: 사이트 자체 스크립트·리소스·API 오류만 /api/client-error로 보낸다 (개인정보·쿼리 문자열 없음)
+var W=window,L=location,host=L.hostname,sent=0,seen={},MAX=15;
+if(!/(^|\.)wistiastudio\.com$|wistiastudio\.workers\.dev$/.test(host))return;
+var dev=function(){return (W.matchMedia&&W.matchMedia('(pointer:coarse)').matches)||W.innerWidth<780?'mobile':'pc'};
+var own=function(u){if(!u)return false;try{var x=new URL(u,L.href);return x.host===L.host}catch(e){return false}};
+var clean=function(u){try{var x=new URL(u,L.href);return x.host===L.host?x.pathname:x.host+x.pathname}catch(e){return String(u||'').split('?')[0]}};
+var send=function(kind,message,source,stack){
+ if(sent>=MAX)return;message=String(message||'').slice(0,300);var key=kind+message+source;if(seen[key])return;seen[key]=1;sent++;
+ var body=JSON.stringify({kind:kind,path:L.pathname,message:message,source:String(source||'').slice(0,200),stack:String(stack||'').slice(0,1200),device:dev(),test:/[?&]wistia_error_test=1/.test(L.search)?1:0});
+ try{if(navigator.sendBeacon&&navigator.sendBeacon('/api/client-error',new Blob([body],{type:'application/json'})))return}catch(e){}
+ try{fetch('/api/client-error',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}).catch(function(){})}catch(e){}
+};
+W.addEventListener('error',function(e){try{
+ var t=e.target;
+ if(t&&t!==W&&(t.src||t.href)){var u=t.src||t.href;if(own(u))send('resource',(t.tagName||'').toLowerCase()+' 로드 실패',clean(u));return}
+ var f=e.filename||'';if(!own(f)||/^Script error\.?$/.test(e.message||''))return;
+ send('js',e.message,clean(f)+':'+(e.lineno||0)+':'+(e.colno||0),e.error&&e.error.stack&&e.error.stack.replace(/https?:\/\/[^/\s)]+/g,''));
+}catch(x){}},true);
+W.addEventListener('unhandledrejection',function(e){try{
+ var r=e.reason||{},st=String(r.stack||'');
+ if(st&&!/wistiastudio|workers\.dev|\/js\//.test(st))return;
+ if(/extension:\/\//.test(st))return;
+ send('promise',r.message||String(r),'',st.replace(/https?:\/\/[^/\s)]+/g,''));
+}catch(x){}});
+var clicks=[];
+document.addEventListener('click',function(e){try{
+ var el=e.target&&e.target.closest&&e.target.closest('a,button,[role=button]');if(!el)return;
+ var now=Date.now();clicks=clicks.filter(function(c){return now-c.t<1200&&c.el===el});clicks.push({t:now,el:el});
+ if(clicks.length===3){var d=(el.tagName||'').toLowerCase()+(el.id?'#'+el.id:'')+(el.className&&typeof el.className==='string'?'.'+el.className.trim().split(/\s+/).slice(0,2).join('.'):'');var txt=(el.textContent||'').trim().replace(/\s+/g,' ').slice(0,30);send('rage-click','같은 버튼 연속 클릭(반응 없음 의심): '+txt,d)}
+}catch(x){}},true);
+W.wistiaReportError=function(m,s){send('custom',m,s)};
+}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <base href="/">
   <script>
