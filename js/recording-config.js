@@ -30,8 +30,8 @@
   if(list!==rate)discounts.push({key:'recording',label:'녹음 시간 할인',amount:list-rate})
   if(offer)discounts.push({key:'monthly',label:'11월 마스터링 서비스',amount:40000})
   // 2026-11-11 지훈: 50분에는 할인 없음 (믹싱·마스터링 묶음가 −40,000원 제거, 이 할인은 50분에만 있었음)
-  // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 ‘첫 이용이신가요?’에서 ‘네’일 때만 (기본 네)
-  if(minutes!==50&&v.firstUse!=='0')discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
+  // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 스위치가 켜졌을 때만 (기본 켜짐), 50분도 적용
+  if(v.firstUse!=='0')discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
   const advance=minutes===50?null:prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
@@ -49,7 +49,7 @@
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
  function editor(v,{delivery=true}={}){
-  const first='<div class="rc-first"><p><b>첫 이용이신가요?</b><small>처음이면 1시간 30분부터 2만원 할인</small></p><div class="rc-first-pick" role="group" aria-label="첫 이용 여부">'+radio('firstUse','1',v.firstUse,'네')+radio('firstUse','0',v.firstUse,'아니요')+'</div></div>'
+  const first='<div class="rc-first"><div class="rc-work" data-rc-work="firstUse"><div><strong>첫 이용 할인</strong> <small>위스티아가 처음이라면 켜 주세요</small><small class="rc-first-amount">−20,000원</small></div><div class="rc-toggle" role="group" aria-label="첫 이용 할인">'+radio('firstUse','0',v.firstUse,'필요 없음')+radio('firstUse','1',v.firstUse,'필요')+'</div></div></div>'
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small class="rc-rate-was"><b class="rc-rate-pct">'+Math.round((list-rate)/list*100)+'%</b><del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
   const work=field('03','음원 작업',audioOptions.map(option=>optionRow(option,v)).join(''))

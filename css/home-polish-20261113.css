@@ -208,14 +208,9 @@ html body #app#app #arcWorries#arcWorries .ed-worry-search li b { color:#2e1f24 
 @media (max-width:350px) { html body #app#app #arcWorries#arcWorries .ed-worry-search li { font-size:13.5px !important; padding:11px 12px !important; gap:7px !important; letter-spacing:-.02em !important; } html body #app#app #arcWorries#arcWorries .ed-worry-search li svg:last-child { display:none !important; } html body #app#app #arcWorries#arcWorries .ed-worry-input { padding:0 14px !important; } }
 /* 2026-11-16 지훈: POINT 05 가운데 재생 버튼 없음(눌러 보고 싶어지니까) */
 html body #app #arcMaking .ed-yt-play { display:none !important; }
-/* 2026-11-16 지훈: 문의 맨 위 ‘첫 이용이신가요?’ 한 줄 (네/아니요) */
-html body #app#app .wistia-wizard .recording-config .rc-first { display:flex !important; align-items:center !important; justify-content:space-between !important; gap:12px !important; margin:0 0 12px !important; padding:12px 14px 12px 16px !important; background:#fff !important; border-radius:16px !important; box-shadow:0 6px 18px #6b354312 !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first p { margin:0 !important; text-align:left !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first p b { display:block !important; font-size:15px !important; font-weight:800 !important; color:#2e1f24 !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first p small { display:block !important; margin-top:2px !important; font-size:12px !important; color:#9d4e62 !important; font-weight:600 !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first-pick { flex:none !important; display:flex !important; gap:6px !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first-pick label { position:relative !important; display:grid !important; place-items:center !important; min-width:58px !important; height:38px !important; padding:0 12px !important; border-radius:999px !important; border:1.5px solid #ead9de !important; background:#fff !important; color:#5a4a50 !important; font-size:14px !important; font-weight:700 !important; cursor:pointer !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first-pick input { position:absolute !important; opacity:0 !important; width:1px !important; height:1px !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first-pick label:has(input:checked) { background:#9d4e62 !important; border-color:#9d4e62 !important; color:#fff !important; }
-html body #app#app .wistia-wizard .recording-config .rc-first-pick label:has(input:focus-visible) { outline:2px solid #9d4e62 !important; outline-offset:2px !important; }
+/* 2026-11-16 지훈 시안 3: 문의 맨 위 ‘첫 이용 할인’ 스위치 (음원 작업 스위치와 같은 모양, 기본 켜짐, 50분도 적용) */
+html body #app#app .wistia-wizard .recording-config .rc-first { margin:0 0 12px !important; padding:4px 16px !important; background:#fff !important; border-radius:16px !important; box-shadow:0 6px 18px #6b354312 !important; }
+html body #app#app .wistia-wizard .recording-config .rc-first .rc-work { border:0 !important; }
+html body #app#app .wistia-wizard .recording-config .rc-first .rc-work strong { font-size:15px !important; font-weight:800 !important; }
+html body #app#app .wistia-wizard .recording-config .rc-first .rc-first-amount { color:#d6334f !important; font-weight:800 !important; }
 }
