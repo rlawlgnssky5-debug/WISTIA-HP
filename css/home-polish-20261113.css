@@ -213,4 +213,12 @@ html body #app#app .wistia-wizard .recording-config .rc-first { margin:0 0 12px 
 html body #app#app .wistia-wizard .recording-config .rc-first .rc-work { border:0 !important; }
 html body #app#app .wistia-wizard .recording-config .rc-first .rc-work strong { font-size:15px !important; font-weight:800 !important; }
 html body #app#app .wistia-wizard .recording-config .rc-first .rc-first-amount { color:#d6334f !important; font-weight:800 !important; }
+/* 2026-11-16 스위치 라벨 글자가 보이던 오류: 글자는 항상 숨김 */
+html body #app#app .rc-toggle label { font-size:0 !important; color:transparent !important; -webkit-text-fill-color:transparent !important; text-shadow:none !important; }
+/* 2026-11-16 지훈: 홈에 남아 있던 글래스·클레이(안쪽 빛·비스듬한 그라데이션)를 평평한 카드로 통일 */
+html body #app#app#app .ed-review-card, html body #app#app#app .ed-review-arrow, html body #app#app#app .ed-review-thumb, html body #app#app#app .ed-photo, html body #app#app#app .bap-player, html body #app#app#app .bap-tabs, html body #app#app#app .solo-p4-panel, html body #app#app#app .solo-p4-ratio, html body #app#app#app .hg-key-card, html body #app#app#app .ed-map-art, html body #app#app#app #arcProcess .package-process-list li, html body #app#app#app #arcFaq details { box-shadow:0 6px 18px #6b354312 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+html body #app#app#app .bap-tabs, html body #app#app#app .solo-p4-ratio, html body #app#app#app .ed-map-art { background:#fff !important; border:1px solid #f0e2e6 !important; }
+html body #app#app#app .solo-p4-ratio.is-on { background:#9d4e62 !important; border-color:#9d4e62 !important; color:#fff !important; }
+html body #app#app#app #arcProcess .package-process-list li::before { background:#f6e3e8 !important; box-shadow:none !important; }
+html body #app#app#app #arcProcess .package-process-list li::after { background:none !important; box-shadow:none !important; }
 }

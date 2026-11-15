@@ -1,5 +1,12 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-16 — 안 쓰는 파일 삭제, 홈 글래스 제거, 스위치 글자 오류, 금액 굴러가기
+
+- 어떤 HTML·JS·CSS·스크립트에서도 부르지 않는 파일 32개(옛 css bundle 20개, design-1, desktop-wide, home-booking-dock, intro-16j, olive/pink 팔레트, page-materials-20261109, studio-editorial, app-1.js, intro-16j.js, mobile-ar-solo.js, quick-estimate.js)를 지웠다, 다시 살리지 않는다
+- `home-detail-glass-20261110.css`의 글래스 변수(그라데이션·inset·blur)를 평평한 값(#fff · 1px #f0e2e6 · 0 6px 18px #6b354312)으로 바꿨고, 남은 글래스(후기 카드·POINT 04 비율 버튼·지도·진행 번호)도 `home-polish` 끝에서 평평하게 덮었다 — 홈·문의 모든 카드는 평평하게
+- 스위치 라벨 ‘필요/필요 없음’ 글자가 보이던 원인: 휴대폰 글씨 최소 11px 강제(approved-mobile-layout JS)가 font-size:0을 덮음 → `.rc-toggle` 제외 + 라벨 글자 항상 투명
+- 다음 단계·요약 금액 굴러가기(roll)는 그대로 있고 500ms→900ms로 늘렸다(너무 빨라 그냥 바뀌는 것처럼 보였다)
+
 ## 2026-11-16 — 문의 맨 위 ‘첫 이용이신가요?’ (네/아니요)
 
 - 할인 선택란은 만들지 않는다(지훈: 마스터링은 옵션에서, 사전 예약은 날짜에서 보인다), 01 인원 위에 `첫 이용 할인 / 위스티아가 처음이라면 켜 주세요 / −20,000원` 스위치 카드(시안 3, 음원 작업과 같은 스위치 = firstUse 라디오 0/1) 하나만 둔다, 기본 켜짐
