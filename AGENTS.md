@@ -1,5 +1,10 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-16 — 문의 ‘다음 단계’ 말풍선에 할인 금액
+
+- 받는 할인이 있으면 말풍선이 코랄 알약(#e2677f, 금액 크림 #fff3c4)으로 ‘○○원 할인 중 · 다음 단계로’를 보여준다(시안 2). 금액은 그때 받는 할인 합계, 할인이 없으면 원래 ‘다음단계 눌러주세요!’
+- 코드: `booking-wizard.js` 렌더(nextHint), 스타일은 `home-polish` 끝 `.is-discount`
+
 ## 2026-11-16 — 안 쓰는 파일 삭제, 홈 글래스 제거, 스위치 글자 오류, 금액 굴러가기
 
 - 어떤 HTML·JS·CSS·스크립트에서도 부르지 않는 파일 32개(옛 css bundle 20개, design-1, desktop-wide, home-booking-dock, intro-16j, olive/pink 팔레트, page-materials-20261109, studio-editorial, app-1.js, intro-16j.js, mobile-ar-solo.js, quick-estimate.js)를 지웠다, 다시 살리지 않는다

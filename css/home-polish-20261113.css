@@ -221,4 +221,8 @@ html body #app#app#app .bap-tabs, html body #app#app#app .solo-p4-ratio, html bo
 html body #app#app#app .solo-p4-ratio.is-on { background:#9d4e62 !important; border-color:#9d4e62 !important; color:#fff !important; }
 html body #app#app#app #arcProcess .package-process-list li::before { background:#f6e3e8 !important; box-shadow:none !important; }
 html body #app#app#app #arcProcess .package-process-list li::after { background:none !important; box-shadow:none !important; }
+/* 2026-11-16 지훈: 다음 단계 말풍선 — 할인 중이면 코랄 알약(시안 2), 금액은 크림색 */
+html body #app#app .wf-nav [data-wf-next-hint].is-discount { padding:7px 14px !important; border:0 !important; border-radius:999px !important; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:13px !important; font-weight:700 !important; white-space:nowrap !important; box-shadow:0 4px 12px #e2677f55 !important; }
+html body #app#app .wf-nav [data-wf-next-hint].is-discount b { color:#fff3c4 !important; -webkit-text-fill-color:#fff3c4 !important; font-weight:800 !important; }
+html body #app#app .wf-nav [data-wf-next-hint].is-discount::after { background:#e2677f !important; border-color:#e2677f !important; }
 }
