@@ -113,12 +113,13 @@
         '<ul class="hg-key-cards"><li class="hg-key-card"><small>01</small><strong>음원 편집</strong><p>원하는 길이로 자르고<br>자연스럽게 이어요</p></li><li class="hg-key-card"><small>02</small><strong>키 조절</strong><p>내 목소리에 맞는<br>높이로 조절해요</p></li></ul></div>' +
         '</section>'
     },
-    making() {
+    making(key) {
       // 2026-11-13 지훈: 녹음 메이킹은 예약 시간 +1시간, +80,000원 (문의양식 '녹음 메이킹 영상 추가' 스위치)
       return '<section class="arc-point arc-point-making ed-section" id="arcMaking" data-svg-title="off">' +
-        heading('RECORDING MAKING · POINT 05', '<span>축가를 녹음하는 순간도</span>영상으로 남겨 드려요', '헤드폰을 쓰고 직접 노래하는 모습을<br>녹음하는 동안 함께 촬영해요') +
+        // 2026-11-15 지훈: 남는 건 영상 — 1인 2컷·2인 4컷 + 인서트 컷, 축가 중 뒤에 띄우는 용도는 AR이 드러나서 쓰지 않음
+        heading('RECORDING MAKING · POINT 05', '<span>결혼식이 끝나도</span>남는 건 영상이에요', '축가를 녹음하는 모습을 그대로 담아<br>두 분만의 기록으로 남겨 드려요') +
         '<div class="ed-making-scene"><figure class="ed-making-photo"><img src="assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 헤드폰을 쓰고 축가를 녹음하는 메이킹 영상 장면" width="1280" height="730" loading="lazy" decoding="async"></figure>' +
-        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>녹음하는 모습을 그대로 촬영</li><li><span aria-hidden="true">+</span>예약 시간에 1시간이 더해져요</li><li><span aria-hidden="true">+</span>문의양식 ‘04 영상 작업’에서 선택</li></ul></div>' +
+        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>메이킹 1인 2컷 · 2인 4컷 + 인서트 컷</li><li><span aria-hidden="true">+</span>예약 시간에 1시간이 더해져요</li><li><span aria-hidden="true">+</span>식전 영상이나 SNS로도 쓸 수 있어요</li></ul></div>' +
         '<p class="ed-making-price"><strong>+80,000원</strong><span>녹음 메이킹 영상 추가</span></p></section>'
     },
     tuningHeader() {
