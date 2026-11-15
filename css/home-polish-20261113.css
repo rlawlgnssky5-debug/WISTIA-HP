@@ -178,4 +178,11 @@ html body #app #arcMaking .ed-yt-ctl b { font-size:10.5px !important; font-weigh
 @media (max-width:350px) { html body #app #arcMaking .ed-yt-ctl > span { gap:8px !important; } html body #app #arcMaking .ed-yt-ctl svg { width:13px !important; height:13px !important; } }
 html body #app #arcMaking .ed-yt-gear { position:relative !important; display:inline-flex !important; }
 html body #app#app #arcMaking#arcMaking .ed-yt-ctl .ed-yt-gear em { position:absolute !important; right:-6px !important; top:-3px !important; padding:0 3px !important; border-radius:3px !important; background:#ff0033 !important; color:#fff !important; font-family:Arial,sans-serif !important; font-size:12px !important; line-height:15px !important; height:15px !important; transform:scale(.5) !important; transform-origin:100% 0 !important; font-weight:800 !important; font-style:normal !important; letter-spacing:0 !important; }
+/* 2026-11-15 지훈 시안 7: 영상 아래 큰 숫자 칸 */
+html body #app#app #arcMaking#arcMaking .ed-yt-nums { display:grid !important; grid-template-columns:repeat(3,1fr) !important; margin:16px 0 0 !important; padding:16px 0 14px !important; background:#fff !important; border-radius:16px !important; box-shadow:0 6px 18px #6b354312 !important; text-align:center !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-nums > div { display:block !important; border-left:1px solid #f0e2e6 !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-nums > div:first-child { border-left:0 !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-nums b { font-size:38px !important; font-weight:800 !important; line-height:1 !important; color:#9d4e62 !important; letter-spacing:-.02em !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-nums span { font-size:16px !important; font-weight:700 !important; color:#2e1f24 !important; margin-left:2px !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-nums small { display:block !important; margin-top:6px !important; font-size:12.5px !important; color:#8d7a80 !important; }
 }
