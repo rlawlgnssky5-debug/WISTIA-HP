@@ -176,4 +176,6 @@ html body #app #arcMaking .ed-yt-ctl > span { display:flex !important; align-ite
 html body #app #arcMaking .ed-yt-ctl svg { width:15px !important; height:15px !important; flex:none !important; filter:drop-shadow(0 1px 2px #0006) !important; }
 html body #app #arcMaking .ed-yt-ctl b { font-size:10.5px !important; font-weight:600 !important; letter-spacing:.01em !important; white-space:nowrap !important; text-shadow:0 1px 2px #0008 !important; }
 @media (max-width:350px) { html body #app #arcMaking .ed-yt-ctl > span { gap:8px !important; } html body #app #arcMaking .ed-yt-ctl svg { width:13px !important; height:13px !important; } }
+html body #app #arcMaking .ed-yt-gear { position:relative !important; display:inline-flex !important; }
+html body #app#app #arcMaking#arcMaking .ed-yt-ctl .ed-yt-gear em { position:absolute !important; right:-6px !important; top:-3px !important; padding:0 3px !important; border-radius:3px !important; background:#ff0033 !important; color:#fff !important; font-family:Arial,sans-serif !important; font-size:12px !important; line-height:15px !important; height:15px !important; transform:scale(.5) !important; transform-origin:100% 0 !important; font-weight:800 !important; font-style:normal !important; letter-spacing:0 !important; }
 }
