@@ -125,12 +125,11 @@
         '<p class="ed-making-price"><strong>+80,000원</strong><span>녹음 메이킹 영상 추가</span></p></section>'
     },
     revision() {
-      // 2026-11-16 지훈: 상세 마지막 POINT 06 무제한 수정 — 보통 vs 위스티아 비교 카드 + ∞ + 모서리 도장(시안 합본 1)
+      // 2026-11-16 지훈: 상세 마지막 POINT 06 무제한 수정 — 보통 vs 위스티아 비교 카드, 위스티아 칸에 ∞ (합본 시안 2, 도장 없음)
       return '<section class="arc-point ed-section ed-revision" id="arcRevision" data-svg-title="off">' +
         heading('REVISION · POINT 06', '<span>혹시 마음에 안 들면 어떡하지?</span>걱정하지 마세요') +
-        '<div class="ed-rev"><svg class="ed-rev-inf" viewBox="0 0 24 12" aria-hidden="true"><path d="M12 6C10 3.3 8 2 6 2a4 4 0 0 0 0 8c2 0 4-1.3 6-4zm0 0c2 2.7 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.3-6 4z"/></svg>' +
-        '<div class="ed-rev-card"><div class="ed-rev-cols"><div class="ed-rev-col"><small>보통</small><s>수정 1~2회</s></div><div class="ed-rev-col is-us"><small>위스티아</small><b>무제한 수정</b></div></div><p>마음에 드실 때까지 고쳐 드려요</p></div>' +
-        '<span class="ed-rev-stamp" aria-hidden="true"><i>WISTIA</i><b>무제한</b><b>수정</b></span></div></section>'
+        '<div class="ed-rev">' +
+        '<div class="ed-rev-card"><div class="ed-rev-cols"><div class="ed-rev-col"><small>보통</small><s>수정 1~2회</s></div><div class="ed-rev-col is-us"><svg class="ed-rev-inf" viewBox="0 0 24 12" aria-hidden="true"><path d="M12 6C10 3.3 8 2 6 2a4 4 0 0 0 0 8c2 0 4-1.3 6-4zm0 0c2 2.7 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.3-6 4z"/></svg><b>무제한 수정</b></div></div><p>마음에 드실 때까지 고쳐 드려요</p></div></div></section>'
     },
     tuningHeader() {
       return heading('VOCAL TUNING · POINT 03', '<span>음정·박자가 흔들려도</span>자연스럽게 다듬어 드려요')

@@ -225,23 +225,18 @@ html body #app#app#app #arcProcess .package-process-list li::after { background:
 html body #app#app .wf-nav [data-wf-next-hint].is-discount { padding:7px 14px !important; border:0 !important; border-radius:999px !important; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:13px !important; font-weight:700 !important; white-space:nowrap !important; box-shadow:0 4px 12px #e2677f55 !important; }
 html body #app#app .wf-nav [data-wf-next-hint].is-discount b { color:#fff3c4 !important; -webkit-text-fill-color:#fff3c4 !important; font-weight:800 !important; }
 html body #app#app .wf-nav [data-wf-next-hint].is-discount::after { background:#e2677f !important; border-color:#e2677f !important; }
-/* 2026-11-16 지훈: 상세 POINT 06 무제한 수정 — 비교 카드 + 얇은 ∞ + 모서리 도장 */
-html body #app#app #arcRevision .ed-rev { position:relative; max-width:340px; margin:22px auto 0; text-align:center; }
-html body #app#app #arcRevision .ed-rev-inf, html body #app#app #arcRevision .ed-rev-inf path { fill:none !important; stroke:#7a3647 !important; stroke-width:1.6 !important; stroke-linecap:round; }
-html body #app#app #arcRevision .ed-rev-inf { display:block; width:96px !important; height:48px !important; margin:0 auto 10px; }
+/* 2026-11-16 지훈: 상세 POINT 06 무제한 수정 — 비교 카드, 위스티아 칸에 얇은 ∞ (도장 없음) */
+html body #app#app #arcRevision .ed-rev { max-width:340px; margin:22px auto 0; text-align:center; }
+html body #app#app #arcRevision .ed-rev-inf, html body #app#app #arcRevision .ed-rev-inf path { fill:none !important; stroke:#e2677f !important; stroke-width:2 !important; stroke-linecap:round; }
+html body #app#app #arcRevision .ed-rev-inf { display:block; width:44px !important; height:22px !important; margin:0 auto 2px; }
 html body #app#app #arcRevision .ed-rev-card { background:#fff !important; border:1px solid #f0e2e6 !important; border-radius:20px !important; box-shadow:0 6px 18px #6b354312 !important; overflow:hidden; }
 html body #app#app #arcRevision .ed-rev-cols { display:flex; }
-html body #app#app #arcRevision .ed-rev-col { flex:1; padding:18px 10px; display:flex; flex-direction:column; align-items:center; gap:4px; }
+html body #app#app #arcRevision .ed-rev-col { flex:1; padding:18px 10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
 html body #app#app #arcRevision .ed-rev-col + .ed-rev-col { border-left:1px solid #f0e2e6; }
 html body #app#app #arcRevision .ed-rev-col.is-us { background:#fdf1f4; }
 html body #app#app #arcRevision .ed-rev-col small { font-size:12px !important; color:#a88f96 !important; -webkit-text-fill-color:#a88f96 !important; }
-html body #app#app #arcRevision .ed-rev-col.is-us small { color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; font-weight:700; }
 html body #app#app #arcRevision .ed-rev-col s { font-size:22px !important; font-weight:800; color:#b9a0a7 !important; -webkit-text-fill-color:#b9a0a7 !important; }
 html body #app#app #arcRevision .ed-rev-col b { font-size:22px !important; font-weight:800; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
 html body #app#app #arcRevision .ed-rev-card p { margin:0; padding:14px; border-top:1px solid #f0e2e6; font-size:14px !important; color:#6b3543 !important; -webkit-text-fill-color:#6b3543 !important; }
-html body #app#app #arcRevision .ed-rev-stamp { position:absolute; right:-12px; top:-26px; width:96px; height:96px; border-radius:50%; border:3px solid #e2677f !important; background:#fffaf8 !important; box-shadow:inset 0 0 0 5px #fff,inset 0 0 0 7px #f3b4c3; transform:rotate(-14deg); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#e2677f; line-height:1.15; }
-html body #app#app #arcRevision .ed-rev-stamp i { font-style:normal; font-size:9px !important; font-weight:700; letter-spacing:.1em; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
-html body #app#app #arcRevision .ed-rev-stamp b { font-size:16px !important; font-weight:900; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
-html body #app#app #arcRevision .ed-rev-stamp b + b { font-size:13px !important; }
-@media (max-width:350px) { html body #app#app #arcRevision .ed-rev-stamp { right:-4px; width:84px; height:84px; } html body #app#app #arcRevision .ed-rev-col s, html body #app#app #arcRevision .ed-rev-col b { font-size:19px !important; } }
+@media (max-width:350px) { html body #app#app #arcRevision .ed-rev-col s, html body #app#app #arcRevision .ed-rev-col b { font-size:19px !important; } }
 }
