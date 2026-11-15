@@ -1225,7 +1225,7 @@ function arCommerceDetail(p,key="solo"){
  keySection+
  tuningSection+
  (['solo','duo'].includes(key)?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
- (['solo','duo'].includes(key)?WistiaEditorial.making(key):'')+
+ (['solo','duo'].includes(key)?WistiaEditorial.making(key)+WistiaEditorial.revision():'')+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">구성 안내 예시</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
  '<div class="arc-advantages">'+productComparisonSection('solo')+'</div>'+
