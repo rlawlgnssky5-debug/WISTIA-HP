@@ -1266,12 +1266,13 @@ function syncHomeEventRibbon(){
  const rows=[]
  if(routePath()==="/"){
   const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==="first")
-  if(first)rows.push(["gift","01","지금, 위스티아가 처음이라면?","첫 이용 "+(first.discount/10000)+"만원 할인"])
-  if(window.WistiaRecording.monthly())rows.push(["confetti","02","11월에 예약하면?","마스터링 무료"])
+  if(first)rows.push(["gift","첫 이용",(first.discount/10000)+"만원 할인"])
+  if(window.WistiaRecording.monthly())rows.push(["headphones","11월","마스터링 무료"])
  }
  header.dataset.homeEventRows=String(rows.length)
- if(rows.length)header.insertAdjacentHTML("beforeend",'<aside class="home-event-strip" aria-label="위스티아 할인 이벤트">'+rows.map(([icon,number,title,benefit])=>
-  '<div class="home-event-strip-row"><span class="home-event-strip-icon" aria-hidden="true">'+studioIcon(icon)+'</span><small>EVENT '+number+'</small><span class="home-event-strip-title">'+title+'</span><a class="home-event-strip-benefit" href="#heroBenefitsTitle">'+benefit+'<span aria-hidden="true">&rsaquo;</span></a></div>').join("")+'</aside>')
+ // 2026-11-15 지훈: 메뉴바 아래 흰 띠 한 줄, 화면을 반반 나눠 각 칸 가운데, 혜택에 분홍 밑줄 (시안 B)
+ if(rows.length)header.insertAdjacentHTML("beforeend",'<aside class="home-event-strip" aria-label="위스티아 할인 이벤트">'+rows.map(([icon,label,benefit])=>
+  '<a class="home-event-strip-cell" href="#heroBenefitsTitle"><span class="home-event-strip-icon" aria-hidden="true">'+studioIcon(icon)+'</span>'+label+' <b>'+benefit+'</b></a>').join("")+'</aside>')
 }
 function mobileDetailEvents(){
  const toggle=(type,title)=>'<button type="button" class="benefit-toggle" data-benefit-toggle="'+type+'" aria-expanded="false" aria-controls="homeBenefit-'+type+'"><span class="mas-event-money" aria-hidden="true">'+(type==='discount'?'💰':'🎁')+'</span><strong>'+title+'</strong><span class="mas-event-chevron" aria-hidden="true">'+studioIcon('chevron')+'</span></button>'
