@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>프로포즈 필름 · 미리보기 | WISTIA</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--rose:#9d4e62;--rose-d:#7a3647;--ink:#2e1f24;--mute:#8d7a80;--blush:#f6e6e8;--cream:#fbf6f4;--line:#eee3e6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#e9e1df;font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.page{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:84px;overflow:hidden}
+img{display:block;max-width:100%;height:auto}
+.preview-note{background:#2e1f24;color:#f3e6ea;font-size:12px;text-align:center;padding:7px 12px}
+header.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 16px;background:#ffffffeb;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:#383237}
+.brand img{width:24px;height:24px;filter:invert(1);opacity:.8}
+.brand span{font:400 19px/1 Georgia,serif;letter-spacing:.14em}
+.menu{width:20px;height:1.6px;background:#3a2a2e;box-shadow:0 -6px 0 #3a2a2e,0 6px 0 #3a2a2e}
+
+/* hero */
+.hero{position:relative}
+.hero img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:62% 50%}
+.hero-body{padding:24px 20px 28px}
+.kicker{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;color:#a8475b}
+.hero h1{margin:10px 0 0;font-size:27px;line-height:1.38;font-weight:500;letter-spacing:-.03em}
+.hero h1 b{font-weight:800}
+.hero p.lead{margin:12px 0 0;font-size:15px;line-height:1.65;color:#6e5a60}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.price small{font-size:13px;color:var(--mute)}
+.price strong{font-size:28px;font-weight:800;color:var(--rose);letter-spacing:-.02em}
+.price strong em{font-style:normal;font-size:16px;font-weight:700;margin-left:2px;color:var(--ink)}
+.uses{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.uses span{font-size:12.5px;font-weight:700;color:var(--rose-d);background:var(--blush);border-radius:999px;padding:6px 11px}
+
+/* sections */
+.sec{padding:52px 20px 48px;text-align:center}
+.sec.pink{background:var(--blush)}
+.sec.cream{background:var(--cream)}
+.badge{display:inline-block;margin-top:10px;padding:7px 14px;border-radius:999px;background:#fff;color:#a8475b;font-size:13px;font-weight:800;letter-spacing:.06em;box-shadow:0 6px 14px #6b354314}
+.sec h2{margin:14px 0 0;font-size:24px;line-height:1.42;font-weight:500;letter-spacing:-.03em}
+.sec h2 b{display:inline;font-weight:800;background:linear-gradient(transparent 70%,#f2cdd7 70%)}
+.sec .desc{margin:12px 0 0;font-size:15px;line-height:1.65;color:#7d6a70}
+
+/* worries */
+.worries{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px;text-align:left}
+.worries li{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 6px 18px #6b354310}
+.worries b{display:block;font-size:15.5px;font-weight:700}
+.worries span{display:block;margin-top:4px;font-size:13.5px;color:#7d6a70;line-height:1.55}
+
+/* photo + benefits */
+.photo{margin:24px 0 0;border-radius:18px;overflow:hidden;box-shadow:0 14px 28px #6b354324}
+.photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.benefits{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.benefits li{display:flex;gap:8px;align-items:center;padding:12px 16px;border-radius:24px;background:#fff;border:1px solid #f0dde3;color:var(--rose-d);font-size:15px;font-weight:700;text-align:left}
+.benefits li:first-child{background:var(--rose);border-color:transparent;color:#fff}
+.benefits li i{font-style:normal;font-weight:800}
+
+/* youtube-like player */
+.yt{position:relative;margin-top:24px;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#111;box-shadow:0 12px 26px #4a2a3326;cursor:pointer}
+.yt img{width:100%;height:100%;object-fit:cover}
+.yt::after{content:"";position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(transparent,#0000007a);pointer-events:none}
+.yt .play{position:absolute;left:50%;top:46%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:#0000008c;z-index:1}
+.yt .play::after{content:"";position:absolute;left:23px;top:18px;border-left:19px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent}
+.yt .ui{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 10px 7px;color:#fff}
+.yt .bar{position:relative;height:3px;border-radius:2px;background:#ffffff59}
+.yt .bar i{position:absolute;left:0;top:0;bottom:0;width:8%;background:#ff0033;border-radius:2px}
+.yt .bar i::after{content:"";position:absolute;right:-5px;top:-3.5px;width:10px;height:10px;border-radius:50%;background:#ff0033}
+.yt .ctl{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+.yt .ctl>span{display:flex;align-items:center;gap:11px}
+.yt .ctl svg{width:15px;height:15px;filter:drop-shadow(0 1px 2px #0006)}
+.yt .ctl b{font-size:11px;font-weight:600;text-shadow:0 1px 2px #0008}
+.yt .gear{position:relative;display:inline-flex}
+.yt .gear em{position:absolute;right:-6px;top:-3px;padding:0 3px;border-radius:3px;background:#ff0033;color:#fff;font:800 12px/15px Arial,sans-serif;font-style:normal;transform:scale(.5);transform-origin:100% 0}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+
+/* composition scroller */
+.scroller{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:24px -20px 0;padding:0 20px 6px;scrollbar-width:none}
+.scroller::-webkit-scrollbar{display:none}
+.comp{flex:0 0 78%;scroll-snap-align:start;background:#fff;border-radius:18px;overflow:hidden;text-align:left;box-shadow:0 8px 20px #6b354314}
+.comp img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.comp div{padding:14px 16px 16px}
+.comp small{font-size:11.5px;font-weight:800;color:#c08a98;letter-spacing:.08em}
+.comp b{display:block;margin-top:4px;font-size:16px;font-weight:800}
+.comp p{margin:5px 0 0;font-size:13.5px;line-height:1.55;color:#7d6a70}
+
+/* formats */
+.formats{display:grid;gap:12px;margin-top:24px;text-align:left}
+.fmt{background:#fff;border-radius:20px;padding:18px;border:1px solid var(--line);position:relative}
+.fmt.best{border:2px solid var(--rose)}
+.fmt .tag{position:absolute;right:14px;top:-11px;background:var(--rose);color:#fff;font-size:11.5px;font-weight:800;padding:4px 9px;border-radius:999px}
+.fmt h3{margin:0;font-size:17px;font-weight:800}
+.fmt p{margin:6px 0 0;font-size:13.5px;line-height:1.55;color:#7d6a70}
+.fmt .won{margin-top:12px;font-size:24px;font-weight:800;color:var(--rose);letter-spacing:-.02em}
+.fmt .won em{font-style:normal;font-size:15px;color:var(--ink);margin-left:2px}
+.fmt ul{margin:10px 0 0;padding:0;list-style:none;font-size:12.5px;color:#8d7a80;line-height:1.6}
+.fmt ul li::before{content:"· "}
+
+/* included */
+.inc{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+.inc span{background:#fff;border:1px solid #f0dde3;border-radius:999px;padding:9px 13px;font-size:13.5px;font-weight:700;color:var(--rose-d)}
+
+/* steps */
+.steps{list-style:none;margin:24px 0 0;padding:0;text-align:left;position:relative}
+.steps::before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:#ecd5dc}
+.steps li{position:relative;padding:0 0 18px 46px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--rose);color:var(--rose);font-size:13px;font-weight:800;display:grid;place-items:center}
+.steps{counter-reset:s}
+.steps b{display:block;font-size:15.5px;font-weight:800;padding-top:5px}
+.steps span{display:block;margin-top:4px;font-size:13.5px;line-height:1.55;color:#7d6a70}
+
+/* faq */
+.faq{margin-top:22px;text-align:left;display:grid;gap:10px}
+.faq details{background:#fff;border-radius:16px;padding:0 16px;box-shadow:0 6px 18px #6b354310}
+.faq summary{list-style:none;cursor:pointer;padding:16px 26px 16px 0;font-size:15px;font-weight:700;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;top:13px;font-size:20px;font-weight:400;color:var(--rose)}
+.faq details[open] summary::after{content:"−"}
+.faq p{margin:0;padding:0 0 16px;font-size:14px;line-height:1.6;color:#6e5a60}
+
+/* dock */
+.dock{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;display:flex;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#ffffffee;backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.dock a{flex:1;display:grid;place-items:center;height:50px;border-radius:14px;font-size:15.5px;font-weight:800;text-decoration:none}
+.dock .ka{flex:0 0 38%;background:#fee500;color:#191919}
+.dock .go{background:var(--rose);color:#fff}
+a:focus-visible,summary:focus-visible,.yt:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+@media (max-width:350px){.hero h1{font-size:24px}.sec h2{font-size:21px}.yt .ctl>span{gap:8px}.yt .ctl svg{width:13px;height:13px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="preview-note">미리보기 페이지예요 · 실제 사이트에는 아직 공개되지 않았어요</div>
+<header class="top"><a class="brand" href="/"><img src="/assets/img/wistia-logo-transparent-q88.webp" alt=""><span>WISTIA</span></a><span class="menu" aria-hidden="true"></span></header>
+
+<section class="hero">
+  <img src="/assets/img/proposal-video-cover.jpg" alt="꽃과 곰인형이 놓인 방에서 마이크를 들고 노래하는 남성, 위스티아 프로포즈 필름 장면" width="1280" height="720">
+  <div class="hero-body">
+    <p class="kicker">PROPOSAL FILM · 프로포즈 · 답프로포즈</p>
+    <h1>말로 다 전하지 못한 마음을,<br><b>노래와 장면으로 남깁니다</b></h1>
+    <p class="lead">직접 부른 노래와 두 사람의 이야기를 한 편의 필름으로 완성해, 오직 한 사람을 위한 고백의 순간을 만듭니다.</p>
+    <div class="uses"><span>프로포즈</span><span>답프로포즈</span><span>결혼식 축가 영상</span></div>
+    <div class="price"><small>녹음 메이킹 필름 기준</small><strong>220,000<em>원부터</em></strong></div>
+  </div>
+</section>
+
+<section class="sec pink">
+  <p class="kicker">PROPOSAL WORRY</p>
+  <h2>이런 고민, <b>있으셨죠?</b></h2>
+  <ul class="worries">
+    <li><b>노래를 잘 못해도 괜찮을까요?</b><span>1대1 디렉팅과 음정·박자 보정, 믹싱으로 자연스럽게 다듬어요</span></li>
+    <li><b>혼자 준비하는 게 막막해요</b><span>곡 선택부터 녹음과 촬영까지 필요한 과정을 함께 안내해요</span></li>
+    <li><b>편지만으로는 부족한 것 같아요</b><span>직접 부른 목소리와 영상으로 마음을 더 선명하게 전해요</span></li>
+    <li><b>프로포즈가 평범할까 걱정돼요</b><span>두 분만의 이야기로 세상에 하나뿐인 영상 선물을 완성해요</span></li>
+  </ul>
+</section>
+
+<section class="sec">
+  <p class="kicker">MY VOICE</p><span class="badge">POINT 01</span>
+  <h2>평범한 선물 대신,<br><b>내 목소리로 마음을 전해요</b></h2>
+  <p class="desc">노래가 익숙하지 않아도<br>한 소절씩 편하게 녹음할 수 있어요</p>
+  <figure class="photo"><img src="/assets/img/proposal/process-03.webp" alt="헤드폰을 쓰고 스튜디오 마이크 앞에서 노래를 녹음하는 남성" width="1200" height="675" loading="lazy"></figure>
+  <ul class="benefits"><li><i>+</i>1대1 보컬 디렉팅 · 구간별 녹음</li><li><i>+</i>감정은 살리는 음정·박자 보정</li><li><i>+</i>엔지니어 믹싱 · 마스터링</li></ul>
+</section>
+
+<section class="sec pink">
+  <p class="kicker">PROPOSAL FILM</p><span class="badge">POINT 02</span>
+  <h2>노래 한 곡에 담은<br><b>우리 둘의 이야기</b></h2>
+  <p class="desc">녹음 장면, 두 분의 사진, 마지막 편지까지<br>한 편의 영상으로 이어져요</p>
+  <div class="yt" role="button" tabindex="0" aria-label="위스티아 프로포즈 필름 예시 영상 재생" data-yt="https://www.youtube.com/embed/pTBfPEWlyZU?autoplay=1&amp;rel=0">
+    <img src="/assets/img/proposal/process-02.webp" alt="" width="1200" height="675" loading="lazy">
+    <span class="play" aria-hidden="true"></span>
+    <span class="ui" aria-hidden="true"><span class="bar"><i></i></span><span class="ctl">
+      <span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM9.5 12 19 5v14z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM14.5 12 5 19V5z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><b>0:15 / 3:38</b></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 11h4M13 11h4M7 15h7"/></svg><span class="gear"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.48.48 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg><em>HD</em></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></span>
+    </span></span>
+  </div>
+  <p class="desc" style="font-size:13px">영상을 누르면 실제 위스티아 프로포즈 필름이 재생돼요</p>
+</section>
+
+<section class="sec">
+  <p class="kicker">COMPOSITION</p><span class="badge">POINT 03</span>
+  <h2>고백은<br><b>이렇게 완성돼요</b></h2>
+  <p class="desc">녹음하는 순간부터 마음을 전하는 장면까지</p>
+  <div class="scroller">
+    <article class="comp"><img src="/assets/img/proposal/process-01.webp" alt="" loading="lazy" width="1200" height="675"><div><small>SCENE 01</small><b>녹음 준비</b><p>한 사람만을 위한 노래를 준비하고 디렉팅을 받는 순간부터 담아요</p></div></article>
+    <article class="comp"><img src="/assets/img/proposal/process-03.webp" alt="" loading="lazy" width="1200" height="675"><div><small>SCENE 02</small><b>녹음 메이킹</b><p>직접 노래를 부르고 완성해 가는 실제 녹음 과정을 촬영해요</p></div></article>
+    <article class="comp"><img src="/assets/img/proposal/process-02.webp" alt="" loading="lazy" width="1200" height="675"><div><small>SCENE 03</small><b>다양한 인서트 컷</b><p>마이크와 손짓, 표정처럼 자연스러운 장면을 함께 담아요</p></div></article>
+    <article class="comp"><img src="/assets/img/proposal/process-04.webp" alt="" loading="lazy" width="1200" height="675"><div><small>SCENE 04</small><b>우리의 이야기</b><p>보내주신 사진과 문구로 두 분의 이야기를 구성해요</p></div></article>
+    <article class="comp"><img src="/assets/img/proposal/process-05.webp" alt="" loading="lazy" width="1200" height="675"><div><small>SCENE 05</small><b>전하는 편지</b><p>노래로 다 전하지 못한 마음을 영상 마지막에 전해요</p></div></article>
+  </div>
+</section>
+
+<section class="sec cream">
+  <p class="kicker">FILM TYPE</p>
+  <h2>원하는 구성으로<br><b>골라 주세요</b></h2>
+  <div class="formats">
+    <div class="fmt"><h3>녹음 메이킹 필름</h3><p>녹음과 촬영 장면을 중심으로 완성하는 영상 편집</p><div class="won">220,000<em>원</em></div><ul><li>편지·메시지 영상은 직접 촬영해 보내주시면 넣어 드려요</li><li>녹음 당일 휴대폰으로 직접 촬영하셔도 돼요</li></ul></div>
+    <div class="fmt best"><span class="tag">스토리 가득</span><h3>스토리형 영상</h3><p>뮤직비디오 클립 · 인터뷰 · 전하는 편지까지 담는 구성</p><div class="won">290,000<em>원</em></div><ul><li>협업 촬영 스튜디오에서 촬영해요</li></ul></div>
+  </div>
+  <div class="inc"><span>녹음 1시간</span><span>스튜디오 촬영 1시간</span><span>인터뷰 · 편지 촬영</span><span>음정 · 박자 보정</span><span>믹싱 · 마스터링</span><span>영상 편집</span><span>최종 필름 전달</span></div>
+</section>
+
+<section class="sec">
+  <p class="kicker">AFTER THE DAY</p>
+  <h2>프로포즈가 끝난 뒤에도<br><b>그날의 마음은 노래로 남아요</b></h2>
+  <p class="desc">완성 음원은 결혼식 축가 영상이나<br>본식 라이브 축가에 다시 쓸 수 있어요</p>
+</section>
+
+<section class="sec pink">
+  <p class="kicker">PROCESS</p>
+  <h2>상담부터 완성본까지<br><b>이렇게 진행돼요</b></h2>
+  <ol class="steps">
+    <li><b>맞춤 제작 상담</b><span>분위기와 곡, 촬영 방향, 상영 시점까지 함께 정해요</span></li>
+    <li><b>1:1 보컬 디렉팅 · 구간별 녹음</b><span>엔지니어가 곁에서 호흡과 감정을 안내해요</span></li>
+    <li><b>촬영</b><span>인터뷰와 편지, 뮤비 클립 등 고른 구성에 맞춰 촬영해요</span></li>
+    <li><b>보정 · 믹싱 · 마스터링</b><span>목소리와 감정은 살리고 음정·박자·밸런스를 다듬어요</span></li>
+    <li><b>편집 · 색감 보정</b><span>노래와 이야기 흐름에 맞춰 자막과 싱크까지 완성해요</span></li>
+    <li><b>완성본 전달</b><span>현장에서 바로 틀 수 있는 파일로 전달해요 · 자료 전달 후 약 14일</span></li>
+  </ol>
+</section>
+
+<section class="sec">
+  <p class="kicker">FAQ</p>
+  <h2>자주 묻는 <b>질문</b></h2>
+  <div class="faq">
+    <details><summary>녹음 장면은 어떻게 촬영하나요?</summary><p>노래를 녹음하는 과정과 표정, 손짓, 마이크 같은 자연스러운 인서트 장면을 함께 촬영해요.</p></details>
+    <details><summary>준비해야 할 사진이나 문구가 있나요?</summary><p>두 분의 사진과 영상에 넣을 문구, 직접 전할 편지는 고른 구성에 맞춰 상담에서 안내해 드려요.</p></details>
+    <details><summary>프로포즈 현장에서 바로 틀 수 있나요?</summary><p>바로 상영할 수 있는 영상 파일로 전달해요. 사용 날짜가 정해져 있다면 상담에서 일정을 먼저 확인해요.</p></details>
+    <details><summary>완성까지 얼마나 걸리나요?</summary><p>촬영과 자료 전달이 끝난 뒤 약 14일이에요.</p></details>
+  </div>
+</section>
+</div>
+
+<nav class="dock" aria-label="상담"><a class="ka" href="https://pf.kakao.com/_GbExjX/chat">카카오톡 상담</a><a class="go" href="/contact">프로포즈 문의하기</a></nav>
+
+<script>
+document.querySelectorAll('.yt[data-yt]').forEach(el=>{
+  const go=()=>{if(el.querySelector('iframe'))return;const f=document.createElement('iframe');f.src=el.dataset.yt;f.title='위스티아 프로포즈 필름 예시';f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;el.appendChild(f)};
+  el.addEventListener('click',go);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+});
+</script>
+</body>
+</html>
