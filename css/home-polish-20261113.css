@@ -150,4 +150,5 @@ html body #app#app .wistia-wizard .recording-config legend { float:left; width:1
 html body #app#app .wistia-wizard .recording-config legend i { display:inline-grid !important; place-items:center; width:24px; height:24px; border-radius:50% !important; background:#9d4e62 !important; color:#fff !important; font-style:normal !important; font-size:11px !important; margin-right:8px !important; padding:0 !important; }
 html body #app#app .wistia-wizard .recording-config fieldset > :not(legend) { clear:both; }
 html body #app#app .wistia-wizard .recording-config .rc-summary { background:#fff !important; border-radius:20px !important; box-shadow:0 6px 18px #6b354312 !important; border:0 !important; }
+@media (max-width:360px) { html body #app .ed-making-benefits li { font-size:13px !important; padding-inline:12px !important; letter-spacing:-.02em !important; white-space:nowrap !important; } }
 }
