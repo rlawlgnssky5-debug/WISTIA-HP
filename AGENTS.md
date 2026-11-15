@@ -1,5 +1,12 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-15 — 사이트 전체 오류 모니터(브라우저·서버)
+
+- 모든 HTML `<head>` 맨 위 인라인 `<script data-wistia-error-logger>`(비차단, try-catch): 자체 스크립트 JS 오류·자체 파일 로드 실패·unhandledrejection·같은 버튼 1.2초 안 3번 클릭(반응 없음 의심)을 `/api/client-error`로 sendBeacon, 페이지당 15건·같은 오류 1번, 경로만(쿼리 없음)·기기(mobile/pc)만, 광고 차단기·확장·외부 스크립트(`Script error.`)는 버린다, wistiastudio.com·workers.dev에서만 동작
+- 서버: `cloudflare/error-monitor.mjs`, Worker가 /api/* 4xx·5xx를 구조화 로그(Workers Logs)로 남기고 5xx·예외는 D1 `wistia-site-errors`(binding `ERRORS_DB`, 테이블 `site_errors`)에도 기록, 30일 지난 행은 자동 삭제, 예외 시 500 응답
+- 확인: `/admin/errors?key=…` (비밀 `ADMIN_ERRORS_KEY`를 지훈이 Cloudflare에 직접 넣어야 열림, 키 없으면 403 안내), 최근 7일 브라우저 오류 TOP·서버 오류·페이지별 건수
+- `/api/error-test`는 wrangler `vars.ERROR_TEST_UNTIL`까지만 일부러 오류를 낸다(검증용), `?wistia_error_test=1`로 연 페이지의 브라우저 오류는 test=1로 표시
+
 ## 2026-11-15 — 문의양식 칸마다 카드(시안 2), POINT 05 사진·문구 교체
 
 - 문의양식 1단계: 크림 바탕(#f4ece8) 위에 항목(fieldset)마다 떨어진 흰 카드(radius 20, 0 6px 18px #6b354312), 바깥 큰 흰 박스는 투명, 번호는 로즈 동그라미, 분홍 제목 박스 없음 (`css/home-polish-20261113.css` 끝)
