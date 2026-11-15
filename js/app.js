@@ -1166,7 +1166,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.studio/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><span></span><svg class="home-offer-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m4 2 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
+ return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><em aria-hidden="true">✦</em><span><b>할인 적용</b> 가격표 보기</span><i aria-hidden="true">›</i></a></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1485,7 +1485,6 @@ function initHomeDock(root){
   const href=recording.inquiryHref(selected)
   link.href=href
   dock.querySelector('[data-package-inquiry]').href=href
-  link.firstElementChild.textContent=recording.monthly()?'첫 이용 할인 + 11월 마스터링 무료':'첫 이용 할인 받고 예약하기'
   banner.hidden=dismissed||!reachedReviews
  }
  function checkReviews(){
@@ -1507,7 +1506,6 @@ function initHomeDock(root){
   window.removeEventListener('wistia:price-date-change',refreshOffer)
  }
  scheduleCheck()
- banner.querySelector('button').addEventListener('click',()=>{dismissed=true;refreshOffer()})
  refreshOffer()
 }
 
