@@ -119,7 +119,7 @@
         // 2026-11-15 지훈: 남는 건 영상 — 1인 2컷·2인 4컷 + 인서트 컷, 축가 중 뒤에 띄우는 용도는 AR이 드러나서 쓰지 않음
         heading('RECORDING MAKING · POINT 05', '<span>결혼식이 끝나도</span>남는 건 영상이에요', '축가를 녹음하는 모습을 그대로 담아<br>두 분만의 기록으로 남겨 드려요') +
         '<div class="ed-making-scene"><figure class="ed-making-photo"><img src="assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 헤드폰을 쓰고 축가를 녹음하는 메이킹 영상 장면" width="1280" height="730" loading="lazy" decoding="async"></figure>' +
-        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>메이킹 1인 2컷 · 2인 4컷 + 인서트 컷</li><li><span aria-hidden="true">+</span>예약 시간에 1시간이 더해져요</li><li><span aria-hidden="true">+</span>식전 영상이나 SNS로도 쓸 수 있어요</li></ul></div>' +
+        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>메이킹 1인 2컷 · 2인 4컷 + 인서트 컷</li></ul></div>' +
         '<p class="ed-making-price"><strong>+80,000원</strong><span>녹음 메이킹 영상 추가</span></p></section>'
     },
     tuningHeader() {
