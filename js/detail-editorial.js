@@ -116,9 +116,9 @@
     making() {
       // 2026-11-13 지훈: 녹음 메이킹은 예약 시간 +1시간, +80,000원 (문의양식 '녹음 메이킹 영상 추가' 스위치)
       return '<section class="arc-point arc-point-making ed-section" id="arcMaking" data-svg-title="off">' +
-        heading('RECORDING MAKING · POINT 05', '<span>노래하는 모습도</span>영상으로 남겨 드려요', '직접 노래를 부르고 완성해 가는<br>실제 녹음 과정을 촬영합니다') +
-        '<div class="ed-making-scene"><figure class="ed-making-photo"><img src="assets/img/film-types/recording-making-film.webp" alt="녹음실에서 헤드폰을 쓰고 함께 노래하는 두 사람의 녹음 메이킹 장면" width="1600" height="836" loading="lazy" decoding="async"></figure>' +
-        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>녹음실 메이킹 컷과 인서트 컷 촬영</li><li><span aria-hidden="true">+</span>예약 시간에 1시간만 더하면 돼요</li><li><span aria-hidden="true">+</span>문의양식에서 스위치 하나로 추가</li></ul></div>' +
+        heading('RECORDING MAKING · POINT 05', '<span>축가를 녹음하는 순간도</span>영상으로 남겨 드려요', '헤드폰을 쓰고 직접 노래하는 모습을<br>녹음하는 동안 함께 촬영해요') +
+        '<div class="ed-making-scene"><figure class="ed-making-photo"><img src="assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 헤드폰을 쓰고 축가를 녹음하는 메이킹 영상 장면" width="1280" height="730" loading="lazy" decoding="async"></figure>' +
+        '<ul class="ed-making-benefits"><li><span aria-hidden="true">+</span>녹음하는 모습을 그대로 촬영</li><li><span aria-hidden="true">+</span>예약 시간에 1시간이 더해져요</li><li><span aria-hidden="true">+</span>문의양식 ‘04 영상 작업’에서 선택</li></ul></div>' +
         '<p class="ed-making-price"><strong>+80,000원</strong><span>녹음 메이킹 영상 추가</span></p></section>'
     },
     tuningHeader() {
