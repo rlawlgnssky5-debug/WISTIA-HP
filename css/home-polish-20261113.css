@@ -239,4 +239,14 @@ html body #app#app #arcRevision .ed-rev-col s { font-size:22px !important; font-
 html body #app#app #arcRevision .ed-rev-col b { font-size:22px !important; font-weight:800; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
 html body #app#app #arcRevision .ed-rev-card p { margin:0; padding:14px; border-top:1px solid #f0e2e6; font-size:14px !important; color:#6b3543 !important; -webkit-text-fill-color:#6b3543 !important; }
 @media (max-width:350px) { html body #app#app #arcRevision .ed-rev-col s, html body #app#app #arcRevision .ed-rev-col b { font-size:19px !important; } }
+/* 2026-11-16 지훈: POINT 01 비교표(시안 5-C) — 보통 칸은 흐리게 줄긋기, 위스티아 칸은 로즈 테두리로 떠 있음 */
+html body #app#app #arcRecording .ed-rec-cmp { display:flex; max-width:300px; margin:30px auto 0; background:#fff !important; border:1px solid #f0e2e6 !important; border-radius:20px !important; box-shadow:0 6px 18px #6b354312 !important; }
+html body #app#app #arcRecording .ed-rec-col { flex:1; display:flex; flex-direction:column; text-align:center; }
+html body #app#app #arcRecording .ed-rec-col > * { display:flex; align-items:center; justify-content:center; height:54px; border:0 !important; border-top:1px solid #f0e2e6 !important; border-radius:0 !important; background:none !important; box-shadow:none !important; }
+html body #app#app #arcRecording .ed-rec-col > .ed-rec-head { height:44px; border-top:0 !important; font-size:12px !important; color:#b9a5ab !important; -webkit-text-fill-color:#b9a5ab !important; }
+html body #app#app #arcRecording .ed-rec-col s { font-size:15px !important; color:#b9a5ab !important; -webkit-text-fill-color:#b9a5ab !important; }
+html body #app#app #arcRecording .ed-rec-col.is-us { margin:-12px -6px -12px 0; padding-top:12px; background:#fff !important; border:2px solid #e2677f !important; border-radius:18px !important; box-shadow:0 12px 26px #e2677f33 !important; }
+html body #app#app #arcRecording .ed-rec-col.is-us > * { border-top-color:#fdf1f4 !important; }
+html body #app#app #arcRecording .ed-rec-col.is-us > .ed-rec-head { font-size:13px !important; font-weight:800; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
+html body #app#app #arcRecording .ed-rec-col.is-us b { font-size:16px !important; font-weight:800; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
 }
