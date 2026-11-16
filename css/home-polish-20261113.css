@@ -249,4 +249,25 @@ html body #app#app #arcRecording .ed-rec-col.is-us { margin:-12px -6px -12px 0; 
 html body #app#app #arcRecording .ed-rec-col.is-us > * { border-top-color:#fdf1f4 !important; }
 html body #app#app #arcRecording .ed-rec-col.is-us > .ed-rec-head { font-size:13px !important; font-weight:800; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
 html body #app#app #arcRecording .ed-rec-col.is-us b { font-size:16px !important; font-weight:800; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
+/* 2026-11-16 푸터 사업자 정보: 확인된 상호·대표·번호만 표시 */
+html body #app .solo-footer-clean .footer-bottom {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 10px !important;
+}
+html body #app .solo-footer-clean .footer-biz {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 11px !important;
+  line-height: 1.7 !important;
+  letter-spacing: -0.02em !important;
+  color: #858c8f !important;
+  -webkit-text-fill-color: #858c8f !important;
+  text-align: center !important;
+}
 }

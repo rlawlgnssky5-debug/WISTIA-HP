@@ -81,6 +81,10 @@ function updateJsonLd(body){
  if(!graph)return body
  for(const item of graph){
   if(item['@type']==='LocalBusiness'||item['@type']==='ProfessionalService')item.priceRange=priceRange
+  if(item['@type']==='Organization'){
+   item.legalName='길지컴퍼니'
+   item.taxID='748-53-00845'
+  }
   patchFaqPage(item)
  }
  const hasCurrent=graph.some(isCurrentRecordingService)
