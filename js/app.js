@@ -600,7 +600,7 @@ function packageItem(item){return ({
  })[item]||item}
 function footerIcon(type){const icons={instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg>',youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 7.1a2.8 2.8 0 0 0-2-2C16.6 4.6 12 4.6 12 4.6s-4.6 0-6.3.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 3.2 12a29 29 0 0 0 .5 4.9 2.8 2.8 0 0 0 2 2c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-4.9 29 29 0 0 0-.5-4.9Z"></path><path d="m10 15.3 5.2-3.3L10 8.7v6.6Z" fill="currentColor" stroke="none"></path></svg>',kakao:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C6.9 4 2.8 7.2 2.8 11.2c0 2.6 1.7 4.8 4.4 6.1L6.3 21l4.2-2.6 1.5.1c5.1 0 9.2-3.2 9.2-7.3S17.1 4 12 4Z"></path></svg>'};return icons[type]||''}
 function footer(){return '<div class="solo-footer-clean">'+footerMarkup()+'</div>'}
- function footerMarkup(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.studio/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent-q88.webp','위스티아')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><div class="footer-message"><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© WISTIA. All rights reserved.</small></div></footer>'}
+ function footerMarkup(){const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.studio/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]];return '<footer class="footer shell"><div class="footer-main"><a class="footer-brand" href="#/">'+img('assets/img/wistia-logo-transparent-q88.webp','위스티아')+'<span><b>WISTIA</b><small>웨딩 축가 전문 스튜디오</small></span></a><div class="footer-message"><strong class="mas-footer-slogan">완성도는 높이고, 부담은 줄인 가격을 약속드립니다</strong></div></div><div class="footer-divider" aria-hidden="true"></div><nav class="footer-social" aria-label="WISTIA 채널">'+channels.map(channel=>'<a href="'+escapeHtml(channel[2])+'" target="_blank" rel="noopener noreferrer" aria-label="'+channel[1]+' 열기"><i>'+footerIcon(channel[0])+'</i><span>'+channel[1]+'</span></a>').join('')+'</nav><div class="footer-bottom"><small>© WISTIA. All rights reserved.</small><p class="footer-biz">상호 길지컴퍼니<br>대표 김지훈<br>사업자등록번호 748-53-00845</p></div></footer>'}
 function serviceRows(keys){return keys.filter(key=>["solo","duo"].includes(key)).map((key,i)=>{let p=PRODUCTS[key],m=SERVICE_META[key];return '<a class="service-row" href="'+(key==='solo'?'#/':'#/detail/'+key)+'"><span class="index">'+String(i+1).padStart(2,"0")+'</span><div><h3>'+p.title+'</h3><p>'+m.short+'</p></div><span class="row-use">'+m.use+'</span>'+arrow()+'</a>'}).join("")}
 function reviewCard(src,i,clone=false){return '<figure class="review-capture review-crop-'+String(i+1).padStart(2,"0")+'"'+(clone?' aria-hidden="true"':'')+'><span class="review-capture-image"><img src="'+escapeHtml(src)+'" alt="실제 고객 카카오톡 후기 '+(i+1)+'" loading="eager" decoding="async"></span></figure>'}
 function homeReviews(){
@@ -1166,7 +1166,7 @@ function soloNoticeAndMap(){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.studio/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><span></span><svg class="home-offer-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m4 2 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><button type="button" aria-label="할인 안내 닫기">×</button></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
+ return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><em aria-hidden="true">✦</em><span><b>할인 적용</b> 가격표 보기</span><i aria-hidden="true">›</i></a></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1225,7 +1225,7 @@ function arCommerceDetail(p,key="solo"){
  keySection+
  tuningSection+
  (['solo','duo'].includes(key)?soloPoint04Section():'<section class="arc-point arc-point-ratio" aria-label="본식 AR 비율 체험">'+detailPointSection(arCdRatioSection(),'04')+'</section>')+
- (['solo','duo'].includes(key)?WistiaEditorial.making(key):'')+
+ (['solo','duo'].includes(key)?WistiaEditorial.making(key)+WistiaEditorial.revision():'')+
 
  '<section class="arc-section arc-lyrics"><div><span class="arc-kicker detail-point-label">POINT 05</span><p class="arc-option-fee">구성 안내 예시</p><h2>뒤에 띄울 가사 영상도<br>필요하세요?</h2><p class="ar-essential-line"><span class="ar-line-full">두 분의 사진과 영상이 자연스럽게 전환되면서 노래의 가사가 함께 나옵니다</span><span class="ar-line-compact">사진·영상과 함께 노래 가사가 나옵니다</span></p>'+action('가사 영상 옵션 견적 뽑기')+'</div><figure>'+img('assets/img/song-options/lyric-video-v2.webp','두 사람의 사진과 노래 가사가 함께 나오는 가사 영상 예시')+'</figure></section>'+
  '<div class="arc-advantages">'+productComparisonSection('solo')+'</div>'+
@@ -1485,7 +1485,6 @@ function initHomeDock(root){
   const href=recording.inquiryHref(selected)
   link.href=href
   dock.querySelector('[data-package-inquiry]').href=href
-  link.firstElementChild.textContent=recording.monthly()?'첫 이용 할인 + 11월 마스터링 무료':'첫 이용 할인 받고 예약하기'
   banner.hidden=dismissed||!reachedReviews
  }
  function checkReviews(){
@@ -1507,7 +1506,6 @@ function initHomeDock(root){
   window.removeEventListener('wistia:price-date-change',refreshOffer)
  }
  scheduleCheck()
- banner.querySelector('button').addEventListener('click',()=>{dismissed=true;refreshOffer()})
  refreshOffer()
 }
 

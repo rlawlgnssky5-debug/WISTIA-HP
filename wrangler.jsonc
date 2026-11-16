@@ -15,9 +15,14 @@
   },
   "observability": { "enabled": true },
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  // 2026-11-15 오류 모니터: 브라우저·서버 오류 기록(site_errors), /admin/errors 는 ADMIN_ERRORS_KEY 비밀이 있어야 열린다
+  "d1_databases": [{ "binding": "ERRORS_DB", "database_name": "wistia-site-errors", "database_id": "c3596603-c875-466c-ab91-3336d651bc49" }],
+  // /api/error-test 는 이 시각까지만 일부러 오류를 낸다 (배포 후 검증용, 지나면 404)
+  "vars": { "ERROR_TEST_UNTIL": "2026-11-15T08:00:00Z" }
   // Secrets (set with `npx wrangler secret put NAME`, never commit values):
   //   NOTION_BOOKING_TOKEN, NOTION_BOOKING_DATA_SOURCE_ID, NOTION_TOKEN (optional), NOTION_CALENDAR_DB_ID (optional)
   //   META_CAPI_TOKEN or META_CONVERSIONS_ACCESS_TOKEN, META_TEST_EVENT_CODE (optional), META_GRAPH_VERSION (optional)
   //   SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY (only reported by /api/health)
+  //   ADMIN_ERRORS_KEY (opens /admin/errors?key=...)
 }

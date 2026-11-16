@@ -56,14 +56,14 @@
  }
  // The one place price views are reported (GA4 view_price + pixel ViewPrice); trackers dedupe per product per page
  function trackPriceView(q){const payload={content_name:q.package.name+' · '+q.package.title,content_ids:[q.package.name.toLowerCase()],content_type:'product',value:q.total,currency:'KRW'};try{global.wistiaAnalytics?.trackViewPrice?.(payload)}catch{}try{global.wistiaMeta?.trackViewPrice?.(payload)}catch{}}
- // 2026-11-11 지훈: 금액이 바뀌면 숫자가 굴러가듯 올라가거나 내려가요 (약 500ms, 동작 줄이기 설정이면 바로 표시)
+ // 2026-11-11 지훈: 금액이 바뀌면 숫자가 굴러가듯 올라가거나 내려가요 (2026-11-16 약 900ms로 늘림 — 너무 빨라 그냥 바뀌는 것처럼 보였다, 동작 줄이기 설정이면 바로 표시)
  function roll(state,key,el,total){
   const anim=state.rolls||(state.rolls={}),a=anim[key]||(anim[key]={})
   if(a.frame)global.cancelAnimationFrame?.(a.frame)
   const from=Number.isFinite(a.shown)?a.shown:total
   if(from===total||global.matchMedia?.('(prefers-reduced-motion: reduce)').matches||!global.requestAnimationFrame){a.shown=total;a.frame=0;el.textContent=money(total);el.classList.remove('wf-rolling');return}
   el.textContent=money(from);el.classList.add('wf-rolling')
-  let began;const tick=now=>{if(!el.isConnected){a.frame=0;return}began??=now;const t=Math.min(1,(now-began)/500);a.shown=t===1?total:Math.round((from+(total-from)*(1-Math.pow(1-t,3)))/1000)*1000;el.textContent=money(a.shown);if(t<1)a.frame=global.requestAnimationFrame(tick);else{a.frame=0;el.classList.remove('wf-rolling')}};a.frame=global.requestAnimationFrame(tick)
+  let began;const tick=now=>{if(!el.isConnected){a.frame=0;return}began??=now;const t=Math.min(1,(now-began)/900);a.shown=t===1?total:Math.round((from+(total-from)*(1-Math.pow(1-t,2)))/1000)*1000;el.textContent=money(a.shown);if(t<1)a.frame=global.requestAnimationFrame(tick);else{a.frame=0;el.classList.remove('wf-rolling')}};a.frame=global.requestAnimationFrame(tick)
  }
  function updateAmount(button,total,state){
   if(state.priceTarget===total)return
@@ -97,7 +97,7 @@
   syncSchedule(form);global.WistiaContact?.repaintCalendars?.(form);
   const time=form.querySelector('#contact-time');
   const ready=state.step===0?Boolean(form.querySelector('[name="recordingMinutes"]:checked')&&form.querySelector('[name="people"]:checked')):state.step===1?Boolean(form.querySelector('#contact-bookingDate').value&&!form.querySelector('#contact-bookingDate').validationMessage&&time.value&&!time.selectedOptions[0]?.disabled&&form.dataset.scheduleState!=='loading'):false;
-  form.querySelector('[data-wf-next-hint]').hidden=!ready;
+  const nextHint=form.querySelector('[data-wf-next-hint]');nextHint.hidden=!ready;/* 2026-11-16 지훈: 말풍선에 지금 받는 할인 합계(시안 2 코랄), 할인 없으면 원래 문구 */const hintAmount=(q.allDiscounts||q.discounts).reduce((sum,d)=>sum+d.amount,0),hintDiscount=hintAmount>0;nextHint.classList.toggle('is-discount',hintDiscount);nextHint.innerHTML=hintDiscount?'<b>'+money(hintAmount)+'</b> 할인 중':'다음단계 눌러주세요!';
   if(save)persistDraft(form)
   if(track)try{global.WistiaInquiryFunnel?.view(form)}catch{}
  }

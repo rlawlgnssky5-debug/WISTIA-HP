@@ -10,6 +10,7 @@ import limitedCoupon from '../api/limited-coupon.js'
 import metaContact from '../api/meta-contact.js'
 import vercelConfig from '../vercel.json'
 import { runVercelHandler } from './vercel-adapter.mjs'
+import { adminErrors, errorTestAllowed, handleClientError, logServerEvent } from './error-monitor.mjs'
 
 const API = {
   '/api/availability': availability,
@@ -44,7 +45,7 @@ function notFound() {
   return new Response('The page could not be found\n\nNOT_FOUND\n', { status: 404, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex' } })
 }
 
-async function route(request, env) {
+async function route(request, env, ctx) {
   const url = new URL(request.url)
   const path = url.pathname
 
@@ -55,8 +56,20 @@ async function route(request, env) {
   if (path.length > 1 && path.endsWith('/')) return redirect(url, path.replace(/\/+$/, '') || '/', 308)
   if (path.endsWith('.html')) return redirect(url, path === '/index.html' ? '/' : path.slice(0, -5), 308)
 
+  if (path === '/api/client-error') return handleClientError(request, env, ctx)
+  if (path === '/admin/errors') return adminErrors(request, env)
+  if (path === '/api/error-test' && errorTestAllowed(env)) {
+    const error = new Error('WISTIA 오류 모니터 테스트 (일부러 발생시킨 서버 오류)')
+    error.wistiaTest = true
+    throw error
+  }
+
   const api = API[path]
-  if (api) return runVercelHandler(api, request)
+  if (api) {
+    const response = await runVercelHandler(api, request)
+    if (response.status >= 400) logServerEvent(env, ctx, { host: url.host, path, method: request.method, status: response.status })
+    return response
+  }
 
   const early = await middleware(request)
   if (early) return early
@@ -70,8 +83,17 @@ async function route(request, env) {
 }
 
 export default {
-  async fetch(request, env) {
-    const path = new URL(request.url).pathname
-    return withSiteHeaders(await route(request, env), path)
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url)
+    const path = url.pathname
+    try {
+      return withSiteHeaders(await route(request, env, ctx), path)
+    } catch (error) {
+      logServerEvent(env, ctx, {
+        host: url.host, path, method: request.method, status: 500, exception: true, test: !!error?.wistiaTest,
+        error_message: error?.message || String(error), stack: String(error?.stack || '').replace(/https?:\/\/[^/\s)]+/g, ''),
+      })
+      return new Response('Server error', { status: 500, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } })
+    }
   },
 }

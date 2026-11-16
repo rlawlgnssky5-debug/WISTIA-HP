@@ -10,10 +10,10 @@
  const makingMinutes=60
  const makingOption=['makingVideo','녹음 메이킹 영상 추가','',80000]
  const options=[...audioOptions,makingOption]
- const keys=['people','recordingMinutes',...options.map(o=>o[0]),'rush']
+ const keys=['firstUse','people','recordingMinutes',...options.map(o=>o[0]),'rush']
  const monthly=(date=prices.today())=>date.startsWith('2026-11')
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier?(tier==='A'?'0':'1'):'',recordingMix:tier?'1':'',recordingMaster:tier?'1':'',makingVideo:'',rush:'0'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier?(tier==='A'?'0':'1'):'',recordingMix:tier?'1':'',recordingMaster:tier?'1':'',makingVideo:'',rush:'0',firstUse:'1'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
@@ -30,7 +30,8 @@
   if(list!==rate)discounts.push({key:'recording',label:'녹음 시간 할인',amount:list-rate})
   if(offer)discounts.push({key:'monthly',label:'11월 마스터링 서비스',amount:40000})
   // 2026-11-11 지훈: 50분에는 할인 없음 (믹싱·마스터링 묶음가 −40,000원 제거, 이 할인은 50분에만 있었음)
-  if(minutes!==50)discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
+  // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 스위치가 켜졌을 때만 (기본 켜짐), 50분도 적용
+  if(v.firstUse!=='0')discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
   const advance=minutes===50?null:prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
@@ -48,11 +49,12 @@
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
  function editor(v,{delivery=true}={}){
+  const first='<div class="rc-first"><div class="rc-work" data-rc-work="firstUse"><div><strong>첫 이용 할인</strong> <small>위스티아가 처음이라면 켜 주세요</small><small class="rc-first-amount">−20,000원</small></div><div class="rc-toggle" role="group" aria-label="첫 이용 할인">'+radio('firstUse','0',v.firstUse,'필요 없음')+radio('firstUse','1',v.firstUse,'필요')+'</div></div></div>'
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+40,000원</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-times">'+Object.entries(times).map(([n,{list,rate}])=>radio('recordingMinutes',n,v.recordingMinutes,'<span>'+prices.hoursText(Number(n))+'</span><span class="rc-rate">'+(rate<list?'<small class="rc-rate-was"><b class="rc-rate-pct">'+Math.round((list-rate)/list*100)+'%</b><del>'+money(list)+'</del></small>':'')+'<strong>'+money(rate)+'</strong></span>')).join('')+'</div>')
   const work=field('03','음원 작업',audioOptions.map(option=>optionRow(option,v)).join(''))
   const making=field('04','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
-  return '<div class="recording-config">'+people+duration+work+making+(delivery?deliveryField(v):'')+'</div>'
+  return '<div class="recording-config">'+first+people+duration+work+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
