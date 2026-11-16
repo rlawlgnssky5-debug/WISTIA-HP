@@ -97,7 +97,7 @@
   syncSchedule(form);global.WistiaContact?.repaintCalendars?.(form);
   const time=form.querySelector('#contact-time');
   const ready=state.step===0?Boolean(form.querySelector('[name="recordingMinutes"]:checked')&&form.querySelector('[name="people"]:checked')):state.step===1?Boolean(form.querySelector('#contact-bookingDate').value&&!form.querySelector('#contact-bookingDate').validationMessage&&time.value&&!time.selectedOptions[0]?.disabled&&form.dataset.scheduleState!=='loading'):false;
-  const nextHint=form.querySelector('[data-wf-next-hint]');nextHint.hidden=!ready;/* 2026-11-16 지훈: 말풍선에 지금 받는 할인 합계(시안 2 코랄), 할인 없으면 원래 문구 */const hintAmount=(q.allDiscounts||q.discounts).reduce((sum,d)=>sum+d.amount,0),hintDiscount=hintAmount>0;nextHint.classList.toggle('is-discount',hintDiscount);nextHint.innerHTML=hintDiscount?'<b>'+money(hintAmount)+'</b> 할인 중 · 다음 단계로':'다음단계 눌러주세요!';
+  const nextHint=form.querySelector('[data-wf-next-hint]');nextHint.hidden=!ready;/* 2026-11-16 지훈: 말풍선에 지금 받는 할인 합계(시안 2 코랄), 할인 없으면 원래 문구 */const hintAmount=(q.allDiscounts||q.discounts).reduce((sum,d)=>sum+d.amount,0),hintDiscount=hintAmount>0;nextHint.classList.toggle('is-discount',hintDiscount);nextHint.innerHTML=hintDiscount?'<b>'+money(hintAmount)+'</b> 할인 중':'다음단계 눌러주세요!';
   if(save)persistDraft(form)
   if(track)try{global.WistiaInquiryFunnel?.view(form)}catch{}
  }
