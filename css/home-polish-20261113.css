@@ -270,4 +270,17 @@ html body #app .solo-footer-clean .footer-biz {
   -webkit-text-fill-color: #858c8f !important;
   text-align: center !important;
 }
+/* 2026-11-17 지훈: POINT 02 0원 영수증(시안 4) — 비스듬한 종이, 아래 톱니, 무료 도장 */
+html body #app#app #arcKey .ed-rcpt-wrap { position:relative; width:250px; margin:28px auto 0; }
+html body #app#app #arcKey .ed-rcpt { background:#fff !important; padding:22px 22px 30px; transform:rotate(-3deg); -webkit-mask:radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) -8px 0/16px 100%; mask:radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) -8px 0/16px 100%; border-radius:0 !important; border:0 !important; box-shadow:none !important; }
+html body #app#app #arcKey .ed-rcpt-wrap { filter:drop-shadow(0 14px 18px #6b354326); }
+html body #app#app #arcKey .ed-rcpt-brand { display:block; text-align:center; font-size:13px !important; letter-spacing:.2em; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
+html body #app#app #arcKey .ed-rcpt i { display:block; border-top:1.5px dashed #c9b6bc; margin:14px 0; }
+html body #app#app #arcKey .ed-rcpt p { display:flex; justify-content:space-between; align-items:center; margin:0; padding:6px 0; font-size:16px !important; color:#33242a !important; -webkit-text-fill-color:#33242a !important; }
+html body #app#app #arcKey .ed-rcpt p b { font-size:20px !important; font-weight:800; color:#33242a !important; -webkit-text-fill-color:#33242a !important; }
+html body #app#app #arcKey .ed-rcpt p.ed-rcpt-sum span { font-size:20px !important; font-weight:800; color:#7a3647 !important; -webkit-text-fill-color:#7a3647 !important; }
+html body #app#app #arcKey .ed-rcpt p.ed-rcpt-sum b { font-size:30px !important; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
+html body #app#app #arcKey .ed-rcpt-stamp { position:absolute; right:-34px; bottom:-18px; width:70px; height:70px; border-radius:50% !important; border:2.5px solid #e2677f !important; background:none !important; box-shadow:none !important; display:flex; align-items:center; justify-content:center; transform:rotate(-14deg); font-size:15px !important; font-weight:900; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; opacity:.9; }
+html body #app#app #arcKey .ed-rcpt-cap { margin:44px 0 0 !important; padding:0 !important; text-align:center; font-size:15px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+@media (max-width:350px) { html body #app#app #arcKey .ed-rcpt-wrap { width:224px; } html body #app#app #arcKey .ed-rcpt-stamp { right:-20px; width:62px; height:62px; } }
 }

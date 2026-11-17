@@ -110,9 +110,10 @@
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
-        '<div class="hg-key"><header class="ed-heading" data-svg-title="off"><span class="ed-point">POINT 02</span><h2>음원 편집 · <b class="ed-title">키 조절</b></h2><p class="ed-description">노래의 감정은 그대로, 내 목소리에 맞게</p></header>' +
-        '<p class="hg-key-free"><b>무료</b></p>' +
-        '<ul class="hg-key-cards"><li class="hg-key-card"><small>01</small><strong>음원 편집</strong><p>원하는 길이로 자르고<br>자연스럽게 이어요</p></li><li class="hg-key-card"><small>02</small><strong>키 조절</strong><p>내 목소리에 맞는<br>높이로 조절해요</p></li></ul></div>' +
+        // 2026-11-17 지훈: POINT 02는 0원 영수증 그림(시안 4) — 표·카드 대신 이미지처럼
+        '<div class="hg-key"><header class="ed-heading" data-svg-title="off"><span class="ed-point">POINT 02</span><h2><span>음원 편집 · 키 조절</span><b class="ed-title">추가 비용 없어요</b></h2></header>' +
+        '<div class="ed-rcpt-wrap"><div class="ed-rcpt" role="img" aria-label="영수증: 음원 편집 0원, 키 조절 0원, 합계 0원"><b class="ed-rcpt-brand">WISTIA</b><i></i><p><span>음원 편집</span><b>0원</b></p><p><span>키 조절</span><b>0원</b></p><i></i><p class="ed-rcpt-sum"><span>합계</span><b>0원</b></p></div><span class="ed-rcpt-stamp" aria-hidden="true">무료</span></div>' +
+        '<p class="ed-rcpt-cap">원하는 길이로 자르고, 내 키에 맞춰 드려요</p></div>' +
         '</section>'
     },
     making(key) {
