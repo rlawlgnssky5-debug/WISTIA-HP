@@ -286,6 +286,5 @@ html body #app#app #arcRecording .ed-madi-lyrics em { font-style:normal; font-fa
 html body #app#app #arcRecording .ed-madi-lyrics p + p em { transform:rotate(3deg); }
 html body #app#app #arcRecording .ed-madi-a { margin-top:40px; border-top:1px solid #2b2024 !important; padding-top:16px; text-align:left; }
 html body #app#app #arcRecording .ed-madi-a h2 { margin:0 !important; font-size:23px !important; line-height:1.4 !important; font-weight:800 !important; letter-spacing:-.02em; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; text-align:left !important; }
-html body #app#app #arcRecording .ed-madi-a p { margin:8px 0 0 !important; font-size:14px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; text-align:left !important; }
 @media (max-width:350px) { html body #app#app #arcRecording .ed-madi-q { font-size:19px !important; } html body #app#app #arcRecording .ed-madi-lyrics span { font-size:23px !important; } html body #app#app #arcRecording .ed-madi-lyrics em { font-size:21px !important; } html body #app#app #arcRecording .ed-madi-lyrics svg { margin:0 5px; } }
 }

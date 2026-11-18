@@ -106,7 +106,7 @@
         // 2026-11-18 지훈: POINT 01은 가사에 끊는 표시(디자인 1 + 문구 1) — 한 소절이 아니라 한 마디씩 끊어서 부른다
         '<div class="ed-madi"><span class="ed-madi-tag">POINT 01</span><p class="ed-madi-q">노래 못하는데, 괜찮을까요?</p>' +
         '<div class="ed-madi-lyrics" role="img" aria-label="가사를 한 마디씩 끊어서 부르는 예시"><p><span>오늘 이 자리에 서서</span><svg viewBox="0 0 26 46" aria-hidden="true"><path d="M22 3 5 43"/></svg><em>끊고</em></p><p><span>너에게 노래할게</span><svg viewBox="0 0 26 46" aria-hidden="true"><path d="M22 3 5 43"/></svg><em>또 끊고</em></p></div>' +
-        '<div class="ed-madi-a"><h2>괜찮아요<br>한 마디씩 끊어서 불러요</h2><p>한 마디만 잘 부르면 돼요</p></div></div></section>'
+        '<div class="ed-madi-a"><h2>괜찮아요<br>한 마디씩 끊어서 불러요</h2></div></div></section>'
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
