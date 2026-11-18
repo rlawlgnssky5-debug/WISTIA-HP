@@ -141,13 +141,13 @@
     },
     preparation() {
       return '<section data-svg-title="off" class="package-notices ed-preparation"><header class="ed-preparation-heading"><p>떨림은 덜고, 진심은 그대로</p><h2><span>위스티아에서</span><strong>함께 준비해요</strong></h2><p>내게 맞는 비율로<br>무대에 서세요</p></header><ol class="ed-preparation-list">' +
-        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['음원 작업은 골라서', '음정·박자 보정, 정밀 믹싱, 마스터링을 필요한 만큼 선택해요'], ['여유로운 녹음 시간', '50분, 1시간 30분, 2시간 30분 중에서 골라요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
+        [['구간별 녹음과 1:1 디렉팅', '처음부터 끝까지 한 번에 부르지 않아도 괜찮아요'], ['음원 작업은 골라서', '음정·박자 보정, 전문 믹싱, 마스터링을 필요한 만큼 선택해요'], ['여유로운 녹음 시간', '50분, 1시간 30분, 2시간 30분 중에서 골라요']].map(([title, copy], index) => '<li><span class="ed-preparation-number" aria-hidden="true">0' + (index + 1) + '</span><h3>' + title + '</h3></li>').join('') + '</ol></section>'
     },
     engineer() {
       return '<section class="ed-section ed-engineer" data-svg-title="off">' +
         '<div class="ed-broadcast-logo"><img src="assets/img/ar-detail/broadcast-singagain-on-light.webp" alt="싱어게인2" width="1600" height="533" loading="lazy" decoding="async"></div>' +
         heading('SOUND', '같은 소스여도, <b class="ed-title">사운드 완성도는 달라집니다</b>') +
-        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>음정·박자 보정은 타입과 옵션에 맞추고<br>정밀 믹싱·마스터링으로 마무리합니다</p></section>'
+        '<p class="ed-description"><strong>〈싱어게인2〉 방송 음악 작업 참여 엔지니어가</strong><br>음정·박자 보정은 타입과 옵션에 맞추고<br>전문 믹싱·마스터링으로 마무리합니다</p></section>'
     }
   }
   if (typeof module === 'object' && module.exports) module.exports = editorial

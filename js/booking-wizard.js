@@ -41,7 +41,7 @@
   // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
   const v=values(form),q=recording.quote(v),notes=String(v.specialNotes||'').trim().replace(/\r\n?/g,'\n')
   const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
-  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['정밀 믹싱','마스터링']:[])]
+  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['전문 믹싱','마스터링']:[])]
   const addedName={duet:'녹음 1인 추가',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
   const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
   const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
