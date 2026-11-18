@@ -287,4 +287,6 @@ html body #app#app #arcRecording .ed-madi-lyrics p + p em { transform:rotate(3de
 html body #app#app #arcRecording .ed-madi-a { margin-top:40px; border-top:1px solid #2b2024 !important; padding-top:16px; text-align:left; }
 html body #app#app #arcRecording .ed-madi-a h2 { margin:0 !important; font-size:23px !important; line-height:1.4 !important; font-weight:800 !important; letter-spacing:-.02em; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; text-align:left !important; }
 @media (max-width:350px) { html body #app#app #arcRecording .ed-madi-q { font-size:19px !important; } html body #app#app #arcRecording .ed-madi-lyrics span { font-size:23px !important; } html body #app#app #arcRecording .ed-madi-lyrics em { font-size:21px !important; } html body #app#app #arcRecording .ed-madi-lyrics svg { margin:0 5px; } }
+/* 2026-11-18 지훈: 녹음 시간 할인 옆 ‘N월 이벤트 중!’ 코랄 알약(달은 자동) */
+html body #app#app .rc-rate-was .rc-rate-event { display:inline-block; margin-right:6px; padding:2px 8px; border-radius:999px; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-style:normal; font-size:11px !important; font-weight:800 !important; line-height:1.5; vertical-align:1px; white-space:nowrap; }
 }
