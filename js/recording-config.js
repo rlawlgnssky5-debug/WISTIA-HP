@@ -13,7 +13,7 @@
  const keys=['firstUse','people','recordingMinutes',...options.map(o=>o[0]),'rush']
  const monthly=(date=prices.today())=>date.startsWith('2026-11')
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='B'?'90':tier==='C'||tier==='D'?'150':'50',tuning:tier?(tier==='A'?'0':'1'):'',recordingMix:tier?'1':'',recordingMaster:tier?'1':'',makingVideo:'',rush:'0',firstUse:'1'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:tier==='A'?'50':tier==='C'||tier==='D'?'150':'90'/* 2026-11-18 지훈: 처음 들어오면 1시간 30분이 기본 */,tuning:tier?(tier==='A'?'0':'1'):'',recordingMix:tier?'1':'',recordingMaster:tier?'1':'',makingVideo:'',rush:'0',firstUse:'1'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
