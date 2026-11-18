@@ -65,11 +65,15 @@
   el.textContent=money(from);el.classList.add('wf-rolling')
   let began;const tick=now=>{if(!el.isConnected){a.frame=0;return}began??=now;const t=Math.min(1,(now-began)/900);a.shown=t===1?total:Math.round((from+(total-from)*(1-Math.pow(1-t,2)))/1000)*1000;el.textContent=money(a.shown);if(t<1)a.frame=global.requestAnimationFrame(tick);else{a.frame=0;el.classList.remove('wf-rolling')}};a.frame=global.requestAnimationFrame(tick)
  }
- function updateAmount(button,total,state){
+ // 2026-11-18 지훈: 다음 단계 버튼 위에 항상 ‘총 N원 할인 중’ (할인이 0원이면 숨김)
+ function updateAmount(button,total,state,discount=0){
+  if(state.priceTarget===total&&state.saveTarget===discount)return
+  state.saveTarget=discount
+  button.setAttribute('aria-label','다음 단계 · '+money(total)+(discount?' · 총 '+money(discount)+' 할인 중':''))
+  let amount=button.querySelector('[data-wf-amount]');if(!amount){button.innerHTML='<small class="wf-next-save" data-wf-save aria-hidden="true" hidden></small><span class="wf-next-main" aria-hidden="true">다음 단계 · <span data-wf-amount></span></span>';amount=button.querySelector('[data-wf-amount]')}
+  const save=button.querySelector('[data-wf-save]');if(save){save.hidden=!discount;save.textContent=discount?'총 '+money(discount)+' 할인 중':''}
   if(state.priceTarget===total)return
-  state.priceTarget=total;button.setAttribute('aria-label','다음 단계 · '+money(total))
-  let amount=button.querySelector('[data-wf-amount]');if(!amount){button.innerHTML='다음 단계 · <span data-wf-amount aria-hidden="true"></span>';amount=button.querySelector('[data-wf-amount]')}
-  roll(state,'next',amount,total)
+  state.priceTarget=total;roll(state,'next',amount,total)
  }
  function update(form,{save=true,track=true}={}){
   const state=states.get(form);if(!state)return
@@ -89,7 +93,7 @@
   if(dateTouch&&state.lastDiscount!==undefined&&q.discount>state.lastDiscount&&!(q.v.firstVisit==='1'&&!state.lastFirst)&&!(q.v.yearEndCoupon==='1'&&!state.lastYearEnd)){global.WistiaPackages.celebrate(note)}
   state.lastDiscount=q.discount;state.lastFirst=q.v.firstVisit==='1';state.lastYearEnd=q.v.yearEndCoupon==='1'
   const discountList=form.querySelector('[data-wf-discounts]');if(discountList)discountList.innerHTML=(q.allDiscounts||q.discounts).map(d=>'<div><dt>'+esc(d.label)+'</dt><dd>−'+money(d.amount)+'</dd></div>').join('')
-  form.dataset.bookingMinutes=String(q.bookingMinutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state);if(track)trackPriceView(q)
+  form.dataset.bookingMinutes=String(q.bookingMinutes);updateAmount(form.querySelector('[data-wf-next]'),q.total,state,q.discount);if(track)trackPriceView(q)
   form.querySelector('[data-wf-review]').innerHTML=reviewHtml(form,q)
   form.dataset.wfCurrentStep=String(state.step);if(!form.dataset.wfTimeMode)timeMode(form,false);form.querySelectorAll('[data-wf-step]').forEach(s=>s.hidden=Number(s.dataset.wfStep)!==state.step)
   form.querySelector('[data-wf-step-label]').textContent=(state.step+1)+' / '+steps.length+'단계';form.querySelectorAll('[data-wf-progress]').forEach(li=>{const i=Number(li.dataset.wfProgress),active=i===state.step,done=i<state.step;li.classList.toggle('is-current',active);li.classList.toggle('is-complete',done);const button=li.querySelector('button');button.querySelector('span').innerHTML=done?icon('check'):String(i+1);state.maxStep=Math.max(state.maxStep||0,state.step);li.classList.toggle('is-reachable',i>state.step&&i<=state.maxStep);button.disabled=i>state.maxStep;if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});form.querySelector('[data-wf-next]').hidden=state.step===LAST;form.querySelector('[type="submit"]').hidden=state.step!==LAST
