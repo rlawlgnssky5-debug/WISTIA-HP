@@ -1425,6 +1425,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
  details=detailParts.innerHTML
  return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo" data-ar-product="'+key+'">'+
  intro+
+ ((key==='solo'||key==='duo')?WistiaEditorial.price():'')+
  '<div class="arc-reviews">'+((key==='solo'||key==='duo')?soloReviewGrid():mobileReviews)+'</div>'+
  '<div class="home-story" id="arcDetails">'+details+'</div>'+soloFooter(key)+
  ((key==='solo'||key==='duo')?'':'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/'+key+'">카카오톡 문의</a></section>')+'</div>'

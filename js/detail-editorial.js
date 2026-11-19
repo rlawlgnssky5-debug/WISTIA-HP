@@ -98,6 +98,24 @@
       if (!Number.isFinite(ratio)) return 50
       return ratio < 40 ? 30 : ratio < 60 ? 50 : ratio < 85 ? 70 : 100
     },
+    price() {
+      // 2026-11-19 지훈: 상세 후킹 — 녹음 2시간·같은 구성 기준 실제 판매가(솔로) 비교, 다른 녹음실은 이름 없이 A~D, 평균 점선 + 손글씨
+      const others = [['A', 350000], ['B', 280000], ['C', 240000], ['D', 190000]]
+      const ours = global.WistiaRecording ? global.WistiaRecording.startPrice() : 180000
+      const avg = others.reduce((sum, item) => sum + item[1], 0) / others.length
+      const max = Math.max(...others.map(item => item[1]), ours)
+      const man = value => (Math.round(value / 1000) / 10) + '만'
+      const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + (value / max * 100).toFixed(1) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
+      return '<section class="ed-section ed-price" id="arcPrice" data-svg-title="off">' +
+        '<h2 class="ed-price-hook">결혼 준비도 비싼데,<br>축가까지 비쌀 필요 있나요?</h2>' +
+        '<p class="ed-price-lead">웨딩 비수기인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong></p>' +
+        '<p class="ed-price-sub">가격 부담은 낮추고, 퀄리티는 높이고!<br>합리적인 가격으로 완성하는 나만의 축가</p>' +
+        '<div class="ed-price-chart"><span class="ed-price-tag">녹음 2시간 · 같은 구성 기준</span>' +
+        '<div class="ed-price-plot" role="img" aria-label="녹음 2시간, 보컬 보정·믹싱·마스터링 포함 솔로 가격 비교: 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
+        '<ol aria-hidden="true">' + others.map(item => bar(item[0], item[1], false)).join('') + bar('WISTIA', ours, true) + '</ol>' +
+        '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + (avg / max * 100).toFixed(1) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
+        '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p></div></section>'
+    },
     recording() {
       return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '이런 고민, 있으셨죠?') +
         // 2026-11-16 지훈 시안 5-B: 검색창 자동완성 모양(로즈 테두리, 줄마다 ‘축가’ 굵게)
