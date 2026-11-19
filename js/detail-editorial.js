@@ -107,9 +107,9 @@
       const man = value => (Math.round(value / 1000) / 10) + '만'
       const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + (value / max * 100).toFixed(1) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
       return '<section class="ed-section ed-price" id="arcPrice" data-svg-title="off">' +
-        '<h2 class="ed-price-hook">결혼 준비도 비싼데,<br>축가까지 비쌀 필요 있나요?</h2>' +
+        // 2026-11-19 지훈 시안 5: 작은 첫 줄 + 큰 질문 한 줄(Pretendard), 그래프는 흰 카드, ‘가격 부담은 낮추고…’ 줄은 뺐다
+        '<p class="ed-price-pre">결혼 준비도 비싼데,</p><h2 class="ed-price-hook">축가까지 비쌀 필요 있나요?</h2>' +
         '<p class="ed-price-lead">웨딩 비수기인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong></p>' +
-        '<p class="ed-price-sub">가격 부담은 낮추고, 퀄리티는 높이고!<br>합리적인 가격으로 완성하는 나만의 축가</p>' +
         '<div class="ed-price-chart"><span class="ed-price-tag">녹음 2시간 · 같은 구성 기준</span>' +
         '<div class="ed-price-plot" role="img" aria-label="녹음 2시간, 보컬 보정·믹싱·마스터링 포함 솔로 가격 비교: 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
         '<ol aria-hidden="true">' + others.map(item => bar(item[0], item[1], false)).join('') + bar('WISTIA', ours, true) + '</ol>' +

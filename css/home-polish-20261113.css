@@ -328,11 +328,11 @@ html body #app#app .rc-gift #rcFirstUse0:checked ~ .rc-gift-text small { color:#
 /* 2026-11-19 지훈: 상세 후킹 가격 비교(#arcPrice) — 명조 후킹 문구 + 솔로 막대 + 평균 점선 + 손글씨 */
 html body #app#app section#arcPrice#arcPrice::before { display:none !important; }
 html body #app#app section#arcPrice#arcPrice { background:#f7f1e8 !important; padding:52px 22px 46px !important; margin:0 !important; text-align:center; }
-html body #app#app #arcPrice .ed-price-hook { margin:0 !important; font-family:'Gowun Batang',serif !important; font-size:24px !important; font-weight:700 !important; line-height:1.45 !important; letter-spacing:-.02em; color:#2e1f24 !important; -webkit-text-fill-color:#2e1f24 !important; }
-html body #app#app #arcPrice .ed-price-lead { margin:18px 0 0 !important; font-size:16px !important; line-height:1.6 !important; color:#5b434a !important; -webkit-text-fill-color:#5b434a !important; }
+html body #app#app #arcPrice .ed-price-pre { margin:0 !important; font-size:17px !important; font-weight:500 !important; letter-spacing:-.03em; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+html body #app#app #arcPrice .ed-price-hook { margin:6px 0 0 !important; font-family:'Pretendard Variable',Pretendard,sans-serif !important; font-size:min(27px,6.7vw) !important; font-weight:900 !important; line-height:1.3 !important; letter-spacing:-.04em; white-space:nowrap; color:#2e1f24 !important; -webkit-text-fill-color:#2e1f24 !important; }
+html body #app#app #arcPrice .ed-price-lead { margin:18px 0 0 !important; font-size:15.5px !important; letter-spacing:-.03em; line-height:1.6 !important; color:#5b434a !important; -webkit-text-fill-color:#5b434a !important; }
 html body #app#app #arcPrice .ed-price-lead strong { font-size:19px !important; font-weight:800 !important; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
-html body #app#app #arcPrice .ed-price-sub { margin:14px 0 0 !important; font-size:14px !important; line-height:1.65 !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
-html body #app#app #arcPrice .ed-price-chart { margin:30px auto 0; max-width:420px; text-align:left; }
+html body #app#app #arcPrice .ed-price-chart { margin:30px auto 0; max-width:420px; text-align:left; background:#fff; border-radius:20px; padding:20px 16px 14px; box-shadow:0 10px 28px #6b354318; }
 html body #app#app #arcPrice .ed-price-tag { display:inline-block; padding:4px 10px; border:1px solid #c9a9b2; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; font-size:11.5px !important; font-weight:800 !important; letter-spacing:.06em; }
 html body #app#app #arcPrice .ed-price-plot { position:relative; height:200px; margin:40px 0 30px; }
 html body #app#app #arcPrice .ed-price-plot ol { list-style:none; margin:0 !important; padding:0 !important; height:100%; display:flex; align-items:flex-end; gap:8px; }
@@ -344,7 +344,8 @@ html body #app#app #arcPrice .ed-price-col.is-us i { background:#d9485f; }
 html body #app#app #arcPrice .ed-price-col.is-us b { font-size:14px !important; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
 html body #app#app #arcPrice .ed-price-col.is-us span { font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
 html body #app#app #arcPrice .ed-price-avg { position:absolute; left:-4px; right:-4px; height:0; border:0 !important; border-top:1.5px dashed #8b4a5e !important; pointer-events:none; }
-html body #app#app #arcPrice .ed-price-avg em { position:absolute; right:0; bottom:3px; padding:0 4px; background:#f7f1e8; font-style:normal; font-size:11px !important; font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
-html body #app#app #arcPrice .ed-price-note { margin:0 !important; text-align:right; font-family:'Nanum Pen Script',cursive !important; font-size:27px !important; line-height:1.2 !important; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
-@media (max-width:350px) { html body #app#app #arcPrice .ed-price-hook { font-size:21px !important; } html body #app#app #arcPrice .ed-price-lead strong { font-size:17px !important; } html body #app#app #arcPrice .ed-price-note { font-size:24px !important; } }
+html body #app#app #arcPrice .ed-price-avg em { position:absolute; right:0; bottom:3px; padding:0 4px; background:#fff; font-style:normal; font-size:11px !important; font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
+html body #app#app #arcPrice .ed-price-note { margin:0 !important; text-align:right; white-space:nowrap; font-family:'Nanum Pen Script',cursive !important; font-size:27px !important; line-height:1.2 !important; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
+html body #app#app #arcPrice .ed-price-pre { margin:0 !important; font-size:17px !important; font-weight:500 !important; letter-spacing:-.03em; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+html body #app#app #arcPrice .ed-price-hook { margin:6px 0 0 !important; font-family:'Pretendard Variable',Pretendard,sans-serif !important; font-size:min(27px,6.7vw) !important; font-weight:900 !important; line-height:1.3 !important; letter-spacing:-.04em; white-space:nowrap; color:#2e1f24 !important; -webkit-text-fill-color:#2e1f24 !important; }
 }
