@@ -931,7 +931,7 @@ function eventsDiscounts(){
 const PROPOSAL_MAKING=80000
 const PROPOSAL_SHORTER=40000
 function proposalPrice(){const r=window.WistiaRecording,list=(r?.list||240000)-PROPOSAL_SHORTER+PROPOSAL_MAKING,event=r?.eventAmount||40000,first=20000;return {list,first,event,label:r?.eventLabel?.()||'최저가 보상 이벤트',month:r?.eventMonth?.()||'',total:list-first-event,advance:10000}}
-function proposalInquiryHref(){return 'https://pf.kakao.com/_GbExjX/chat'}
+function proposalInquiryHref(){return '/event/solo?product=proposal'}
 function renderProposalPage(){
  const p=proposalPrice(),won=n=>n.toLocaleString('ko-KR')+'원',pct=Math.round((p.first+p.event)/p.list*100)
  const steps=[['인트로 글귀','마음을 여는 한 줄'],['인서트','가사를 직접 쓰는 손'],['우리 둘의 사진·영상','함께한 순간들'],['녹음 메이킹 1','마이크 앞, 떨리는 첫 마디'],['녹음 메이킹 2','진심을 담아 끝까지'],['전하는 편지','카메라를 보고 건네는 말']]
@@ -941,15 +941,10 @@ function renderProposalPage(){
  const film='<section class="ed-section pp-film" id="ppFilm" data-svg-title="off">'+WistiaEditorial.head('POINT 01','한 편의 영화처럼','이렇게 흘러가요')+'<ol class="pp-strip">'+steps.map(([t,d],i)=>'<li><img src="assets/img/proposal-film/step-0'+(i+1)+'.webp" alt="'+t+' 장면 예시" loading="lazy" decoding="async"><div><small>0'+(i+1)+'</small><b>'+t+'</b><span>'+d+'</span></div></li>').join('')+'</ol><p class="pp-note">구성은 1:1 맞춤으로, 원하시는 대로 맞춰 드려요</p></section>'
  const letter='<section class="ed-section pp-letter" id="ppLetter" data-svg-title="off">'+WistiaEditorial.head('POINT 03','노래로 다 못한 말은','마지막 편지로')+'<figure><img src="assets/img/proposal-film/step-06.webp" alt="카메라를 보고 손을 흔들며 편지를 전하는 장면" loading="lazy" decoding="async"></figure><p class="pp-note">카메라를 보고 직접 건네는 한마디로 필름을 마무리해요</p></section>'
  const ar='<section class="ed-section pp-ar" id="ppAr" data-svg-title="off">'+WistiaEditorial.head('POINT 04','나중에 결혼하실 때','축가용 AR 버전도 드려요!')+'<div class="pp-ar-cards"><div><i aria-hidden="true">💍</i><b>프로포즈 날</b><span>필름으로 고백</span></div><div><i aria-hidden="true">💒</i><b>결혼식 날</b><span>같은 노래로 AR 축가</span></div></div></section>'
- const row=(a,b,cls='')=>'<p class="pp-rc-row'+cls+'"><span>'+a+'</span><span>'+b+'</span></p>'
- const receipt='<section class="ed-section pp-receipt" id="ppPrice" data-svg-title="off"><header class="ed-heading" data-svg-title="off"><h2>가격 안내</h2></header><div class="pp-rc"><p class="pp-rc-title">WISTIA · 프로포즈 필름 영수증</p>'+
-  row('녹음 1시간 + 튜닝·믹싱·마스터링',won(p.list-PROPOSAL_MAKING))+row('촬영 30분 + 필름 편집',won(PROPOSAL_MAKING))+'<hr>'+
-  row('정가','<s>'+won(p.list)+'</s>',' is-muted')+row('첫 이용 할인','−'+won(p.first),' is-off')+row('✨ '+p.label,'−'+won(p.event),' is-off')+'<hr class="is-strong">'+
-  '<p class="pp-rc-total"><span>합계</span><strong>'+won(p.total)+'</strong></p><p class="pp-rc-advance">📅 녹음일이 한 달 이후면 사전 예약 −'+won(p.advance)+' → '+won(p.total-p.advance)+'</p></div></section>'
  const faqItems=[['준비해야 할 사진이 있나요?','두 분의 사진·영상과 넣고 싶은 문구를 상담 후 안내해 드려요'],['상대방 몰래 준비할 수 있나요?','네, 비공개로 진행하고 연락도 신청하신 분께만 드려요'],['현장에서 바로 틀 수 있나요?','바로 상영할 수 있는 영상 파일로 전달해요, 사용 날짜가 정해져 있다면 상담에서 먼저 맞춰요'],['노래를 잘 못해도 괜찮을까요?','한 마디씩 끊어서 디렉팅을 받으며 녹음하고, 음정·박자 보정으로 자연스럽게 다듬어요']]
- const faq='<section class="ed-section pp-faq" id="ppFaq" data-svg-title="off"><header class="ed-heading" data-svg-title="off"><h2>자주 묻는 질문</h2></header>'+faqItems.map(([q,a],i)=>'<details'+(i===0?' open':'')+'><summary>Q. '+q+'</summary><p>'+a+'</p></details>').join('')+'<a class="pp-cta" href="'+proposalInquiryHref()+'" target="_blank" rel="noopener">카카오톡으로 상담하기</a></section>'
+ const faq='<section class="ed-section pp-faq" id="ppFaq" data-svg-title="off"><header class="ed-heading" data-svg-title="off"><h2>자주 묻는 질문</h2></header>'+faqItems.map(([q,a],i)=>'<details'+(i===0?' open':'')+'><summary>Q. '+q+'</summary><p>'+a+'</p></details>').join('')+'<a class="pp-cta" href="'+proposalInquiryHref()+'">문의양식 작성하기</a></section>'
  const items=['반지만 주기엔 평범할까 걱정돼요','노래를 잘 못해도 괜찮을까요?','편지만으로는 부족한 것 같아요','들키지 않게 준비할 수 있을까요?']
- app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+receipt+faq+soloMapSection()+'</div>'+footer()
+ app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+faq+soloMapSection()+'</div>'+footer()
 }
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
@@ -1957,7 +1952,7 @@ async function copyConsultationAndShowChoice(text){
  showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카톡 채팅창에 붙여넣어 보내면 문의 끝</p>'+chat+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 길게 눌러 전체 복사한 뒤 카톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+chat+ok,'contact-ok-dialog')
  dialog.setAttribute('aria-label','문의 내용 복사 완료')
 }
-function navigationMenu(){const groups=[{label:'웨딩 축가',items:[['축가 AR 사전 녹음','/'],['프로포즈 · 답프로포즈','/proposal']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
+function navigationMenu(){const groups=[{label:'서비스',items:[['축가 AR 사전 녹음','/'],['프로포즈 · 답프로포즈','/proposal']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
@@ -2223,6 +2218,8 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  }
  if(legacyHomePath(routePath()))history.replaceState(history.state,'','/'+location.search)
  if(!isLiveRoute(routePath())){location.reload();return}
+ // 2026-11-20: 홈 전용 스타일(home-detail-glass·첫 화면 인라인)은 index.html에만 있다 — 다른 페이지에서 홈으로 올 때는 새로 불러온다(안 그러면 Point 제목이 44px로 깨짐)
+ if(routePath()==="/"&&!document.querySelector('link[href*="home-detail-glass"]')){location.reload();return}
  window.WistiaMotion?.destroy()
  inquiryObserver?.disconnect();inquiryObserver=null;document.body.classList.remove("inquiry-visible")
  const previousScrollY=preserveScroll?window.scrollY:0

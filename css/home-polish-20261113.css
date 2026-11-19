@@ -373,7 +373,6 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
   html body #app#app .pp-scope section#arcRecording#arcRecording { background:#f8e4e8 !important; }
   html body #app#app .pp-scope section#ppLetter { background:#f4d8de !important; }
   html body #app#app .pp-scope section#ppAr { background:#fff !important; }
-  html body #app#app .pp-scope section#ppPrice { background:#fdf6f6 !important; }
   html body #app#app .pp-scope section#ppFaq { background:#fbeef0 !important; }
   html body #app#app .pp-scope > section::before, html body #app#app .pp-scope > section::after { display:none !important; }
   html body #app#app .pp-scope > section > * { max-width:520px; margin-left:auto !important; margin-right:auto !important; }
@@ -409,20 +408,16 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
   html body #app#app .pp-ar-cards i { display:block; font-style:normal; font-size:28px !important; }
   html body #app#app .pp-ar-cards b { display:block; margin-top:4px; font-size:15px !important; font-weight:800; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
   html body #app#app .pp-ar-cards span { display:block; margin-top:3px; font-size:12.5px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
-  html body #app#app .pp-rc { padding:18px 18px 14px; border-radius:6px; background:#fff; box-shadow:0 8px 20px rgba(176,112,112,.15); }
-  html body #app#app .pp-rc-title { margin:0 0 10px !important; padding-bottom:10px; border-bottom:1px dashed #e8c5ce; text-align:center !important; font-size:12px !important; font-weight:800; letter-spacing:.06em; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
-  html body #app#app .pp-rc-row { display:flex; justify-content:space-between; gap:10px; margin:0 !important; padding:5px 0; font-size:14px !important; text-align:left !important; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
-  html body #app#app .pp-rc-row span:last-child { flex:none; }
-  html body #app#app .pp-rc-row.is-muted { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
-  html body #app#app .pp-rc-row.is-off { font-weight:700; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
-  html body #app#app .pp-rc hr { margin:8px 0 !important; border:0; border-top:1px dashed #e8c5ce; }
-  html body #app#app .pp-rc hr.is-strong { border-top:2px solid #2b2024; }
-  html body #app#app .pp-rc-total { display:flex; justify-content:space-between; align-items:baseline; margin:0 !important; font-weight:800; }
-  html body #app#app .pp-rc-total strong { font-size:26px !important; font-weight:900; color:#8c2340 !important; -webkit-text-fill-color:#8c2340 !important; }
-  html body #app#app .pp-rc-advance { margin:10px 0 0 !important; padding:9px 12px; border-radius:10px; background:#fbeef0; text-align:center !important; font-size:13px !important; font-weight:700; color:#8c2340 !important; -webkit-text-fill-color:#8c2340 !important; }
   html body #app#app .pp-faq details { margin:0 auto !important; padding:13px 2px; border-bottom:1px solid #ecd3da; text-align:left; }
   html body #app#app .pp-faq summary { cursor:pointer; list-style:none; font-size:15px !important; font-weight:700; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
   html body #app#app .pp-faq summary::-webkit-details-marker { display:none; }
   html body #app#app .pp-faq details p { margin:6px 0 0 !important; font-size:13.5px !important; line-height:1.6; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; text-align:left !important; }
   html body #app#app .pp-cta { display:flex !important; align-items:center; justify-content:center; min-height:52px; margin-top:26px !important; border-radius:999px; background:#7a3647; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:16px !important; font-weight:800; text-decoration:none; }
+}
+
+/* 2026-11-20: 홈 전용 glass CSS가 없는 페이지(프로포즈)에서 .mobile-ar-solo 제목 clamp(…cqw…)가 PC에서 44px로 커지는 오류 — 홈과 같은 값으로 고정 */
+@layer wistia-home-polish {
+  html body #app#app .pp-scope .ed-heading h2 > span { font-size:20px !important; line-height:29px !important; margin-bottom:4px !important; }
+  html body #app#app .pp-scope .ed-heading h2 { margin-bottom:6px !important; }
+  html body #app#app .pp-scope #arcWorries li span { line-height:1.45 !important; font-weight:600 !important; }
 }

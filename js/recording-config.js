@@ -26,7 +26,23 @@
   for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?['120','180'].includes(val):['0','1'].includes(val))v[key]=val}
   return v
  }
+ // 2026-11-20 지훈: 프로포즈 필름 — 녹음 1시간 + 촬영 30분(+영상 편집), 옵션 없음, 정가 280,000(축가 240,000 − 1시간 40,000 + 필름 80,000)
+ const proposalIncluded=[['recording','녹음 1시간'],['filming','촬영 30분'],['tuning','보컬 튜닝 · 전문 믹싱 · 마스터링'],['film','필름 편집']]
+ const proposalList=list-40000+80000
+ function proposalQuote(v,date){
+  const discounts=[{key:'first',label:'첫 이용 할인',amount:20000},{key:'monthly',label:eventLabel(date),amount:eventAmount}]
+  const advance=prices.advanceDiscount(v.bookingDate,date)
+  if(advance)discounts.push(advance)
+  const discount=discounts.reduce((sum,d)=>sum+d.amount,0)
+  // 2026-11-20 지훈: 프로포즈 문의 1단계는 녹음 시간(1시간 기본 / 2시간 +60,000)과 작업 기간(7일 / 3일 +30,000)만
+  const longer=v.recordingMinutes==='180',minutes=longer?120:60,options=[]
+  if(longer)options.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
+  if(v.rush==='1')options.push({key:'rush',label:'3일 이내 전달',price:30000})
+  const optionTotal=options.reduce((sum,o)=>sum+o.price,0)
+  return {v,minutes,recordingMinutes:minutes,filmingMinutes:30,making:false,bookingMinutes:minutes+30,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 30분 + 튜닝·믹싱·마스터링 + 필름 편집'}}
+ }
  function quote(v,date=prices.today()){
+  if(v.product==='proposal')return proposalQuote(v,date)
   const longer=v.recordingMinutes==='180', minutes=longer?180:baseMinutes, duet=v.people==='1'
   const selected=[]
   if(duet)selected.push({key:'duet',label:'2인 (듀엣곡)',price:duetFee})
@@ -59,13 +75,18 @@
   const pct=Math.round((list-startPrice())/list*100)
   return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card rc-price-e"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>올인원 패키지</b><del class="rc-shortcut-original">'+money(list)+'</del><strong class="rc-e-price">'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong><ul class="rc-e-incl"><li><i aria-hidden="true">🎙️</i>녹음 2시간</li><li><i aria-hidden="true">🎚️</i>보컬 튜닝</li><li><i aria-hidden="true">🎛️</i>전문 믹싱</li><li><i aria-hidden="true">💿</i>마스터링</li></ul></div></div>'
  }
+ function proposalEditor(v){
+  const hidden='<input type="hidden" name="product" value="proposal"><input type="hidden" name="firstUse" value="1"><input type="hidden" name="people" value="0">'
+  const duration=field('01','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>1시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>2시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
+  return '<div class="recording-config">'+hidden+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+duration+deliveryField(v).replace('<i>03</i>','<i>02</i>')+'</div>'
+ }
  function deliveryField(v){
   return field('03','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
  }
  function summary(q){
   const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
-  return '<div class="rc-receipt"><p class="rc-rcpt-brand">WISTIA · 내 축가 영수증</p><dl>'+
-   included.map(item=>line(item[1],'포함','is-included')).join('')+
+  return '<div class="rc-receipt"><p class="rc-rcpt-brand">WISTIA · '+(q.proposal?'프로포즈 필름 영수증':'내 축가 영수증')+'</p><dl>'+
+   (q.included||included).map(item=>line(item[1],'포함','is-included')).join('')+
    q.options.map(o=>Array.isArray(o)?{label:o[0],price:o[1]}:o).map(o=>line(o.label,'+'+money(o.price),'is-option')).join('')+
    line('정가','<s>'+money(q.list+q.optionTotal)+'</s>','is-list')+
    q.discounts.map(d=>line(d.key==='monthly'?'✨ '+d.label:d.label,'−'+money(d.amount),'is-discount')).join('')+
@@ -80,5 +101,5 @@
   }
   return params.toString()
  }
- global.WistiaRecording={keys,list,included,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,summary,query,firstVisit,preferences}
+ global.WistiaRecording={proposalEditor,keys,list,included,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,summary,query,firstVisit,preferences}
 })(window)
