@@ -54,8 +54,9 @@
     '</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
- function includedRow([key,label,copy,price,icon]){
-  return '<li class="rc-inc-item" data-rc-included="'+key+'"><span class="rc-inc-icon" aria-hidden="true">'+icon+'</span><span class="rc-inc-text"><strong>'+label+'</strong><small>'+copy+'</small></span><span class="rc-inc-price">'+money(price)+'</span></li>'
+ // 2026-11-19 지훈: 구성 항목마다 금액은 적지 않는다 — ‘포함’만, 금액은 정가 한 줄
+ function includedRow([key,label,copy,,icon]){
+  return '<li class="rc-inc-item" data-rc-included="'+key+'"><span class="rc-inc-icon" aria-hidden="true">'+icon+'</span><span class="rc-inc-text"><strong>'+label+'</strong><small>'+copy+'</small></span><span class="rc-inc-price">포함</span></li>'
  }
  // 2026-11-19 지훈: 순서는 01 인원 → 02 기본 구성 → 첫 이용 할인 → 03 녹음 시간 → 04 영상 → 05 작업 기간
  function editor(v,{delivery=true}={}){

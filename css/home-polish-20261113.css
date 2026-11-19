@@ -301,7 +301,7 @@ html body #app#app .rc-inc-icon { flex:0 0 auto; width:34px; height:34px; displa
 html body #app#app .rc-inc-text { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
 html body #app#app .rc-inc-text strong { font-size:15px !important; font-weight:800 !important; color:#3a2a2f !important; }
 html body #app#app .rc-inc-text small { font-size:12px !important; color:#8f777e !important; line-height:1.45; }
-html body #app#app .rc-inc-price { flex:0 0 auto; font-size:14px !important; font-weight:700 !important; color:#5b434a !important; font-variant-numeric:tabular-nums; }
+html body #app#app .rc-inc-price { flex:0 0 auto; padding:3px 10px; border-radius:999px; background:#fbeef1; font-size:12px !important; font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
 html body #app#app .rc-inc-total { display:flex; justify-content:space-between; align-items:baseline; margin:12px 2px 0 !important; font-size:14px !important; color:#5b434a !important; }
 html body #app#app .rc-inc-total b { font-size:18px !important; font-weight:800 !important; color:#3a2a2f !important; }
 html body #app#app .rc-shortcuts-one { display:block !important; }
