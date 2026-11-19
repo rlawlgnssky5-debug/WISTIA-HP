@@ -270,13 +270,6 @@ html body #app#app #arcKey .ed-rcpt-cap { margin:44px 0 0 !important; padding:0 
 /* 2026-11-18 지훈: POINT 01 가사에 끊는 표시(디자인 1 + 문구 1) — 종이색 바탕, 가사 명조, 빨간 펜 사선과 손글씨 */
 html body #app#app #arcRecording { background:#f7f1e8 !important; }
 html body #app#app #arcRecording .ed-madi { max-width:340px; margin:0 auto; text-align:left; }
-html body #app#app #arcRecording .ed-madi-lyrics { margin-top:26px; }
-html body #app#app #arcRecording .ed-madi-lyrics p { display:flex; align-items:center; margin:22px 0 0 !important; white-space:nowrap; }
-html body #app#app #arcRecording .ed-madi-lyrics span { font-family:'Gowun Batang',serif !important; font-weight:700; font-size:27px !important; letter-spacing:-.02em; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
-html body #app#app #arcRecording .ed-madi-lyrics svg { flex:0 0 26px; width:26px; height:46px; margin:0 8px; fill:none; stroke:#d9485f; stroke-width:4.5; stroke-linecap:round; }
-html body #app#app #arcRecording .ed-madi-lyrics em { font-style:normal; font-family:'Nanum Pen Script',cursive !important; font-size:24px !important; line-height:1; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; transform:rotate(-4deg); }
-html body #app#app #arcRecording .ed-madi-lyrics p + p em { transform:rotate(3deg); }
-@media (max-width:350px) { html body #app#app #arcRecording .ed-madi-lyrics span { font-size:23px !important; } html body #app#app #arcRecording .ed-madi-lyrics em { font-size:21px !important; } html body #app#app #arcRecording .ed-madi-lyrics svg { margin:0 5px; } }
 /* 2026-11-18 지훈: 녹음 시간 할인 옆 ‘N월 이벤트 중!’ 코랄 알약(달은 자동) */
 html body #app#app .rc-rate-was .rc-rate-event { display:inline-block; margin-right:6px; padding:2px 8px; border-radius:999px; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-style:normal; font-size:11px !important; font-weight:800 !important; line-height:1.5; vertical-align:1px; white-space:nowrap; }
 /* 2026-11-18 지훈: 다음 단계 버튼 위 ‘총 N원 할인 중’ */
@@ -390,4 +383,23 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
 @layer wistia-home-polish {
   html body #app#app .rc-shortcuts-one .rc-price-card > b { font-size:18px !important; font-weight:800 !important; margin:8px 0 2px !important; }
   html body #app#app .rc-shortcuts-one .rc-shortcut-incl { display:block; font-size:13px !important; line-height:1.4; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; margin:0 0 8px; white-space:nowrap; }
+}
+
+/* 2026-11-19 지훈: Point 1 테이크 골라 붙이기 */
+@layer wistia-home-polish {
+  html body #app#app #arcRecording .ed-comp { background:rgba(255,255,255,.55); border-radius:18px; padding:14px 14px 16px; }
+  html body #app#app #arcRecording .ed-comp-head, html body #app#app #arcRecording .ed-comp-row { display:grid; grid-template-columns:30px 1fr 1fr 1fr; gap:5px; align-items:center; }
+  html body #app#app #arcRecording .ed-comp-head b { text-align:center; font-family:'Gowun Batang',serif !important; font-size:14px !important; font-weight:700; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app #arcRecording .ed-comp-row { margin-top:6px; }
+  html body #app#app #arcRecording .ed-comp-row > span { font-size:11px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app #arcRecording .ed-comp-row i { display:block; height:34px; padding:3px 4px; border-radius:8px; background:rgba(255,255,255,.5); }
+  html body #app#app #arcRecording .ed-comp-row i svg { display:block; width:100%; height:100%; fill:#d8b8c0; }
+  html body #app#app #arcRecording .ed-comp-row i.is-best { background:#fff; box-shadow:0 0 0 2px #d9485f, 0 4px 10px rgba(217,72,95,.18); }
+  html body #app#app #arcRecording .ed-comp-row i.is-best svg { fill:#d9485f; }
+  html body #app#app #arcRecording .ed-comp-final { grid-template-columns:30px 1fr; margin-top:12px; }
+  html body #app#app #arcRecording .ed-comp-final > span { font-weight:800; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
+  html body #app#app #arcRecording .ed-comp-final i { height:40px; background:#d9485f; padding:5px 8px; }
+  html body #app#app #arcRecording .ed-comp-final i svg { fill:#fff; }
+  html body #app#app #arcRecording .ed-comp-note { margin:16px 0 0 !important; text-align:center !important; font-size:15px !important; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app #arcRecording .ed-comp-note b { color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
 }
