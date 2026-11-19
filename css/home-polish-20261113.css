@@ -149,7 +149,6 @@ html body #app#app .wistia-wizard .recording-config fieldset { background:#fff !
 html body #app#app .wistia-wizard .recording-config legend { float:left; width:100%; background:none !important; padding:0 0 12px !important; font-size:16px !important; font-weight:800 !important; color:#2e1f24 !important; box-shadow:none !important; border:0 !important; }
 html body #app#app .wistia-wizard .recording-config legend i { display:inline-grid !important; place-items:center; width:24px; height:24px; border-radius:50% !important; background:#9d4e62 !important; color:#fff !important; font-style:normal !important; font-size:11px !important; margin-right:8px !important; padding:0 !important; }
 html body #app#app .wistia-wizard .recording-config fieldset > :not(legend) { clear:both; }
-html body #app#app .wistia-wizard .recording-config .rc-summary { background:#fff !important; border-radius:20px !important; box-shadow:0 6px 18px #6b354312 !important; border:0 !important; }
 @media (max-width:360px) { html body #app .ed-making-benefits li { font-size:13px !important; padding-inline:12px !important; letter-spacing:-.02em !important; white-space:nowrap !important; } }
 /* 2026-11-15 지훈: POINT 05 유튜브 영상 카드 느낌 */
 html body #app #arcMaking .ed-yt-player { aspect-ratio:16/9 !important; position:relative !important; margin:0 !important; border-radius:16px !important; overflow:hidden !important; background:#111 !important; box-shadow:0 12px 26px #4a2a3326 !important; }
@@ -295,17 +294,25 @@ html body #app#app .wistia-wizard [data-wf-next] .wf-next-main { display:block; 
 /* 2026-11-18 지훈: 오시는 길 지도 버튼 아래 ‘네이버 마이플레이스 등록 중’ 안내 */
 html body #app#app .naver-pending { margin:10px 0 0 !important; padding:9px 12px !important; border-radius:10px; background:#fdf0f2 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; font-size:12.5px !important; font-weight:600 !important; line-height:1.5 !important; text-align:left; width:100%; box-sizing:border-box; }
 /* 2026-11-19 지훈: 단일 상품 — 문의 01 기본 구성(포함 항목 목록 + 정가), 히어로 가격 카드 한 장 */
-html body #app#app .rc-included { list-style:none; margin:4px 0 0 !important; padding:0 !important; display:flex; flex-direction:column; gap:2px; }
-html body #app#app .rc-inc-item { display:flex; align-items:center; gap:12px; padding:12px 2px !important; border-bottom:1px dashed #ead9de; }
-html body #app#app .rc-inc-icon { flex:0 0 auto; width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#fbeef1; font-size:16px; }
-html body #app#app .rc-inc-text { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
-html body #app#app .rc-inc-text strong { font-size:15px !important; font-weight:800 !important; color:#3a2a2f !important; }
-html body #app#app .rc-inc-text small { font-size:12px !important; color:#8f777e !important; line-height:1.45; }
-html body #app#app .rc-inc-price { flex:0 0 auto; padding:3px 10px; border-radius:999px; background:#fbeef1; font-size:12px !important; font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
-html body #app#app .rc-inc-total { display:flex; justify-content:space-between; align-items:baseline; margin:12px 2px 0 !important; font-size:14px !important; color:#5b434a !important; }
-html body #app#app .rc-inc-total b { font-size:18px !important; font-weight:800 !important; color:#3a2a2f !important; }
 html body #app#app .rc-shortcuts-one { display:block !important; }
 html body #app#app .rc-shortcuts-one .rc-price-card { width:100% !important; max-width:none !important; text-align:left; padding:16px 18px !important; }
 html body #app#app .rc-shortcuts-one .rc-price-card > b { display:block; font-size:15px !important; line-height:1.4; margin:8px 0 6px; }
 html body #app#app .rc-shortcuts-one .rc-shortcut-prices { justify-content:flex-start !important; }
+/* 2026-11-19 지훈: 문의 1단계 시안 2 — 첫 이용 할인 바로 아래 실시간 영수증 */
+html body #app#app .wistia-wizard .rc-receipt-slot { margin:12px 0 !important; }
+html body #app#app .rc-receipt { position:relative; background:#fff !important; border-radius:8px !important; padding:18px 18px 16px !important; box-shadow:0 10px 28px #6b354322 !important; }
+html body #app#app .rc-receipt::after { content:''; position:absolute; left:0; right:0; bottom:-7px; height:8px; background:radial-gradient(circle at 6px 0, transparent 5px, #fff 5.5px) 0 0/12px 8px repeat-x; }
+html body #app#app .rc-rcpt-brand { margin:0 0 10px !important; text-align:center; font-size:12px !important; font-weight:800 !important; letter-spacing:.16em; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
+html body #app#app .rc-receipt dl { margin:0 !important; padding:0 !important; }
+html body #app#app .rc-rcpt-line { display:flex; justify-content:space-between; gap:10px; padding:5px 0 !important; margin:0 !important; font-size:13.5px !important; border:0 !important; background:none !important; }
+html body #app#app .rc-rcpt-line dt, html body #app#app .rc-rcpt-line dd { margin:0 !important; font-size:13.5px !important; font-weight:500 !important; color:#3a2a2f !important; -webkit-text-fill-color:#3a2a2f !important; }
+html body #app#app .rc-rcpt-line.is-included { border-bottom:1px dashed #ead9de !important; }
+html body #app#app .rc-rcpt-line.is-included dd { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+html body #app#app .rc-rcpt-line.is-option { border-bottom:1px dashed #ead9de !important; }
+html body #app#app .rc-rcpt-line.is-option dd { font-weight:700 !important; }
+html body #app#app .rc-rcpt-line.is-list { padding-top:9px !important; }
+html body #app#app .rc-rcpt-line.is-list dd s { color:#8f777e; -webkit-text-fill-color:#8f777e; }
+html body #app#app .rc-rcpt-line.is-discount dt, html body #app#app .rc-rcpt-line.is-discount dd { color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
+html body #app#app .rc-rcpt-total { display:flex; justify-content:space-between; align-items:baseline; margin:8px 0 0 !important; padding-top:9px !important; border-top:1.5px solid #3a2a2f; font-size:15px !important; font-weight:800 !important; color:#3a2a2f !important; }
+html body #app#app .rc-rcpt-total strong { font-size:23px !important; font-weight:800 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; }
 }

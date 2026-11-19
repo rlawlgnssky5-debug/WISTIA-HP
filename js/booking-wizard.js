@@ -14,7 +14,7 @@
  function render(key){
   const selected=recording.selection(new URLSearchParams(global.location.search),key==='duo')
   const sections=[
-   recording.editor(selected)+'<div data-rc-summary></div>',
+   recording.editor(selected),
    '<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>2시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
    '<label class="wf-field wf-notes-field">특이사항 (선택)<textarea name="specialNotes" rows="3" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을&#10;편하게 적어 주세요"></textarea></label><div class="wf-review" data-wf-review></div><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p>'
   ]

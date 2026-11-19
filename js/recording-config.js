@@ -55,17 +55,13 @@
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
  // 2026-11-19 지훈: 구성 항목마다 금액은 적지 않는다 — ‘포함’만, 금액은 정가 한 줄
- function includedRow([key,label,copy,,icon]){
-  return '<li class="rc-inc-item" data-rc-included="'+key+'"><span class="rc-inc-icon" aria-hidden="true">'+icon+'</span><span class="rc-inc-text"><strong>'+label+'</strong><small>'+copy+'</small></span><span class="rc-inc-price">포함</span></li>'
- }
- // 2026-11-19 지훈: 순서는 01 인원 → 02 기본 구성 → 첫 이용 할인 → 03 녹음 시간 → 04 영상 → 05 작업 기간
+ // 2026-11-19 지훈: 시안 2 — 맨 위 첫 이용 할인 → 실시간 영수증(기본 구성 포함·옵션·할인·합계) → 01 인원 → 02 녹음 시간 → 03 영상 → 04 작업 기간
  function editor(v,{delivery=true}={}){
   const first='<div class="rc-first"><div class="rc-work" data-rc-work="firstUse"><div><strong>첫 이용 할인</strong> <small>위스티아가 처음이라면 켜 주세요</small><small class="rc-first-amount">−20,000원</small></div><div class="rc-toggle" role="group" aria-label="첫 이용 할인">'+radio('firstUse','0',v.firstUse,'필요 없음')+radio('firstUse','1',v.firstUse,'필요')+'</div></div></div>'
-  const base=field('02','기본 구성 <small>모두 포함</small>','<ul class="rc-included">'+included.map(includedRow).join('')+'</ul><p class="rc-inc-total"><span>정가</span><b>'+money(list)+'</b></p>')
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
-  const duration=field('03','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
-  const making=field('04','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
-  return '<div class="recording-config">'+people+base+first+duration+making+(delivery?deliveryField(v):'')+'</div>'
+  const duration=field('02','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
+  const making=field('03','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
+  return '<div class="recording-config">'+first+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+people+duration+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
@@ -73,11 +69,16 @@
   return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링</b><div class="rc-shortcut-prices"><del class="rc-shortcut-original">'+money(list)+'</del><span class="rc-shortcut-arrow" aria-hidden="true">›</span><strong>'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></div></div></div>'
  }
  function deliveryField(v){
-  return field('05','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
+  return field('04','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
  }
  function summary(q){
-  const row=(label,value,cls)=>'<div class="'+cls+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
-  return '<dl class="rc-summary">'+row('선택한 구성',money(q.list+q.optionTotal),'rc-sum-list')+q.discounts.map(d=>row(d.key==='monthly'?'<span class="rc-sum-event">✨ '+d.label+'</span>':d.label,'−'+money(d.amount),'rc-sum-discount'+(d.key==='monthly'?' is-event':''))).join('')+row('최종 금액','<strong data-rc-total>'+money(q.total)+'</strong>','rc-sum-total')+'</dl>'
+  const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
+  return '<div class="rc-receipt"><p class="rc-rcpt-brand">WISTIA · 내 축가 영수증</p><dl>'+
+   included.map(item=>line(item[1],'포함','is-included')).join('')+
+   q.options.map(o=>Array.isArray(o)?{label:o[0],price:o[1]}:o).map(o=>line(o.label,'+'+money(o.price),'is-option')).join('')+
+   line('정가','<s>'+money(q.list+q.optionTotal)+'</s>','is-list')+
+   q.discounts.map(d=>line(d.key==='monthly'?'✨ '+d.label:d.label,'−'+money(d.amount),'is-discount')).join('')+
+   '</dl><p class="rc-rcpt-total"><span>합계</span><strong data-rc-total>'+money(q.total)+'</strong></p></div>'
  }
  function firstVisit(){return prices.readCouponClaims().firstVisit!==false}
  function preferences(form){return Object.fromEntries(new FormData(form))}

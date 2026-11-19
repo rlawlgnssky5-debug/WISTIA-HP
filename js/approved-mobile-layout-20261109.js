@@ -38,7 +38,7 @@
         if(e.namespaceURI?.includes('svg')||!Array.from(e.childNodes).some(n=>n.nodeType===3&&n.textContent.trim()))continue;
         const s=getComputedStyle(e);if(s.display==='none')continue;
         const size=parseFloat(s.fontSize);if(!Number.isFinite(size))continue;
-        if(e.closest('.package-cards,.package-selected-cheaper,.type-poster-standard,.wf-location-bar,.ed-hero-overview h1,.ed-yt-nums,.ed-yt-gear,.rc-toggle,.ed-rev,.ed-madi,.ed-rcpt-wrap,.naver-pending,.rc-included,.rc-inc-total,.rc-shortcuts-one'))continue;
+        if(e.closest('.package-cards,.package-selected-cheaper,.type-poster-standard,.wf-location-bar,.ed-hero-overview h1,.ed-yt-nums,.ed-yt-gear,.rc-toggle,.ed-rev,.ed-madi,.ed-rcpt-wrap,.naver-pending,.rc-receipt,.rc-shortcuts-one'))continue;
         const clamped=Math.max(e.closest('.ed-event-discount')?10:11,Math.min(20,size));
         if(Math.abs(size-clamped)>.01)e.style.setProperty('font-size',clamped+'px','important');
       }
