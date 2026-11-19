@@ -903,13 +903,7 @@ html body #app#app#app#app#app#app#app .package-price-lines>:is(.is-pkg,.is-coup
 html body #app#app#app#app#app#app#app .package-price-lines dt .price-down-pill{font-size:.78em!important;padding:2px 2px!important;min-width:0!important;white-space:nowrap!important}
 html body #app#app#app#app#app#app#app .package-price-lines .price-line-main dd{font-size:clamp(10.5px,4.2cqw,14px)!important;justify-self:end!important;text-align:right!important}
 html body #app#app#app#app#app#app#app .package-price-lines>.is-best .price-line-main dd{font-size:clamp(10.5px,4.6cqw,16px)!important}
-html body #app#app#app#app#app#app#app #arcProcess .package-process-list li{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;column-gap:8px!important;row-gap:6px!important;align-items:baseline!important;padding:0!important}
-html body #app#app#app#app#app#app#app #arcProcess .package-process-list li::before{position:static!important;grid-column:1!important;grid-row:1!important;align-self:baseline!important;width:auto!important;margin:0!important;padding:0!important;transform:none!important;font-size:26px!important;line-height:1!important;text-align:left!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important}
-html body #app#app#app#app#app#app#app #arcProcess .package-process-list li>strong{grid-column:2!important;grid-row:1!important;align-self:baseline!important;margin:0!important}
-html body #app#app#app#app#app#app#app #arcProcess .package-process-list li>p{grid-column:2!important;grid-row:2!important;margin:0!important;min-width:0!important;word-break:keep-all!important;text-wrap:pretty!important}
 html body #app#app#app#app#app#app#app #arcProcess .process-keep{white-space:nowrap!important;word-break:keep-all!important}
-@media(max-width:360px){
-}
 }
 @layer wistia-site-fixes{
 /* FAQ callout cards: more air around the title and between accordion rows on phones */

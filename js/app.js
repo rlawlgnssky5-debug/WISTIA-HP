@@ -1339,7 +1339,6 @@ function optionExplainSection(){
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달<br>3일 이내 전달은 +30,000원</span></li><li><strong>녹음 시간</strong><span>2시간 기본 · 1시간 추가 +60,000원</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','음정·박자 보정·전문 믹싱·마스터링까지 모두 진행해요'],['검수·전달','녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 // Keep the home controls styled when client-side navigation starts on another page.
 function ensureHomeControlStyles(){
  if(document.getElementById('wistia-home-control-styles'))return
@@ -1398,7 +1397,7 @@ details=details.replace(/<section class="arc-point arc-point-key"[\s\S]*?<\/sect
   details=details.replace(/<section class="arc-section arc-lyrics">[\s\S]*?<\/section>/,'')
   details=details.replace(/<div class="arc-advantages">[\s\S]*?<div class="arc-engineer">/,'<div class="arc-engineer">')
   details=details.replace(/<div class="arc-engineer">[\s\S]*?<section class="arc-section arc-process"/,'<section class="arc-section arc-process"')
-  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,packageProcess())
+  details=details.replace(/<section class="arc-section arc-process"[\s\S]*?<\/section>/,'')
   details=details.replace(/<section class="arc-section arc-faq"[\s\S]*?<\/section>/,soloChatFaq())
   details=details.replace(/<section class="arc-section arc-notices">[\s\S]*?<\/section>/,soloNoticeAndMap().replace(/<section class="arc-section arc-notices solo-notice">[\s\S]*?<\/section>/,''))
   details=details.replace(/(?:<div class="solo-footer-clean">)?<footer class="footer shell">[\s\S]*?<\/footer>(?:<\/div>)?/,'')

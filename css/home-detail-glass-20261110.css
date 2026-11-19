@@ -78,16 +78,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcDetails .ed-heading { padding: 0 !important; margin: 0 0 24px !important; text-align: center !important; }
 
-/* ---------- 3. 리퀴드 글래스 카드 ---------- */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-player,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-panel,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq details,
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .home-map-inset {
+html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .arc-reviews .ed-review-card,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcWorries li,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcRecording .ed-photo,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcKey .hg-key-card,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcTuning .bap-player,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-panel,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq details,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-map .home-map-inset {
   background: var(--hg-glass) !important;
   border: var(--hg-border) !important;
   border-radius: var(--hg-radius) !important;
@@ -161,12 +152,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-buttons { gap: 8px !important; padding: 0 !important; margin: 0 !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-ratio { border-radius: 14px !important; }
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #soloPoint04 .solo-p4-hint { font-size: 13px !important; margin: 14px 0 0 !important; text-align: center !important; }
-
-/* 과정 */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list { gap: 12px !important; padding: 0 !important; margin: 0 !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li { padding: 16px 14px !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li strong { font-size: 15px !important; font-weight: 700 !important; color: var(--hg-ink) !important; }
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcProcess .package-process-list li p { font-size: 13px !important; line-height: 1.55 !important; color: var(--hg-muted) !important; }
 
 /* FAQ */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope #arcFaq .solo-faq-list { padding: 0 !important; margin: 0 !important; display: grid !important; gap: 10px !important; }

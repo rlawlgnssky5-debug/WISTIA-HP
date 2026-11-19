@@ -2,15 +2,15 @@
 (function (global) {
   'use strict'
   // 2026-11-19 지훈 시안 4: POINT 표시는 전부 손글씨 ‘Point 1.’ 가운데 정렬 (POINT 01~06 같은 모양)
-  // 2026-11-19 지훈: Point 1 — 가사로: 마디마다 끊어서 잘될 때까지 반복 녹음 → 이어 붙여 완성 음원
+  // 2026-11-19 지훈: Point 1 시안 2 — 가사마다 디렉터 한마디로 잘될 때까지 반복 → 이어 붙여 완성 음원
   const compTakes = () => {
-    const part = (lyric, fails, best) => '<div class="ed-comp-part"><p class="ed-comp-lyric">' + lyric + '</p><p class="ed-comp-takes">' +
-      Array.from({ length: fails }, (_, i) => '<s>take ' + (i + 1) + '</s>').join('') + '<b>take ' + best + ' OK</b></p></div>'
-    return '<div class="ed-comp" role="img" aria-label="한 마디씩 끊어서 잘될 때까지 반복 녹음한 뒤 이어 붙여 완성 음원을 만드는 예시">' +
-      part('사랑해 너를 사랑해', 2, 3) + part('눈물 나도록 사랑해', 4, 5) +
-      '<p class="ed-comp-join">잘된 마디만 이어 붙이면</p>' +
-      '<div class="ed-comp-final"><span>완성 음원 ♪</span><p>사랑해 너를 사랑해<br>눈물 나도록 사랑해</p></div></div>' +
-      '<p class="ed-comp-note">한 마디씩 끊어서 <b>잘될 때까지</b> 반복 녹음해요</p>'
+    const part = (lyric, talks) => '<div class="ed-comp-part"><p class="ed-comp-lyric">' + lyric + '</p><p class="ed-comp-talk">' +
+      talks.map((t, i) => '<span' + (i === talks.length - 1 ? ' class="is-ok"' : '') + '>' + t + '</span>').join('') + '</p></div>'
+    return '<div class="ed-comp" role="img" aria-label="가사를 한 마디씩 끊어서 디렉팅을 받으며 잘될 때까지 반복 녹음한 뒤 이어 붙여 완성 음원을 만드는 예시">' +
+      part('사랑해 너를 사랑해', ['한 번 더 갈게요', '조금만 부드럽게', '좋아요! OK']) +
+      part('눈물 나도록 사랑해', ['다시 한 번', '숨 쉬고', '거의 왔어요', '한 번만 더', '완벽해요! OK']) +
+      '<p class="ed-comp-join">잘될 때까지 디렉팅하며 반복 ↓</p>' +
+      '<div class="ed-comp-final"><span>완성 음원 ♪</span><p>사랑해 너를 사랑해<br>눈물 나도록 사랑해</p></div></div>'
   }
   const pointLabel = point => '<span class="ed-point ed-point-hand" aria-label="' + point + '">Point ' + Number(point.replace(/\D/g, '')) + '.</span>'
   const heading = (eyebrow, title, copy = '') => {

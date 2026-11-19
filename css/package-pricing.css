@@ -68,8 +68,6 @@
 .package-brand-summary>p{font-size:14px!important;line-height:1.7!important}
 .package-selection-total{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:center!important;font-size:14px!important;margin:18px 0 0!important}
 .package-selection-total strong{font-size:22px!important;color:#a65a6c!important}
-.package-process-list{padding-left:20px!important;display:grid!important;gap:18px!important;font-size:14px!important;line-height:1.7!important}
-.package-process-list p{margin:4px 0 0!important}
 #app .package-intro{padding:0!important;display:block!important}
 #app .package-intro .mas-gallery{position:relative!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;aspect-ratio:auto!important}
 #app .package-intro .mas-gallery-viewport{width:100%!important;height:auto!important;aspect-ratio:780/900!important;min-height:0!important}
@@ -78,7 +76,7 @@
 .package-brand-summary .mas-event-content{position:static!important;width:100%!important;box-sizing:border-box!important}
 
 .package-section,.package-information,.package-notices{margin:0!important;max-width:none!important;line-height:1.7!important;text-align:left!important}
-.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul,.package-process-list{width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
+.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul {width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
 .package-card-name,.package-card-price,.package-card-features,.package-card-saving,.package-section h2,.package-section h3,.package-information h2,.package-notices h2{text-align:left!important}
 .package-card-features>span{width:100%!important;max-width:none!important;text-align:left!important}
 .package-inquiry-link{position:static!important;width:100%!important;box-sizing:border-box!important;text-align:center!important;padding:12px!important}

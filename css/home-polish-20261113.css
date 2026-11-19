@@ -209,12 +209,9 @@ html body #app#app #arcWorries#arcWorries .ed-worry-search li b { color:#2e1f24 
 html body #app #arcMaking .ed-yt-play { display:none !important; }
 /* 2026-11-16 스위치 라벨 글자가 보이던 오류: 글자는 항상 숨김 */
 html body #app#app .rc-toggle label { font-size:0 !important; color:transparent !important; -webkit-text-fill-color:transparent !important; text-shadow:none !important; }
-/* 2026-11-16 지훈: 홈에 남아 있던 글래스·클레이(안쪽 빛·비스듬한 그라데이션)를 평평한 카드로 통일 */
-html body #app#app#app .ed-review-card, html body #app#app#app .ed-review-arrow, html body #app#app#app .ed-review-thumb, html body #app#app#app .ed-photo, html body #app#app#app .bap-player, html body #app#app#app .bap-tabs, html body #app#app#app .solo-p4-panel, html body #app#app#app .solo-p4-ratio, html body #app#app#app .hg-key-card, html body #app#app#app .ed-map-art, html body #app#app#app #arcProcess .package-process-list li, html body #app#app#app #arcFaq details { box-shadow:0 6px 18px #6b354312 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+html body #app#app#app .ed-review-card,html body #app#app#app .ed-review-arrow,html body #app#app#app .ed-review-thumb,html body #app#app#app .ed-photo,html body #app#app#app .bap-player,html body #app#app#app .bap-tabs,html body #app#app#app .solo-p4-panel,html body #app#app#app .solo-p4-ratio,html body #app#app#app .hg-key-card,html body #app#app#app .ed-map-art,html body #app#app#app #arcFaq details { box-shadow:0 6px 18px #6b354312 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
 html body #app#app#app .bap-tabs, html body #app#app#app .solo-p4-ratio, html body #app#app#app .ed-map-art { background:#fff !important; border:1px solid #f0e2e6 !important; }
 html body #app#app#app .solo-p4-ratio.is-on { background:#9d4e62 !important; border-color:#9d4e62 !important; color:#fff !important; }
-html body #app#app#app #arcProcess .package-process-list li::before { background:#f6e3e8 !important; box-shadow:none !important; }
-html body #app#app#app #arcProcess .package-process-list li::after { background:none !important; box-shadow:none !important; }
 /* 2026-11-16 지훈: 다음 단계 말풍선 — 할인 중이면 코랄 알약(시안 2), 금액은 크림색 */
 html body #app#app .wf-nav [data-wf-next-hint].is-discount { padding:7px 14px !important; border:0 !important; border-radius:999px !important; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:13px !important; font-weight:700 !important; white-space:nowrap !important; box-shadow:0 4px 12px #e2677f55 !important; }
 html body #app#app .wf-nav [data-wf-next-hint].is-discount b { color:#fff3c4 !important; -webkit-text-fill-color:#fff3c4 !important; font-weight:800 !important; }
@@ -330,7 +327,6 @@ html body #app#app section#arcTuning#arcTuning { background:#fdf6f6 !important; 
 html body #app#app section#soloPoint04#soloPoint04 { background:#fbeef0 !important; }
 html body #app#app section#arcMaking#arcMaking { background:#f8e4e8 !important; }
 html body #app#app section#arcRevision#arcRevision { background:#f4d8de !important; }
-html body #app#app section#arcProcess#arcProcess { background:#ffffff !important; }
 html body #app#app section#arcFaq#arcFaq { background:#fbeef0 !important; }
 html body #app#app .mobile-ar-solo section.solo-map { background:#ffffff !important; }
 /* 2026-11-19 지훈 시안 C: 오시는 길 지도 버튼 아래 — 위 칸 초록불 ‘예약 및 방문 정상 운영’, 아래 칸 느낌표 지도 핀 + 네이버 지도 등록 진행 중 */
@@ -380,21 +376,17 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
 }
 
 
-/* 2026-11-19 지훈: Point 1 가사 반복 녹음 → 완성 음원 */
+/* 2026-11-19 지훈: Point 1 시안 2 — 가사 + 디렉터 한마디 → 완성 음원 */
 @layer wistia-home-polish {
-  html body #app#app #arcRecording .ed-comp { margin-top:4px; }
   html body #app#app #arcRecording .ed-comp-part { background:#fff; border-radius:16px; padding:14px 16px; margin-top:10px; box-shadow:0 4px 14px rgba(176,112,112,.12); }
   html body #app#app #arcRecording .ed-comp-lyric { margin:0 !important; font-family:'Gowun Batang',serif !important; font-size:21px !important; font-weight:700; line-height:1.4; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; text-align:left !important; }
-  html body #app#app #arcRecording .ed-comp-takes { display:flex; flex-wrap:wrap; gap:4px 10px; margin:6px 0 0 !important; font-size:13px !important; line-height:1.5; text-align:left !important; }
-  html body #app#app #arcRecording .ed-comp-takes s { color:#b9a2a8 !important; -webkit-text-fill-color:#b9a2a8 !important; }
-  html body #app#app #arcRecording .ed-comp-takes b { color:#fff !important; -webkit-text-fill-color:#fff !important; background:#d9485f; border-radius:999px; padding:0 8px; font-weight:800; }
+  html body #app#app #arcRecording .ed-comp-talk { display:flex; flex-wrap:wrap; gap:5px; margin:8px 0 0 !important; text-align:left !important; }
+  html body #app#app #arcRecording .ed-comp-talk span { font-size:12.5px !important; line-height:1.4; padding:4px 10px; border-radius:12px 12px 12px 3px; background:#f6e6ea; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; white-space:nowrap; }
+  html body #app#app #arcRecording .ed-comp-talk span.is-ok { background:#d9485f; color:#fff !important; -webkit-text-fill-color:#fff !important; font-weight:800; }
   html body #app#app #arcRecording .ed-comp-join { margin:12px 0 8px !important; text-align:center !important; font-size:14px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
-  html body #app#app #arcRecording .ed-comp-join::after { content:'↓'; display:block; color:#d9485f; -webkit-text-fill-color:#d9485f; font-size:20px; line-height:1.3; }
   html body #app#app #arcRecording .ed-comp-final { background:#d9485f; border-radius:16px; padding:14px 16px; box-shadow:0 8px 20px rgba(217,72,95,.25); }
   html body #app#app #arcRecording .ed-comp-final span { font-size:13px !important; font-weight:800; color:#ffe3e8 !important; -webkit-text-fill-color:#ffe3e8 !important; }
   html body #app#app #arcRecording .ed-comp-final p { margin:4px 0 0 !important; font-family:'Gowun Batang',serif !important; font-size:21px !important; font-weight:700; line-height:1.45; color:#fff !important; -webkit-text-fill-color:#fff !important; text-align:left !important; }
-  html body #app#app #arcRecording .ed-comp-note { margin:16px 0 0 !important; text-align:center !important; font-size:15px !important; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
-  html body #app#app #arcRecording .ed-comp-note b { color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
 }
 
 /* 2026-11-19 지훈: 가격 카드 시안 E — 가운데 정렬, 가격 크게, 구성 아이콘 4칸 */

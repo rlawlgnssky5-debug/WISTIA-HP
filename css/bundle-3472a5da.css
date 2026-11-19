@@ -20393,8 +20393,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 .package-brand-summary>p{font-size:14px!important;line-height:1.7!important}
 .package-selection-total{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:center!important;font-size:14px!important;margin:18px 0 0!important}
 .package-selection-total strong{font-size:22px!important;color:#a65a6c!important}
-.package-process-list{padding-left:20px!important;display:grid!important;gap:18px!important;font-size:14px!important;line-height:1.7!important}
-.package-process-list p{margin:4px 0 0!important}
 #app .package-intro{padding:0!important;display:block!important}
 #app .package-intro .mas-gallery{position:relative!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;aspect-ratio:auto!important}
 #app .package-intro .mas-gallery-viewport{width:100%!important;height:auto!important;aspect-ratio:780/900!important;min-height:0!important}
@@ -20403,7 +20401,7 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 .package-brand-summary .mas-event-content{position:static!important;width:100%!important;box-sizing:border-box!important}
 
 .package-section,.package-information,.package-notices{margin:0!important;max-width:none!important;line-height:1.7!important;text-align:left!important}
-.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul,.package-process-list{width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
+.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul {width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
 .package-card-name,.package-card-price,.package-card-features,.package-card-saving,.package-section h2,.package-section h3,.package-information h2,.package-notices h2{text-align:left!important}
 .package-card-features>span{width:100%!important;max-width:none!important;text-align:left!important}
 .package-inquiry-link{position:static!important;width:100%!important;box-sizing:border-box!important;text-align:center!important;padding:12px!important}
@@ -20595,8 +20593,6 @@ html body #floatingKakaoChat.is-content-overlap{visibility:hidden!important;opac
 .package-brand-summary>p{font-size:14px!important;line-height:1.7!important}
 .package-selection-total{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:center!important;font-size:14px!important;margin:18px 0 0!important}
 .package-selection-total strong{font-size:22px!important;color:#a65a6c!important}
-.package-process-list{padding-left:20px!important;display:grid!important;gap:18px!important;font-size:14px!important;line-height:1.7!important}
-.package-process-list p{margin:4px 0 0!important}
 #app .package-intro{padding:0!important;display:block!important}
 #app .package-intro .mas-gallery{position:relative!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;aspect-ratio:auto!important}
 #app .package-intro .mas-gallery-viewport{width:100%!important;height:auto!important;aspect-ratio:780/900!important;min-height:0!important}
@@ -20605,7 +20601,7 @@ html body #floatingKakaoChat.is-content-overlap{visibility:hidden!important;opac
 .package-brand-summary .mas-event-content{position:static!important;width:100%!important;box-sizing:border-box!important}
 
 .package-section,.package-information,.package-notices{margin:0!important;max-width:none!important;line-height:1.7!important;text-align:left!important}
-.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul,.package-process-list{width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
+.package-cards,.package-card,.package-card-body,.package-card-features,.package-card-saving,.package-people,.package-people-buttons,.package-options-guide,.package-discount-guide,.package-information dl,.package-notices ul {width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-inline:0!important;text-align:left!important}
 .package-card-name,.package-card-price,.package-card-features,.package-card-saving,.package-section h2,.package-section h3,.package-information h2,.package-notices h2{text-align:left!important}
 .package-card-features>span{width:100%!important;max-width:none!important;text-align:left!important}
 .package-inquiry-link{position:static!important;width:100%!important;box-sizing:border-box!important;text-align:center!important;padding:12px!important}
@@ -20899,11 +20895,6 @@ html body #floatingKakaoChat.is-content-overlap{visibility:hidden!important;opac
   #app .package-notices>ul>li>span:not(.ed-benefit-icon) { font-size:13px!important; line-height:1.8!important; color:var(--ed-muted)!important; }
   #app .ed-credit { padding:28px 24px!important; margin:0!important; background:#fff!important; text-align:center!important; border:0!important; border-radius:20px 20px 6px 6px!important; box-shadow:0 8px 24px #60434b08!important; }
   #app .ed-credit>strong { font-size:36px!important; letter-spacing:-.055em!important; font-weight:800!important; color:var(--ed-ink)!important; }
-  #app .package-process-list { counter-reset:ed-process!important; display:grid!important; gap:24px!important; list-style:none!important; padding:0!important; margin:0!important; }
-  #app .package-process-list li { counter-increment:ed-process!important; display:block!important; position:relative!important; padding:0 0 0 36px!important; margin:0!important; border:0!important; background:none!important; }
-  #app .package-process-list li::before { content:"0" counter(ed-process)!important; position:absolute!important; left:0!important; top:3px!important; font-size:11px!important; font-weight:600!important; color:var(--ed-rose)!important; background:none!important; border:0!important; width:auto!important; height:auto!important; }
-  #app .package-process-list strong { font-size:16px!important; font-weight:650!important; line-height:1.5!important; color:var(--ed-ink)!important; }
-  #app .package-process-list p { margin:6px 0 0!important; font-size:13px!important; line-height:1.8!important; color:var(--ed-muted)!important; }
 
   #app .solo-faq-html { background:transparent!important; padding:0!important; }
   #app .solo-faq-list details { margin:0 0 8px!important; padding:0!important; border:0!important; border-radius:12px!important; box-shadow:none!important; background:var(--ed-soft)!important; }
@@ -20993,10 +20984,6 @@ html body #floatingKakaoChat.is-content-overlap{visibility:hidden!important;opac
   #app .ed-preparation-list h3 { font-size:14px!important; font-weight:650!important; line-height:1.65!important; margin:0 0 6px!important; color:var(--ed-ink)!important; text-align:left!important; word-break:keep-all!important; }
   #app .ed-preparation-list p { font-size:12px!important; line-height:1.85!important; margin:0!important; color:var(--ed-muted)!important; text-align:left!important; word-break:keep-all!important; }
   #app #arcProcess>h2 { padding-left:40px!important; text-align:left!important; }
-  #app #arcProcess .package-process-list li { box-sizing:border-box!important; padding-left:40px!important; text-align:left!important; }
-  #app #arcProcess .package-process-list li::before { font-family:Georgia,serif!important; font-size:22px!important; font-weight:400!important; line-height:1.2!important; top:0!important; }
-  #app #arcProcess .package-process-list strong { display:block!important; text-align:left!important; }
-  #app #arcProcess .package-process-list p { text-align:left!important; }
   #app .mobile-ar-solo>.ed-engineer { position:relative!important; isolation:isolate!important; overflow:hidden!important; background:radial-gradient(ellipse at 0% 0%,#6d485c70,transparent 64%),#151315!important; color:#f9f4f5!important; padding-top:22px!important; padding-bottom:22px!important; }
   #app .ed-engineer::after { content:""!important; position:absolute!important; inset:auto 0 0!important; width:100%!important; height:110px!important; background:url('../assets/editorial/sound-vinyl-reference.webp') center bottom / 100% auto no-repeat!important; opacity:.65!important; mask-image:linear-gradient(to bottom,transparent,#000 70%)!important; pointer-events:none!important; z-index:-1!important; }
   #app .ed-sound-icon { display:block!important; width:24px!important; height:24px!important; margin:0 auto 8px!important; color:#bd8598!important; }

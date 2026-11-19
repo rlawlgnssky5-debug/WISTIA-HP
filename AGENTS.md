@@ -1,5 +1,8 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-19 — Point 1 시안 2(가사 + 디렉터 한마디 말풍선 → 완성 음원). "준비부터 전달까지"(#arcProcess, packageProcess) 섹션 삭제, package-process-list CSS 전부 제거
+
+
 ## 2026-11-19 — Point 1 그림을 파형 → 가사로: "사랑해 너를 사랑해"(take 1·2 실패, 3 OK) + "눈물 나도록 사랑해"(take 1~4 실패, 5 OK) → 이어 붙여 완성 음원. compWave 삭제. 가격 카드 시안 E(가운데, 가격 크게, 구성 아이콘 4칸, .rc-price-e)
 
 
