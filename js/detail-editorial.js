@@ -1,10 +1,12 @@
 /* Presentation only. Prices, audio and booking remain in their existing modules. */
 (function (global) {
   'use strict'
+  // 2026-11-19 지훈 시안 4: POINT 표시는 전부 손글씨 ‘Point 1.’ 가운데 정렬 (POINT 01~06 같은 모양)
+  const pointLabel = point => '<span class="ed-point ed-point-hand" aria-label="' + point + '">Point ' + Number(point.replace(/\D/g, '')) + '.</span>'
   const heading = (eyebrow, title, copy = '') => {
     const [label, point] = eyebrow.split(' · ')
     const styledTitle = point ? title.replace(/(<\/span>)?([^<>]+)$/, '$1<b class="ed-title">$2</b>') : title
-    return '<header class="ed-heading" data-svg-title="off"><p class="ed-eyebrow">' + label + '</p>' + (point ? '<span class="ed-point">' + point + '</span>' : '') + '<h2>' + styledTitle + '</h2>' + (copy ? '<p class="ed-description">' + copy + '</p>' : '') + '</header>'
+    return '<header class="ed-heading" data-svg-title="off"><p class="ed-eyebrow">' + label + '</p>' + (point ? pointLabel(point) : '') + '<h2>' + styledTitle + '</h2>' + (copy ? '<p class="ed-description">' + copy + '</p>' : '') + '</header>'
   }
   const editorial = {
     reviews(items) {
@@ -122,14 +124,14 @@
         '<div class="ed-worry-search"><div class="ed-worry-input" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>축가 고민<i></i></div><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 부탁할 사람이 마땅치 않아요</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 노래를 잘 못해도 괜찮을까요?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 하객들 앞에서 너무 떨려요</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 미리 녹음하면 티 나지 않을까요?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li></ul></div></section>' +
         '<section class="arc-point arc-point-recording ed-section" id="arcRecording" data-svg-title="off">' +
         // 2026-11-18 지훈: POINT 01은 가사에 끊는 표시(디자인 1 + 문구 1) — 한 소절이 아니라 한 마디씩 끊어서 부른다
-        '<div class="ed-madi"><span class="ed-madi-tag">POINT 01</span><p class="ed-madi-q">노래 못하는데, 괜찮을까요?</p>' +
+        '<div class="ed-madi">' + pointLabel('POINT 01') + '<p class="ed-madi-q">노래 못하는데, 괜찮을까요?</p>' +
         '<div class="ed-madi-lyrics" role="img" aria-label="가사를 한 마디씩 끊어서 부르는 예시"><p><span>오늘 이 자리에 서서</span><svg viewBox="0 0 26 46" aria-hidden="true"><path d="M22 3 5 43"/></svg><em>끊고</em></p><p><span>너에게 노래할게</span><svg viewBox="0 0 26 46" aria-hidden="true"><path d="M22 3 5 43"/></svg><em>또 끊고</em></p></div>' +
         '<div class="ed-madi-a"><h2>괜찮아요<br>한 마디씩 끊어서 불러요</h2></div></div></section>'
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
         // 2026-11-17 지훈: POINT 02는 0원 영수증 그림(시안 4) — 표·카드 대신 이미지처럼
-        '<div class="hg-key"><header class="ed-heading" data-svg-title="off"><span class="ed-point">POINT 02</span><h2><span>음원 편집 · 키 조절</span><b class="ed-title">추가 비용 없어요</b></h2></header>' +
+        '<div class="hg-key"><header class="ed-heading" data-svg-title="off">' + pointLabel('POINT 02') + '<h2><span>음원 편집 · 키 조절</span><b class="ed-title">추가 비용 없어요</b></h2></header>' +
         '<div class="ed-rcpt-wrap"><div class="ed-rcpt" role="img" aria-label="영수증: 음원 편집 0원, 키 조절 0원, 합계 0원"><b class="ed-rcpt-brand">WISTIA</b><i></i><p><span>음원 편집</span><b>0원</b></p><p><span>키 조절</span><b>0원</b></p><i></i><p class="ed-rcpt-sum"><span>합계</span><b>0원</b></p></div><span class="ed-rcpt-stamp" aria-hidden="true">무료</span></div>' +
         '<p class="ed-rcpt-cap">원하는 길이로 자르고, 내 키에 맞춰 드려요</p></div>' +
         '</section>'
