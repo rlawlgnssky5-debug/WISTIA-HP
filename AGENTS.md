@@ -1,5 +1,9 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-19 — 섹션 색 시안 3(분홍 단계)
+
+- 지훈: 소개 흰 → 가격 #fdf6f6 → 후기 #fbeef0 → 고민 #f8e4e8 → Point 1 #f4d8de → Point 2 흰 → 3 #fdf6f6 → 4 #fbeef0 → 5 #f8e4e8 → 6 #f4d8de → 진행 흰 → FAQ #fbeef0 → 오시는 길 흰, 갈색 금지
+
 ## 2026-11-19 — 상세 영어 소제목 삭제
 
 - 지훈: VOCAL TUNING·LIVE & AR MIX·RECORDING MAKING·REVISION·BRIDE’S WORRY·REAL REVIEW·FAQ·HOW TO COME 같은 작은 영어 소제목은 쓰지 않는다(heading()의 eyebrow는 Point 번호만 쓴다), 후기 도착 감지는 #soloReviewTitle
