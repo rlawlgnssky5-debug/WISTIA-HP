@@ -357,10 +357,18 @@ html body #app#app .naver-pending-map strong { font-size:13.5px !important; font
 html body #app#app .naver-pending-map span { font-size:12.5px !important; font-weight:500 !important; line-height:1.5 !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
 /* 2026-11-19 지훈: 3단계 확인 영수증 — 1단계 영수증(.rc-receipt)과 같은 모양, 일정 칸과 구성 칸 사이만 띄움 */
 html body #app#app .wf-review .wf-review-receipt { margin:4px 0 14px !important; }
-html body #app#app .wf-review-receipt .wf-rcpt-block { margin-top:10px !important; padding-top:6px !important; border-top:1.5px solid #3a2a2f !important; }
-html body #app#app .wf-review-receipt .rc-rcpt-line.is-option dd { font-weight:700 !important; }
 /* 2026-11-19 지훈: 문의 03 영상 작업 — 사진은 시안 2처럼 작은 썸네일, 스위치 줄과 한 줄 */
 html body #app#app .wistia-wizard .rc-making-row { display:flex; align-items:center; gap:12px; margin-top:6px; }
 html body #app#app .wistia-wizard .rc-making-thumb { flex:0 0 auto; width:68px !important; height:48px !important; max-width:none !important; object-fit:cover; object-position:60% 35%; border-radius:10px; margin:0 !important; }
 html body #app#app .wistia-wizard .rc-making-row .rc-work { flex:1 1 auto; min-width:0; border:0 !important; padding:0 !important; margin:0 !important; }
+/* 2026-11-19 지훈 시안 3: 확인 영수증 아이콘 소제목 */
+html body #app#app .wf-review-receipt .wf-rcpt-head { display:flex; align-items:center; gap:7px; margin:16px 0 4px !important; font-size:14.5px !important; font-weight:800 !important; color:#3a2a2f !important; -webkit-text-fill-color:#3a2a2f !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-brand + .wf-rcpt-head { margin-top:4px !important; }
+html body #app#app .wf-review-receipt .wf-rcpt-head span { width:26px; height:26px; border-radius:8px; background:#fbeef1; display:grid; place-items:center; font-size:14px; }
+html body #app#app .wf-review-receipt .rc-rcpt-line { border-bottom:1px dashed #ead9de !important; }
+html body #app#app .wf-review-receipt dl > .rc-rcpt-line:last-child, html body #app#app .wf-review-receipt .rc-rcpt-line.is-list, html body #app#app .wf-review-receipt .rc-rcpt-line.is-discount { border-bottom:0 !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-line dt { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-line.is-key dd { font-weight:700 !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-line.is-muted dd { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-line.is-discount dt { color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
 }

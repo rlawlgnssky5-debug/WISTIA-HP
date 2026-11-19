@@ -25,18 +25,19 @@
  function range(time,minutes=60){if(!time)return '미정';const start=Number(time.slice(0,2))*60+Number(time.slice(3)),clock=m=>(m>=1440?'다음 날 ':'')+String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');return clock(start)+'~'+clock(start+minutes)}
  function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['소요 시간',hours(q.bookingMinutes)],['녹음 날짜',v.bookingDate||'미정'],[scheduleLabel(q),range(v.timeStart,q.bookingMinutes)],['추가 옵션',q.options.map(o=>o[0]+' '+'+'+money(o[1])).join('\n')||'없음'],['할인',(q.allDiscounts||q.discounts).map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['총 금액',money(q.total)]]}
  // Display only: the Kakao text still comes from rows() unchanged
- // 2026-11-19 지훈: 3단계 확인도 1단계처럼 영수증 한 장 — 일정 → 구성(포함·인원·옵션·전달) → 정가 → 할인 → 합계
+ // 2026-11-19 지훈: 3단계 확인 영수증 시안 3 — 📅 녹음 예약 / 📦 구성 / 💰 금액 아이콘 소제목으로 구분, 합계는 맨 아래
  function reviewHtml(form,q){
   const d=Object.fromEntries(rows(form))
   const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+esc(label)+'</dt><dd>'+value+'</dd></div>'
+  const head=(icon,title)=>'<p class="wf-rcpt-head"><span aria-hidden="true">'+icon+'</span>'+title+'</p>'
   const unavailable=form.dataset.scheduleState==='unavailable'
-  const included=(global.WistiaRecording.included||[]).map(item=>line(item[1],'포함','is-included')).join('')
-  return '<div class="rc-receipt wf-review-receipt" style="display:block !important;grid-template-columns:none !important;padding:18px 18px 16px !important;background:#fff !important;border:0 !important"><p class="rc-rcpt-brand">WISTIA · 축가 녹음 영수증</p><dl>'+
-   line('녹음 날짜',esc(d['녹음 날짜']),'is-option')+line(scheduleLabel(q),esc(d[scheduleLabel(q)]),'is-option')+(unavailable?line('일정 확인','상담 후 확정','is-option'):'')+
-   '</dl><dl class="wf-rcpt-block">'+included+line('인원',esc(d['인원']),'is-included')+
-   q.options.map(([label,price])=>line(label,'+'+money(price),'is-option')).join('')+
-   line('음원 전달',esc(q.delivery),'is-included')+
-   line('정가','<s>'+money(q.list+q.optionTotal)+'</s>','is-list')+
+  const included=(global.WistiaRecording.included||[]).map(item=>line(item[1],'포함','is-muted')).join('')
+  return '<div class="rc-receipt wf-review-receipt" style="display:block !important;grid-template-columns:none !important;padding:18px 18px 16px !important;background:#fff !important;border:0 !important"><p class="rc-rcpt-brand">WISTIA · 축가 녹음 영수증</p>'+
+   head('📅','녹음 예약')+'<dl>'+line('날짜',esc(d['녹음 날짜']),'is-key')+line('시간',esc(d[scheduleLabel(q)]),'is-key')+(unavailable?line('일정 확인','상담 후 확정','is-key'):'')+'</dl>'+
+   head('📦','구성')+'<dl>'+included+line('인원',esc(d['인원']),'is-key')+
+   q.options.map(([label,price])=>line(label,'+'+money(price),'is-key')).join('')+
+   line('음원 전달',esc(q.delivery),'is-muted')+'</dl>'+
+   head('💰','금액')+'<dl>'+line('정가','<s>'+money(q.list+q.optionTotal)+'</s>','is-list')+
    (q.allDiscounts||q.discounts).map(x=>line(x.key==='monthly'?'✨ '+x.label:x.label,'−'+money(x.amount),'is-discount')).join('')+
    '</dl><p class="rc-rcpt-total"><span>합계</span><strong>'+money(q.total)+'</strong></p></div>'
  }
