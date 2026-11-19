@@ -3,51 +3,38 @@ const require=createRequire(import.meta.url)
 const pricing=require('../js/package-pricing.js')
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
 
-// Numbers and labels follow js/recording-config.js (sale rate, then list price).
-const times=[[50,50000,50000],[90,80000,90000],[150,120000,150000]]
-const workOptions=['음정·박자 보정','정밀 믹싱','마스터링']
+// Numbers and labels follow js/recording-config.js — 2026-11-19 단일 상품: 녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링
+const list=240000,start=180000
+const included=[['녹음 2시간',120000],['보컬 튜닝',40000],['전문 믹싱',40000],['마스터링',40000]]
 const cities=['부천시','인천광역시','시흥시','김포시']
 const origin='https://www.wistiastudio.com'
-const priceRange='₩50,000~₩120,000'
+const priceRange='₩180,000~₩240,000'
 
 function seoFallback(){
- const timeItems=times.map(([minutes,rate,list])=>{
-  const label=pricing.hoursText(minutes)+' '+pricing.money(rate)
-  return '<li>'+esc(list>rate?label+' · 할인 적용 전 '+pricing.money(list):label)+'</li>'
- }).join('')
  return [
   '<h1>부천 축가 AR 사전 녹음 · 위스티아</h1>',
   '<p>부천시청역 1번 출구 도보 약 300m · 경기도 부천시 석천로170번길 19, 부광프라자 2층</p>',
-  '<h2>인원·녹음 시간·음원 작업을 골라보세요</h2>',
-  '<section><h2>녹음 시간</h2><ul>'+timeItems+'</ul></section>',
-  '<section><h2>인원</h2><ul><li>1인 기본</li><li>2인 (듀엣곡) +40,000원</li></ul></section>',
-  '<section><h2>음원 작업</h2><ul>'+workOptions.map(label=>'<li>'+esc(label)+' +40,000원</li>').join('')+'</ul></section>',
-  '<section><h2>작업 기간</h2><ul><li>7일 이내 기본</li><li>3일 이내 +30,000원</li><li>전달 : 녹음일 기준 7일 이내</li></ul></section>',
-  '<section><h2>할인</h2><ul>',
-  '<li>첫 이용 20,000원 할인 · 50분 제외</li>',
-  '<li>11월 마스터링 무료 · 50분 제외</li>',
-  '<li>녹음일 1개월 이후 10,000원 할인 · 50분 제외</li>',
-  '</ul></section>'
+  '<h2>녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링</h2>',
+  '<section><h2>기본 구성</h2><ul>'+included.map(([label,price])=>'<li>'+esc(label)+' '+pricing.money(price)+'</li>').join('')+'<li>정가 '+pricing.money(list)+'</li></ul></section>',
+  '<section><h2>옵션</h2><ul><li>인원 추가 (듀엣곡) +40,000원</li><li>녹음 1시간 추가 +60,000원</li><li>녹음 메이킹 영상 +80,000원</li><li>3일 이내 전달 +30,000원</li></ul></section>',
+  '<section><h2>할인</h2><ul><li>첫 이용 20,000원 할인</li><li>이번 달 최저가 보상 이벤트 40,000원 할인</li><li>녹음일 1개월 이후 10,000원 할인</li><li>첫 이용 기준 '+pricing.money(start)+'</li></ul></section>'
  ].join('')
 }
 
 function recordingServices(){
  const areaServed=cities.map(name=>({'@type':'City',name}))
- return times.map(([minutes,rate])=>{
-  const label=pricing.hoursText(minutes)
-  const url=origin+'/event/solo?recordingMinutes='+minutes
-  return {
-   '@type':'Service',
-   '@id':origin+'/#service-'+minutes,
-   name:'위스티아 축가 AR 사전 녹음 · 녹음 '+label,
-   serviceType:'축가 AR 사전 녹음',
-   description:'1곡 · 녹음 '+label+' · 인원 : 1인 기본, 2인 (듀엣곡) +40,000원 · 음원 작업 : 음정·박자 보정, 정밀 믹싱, 마스터링 각 +40,000원 선택 · 1:1 디렉팅 · 전달 : 녹음일 기준 7일 이내 (3일 이내 +30,000원)',
-   url,
-   provider:{'@id':origin+'/#studio'},
-   areaServed,
-   offers:{'@type':'Offer',price:rate,priceCurrency:'KRW',url,availability:'https://schema.org/InStock'}
-  }
- })
+ const url=origin+'/event/solo'
+ return [{
+  '@type':'Service',
+  '@id':origin+'/#service-recording',
+  name:'위스티아 축가 AR 사전 녹음 · 녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링',
+  serviceType:'축가 AR 사전 녹음',
+  description:'1곡 · 녹음 2시간 · 보컬 튜닝·전문 믹싱·마스터링 포함 · 정가 240,000원 · 인원 추가 +40,000원 · 녹음 1시간 추가 +60,000원 · 1:1 디렉팅 · 전달 : 녹음일 기준 7일 이내 (3일 이내 +30,000원)',
+  url,
+  provider:{'@id':origin+'/#studio'},
+  areaServed,
+  offers:{'@type':'Offer',price:start,priceCurrency:'KRW',url,availability:'https://schema.org/InStock'}
+ }]
 }
 
 function isRetiredTypeService(item){
@@ -57,7 +44,7 @@ function isRetiredTypeService(item){
 }
 
 function isCurrentRecordingService(item){
- return item['@type']==='Service' && /#service-(50|90|150)\b/.test(item['@id']||'')
+ return item['@type']==='Service' && /#service-(50|90|150|recording)\b/.test(item['@id']||'')
 }
 
 function patchFaqText(text){
@@ -87,9 +74,7 @@ function updateJsonLd(body){
   }
   patchFaqPage(item)
  }
- const hasCurrent=graph.some(isCurrentRecordingService)
- const withoutRetired=graph.filter(item=>!isRetiredTypeService(item))
- const next=hasCurrent&&withoutRetired.length===graph.length?withoutRetired:[...withoutRetired.filter(item=>!isCurrentRecordingService(item)),...recordingServices()]
+ const next=[...graph.filter(item=>!isRetiredTypeService(item)&&!isCurrentRecordingService(item)),...recordingServices()]
  return JSON.stringify({...data,'@graph':next},null,1)
 }
 

@@ -294,4 +294,18 @@ html body #app#app .wistia-wizard [data-wf-next] .wf-next-save:not([hidden]) { d
 html body #app#app .wistia-wizard [data-wf-next] .wf-next-main { display:block; }
 /* 2026-11-18 지훈: 오시는 길 지도 버튼 아래 ‘네이버 마이플레이스 등록 중’ 안내 */
 html body #app#app .naver-pending { margin:10px 0 0 !important; padding:9px 12px !important; border-radius:10px; background:#fdf0f2 !important; color:#8b4a5e !important; -webkit-text-fill-color:#8b4a5e !important; font-size:12.5px !important; font-weight:600 !important; line-height:1.5 !important; text-align:left; width:100%; box-sizing:border-box; }
+/* 2026-11-19 지훈: 단일 상품 — 문의 01 기본 구성(포함 항목 목록 + 정가), 히어로 가격 카드 한 장 */
+html body #app#app .rc-included { list-style:none; margin:4px 0 0 !important; padding:0 !important; display:flex; flex-direction:column; gap:2px; }
+html body #app#app .rc-inc-item { display:flex; align-items:center; gap:12px; padding:12px 2px !important; border-bottom:1px dashed #ead9de; }
+html body #app#app .rc-inc-icon { flex:0 0 auto; width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#fbeef1; font-size:16px; }
+html body #app#app .rc-inc-text { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
+html body #app#app .rc-inc-text strong { font-size:15px !important; font-weight:800 !important; color:#3a2a2f !important; }
+html body #app#app .rc-inc-text small { font-size:12px !important; color:#8f777e !important; line-height:1.45; }
+html body #app#app .rc-inc-price { flex:0 0 auto; font-size:14px !important; font-weight:700 !important; color:#5b434a !important; font-variant-numeric:tabular-nums; }
+html body #app#app .rc-inc-total { display:flex; justify-content:space-between; align-items:baseline; margin:12px 2px 0 !important; font-size:14px !important; color:#5b434a !important; }
+html body #app#app .rc-inc-total b { font-size:18px !important; font-weight:800 !important; color:#3a2a2f !important; }
+html body #app#app .rc-shortcuts-one { display:block !important; }
+html body #app#app .rc-shortcuts-one .rc-price-card { width:100% !important; max-width:none !important; text-align:left; padding:16px 18px !important; }
+html body #app#app .rc-shortcuts-one .rc-price-card > b { display:block; font-size:15px !important; line-height:1.4; margin:8px 0 6px; }
+html body #app#app .rc-shortcuts-one .rc-shortcut-prices { justify-content:flex-start !important; }
 }

@@ -11,9 +11,7 @@
   const input=data?.fields||{},parts=data?.wedding||{}
   return {version:1,flow:'recording-v2',step:Number.isInteger(data?.step)?Math.max(0,Math.min(4,data.step)):0,view:data?.view==='time'?'time':'date',fields:{
    package:['A','B','C','D'].includes(input.package)?input.package:'A',people:input.people==='1'?'1':'0',discovery:sources.includes(input.discovery)?input.discovery:'',
-   recordingMinutes:['50','90','150'].includes(input.recordingMinutes)?input.recordingMinutes:'',
-   recordingMix:input.recordingMix==='1'?'1':input.recordingMix==='0'?'0':'',
-   recordingMaster:input.recordingMaster==='1'?'1':input.recordingMaster==='0'?'0':'',
+   recordingMinutes:['120','180'].includes(input.recordingMinutes)?input.recordingMinutes:'',
    makingVideo:['0','1'].includes(input.makingVideo)?input.makingVideo:'',
    bookingDate:date(input.bookingDate),
    timeStart:/^(?:1[3-9]|2[0-3]):00$/.test(input.timeStart)?input.timeStart:'',
