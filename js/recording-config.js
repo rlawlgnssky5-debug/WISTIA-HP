@@ -57,13 +57,14 @@
  function includedRow([key,label,copy,price,icon]){
   return '<li class="rc-inc-item" data-rc-included="'+key+'"><span class="rc-inc-icon" aria-hidden="true">'+icon+'</span><span class="rc-inc-text"><strong>'+label+'</strong><small>'+copy+'</small></span><span class="rc-inc-price">'+money(price)+'</span></li>'
  }
+ // 2026-11-19 지훈: 순서는 01 인원 → 02 기본 구성 → 첫 이용 할인 → 03 녹음 시간 → 04 영상 → 05 작업 기간
  function editor(v,{delivery=true}={}){
   const first='<div class="rc-first"><div class="rc-work" data-rc-work="firstUse"><div><strong>첫 이용 할인</strong> <small>위스티아가 처음이라면 켜 주세요</small><small class="rc-first-amount">−20,000원</small></div><div class="rc-toggle" role="group" aria-label="첫 이용 할인">'+radio('firstUse','0',v.firstUse,'필요 없음')+radio('firstUse','1',v.firstUse,'필요')+'</div></div></div>'
-  const base=field('01','기본 구성 <small>모두 포함</small>','<ul class="rc-included">'+included.map(includedRow).join('')+'</ul><p class="rc-inc-total"><span>정가</span><b>'+money(list)+'</b></p>')
-  const people=field('02','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
+  const base=field('02','기본 구성 <small>모두 포함</small>','<ul class="rc-included">'+included.map(includedRow).join('')+'</ul><p class="rc-inc-total"><span>정가</span><b>'+money(list)+'</b></p>')
+  const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
   const duration=field('03','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
   const making=field('04','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
-  return '<div class="recording-config">'+first+base+people+duration+making+(delivery?deliveryField(v):'')+'</div>'
+  return '<div class="recording-config">'+people+base+first+duration+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
