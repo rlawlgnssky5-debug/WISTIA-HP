@@ -388,7 +388,7 @@ const INFO_PAGES = {
 const INFO_FAQ_GROUPS=[
  {title:"녹음 전 준비",description:"곡 선정부터 녹음 준비까지 함께 도와드려요",items:[
   ["아직 곡을 정하지 못했는데 상담받아도 될까요?","물론이에요!<br><br>마음에 두고 계신 노래나 전하고 싶은<br>분위기만 알려주셔도 좋아요<br><br>목소리와 음역대에 맞는 곡을<br>함께 고민하고 추천해 드릴게요"],
-  ["결혼식 며칠 전에 녹음하는 게 좋을까요?","여유로운 준비를 위해<br>결혼식 2주 전까지 녹음하시길 추천드려요<br><br>완성 음원은 녹음일 기준 7일 이내에<br>전달해 드려요<br><br>급하게 필요하시면 3일 이내 전달 옵션도 있어요"],
+  ["결혼식 며칠 전에 녹음하는 게 좋을까요?","여유로운 준비를 위해<br>결혼식 2주 전까지 녹음하시길 추천드려요<br><br>완성 음원은 녹음일 기준 7일 이내에<br>전달해 드려요"],
   ["원곡의 키가 너무 높거나 낮아도 괜찮을까요?","네, 괜찮아요!<br><br>녹음 전에 직접 불러보면서<br>목소리에 가장 편안한 키로 맞춰 드려요<br><br>키 조절은 무료로 진행해 드려요"],
   ["녹음 전에 무엇을 준비하면 좋을까요?","특별히 준비하실 건 없어요!<br><br>녹음에 필요한 장비와 MR은<br>저희가 준비해 드리니<br>편안한 마음으로 방문해 주세요"]
  ]},
@@ -402,7 +402,7 @@ const INFO_FAQ_GROUPS=[
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","녹음한 목소리와 현장에서 부르는 목소리가<br>자연스럽게 어우러지도록 비율을 맞춰요<br><br>녹음 당일 AR에 맞춰 직접 불러보면서<br>본식에서의 느낌도 확인하실 수 있어요"]
  ]},
  {title:"완성본 전달과 수정",description:"녹음 후에도 마지막까지 꼼꼼히 도와드려요",items:[
-  ["완성된 음원은 언제 받을 수 있나요?","녹음일 기준 7일 이내에<br>완성 음원을 전달해 드려요<br><br>3일 이내 전달은 별도 옵션이에요"],
+  ["완성된 음원은 언제 받을 수 있나요?","녹음일 기준 7일 이내에<br>완성 음원을 전달해 드려요"],
   ["완성본을 듣고 수정하고 싶으면 어떡하나요?","음원을 들어보신 뒤 아쉬운 부분이 있다면<br>편하게 말씀해 주세요<br><br>마음에 드실 때까지<br>무제한으로 수정해 드려요"],
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달해 드린 본식용 AR 음원을<br>예식장 담당자에게 보내주시면 돼요<br><br>필요한 파일 형식과 재생 환경을 확인하고<br>본식 전에 잘 재생되는지도 점검해 주세요"]
  ]},
@@ -1173,7 +1173,7 @@ function soloChatFaq(){
   ['노래를 잘 못해도 괜찮을까요?','물론이에요! 한 마디씩 나누어 녹음하고, 옆에서 1:1 맞춤 디렉팅으로 차근차근 도와드려요'],
   ['어려운 부분은 다시 부를 수 있나요?','네! 어려운 구간은 충분히 반복해서 녹음할 수 있어요<br>마음에 드는 결과가 나올 수 있도록 함께 맞춰가요'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원곡의 키가 높거나 낮아도 괜찮아요<br>녹음 전 직접 불러보면서 목소리에 가장 편안한 키로 조절해 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 빠른 전달도 별도 옵션으로 가능해요'],
+  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 완성된 AR 음원을 재생하고, 그 위에 직접 노래하시면 돼요<br>본식 전 예식장 담당자에게 음원을 전달하고, 재생 및 마이크 리허설 가능 여부를 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','네! 보컬 밸런스를 30%, 50%, 70%, 100% 등 다양한 비율로 모두 준비해 드려요<br>본식 당일 컨디션에 맞춰 가장 편안한 버전을 선택하시면 돼요']
  ]
@@ -1230,7 +1230,7 @@ function arCommerceDetail(p,key="solo"){
   ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요.</strong>'],
   ['어려운 부분은 다시 부를 수 있나요?','<span data-ar-hours>'+hours+'</span>시간 안에서 어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 마디씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 받기는 별도 옵션이에요'],
+  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
@@ -1365,7 +1365,7 @@ function optionExplainSection(){
  }).join('')
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
-function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달<br>3일 이내 전달은 +30,000원</span></li><li><strong>녹음 시간</strong><span>2시간 기본 · 1시간 추가 +60,000원</span></li></ul></section>'}
+function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달</span></li><li><strong>녹음 시간</strong><span>2시간 기본 · 1시간 추가 +60,000원</span></li></ul></section>'}
 // Keep the home controls styled when client-side navigation starts on another page.
 function ensureHomeControlStyles(){
  if(document.getElementById('wistia-home-control-styles'))return
@@ -1960,7 +1960,7 @@ async function copyConsultationAndShowChoice(text){
  showDialog(copied?'<span class="contact-ok-mark" aria-hidden="true">✓</span><h2>문의 내용이 복사되었어요</h2><p>카톡 채팅창에 붙여넣어 보내면 문의 끝</p>'+chat+ok:'<h2>문의 내용을 자동으로 복사하지 못했어요</h2><p>아래 내용을 길게 눌러 전체 복사한 뒤 카톡 채팅창에 붙여넣어 보내 주세요</p><textarea class="consult-copy-fallback" readonly aria-label="직접 복사할 문의 내용">'+escapeHtml(text)+'</textarea>'+chat+ok,'contact-ok-dialog')
  dialog.setAttribute('aria-label','문의 내용 복사 완료')
 }
-function navigationMenu(){const groups=[{label:'서비스',items:[['축가 AR 사전 녹음','/'],['프로포즈 · 답프로포즈','/proposal']]},{label:'위스티아',items:[['이벤트','/events'],['문의 양식','/contact'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
+function navigationMenu(){const groups=[{label:'서비스',items:[['축가 AR 사전 녹음','/'],['프로포즈 · 답프로포즈','/proposal']]},{label:'위스티아',items:[['이벤트','/events'],['자주 묻는 질문','/info/faq'],['오시는 길','/info/location']]}];return '<nav id="mainMenu" aria-label="전체 메뉴"><p class="menu-title">메뉴</p>'+groups.map(group=>'<section class="menu-group"><p class="menu-group-label">'+group.label+'</p><div class="menu-group-items">'+group.items.map(([title,href])=>'<a class="menu-item" href="'+href+'"><strong>'+title+'</strong></a>').join('')+'</div></section>').join('')+'</nav>'}
 function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
@@ -2074,7 +2074,8 @@ function cleanHashRoute(){
  history.replaceState(history.state,"",(legacyHomePath(path.split("?")[0])||path)+location.search);
  return true;
 }
-function navigationTarget(path){const target=new URL(path,location.href);for(const [key,value] of new URLSearchParams(location.search))if(!target.searchParams.has(key))target.searchParams.append(key,value);return target.pathname+target.search+target.hash}
+// 2026-11-20: product=proposal(프로포즈 문의 표시)는 다른 페이지로 따라가지 않는다 — 안 그러면 축가 AR 문의양식이 프로포즈 필름으로 열림
+function navigationTarget(path){const target=new URL(path,location.href);for(const [key,value] of new URLSearchParams(location.search))if(key!=="product"&&!target.searchParams.has(key))target.searchParams.append(key,value);return target.pathname+target.search+target.hash}
 function normalizeInternalLinks(){
  document.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute("href",link.getAttribute("href").slice(1)));
 }

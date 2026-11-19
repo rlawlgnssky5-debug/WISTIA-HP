@@ -1,5 +1,14 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-20 — 문의양식 1단계(구성) 삭제(축가 AR·프로포즈 둘 다): 바로 날짜·시간부터, 단계 표시는 1 날짜·시간 / 2 확인. 축가 AR만 날짜 달력 위에 인원(1인 / 2인 듀엣곡 +40,000) 선택(`recording.peoplePicker`), 녹음 시간 추가 선택은 없앴다(숨긴 recordingMinutes=120). 1단계 섹션은 숨긴 값(firstUse·recordingMinutes·영수증 슬롯)만 남김, 이전 버튼은 상세로. 프로포즈 문의 표시 product=proposal은 다른 페이지로 따라가지 않는다(navigationTarget)
+
+
+## 2026-11-20 — 메뉴 ‘위스티아’ 그룹에서 ‘문의 양식’ 삭제(이벤트·자주 묻는 질문·오시는 길만), /contact 주소는 그대로 살아 있다
+
+
+## 2026-11-20 — 3일 이내 작업(전달) 옵션 전부 삭제: 축가 AR·프로포즈 문의의 작업 기간 칸(deliveryField)·rush 키·견적 옵션, FAQ·예약 전 안내·SEO 대체글·JSON-LD 문구. 전달은 녹음일 기준 7일 이내 하나. 축가 문의는 01 인원 → 02 녹음 시간, 프로포즈 문의는 01 녹음 시간만
+
+
 ## 2026-11-20 — 프로포즈 상단을 축가 AR(홈)과 같은 형태로: 사진 넘김(.mas-gallery, proposal-film 5장) → WISTIA 배지·제목·한 줄 → 한눈에 보는 프로포즈 안내 → 가격 카드(.rc-price-e 재사용) → 이벤트 3줄, 메뉴 아래 이벤트 띠·하단 ‘문의양식 작성하기’ 바도 홈과 같다(body is-solo-detail, ensureHomeControlStyles, 하단 바 링크는 data-dock-href)
 
 

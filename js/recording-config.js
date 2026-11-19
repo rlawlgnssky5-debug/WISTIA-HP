@@ -10,7 +10,8 @@
  const list=included.reduce((sum,item)=>sum+item[3],0)
  const baseMinutes=120,extraHour=60000,duetFee=40000
  // 2026-11-20 지훈: 축가 AR에서 녹음 메이킹 옵션은 없앤다
- const keys=['firstUse','people','recordingMinutes','rush']
+ // 2026-11-20 지훈: 3일 이내 작업 옵션은 없앤다 — 작업 기간은 녹음일 기준 7일 이내 하나
+ const keys=['firstUse','people','recordingMinutes']
  // 2026-11-18 지훈: 이벤트는 달이 바뀌면 그대로 다음 달 이벤트로 이어진다 — 글자 ‘N월’과 말일은 오늘(한국 시간) 기준으로 자동
  // 2026-11-19 지훈: 이벤트는 ‘N월 최저가 보상 이벤트’ −40,000원 (마스터링 무료 이벤트는 끝)
  const monthly=()=>true
@@ -19,7 +20,7 @@
  const eventUntil=(date=prices.today())=>{const y=Number(date.slice(0,4)),m=Number(date.slice(5,7));return m+'월 '+new Date(Date.UTC(y,m,0)).getUTCDate()+'일까지'}
  const eventLabel=(date=prices.today())=>eventMonth(date)+' 최저가 보상 이벤트'
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:String(baseMinutes),rush:'0',firstUse:'1'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:String(baseMinutes),firstUse:'1'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
@@ -34,12 +35,11 @@
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  // 2026-11-20 지훈: 프로포즈 문의 1단계는 녹음 시간(1시간 기본 / 2시간 +60,000)과 작업 기간(7일 / 3일 +30,000)만
+  // 2026-11-20 지훈: 프로포즈 문의 1단계는 녹음 시간(1시간 기본 / 2시간 +60,000)만
   const longer=v.recordingMinutes==='180',minutes=longer?120:60,options=[]
   if(longer)options.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
-  if(v.rush==='1')options.push({key:'rush',label:'3일 이내 전달',price:30000})
   const optionTotal=options.reduce((sum,o)=>sum+o.price,0)
-  return {v,minutes,recordingMinutes:minutes,filmingMinutes:30,making:false,bookingMinutes:minutes+30,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 30분 + 튜닝·믹싱·마스터링 + 필름 편집'}}
+  return {v,minutes,recordingMinutes:minutes,filmingMinutes:30,making:false,bookingMinutes:minutes+30,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 30분 + 튜닝·믹싱·마스터링 + 필름 편집'}}
  }
  function quote(v,date=prices.today()){
   if(v.product==='proposal')return proposalQuote(v,date)
@@ -47,7 +47,6 @@
   const selected=[]
   if(duet)selected.push({key:'duet',label:'2인 (듀엣곡)',price:duetFee})
   if(longer)selected.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
-  if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})
   const discounts=[]
   // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 스위치가 켜졌을 때만 (기본 켜짐)
   if(v.firstUse!=='0')discounts.push({key:'first',label:'첫 이용 할인',amount:20000})
@@ -55,20 +54,19 @@
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  return {v,minutes,recordingMinutes:minutes,filmingMinutes:0,making:false,bookingMinutes:minutes,offer:true,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',package:{key:'custom',name:'축가 녹음',title:'녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링'}}
+  return {v,minutes,recordingMinutes:minutes,filmingMinutes:0,making:false,bookingMinutes:minutes,offer:true,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:'녹음일 기준 7일 이내',package:{key:'custom',name:'축가 녹음',title:'녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링'}}
  }
  // 기본 구성 그대로(1인, 첫 이용) 받는 가격
  const startPrice=(date=prices.today())=>list-20000-eventAmount
  const radio=(key,value,current,copy)=>'<label><input type="radio" name="'+key+'" value="'+value+'"'+(current===value?' checked':'')+'>'+copy+'</label>'
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
- // 2026-11-19 지훈: 구성 항목마다 금액은 적지 않는다 — ‘포함’만, 금액은 정가 한 줄
- // 2026-11-19 지훈: 시안 2 — 실시간 영수증(기본 구성 포함·옵션·할인·합계) → 01 인원 → 02 녹음 시간 → 03 영상 → 04 작업 기간
- function editor(v,{delivery=true}={}){
-  // 2026-11-19 지훈: 첫 이용 카드는 없앤다 — 할인(−20,000원)과 영수증 표기는 그대로, 모두에게 적용
-  const first='<input type="hidden" name="firstUse" value="1">'
-  const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
-  const duration=field('02','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
-  return '<div class="recording-config">'+first+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+people+duration+(delivery?deliveryField(v):'')+'</div>'
+ // 2026-11-20 지훈: 문의 1단계(구성)는 없앤다 — 숨긴 값만 두고, 인원(1인/2인)은 날짜 선택 위에서 고른다, 녹음 시간 추가 선택도 없음
+ const hiddenMinutes='<input type="radio" name="recordingMinutes" value="120" checked hidden>'
+ function editor(v){
+  return '<div class="recording-config" hidden><input type="hidden" name="firstUse" value="1">'+hiddenMinutes+'<div class="rc-receipt-slot" data-rc-summary></div></div>'
+ }
+ function peoplePicker(v){
+  return '<div class="recording-config wf-people-pick"><fieldset><legend>인원</legend><div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div></fieldset></div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
@@ -76,12 +74,7 @@
   return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card rc-price-e"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>올인원 패키지</b><del class="rc-shortcut-original">'+money(list)+'</del><strong class="rc-e-price">'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong><ul class="rc-e-incl"><li><i aria-hidden="true">🎙️</i>녹음 2시간</li><li><i aria-hidden="true">🎚️</i>보컬 튜닝</li><li><i aria-hidden="true">🎛️</i>전문 믹싱</li><li><i aria-hidden="true">💿</i>마스터링</li></ul></div></div>'
  }
  function proposalEditor(v){
-  const hidden='<input type="hidden" name="product" value="proposal"><input type="hidden" name="firstUse" value="1"><input type="hidden" name="people" value="0">'
-  const duration=field('01','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>1시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>2시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
-  return '<div class="recording-config">'+hidden+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+duration+deliveryField(v).replace('<i>03</i>','<i>02</i>')+'</div>'
- }
- function deliveryField(v){
-  return field('03','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
+  return '<div class="recording-config" hidden><input type="hidden" name="product" value="proposal"><input type="hidden" name="firstUse" value="1"><input type="hidden" name="people" value="0">'+hiddenMinutes+'<div class="rc-receipt-slot" data-rc-summary></div></div>'
  }
  function summary(q){
   const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
@@ -101,5 +94,5 @@
   }
   return params.toString()
  }
- global.WistiaRecording={proposalEditor,keys,list,included,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,summary,query,firstVisit,preferences}
+ global.WistiaRecording={proposalEditor,peoplePicker,keys,list,included,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,summary,query,firstVisit,preferences}
 })(window)
