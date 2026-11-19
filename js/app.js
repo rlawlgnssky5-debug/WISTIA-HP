@@ -933,18 +933,26 @@ const PROPOSAL_SHORTER=40000
 function proposalPrice(){const r=window.WistiaRecording,list=(r?.list||240000)-PROPOSAL_SHORTER+PROPOSAL_MAKING,event=r?.eventAmount||40000,first=20000;return {list,first,event,label:r?.eventLabel?.()||'최저가 보상 이벤트',month:r?.eventMonth?.()||'',total:list-first-event,advance:10000}}
 function proposalInquiryHref(){return '/event/solo?product=proposal'}
 function renderProposalPage(){
- const p=proposalPrice(),won=n=>n.toLocaleString('ko-KR')+'원',pct=Math.round((p.first+p.event)/p.list*100)
+ ensureHomeControlStyles();const p=proposalPrice(),won=n=>n.toLocaleString('ko-KR')+'원',pct=Math.round((p.first+p.event)/p.list*100)
  const steps=[['인트로 글귀','마음을 여는 한 줄'],['인서트','가사를 직접 쓰는 손'],['우리 둘의 사진·영상','함께한 순간들'],['녹음 메이킹 1','마이크 앞, 떨리는 첫 마디'],['녹음 메이킹 2','진심을 담아 끝까지'],['전하는 편지','카메라를 보고 건네는 말']]
- const icons=[['🎙️','녹음<br>1시간'],['🎬','촬영<br>30분'],['🎚️','튜닝·믹싱<br>마스터링'],['🎞️','필름<br>편집']]
- const hero='<section class="pp-hero"><img class="pp-hero-img" src="assets/img/proposal-film/hero.webp" alt="스튜디오에서 헤드폰을 쓰고 프로포즈 노래를 녹음하는 모습" width="1280" height="760" fetchpriority="high" decoding="async"><div class="pp-hero-copy"><p class="pp-kicker">프로포즈 · 답프로포즈</p><h1 data-svg-title="off">노래로 건네는<br>나의 대답</h1><p class="pp-lead">직접 부른 노래와 우리의 추억으로 완성하는 한 편의 필름</p>'+
-  '<div class="pp-price"><span class="pp-price-badge">'+p.month+' 최저가 보상 · '+pct+'% 할인</span><b>프로포즈 필름 패키지</b><del>'+won(p.list)+'</del><strong>'+p.total.toLocaleString('ko-KR')+'<span>원</span></strong><ul>'+icons.map(([i,t])=>'<li><i aria-hidden="true">'+i+'</i>'+t+'</li>').join('')+'</ul></div></div></section>'
+ const icons=[['🎙️','녹음 1시간'],['🎬','촬영 30분'],['🎚️','튜닝·믹싱'],['🎞️','필름 편집']]
+ // 2026-11-20 지훈: 맨 위는 축가 AR(1번)과 같은 형태 — 사진 넘김 → WISTIA 배지·제목·한 줄 → 한눈에 보는 안내 → 가격 카드 → 이벤트
+ const photos=[['hero.webp',1280,760,'헤드폰을 쓰고 프로포즈 노래를 녹음하는 모습'],['step-02.webp',960,540,'가사를 직접 쓰는 손'],['step-03.webp',960,640,'우리 둘의 사진'],['step-05.webp',960,559,'진심을 담아 노래하는 모습'],['step-06.webp',960,538,'카메라를 보고 편지를 전하는 모습']]
+ const slides=photos.map(([f,w,h,alt],index)=>'<div class="mas-gallery-slide hs-slide hs-landscape'+(index===0?' is-current':'')+'" id="masPhotoSlide'+index+'" data-mobile-slide role="group" aria-roledescription="slide" aria-label="'+(index+1)+' / '+photos.length+'">'+(index?'<img class="hs-blur-backdrop" src="assets/img/proposal-film/'+f+'" alt="" aria-hidden="true" loading="lazy" decoding="async">':'')+'<img class="hs-photo" src="assets/img/proposal-film/'+f+'" width="'+w+'" height="'+h+'" alt="'+alt+'" '+(index===0?'fetchpriority="high" decoding="async"':'loading="lazy" decoding="async"')+' draggable="false"></div>').join('')
+ const gallery='<div class="mas-gallery hs-gallery ed-hero-gallery" aria-label="프로포즈 필름 사진" aria-roledescription="carousel" data-mobile-gallery data-mobile-gallery-start="0"><div class="mas-gallery-viewport"><div class="mas-gallery-track hs-track" tabindex="0" aria-label="프로포즈 필름 사진, 좌우로 넘겨 보세요">'+slides+'</div><span class="mas-gallery-count hs-count" aria-live="polite">01 / '+String(photos.length).padStart(2,'0')+'</span></div></div>'
+ const priceCard='<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="프로포즈 필름 가격"><div class="rc-price-card rc-price-e"><span class="rc-shortcut-badge">'+p.month+' 최저가 보상 · '+pct+'% 할인</span><b>프로포즈 필름 패키지</b><del class="rc-shortcut-original">'+won(p.list)+'</del><strong class="rc-e-price">'+p.total.toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong><ul class="rc-e-incl">'+icons.map(([i,t])=>'<li><i aria-hidden="true">'+i+'</i>'+t.replace('<br>',' ')+'</li>').join('')+'</ul></div></div>'
+ const benefits='<section class="ed-hero-benefits" aria-labelledby="heroBenefitsTitle"><h2 id="heroBenefitsTitle">이벤트</h2><ul><li><span class="ed-benefit-symbol" aria-hidden="true">🎁</span><span>첫 이용 고객 <strong>20,000원 할인</strong></span></li><li><span class="ed-benefit-symbol" aria-hidden="true">✨</span><span>'+p.month+' 최저가 보상 이벤트 <strong>40,000원 할인</strong></span></li><li><span class="ed-benefit-symbol" aria-hidden="true">📅</span><span>녹음일 1개월 이후 <strong>10,000원 할인</strong></span></li></ul></section>'
+ const heroCopy='<div class="ed-hero-overview"><p class="ed-hero-brand">WISTIA <span>웨딩 축가 전문 스튜디오</span></p><h1 id="arcProductTitle">프로포즈 · 답프로포즈</h1><p class="ed-hero-lead">직접 부른 노래와 우리의 추억으로 완성하는 한 편의 필름</p>'+
+  '<section class="ed-hero-essentials" aria-labelledby="heroEssentialsTitle"><h2 id="heroEssentialsTitle">한눈에 보는 프로포즈 안내</h2><ul><li>'+studioIcon('microphone')+'<span>녹음 1시간 + 촬영 30분</span></li><li>'+studioIcon('tune')+'<span>한 마디씩 녹음 · 1:1 디렉팅</span></li><li>'+studioIcon('check')+'<span>나중에 결혼식 축가용 AR 버전까지</span></li></ul></section>'+
+  '<div class="ed-hero-actions">'+priceCard+'</div>'+benefits+'</div>'
+ const hero='<section class="mas-intro package-intro ed-hero" aria-labelledby="arcProductTitle" data-svg-title="off">'+gallery+heroCopy+'</section>'
  const film='<section class="ed-section pp-film" id="ppFilm" data-svg-title="off">'+WistiaEditorial.head('POINT 01','한 편의 영화처럼','이렇게 흘러가요')+'<ol class="pp-strip">'+steps.map(([t,d],i)=>'<li><img src="assets/img/proposal-film/step-0'+(i+1)+'.webp" alt="'+t+' 장면 예시" loading="lazy" decoding="async"><div><small>0'+(i+1)+'</small><b>'+t+'</b><span>'+d+'</span></div></li>').join('')+'</ol><p class="pp-note">구성은 1:1 맞춤으로, 원하시는 대로 맞춰 드려요</p></section>'
  const letter='<section class="ed-section pp-letter" id="ppLetter" data-svg-title="off">'+WistiaEditorial.head('POINT 03','노래로 다 못한 말은','마지막 편지로')+'<figure><img src="assets/img/proposal-film/step-06.webp" alt="카메라를 보고 손을 흔들며 편지를 전하는 장면" loading="lazy" decoding="async"></figure><p class="pp-note">카메라를 보고 직접 건네는 한마디로 필름을 마무리해요</p></section>'
  const ar='<section class="ed-section pp-ar" id="ppAr" data-svg-title="off">'+WistiaEditorial.head('POINT 04','나중에 결혼하실 때','축가용 AR 버전도 드려요!')+'<div class="pp-ar-cards"><div><i aria-hidden="true">💍</i><b>프로포즈 날</b><span>필름으로 고백</span></div><div><i aria-hidden="true">💒</i><b>결혼식 날</b><span>같은 노래로 AR 축가</span></div></div></section>'
  const faqItems=[['준비해야 할 사진이 있나요?','두 분의 사진·영상과 넣고 싶은 문구를 상담 후 안내해 드려요'],['상대방 몰래 준비할 수 있나요?','네, 비공개로 진행하고 연락도 신청하신 분께만 드려요'],['현장에서 바로 틀 수 있나요?','바로 상영할 수 있는 영상 파일로 전달해요, 사용 날짜가 정해져 있다면 상담에서 먼저 맞춰요'],['노래를 잘 못해도 괜찮을까요?','한 마디씩 끊어서 디렉팅을 받으며 녹음하고, 음정·박자 보정으로 자연스럽게 다듬어요']]
  const faq='<section class="ed-section pp-faq" id="ppFaq" data-svg-title="off"><header class="ed-heading" data-svg-title="off"><h2>자주 묻는 질문</h2></header>'+faqItems.map(([q,a],i)=>'<details'+(i===0?' open':'')+'><summary>Q. '+q+'</summary><p>'+a+'</p></details>').join('')+'<a class="pp-cta" href="'+proposalInquiryHref()+'">문의양식 작성하기</a></section>'
  const items=['반지만 주기엔 평범할까 걱정돼요','노래를 잘 못해도 괜찮을까요?','편지만으로는 부족한 것 같아요','들키지 않게 준비할 수 있을까요?']
- app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+faq+soloMapSection()+'</div>'+footer()
+ app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+faq+soloMapSection()+footer()+'<div class="home-dock" aria-label="예약 안내" data-dock-href="'+proposalInquiryHref()+'"><div class="home-offer" hidden><a data-home-offer-link></a></div><div class="home-dock-row"><a data-package-inquiry href="'+proposalInquiryHref()+'">문의양식 작성하기</a></div></div></div>'
 }
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
@@ -1284,7 +1292,7 @@ function syncHomeEventRibbon(){
  if(!header)return
  header.querySelector(".home-event-strip")?.remove()
  const rows=[]
- if(routePath()==="/"){
+ if(routePath()==="/"||routePath()==="/proposal"){
   const first=window.WistiaPackages.discountOffers.find(offer=>offer.key==="first")
   if(first)rows.push(["gift","첫 이용",(first.discount/10000)+"만원 할인"])
   if(window.WistiaRecording.monthly())rows.push(["headphones",WistiaRecording.eventMonth(),"최저가 보상"])
@@ -1502,7 +1510,7 @@ function initHomeDock(root){
  const selected=recording.selection(new URLSearchParams(location.search),root.dataset.arProduct==='duo')
  let reachedReviews=false,dismissed=false,frame=0
  function refreshOffer(){
-  const href=recording.inquiryHref(selected)
+  const href=dock.dataset.dockHref||recording.inquiryHref(selected)
   link.href=href
   dock.querySelector('[data-package-inquiry]').href=href
   banner.hidden=dismissed||!reachedReviews
@@ -2229,7 +2237,7 @@ function route({preserveScroll=false,reuseEventForm=false,scrollAnchor=""}={}){
  const home=!type||type==="section"||type==="find";const rootSolo=!type;const detail=type==="detail"&&PRODUCTS[key];const choice=type==="choose"&&FILM_FORMAT_PRODUCTS.has(key);const ar=type==="ar"&&AR_PURPOSES[key];const event=type==="event"&&PRODUCTS[key];const eventsPage=type==="events";const info=type==="info"&&INFO_PAGES[key];const purpose=parts[2]||"";const validDetail=detail||choice;
  const reuseArPriceForm=reuseEventForm&&event&&["solo","duo"].includes(key)&&["solo","duo"].includes(currentEventProduct)&&Boolean(app.querySelector("#consultForm"));
  const nextHasRatio=Boolean(rootSolo||ar||(detail&&(key==="solo"||PRODUCTS[key]?.category==="song")));if(document.querySelector("#ratioAudio")&&!nextHasRatio)releaseRatioAudioSources()
- const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));document.body.dataset.page=rootSolo?"detail":home?"home":type==="contact"?"event":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("is-solo-detail",unifiedDetail||rootSolo);document.body.classList.toggle("is-ar-detail",arDetail||rootSolo);document.body.classList.toggle("is-event-inquiry",Boolean(event));
+ const unifiedDetail=Boolean(validDetail&&AR_DETAIL_CONTENT[key]),arDetail=Boolean(detail&&["solo","duo"].includes(key));const proposalPage=type==="proposal";document.body.dataset.page=rootSolo||proposalPage?"detail":home?"home":type==="contact"?"event":event?"event":eventsPage?"events":validDetail?"detail":info?"info":"inner";document.body.classList.toggle("is-solo-detail",unifiedDetail||rootSolo||proposalPage);document.body.classList.toggle("is-ar-detail",arDetail||rootSolo||proposalPage);document.body.classList.toggle("is-event-inquiry",Boolean(event));
  document.body.classList.remove("menu-open");document.querySelector("#menuToggle")?.setAttribute("aria-expanded","false");document.querySelector("#menuToggle")?.setAttribute("aria-label","메뉴 열기");
  const headerBack=document.querySelector("#headerBack");if(headerBack)headerBack.hidden=home&&type!=="find";
  if(home)renderDetail("solo");else if(type==="contact")renderContactPage();else if(eventsPage)renderEventsPage();else if(choice)renderDetail(key);else if(detail)renderDetail(key,purpose);else if(event){if(reuseArPriceForm){currentEventProduct=key;currentEventPurpose=purpose;updatePrice()}else renderEvent(key,purpose)}else if(type==="proposal")renderProposalPage();else if(info)renderInfoPage(key);else app.innerHTML='<section class="shell section"><h1>찾으시는 페이지가 없습니다</h1><p>상품 목록에서 준비 중인 순간을 다시 찾아보세요</p>'+cta("상품 찾아보기","#/")+'</section>'+footer();
