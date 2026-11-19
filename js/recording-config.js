@@ -68,7 +68,7 @@
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
   const pct=Math.round((list-startPrice())/list*100)
-  return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>올인원 패키지</b><small class="rc-shortcut-incl">녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링</small><div class="rc-shortcut-prices"><del class="rc-shortcut-original">'+money(list)+'</del><span class="rc-shortcut-arrow" aria-hidden="true">›</span><strong>'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong></div></div></div>'
+  return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card rc-price-e"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>올인원 패키지</b><del class="rc-shortcut-original">'+money(list)+'</del><strong class="rc-e-price">'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong><ul class="rc-e-incl"><li><i aria-hidden="true">🎙️</i>녹음 2시간</li><li><i aria-hidden="true">🎚️</i>보컬 튜닝</li><li><i aria-hidden="true">🎛️</i>전문 믹싱</li><li><i aria-hidden="true">💿</i>마스터링</li></ul></div></div>'
  }
  function deliveryField(v){
   return field('04','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')

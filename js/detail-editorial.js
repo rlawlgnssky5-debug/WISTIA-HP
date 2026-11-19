@@ -2,25 +2,15 @@
 (function (global) {
   'use strict'
   // 2026-11-19 지훈 시안 4: POINT 표시는 전부 손글씨 ‘Point 1.’ 가운데 정렬 (POINT 01~06 같은 모양)
-  // 2026-11-19 지훈: Point 1 — 테이크 골라 붙이기(시안 1). 파형은 실제 오디오처럼 부드러운 채움형
-  const compWave = (seed, w) => {
-    let top = '', bot = ''
-    const n = Math.round(w / 1.5)
-    for (let i = 0; i <= n; i++) {
-      const x = i * w / n, t = i / n
-      const env = Math.max(.12, Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.08)), .6) * (.55 + .3 * Math.sin(t * 9 + seed) + .15 * Math.sin(t * 23 + seed * 3)))
-      const a = 13 * Math.min(1, env * 1.45) * (.7 + .3 * Math.abs(Math.sin(i * 2.3 + seed * 5)))
-      top += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + (14 - a).toFixed(1)
-      bot = 'L' + x.toFixed(1) + ' ' + (14 + a).toFixed(1) + bot
-    }
-    return '<svg viewBox="0 0 ' + w + ' 28" preserveAspectRatio="none" aria-hidden="true"><path d="' + top + bot + 'Z"/></svg>'
-  }
+  // 2026-11-19 지훈: Point 1 — 가사로: 마디마다 끊어서 잘될 때까지 반복 녹음 → 이어 붙여 완성 음원
   const compTakes = () => {
-    const best = [2, 0, 1]
-    const rows = [0, 1, 2].map(t => '<div class="ed-comp-row"><span>T' + (t + 1) + '</span>' + [0, 1, 2].map(c => '<i' + (best[c] === t ? ' class="is-best"' : '') + '>' + compWave(t * 3 + c + 1, 100) + '</i>').join('') + '</div>').join('')
-    return '<div class="ed-comp" role="img" aria-label="마디마다 가장 좋은 테이크를 골라 한 곡으로 이어 붙이는 예시"><div class="ed-comp-head"><span></span><b>오늘 이</b><b>자리에</b><b>서서</b></div>' + rows +
-      '<div class="ed-comp-row ed-comp-final"><span>완성</span><i>' + compWave(7, 300) + '</i></div></div>' +
-      '<p class="ed-comp-note">마디마다 <b>제일 좋은 테이크</b>만 골라 한 곡으로</p>'
+    const part = (lyric, fails, best) => '<div class="ed-comp-part"><p class="ed-comp-lyric">' + lyric + '</p><p class="ed-comp-takes">' +
+      Array.from({ length: fails }, (_, i) => '<s>take ' + (i + 1) + '</s>').join('') + '<b>take ' + best + ' OK</b></p></div>'
+    return '<div class="ed-comp" role="img" aria-label="한 마디씩 끊어서 잘될 때까지 반복 녹음한 뒤 이어 붙여 완성 음원을 만드는 예시">' +
+      part('사랑해 너를 사랑해', 2, 3) + part('눈물 나도록 사랑해', 4, 5) +
+      '<p class="ed-comp-join">잘된 마디만 이어 붙이면</p>' +
+      '<div class="ed-comp-final"><span>완성 음원 ♪</span><p>사랑해 너를 사랑해<br>눈물 나도록 사랑해</p></div></div>' +
+      '<p class="ed-comp-note">한 마디씩 끊어서 <b>잘될 때까지</b> 반복 녹음해요</p>'
   }
   const pointLabel = point => '<span class="ed-point ed-point-hand" aria-label="' + point + '">Point ' + Number(point.replace(/\D/g, '')) + '.</span>'
   const heading = (eyebrow, title, copy = '') => {
