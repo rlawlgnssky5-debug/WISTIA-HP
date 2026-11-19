@@ -270,16 +270,13 @@ html body #app#app #arcKey .ed-rcpt-cap { margin:44px 0 0 !important; padding:0 
 /* 2026-11-18 지훈: POINT 01 가사에 끊는 표시(디자인 1 + 문구 1) — 종이색 바탕, 가사 명조, 빨간 펜 사선과 손글씨 */
 html body #app#app #arcRecording { background:#f7f1e8 !important; }
 html body #app#app #arcRecording .ed-madi { max-width:340px; margin:0 auto; text-align:left; }
-html body #app#app #arcRecording .ed-madi-q { margin:20px 0 0 !important; font-family:'Gowun Batang',serif !important; font-size:22px !important; line-height:1.4; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; text-align:left !important; }
 html body #app#app #arcRecording .ed-madi-lyrics { margin-top:26px; }
 html body #app#app #arcRecording .ed-madi-lyrics p { display:flex; align-items:center; margin:22px 0 0 !important; white-space:nowrap; }
 html body #app#app #arcRecording .ed-madi-lyrics span { font-family:'Gowun Batang',serif !important; font-weight:700; font-size:27px !important; letter-spacing:-.02em; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
 html body #app#app #arcRecording .ed-madi-lyrics svg { flex:0 0 26px; width:26px; height:46px; margin:0 8px; fill:none; stroke:#d9485f; stroke-width:4.5; stroke-linecap:round; }
 html body #app#app #arcRecording .ed-madi-lyrics em { font-style:normal; font-family:'Nanum Pen Script',cursive !important; font-size:24px !important; line-height:1; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; transform:rotate(-4deg); }
 html body #app#app #arcRecording .ed-madi-lyrics p + p em { transform:rotate(3deg); }
-html body #app#app #arcRecording .ed-madi-a { margin-top:40px; border-top:1px solid #2b2024 !important; padding-top:16px; text-align:left; }
-html body #app#app #arcRecording .ed-madi-a h2 { margin:0 !important; font-size:23px !important; line-height:1.4 !important; font-weight:800 !important; letter-spacing:-.02em; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; text-align:left !important; }
-@media (max-width:350px) { html body #app#app #arcRecording .ed-madi-q { font-size:19px !important; } html body #app#app #arcRecording .ed-madi-lyrics span { font-size:23px !important; } html body #app#app #arcRecording .ed-madi-lyrics em { font-size:21px !important; } html body #app#app #arcRecording .ed-madi-lyrics svg { margin:0 5px; } }
+@media (max-width:350px) { html body #app#app #arcRecording .ed-madi-lyrics span { font-size:23px !important; } html body #app#app #arcRecording .ed-madi-lyrics em { font-size:21px !important; } html body #app#app #arcRecording .ed-madi-lyrics svg { margin:0 5px; } }
 /* 2026-11-18 지훈: 녹음 시간 할인 옆 ‘N월 이벤트 중!’ 코랄 알약(달은 자동) */
 html body #app#app .rc-rate-was .rc-rate-event { display:inline-block; margin-right:6px; padding:2px 8px; border-radius:999px; background:#e2677f !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-style:normal; font-size:11px !important; font-weight:800 !important; line-height:1.5; vertical-align:1px; white-space:nowrap; }
 /* 2026-11-18 지훈: 다음 단계 버튼 위 ‘총 N원 할인 중’ */
@@ -381,4 +378,10 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
 /* 2026-11-19 지훈 시안 4: POINT 01~06 손글씨 ‘Point N.’ 가운데 — 테두리·배경·알약 없음 */
 html body #app#app .ed-point.ed-point-hand { display:block !important; width:max-content; margin:0 auto 6px !important; padding:0 !important; border:0 !important; border-radius:0 !important; background:none !important; box-shadow:none !important; font-family:'Nanum Pen Script',cursive !important; font-size:32px !important; font-weight:400 !important; line-height:1.1 !important; letter-spacing:0 !important; text-transform:none !important; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
 html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !important; }
+}
+
+/* 2026-11-19 지훈: Point 1도 Point 2처럼 포인트 밑 후킹 2줄 — 분홍 배경에서 밑줄 보이게 */
+@layer wistia-home-polish {
+  html body #app#app section#arcRecording#arcRecording .ed-madi .ed-heading { margin-bottom:22px !important; }
+  html body #app#app section#arcRecording#arcRecording .ed-madi .ed-heading h2 b.ed-title { box-shadow:inset 0 -4.6px 0 #e8a7b5 !important; }
 }

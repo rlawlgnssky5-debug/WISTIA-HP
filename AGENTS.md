@@ -1,5 +1,8 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-19 — Point 1 후킹: Point 2와 같은 ed-heading 구조(질문 + 굵은 "한 마디씩 끊어서 불러요"), 아래 ed-madi-q/ed-madi-a 삭제
+
+
 ## 2026-11-19 — 섹션 색 시안 3(분홍 단계)
 
 - 지훈: 소개 흰 → 가격 #fdf6f6 → 후기 #fbeef0 → 고민 #f8e4e8 → Point 1 #f4d8de → Point 2 흰 → 3 #fdf6f6 → 4 #fbeef0 → 5 #f8e4e8 → 6 #f4d8de → 진행 흰 → FAQ #fbeef0 → 오시는 길 흰, 갈색 금지
