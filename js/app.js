@@ -1128,10 +1128,10 @@ function soloPoint04Section(){
   '<div class="solo-p4-panel">'+
   '<div class="ed-ratio-adjust"><div class="ed-ratio-dial"><span class="ed-ratio-disc" aria-hidden="true"><img src="assets/editorial/ar-cd-reference.webp" alt="" width="600" height="600" loading="lazy" decoding="async"></span><output data-ratio-output for="arRatioAdjust">50<small>%</small></output><span>AR MIX</span></div><div class="ed-ratio-track"><div class="ed-ratio-endpoints" aria-hidden="true"><span>LIVE</span><span>AR</span></div><input id="arRatioAdjust" data-ratio-adjust type="range" min="0" max="100" step="1" value="50" aria-label="AR 비율 조절" aria-valuetext="AR 50%, 현장 라이브 50%"><div class="ed-ratio-scale" aria-hidden="true"><span>내 목소리 중심</span><span>AR 보컬 중심</span></div></div></div>'+
   '<div class="solo-p4-ratios"><div class="solo-p4-buttons" role="group" aria-label="AR 비율 선택">'+buttons+'</div></div>'+
-  '<p class="solo-p4-hint"><strong>비율을 누르면</strong> 바로 들어볼 수 있어요</p>'+
-  '<div class="solo-p4-card" hidden>'+
+  '<p class="solo-p4-hint">비율을 고르고 재생 버튼을 눌러 들어보세요</p>'+
+  '<div class="solo-p4-card">'+
   '<div class="solo-p4-status"><span class="ed-listen-label">지금 이 비율로 들어보기</span><span class="ed-audio-state"><span data-solo-state>재생 대기</span> · <b data-solo-mix>AR 50%</b></span><span><span data-solo-current>0:00</span> / <span data-solo-duration>0:00</span></span></div>'+
-  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><button type="button" class="solo-p4-stop" aria-label="재생"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2 1v10l9-5Z" fill="currentColor"/></svg><span>재생</span></button></div>'+
+  '<div class="solo-p4-transport"><input class="solo-p4-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="재생 위치"><span class="solo-p4-tip" aria-hidden="true">여기 눌러보세요!</span><button type="button" class="solo-p4-stop" aria-label="재생"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2 1v10l9-5Z" fill="currentColor"/></svg><span>재생</span></button></div>'+
   '<div class="solo-p4-mix" aria-hidden="true"><i data-solo-live></i><i data-solo-ar></i></div>'+
   '<div class="solo-p4-legend"><span data-solo-live-label>현장 라이브 보컬 50</span><span data-solo-ar-label>미리 녹음한 AR 보컬 50</span></div>'+
   '<p class="solo-p4-error" role="status" hidden>음원을 불러오지 못했습니다</p>'+
@@ -2100,7 +2100,7 @@ function initSoloPoint04(){
  const liveBar=root.querySelector('[data-solo-live]'),arBar=root.querySelector('[data-solo-ar]')
  const liveLabel=root.querySelector('[data-solo-live-label]'),arLabel=root.querySelector('[data-solo-ar-label]'),error=root.querySelector('.solo-p4-error')
  const adjust=root.querySelector('[data-ratio-adjust]'),ratioOutput=root.querySelector('[data-ratio-output]')
- let pendingTime=null,selection=0,selectedSource=''
+ let pendingTime=null,selection=0,selectedSource=ratioSource(50)
  let knownDuration=Number.isFinite(audio.duration)?audio.duration:Number(audio.dataset?.durationHint)||0
  const timeline=()=>pendingTime??(Number.isFinite(audio.currentTime)?audio.currentTime:0)
  // A new src resets the media clock before metadata arrives. Keep the requested
@@ -2123,10 +2123,14 @@ function initSoloPoint04(){
  buttons.forEach(button=>button.addEventListener('click',()=>{
   const ratio=button.dataset.soloRatio
   buttons.forEach(item=>{const on=item===button;item.classList.toggle('is-on',on);item.classList.toggle('is-playing',on);item.setAttribute('aria-pressed',String(on))})
-  paint(ratio);card.hidden=false;if(error)error.hidden=true;if(state)state.textContent='불러오는 중'
+  // 2026-11-19 지훈: 비율만 눌러서는 소리가 나지 않게 — 재생 중일 때만 새 비율로 이어서 재생
+  const wasPlaying=!audio.paused
+  paint(ratio);if(error)error.hidden=true
   const request=++selection,source=ratioSource(ratio),time=timeline()
   if(source!==selectedSource){selectedSource=source;pendingTime=time;audio.src=source;setTimeline(time)}
   onTime()
+  if(!wasPlaying){buttons.forEach(item=>item.classList.remove('is-playing'));return}
+  if(state)state.textContent='불러오는 중'
   window.wistiaClaimPlayback?.(audio)
   const pending=audio.play();if(pending)pending.catch(reason=>{if(request!==selection||reason?.name==='AbortError')return;if(error)error.hidden=false;if(state)state.textContent='재생 오류';buttons.forEach(button=>button.classList.remove('is-playing'))})
  }))
@@ -2136,7 +2140,7 @@ function initSoloPoint04(){
  adjust?.addEventListener('input',onAdjust)
  adjust?.addEventListener('keydown',onAdjustKey)
  seek?.addEventListener('input',()=>{setTimeline(seek.value);onTime()})
- stop?.addEventListener('click',()=>{const request=++selection;if(audio.paused){if(error)error.hidden=true;window.wistiaClaimPlayback?.(audio);const pending=audio.play();if(pending)pending.catch(reason=>{if(request!==selection||reason?.name==='AbortError')return;onState();if(error)error.hidden=false;if(state)state.textContent='재생 오류'})}else{audio.pause();setTimeline(0);onTime();buttons.forEach(button=>button.classList.remove('is-playing'))}})
+ stop?.addEventListener('click',()=>{const request=++selection;root.querySelector('.solo-p4-tip')?.remove();if(audio.paused){buttons.forEach(item=>item.classList.toggle('is-playing',item.classList.contains('is-on')));if(error)error.hidden=true;window.wistiaClaimPlayback?.(audio);const pending=audio.play();if(pending)pending.catch(reason=>{if(request!==selection||reason?.name==='AbortError')return;onState();if(error)error.hidden=false;if(state)state.textContent='재생 오류'})}else{audio.pause();setTimeline(0);onTime();buttons.forEach(button=>button.classList.remove('is-playing'))}})
  soloPoint04Cleanup=()=>{selection++;pendingTime=null;adjust?.removeEventListener('input',onAdjust);adjust?.removeEventListener('keydown',onAdjustKey);audio.pause();audio.removeAttribute('src');audio.load();audio.removeEventListener('timeupdate',onTime);audio.removeEventListener('loadedmetadata',onMeta);audio.removeEventListener('ended',onEnded);audio.removeEventListener('play',onState);audio.removeEventListener('pause',onState)}
 }
 let editorialReviewsCleanup=null

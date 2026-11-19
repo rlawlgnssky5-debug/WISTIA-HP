@@ -127,7 +127,7 @@
         '<div class="ed-price-plot" role="img" aria-label="녹음 2시간, 보컬 보정·믹싱·마스터링 포함 솔로 가격 비교: 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
         '<ol aria-hidden="true">' + others.map(item => bar(item[0], item[1], false)).join('') + bar('WISTIA', ours, true) + '</ol>' +
         '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + (avg / max * 100).toFixed(1) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
-        '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p></div></section>'
+        '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p><p class="ed-price-src">* 2026년 11월 가격조사 기준</p></div></section>'
     },
     recording() {
       return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '이런 고민, 있으셨죠?') +
