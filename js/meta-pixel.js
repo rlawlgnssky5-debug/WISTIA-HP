@@ -168,7 +168,7 @@
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
       keepalive: true,
-      body: JSON.stringify({ event_id: eventId, event_source_url: sourceUrl.href, kind, ...clickIds() })
+      body: JSON.stringify({ event_id: eventId, event_source_url: sourceUrl.href, kind, ...clickIds(), ...(window.wistiaTestMode === true ? { test: true } : {}) })
     }).catch(() => {});
     return eventId;
   }

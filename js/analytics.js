@@ -1,6 +1,7 @@
 ﻿(() => {
   const measurementId = "G-5E0XX7SE8T";
-  const localPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+  // 테스트 기기(?test=1)·자동 도구는 GA4로 아무것도 보내지 않음 (js/test-mode.js)
+  const localPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) || window.wistiaTestMode === true;
   let lastPageUrl = "";
   let routeCleanup = null;
   let activePath = "";

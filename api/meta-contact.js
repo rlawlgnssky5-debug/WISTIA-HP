@@ -23,6 +23,8 @@ export default async function handler(request, response) {
   }
 
   const { event_id: eventId, event_source_url: sourceUrl, kind = "contact", fbp: bodyFbp, fbc: bodyFbc, fbclid, fbclid_at: fbclidAt } = request.body || {};
+  // 테스트 기기(?test=1 쿠키 wistia_test=1)나 테스트 표시가 붙은 요청은 메타로 보내지 않음
+  if ((request.body && request.body.test === true) || cookieValue(request.headers.cookie, "wistia_test") === "1") return response.status(200).json({ ok: true, skipped: "test" });
   if (!Object.hasOwn(EVENT_KINDS, kind)) return response.status(400).json({ ok: false });
   if (typeof eventId !== "string" || !/^[a-f0-9-]{36}$/i.test(eventId) || typeof sourceUrl !== "string") {
     return response.status(400).json({ ok: false });

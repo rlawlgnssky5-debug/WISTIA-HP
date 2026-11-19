@@ -1,5 +1,8 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-19 — 테스트 방문 광고 숫자 제외: js/test-mode.js(?test=1 → localStorage·쿠키 wistia_test=1 1년, ?test=0 해제, navigator.webdriver도 테스트, 좌상단 TEST 표시). 테스트면 fbq를 빈 함수로 막아 픽셀 미전송, analytics.js는 GA4 미전송, CAPI 요청에 test:true + 서버(api/meta-contact.js)는 test 표시·쿠키면 메타로 안 보냄. 픽셀 스니펫보다 먼저 동기 로드해야 함
+
+
 ## 2026-11-19 — Point 1 시안 2(가사 + 디렉터 한마디 말풍선 → 완성 음원). "준비부터 전달까지"(#arcProcess, packageProcess) 섹션 삭제, package-process-list CSS 전부 제거
 
 
