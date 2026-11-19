@@ -80,8 +80,9 @@
       if(resume||autoPlay||pendingPlay)play()
     }
     playBtn.addEventListener('click',()=>isPlaying?pause():play(),{signal})
-    tabs.forEach(tab=>tab.addEventListener('click',()=>activate(tab.dataset.mode,true),{signal}))
-    switchBtn.addEventListener('click',()=>activate(mode==='before'?'after':'before',true),{signal})
+    // 2026-11-19 지훈: 보정 전·후 탭은 전환만 — 재생 버튼을 눌러야 시작(재생 중이면 이어서)
+    tabs.forEach(tab=>tab.addEventListener('click',()=>activate(tab.dataset.mode),{signal}))
+    switchBtn.addEventListener('click',()=>activate(mode==='before'?'after':'before'),{signal})
     function makePeaks(buffer,count=120){
       const data=buffer.getChannelData(0),size=Math.max(1,Math.floor(data.length/count)),result=[]
       for(let i=0;i<count;i++){let sum=0;for(let j=0;j<size;j++)sum+=Math.abs(data[i*size+j]||0);result.push(sum/size)}

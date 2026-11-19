@@ -151,7 +151,8 @@
       // 2026-11-13 지훈: 녹음 메이킹은 예약 시간 +1시간, +80,000원 (문의양식 '녹음 메이킹 영상 추가' 스위치)
       return '<section class="arc-point arc-point-making ed-section" id="arcMaking" data-svg-title="off">' +
         // 2026-11-15 지훈: 남는 건 영상 — 1인 2컷·2인 4컷 + 인서트 컷, 축가 중 뒤에 띄우는 용도는 AR이 드러나서 쓰지 않음
-        heading('RECORDING MAKING · POINT 05', '<span>둘이 함께 부른 그 순간</span>오래 꺼내 볼 수 있게') +
+        // 2026-11-19 지훈: 메이킹은 Point가 아니라 '추가 옵션' 섹션 — Point 5(무제한 수정) 아래
+        '<p class="ed-option-label">추가 옵션</p>' + heading('RECORDING MAKING', '<span>둘이 함께 부른 그 순간</span><b class="ed-title">오래 꺼내 볼 수 있게</b>') +
         // 2026-11-15 지훈: 유튜브 일시정지 화면 + 아래 큰 숫자 칸(1인 2컷 · 2인 4컷 · + 인서트 컷), 시안 7
         '<div class="ed-making-scene ed-yt"><figure class="ed-yt-player"><img src="assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 헤드폰을 쓰고 축가를 녹음하는 메이킹 영상 장면" width="1280" height="730" loading="lazy" decoding="async"><span class="ed-yt-ui" aria-hidden="true"><span class="ed-yt-bar"><i></i></span><span class="ed-yt-ctl"><span class="ed-yt-l"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM9.5 12 19 5v14z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM14.5 12 5 19V5z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><b>0:15 / 3:38</b></span><span class="ed-yt-r"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11h4M13 11h4M7 15h7" stroke="currentColor" stroke-width="2"/></svg><span class="ed-yt-gear"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.48.48 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg><em>HD</em></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span></figure>' +
         '<div class="ed-yt-nums"><div><b>2</b><span>컷</span><small>1인</small></div><div><b>4</b><span>컷</span><small>2인</small></div><div><b>+</b><small>인서트 컷</small></div></div></div>' +
@@ -160,7 +161,7 @@
     revision() {
       // 2026-11-16 지훈: 상세 마지막 POINT 06 무제한 수정 — 보통 vs 위스티아 비교 카드, 위스티아 칸에 ∞ (합본 시안 2, 도장 없음)
       return '<section class="arc-point ed-section ed-revision" id="arcRevision" data-svg-title="off">' +
-        heading('REVISION · POINT 06', '<span>혹시 마음에 안 들면 어떡하지?</span>걱정하지 마세요') +
+        heading('REVISION · POINT 05', '<span>혹시 마음에 안 들면 어떡하지?</span>걱정하지 마세요') +
         '<div class="ed-rev">' +
         '<div class="ed-rev-card"><div class="ed-rev-cols"><div class="ed-rev-col"><small>보통</small><s>수정 1~2회</s></div><div class="ed-rev-col is-us"><svg class="ed-rev-inf" viewBox="0 0 24 12" aria-hidden="true"><path d="M12 6C10 3.3 8 2 6 2a4 4 0 0 0 0 8c2 0 4-1.3 6-4zm0 0c2 2.7 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.3-6 4z"/></svg><b>무제한 수정</b></div></div><p>마음에 드실 때까지 고쳐 드려요</p></div></div></section>'
     },
