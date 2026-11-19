@@ -14,8 +14,8 @@
     "not_found_handling": "none"
   },
   "observability": { "enabled": true },
-  "workers_dev": true,
-  "preview_urls": true,
+  "workers_dev": false,
+  "preview_urls": false,
   // 2026-11-15 오류 모니터: 브라우저·서버 오류 기록(site_errors), /admin/errors 는 ADMIN_ERRORS_KEY 비밀이 있어야 열린다
   "d1_databases": [{ "binding": "ERRORS_DB", "database_name": "wistia-site-errors", "database_id": "c3596603-c875-466c-ab91-3336d651bc49" }],
   // /api/error-test 는 이 시각까지만 일부러 오류를 낸다 (배포 후 검증용, 지나면 404)

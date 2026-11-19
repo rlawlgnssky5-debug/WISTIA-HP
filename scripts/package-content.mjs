@@ -27,7 +27,7 @@ function recordingServices(){
  return [{
   '@type':'Service',
   '@id':origin+'/#service-recording',
-  name:'위스티아 축가 AR 사전 녹음 · 녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링',
+  name:'위스티아 축가 AR 사전 녹음 · 올인원 패키지 (녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링)',
   serviceType:'축가 AR 사전 녹음',
   description:'1곡 · 녹음 2시간 · 보컬 튜닝·전문 믹싱·마스터링 포함 · 정가 240,000원 · 인원 추가 +40,000원 · 녹음 1시간 추가 +60,000원 · 1:1 디렉팅 · 전달 : 녹음일 기준 7일 이내 (3일 이내 +30,000원)',
   url,
