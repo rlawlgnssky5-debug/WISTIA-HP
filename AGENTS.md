@@ -1,5 +1,9 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-19 — 상세 영어 소제목 삭제
+
+- 지훈: VOCAL TUNING·LIVE & AR MIX·RECORDING MAKING·REVISION·BRIDE’S WORRY·REAL REVIEW·FAQ·HOW TO COME 같은 작은 영어 소제목은 쓰지 않는다(heading()의 eyebrow는 Point 번호만 쓴다), 후기 도착 감지는 #soloReviewTitle
+
 ## 2026-11-19 — ‘타입’ 문구 정리
 
 - 지훈: 상품이 하나라 ‘타입’ 말을 쓰지 않는다 — FAQ 완성 음원(‘녹음일 기준 7일 이내’), 진행 순서 01 ‘곡과 키, 필요한 옵션’, 03 ‘음정·박자 보정·전문 믹싱·마스터링까지 모두 진행해요’, 04 ‘녹음일 기준 7일 이내 전달’ (진행 안내 페이지도 같음)

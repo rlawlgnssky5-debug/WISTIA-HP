@@ -1150,7 +1150,7 @@ function soloChatFaq(){
   ['본식에서는 어떻게 사용하나요?','예식장에서 완성된 AR 음원을 재생하고, 그 위에 직접 노래하시면 돼요<br>본식 전 예식장 담당자에게 음원을 전달하고, 재생 및 마이크 리허설 가능 여부를 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','네! 보컬 밸런스를 30%, 50%, 70%, 100% 등 다양한 비율로 모두 준비해 드려요<br>본식 당일 컨디션에 맞춰 가장 편안한 버전을 선택하시면 돼요']
  ]
- return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q'+(index+1)+'. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map(line=>'<p>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
+ return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q'+(index+1)+'. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map(line=>'<p>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
 function soloNoticeAndMap(){
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=20261105-notice-7d-1','예약 전에 확인하세요. 납기는 녹음일 기준 7일 이내, 빠른 작업은 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
@@ -1159,7 +1159,7 @@ function soloNoticeAndMap(){
 // 2026-11-19 지훈: 오시는 길은 홈과 오시는 길 페이지가 같은 모양(지도 → 지하철·도보·스튜디오·주차 → 네이버·카카오 → 운영 안내)
 function soloMapSection({heading=true}={}){
  const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
- return '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-label="오시는 길" data-svg-title="off">'+(heading?'<p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>':'')+
+ return '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-label="오시는 길" data-svg-title="off">'+(heading?'<h2 id="soloMapTitle">오시는 길</h2>':'')+
  '<div class="home-map-inset"><div class="ed-map-art"><img src="assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="1443" height="1041" loading="lazy" decoding="async"></div>'+
   '<div class="ed-map-route"><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="22" rx="5"/><path d="M8 14h16M11 25l-3 4m13-4 3 4M12 21h.01M20 21h.01"/></svg></span><strong>부천시청역 1번 출구</strong></div><div class="ed-map-walk"><span aria-hidden="true"></span><p>도보 약 300m</p></div><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a10 10 0 0 0-10 10c0 7 10 18 10 18s10-11 10-18A10 10 0 0 0 16 2Zm0 6a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg></span><div><strong>위스티아 스튜디오</strong><p>'+address+'</p></div></div></div>'+
   '<div class="ed-map-parking ed-map-stop"><span class="ed-map-icon" aria-hidden="true">P</span><div><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></div></div>'+
@@ -1491,7 +1491,7 @@ function initHomeDock(root){
  }
  function checkReviews(){
   frame=0
-  const reviewLabel=root.querySelector('.arc-reviews .rv5-eye')
+  const reviewLabel=root.querySelector('.arc-reviews #soloReviewTitle')
   const dockTop=dock.getBoundingClientRect().top
   const visibleBottom=dockTop>0?Math.min(dockTop,window.innerHeight):window.innerHeight
   const reached=!!reviewLabel&&reviewLabel.getBoundingClientRect().bottom<=visibleBottom
