@@ -385,3 +385,9 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
   html body #app#app section#arcRecording#arcRecording .ed-madi .ed-heading { margin-bottom:22px !important; }
   html body #app#app section#arcRecording#arcRecording .ed-madi .ed-heading h2 b.ed-title { box-shadow:inset 0 -4.6px 0 #e8a7b5 !important; }
 }
+
+/* 2026-11-19 지훈: 가격 카드 제목 '올인원 패키지' + 구성은 작은 줄 */
+@layer wistia-home-polish {
+  html body #app#app .rc-shortcuts-one .rc-price-card > b { font-size:18px !important; font-weight:800 !important; margin:8px 0 2px !important; }
+  html body #app#app .rc-shortcuts-one .rc-shortcut-incl { display:block; font-size:13px !important; line-height:1.4; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; margin:0 0 8px; white-space:nowrap; }
+}
