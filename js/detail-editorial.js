@@ -129,15 +129,27 @@
         '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + (avg / max * 100).toFixed(1) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
         '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p><p class="ed-price-src">* 2026년 11월 가격조사 기준</p></div></section>'
     },
-    recording() {
+    // 2026-11-20 지훈: 고민 검색창·한 마디씩 끊어 부르기 섹션은 프로포즈 상세에서도 그대로 쓴다
+    worries(keyword = '축가', items = ['부탁할 사람이 마땅치 않아요', '노래를 잘 못해도 괜찮을까요?', '하객들 앞에서 너무 떨려요', '미리 녹음하면 티 나지 않을까요?']) {
+      const glass = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>'
+      const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>'
       return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '이런 고민, 있으셨죠?') +
-        // 2026-11-16 지훈 시안 5-B: 검색창 자동완성 모양(로즈 테두리, 줄마다 ‘축가’ 굵게)
-        '<div class="ed-worry-search"><div class="ed-worry-input" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>축가 고민<i></i></div><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 부탁할 사람이 마땅치 않아요</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 노래를 잘 못해도 괜찮을까요?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 하객들 앞에서 너무 떨려요</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span><b>축가</b> 미리 녹음하면 티 나지 않을까요?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></li></ul></div></section>' +
-        '<section class="arc-point arc-point-recording ed-section" id="arcRecording" data-svg-title="off">' +
-        // 2026-11-18 지훈: POINT 01은 가사에 끊는 표시(디자인 1 + 문구 1) — 한 소절이 아니라 한 마디씩 끊어서 부른다
-        '<div class="ed-madi"><header class="ed-heading" data-svg-title="off">' + pointLabel('POINT 01') + '<h2><span>노래 못하는데, 괜찮을까요?</span><b class="ed-title">한 마디씩 끊어서 불러요</b></h2></header>' +
+        // 2026-11-16 지훈 시안 5-B: 검색창 자동완성 모양(로즈 테두리, 줄마다 키워드 굵게)
+        '<div class="ed-worry-search"><div class="ed-worry-input" aria-hidden="true">' + glass + keyword + ' 고민<i></i></div><ul>' +
+        items.map(text => '<li>' + glass + '<span><b>' + keyword + '</b> ' + text + '</span>' + arrow + '</li>').join('') + '</ul></div></section>'
+    },
+    takes(point = 'POINT 01') {
+      return '<section class="arc-point arc-point-recording ed-section" id="arcRecording" data-svg-title="off">' +
+        // 2026-11-18 지훈: 한 소절이 아니라 한 마디씩 끊어서 부른다
+        '<div class="ed-madi"><header class="ed-heading" data-svg-title="off">' + pointLabel(point) + '<h2><span>노래 못하는데, 괜찮을까요?</span><b class="ed-title">한 마디씩 끊어서 불러요</b></h2></header>' +
         compTakes() +
         '</div></section>'
+    },
+    recording() {
+      return this.worries() + this.takes()
+    },
+    head(point, question, title) {
+      return '<header class="ed-heading" data-svg-title="off">' + pointLabel(point) + '<h2><span>' + question + '</span><b class="ed-title">' + title + '</b></h2></header>'
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +

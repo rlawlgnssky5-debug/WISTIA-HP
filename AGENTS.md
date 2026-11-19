@@ -1,5 +1,12 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-20 — 프로포즈·답프로포즈 상세 /proposal (새 경로, 예전 /event/proposal·/detail/proposal은 410 유지)
+
+- 지훈: 녹음 1시간 30분 + 촬영 30분, 가격은 녹음 상품 + 메이킹 필름 80,000원과 같다 — 정가 320,000 → 첫 이용 −20,000 · N월 최저가 보상 −40,000 = 260,000원, 사전 예약 −10,000 → 250,000원 (`proposalPrice()`가 WistiaRecording 값을 읽는다)
+- 순서: 히어로(여자 녹음 사진, 재생 버튼 없음) + 가격 카드 E형 → 프로포즈 고민 검색창(`WistiaEditorial.worries`) → Point 1 필름 흐름(지훈 폴더 6장 `assets/img/proposal-film/`, ‘구성은 1:1 맞춤으로 원하시는 대로’) → Point 2 한 마디씩(`WistiaEditorial.takes`, 축가 AR과 같은 섹션) → Point 3 마지막 편지 → Point 4 ‘나중에 결혼하실 때 축가용 AR 버전도 드려요!’ → 가격 영수증 → FAQ → 오시는 길, 진행 순서는 없다
+- 문의 버튼은 `/event/solo?…makingVideo=1`(합계 260,000원), 메뉴 웨딩 축가 그룹에 ‘프로포즈 · 답프로포즈’, proposal.html·sitemap·gone-paths LIVE에 추가
+
+
 ## 2026-11-19 — 보정 전·후 탭/전환 버튼은 전환만(자동 재생 X), 재생 버튼으로만 시작
 
 

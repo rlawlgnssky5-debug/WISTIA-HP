@@ -419,3 +419,67 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
 @layer wistia-home-polish {
   html body #app#app #arcMaking .ed-option-label { display:table; margin:0 auto 10px !important; padding:5px 14px; border-radius:999px; border:1.5px solid #d9485f; background:#fff; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; font-size:13px !important; font-weight:800; line-height:1.3; letter-spacing:.02em; }
 }
+
+/* 2026-11-20 지훈: 프로포즈·답프로포즈 상세(/proposal) — 홈 상세와 같은 손글씨 Point·제목, 섹션마다 분홍 단계 */
+@layer wistia-home-polish {
+  html body #app#app .pp-scope { overflow:hidden; }
+  html body #app#app .pp-scope > section { padding:52px 20px !important; margin:0 !important; }
+  html body #app#app .pp-scope > section.pp-hero { padding:0 0 40px !important; background:#fff !important; }
+  html body #app#app .pp-scope section#arcWorries#arcWorries { background:#fdf6f6 !important; }
+  html body #app#app .pp-scope section#ppFilm { background:#fbeef0 !important; }
+  html body #app#app .pp-scope section#arcRecording#arcRecording { background:#f8e4e8 !important; }
+  html body #app#app .pp-scope section#ppLetter { background:#f4d8de !important; }
+  html body #app#app .pp-scope section#ppAr { background:#fff !important; }
+  html body #app#app .pp-scope section#ppPrice { background:#fdf6f6 !important; }
+  html body #app#app .pp-scope section#ppFaq { background:#fbeef0 !important; }
+  html body #app#app .pp-scope > section::before, html body #app#app .pp-scope > section::after { display:none !important; }
+  html body #app#app .pp-scope > section > * { max-width:520px; margin-left:auto !important; margin-right:auto !important; }
+  html body #app#app .pp-hero-img { display:block; width:100%; max-width:none !important; height:auto; aspect-ratio:1280/760; object-fit:cover; }
+  html body #app#app .pp-hero-copy { padding:24px 20px 0; text-align:center; }
+  html body #app#app .pp-kicker { margin:0 !important; font-size:13px !important; font-weight:800; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; }
+  html body #app#app .pp-hero h1 { margin:6px 0 0 !important; font-size:27px !important; font-weight:900 !important; line-height:1.3 !important; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; text-align:center !important; }
+  html body #app#app .pp-lead { margin:8px 0 0 !important; font-size:14px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; text-align:center !important; }
+  html body #app#app .pp-price { position:relative; display:flex; flex-direction:column; align-items:center; margin:30px auto 0; max-width:420px; padding:28px 14px 18px; border:1px solid #f0d6dc; border-radius:22px; background:#fff; box-shadow:0 8px 24px rgba(176,112,112,.13); }
+  html body #app#app .pp-price-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); white-space:nowrap; padding:4px 11px; border-radius:999px; background:#8c2340; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:12px !important; font-weight:800; }
+  html body #app#app .pp-price > b { font-size:15px !important; font-weight:700; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app .pp-price del { margin-top:4px; font-size:14px !important; color:#9b8a8f !important; -webkit-text-fill-color:#9b8a8f !important; }
+  html body #app#app .pp-price strong { font-size:clamp(34px,10vw,40px) !important; font-weight:900 !important; line-height:1.1; color:#8c2340 !important; -webkit-text-fill-color:#8c2340 !important; }
+  html body #app#app .pp-price strong span { font-size:.5em !important; }
+  html body #app#app .pp-price ul { display:grid; grid-template-columns:repeat(4,1fr); gap:4px; width:100%; list-style:none; margin:16px 0 0 !important; padding:14px 0 0 !important; border-top:1px solid #f4e3e7; }
+  html body #app#app .pp-price li { margin:0; padding:0; font-size:11.5px !important; font-weight:600; line-height:1.35; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app .pp-price li::before { content:none !important; }
+  html body #app#app .pp-price li i { display:block; font-style:normal; font-size:22px !important; line-height:1.2; margin-bottom:4px; }
+  html body #app#app .pp-strip { list-style:none; margin:24px auto 0 !important; padding:12px 10px !important; border-radius:8px; background:#2b2024; background-image:repeating-linear-gradient(90deg,transparent 0 8px,#fbeef0 8px 16px,transparent 16px 24px),repeating-linear-gradient(90deg,transparent 0 8px,#fbeef0 8px 16px,transparent 16px 24px); background-size:100% 10px,100% 10px; background-position:0 0,0 100%; background-repeat:no-repeat; }
+  html body #app#app .pp-strip li { display:flex; gap:12px; align-items:center; margin:0; padding:6px 0; }
+  html body #app#app .pp-strip li::before { content:none !important; }
+  html body #app#app .pp-strip img { flex:none; width:56%; aspect-ratio:16/9; object-fit:cover; border-radius:4px; }
+  html body #app#app .pp-strip div { display:flex; flex-direction:column; min-width:0; text-align:left; }
+  html body #app#app .pp-strip small { font-size:11px !important; font-weight:800; color:#e8a7b5 !important; -webkit-text-fill-color:#e8a7b5 !important; }
+  html body #app#app .pp-strip b { font-size:15px !important; font-weight:800; line-height:1.3; color:#fff !important; -webkit-text-fill-color:#fff !important; }
+  html body #app#app .pp-strip span { font-size:12px !important; line-height:1.4; color:#cbb8bd !important; -webkit-text-fill-color:#cbb8bd !important; }
+  html body #app#app .pp-note { margin:14px auto 0 !important; text-align:center !important; font-size:14px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app .pp-film .pp-note { color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; font-weight:700; }
+  html body #app#app .pp-letter figure { margin:22px auto 0 !important; }
+  html body #app#app .pp-letter img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:16px; }
+  html body #app#app .pp-ar-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  html body #app#app .pp-ar-cards div { padding:16px 10px; border-radius:16px; background:#fdf6f6; text-align:center; }
+  html body #app#app .pp-ar-cards i { display:block; font-style:normal; font-size:28px !important; }
+  html body #app#app .pp-ar-cards b { display:block; margin-top:4px; font-size:15px !important; font-weight:800; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app .pp-ar-cards span { display:block; margin-top:3px; font-size:12.5px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app .pp-rc { padding:18px 18px 14px; border-radius:6px; background:#fff; box-shadow:0 8px 20px rgba(176,112,112,.15); }
+  html body #app#app .pp-rc-title { margin:0 0 10px !important; padding-bottom:10px; border-bottom:1px dashed #e8c5ce; text-align:center !important; font-size:12px !important; font-weight:800; letter-spacing:.06em; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app .pp-rc-row { display:flex; justify-content:space-between; gap:10px; margin:0 !important; padding:5px 0; font-size:14px !important; text-align:left !important; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app .pp-rc-row span:last-child { flex:none; }
+  html body #app#app .pp-rc-row.is-muted { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+  html body #app#app .pp-rc-row.is-off { font-weight:700; color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
+  html body #app#app .pp-rc hr { margin:8px 0 !important; border:0; border-top:1px dashed #e8c5ce; }
+  html body #app#app .pp-rc hr.is-strong { border-top:2px solid #2b2024; }
+  html body #app#app .pp-rc-total { display:flex; justify-content:space-between; align-items:baseline; margin:0 !important; font-weight:800; }
+  html body #app#app .pp-rc-total strong { font-size:26px !important; font-weight:900; color:#8c2340 !important; -webkit-text-fill-color:#8c2340 !important; }
+  html body #app#app .pp-rc-advance { margin:10px 0 0 !important; padding:9px 12px; border-radius:10px; background:#fbeef0; text-align:center !important; font-size:13px !important; font-weight:700; color:#8c2340 !important; -webkit-text-fill-color:#8c2340 !important; }
+  html body #app#app .pp-faq details { margin:0 auto !important; padding:13px 2px; border-bottom:1px solid #ecd3da; text-align:left; }
+  html body #app#app .pp-faq summary { cursor:pointer; list-style:none; font-size:15px !important; font-weight:700; color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; }
+  html body #app#app .pp-faq summary::-webkit-details-marker { display:none; }
+  html body #app#app .pp-faq details p { margin:6px 0 0 !important; font-size:13.5px !important; line-height:1.6; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; text-align:left !important; }
+  html body #app#app .pp-cta { display:flex !important; align-items:center; justify-content:center; min-height:52px; margin-top:26px !important; border-radius:999px; background:#7a3647; color:#fff !important; -webkit-text-fill-color:#fff !important; font-size:16px !important; font-weight:800; text-decoration:none; }
+}

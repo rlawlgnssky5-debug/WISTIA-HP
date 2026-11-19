@@ -6,6 +6,7 @@ export const LIVE_PATHS = new Set([
   '/event/duo',
   '/contact',
   '/events',
+  '/proposal',
   '/info/faq',
   '/info/location',
 ])
@@ -16,6 +17,7 @@ export const LIVE_FILES = new Set([
   '/event/duo.html',
   '/contact.html',
   '/events.html',
+  '/proposal.html',
   '/info/faq.html',
   '/info/location.html',
 ])
@@ -49,7 +51,7 @@ function isStaticAsset(path) {
 function isUnpublishedFile(path) {
   if (/\.(?:zip|md)$/i.test(path)) return true
   if (path.startsWith('/Claude outputs/') || path.startsWith('/tmp/')) return true
-  if (/^\/[^/]+\.[^/]+$/.test(path) && !['/robots.txt', '/sitemap.xml', '/favicon.ico', '/wistia-config.json', '/index.html', '/contact.html', '/events.html', '/4b00b68f4bc3ad46fe8137c51fbcf8b3.txt'].includes(path)) return true
+  if (/^\/[^/]+\.[^/]+$/.test(path) && !['/robots.txt', '/sitemap.xml', '/favicon.ico', '/wistia-config.json', '/index.html', '/contact.html', '/events.html', '/proposal.html', '/4b00b68f4bc3ad46fe8137c51fbcf8b3.txt'].includes(path)) return true
   return false
 }
 
