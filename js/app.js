@@ -402,7 +402,7 @@ const INFO_FAQ_GROUPS=[
   ["AR을 사용하면 어색하거나 티가 나지 않을까요?","녹음한 목소리와 현장에서 부르는 목소리가<br>자연스럽게 어우러지도록 비율을 맞춰요<br><br>녹음 당일 AR에 맞춰 직접 불러보면서<br>본식에서의 느낌도 확인하실 수 있어요"]
  ]},
  {title:"완성본 전달과 수정",description:"녹음 후에도 마지막까지 꼼꼼히 도와드려요",items:[
-  ["완성된 음원은 언제 받을 수 있나요?","모든 타입은 녹음일 기준 7일 이내에<br>완성 음원을 전달해 드려요<br><br>3일 이내 전달은 별도 옵션이에요"],
+  ["완성된 음원은 언제 받을 수 있나요?","녹음일 기준 7일 이내에<br>완성 음원을 전달해 드려요<br><br>3일 이내 전달은 별도 옵션이에요"],
   ["완성본을 듣고 수정하고 싶으면 어떡하나요?","음원을 들어보신 뒤 아쉬운 부분이 있다면<br>편하게 말씀해 주세요<br><br>요청하신 내용을 꼼꼼히 확인하고<br>수정 가능 범위와 일정을 안내해 드릴게요"],
   ["예식장에는 어떤 파일을 전달하면 되나요?","전달해 드린 본식용 AR 음원을<br>예식장 담당자에게 보내주시면 돼요<br><br>필요한 파일 형식과 재생 환경을 확인하고<br>본식 전에 잘 재생되는지도 점검해 주세요"]
  ]},
@@ -912,7 +912,7 @@ function renderInfoPage(key){
  const locationContent='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo location-map-scope" data-ar-product="solo">'+soloMapSection({heading:false})+'</div>'
  const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&window.WistiaRecording?.monthly()?{...group,items:[["이번 달 이벤트 할인은 어떻게 적용되나요?",WistiaRecording.eventUntil()+" 예약하시면 최저가 보상 이벤트로 40,000원을 할인해 드려요<br>별도로 쿠폰을 받으실 필요는 없어요",true],...group.items]}:group)
  const faqContent='<div class="info-faq">'+faqGroups.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><div><h2 id="infoFaqGroup'+index+'"><span class="faq-group-q" aria-hidden="true"><svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><circle cx="10" cy="10" r="10" fill="#b98a8e"/><circle cx="9.6" cy="9.4" r="4.3" fill="none" stroke="#fff" stroke-width="2"/><path d="M11.3 11.4l3 3" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></span>'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
- const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','선택한 타입에 맞춰 목소리를 완성해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/">AR 축가 알아보기 →</a></div></div>'
+ const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','음정·박자 보정·전문 믹싱·마스터링까지 모두 진행해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/">AR 축가 알아보기 →</a></div></div>'
  const content=key==="faq"?faqContent:key==="process"?processContent:key==="location"?locationContent:aboutContent.replace('WEDDING VOCAL · FILM STUDIO','목소리와 이야기를 담는 스튜디오')
  const introduction=key==='about'?'<p class="about-fixed-lines">위스티아는 경기도 부천에 위치한<br>웨딩 축가 전문 스튜디오입니다</p><p class="about-fixed-lines about-intro-services"><strong>축가 AR 사전 녹음</strong>으로<br>본식에서 전할 노래를 함께 준비합니다</p>':'<p>'+sentenceBreaks(page.description)+'</p>'
  app.innerHTML='<section class="shell section info-page info-page-'+key+'" aria-labelledby="infoPageTitle"><header class="info-page-intro">'+(page.eyebrow?label(page.eyebrow):'')+'<h1 id="infoPageTitle">'+page.title.replace("\n","<br>")+'</h1>'+introduction+'</header>'+content+'</section>'+footer()
@@ -1146,7 +1146,7 @@ function soloChatFaq(){
   ['노래를 잘 못해도 괜찮을까요?','물론이에요! 한 마디씩 나누어 녹음하고, 옆에서 1:1 맞춤 디렉팅으로 차근차근 도와드려요'],
   ['어려운 부분은 다시 부를 수 있나요?','네! 어려운 구간은 충분히 반복해서 녹음할 수 있어요<br>마음에 드는 결과가 나올 수 있도록 함께 맞춰가요'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원곡의 키가 높거나 낮아도 괜찮아요<br>녹음 전 직접 불러보면서 목소리에 가장 편안한 키로 조절해 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 빠른 전달도 별도 옵션으로 가능해요'],
+  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 빠른 전달도 별도 옵션으로 가능해요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 완성된 AR 음원을 재생하고, 그 위에 직접 노래하시면 돼요<br>본식 전 예식장 담당자에게 음원을 전달하고, 재생 및 마이크 리허설 가능 여부를 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','네! 보컬 밸런스를 30%, 50%, 70%, 100% 등 다양한 비율로 모두 준비해 드려요<br>본식 당일 컨디션에 맞춰 가장 편안한 버전을 선택하시면 돼요']
  ]
@@ -1203,7 +1203,7 @@ function arCommerceDetail(p,key="solo"){
   ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요.</strong>'],
   ['어려운 부분은 다시 부를 수 있나요?','<span data-ar-hours>'+hours+'</span>시간 안에서 어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 마디씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
-  ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 받기는 별도 옵션이에요'],
+  ['완성 음원은 언제 받을 수 있나요?','녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 받기는 별도 옵션이에요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
   ['녹음한 목소리의 비율도 고를 수 있나요?','위스티아는 모든 비율을 다 만들어 드려요,<br>그날 컨디션에 맞게 골라 쓰세요']
  ]
@@ -1339,7 +1339,7 @@ function optionExplainSection(){
  return '<section class="option-explain" aria-labelledby="optionExplainTitle" data-svg-title="off"><h2 id="optionExplainTitle">옵션 설명!</h2><div class="ox-steps">'+items+'</div></section>'
 }
 function packageNotices(){return '<section data-svg-title="off" class="package-notices"><h2>예약 전에 확인하세요</h2><ul><li><strong>음원 전달</strong><span>녹음일 기준 7일 이내 전달<br>3일 이내 전달은 +30,000원</span></li><li><strong>녹음 시간</strong><span>2시간 기본 · 1시간 추가 +60,000원</span></li></ul></section>'}
-function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 타입과 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','선택하신 구성에 맞춰 음정·박자 보정, 전문 믹싱, 마스터링을 진행해요'],['검수·전달','모든 타입은 녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
+function packageProcess(){return '<section data-svg-title="off" class="package-notices" id="arcProcess"><h2>준비부터 전달까지</h2><ol class="package-process-list">'+[['맞춤 상담','곡과 키, 필요한 옵션을 함께 확인해요'],['방문 녹음','선택한 시간 안에서 구간별 녹음과 <span class="process-keep">1:1 디렉팅</span>을 진행해요'],['음원 작업','음정·박자 보정·전문 믹싱·마스터링까지 모두 진행해요'],['검수·전달','녹음일 기준 <span class="process-keep">7일 이내</span> 전달해요']].map(([title,copy])=>'<li><strong>'+title+'</strong><p>'+copy+'</p></li>').join('')+'</ol></section>'}
 // Keep the home controls styled when client-side navigation starts on another page.
 function ensureHomeControlStyles(){
  if(document.getElementById('wistia-home-control-styles'))return
