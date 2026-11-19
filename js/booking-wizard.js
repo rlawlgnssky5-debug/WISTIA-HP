@@ -42,21 +42,17 @@
    '</dl><p class="rc-rcpt-total"><span>합계</span><strong>'+money(q.total)+'</strong></p></div>'
  }
  function text(form){
-  // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)
+  // 2026-11-19 지훈: 카카오 복사도 영수증 순서 — 📅 녹음 예약 → 📦 구성 → 💰 금액 → 📝 특이사항, 할인 이름은 영수증과 같게
   const v=values(form),q=recording.quote(v),notes=String(v.specialNotes||'').trim().replace(/\r\n?/g,'\n')
   const day=v.bookingDate?' ('+['일','월','화','수','목','금','토'][new Date(v.bookingDate+'T12:00:00Z').getUTCDay()]+')':''
-  const included=['1:1 디렉팅',...(q.package.tuning?['음정·박자 보정']:[]),...(q.package.mixing?['전문 믹싱','마스터링']:[])]
-  const addedName={duet:'녹음 1인 추가',extraHour:'녹음 1시간 추가',rush:'3일 이내 전달 (녹음일 기준)'}
-  const added=q.options.map(o=>'(추가) '+(addedName[o.key]||o.label))
-  const discountName=d=>d.key==='first'?'첫 이용 쿠폰':d.key==='advance1'?'사전 예약 할인 (1개월 이후)':d.label
-  // One blank line after the title and exactly one between sections; no trailing spaces or commas
+  const added=q.options.map(o=>'- '+o.label+' +'+money(o.price))
+  const included=(recording.included||[]).map(item=>item[1]).join(' · ')
+  // One blank line after the title and exactly one between sections; no trailing spaces
   return ['🎙️ 위스티아 | 신규 상담 신청','',
    '📅 녹음 예약',...(form.dataset.scheduleState==='unavailable'?['• 일정 확인 : 자동 확인 불가 · 희망 일정 / 상담 후 확정']:[]),'• 날짜 : '+(v.bookingDate?v.bookingDate+day:'미정'),'• 시간 : '+range(v.timeStart,q.bookingMinutes).replace('~',' ~ '),'',
-   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음']),'',
-   '📦 상품','• 타입 : '+q.package.name,'• 구성 : '+(v.people==='1'?'2인':'1인')+' · 1곡 · '+hours(q.bookingMinutes),'• 옵션 :',...included.map(item=>'- '+item),'',
-   '🎵 추가 옵션',...(added.length?['• 추가 옵션 :',...added.map(item=>'- '+item)]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
-   '💰 결제 금액','• 기본 상품 (원가) : '+money(q.list??q.base),'• 추가 옵션 : '+money(q.optionTotal),'',
-   '할인 내역',...((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(d=>'• '+discountName(d)+' : -'+money(d.amount)):['• 할인 : 없음']),'━━━━━━━━━━','• 최종 금액 : '+money(q.total)].join('\n')
+   '📦 구성','• '+included+' 포함','• 인원 : '+(v.people==='1'?'2인':'1인')+' · 1곡',...(added.length?['• 추가 옵션 :',...added]:['• 추가 옵션 : 없음']),'• 음원 전달 : '+q.delivery,'',
+   '💰 금액','• 정가 : '+money(q.list+q.optionTotal),...(q.allDiscounts||q.discounts).map(d=>'• '+d.label+' : -'+money(d.amount)),'━━━━━━━━━━','• 최종 금액 : '+money(q.total),'',
+   '📝 특이사항',...(notes?notes.split('\n').map(line=>'• '+line):['• 없음'])].join('\n')
  }
  // The one place price views are reported (GA4 view_price + pixel ViewPrice); trackers dedupe per product per page
  function trackPriceView(q){const payload={content_name:q.package.name+' · '+q.package.title,content_ids:[q.package.name.toLowerCase()],content_type:'product',value:q.total,currency:'KRW'};try{global.wistiaAnalytics?.trackViewPrice?.(payload)}catch{}try{global.wistiaMeta?.trackViewPrice?.(payload)}catch{}}

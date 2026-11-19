@@ -1,7 +1,5 @@
 /* 2026-10-17 batch3 */
 /* map: no zoom */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map *,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-shot-img{cursor:default!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map figcaption,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-zoom{display:none!important}
 /* faq page mobile: ~12% lighter type */
 @media(max-width:480px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro h1,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-text{font-size:19px!important;line-height:1.35!important}

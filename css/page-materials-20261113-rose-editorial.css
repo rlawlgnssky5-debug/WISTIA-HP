@@ -14,16 +14,14 @@
     --clay-selected:#f5d8e1;
     background:#f2e8e3!important;color:#58423f!important;
   }
-  #app .info-page-location .lc2-card,
   #app .wistia-events.ev2 :is(.evd-card,.pb-card,.pb-summary,.pb-refund),
   #app .info-page-faq .info-faq-group,
-  #app .wistia-wizard :is(.wf-schedule,.wf-review-group) {
+  #app .wistia-wizard :is(.wf-schedule) {
     border:1px solid #ead9de!important;
     border-radius:26px!important;
     background:var(--clay-surface)!important;
     box-shadow:var(--clay-shadow)!important;
   }
-  #app .info-page-location .lc2-card {overflow:hidden!important}
   #app .wistia-events.ev2 :is(.ev2-hero,.events-discounts,.events-payback) {background:transparent!important}
   #app .wistia-events.ev2 .pb-summary {background:#f9e4e6!important}
   #app .wistia-events.ev2 .pb-refund {padding:16px 18px!important}
@@ -35,26 +33,10 @@
     color:#6b3b50!important;
     box-shadow:none!important;
   }
-  #app .info-page-location .lc2-addr {padding:22px 20px!important}
-  #app .info-page-location .lc2-badge {padding:8px 12px!important;border-radius:14px!important;border:1px solid transparent!important;background:#efcdd0!important;color:#92546a!important;box-shadow:none!important;font-size:11px!important}
   #app .info-page-location .studio-address {display:block!important;margin:18px 0 8px!important;font-size:clamp(16px,4.6vw,20px)!important;line-height:1.65!important;font-weight:750!important;color:#503c39!important;letter-spacing:-.04em!important;word-break:keep-all!important;overflow-wrap:normal!important}
   #app .material-address-street {display:flex!important;flex-wrap:wrap!important;gap:0 .35em!important}
   #app .material-address-part {display:inline-block!important;white-space:nowrap!important}
   #app .material-address-building {display:block!important;margin-top:2px!important;font-size:14px!important;font-weight:600!important;color:#8f6a65!important}
-  #app .info-page-location .lc2-sub {font-size:12px!important;line-height:1.6!important;color:#977d73!important}
-  #app .info-page-location .lc2-btns {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin-top:20px!important}
-  #app .info-page-location .lc2-btns :is(a,button) {min-width:0!important;min-height:42px!important;padding:8px 3px!important;border-radius:15px!important;border:1px solid transparent!important;background:#f3ddd4!important;color:#8c5863!important;font-size:11px!important;white-space:nowrap!important;box-shadow:none!important}
-  #app .info-page-location .lc2-btns .lc2-n {background:#d99eaf!important;color:#6b3b50!important;border-color:#efbecb!important;box-shadow:none!important}
-  #app .info-page-location .lc2-map {padding:8px!important}
-  #app .info-page-location .lc2-map figure {border-radius:19px!important;overflow:hidden!important}
-  #app .info-page-location .lc2-cap {border:0!important;padding:13px 8px 8px!important;font-size:11px!important;word-break:keep-all!important;text-align:center!important}
-  #app .info-page-location .lc2-row {padding:19px 14px!important;gap:12px!important;border-bottom:1px solid #dfc8bf80!important}
-  #app .info-page-location .lc2-row:last-child {border-bottom:0!important}
-  #app .info-page-location .lc2-row>:first-child {width:34px!important;height:34px!important;min-width:34px!important;border-radius:13px!important;background:#efd1cd!important;box-shadow:none!important}
-  #app .info-page-location .lc2-row>div {min-width:0!important}
-  #app .info-page-location .lc2-row p {font-size:12px!important;line-height:1.75!important;word-break:keep-all!important;overflow-wrap:normal!important}
-  #app .info-page-location .lc2-steps {display:flex!important;flex-wrap:nowrap!important;gap:4px!important;font-size:10px!important}
-  #app .info-page-location .lc2-steps span {padding:6px 4px!important;border-radius:10px!important;background:#f0d5cf!important;box-shadow:inset 1px 1px 2px #fff8,2px 3px 5px #bd968b20!important;font-size:10px!important}
 
   #app .info-page-faq .info-faq-group {padding:21px 18px!important;margin-bottom:24px!important}
   #app .info-page-faq .faq-group-heading {margin-bottom:4px!important;padding-bottom:18px!important;border-bottom:1px solid #d7ced55c!important}

@@ -91,7 +91,6 @@ html #app#app#app#app .ar-commerce-detail .we-directions-copy :is(dt,dd){margin-
 html #app#app#app#app .wistia-location-details{display:flex!important;flex-direction:column!important;align-items:center!important}
 html #app#app#app#app .wistia-location-details article{box-sizing:border-box!important;width:100%!important;max-width:900px!important;padding-inline:20px!important;border-right:0!important}
 html #app#app#app#app .wistia-location{display:flex!important;flex-direction:column!important;align-items:center!important;gap:28px!important}
-html #app#app#app#app .wistia-location>.wistia-directions-map{width:100%!important;max-width:900px!important;margin-inline:auto!important}
 html #app#app#app#app .wistia-location .studio-address :is(.studio-address-city,.studio-address-street,.studio-address-floor){display:block!important;width:100%!important;text-align:center!important}
 html #app#app#app#app .wistia-location .svg-title-icon{margin:0!important;align-self:center!important}
 /* A full-width description box keeps the existing POINT axis exact at subpixel precision. */
@@ -161,8 +160,6 @@ html #app#app#app#app .info-page-location .wistia-location-links{grid-template-c
 html #app#app#app#app .info-page-location .wistia-location-links a{justify-content:center!important;min-height:50px!important;box-sizing:border-box!important;padding:12px!important;gap:8px!important;border:1px solid #ded0bf!important;border-radius:10px!important;background:#fffdf8!important;color:#594739!important;box-shadow:none!important;font-size:14px!important;line-height:1.5!important;white-space:nowrap!important}
 html #app#app#app#app .info-page-location .wistia-location-links a:hover{background:#f3eadd!important}
 html #app#app#app#app .info-page-location .wistia-location-links .studio-icon{width:16px!important;height:16px!important;flex:none!important}
-html #app#app#app#app .info-page-location>.wistia-location>.wistia-directions-map{margin:0!important;border:1px solid #dfd4c7!important;border-radius:18px!important;overflow:hidden!important;background:#faf6ee!important}
-html #app#app#app#app .info-page-location .wistia-directions-map figcaption{padding:14px 20px!important;color:#706055!important;line-height:1.7!important}
 html #app#app#app#app .info-page-location .wistia-location-details{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;border:0!important;align-items:stretch!important}
 html #app#app#app#app .info-page-location .wistia-location-details article{padding:28px!important;border:1px solid #dfd4c7!important;border-radius:18px!important;background:#faf6ee!important}
 html #app#app#app#app .info-page-location .wistia-location-details h3{display:flex!important;flex-direction:column!important;align-items:center!important;gap:16px!important;margin:0 0 16px!important;font-size:20px!important;line-height:1.5!important;color:#493b32!important}

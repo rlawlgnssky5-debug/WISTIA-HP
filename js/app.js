@@ -25,7 +25,7 @@ const PRODUCTS = {
     steps: [
       ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
       ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 마디씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
       ["AR 속 내 목소리 비율 선택", "스튜디오에서 리허설과 AR 연습 방법을 안내해 드리며, 실제 노래 방식에 맞춰 1:1 맞춤 비율을 결정합니다", "assets/img/process-no-people/04.svg"],
       ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
       ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
@@ -60,7 +60,7 @@ const PRODUCTS = {
     steps: [
       ["맞춤 제작 상담 · 곡과 파트 확인", "두 분의 음역과 예식 분위기를 확인해 곡·키·파트·화음 구성을 함께 정합니다", "assets/img/process-no-people/01.svg"],
       ["스튜디오 방문 · 듀엣 녹음 준비", "두 분의 마이크와 헤드폰을 맞추고 각자 부를 파트와 함께 부를 구간을 확인합니다", "assets/img/duet-film/duet-recording.webp"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 소절씩 녹음하고 두 목소리의 호흡과 타이밍을 맞춥니다", "assets/img/process-no-people/03.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 마디씩 녹음하고 두 목소리의 호흡과 타이밍을 맞춥니다", "assets/img/process-no-people/03.svg"],
       ["AR 속 목소리 비율 선택", "30% · 50% · 70% · 100%를 실제 음원으로 비교해 두 분이 함께 부르기 편한 비율을 선택합니다", "assets/img/process-no-people/04.svg"],
       ["멜로다인 수작업 보컬 보정", "각자의 음색은 살리면서 음정·박자·화음과 함께 부르는 구간의 타이밍을 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
       ["전문 엔지니어 믹싱 & 듀엣 AR 제작", "두 보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR로 완성합니다", "assets/img/process-no-people/06.svg"],
@@ -96,7 +96,7 @@ const PRODUCTS = {
     ],
     steps: [
       ["맞춤 제작 상담", "두 분에게 맞는 곡·키·파트 구성과 식전 상영 시점까지 함께 설계합니다"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "한 번에 잘 부를 필요 없이 각자의 파트를 한 소절씩 세분화해 녹음하고, 두 분의 목소리가 자연스럽게 어우러지도록 디렉팅합니다"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "한 번에 잘 부를 필요 없이 각자의 파트를 한 마디씩 세분화해 녹음하고, 두 분의 목소리가 자연스럽게 어우러지도록 디렉팅합니다"],
       ["스토리 영상 촬영", "인터뷰, 전하는 편지, 뮤비 클립, 인서트, 녹음 메이킹 등 두 분의 이야기가 자연스럽게 담기도록 촬영합니다"],
       ["디테일 수작업 보컬 보정", "AI 자동 보정 없이 각자의 목소리와 감정은 살리면서 음정·박자·호흡·화음과 타이밍까지 세밀하게 작업합니다"],
       ["전문 엔지니어 믹싱 & 마스터링", "실제 앨범 발매 음원을 작업하는 전문 엔지니어가 두 보컬의 밸런스와 반주를 조율해 최종 사운드를 완성합니다"],
@@ -144,7 +144,7 @@ const PRODUCTS = {
     ],
     steps: [
       ["맞춤 제작 상담", "두 분의 음역과 목소리에 맞춰 곡·키·파트 구성과 예식에서 사용할 시점까지 함께 설계합니다"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 소절씩 세분화해 녹음하고, 함께 부르는 구간과 화음까지 자연스럽게 어우러지도록 디렉팅합니다"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "각자의 파트를 한 마디씩 세분화해 녹음하고, 함께 부르는 구간과 화음까지 자연스럽게 어우러지도록 디렉팅합니다"],
       ["축가 영상 촬영", "뮤비 클립, 인서트, 녹음 메이킹, 전하는 메시지 등 축가의 분위기와 두 분의 이야기에 맞춰 촬영합니다"],
       ["디테일 수작업 보컬 보정", "AI 자동 보정 없이 각자의 음색은 그대로 살리면서 음정·박자·호흡·화음과 두 보컬의 타이밍까지 세밀하게 작업합니다"],
       ["전문 엔지니어 믹싱 & 마스터링", "실제 앨범 발매 음원을 작업하는 전문 엔지니어가 두 사람의 목소리와 반주의 밸런스를 조율해 예식장에서도 선명하게 들리는 최종 사운드를 완성합니다"],
@@ -191,8 +191,8 @@ const PRODUCTS = {
     ],
     steps: [
       ["맞춤 제작 상담", "부르시는 분의 음역과 예식 분위기에 맞춰 곡·키·부르는 구간·상영 시점까지 함께 설계합니다"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "한 번에 잘 부를 필요 없이 한 소절씩 세분화해 호흡·발음·감정 표현까지 1:1 디렉팅합니다"],
-      ["녹음 메이킹 촬영", "한 소절씩 노래를 완성해 가는 모습과 녹음실의 자연스러운 장면을 촬영합니다"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "한 번에 잘 부를 필요 없이 한 마디씩 세분화해 호흡·발음·감정 표현까지 1:1 디렉팅합니다"],
+      ["녹음 메이킹 촬영", "한 마디씩 노래를 완성해 가는 모습과 녹음실의 자연스러운 장면을 촬영합니다"],
       ["디테일 수작업 보컬 보정", "AI 자동 보정 없이 직접 듣고 원래의 목소리와 감정은 살리면서 음정·박자·호흡을 세밀하게 작업합니다"],
       ["전문 엔지니어 믹싱 & 마스터링", "실제 앨범 발매 음원을 작업하는 전문 엔지니어가 보컬과 반주의 밸런스부터 최종 사운드까지 완성합니다"],
       ["영상 편집 & 색감 보정", "가사와 감정선에 맞춘 컷 편집부터 색감·싱크·자막까지 세밀하게 완성합니다"],
@@ -234,7 +234,7 @@ const PRODUCTS = {
     ],
     steps: [
       ["맞춤 제작 상담", "전하고 싶은 분위기와 사용할 곡, 촬영 방향과 프로포즈 상영 시점까지 함께 설계합니다"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 곁에서 호흡과 발음, 감정 표현을 안내하며 한 소절씩 편하게 녹음합니다"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 곁에서 호흡과 발음, 감정 표현을 안내하며 한 마디씩 편하게 녹음합니다"],
       ["뮤비 클립 촬영", "인터뷰와 편지, 뮤비 클립 등 선택한 구성에 맞춰 이야기를 촬영합니다"],
       ["디테일 수작업 보컬 보정", "원래 목소리와 감정은 살리면서 음정·박자·호흡을 세밀하게 다듬습니다"],
       ["전문 엔지니어 믹싱 & 마스터링", "보컬과 반주의 밸런스를 조율해 고백의 감정이 선명하게 들리는 최종 사운드를 완성합니다"],
@@ -319,7 +319,7 @@ const AR_PURPOSES = {
     items: [
       ["맞춤 제작 상담 · 곡과 키 확인", "예식 분위기와 음역을 확인해 곡·키·본식에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
       ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 위스티아 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 마디씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
       ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 본식에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/process-no-people/04.svg"],
       ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
       ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
@@ -335,7 +335,7 @@ const AR_PURPOSES = {
     items: [
       ["맞춤 제작 상담 · 곡과 키 확인", "축가 분위기와 음역을 확인해 곡·키·현장에서 사용할 AR 방향을 함께 정합니다", "assets/img/process-no-people/01.svg"],
       ["스튜디오 방문 · 녹음 준비", "예약한 날짜에 스튜디오를 방문해 마이크와 헤드폰을 맞추고 편안하게 녹음을 준비합니다", "assets/img/process-no-people/02.svg"],
-      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 소절씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
+      ["1:1 보컬 디렉팅 & 구간별 녹음", "엔지니어가 호흡·발음·감정 표현을 안내하며 한 마디씩 나누어 녹음합니다", "assets/img/process-no-people/03.svg"],
       ["AR 속 내 목소리 비율 선택", "30% · 50% · 70% · 100% 중 현장에서 가장 편안한 비율을 실제 음원으로 비교해 선택합니다", "assets/img/process-no-people/04.svg"],
       ["멜로다인 수작업 보컬 보정", "원래 목소리의 느낌은 살리면서 음정·박자·호흡을 한 음씩 세밀하게 다듬습니다", "assets/img/process-no-people/05.svg"],
       ["전문 엔지니어 믹싱 & AR 제작", "보컬과 반주의 밸런스를 맞춰 예식장에서 바로 재생할 수 있는 AR 음원으로 완성합니다", "assets/img/process-no-people/06.svg"],
@@ -393,7 +393,7 @@ const INFO_FAQ_GROUPS=[
   ["녹음 전에 무엇을 준비하면 좋을까요?","특별히 준비하실 건 없어요!<br><br>녹음에 필요한 장비와 MR은<br>저희가 준비해 드리니<br>편안한 마음으로 방문해 주세요"]
  ]},
  {title:"녹음 당일",description:"처음이어도 편안하게 부르실 수 있도록 도와드려요",items:[
-  ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","그럼요! 처음이셔도 괜찮아요<br><br>어려운 부분은 한 소절씩 나누어 녹음하고<br>1:1 맞춤 디렉팅으로 함께 완성해 드려요<br><br>부담 없이 편안하게 노래해 주세요"],
+  ["녹음이 처음이고 노래에 자신이 없어도 괜찮을까요?","그럼요! 처음이셔도 괜찮아요<br><br>어려운 부분은 한 마디씩 나누어 녹음하고<br>1:1 맞춤 디렉팅으로 함께 완성해 드려요<br><br>부담 없이 편안하게 노래해 주세요"],
   ["녹음은 현장에서 어떻게 진행되나요?","먼저 곡과 키를 확인하고<br>가볍게 연습한 뒤 녹음을 시작해요<br><br>한 구간씩 나누어 녹음하며<br>어려운 부분은 다시 부르실 수 있어요<br><br>연습과 디렉팅도 선택하신 타입의<br>녹음 시간에 포함돼요"]
  ]},
  {title:"AR과 본식 준비",description:"예식장에서 부르는 순간까지 안내해 드려요",items:[
@@ -633,7 +633,7 @@ const AR_DETAIL_CONTENT={
   kicker:"축가 AR 사전 녹음 · 2시간",poster:"assets/img/song/duo.webp",videoLabel:"실제 고객의 본식 AR 축가 현장 영상",
   heroLine1:"넉넉한 두 시간의 녹음,",heroLine2:"우리의 목소리를 세심하게 완성합니다",
   heroDescription:"두 분이 한 구간씩 녹음하고 음정과 박자를 수작업으로 다듬어,<br>본식에서 함께 부를 AR 음원으로 완성합니다.",
-  benefitLine1:"녹음 시간은 넉넉하게,",benefitEmphasis:"한 소절씩 더 세심하게",
+  benefitLine1:"녹음 시간은 넉넉하게,",benefitEmphasis:"한 마디씩 더 세심하게",
   benefitDescription:["2시간 동안 구간별로 녹음하고 목소리를 다듬어,","본식에서 자연스럽게 노래를 이어갈 수 있도록 돕습니다."],
   keywords:[["01","2시간 녹음"],["02","1곡 기준 · 2인"],["03","구간별 디렉팅"],["04","수작업 보정"],["05","믹싱·마스터링"]]
  },
@@ -658,7 +658,7 @@ const AR_DETAIL_CONTENT={
   heroLine1:"직접 부른 목소리로,",heroLine2:"가장 진한 마음을 전합니다",
   heroDescription:"직접 부른 노래와 녹음 장면을 축가 영상으로 완성해,<br>본식에서는 편안하게 상영하고 마음은 오래 남깁니다.",
   benefitLine1:"축가 가수 대신,",benefitEmphasis:"내 목소리로 직접 전합니다",
-  benefitDescription:["한 소절씩 편안하게 녹음하고 자연스럽게 보정해,","본식 축가 순서에 바로 상영할 한 편의 영상으로 만듭니다."],
+  benefitDescription:["한 마디씩 편안하게 녹음하고 자연스럽게 보정해,","본식 축가 순서에 바로 상영할 한 편의 영상으로 만듭니다."],
   keywords:[["01","1:1 디렉팅"],["02","구간별 녹음"],["03","보컬 보정"],["04","메이킹 촬영"],["05","상영본 전달"]]
  },
  proposal:{
@@ -909,10 +909,7 @@ function renderLegacyHome(requested="role"){
 function renderInfoPage(key){
  const page=INFO_PAGES[key]||INFO_PAGES.about
  const aboutContent='<div class="wistia-about"><section class="wistia-about-story"><div><h2 class="about-story-title about-specialist-title">목소리와 이야기를 담는 스튜디오</h2><p class="about-fixed-lines">말로 다 전하지 못한 마음을<br>직접 부른 노래에 담습니다</p><p class="about-fixed-lines about-long-lines">한 곡의 노래가 완성된 음원이 되기까지,<br>목소리에 담긴 마음이 자연스럽게 전해지도록<br>녹음부터 음원 보정, 믹싱까지 함께합니다</p></div><figure>'+img("assets/img/studio-facility/facility-1640.webp","위스티아 스튜디오 내부, 소파와 녹음 부스, 마이크",true).replace('<img ','<img srcset="assets/img/studio-facility/facility-820.webp 820w, assets/img/studio-facility/facility-1640.webp 1640w" sizes="(min-width: 780px) 560px, 100vw" ')+'</figure></section><section class="wistia-specialists" aria-labelledby="specialistTitle"><header><h2 id="specialistTitle" class="single-line-heading about-specialist-title">함께 완성하는 전문가들</h2></header><div class="wistia-specialist-grid"><article><span>01</span>'+img("assets/img/process-no-people/03.svg","1대1 보컬 디렉팅",true)+'<p>현장</p><h3 class="about-specialist-title">편안하게 부를 수 있도록</h3><small>1:1 보컬 디렉팅과 구간별 녹음으로 목소리의 장점을 찾습니다</small></article><article><span>02</span>'+img("assets/img/process-no-people/06.svg","음원 보정과 믹싱 작업",true)+'<p>음원</p><h3 class="about-specialist-title">내 목소리는 그대로, 더 안정적으로</h3><small>〈싱어게인2〉 등 방송 음악 작업에 참여한 엔지니어가 보정부터 믹싱·마스터링까지 완성합니다</small></article></div></section><blockquote class="wistia-about-closing"><p>노래를 얼마나 잘 부르는지보다<br><strong>그 안에 담긴 마음이 온전히 전해지는 것</strong></p><small>한 분 한 분의 목소리와 이야기에 귀 기울이겠습니다</small></blockquote></div>'
- const address="경기도 부천시 석천로170번길 19, 부광프라자 2층",mapAddress="경기도 부천시 석천로170번길 19, 2층"
- const enc=encodeURIComponent(mapAddress),ic=(d)=>'<span class="lc2-ic" aria-hidden="true">'+d+'</span>'
- const locationContent='<div class="wistia-location lc2"><div class="lc2-card lc2-addr"><span class="lc2-badge">'+studioIcon('pin')+'WISTIA STUDIO</span><h2 class="studio-address" data-svg-title="off">'+address+'</h2><p class="lc2-sub">7호선 부천시청역 1번 출구</p><div class="lc2-btns"><a class="lc2-n" href="https://map.naver.com/p/search/'+enc+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a class="lc2-k" href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a><button class="lc2-c location-address-copy" type="button" data-copy-address="'+address+'" aria-label="주소 복사">주소복사</button></div><div class="naver-pending" role="note"><p class="naver-pending-ok"><i aria-hidden="true"></i>예약 및 방문은 정상적으로 운영되고 있어요</p><div class="naver-pending-map"><span class="naver-pending-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><b>!</b></span><p><strong>네이버 지도 등록 진행 중입니다!</strong><span>현재 지도 검색이 어려운 점 양해 부탁드려요</span></p></div></div><p class="location-copy-status" role="status" aria-live="polite" data-address-copy-status></p></div><div class="lc2-card lc2-map"><figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure><div class="lc2-cap"><span>부천시청역 1번 출구 → 위스티아 스튜디오</span></div></div><div class="lc2-side"><h3 data-svg-title="off" class="lc2-sec">교통편 안내</h3><div class="lc2-card lc2-rows"><div class="lc2-row">'+ic(studioIcon('train'))+'<div><h4 data-svg-title="off">지하철로 오실 때</h4><p>부천시청역 1번 출구에서 도보 약 300m 이동해 주세요</p><div class="lc2-steps"><span>1번 출구</span><i>›</i><span>도보 이동</span><i>›</i><span>2층 스튜디오</span></div></div></div><div class="lc2-row">'+ic(studioIcon('car'))+'<div><h4 data-svg-title="off">차량으로 오실 때</h4><p>스튜디오 바로 옆 공영주차장을 이용하실 수 있습니다</p></div></div><div class="lc2-row">'+ic('<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>')+'<div><h4 data-svg-title="off">주차 안내</h4><p>시의회 옆 공영주차장 · 주차 요금 별도<br>주차비 지원은 어렵습니다</p></div></div></div></div></div>'
- const directionsMap='<figure class="wistia-directions-map">'+img("assets/img/wistia-directions.png","부천시청역 출구, 위스티아 스튜디오와 시의회 옆 공영주차장 위치 안내 지도",true)+'</figure>'
+ const locationContent='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo location-map-scope" data-ar-product="solo">'+soloMapSection({heading:false})+'</div>'
  const faqGroups=INFO_FAQ_GROUPS.map((group,index)=>index===0&&window.WistiaRecording?.monthly()?{...group,items:[["이번 달 이벤트 할인은 어떻게 적용되나요?",WistiaRecording.eventUntil()+" 예약하시면 최저가 보상 이벤트로 40,000원을 할인해 드려요<br>별도로 쿠폰을 받으실 필요는 없어요",true],...group.items]}:group)
  const faqContent='<div class="info-faq">'+faqGroups.map((group,index)=>'<section class="info-faq-group" aria-labelledby="infoFaqGroup'+index+'"><header class="faq-group-heading"><div><h2 id="infoFaqGroup'+index+'"><span class="faq-group-q" aria-hidden="true"><svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><circle cx="10" cy="10" r="10" fill="#b98a8e"/><circle cx="9.6" cy="9.4" r="4.3" fill="none" stroke="#fff" stroke-width="2"/><path d="M11.3 11.4l3 3" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></span>'+group.title+'</h2><p>'+group.description+'</p></div></header>'+faq(group.items)+'</section>').join("")+'</div>'
  const processContent='<div class="info-process"><ol class="we-process">'+[['상담·예약','원하는 곡과 상품, 본식 일정을 확인합니다'],['방문·녹음','부천 스튜디오에서 디렉팅을 받으며 녹음합니다'],['음원 작업','선택한 타입에 맞춰 목소리를 완성해요'],['완성본 전달','최종 파일을 받고 예식장 재생 환경을 확인합니다']].map(([title,copy],i)=>'<li><span>0'+(i+1)+'</span><h2>'+title+'</h2><p>'+copy+'</p></li>').join('')+'</ol>'+bookingGuideSection()+'<div class="info-process-actions"><a href="/">AR 축가 알아보기 →</a></div></div>'
@@ -1084,9 +1081,9 @@ function arSalesDetail(p,key){
  const hours=key==="duo"?2:1
  const proof=detailHookHero(p,key).replace(/<h1 id="arHookTitle">/, '<h2 id="arHookTitle">').replace('</h1>','</h2>')
  return '<div class="solo-detail-scope ar-detail-scope ar-sales-detail" data-ar-product="'+key+'">'+
- '<section class="ar-sales-intro" aria-labelledby="arSalesTitle"><p class="sales-brand">WISTIA <span>목소리와 영상</span></p><p class="sales-product">축가 AR 사전 녹음 · '+hours+'시간</p><h1 id="arSalesTitle">떨리는 축가,<br><strong>내 목소리는<br>미리 완성하세요</strong></h1><p class="sales-lead">마음은 직접 전하고,<br>목소리는 미리 준비할 수 있으니까</p><div class="sales-tags"><span>#구간별녹음</span><span>#자연스러운보정</span><span>#내목소리AR</span></div><div class="sales-intro-photo"><img src="assets/img/process-no-people/03.svg" alt="스튜디오에서 마이크 앞에 서서 보컬을 녹음하는 모습" fetchpriority="high"><span>경기도 부천 · WISTIA STUDIO</span></div><div class="sales-checks"><div><b>01</b><strong>한 소절씩</strong><span>구간별 녹음</span></div><div><b>02</b><strong>목소리는 그대로</strong><span>수작업 보정</span></div><div><b>03</b><strong>본식에 맞게</strong><span>AR 비율 조절</span></div></div></section>'+
+ '<section class="ar-sales-intro" aria-labelledby="arSalesTitle"><p class="sales-brand">WISTIA <span>목소리와 영상</span></p><p class="sales-product">축가 AR 사전 녹음 · '+hours+'시간</p><h1 id="arSalesTitle">떨리는 축가,<br><strong>내 목소리는<br>미리 완성하세요</strong></h1><p class="sales-lead">마음은 직접 전하고,<br>목소리는 미리 준비할 수 있으니까</p><div class="sales-tags"><span>#구간별녹음</span><span>#자연스러운보정</span><span>#내목소리AR</span></div><div class="sales-intro-photo"><img src="assets/img/process-no-people/03.svg" alt="스튜디오에서 마이크 앞에 서서 보컬을 녹음하는 모습" fetchpriority="high"><span>경기도 부천 · WISTIA STUDIO</span></div><div class="sales-checks"><div><b>01</b><strong>한 마디씩</strong><span>구간별 녹음</span></div><div><b>02</b><strong>목소리는 그대로</strong><span>수작업 보정</span></div><div><b>03</b><strong>본식에 맞게</strong><span>AR 비율 조절</span></div></div></section>'+
  '<section class="sales-proof"><header class="sales-section-heading"><p class="sales-point">THE MOMENT</p><h2>그날의 긴장보다,<br><strong>전하고 싶은 마음이 먼저</strong></h2><p>실제 고객님의 본식 영상으로 확인해 보세요</p></header>'+proof+'</section>'+
- '<section class="sales-recording"><header class="sales-section-heading"><p class="sales-point">핵심 01 · 구간별 녹음</p><h2>한 곡을 한 번에?<br><strong>한 소절씩이면 괜찮습니다</strong></h2><p>처음부터 끝까지 완벽하게 부를 필요 없이<br>구간별 녹음과 1:1 디렉팅으로 차근차근 완성합니다</p></header><figure><img src="assets/img/process-no-people/02.svg" alt="위스티아 스튜디오에서 헤드폰을 착용하고 녹음하는 실제 현장" loading="lazy"><figcaption>편한 키를 찾고, 내 속도에 맞춰 녹음합니다</figcaption></figure><ol class="sales-recording-steps"><li><span>01</span><strong>편한 키 찾기</strong></li><li><span>02</span><strong>구간별 녹음</strong></li><li><span>03</span><strong>1:1 디렉팅</strong></li></ol></section>'+
+ '<section class="sales-recording"><header class="sales-section-heading"><p class="sales-point">핵심 01 · 구간별 녹음</p><h2>한 곡을 한 번에?<br><strong>한 마디씩이면 괜찮습니다</strong></h2><p>처음부터 끝까지 완벽하게 부를 필요 없이<br>구간별 녹음과 1:1 디렉팅으로 차근차근 완성합니다</p></header><figure><img src="assets/img/process-no-people/02.svg" alt="위스티아 스튜디오에서 헤드폰을 착용하고 녹음하는 실제 현장" loading="lazy"><figcaption>편한 키를 찾고, 내 속도에 맞춰 녹음합니다</figcaption></figure><ol class="sales-recording-steps"><li><span>01</span><strong>편한 키 찾기</strong></li><li><span>02</span><strong>구간별 녹음</strong></li><li><span>03</span><strong>1:1 디렉팅</strong></li></ol></section>'+
  '<div class="sales-tuning"><header class="sales-section-heading"><p class="sales-point">핵심 02 · 자연스러운 보정</p><h2>음정과 박자는 다듬고,<br><strong>내 목소리의 느낌은 그대로</strong></h2></header>'+wistiaBeforeAfterSection()+'</div>'+
  '<div class="sales-engineer">'+arExpertStory(key)+'</div>'+
  (key==="solo"?'<div class="sales-ratio"><p class="sales-point">핵심 03 · 목소리 비율</p>'+arCdRatioSection()+'</div>':'')+
@@ -1146,7 +1143,7 @@ function soloReviewGrid(){
 }
 function soloChatFaq(){
  const questions=[
-  ['노래를 잘 못해도 괜찮을까요?','물론이에요! 한 소절씩 나누어 녹음하고, 옆에서 1:1 맞춤 디렉팅으로 차근차근 도와드려요'],
+  ['노래를 잘 못해도 괜찮을까요?','물론이에요! 한 마디씩 나누어 녹음하고, 옆에서 1:1 맞춤 디렉팅으로 차근차근 도와드려요'],
   ['어려운 부분은 다시 부를 수 있나요?','네! 어려운 구간은 충분히 반복해서 녹음할 수 있어요<br>마음에 드는 결과가 나올 수 있도록 함께 맞춰가요'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원곡의 키가 높거나 낮아도 괜찮아요<br>녹음 전 직접 불러보면서 목소리에 가장 편안한 키로 조절해 드려요'],
   ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 빠른 전달도 별도 옵션으로 가능해요'],
@@ -1156,10 +1153,14 @@ function soloChatFaq(){
  return '<section class="arc-section arc-faq solo-faq solo-shot solo-shot-narrow solo-faq-live" id="arcFaq" data-svg-title="off"><div class="solo-faq-html"><header class="solo-faq-heading"><p>FAQ</p><h2>자주 묻는 질문을<br><strong>확인해 보세요</strong></h2></header><div class="solo-faq-list">'+questions.map(([q,a],index)=>'<details'+(index===0?' open':'')+'><summary><span>Q'+(index+1)+'. '+q+'</span><i aria-hidden="true"></i></summary><div class="solo-faq-answer">'+a.split('<br>').map(line=>'<p>'+line+'</p>').join('')+'</div></details>').join('')+'</div></div></section>'
 }
 function soloNoticeAndMap(){
- const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
  return '<section class="arc-section arc-notices solo-notice">'+detailPosterImage('assets/detail/notice-c.webp?v=20261105-notice-7d-1','예약 전에 확인하세요. 납기는 녹음일 기준 7일 이내, 빠른 작업은 요청 시 3일 이내 추가 3만원',860,1088)+'</section>'+
-  '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-labelledby="soloMapTitle" data-svg-title="off"><p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>'+
-  '<div class="home-map-inset"><div class="ed-map-art"><img src="assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="1443" height="1041" loading="lazy" decoding="async"></div>'+
+  soloMapSection()
+}
+// 2026-11-19 지훈: 오시는 길은 홈과 오시는 길 페이지가 같은 모양(지도 → 지하철·도보·스튜디오·주차 → 네이버·카카오 → 운영 안내)
+function soloMapSection({heading=true}={}){
+ const address='경기도 부천시 석천로170번길 19, 부광프라자 2층',encoded=encodeURIComponent('경기도 부천시 석천로170번길 19, 2층')
+ return '<section class="arc-section solo-map solo-shot solo-shot-narrow" data-solo-map aria-label="오시는 길" data-svg-title="off">'+(heading?'<p class="ed-eyebrow">HOW TO COME</p><h2 id="soloMapTitle">오시는 길</h2>':'')+
+ '<div class="home-map-inset"><div class="ed-map-art"><img src="assets/detail/map-rose.webp?v=20261108-map-uncrop-1" alt="부천시청역에서 위스티아 스튜디오까지의 지도" width="1443" height="1041" loading="lazy" decoding="async"></div>'+
   '<div class="ed-map-route"><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="22" rx="5"/><path d="M8 14h16M11 25l-3 4m13-4 3 4M12 21h.01M20 21h.01"/></svg></span><strong>부천시청역 1번 출구</strong></div><div class="ed-map-walk"><span aria-hidden="true"></span><p>도보 약 300m</p></div><div class="ed-map-stop"><span class="ed-map-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a10 10 0 0 0-10 10c0 7 10 18 10 18s10-11 10-18A10 10 0 0 0 16 2Zm0 6a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg></span><div><strong>위스티아 스튜디오</strong><p>'+address+'</p></div></div></div>'+
   '<div class="ed-map-parking ed-map-stop"><span class="ed-map-icon" aria-hidden="true">P</span><div><strong>스튜디오 바로 옆 공영주차장</strong><p>주차 요금 별도 · 주차비 지원 불가</p></div></div>'+
   '<div class="solo-map-links"><a href="https://map.naver.com/p/search/'+encoded+'" target="_blank" rel="noopener noreferrer">네이버 지도</a><a href="'+KAKAO_STUDIO_PLACE_URL+'" target="_blank" rel="noopener noreferrer">카카오맵</a></div><div class="naver-pending" role="note"><p class="naver-pending-ok"><i aria-hidden="true"></i>예약 및 방문은 정상적으로 운영되고 있어요</p><div class="naver-pending-map"><span class="naver-pending-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><b>!</b></span><p><strong>네이버 지도 등록 진행 중입니다!</strong><span>현재 지도 검색이 어려운 점 양해 부탁드려요</span></p></div></div></div>'+'</section>'
@@ -1200,7 +1201,7 @@ function arCommerceDetail(p,key="solo"){
  const point=(number,title,copy,photo,alt)=>'<section class="arc-point arc-point-key" id="arcKey"><header><span class="arc-kicker detail-point-label">POINT '+number+'</span><h2>'+title+'</h2><p>'+copy+'</p><p class="arc-free-edit"><strong>음원 편집 · 키 조절 무료</strong><span>추가금 없음</span></p></header><figure>'+img(photo,alt)+'<figcaption>목소리에 맞춰 녹음 방향을 상담하는 과정 예시</figcaption></figure></section>'
  const questions=[
   ['노래를 잘 못해도 괜찮을까요?','네, 한 구간씩 나누어 녹음하고<br>옆에서 <strong>1:1로 방향을 잡아 드려요.</strong>'],
-  ['어려운 부분은 다시 부를 수 있나요?','<span data-ar-hours>'+hours+'</span>시간 안에서 어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 소절씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
+  ['어려운 부분은 다시 부를 수 있나요?','<span data-ar-hours>'+hours+'</span>시간 안에서 어려운 구간은 충분히 다시 녹음하며 맞춰갑니다<br>한 마디씩 듣고 디렉팅을 받아 편하게 진행하실 수 있습니다'],
   ['원곡의 키가 너무 높은데 괜찮을까요?','원키가 높거나 낮아도 괜찮아요<br>녹음 전에 직접 불러 보면서<br><strong>목소리에 가장 편한 키</strong>로 맞춰 드려요'],
   ['완성 음원은 언제 받을 수 있나요?','모든 타입은 녹음일 기준 7일 이내에 전달해 드려요<br>3일 이내 받기는 별도 옵션이에요'],
   ['본식에서는 어떻게 사용하나요?','예식장에서 <strong>AR을 재생하고</strong><br><strong>그 위에 직접 노래</strong>하시면 돼요<br>본식 전에 예식장 담당자에게 음원을 전달하고,<br>재생과 마이크 리허설이 되는지 확인해 주세요'],
@@ -1312,7 +1313,7 @@ function mobileStoryFilmDetail(p){
  const info=[['상품','AR 축가 듀엣'],['인원 · 곡수','2인 · 1곡'],['녹음·촬영 시간','총 180분 <small>안내·연습·부가 시간 포함</small>'],['포함 작업','녹음 · 보컬 디렉팅 · 음정·박자 보정<br>믹싱 · 마스터링 · 영상 제작'],['전달 파일','본식 상영용 영상 · 완성 음원'],['제작 기간','촬영·자료 전달 완료 후 약 14일']]
  const chapters=p.composition.map(([title,copy,photo],i)=>'<li><figure>'+storySceneImage(Array.isArray(photo)?photo[0]:photo,title+' 제작 영상 장면')+'</figure><div><span>0'+(i+1)+'</span><h3>'+title+'</h3><p>'+copy+'</p></div></li>').join('')
  const experts=detailPointSection(arExpertStory(key).replace('자연스럽게 들리는 AR을 완성합니다','영상과 어우러지는 완성 음원을 만듭니다'),'02')
- const vocal=storyVocalSection().replace('한 소절씩 녹음하고 1:1 디렉팅을 받으며, 스토리 필름에 담길 두 분의 노래를 준비합니다','한 소절씩 녹음하고, 두 목소리를 함께 맞춥니다').replace('녹음 후에는 음정·박자를 수작업으로 세밀하게 보정해 원래 목소리의 느낌은 살리고 더욱 자연스럽게 완성합니다','보정·믹싱의 마법, 티 나지 않게 자연스럽게').replace('<span class="ba-paragraph">보정·믹싱의 마법','<span class="ba-paragraph mas-tuning-line">보정·믹싱의 마법')
+ const vocal=storyVocalSection().replace('한 마디씩 녹음하고 1:1 디렉팅을 받으며, 스토리 필름에 담길 두 분의 노래를 준비합니다','한 마디씩 녹음하고, 두 목소리를 함께 맞춥니다').replace('녹음 후에는 음정·박자를 수작업으로 세밀하게 보정해 원래 목소리의 느낌은 살리고 더욱 자연스럽게 완성합니다','보정·믹싱의 마법, 티 나지 않게 자연스럽게').replace('<span class="ba-paragraph">보정·믹싱의 마법','<span class="ba-paragraph mas-tuning-line">보정·믹싱의 마법')
  const process=detailPointSection(verticalProcessSection(key),'04').replace('story-process-cards"','story-process-cards arc-section arc-process mas-story-process"').replace('id="process"','id="arcProcess"').replace('처음부터 끝까지,<br>맞춤형으로 케어해드립니다','진행 순서')
  const advantages=productComparisonSection(key).replace('한 곡을 준비하는 과정부터 완성본까지, 필요한 작업에 집중합니다','준비부터 완성까지, 필요한 작업에 집중합니다')
 return '<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo mobile-story-film" data-ar-product="duet-film"><section class="mas-intro" aria-labelledby="arcProductTitle"><div class="mas-gallery"><p class="mas-gallery-caption">위스티아 실제 제작 영상</p><div class="mas-story-media"><button type="button" class="mas-story-video" data-inline-youtube="'+escapeHtml(p.videoUrl)+'" aria-label="AR 축가 듀엣 실제 영상 재생">'+img(content.poster,content.videoLabel,true)+'<span class="mas-story-play"><span aria-hidden="true">▶</span> 실제 영상 보기</span></button></div></div><div class="mas-summary">'+mobileStudioBrand()+'<h1 id="arcProductTitle">AR 축가 듀엣<br><span>우리 목소리와 이야기를 담은 영상</span></h1><p class="mas-description">하객과 함께 즐기는, 두 사람의 축가</p><p class="mas-included"><span>구간별 1:1 디렉팅</span><span>음정·박자 보정</span><span>스토리 영상 제작</span></p><p class="mas-price"><strong>'+price.toLocaleString('ko-KR')+'<small>원</small></strong><span>(1곡 · 2인 · 스토리형)</span></p>'+mobileDetailEvents()+'</div></section><section class="mas-information" aria-labelledby="masInfoTitle"><h2 id="masInfoTitle">상품정보</h2><dl>'+info.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+value+'</dd></div>').join('')+'</dl></section><div class="arc-reviews">'+mobileDetailReviews()+'</div><section class="arc-section mas-story-chapters" id="arcDetails"><header><span class="arc-kicker detail-point-label">POINT 01</span><h2>우리의 이야기를 담아<br>한 편의 축가로</h2><p>직접 부른 노래와 두 사람의 이야기가<br>본식에서 함께 즐기는 영상이 됩니다</p></header><ol>'+chapters+'</ol></section><div class="arc-engineer">'+experts+'</div><section class="arc-point arc-point-tuning">'+vocal+'</section>'+advantages+process+'<section class="arc-section arc-faq" id="arcFaq"><h2>자주 묻는 질문</h2>'+faq(p.faq)+'</section>'+mobileArNotices(true)+mobileDetailFooter()+'<section class="product-inquiry" aria-label="상품 문의"><a class="button dark" data-kakao-inquiry href="/event/duo">카카오톡 문의</a></section></div>'

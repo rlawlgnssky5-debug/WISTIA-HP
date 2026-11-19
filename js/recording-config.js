@@ -31,7 +31,7 @@
  function quote(v,date=prices.today()){
   const longer=v.recordingMinutes==='180', minutes=longer?180:baseMinutes, duet=v.people==='1', making=v.makingVideo==='1'
   const selected=[]
-  if(duet)selected.push({key:'duet',label:'녹음 1인 추가',price:duetFee})
+  if(duet)selected.push({key:'duet',label:'2인 (듀엣곡)',price:duetFee})
   if(longer)selected.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
   if(making)selected.push({key:'makingVideo',label:makingOption[1],price:makingOption[3]})
   if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})

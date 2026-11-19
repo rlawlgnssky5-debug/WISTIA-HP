@@ -34,10 +34,6 @@ body{--app-canvas-width:1280px}
 .info-process-actions{display:flex;gap:24px;flex-wrap:wrap;margin-top:36px;font-size:14px}
 .info-process-actions a{padding:12px 0}
 #app .wistia-location{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;padding:0}
-.wistia-directions-map{margin:0}
-.wistia-directions-map a{display:block}
-.wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain;border-radius:12px}
-.wistia-directions-map figcaption{font-size:12px;line-height:1.8;color:var(--muted);margin-top:12px}
 #app .wistia-location-address{min-width:0;padding:28px;background:linear-gradient(135deg,#f2f5f7,#fff);border:0}
 #app .wistia-location-links{grid-template-columns:1fr;margin-top:24px}
 #app .wistia-location-links a{border:0;background:linear-gradient(110deg,#e8edf2,#f9fafb);border-radius:8px}
@@ -80,7 +76,6 @@ body{--app-canvas-width:1280px}
  #app .info-page-about .wistia-specialist-grid article img{max-width:520px}
  #app .before-after-page .wistia-ba-layout{grid-template-columns:1fr;gap:24px}
  #app .wistia-location{grid-template-columns:1fr;gap:28px}
- .wistia-directions-map{max-width:640px;width:100%;margin-inline:auto}
  .story-process-folder .story-process-card{grid-template-columns:100px minmax(0,1fr);gap:14px;padding:16px}
  .story-process-folder .story-process-media{width:100px}
 }

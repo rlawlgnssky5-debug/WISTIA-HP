@@ -345,7 +345,7 @@ html body #app#app section#arcProcess#arcProcess { background:#f7f1e8 !important
 html body #app#app section#arcFaq#arcFaq { background:#fbeaec !important; }
 html body #app#app .mobile-ar-solo section.solo-map { background:#ffffff !important; }
 /* 2026-11-19 지훈 시안 C: 오시는 길 지도 버튼 아래 — 위 칸 초록불 ‘예약 및 방문 정상 운영’, 아래 칸 느낌표 지도 핀 + 네이버 지도 등록 진행 중 */
-html body #app#app .naver-pending { margin:12px 0 0 !important; width:100%; box-sizing:border-box; background:#fff !important; border:1px solid #ead9de !important; border-radius:12px !important; overflow:hidden; text-align:left !important; }
+html body #app#app .naver-pending { margin:12px auto 0 !important; width:100%; max-width:520px; box-sizing:border-box; background:#fff !important; border:1px solid #ead9de !important; border-radius:12px !important; overflow:hidden; text-align:left !important; }
 html body #app#app .naver-pending-ok { display:flex; align-items:center; gap:8px; margin:0 !important; padding:10px 14px !important; background:#f1faf4 !important; font-size:13px !important; font-weight:800 !important; line-height:1.4 !important; color:#23804f !important; -webkit-text-fill-color:#23804f !important; }
 html body #app#app .naver-pending-ok i { flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#2fb36b; box-shadow:0 0 0 3px #2fb36b33; }
 html body #app#app .naver-pending-map { display:flex; align-items:flex-start; gap:10px; padding:11px 14px !important; border-top:1px dashed #ead9de; }
@@ -371,4 +371,8 @@ html body #app#app .wf-review-receipt .rc-rcpt-line dt { color:#8f777e !importan
 html body #app#app .wf-review-receipt .rc-rcpt-line.is-key dd { font-weight:700 !important; }
 html body #app#app .wf-review-receipt .rc-rcpt-line.is-muted dd { color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
 html body #app#app .wf-review-receipt .rc-rcpt-line.is-discount dt { color:#e2677f !important; -webkit-text-fill-color:#e2677f !important; }
+/* 2026-11-19 지훈: 오시는 길 페이지는 홈 오시는 길과 같은 구성 — 흰 판 안쪽 여백 겹침 제거 */
+html body #app#app .info-page-location .location-map-scope .solo-map { padding:0 !important; margin:0 !important; background:transparent !important; box-shadow:none !important; }
+/* 2026-11-19 오류 검사: POINT 01 아래쪽 여백 고정(다음 섹션 POINT 02 알약과 붙지 않게) */
+html body #app#app section#arcRecording#arcRecording { padding-bottom:52px !important; }
 }

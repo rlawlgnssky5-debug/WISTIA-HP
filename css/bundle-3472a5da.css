@@ -10678,10 +10678,6 @@ body{--app-canvas-width:1280px}
 .info-process-actions{display:flex;gap:24px;flex-wrap:wrap;margin-top:36px;font-size:14px}
 .info-process-actions a{padding:12px 0}
 #app .wistia-location{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;padding:0}
-.wistia-directions-map{margin:0}
-.wistia-directions-map a{display:block}
-.wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain;border-radius:12px}
-.wistia-directions-map figcaption{font-size:12px;line-height:1.8;color:var(--muted);margin-top:12px}
 #app .wistia-location-address{min-width:0;padding:28px;background:linear-gradient(135deg,#f2f5f7,#fff);border:0}
 #app .wistia-location-links{grid-template-columns:1fr;margin-top:24px}
 #app .wistia-location-links a{border:0;background:linear-gradient(110deg,#e8edf2,#f9fafb);border-radius:8px}
@@ -10724,7 +10720,6 @@ body{--app-canvas-width:1280px}
  #app .info-page-about .wistia-specialist-grid article img{max-width:520px}
  #app .before-after-page .wistia-ba-layout{grid-template-columns:1fr;gap:24px}
  #app .wistia-location{grid-template-columns:1fr;gap:28px}
- .wistia-directions-map{max-width:640px;width:100%;margin-inline:auto}
  .story-process-folder .story-process-card{grid-template-columns:100px minmax(0,1fr);gap:14px;padding:16px}
  .story-process-folder .story-process-media{width:100px}
 }
@@ -10806,10 +10801,6 @@ body{--app-canvas-width:1280px}
 .info-process-actions{display:flex;gap:24px;flex-wrap:wrap;margin-top:36px;font-size:14px}
 .info-process-actions a{padding:12px 0}
 #app .wistia-location{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;padding:0}
-.wistia-directions-map{margin:0}
-.wistia-directions-map a{display:block}
-.wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain;border-radius:12px}
-.wistia-directions-map figcaption{font-size:12px;line-height:1.8;color:var(--muted);margin-top:12px}
 #app .wistia-location-address{min-width:0;padding:28px;background:linear-gradient(135deg,#f2f5f7,#fff);border:0}
 #app .wistia-location-links{grid-template-columns:1fr;margin-top:24px}
 #app .wistia-location-links a{border:0;background:linear-gradient(110deg,#e8edf2,#f9fafb);border-radius:8px}
@@ -10851,7 +10842,6 @@ body{--app-canvas-width:1280px}
  #app .info-page-about .wistia-specialist-grid article img{max-width:520px}
  #app .before-after-page .wistia-ba-layout{grid-template-columns:1fr;gap:24px}
  #app .wistia-location{grid-template-columns:1fr;gap:28px}
- .wistia-directions-map{max-width:640px;width:100%;margin-inline:auto}
  .story-process-folder .story-process-card{grid-template-columns:100px minmax(0,1fr);gap:14px;padding:16px}
  .story-process-folder .story-process-media{width:100px}
 }@media (min-width: 0px){
@@ -11728,8 +11718,6 @@ body[data-page="event"] .booking-price-sidebar .booking-live-total strong{font-s
 .we-home .we-affordability .we-location{margin:0;padding:0;border:0}
 .we-affordability h2{font-size:clamp(28px,3vw,42px);line-height:1.4;margin:18px 0 24px}
 .we-home .we-directions-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.we-home .wistia-directions-map{margin:0;max-width:481px;width:100%}
-.we-home .wistia-directions-map img{display:block;width:100%;height:auto;aspect-ratio:481/347;object-fit:contain}
 .we-directions-copy h3{font-size:clamp(22px,2.5vw,32px);line-height:1.5;margin-bottom:24px}
 .we-directions-copy p{font-size:14px;line-height:1.9;margin-block:12px}
 .we-directions-copy .wistia-location-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
@@ -11762,8 +11750,6 @@ body[data-page="event"] .booking-price-sidebar .booking-live-total strong{font-s
 .we-home .we-affordability .we-location{margin:0;padding:0;border:0}
 .we-affordability h2{font-size:clamp(28px,11.7px,42px);line-height:1.4;margin:18px 0 24px}
 .we-home .we-directions-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.we-home .wistia-directions-map{margin:0;max-width:481px;width:100%}
-.we-home .wistia-directions-map img{display:block;width:100%;height:auto;aspect-ratio:481/347;object-fit:contain}
 .we-directions-copy h3{font-size:clamp(22px,9.75px,32px);line-height:1.5;margin-bottom:24px}
 .we-directions-copy p{font-size:14px;line-height:1.9;margin-block:12px}
 .we-directions-copy .wistia-location-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
@@ -12742,8 +12728,6 @@ body[data-page=event]{background:#f1f3f5}
 
 /* Approved comments: aligned directions, simple product picker and separate quote. */
 #app .we-home .we-directions-grid{grid-template-columns:minmax(0,1fr);justify-items:center;gap:28px;max-width:760px;margin-inline:auto;text-align:center}
-#app .we-home .wistia-directions-map{width:100%;max-width:560px;margin:0 auto;text-align:center}
-#app .we-home .wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain}
 #app .we-home .we-directions-copy{width:100%;text-align:center!important}
 #app .we-home .we-directions-copy :is(h3,p){text-align:center!important}
 #app .we-home .studio-address{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 6px}
@@ -12896,8 +12880,6 @@ body[data-page=event]{background:#f1f3f5}
 
 /* Approved comments: aligned directions, simple product picker and separate quote. */
 #app .we-home .we-directions-grid{grid-template-columns:minmax(0,1fr);justify-items:center;gap:28px;max-width:760px;margin-inline:auto;text-align:center}
-#app .we-home .wistia-directions-map{width:100%;max-width:560px;margin:0 auto;text-align:center}
-#app .we-home .wistia-directions-map img{display:block;width:100%;height:auto;object-fit:contain}
 #app .we-home .we-directions-copy{width:100%;text-align:center!important}
 #app .we-home .we-directions-copy :is(h3,p){text-align:center!important}
 #app .we-home .studio-address{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 6px}
@@ -16484,7 +16466,6 @@ html #app#app#app#app .ar-commerce-detail .we-directions-copy :is(dt,dd){margin-
 html #app#app#app#app .wistia-location-details{display:flex!important;flex-direction:column!important;align-items:center!important}
 html #app#app#app#app .wistia-location-details article{box-sizing:border-box!important;width:100%!important;max-width:900px!important;padding-inline:20px!important;border-right:0!important}
 html #app#app#app#app .wistia-location{display:flex!important;flex-direction:column!important;align-items:center!important;gap:28px!important}
-html #app#app#app#app .wistia-location>.wistia-directions-map{width:100%!important;max-width:900px!important;margin-inline:auto!important}
 html #app#app#app#app .wistia-location .studio-address :is(.studio-address-city,.studio-address-street,.studio-address-floor){display:block!important;width:100%!important;text-align:center!important}
 html #app#app#app#app .wistia-location .svg-title-icon{margin:0!important;align-self:center!important}
 /* A full-width description box keeps the existing POINT axis exact at subpixel precision. */
@@ -16554,8 +16535,6 @@ html #app#app#app#app .info-page-location .wistia-location-links{grid-template-c
 html #app#app#app#app .info-page-location .wistia-location-links a{justify-content:center!important;min-height:50px!important;box-sizing:border-box!important;padding:12px!important;gap:8px!important;border:1px solid #ded0bf!important;border-radius:10px!important;background:#fffdf8!important;color:#594739!important;box-shadow:none!important;font-size:14px!important;line-height:1.5!important;white-space:nowrap!important}
 html #app#app#app#app .info-page-location .wistia-location-links a:hover{background:#f3eadd!important}
 html #app#app#app#app .info-page-location .wistia-location-links .studio-icon{width:16px!important;height:16px!important;flex:none!important}
-html #app#app#app#app .info-page-location>.wistia-location>.wistia-directions-map{margin:0!important;border:1px solid #dfd4c7!important;border-radius:18px!important;overflow:hidden!important;background:#faf6ee!important}
-html #app#app#app#app .info-page-location .wistia-directions-map figcaption{padding:14px 20px!important;color:#706055!important;line-height:1.7!important}
 html #app#app#app#app .info-page-location .wistia-location-details{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;border:0!important;align-items:stretch!important}
 html #app#app#app#app .info-page-location .wistia-location-details article{padding:28px!important;border:1px solid #dfd4c7!important;border-radius:18px!important;background:#faf6ee!important}
 html #app#app#app#app .info-page-location .wistia-location-details h3{display:flex!important;flex-direction:column!important;align-items:center!important;gap:16px!important;margin:0 0 16px!important;font-size:20px!important;line-height:1.5!important;color:#493b32!important}
@@ -16665,7 +16644,6 @@ html #app#app#app#app .ar-commerce-detail .we-directions-copy :is(dt,dd){margin-
 html #app#app#app#app .wistia-location-details{display:flex!important;flex-direction:column!important;align-items:center!important}
 html #app#app#app#app .wistia-location-details article{box-sizing:border-box!important;width:100%!important;max-width:900px!important;padding-inline:20px!important;border-right:0!important}
 html #app#app#app#app .wistia-location{display:flex!important;flex-direction:column!important;align-items:center!important;gap:28px!important}
-html #app#app#app#app .wistia-location>.wistia-directions-map{width:100%!important;max-width:900px!important;margin-inline:auto!important}
 html #app#app#app#app .wistia-location .studio-address :is(.studio-address-city,.studio-address-street,.studio-address-floor){display:block!important;width:100%!important;text-align:center!important}
 html #app#app#app#app .wistia-location .svg-title-icon{margin:0!important;align-self:center!important}
 /* A full-width description box keeps the existing POINT axis exact at subpixel precision. */
@@ -16724,8 +16702,6 @@ html #app#app#app#app .info-page-location .wistia-location-links{grid-template-c
 html #app#app#app#app .info-page-location .wistia-location-links a{justify-content:center!important;min-height:50px!important;box-sizing:border-box!important;padding:12px!important;gap:8px!important;border:1px solid #ded0bf!important;border-radius:10px!important;background:#fffdf8!important;color:#594739!important;box-shadow:none!important;font-size:14px!important;line-height:1.5!important;white-space:nowrap!important}
 html #app#app#app#app .info-page-location .wistia-location-links a:hover{background:#f3eadd!important}
 html #app#app#app#app .info-page-location .wistia-location-links .studio-icon{width:16px!important;height:16px!important;flex:none!important}
-html #app#app#app#app .info-page-location>.wistia-location>.wistia-directions-map{margin:0!important;border:1px solid #dfd4c7!important;border-radius:18px!important;overflow:hidden!important;background:#faf6ee!important}
-html #app#app#app#app .info-page-location .wistia-directions-map figcaption{padding:14px 20px!important;color:#706055!important;line-height:1.7!important}
 html #app#app#app#app .info-page-location .wistia-location-details{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;border:0!important;align-items:stretch!important}
 html #app#app#app#app .info-page-location .wistia-location-details article{padding:28px!important;border:1px solid #dfd4c7!important;border-radius:18px!important;background:#faf6ee!important}
 html #app#app#app#app .info-page-location .wistia-location-details h3{display:flex!important;flex-direction:column!important;align-items:center!important;gap:16px!important;margin:0 0 16px!important;font-size:20px!important;line-height:1.5!important;color:#493b32!important}
@@ -19431,8 +19407,6 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z):has(.info-page) 
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .svg-section-kicker,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .eyebrow{color:#B0596A!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-section-description{color:#8A7A7B!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-title-icon,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-title-icon svg{color:#A65A6C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location :is(.studio-depth-card,.wistia-directions-map,.wistia-location-details article){background:#FFFDFB!important;border-color:#EFDCDC!important;border-radius:20px!important;box-shadow:0 10px 24px rgba(168,88,106,.07)!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .wistia-directions-map{overflow:hidden!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location :is(.location-line-icon,.location-line-icon svg,h3 svg){color:#A65A6C!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .location-address-copy{background:#F6E6E6!important;border-color:#EFDCDC!important;color:#A65A6C!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .studio-address{color:#3A2E2F!important}
@@ -19482,8 +19456,6 @@ html body:not(#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z#z):has(.info-page) 
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .svg-section-kicker,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .eyebrow{color:#B0596A!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-section-description{color:#8A7A7B!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-title-icon,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page .info-page-intro .svg-title-icon svg{color:#A65A6C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location :is(.studio-depth-card,.wistia-directions-map,.wistia-location-details article){background:#FFFDFB!important;border-color:#EFDCDC!important;border-radius:20px!important;box-shadow:0 10px 24px rgba(168,88,106,.07)!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .wistia-directions-map{overflow:hidden!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location :is(.location-line-icon,.location-line-icon svg,h3 svg){color:#A65A6C!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .location-address-copy{background:#F6E6E6!important;border-color:#EFDCDC!important;color:#A65A6C!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-location .studio-address{color:#3A2E2F!important}
@@ -19538,8 +19510,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 @media (max-width:779px){
 /* 2026-10-17 batch3 */
 /* map: no zoom */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map *,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-shot-img{cursor:default!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map figcaption,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-zoom{display:none!important}
 /* faq page mobile: ~12% lighter type */
 @media(max-width:480px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro h1,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-text{font-size:19px!important;line-height:1.35!important}
@@ -19555,7 +19525,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 @media (min-width:780px){
 /* 2026-10-17 batch3 */
 /* map: no zoom */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map *,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-shot-img{cursor:default!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .wistia-directions-map figcaption,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-map .solo-map-zoom{display:none!important}@media (min-width: 0px){
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro h1,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-text{font-size:19px!important;line-height:1.35!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .info-page-faq .info-page-intro .svg-section-description{font-size:12.5px!important;line-height:1.65!important}
@@ -19661,35 +19630,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-note{margin:18px 0 0!important;padding:14px 16px!important;border-radius:16px!important;background:#F6E6E6!important;font-size:12.5px!important;line-height:1.6!important;color:#6E5458!important;word-break:keep-all!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-cta{display:block!important;margin:18px 0 0!important;text-align:center!important;padding:16px!important;border-radius:999px!important;background:#FEE500!important;color:#3A1D1D!important;font:700 15px/1 Pretendard,sans-serif!important;text-decoration:none!important}
 @media(min-width:780px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-hero{padding:80px 22px 40px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-hero h1{font-size:38px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-lead{font-size:16px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-big{padding:34px 36px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-big h2{font-size:38px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-list{grid-template-columns:1fr 1fr!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-cta{max-width:360px!important;margin:24px auto 0!important}}
-/* ===== /info/location redesign (lc2) ===== */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2{display:block!important;max-width:560px!important;margin:0 auto!important;padding:0!important;background:none!important;color:#3A2E2F!important;font-family:Pretendard,sans-serif!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 *{box-sizing:border-box}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-card{background:#FFFDFB!important;border:1px solid #EFDCDC!important;border-radius:22px!important;box-shadow:0 10px 24px rgba(168,88,106,.08)!important;overflow:hidden!important;margin:0 0 14px!important;padding:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr{padding:20px!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge{display:inline-block!important;padding:5px 10px!important;border-radius:999px!important;background:#F6E6E6!important;color:#A65A6C!important;font:700 11px/1 Pretendard,sans-serif!important;letter-spacing:.06em!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr h2{margin:10px 0 2px!important;font:700 18px/1.45 Pretendard,sans-serif!important;color:#3A2E2F!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-sub{margin:0!important;font-size:13px!important;color:#8A7A7B!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns{display:flex!important;gap:8px!important;margin-top:14px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns a,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns button{flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;margin:0!important;padding:0 6px!important;border-radius:999px!important;font:700 14px/1 Pretendard,sans-serif!important;text-decoration:none!important;cursor:pointer!important;box-shadow:none!important;width:auto!important;height:auto!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-n{background:#A65A6C!important;color:#fff!important;border:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-k{background:#fff!important;color:#A65A6C!important;border:1.5px solid #C4808C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns .lc2-c{flex:0 0 72px!important;background:#F6E6E6!important;color:#A65A6C!important;border:0!important;font-size:12.5px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .location-copy-status{margin:6px 0 0!important;font-size:12px!important;color:#A65A6C!important;min-height:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .location-copy-status:empty{display:none!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-map .wistia-directions-map{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;cursor:default!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-map img{display:block!important;width:100%!important;height:auto!important;border-radius:0!important;margin:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-cap{display:flex!important;justify-content:space-between!important;padding:12px 16px!important;font-size:12px!important;color:#8A7A7B!important;border-top:1px solid #F3E4E4!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-sec{margin:22px 4px 10px!important;font:700 15px/1 Pretendard,sans-serif!important;color:#4A3238!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row{display:flex!important;gap:14px!important;padding:16px 18px!important;border-bottom:1px solid #F3E4E4!important;align-items:flex-start!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row:last-child{border-bottom:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic{flex:none!important;width:42px!important;height:42px!important;border-radius:14px!important;background:#F6E6E6!important;display:grid!important;place-items:center!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic svg{width:22px!important;height:22px!important;stroke:#A65A6C!important;fill:none!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row h4{margin:0!important;font:700 15px/1.4 Pretendard,sans-serif!important;color:#3A2E2F!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row p{margin:3px 0 0!important;font-size:13px!important;line-height:1.6!important;color:#8A7A7B!important;word-break:keep-all!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px!important;margin-top:10px!important;font:600 12px/1 Pretendard,sans-serif!important;color:#A65A6C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps span{padding:6px 9px!important;border-radius:999px!important;background:#F9EEEE!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps i{color:#D4A6AF!important;font-style:normal!important}
-@media(min-width:780px){html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2{max-width:1040px!important;display:grid!important;grid-template-columns:1.15fr 1fr!important;grid-template-areas:"addr side" "map side"!important;column-gap:24px!important;align-items:start!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr{grid-area:addr!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-map{grid-area:map!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-side{grid-area:side!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-side .lc2-sec{margin-top:4px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr h2{font-size:21px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row h4{font-size:16px!important}html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row p{font-size:14px!important}}
 
 /* ===== detail top: price box removed, event list + 인원 선택 as real layout ===== */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-shot-top{clip-path:none!important;margin-bottom:0!important;height:auto!important;min-height:0!important;overflow:visible!important;background:#F9EDED!important}
@@ -19716,9 +19656,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-shot-top .mas-selection h2{background:transparent!important;box-shadow:none!important;padding:0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-faq.solo-faq-live .solo-faq-answer p{max-width:calc(560*100cqw/760)!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-sec span{white-space:nowrap!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge{display:inline-flex!important;align-items:center!important;gap:4px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge svg{width:12px!important;height:12px!important;stroke:#A65A6C!important;fill:none!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic svg{width:22px!important;height:22px!important;color:#A65A6C!important}
 
 }
 @media (min-width:780px){
@@ -19812,34 +19749,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-cond span{font-size:12px!important;line-height:1.3!important;padding:5px 9px!important;border-radius:8px!important;background:#F8F1F0!important;color:#6E5458!important;border:1px solid #F0E2E2!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-note{margin:18px 0 0!important;padding:14px 16px!important;border-radius:16px!important;background:#F6E6E6!important;font-size:12.5px!important;line-height:1.6!important;color:#6E5458!important;word-break:keep-all!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-cta{display:block!important;margin:18px 0 0!important;text-align:center!important;padding:16px!important;border-radius:999px!important;background:#FEE500!important;color:#3A1D1D!important;font:700 15px/1 Pretendard,sans-serif!important;text-decoration:none!important}
-/* ===== /info/location redesign (lc2) ===== */
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2{display:block!important;max-width:560px!important;margin:0 auto!important;padding:0!important;background:none!important;color:#3A2E2F!important;font-family:Pretendard,sans-serif!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 *{box-sizing:border-box}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-card{background:#FFFDFB!important;border:1px solid #EFDCDC!important;border-radius:22px!important;box-shadow:0 10px 24px rgba(168,88,106,.08)!important;overflow:hidden!important;margin:0 0 14px!important;padding:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr{padding:20px!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge{display:inline-block!important;padding:5px 10px!important;border-radius:999px!important;background:#F6E6E6!important;color:#A65A6C!important;font:700 11px/1 Pretendard,sans-serif!important;letter-spacing:.06em!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-addr h2{margin:10px 0 2px!important;font:700 18px/1.45 Pretendard,sans-serif!important;color:#3A2E2F!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-sub{margin:0!important;font-size:13px!important;color:#8A7A7B!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns{display:flex!important;gap:8px!important;margin-top:14px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns a,html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns button{flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;margin:0!important;padding:0 6px!important;border-radius:999px!important;font:700 14px/1 Pretendard,sans-serif!important;text-decoration:none!important;cursor:pointer!important;box-shadow:none!important;width:auto!important;height:auto!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-n{background:#A65A6C!important;color:#fff!important;border:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-k{background:#fff!important;color:#A65A6C!important;border:1.5px solid #C4808C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-btns .lc2-c{flex:0 0 72px!important;background:#F6E6E6!important;color:#A65A6C!important;border:0!important;font-size:12.5px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .location-copy-status{margin:6px 0 0!important;font-size:12px!important;color:#A65A6C!important;min-height:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .location-copy-status:empty{display:none!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-map .wistia-directions-map{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;cursor:default!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-map img{display:block!important;width:100%!important;height:auto!important;border-radius:0!important;margin:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-cap{display:flex!important;justify-content:space-between!important;padding:12px 16px!important;font-size:12px!important;color:#8A7A7B!important;border-top:1px solid #F3E4E4!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-sec{margin:22px 4px 10px!important;font:700 15px/1 Pretendard,sans-serif!important;color:#4A3238!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row{display:flex!important;gap:14px!important;padding:16px 18px!important;border-bottom:1px solid #F3E4E4!important;align-items:flex-start!important;text-align:left!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row:last-child{border-bottom:0!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic{flex:none!important;width:42px!important;height:42px!important;border-radius:14px!important;background:#F6E6E6!important;display:grid!important;place-items:center!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic svg{width:22px!important;height:22px!important;stroke:#A65A6C!important;fill:none!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row h4{margin:0!important;font:700 15px/1.4 Pretendard,sans-serif!important;color:#3A2E2F!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-row p{margin:3px 0 0!important;font-size:13px!important;line-height:1.6!important;color:#8A7A7B!important;word-break:keep-all!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px!important;margin-top:10px!important;font:600 12px/1 Pretendard,sans-serif!important;color:#A65A6C!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps span{padding:6px 9px!important;border-radius:999px!important;background:#F9EEEE!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-steps i{color:#D4A6AF!important;font-style:normal!important}
 
 /* ===== detail top: price box removed, event list + 인원 선택 as real layout ===== */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-shot-top{clip-path:none!important;margin-bottom:0!important;height:auto!important;min-height:0!important;overflow:visible!important;background:#F9EDED!important}
@@ -19858,16 +19767,12 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-detail-scope .solo-shot-top .mas-selection h2{background:transparent!important;box-shadow:none!important;padding:0!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .solo-faq.solo-faq-live .solo-faq-answer p{max-width:calc(560*100cqw/760)!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .ev2 .ev2-sec span{white-space:nowrap!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge{display:inline-flex!important;align-items:center!important;gap:4px!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-badge svg{width:12px!important;height:12px!important;stroke:#A65A6C!important;fill:none!important}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .lc2 .lc2-ic svg{width:22px!important;height:22px!important;color:#A65A6C!important}
 
 }
 /* == css/faqbr-1017.css == */
 @media (max-width:779px){
 /* Korean wraps at word boundaries everywhere text is read */
 #app :is(p,li,dd,dt,summary,small,h1,h2,h3,h4,figcaption,blockquote,.faq-list p,.solo-faq-answer p){word-break:keep-all;overflow-wrap:break-word}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.faq-list,.info-faq,.solo-faq,.mas-notices,.mas-location,.ev2,.lc2,.wistia-events,.wistia-location,.mas-event-disclosure) :is(p,li,dd,summary,span,small,strong,b){word-break:keep-all!important;overflow-wrap:break-word!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .faq-list details>p{line-height:1.75!important}
 /* step 3 calendar header: clear gaps between arrows and selects */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-navigation{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important}
@@ -19882,7 +19787,6 @@ html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#a
 @media (min-width:780px){
 /* Korean wraps at word boundaries everywhere text is read */
 #app :is(p,li,dd,dt,summary,small,h1,h2,h3,h4,figcaption,blockquote,.faq-list p,.solo-faq-answer p){word-break:keep-all;overflow-wrap:break-word}
-html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app :is(.faq-list,.info-faq,.solo-faq,.mas-notices,.mas-location,.ev2,.lc2,.wistia-events,.wistia-location,.mas-event-disclosure) :is(p,li,dd,summary,span,small,strong,b){word-break:keep-all!important;overflow-wrap:break-word!important}
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .faq-list details>p{line-height:1.75!important}
 /* step 3 calendar header: clear gaps between arrows and selects */
 html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .calendar-navigation{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important}
