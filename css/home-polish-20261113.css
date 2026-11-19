@@ -355,4 +355,8 @@ html body #app#app .naver-pending-pin b { position:absolute; right:-3px; top:-3p
 html body #app#app .naver-pending-map p { margin:0 !important; display:flex; flex-direction:column; gap:3px; text-align:left !important; }
 html body #app#app .naver-pending-map strong { font-size:13.5px !important; font-weight:800 !important; line-height:1.4 !important; color:#3a2a2f !important; -webkit-text-fill-color:#3a2a2f !important; }
 html body #app#app .naver-pending-map span { font-size:12.5px !important; font-weight:500 !important; line-height:1.5 !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
+/* 2026-11-19 지훈: 3단계 확인 영수증 — 1단계 영수증(.rc-receipt)과 같은 모양, 일정 칸과 구성 칸 사이만 띄움 */
+html body #app#app .wf-review .wf-review-receipt { margin:4px 0 14px !important; }
+html body #app#app .wf-review-receipt .wf-rcpt-block { margin-top:10px !important; padding-top:6px !important; border-top:1.5px solid #3a2a2f !important; }
+html body #app#app .wf-review-receipt .rc-rcpt-line.is-option dd { font-weight:700 !important; }
 }

@@ -25,17 +25,20 @@
  function range(time,minutes=60){if(!time)return '미정';const start=Number(time.slice(0,2))*60+Number(time.slice(3)),clock=m=>(m>=1440?'다음 날 ':'')+String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');return clock(start)+'~'+clock(start+minutes)}
  function rows(form){const q=quote(form),v=q.v;return [['타입',q.package.name+' | '+q.package.title],['인원',v.people==='1'?'2인(듀엣곡) · 1곡':'1인 · 1곡'],['소요 시간',hours(q.bookingMinutes)],['녹음 날짜',v.bookingDate||'미정'],[scheduleLabel(q),range(v.timeStart,q.bookingMinutes)],['추가 옵션',q.options.map(o=>o[0]+' '+'+'+money(o[1])).join('\n')||'없음'],['할인',(q.allDiscounts||q.discounts).map(d=>d.label+' −'+money(d.amount)).join('\n')||'없음'],['음원 전달',q.delivery],['총 금액',money(q.total)]]}
  // Display only: the Kakao text still comes from rows() unchanged
- // 2026-11-11 지훈: 확인 단계 '추가 옵션' → '옵션', 옵션마다 한 줄 (이름 왼쪽 · 금액 오른쪽)
- function optionRows(q){
-  const items=q.options.map(([label,price])=>'<li><span>'+esc(label)+'</span><b>'+'+'+money(price)+'</b></li>')
-  return '<div class="wf-review-options"><dt>옵션</dt><dd>'+(items.length?'<ul>'+items.join('')+'</ul>':'없음')+'</dd></div>'
- }
+ // 2026-11-19 지훈: 3단계 확인도 1단계처럼 영수증 한 장 — 일정 → 구성(포함·인원·옵션·전달) → 정가 → 할인 → 합계
  function reviewHtml(form,q){
-  const d=Object.fromEntries(rows(form)),row=(label,value,cls='')=>'<div'+(cls?' class="'+cls+'"':'')+'><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>'
-  const group=(title,body,cls)=>'<section class="wf-review-group '+cls+'"><h3 class="wf-review-head">'+title+'</h3><dl>'+body+'</dl></section>'
-  return group('문의 요약',row('총 금액',d['총 금액'],'wf-final-total')+(form.dataset.scheduleState==='unavailable'?row('일정 확인','자동 확인 불가 · 희망 일정 / 상담 후 확정'):'')+row('녹음 날짜',d['녹음 날짜'])+row(scheduleLabel(q),d[scheduleLabel(q)]),'is-schedule')
-   +group('상품',row('타입',q.package.name,'is-tier" data-tier="'+q.package.key)+row('인원',d['인원'])+row('소요 시간',d['소요 시간'])+optionRows(q)+row('음원 전달',d['음원 전달']),'is-product')
-   +group('할인·금액',row('선택한 구성',money(q.list+q.optionTotal),'wf-review-list')+((q.allDiscounts||q.discounts).length?(q.allDiscounts||q.discounts).map(x=>row(x.label,'−'+money(x.amount),'wf-review-discount')).join(''):row('할인','없음','wf-review-discount')),'is-amount')
+  const d=Object.fromEntries(rows(form))
+  const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+esc(label)+'</dt><dd>'+value+'</dd></div>'
+  const unavailable=form.dataset.scheduleState==='unavailable'
+  const included=(global.WistiaRecording.included||[]).map(item=>line(item[1],'포함','is-included')).join('')
+  return '<div class="rc-receipt wf-review-receipt" style="display:block !important;grid-template-columns:none !important;padding:18px 18px 16px !important;background:#fff !important;border:0 !important"><p class="rc-rcpt-brand">WISTIA · 축가 녹음 영수증</p><dl>'+
+   line('녹음 날짜',esc(d['녹음 날짜']),'is-option')+line(scheduleLabel(q),esc(d[scheduleLabel(q)]),'is-option')+(unavailable?line('일정 확인','상담 후 확정','is-option'):'')+
+   '</dl><dl class="wf-rcpt-block">'+included+line('인원',esc(d['인원']),'is-included')+
+   q.options.map(([label,price])=>line(label,'+'+money(price),'is-option')).join('')+
+   line('음원 전달',esc(q.delivery),'is-included')+
+   line('정가','<s>'+money(q.list+q.optionTotal)+'</s>','is-list')+
+   (q.allDiscounts||q.discounts).map(x=>line(x.key==='monthly'?'✨ '+x.label:x.label,'−'+money(x.amount),'is-discount')).join('')+
+   '</dl><p class="rc-rcpt-total"><span>합계</span><strong>'+money(q.total)+'</strong></p></div>'
  }
  function text(form){
   // Kakao copy layout approved 2026-10-24: only the lines that apply, included items from the package, added options marked (추가)

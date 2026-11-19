@@ -91,5 +91,5 @@
   }
   return params.toString()
  }
- global.WistiaRecording={keys,list,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,summary,query,firstVisit,preferences}
+ global.WistiaRecording={keys,list,included,monthly,eventMonth,eventUntil,eventLabel,eventAmount,startPrice,preset,selection,quote,editor,shortcuts,inquiryHref,deliveryField,summary,query,firstVisit,preferences}
 })(window)
