@@ -359,4 +359,8 @@ html body #app#app .naver-pending-map span { font-size:12.5px !important; font-w
 html body #app#app .wf-review .wf-review-receipt { margin:4px 0 14px !important; }
 html body #app#app .wf-review-receipt .wf-rcpt-block { margin-top:10px !important; padding-top:6px !important; border-top:1.5px solid #3a2a2f !important; }
 html body #app#app .wf-review-receipt .rc-rcpt-line.is-option dd { font-weight:700 !important; }
+/* 2026-11-19 지훈: 문의 03 영상 작업 — 사진은 시안 2처럼 작은 썸네일, 스위치 줄과 한 줄 */
+html body #app#app .wistia-wizard .rc-making-row { display:flex; align-items:center; gap:12px; margin-top:6px; }
+html body #app#app .wistia-wizard .rc-making-thumb { flex:0 0 auto; width:68px !important; height:48px !important; max-width:none !important; object-fit:cover; object-position:60% 35%; border-radius:10px; margin:0 !important; }
+html body #app#app .wistia-wizard .rc-making-row .rc-work { flex:1 1 auto; min-width:0; border:0 !important; padding:0 !important; margin:0 !important; }
 }

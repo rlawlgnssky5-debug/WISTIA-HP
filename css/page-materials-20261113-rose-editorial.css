@@ -197,14 +197,6 @@
     border-radius: var(--schedule-cell-radius);
     background: #f3dfe9;
   }
-  #app .wistia-wizard .rc-making-photo {
-    display: block;
-    width: 100%;
-    max-width: 440px;
-    height: auto;
-    margin: 0 auto 8px;
-    border-radius: var(--schedule-cell-radius);
-  }
   #app .wistia-wizard [data-wf-step="0"] :is(.rc-pair label, .rc-times, .rc-toggle) {
     background: var(--schedule-time) !important;
     border: 1px solid var(--schedule-line) !important;

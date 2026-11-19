@@ -61,7 +61,8 @@
   const first='<input type="hidden" name="firstUse" value="1">'
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
-  const making=field('03','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
+  // 2026-11-19 지훈: 시안대로 영상 작업 사진은 작은 썸네일(스위치 줄 왼쪽), 큰 사진 금지
+  const making=field('03','영상 작업','<div class="rc-making-row"><img class="rc-making-thumb" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v)+'</div>')
   return '<div class="recording-config">'+first+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+people+duration+making+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
