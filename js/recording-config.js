@@ -55,11 +55,10 @@
     radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
  }
  // 2026-11-19 지훈: 구성 항목마다 금액은 적지 않는다 — ‘포함’만, 금액은 정가 한 줄
- // 2026-11-19 지훈: 시안 2 — 맨 위 첫 이용 할인 → 실시간 영수증(기본 구성 포함·옵션·할인·합계) → 01 인원 → 02 녹음 시간 → 03 영상 → 04 작업 기간
+ // 2026-11-19 지훈: 시안 2 — 실시간 영수증(기본 구성 포함·옵션·할인·합계) → 01 인원 → 02 녹음 시간 → 03 영상 → 04 작업 기간
  function editor(v,{delivery=true}={}){
-  // 2026-11-19 지훈 시안 4: 첫 이용 할인은 작은 선물 상자 카드 — 켜짐 ‘첫 이용 선물 받았어요’ + ‘처음 아니에요’, 꺼짐 ‘위스티아가 처음이신가요?’ + ‘선물 받기’ (라디오 firstUse 0/1 그대로)
-  const gift='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M2 9h20M12 9v12"/><path d="M12 9c-2-4-6-4-6-1.5S9 9 12 9zM12 9c2-4 6-4 6-1.5S15 9 12 9z"/></svg>'
-  const first='<div class="rc-gift" data-rc-work="firstUse" role="group" aria-label="첫 이용 할인"><input type="radio" name="firstUse" value="1" id="rcFirstUse1"'+(v.firstUse!=='0'?' checked':'')+'><input type="radio" name="firstUse" value="0" id="rcFirstUse0"'+(v.firstUse==='0'?' checked':'')+'><span class="rc-gift-box">'+gift+'</span><span class="rc-gift-text rc-gift-on"><b>첫 이용 선물 받았어요</b><small>−20,000원 적용 중</small></span><span class="rc-gift-text rc-gift-off"><b>위스티아가 처음이신가요?</b><small>처음이면 20,000원 선물</small></span><label for="rcFirstUse0" class="rc-gift-btn rc-gift-on">처음 아니에요</label><label for="rcFirstUse1" class="rc-gift-btn rc-gift-off">선물 받기</label></div>'
+  // 2026-11-19 지훈: 첫 이용 카드는 없앤다 — 할인(−20,000원)과 영수증 표기는 그대로, 모두에게 적용
+  const first='<input type="hidden" name="firstUse" value="1">'
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
   const making=field('03','영상 작업','<img class="rc-making-photo" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v))
