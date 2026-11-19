@@ -15,7 +15,7 @@ rmSync(out, { recursive: true, force: true })
 mkdirSync(assets, { recursive: true })
 
 // Public files: the pages and folders middleware.js allows on Vercel.
-const PUBLIC_FILES = ['index.html', 'contact.html', 'events.html', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'wistia-config.json', '4b00b68f4bc3ad46fe8137c51fbcf8b3.txt']
+const PUBLIC_FILES = ['index.html', 'contact.html', 'events.html', 'proposal.html', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'wistia-config.json', '4b00b68f4bc3ad46fe8137c51fbcf8b3.txt']
 const PUBLIC_DIRS = ['event', 'info', 'css', 'js', 'assets', 'lib', 'carousel']
 const skip = name => name.startsWith('.') || /\.(?:md|zip|py)$/i.test(name)
 

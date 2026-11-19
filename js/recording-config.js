@@ -9,10 +9,8 @@
  ]
  const list=included.reduce((sum,item)=>sum+item[3],0)
  const baseMinutes=120,extraHour=60000,duetFee=40000
- // 2026-11-13 지훈: 녹음 메이킹은 녹음·촬영을 나누어 안내하지 않고 예약 시간에 1시간만 더한다
- const makingMinutes=60
- const makingOption=['makingVideo','녹음 메이킹 영상 추가','',80000]
- const keys=['firstUse','people','recordingMinutes','makingVideo','rush']
+ // 2026-11-20 지훈: 축가 AR에서 녹음 메이킹 옵션은 없앤다
+ const keys=['firstUse','people','recordingMinutes','rush']
  // 2026-11-18 지훈: 이벤트는 달이 바뀌면 그대로 다음 달 이벤트로 이어진다 — 글자 ‘N월’과 말일은 오늘(한국 시간) 기준으로 자동
  // 2026-11-19 지훈: 이벤트는 ‘N월 최저가 보상 이벤트’ −40,000원 (마스터링 무료 이벤트는 끝)
  const monthly=()=>true
@@ -21,19 +19,18 @@
  const eventUntil=(date=prices.today())=>{const y=Number(date.slice(0,4)),m=Number(date.slice(5,7));return m+'월 '+new Date(Date.UTC(y,m,0)).getUTCDate()+'일까지'}
  const eventLabel=(date=prices.today())=>eventMonth(date)+' 최저가 보상 이벤트'
  function preset(tier,duo=false){
-  return {people:tier==='D'||duo?'1':'0',recordingMinutes:String(baseMinutes),makingVideo:'',rush:'0',firstUse:'1'}
+  return {people:tier==='D'||duo?'1':'0',recordingMinutes:String(baseMinutes),rush:'0',firstUse:'1'}
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
-  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?['120','180'].includes(val):['0','1'].includes(val)||val===''&&key==='makingVideo')v[key]=val}
+  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?['120','180'].includes(val):['0','1'].includes(val))v[key]=val}
   return v
  }
  function quote(v,date=prices.today()){
-  const longer=v.recordingMinutes==='180', minutes=longer?180:baseMinutes, duet=v.people==='1', making=v.makingVideo==='1'
+  const longer=v.recordingMinutes==='180', minutes=longer?180:baseMinutes, duet=v.people==='1'
   const selected=[]
   if(duet)selected.push({key:'duet',label:'2인 (듀엣곡)',price:duetFee})
   if(longer)selected.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
-  if(making)selected.push({key:'makingVideo',label:makingOption[1],price:makingOption[3]})
   if(v.rush==='1')selected.push({key:'rush',label:'3일 이내 전달',price:30000})
   const discounts=[]
   // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 스위치가 켜졌을 때만 (기본 켜짐)
@@ -42,18 +39,12 @@
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const optionTotal=selected.reduce((sum,o)=>sum+o.price,0),discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  return {v,minutes,recordingMinutes:minutes,filmingMinutes:0,making,bookingMinutes:minutes+(making?makingMinutes:0),offer:true,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',package:{key:'custom',name:'축가 녹음',title:'녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링'}}
+  return {v,minutes,recordingMinutes:minutes,filmingMinutes:0,making:false,bookingMinutes:minutes,offer:true,advance,list,base:list,options:selected,optionTotal,discounts,discount,total:list+optionTotal-discount,delivery:v.rush==='1'?'녹음일 기준 3일 이내':'녹음일 기준 7일 이내',package:{key:'custom',name:'축가 녹음',title:'녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링'}}
  }
  // 기본 구성 그대로(1인, 첫 이용) 받는 가격
  const startPrice=(date=prices.today())=>list-20000-eventAmount
  const radio=(key,value,current,copy)=>'<label><input type="radio" name="'+key+'" value="'+value+'"'+(current===value?' checked':'')+'>'+copy+'</label>'
  const field=(number,title,body)=>'<fieldset><legend><i>'+number+'</i> '+title+'</legend>'+body+'</fieldset>'
- function optionRow([key,label,copy,price,icon],v){
-  return '<div class="rc-work" data-rc-work="'+key+'"><div><strong>'+(icon?'<span aria-hidden="true">'+icon+'</span>&nbsp;':'')+label+'</strong> '+
-    (copy?'<small>'+copy+'</small>':'')+'<small data-rc-regular>+'+money(price)+'</small>'+
-    '</div><div class="rc-toggle" role="group" aria-label="'+label+'">'+
-    radio(key,'0',v[key],'필요 없음')+radio(key,'1',v[key],'필요')+'</div></div>'
- }
  // 2026-11-19 지훈: 구성 항목마다 금액은 적지 않는다 — ‘포함’만, 금액은 정가 한 줄
  // 2026-11-19 지훈: 시안 2 — 실시간 영수증(기본 구성 포함·옵션·할인·합계) → 01 인원 → 02 녹음 시간 → 03 영상 → 04 작업 기간
  function editor(v,{delivery=true}={}){
@@ -61,9 +52,7 @@
   const first='<input type="hidden" name="firstUse" value="1">'
   const people=field('01','인원','<div class="rc-pair">'+radio('people','0',v.people,'<b>1인</b><small>기본</small>')+radio('people','1',v.people,'<b>2인 (듀엣곡)</b><small>+'+money(duetFee)+'</small>')+'</div>')
   const duration=field('02','녹음 시간','<div class="rc-pair">'+radio('recordingMinutes','120',v.recordingMinutes,'<b>2시간</b><small>기본</small>')+radio('recordingMinutes','180',v.recordingMinutes,'<b>3시간</b><small>+'+money(extraHour)+'</small>')+'</div>')
-  // 2026-11-19 지훈: 시안대로 영상 작업 사진은 작은 썸네일(스위치 줄 왼쪽), 큰 사진 금지
-  const making=field('03','영상 작업','<div class="rc-making-row"><img class="rc-making-thumb" src="/assets/img/song-options/recording-making-portrait-v3.webp" alt="스튜디오에서 축가를 녹음하는 메이킹 영상 장면" loading="lazy" width="1280" height="730">'+optionRow(makingOption,v)+'</div>')
-  return '<div class="recording-config">'+first+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+people+duration+making+(delivery?deliveryField(v):'')+'</div>'
+  return '<div class="recording-config">'+first+'<div class="rc-receipt-slot" data-rc-summary aria-live="polite"></div>'+people+duration+(delivery?deliveryField(v):'')+'</div>'
  }
  function inquiryHref(v){return "/event/"+(v.people==="1"?"duo":"solo")+"?"+query(v)}
  function shortcuts(){
@@ -71,7 +60,7 @@
   return '<div class="ed-hero-types rc-shortcuts rc-shortcuts-one" role="group" aria-label="축가 녹음 가격"><div class="rc-price-card rc-price-e"><span class="rc-shortcut-badge">'+eventMonth()+' 최저가 보상 · '+pct+'% 할인</span><b>올인원 패키지</b><del class="rc-shortcut-original">'+money(list)+'</del><strong class="rc-e-price">'+startPrice().toLocaleString('ko-KR')+'<span class="rc-shortcut-unit">원</span></strong><ul class="rc-e-incl"><li><i aria-hidden="true">🎙️</i>녹음 2시간</li><li><i aria-hidden="true">🎚️</i>보컬 튜닝</li><li><i aria-hidden="true">🎛️</i>전문 믹싱</li><li><i aria-hidden="true">💿</i>마스터링</li></ul></div></div>'
  }
  function deliveryField(v){
-  return field('04','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
+  return field('03','작업 기간 <small>녹음일 기준</small>','<div class="rc-pair">'+radio('rush','0',v.rush,'<b>7일 이내</b><small>기본</small>')+radio('rush','1',v.rush,'<b>3일 이내</b><small>+30,000원</small>')+'</div>')
  }
  function summary(q){
   const line=(label,value,cls='')=>'<div class="rc-rcpt-line'+(cls?' '+cls:'')+'"><dt>'+label+'</dt><dd>'+value+'</dd></div>'
@@ -87,7 +76,6 @@
  function query(v){
   const params=new URLSearchParams()
   for(const key of keys){
-   if(v[key]==null&&key==='makingVideo')continue
    params.set(key,v[key]??'0')
   }
   return params.toString()

@@ -121,16 +121,6 @@ html body #app .mobile-ar-solo .solo-map { padding-bottom: 48px !important; }
 
 /* POINT 05 · 녹음 메이킹 (2026-11-15) — POINT 01의 아치 사진·로즈 알약 톤을 따르되 가로 사진은 자르지 않는다 */
 @layer wistia-home-polish {
-  html body #app .ed-making-scene { max-width: 460px !important; margin: 26px auto 0 !important; padding: 0 11px !important; box-sizing: border-box !important; }
-  html body #app .ed-making-photo { margin: 0 !important; border-radius: 18px !important; overflow: hidden !important; outline: 1px solid #d8aab7 !important; outline-offset: 6px !important; box-shadow: 0 14px 28px #60434b12 !important; }
-  html body #app .ed-making-photo img { display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 50% 40% !important; }
-  html body #app .ed-making-benefits { list-style: none !important; display: grid !important; gap: 8px !important; margin: 22px 0 0 !important; padding: 0 !important; }
-  html body #app .ed-making-benefits li { display: flex !important; align-items: center !important; gap: 8px !important; padding: 11px 14px !important; border-radius: 24px !important; background: #fff !important; border: 1px solid #ecd7dc !important; color: var(--ed-rose, #9d4e62) !important; font-size: 13px !important; font-weight: 600 !important; line-height: 1.4 !important; }
-  html body #app .ed-making-benefits li:first-child { background: var(--ed-rose, #9d4e62) !important; border-color: transparent !important; color: #fff !important; }
-  html body #app .ed-making-benefits li span { font-weight: 800 !important; }
-  html body #app .ed-making-price { display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 8px !important; margin: 18px 0 0 !important; }
-  html body #app .ed-making-price strong { font-size: 20px !important; font-weight: 800 !important; color: var(--ed-rose, #9d4e62) !important; letter-spacing: -.02em !important; }
-  html body #app .ed-making-price span { font-size: 13px !important; color: #8d7a80 !important; }
 /* 2026-11-15 지훈: 홈 이벤트 띠 = 메뉴바 아래 흰 띠 한 줄(40px), 반반 칸 가운데 정렬, 혜택 로즈 + 분홍 밑줄 */
 body:has(#siteHeader[data-home-event-rows="1"]), body:has(#siteHeader[data-home-event-rows="2"]) { --home-ribbon-height: 40px !important; }
 #siteHeader .home-event-strip { display:grid !important; grid-template-columns:repeat(var(--cells,2),minmax(0,1fr)) !important; gap:0 !important; padding:0 !important; height:var(--home-ribbon-height) !important; background:#fff !important; border-top:1px solid #eee3e6 !important; border-bottom:1px solid #eee3e6 !important; }
@@ -149,41 +139,6 @@ html body #app#app .wistia-wizard .recording-config fieldset { background:#fff !
 html body #app#app .wistia-wizard .recording-config legend { float:left; width:100%; background:none !important; padding:0 0 12px !important; font-size:16px !important; font-weight:800 !important; color:#2e1f24 !important; box-shadow:none !important; border:0 !important; }
 html body #app#app .wistia-wizard .recording-config legend i { display:inline-grid !important; place-items:center; width:24px; height:24px; border-radius:50% !important; background:#9d4e62 !important; color:#fff !important; font-style:normal !important; font-size:11px !important; margin-right:8px !important; padding:0 !important; }
 html body #app#app .wistia-wizard .recording-config fieldset > :not(legend) { clear:both; }
-@media (max-width:360px) { html body #app .ed-making-benefits li { font-size:13px !important; padding-inline:12px !important; letter-spacing:-.02em !important; white-space:nowrap !important; } }
-/* 2026-11-15 지훈: POINT 05 유튜브 영상 카드 느낌 */
-html body #app #arcMaking .ed-yt-player { aspect-ratio:16/9 !important; position:relative !important; margin:0 !important; border-radius:16px !important; overflow:hidden !important; background:#111 !important; box-shadow:0 12px 26px #4a2a3326 !important; }
-html body #app #arcMaking .ed-yt-player img { display:block !important; width:100% !important; height:100% !important; max-height:none !important; aspect-ratio:auto !important; object-fit:cover !important; object-position:50% 40% !important; }
-html body #app #arcMaking .ed-yt-player::after { content:"" !important; position:absolute !important; inset:auto 0 0 0 !important; height:38% !important; background:linear-gradient(transparent,#0000006b) !important; pointer-events:none !important; }
-html body #app #arcMaking .ed-yt-meta { display:flex !important; gap:12px !important; align-items:flex-start !important; margin:14px 2px 0 !important; text-align:left !important; }
-html body #app #arcMaking .ed-yt-avatar { flex:none !important; display:grid !important; place-items:center !important; width:38px !important; height:38px !important; border-radius:50% !important; background:#fff !important; border:1px solid #ead9de !important; overflow:hidden !important; }
-html body #app #arcMaking .ed-yt-avatar img { width:26px !important; height:26px !important; object-fit:contain !important; filter:invert(1) brightness(.35) !important; }
-html body #app #arcMaking .ed-yt-meta strong { display:block !important; font-size:15.5px !important; font-weight:700 !important; color:#1f1a1c !important; line-height:1.35 !important; letter-spacing:-.02em !important; }
-html body #app #arcMaking .ed-yt-meta small { display:block !important; margin-top:3px !important; font-size:12.5px !important; color:#7d6a70 !important; }
-html body #app #arcMaking .ed-yt-chips { list-style:none !important; display:flex !important; gap:8px !important; margin:14px 0 0 !important; padding:0 !important; overflow:hidden !important; }
-html body #app #arcMaking .ed-yt-chips li { flex:none !important; padding:7px 12px !important; border-radius:8px !important; background:#fff !important; color:#2e1f24 !important; font-size:13px !important; font-weight:600 !important; }
-html body #app #arcMaking .ed-yt-chips li:first-child { background:#1f1a1c !important; color:#fff !important; }
-html body #app #arcMaking .ed-making-scene.ed-yt { max-width:460px !important; }
-/* 2026-11-15 지훈 참고 캡처: 유튜브 일시정지 화면 — 가운데 반투명 원형 재생 버튼, 아래 빨간 진행 막대 + 컨트롤 줄 */
-html body #app #arcMaking .ed-yt-play { position:absolute !important; left:50% !important; top:46% !important; width:58px !important; height:58px !important; margin:-29px 0 0 -29px !important; border-radius:50% !important; background:#0000008c !important; z-index:1 !important; }
-html body #app #arcMaking .ed-yt-play::after { content:"" !important; position:absolute !important; left:22px !important; top:17px !important; border-left:19px solid #fff !important; border-top:12px solid transparent !important; border-bottom:12px solid transparent !important; }
-html body #app #arcMaking .ed-yt-ui { position:absolute !important; left:0 !important; right:0 !important; bottom:0 !important; z-index:1 !important; padding:0 10px 6px !important; color:#fff !important; }
-html body #app #arcMaking .ed-yt-bar { position:relative !important; display:block !important; height:3px !important; border-radius:2px !important; background:#ffffff59 !important; }
-html body #app #arcMaking .ed-yt-bar i { position:absolute !important; left:0 !important; top:0 !important; bottom:0 !important; width:8% !important; border-radius:2px !important; background:#ff0033 !important; }
-html body #app #arcMaking .ed-yt-bar i::after { content:"" !important; position:absolute !important; right:-5px !important; top:-3.5px !important; width:10px !important; height:10px !important; border-radius:50% !important; background:#ff0033 !important; }
-html body #app #arcMaking .ed-yt-ctl { display:flex !important; justify-content:space-between !important; align-items:center !important; margin-top:7px !important; }
-html body #app #arcMaking .ed-yt-ctl > span { display:flex !important; align-items:center !important; gap:11px !important; }
-html body #app #arcMaking .ed-yt-ctl svg { width:15px !important; height:15px !important; flex:none !important; filter:drop-shadow(0 1px 2px #0006) !important; }
-html body #app #arcMaking .ed-yt-ctl b { font-size:10.5px !important; font-weight:600 !important; letter-spacing:.01em !important; white-space:nowrap !important; text-shadow:0 1px 2px #0008 !important; }
-@media (max-width:350px) { html body #app #arcMaking .ed-yt-ctl > span { gap:8px !important; } html body #app #arcMaking .ed-yt-ctl svg { width:13px !important; height:13px !important; } }
-html body #app #arcMaking .ed-yt-gear { position:relative !important; display:inline-flex !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-ctl .ed-yt-gear em { position:absolute !important; right:-6px !important; top:-3px !important; padding:0 3px !important; border-radius:3px !important; background:#ff0033 !important; color:#fff !important; font-family:Arial,sans-serif !important; font-size:12px !important; line-height:15px !important; height:15px !important; transform:scale(.5) !important; transform-origin:100% 0 !important; font-weight:800 !important; font-style:normal !important; letter-spacing:0 !important; }
-/* 2026-11-15 지훈 시안 7: 영상 아래 큰 숫자 칸 */
-html body #app#app #arcMaking#arcMaking .ed-yt-nums { display:grid !important; grid-template-columns:repeat(3,1fr) !important; margin:16px 0 0 !important; padding:16px 0 14px !important; background:#fff !important; border-radius:16px !important; box-shadow:0 6px 18px #6b354312 !important; text-align:center !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-nums > div { display:block !important; border-left:1px solid #f0e2e6 !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-nums > div:first-child { border-left:0 !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-nums b { font-size:38px !important; font-weight:800 !important; line-height:1 !important; color:#9d4e62 !important; letter-spacing:-.02em !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-nums span { font-size:16px !important; font-weight:700 !important; color:#2e1f24 !important; margin-left:2px !important; }
-html body #app#app #arcMaking#arcMaking .ed-yt-nums small { display:block !important; margin-top:6px !important; font-size:12.5px !important; color:#8d7a80 !important; }
 /* 2026-11-16 지훈 시안 5: 하단 ‘할인 적용 가격표 보기’ 빛나는 테두리 알약(가운데, 문의양식 가격표로 이동) + 아래 진한 둥근 문의 버튼 */
 html body .home-dock .home-offer { left:50% !important; right:auto !important; transform:translateX(-50%) !important; margin-bottom:10px !important; min-height:0 !important; height:38px !important; border-radius:999px !important; border:1.5px solid transparent !important; background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#f0b46a,#e2708a,#a77be0) !important; background-origin:border-box !important; background-clip:padding-box,border-box !important; box-shadow:0 0 0 4px #f5c8d455,0 6px 18px #e2708a40 !important; color:#3a2a20 !important; animation:none !important; }
 html body .home-dock .home-offer a { gap:6px !important; height:100% !important; padding:0 16px !important; font-size:14px !important; font-weight:700 !important; color:#3a2a20 !important; -webkit-text-fill-color:#3a2a20 !important; white-space:nowrap !important; }
@@ -205,8 +160,6 @@ html body #app#app #arcWorries#arcWorries .ed-worry-search li svg { width:16px !
 html body #app#app #arcWorries#arcWorries .ed-worry-search li span { flex:1 !important; min-width:0 !important; }
 html body #app#app #arcWorries#arcWorries .ed-worry-search li b { color:#2e1f24 !important; font-weight:800 !important; }
 @media (max-width:350px) { html body #app#app #arcWorries#arcWorries .ed-worry-search li { font-size:13.5px !important; padding:11px 12px !important; gap:7px !important; letter-spacing:-.02em !important; } html body #app#app #arcWorries#arcWorries .ed-worry-search li svg:last-child { display:none !important; } html body #app#app #arcWorries#arcWorries .ed-worry-input { padding:0 14px !important; } }
-/* 2026-11-16 지훈: POINT 05 가운데 재생 버튼 없음(눌러 보고 싶어지니까) */
-html body #app #arcMaking .ed-yt-play { display:none !important; }
 /* 2026-11-16 스위치 라벨 글자가 보이던 오류: 글자는 항상 숨김 */
 html body #app#app .rc-toggle label { font-size:0 !important; color:transparent !important; -webkit-text-fill-color:transparent !important; text-shadow:none !important; }
 html body #app#app#app .ed-review-card,html body #app#app#app .ed-review-arrow,html body #app#app#app .ed-review-thumb,html body #app#app#app .ed-photo,html body #app#app#app .bap-player,html body #app#app#app .bap-tabs,html body #app#app#app .solo-p4-panel,html body #app#app#app .solo-p4-ratio,html body #app#app#app .hg-key-card,html body #app#app#app .ed-map-art,html body #app#app#app #arcFaq details { box-shadow:0 6px 18px #6b354312 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
@@ -325,7 +278,6 @@ html body #app#app section#arcRecording#arcRecording { background:#f4d8de !impor
 html body #app#app section#arcKey#arcKey { background:#ffffff !important; }
 html body #app#app section#arcTuning#arcTuning { background:#fdf6f6 !important; }
 html body #app#app section#soloPoint04#soloPoint04 { background:#fbeef0 !important; }
-html body #app#app section#arcMaking#arcMaking { background:#f4d8de !important; }
 html body #app#app section#arcRevision#arcRevision { background:#f8e4e8 !important; }
 html body #app#app section#arcFaq#arcFaq { background:#fbeef0 !important; }
 html body #app#app .mobile-ar-solo section.solo-map { background:#ffffff !important; }
@@ -342,10 +294,6 @@ html body #app#app .naver-pending-map strong { font-size:13.5px !important; font
 html body #app#app .naver-pending-map span { font-size:12.5px !important; font-weight:500 !important; line-height:1.5 !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
 /* 2026-11-19 지훈: 3단계 확인 영수증 — 1단계 영수증(.rc-receipt)과 같은 모양, 일정 칸과 구성 칸 사이만 띄움 */
 html body #app#app .wf-review .wf-review-receipt { margin:4px 0 14px !important; }
-/* 2026-11-19 지훈: 문의 03 영상 작업 — 사진은 시안 2처럼 작은 썸네일, 스위치 줄과 한 줄 */
-html body #app#app .wistia-wizard .rc-making-row { display:flex; align-items:center; gap:12px; margin-top:6px; }
-html body #app#app .wistia-wizard .rc-making-thumb { flex:0 0 auto; width:68px !important; height:48px !important; max-width:none !important; object-fit:cover; object-position:60% 35%; border-radius:10px; margin:0 !important; }
-html body #app#app .wistia-wizard .rc-making-row .rc-work { flex:1 1 auto; min-width:0; border:0 !important; padding:0 !important; margin:0 !important; }
 /* 2026-11-19 지훈 시안 3: 확인 영수증 아이콘 소제목 */
 html body #app#app .wf-review-receipt .wf-rcpt-head { display:flex; align-items:center; gap:7px; margin:16px 0 4px !important; font-size:14.5px !important; font-weight:800 !important; color:#3a2a2f !important; -webkit-text-fill-color:#3a2a2f !important; }
 html body #app#app .wf-review-receipt .rc-rcpt-brand + .wf-rcpt-head { margin-top:4px !important; }
@@ -413,11 +361,6 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
   html body #app#app#app #soloPoint04 .solo-p4-tip::after { content:''; position:absolute; left:17px; top:100%; border:7px solid transparent; border-top-color:#9d4e62; }
   @keyframes wistiaTipBob { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-3px) } }
   @media (prefers-reduced-motion:reduce) { html body #app#app#app #soloPoint04 .solo-p4-tip { animation:none; } }
-}
-
-/* 2026-11-19 지훈: 녹음 메이킹 = 추가 옵션 섹션(Point 아님) */
-@layer wistia-home-polish {
-  html body #app#app #arcMaking .ed-option-label { display:table; margin:0 auto 10px !important; padding:5px 14px; border-radius:999px; border:1.5px solid #d9485f; background:#fff; color:#d9485f !important; -webkit-text-fill-color:#d9485f !important; font-size:13px !important; font-weight:800; line-height:1.3; letter-spacing:.02em; }
 }
 
 /* 2026-11-20 지훈: 프로포즈·답프로포즈 상세(/proposal) — 홈 상세와 같은 손글씨 Point·제목, 섹션마다 분홍 단계 */

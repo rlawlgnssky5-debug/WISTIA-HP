@@ -16,7 +16,7 @@ function seoFallback(){
   '<p>부천시청역 1번 출구 도보 약 300m · 경기도 부천시 석천로170번길 19, 부광프라자 2층</p>',
   '<h2>녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링</h2>',
   '<section><h2>기본 구성</h2><ul>'+included.map(([label,price])=>'<li>'+esc(label)+' '+pricing.money(price)+'</li>').join('')+'<li>정가 '+pricing.money(list)+'</li></ul></section>',
-  '<section><h2>옵션</h2><ul><li>인원 추가 (듀엣곡) +40,000원</li><li>녹음 1시간 추가 +60,000원</li><li>녹음 메이킹 영상 +80,000원</li><li>3일 이내 전달 +30,000원</li></ul></section>',
+  '<section><h2>옵션</h2><ul><li>인원 추가 (듀엣곡) +40,000원</li><li>녹음 1시간 추가 +60,000원</li><li>3일 이내 전달 +30,000원</li></ul></section>',
   '<section><h2>할인</h2><ul><li>첫 이용 20,000원 할인</li><li>이번 달 최저가 보상 이벤트 40,000원 할인</li><li>녹음일 1개월 이후 10,000원 할인</li><li>첫 이용 기준 '+pricing.money(start)+'</li></ul></section>'
  ].join('')
 }

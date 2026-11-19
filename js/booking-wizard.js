@@ -6,7 +6,7 @@
  const LAST=steps.length-1,states=new WeakMap(),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
  const money=value=>Number(value).toLocaleString('ko-KR')+'원'
  const hours=global.WistiaPackages.hoursText
- const scheduleLabel=q=>q.making?'예약 시간':'녹음 시간'
+ const scheduleLabel=()=>'녹음 시간'
  const icon=kind=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">'+(kind==='calendar'?'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>':kind==='people'?'<circle cx="9" cy="7" r="3"/><path d="M3 21v-4a6 6 0 0 1 12 0v4m2-17a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 4v4"/>':'<path d="m5 12 4 4L19 6"/>')+'</svg>'
  const error=key=>'<p class="wf-error" id="wf-error-'+key+'" data-wf-error="'+key+'" role="alert" hidden></p>'
  function discountDates(){const today=global.WistiaPackages.today(),format=date=>Number(date.slice(5,7))+'월 '+Number(date.slice(8,10))+'일';return '<div class="wf-earlybird-legend" aria-label="녹음일 사전 예약 할인"><p class="earlybird-one"><strong>'+format(global.WistiaPackages.addMonths(today,1))+'부터</strong><span>10,000원 할인</span></p><small>녹음 날짜 기준</small></div>'}
@@ -113,7 +113,6 @@
   let configurationChanged=false
   if(params.has('package')||recording.keys.some(key=>params.has(key))){
    const selected=recording.selection(params,state.draftKey==='duo')
-   if(!params.has('makingVideo'))selected.makingVideo=fields.makingVideo
    configurationChanged=recording.keys.some(key=>fields[key]!==selected[key])
    Object.assign(fields,selected)
   }
@@ -177,19 +176,12 @@
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
    if(el.name==='people')onPeople(el.value==='1'?'duo':'solo')
-   if(el.name==='makingVideo'){
-    const url=new URL(global.location.href)
-    if(url.searchParams.has(el.name)){
-     url.searchParams.set(el.name,el.value)
-     global.history.replaceState(global.history.state,'',url)
-    }
-   }
    if(['bookingDateMode','bookingDate','timeStart'].includes(el.name))global.WistiaContact.update(el)
    if(el.name==='bookingDate'){mark(form,'bookingDate','');mark(form,'timeStart','');timeMode(form,!!el.value&&!event.wistiaCouponSync)}
    if(el.name==='timeStart')mark(form,'timeStart','')
    const previousMinutes=Number(form.dataset.bookingMinutes)
    update(form,{save:!event.wistiaCouponSync})
-   if(el.name==='recordingMinutes'||el.name==='makingVideo'){
+   if(el.name==='recordingMinutes'){
     const minutes=Number(form.dataset.bookingMinutes)
     if(minutes!==previousMinutes)recheckDuration(form,state,minutes>previousMinutes)
    }
