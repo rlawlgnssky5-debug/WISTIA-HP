@@ -381,7 +381,7 @@ html body #app#app #arcRecording .ed-madi > .ed-point-hand { margin:0 auto 4px !
   html body #app#app .pp-strip img { flex:none; width:56%; aspect-ratio:16/9; object-fit:cover; border-radius:4px; }
   html body #app#app .pp-strip div { display:flex; flex-direction:column; min-width:0; text-align:left; }
   html body #app#app .pp-strip small { font-size:11px !important; font-weight:800; color:#e8a7b5 !important; -webkit-text-fill-color:#e8a7b5 !important; }
-  html body #app#app .pp-strip b { font-size:15px !important; font-weight:800; line-height:1.3; color:#fff !important; -webkit-text-fill-color:#fff !important; }
+  html body #app#app .pp-strip b { white-space:nowrap; letter-spacing:-.02em; font-size:15px !important; font-weight:800; line-height:1.3; color:#fff !important; -webkit-text-fill-color:#fff !important; }
   html body #app#app .pp-strip span { font-size:12px !important; line-height:1.4; color:#cbb8bd !important; -webkit-text-fill-color:#cbb8bd !important; }
   html body #app#app .pp-note { margin:14px auto 0 !important; text-align:center !important; font-size:14px !important; color:#8f777e !important; -webkit-text-fill-color:#8f777e !important; }
   html body #app#app .pp-film .pp-note { color:#2b2024 !important; -webkit-text-fill-color:#2b2024 !important; font-weight:700; }
