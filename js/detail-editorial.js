@@ -12,12 +12,16 @@
       '<p class="ed-comp-join">잘될 때까지 디렉팅하며 반복 ↓</p>' +
       '<div class="ed-comp-final"><span>완성 음원 ♪</span><p>사랑해 너를 사랑해<br>눈물 나도록 사랑해</p></div></div>'
   }
-  const pointLabel = point => '<span class="ed-point ed-point-hand" aria-label="' + point + '">Point ' + Number(point.replace(/\D/g, '')) + '.</span>'
+  // 2026-11-20 지훈 하단 시안 2(다이어리): Point 손글씨 → 번호 알약(01) + 영문 세리프 한 줄, 제목은 검정 한 줄 + 로즈 한 줄
+  const EN = { 'VOCAL TUNING': 'Natural tuning', 'LIVE &amp; AR MIX': 'Every ratio', 'REVISION': 'Until you love it', 'BRIDE’S WORRY': 'Your worries' }
+  const enLabel = en => en ? '<span class="ed-en" aria-hidden="true">' + en + '</span>' : ''
+  const pointLabel = (point, en = '') => '<span class="ed-point ed-point-pill" aria-label="' + point + '">' + String(Number(point.replace(/\D/g, ''))).padStart(2, '0') + '</span>' + enLabel(en)
   const heading = (eyebrow, title, copy = '') => {
     const point = eyebrow.split(' · ')[1]
     const styledTitle = point ? title.replace(/(<\/span>)?([^<>]+)$/, '$1<b class="ed-title">$2</b>') : title
     // 2026-11-19 지훈: 영어 소제목(VOCAL TUNING 등)은 쓰지 않는다
-    return '<header class="ed-heading" data-svg-title="off">' + (point ? pointLabel(point) : '') + '<h2>' + styledTitle + '</h2>' + (copy ? '<p class="ed-description">' + copy + '</p>' : '') + '</header>'
+    const en = EN[eyebrow.split(' · ')[0]] || ''
+    return '<header class="ed-heading" data-svg-title="off">' + (point ? pointLabel(point, en) : enLabel(en)) + '<h2>' + styledTitle + '</h2>' + (copy ? '<p class="ed-description">' + copy + '</p>' : '') + '</header>'
   }
   const editorial = {
     reviews(items) {
@@ -123,7 +127,7 @@
       const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + pct(value) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
       return '<section class="ed-section ed-price" id="arcPrice" data-svg-title="off">' +
         // 2026-11-19 지훈 시안 5: 작은 첫 줄 + 큰 질문 한 줄(Pretendard), 그래프는 흰 카드, ‘가격 부담은 낮추고…’ 줄은 뺐다
-        '<p class="ed-price-pre">' + pre + '</p><h2 class="ed-price-hook">' + hook + '</h2>' +
+        enLabel('Best price') + '<p class="ed-price-pre">' + pre + '</p><h2 class="ed-price-hook">' + hook + '</h2>' +
         '<p class="ed-price-lead">' + lead + '</p>' +
         '<div class="ed-price-chart"><span class="ed-price-tag">' + tag + '</span>' +
         '<div class="ed-price-plot" role="img" aria-label="' + label + ': 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
@@ -133,30 +137,27 @@
     },
     // 2026-11-20 지훈: 고민 검색창·한 마디씩 끊어 부르기 섹션은 프로포즈 상세에서도 그대로 쓴다
     worries(keyword = '축가', items = ['부탁할 사람이 마땅치 않아요', '노래를 잘 못해도 괜찮을까요?', '하객들 앞에서 너무 떨려요', '미리 녹음하면 티 나지 않을까요?']) {
-      const glass = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>'
-      const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>'
-      return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '이런 고민, 있으셨죠?') +
-        // 2026-11-16 지훈 시안 5-B: 검색창 자동완성 모양(로즈 테두리, 줄마다 키워드 굵게)
-        '<div class="ed-worry-search"><div class="ed-worry-input" aria-hidden="true">' + glass + keyword + ' 고민<i></i></div><ul>' +
-        items.map(text => '<li>' + glass + '<span><b>' + keyword + '</b> ' + text + '</span>' + arrow + '</li>').join('') + '</ul></div></section>'
+      // 2026-11-20 지훈 하단 시안 2: 검색창 → 말풍선(좌우 번갈아, 키워드 굵게 + 형광펜)
+      return '<section class="ed-worries ed-section" id="arcWorries" data-svg-title="off">' + heading("BRIDE’S WORRY", '<span>이런 고민,</span><b class="ed-title">있으셨죠?</b>') +
+        '<div class="ed-worry-chat">' + items.map((text, i) => '<p class="ed-bubble' + (i % 2 ? ' is-right' : '') + '"><b>' + keyword + '</b> ' + text + '</p>').join('') + '</div></section>'
     },
     takes(point = 'POINT 01') {
       return '<section class="arc-point arc-point-recording ed-section" id="arcRecording" data-svg-title="off">' +
         // 2026-11-18 지훈: 한 소절이 아니라 한 마디씩 끊어서 부른다
-        '<div class="ed-madi"><header class="ed-heading" data-svg-title="off">' + pointLabel(point) + '<h2><span>노래 못하는데, 괜찮을까요?</span><b class="ed-title">한 마디씩 끊어서 불러요</b></h2></header>' +
+        '<div class="ed-madi"><header class="ed-heading" data-svg-title="off">' + pointLabel(point, 'One bar at a time') + '<h2><span>노래 못하는데, 괜찮을까요?</span><b class="ed-title">한 마디씩 끊어서 불러요</b></h2></header>' +
         compTakes() +
         '</div></section>'
     },
     recording() {
       return this.worries() + this.takes()
     },
-    head(point, question, title) {
-      return '<header class="ed-heading" data-svg-title="off">' + pointLabel(point) + '<h2><span>' + question + '</span><b class="ed-title">' + title + '</b></h2></header>'
+    head(point, question, title, en = '') {
+      return '<header class="ed-heading" data-svg-title="off">' + pointLabel(point, en) + '<h2><span>' + question + '</span><b class="ed-title">' + title + '</b></h2></header>'
     },
     key() {
       return '<section class="arc-point arc-point-poster ed-section ed-key" id="arcKey" data-svg-title="off">' +
         // 2026-11-17 지훈: POINT 02는 0원 영수증 그림(시안 4) — 표·카드 대신 이미지처럼
-        '<div class="hg-key"><header class="ed-heading" data-svg-title="off">' + pointLabel('POINT 02') + '<h2><span>음원 편집 · 키 조절</span><b class="ed-title">추가 비용 없어요</b></h2></header>' +
+        '<div class="hg-key"><header class="ed-heading" data-svg-title="off">' + pointLabel('POINT 02', 'No extra cost') + '<h2><span>음원 편집 · 키 조절</span><b class="ed-title">추가 비용 없어요</b></h2></header>' +
         '<div class="ed-rcpt-wrap"><div class="ed-rcpt" role="img" aria-label="영수증: 음원 편집 0원, 키 조절 0원, 합계 0원"><b class="ed-rcpt-brand">WISTIA</b><i></i><p><span>음원 편집</span><b>0원</b></p><p><span>키 조절</span><b>0원</b></p><i></i><p class="ed-rcpt-sum"><span>합계</span><b>0원</b></p></div><span class="ed-rcpt-stamp" aria-hidden="true">무료</span></div>' +
         '<p class="ed-rcpt-cap">원하는 길이로 자르고, 내 키에 맞춰 드려요</p></div>' +
         '</section>'
