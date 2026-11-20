@@ -34,7 +34,7 @@
  const yearEndUntil='2026-12-31'
  function proposalQuote(v,date){
   const discounts=[{key:'first',label:'첫 이용 할인',amount:20000},{key:'monthly',label:eventLabel(date),amount:eventAmount}]
-  if(date<=yearEndUntil)discounts.push({key:'yearEnd',label:'연말 기념 할인',amount:20000})
+  if(date<=yearEndUntil)discounts.push({key:'yearEnd',label:'연말 기념 프로포즈 할인',amount:20000})
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const discount=discounts.reduce((sum,d)=>sum+d.amount,0)
