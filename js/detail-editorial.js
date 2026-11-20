@@ -116,8 +116,11 @@
       // 2026-11-19 지훈: 상세 후킹 — 녹음 2시간·같은 구성 기준 실제 판매가(솔로) 비교, 다른 녹음실은 이름 없이 A~D, 평균 점선 + 손글씨
       const avg = others.reduce((sum, item) => sum + item[1], 0) / others.length
       const max = Math.max(...others.map(item => item[1]), ours)
+      // 2026-11-20 지훈: 더 극적으로 — 0원부터가 아니라 바닥을 올려 위스티아 막대가 22% 높이가 되게
+      const base = Math.max(0, (ours - 0.22 * max) / 0.78)
+      const pct = value => ((value - base) / (max - base) * 100).toFixed(1)
       const man = value => (Math.round(value / 1000) / 10) + '만'
-      const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + (value / max * 100).toFixed(1) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
+      const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + pct(value) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
       return '<section class="ed-section ed-price" id="arcPrice" data-svg-title="off">' +
         // 2026-11-19 지훈 시안 5: 작은 첫 줄 + 큰 질문 한 줄(Pretendard), 그래프는 흰 카드, ‘가격 부담은 낮추고…’ 줄은 뺐다
         '<p class="ed-price-pre">' + pre + '</p><h2 class="ed-price-hook">' + hook + '</h2>' +
@@ -125,7 +128,7 @@
         '<div class="ed-price-chart"><span class="ed-price-tag">' + tag + '</span>' +
         '<div class="ed-price-plot" role="img" aria-label="' + label + ': 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
         '<ol aria-hidden="true">' + others.map(item => bar(item[0], item[1], false)).join('') + bar('WISTIA', ours, true) + '</ol>' +
-        '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + (avg / max * 100).toFixed(1) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
+        '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + pct(avg) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
         '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p><p class="ed-price-src">* 2026년 11월 가격조사 기준</p></div></section>'
     },
     // 2026-11-20 지훈: 고민 검색창·한 마디씩 끊어 부르기 섹션은 프로포즈 상세에서도 그대로 쓴다
