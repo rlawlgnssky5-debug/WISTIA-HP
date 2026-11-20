@@ -27,8 +27,8 @@
   for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?['120','180'].includes(val):['0','1'].includes(val))v[key]=val}
   return v
  }
- // 2026-11-20 지훈: 프로포즈 필름 — 녹음 1시간 + 촬영 30분(+영상 편집), 옵션 없음, 정가 280,000(축가 240,000 − 1시간 40,000 + 필름 80,000)
- const proposalIncluded=[['recording','녹음 1시간'],['filming','촬영 30분'],['tuning','보컬 튜닝 · 전문 믹싱 · 마스터링'],['film','필름 편집']]
+ // 2026-11-20 지훈: 프로포즈 필름 — 녹음 1시간 + 촬영 1시간(+영상 편집), 옵션 없음, 정가 280,000(축가 240,000 − 1시간 40,000 + 필름 80,000)
+ const proposalIncluded=[['recording','녹음 1시간'],['filming','촬영 1시간'],['tuning','보컬 튜닝 · 전문 믹싱 · 마스터링'],['film','필름 편집']]
  // 2026-11-20 지훈: 가격 기준은 10분당 1만원(그래서 녹음 1시간 추가 = 60,000) — 프로포즈 필름 정가 300,000 → 첫 이용 −20,000 · 최저가 보상 −40,000 = 240,000, 연말 기념 −20,000 더해 220,000
  const proposalList=300000
  const yearEndUntil='2026-12-31'
@@ -42,7 +42,7 @@
   const longer=v.recordingMinutes==='180',minutes=longer?120:60,options=[]
   if(longer)options.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
   const optionTotal=options.reduce((sum,o)=>sum+o.price,0)
-  return {v,minutes,recordingMinutes:minutes,filmingMinutes:30,making:false,bookingMinutes:minutes+30,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 30분 + 튜닝·믹싱·마스터링 + 필름 편집'}}
+  return {v,minutes,recordingMinutes:minutes,filmingMinutes:60,making:false,bookingMinutes:minutes+60,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 1시간 + 튜닝·믹싱·마스터링 + 필름 편집'}}
  }
  function quote(v,date=prices.today()){
   if(v.product==='proposal')return proposalQuote(v,date)
