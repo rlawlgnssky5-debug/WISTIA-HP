@@ -29,9 +29,12 @@
  }
  // 2026-11-20 지훈: 프로포즈 필름 — 녹음 1시간 + 촬영 30분(+영상 편집), 옵션 없음, 정가 280,000(축가 240,000 − 1시간 40,000 + 필름 80,000)
  const proposalIncluded=[['recording','녹음 1시간'],['filming','촬영 30분'],['tuning','보컬 튜닝 · 전문 믹싱 · 마스터링'],['film','필름 편집']]
- const proposalList=list-40000+80000
+ // 2026-11-20 지훈: 가격 기준은 10분당 1만원(그래서 녹음 1시간 추가 = 60,000) — 프로포즈 필름 정가 300,000 → 첫 이용 −20,000 · 최저가 보상 −40,000 = 240,000, 연말 기념 −20,000 더해 220,000
+ const proposalList=300000
+ const yearEndUntil='2026-12-31'
  function proposalQuote(v,date){
   const discounts=[{key:'first',label:'첫 이용 할인',amount:20000},{key:'monthly',label:eventLabel(date),amount:eventAmount}]
+  if(date<=yearEndUntil)discounts.push({key:'yearEnd',label:'연말 기념 할인',amount:20000})
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const discount=discounts.reduce((sum,d)=>sum+d.amount,0)

@@ -111,20 +111,19 @@
       if (!Number.isFinite(ratio)) return 50
       return ratio < 40 ? 30 : ratio < 60 ? 50 : ratio < 85 ? 70 : 100
     },
-    price() {
+    // 2026-11-20 지훈: 프로포즈 상세도 같은 가격 비교 — 값·문구만 바꿔 쓴다
+    price({ others = [['A', 350000], ['B', 280000], ['C', 240000], ['D', 190000]], ours = global.WistiaRecording ? global.WistiaRecording.startPrice() : 180000, pre = '결혼 준비도 비싼데,', hook = '축가까지 비쌀 필요 있나요?', lead = '웨딩 비수기인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong>', tag = '녹음 2시간 · 같은 구성 기준', label = '녹음 2시간, 보컬 보정·믹싱·마스터링 포함 솔로 가격 비교' } = {}) {
       // 2026-11-19 지훈: 상세 후킹 — 녹음 2시간·같은 구성 기준 실제 판매가(솔로) 비교, 다른 녹음실은 이름 없이 A~D, 평균 점선 + 손글씨
-      const others = [['A', 350000], ['B', 280000], ['C', 240000], ['D', 190000]]
-      const ours = global.WistiaRecording ? global.WistiaRecording.startPrice() : 180000
       const avg = others.reduce((sum, item) => sum + item[1], 0) / others.length
       const max = Math.max(...others.map(item => item[1]), ours)
       const man = value => (Math.round(value / 1000) / 10) + '만'
       const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + (value / max * 100).toFixed(1) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
       return '<section class="ed-section ed-price" id="arcPrice" data-svg-title="off">' +
         // 2026-11-19 지훈 시안 5: 작은 첫 줄 + 큰 질문 한 줄(Pretendard), 그래프는 흰 카드, ‘가격 부담은 낮추고…’ 줄은 뺐다
-        '<p class="ed-price-pre">결혼 준비도 비싼데,</p><h2 class="ed-price-hook">축가까지 비쌀 필요 있나요?</h2>' +
-        '<p class="ed-price-lead">웨딩 비수기인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong></p>' +
-        '<div class="ed-price-chart"><span class="ed-price-tag">녹음 2시간 · 같은 구성 기준</span>' +
-        '<div class="ed-price-plot" role="img" aria-label="녹음 2시간, 보컬 보정·믹싱·마스터링 포함 솔로 가격 비교: 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
+        '<p class="ed-price-pre">' + pre + '</p><h2 class="ed-price-hook">' + hook + '</h2>' +
+        '<p class="ed-price-lead">' + lead + '</p>' +
+        '<div class="ed-price-chart"><span class="ed-price-tag">' + tag + '</span>' +
+        '<div class="ed-price-plot" role="img" aria-label="' + label + ': 다른 녹음실 ' + others.map(item => item[0] + ' ' + man(item[1])).join(', ') + ', 평균 ' + man(avg) + ', 위스티아 ' + man(ours) + '">' +
         '<ol aria-hidden="true">' + others.map(item => bar(item[0], item[1], false)).join('') + bar('WISTIA', ours, true) + '</ol>' +
         '<span class="ed-price-avg" aria-hidden="true" style="bottom:' + (avg / max * 100).toFixed(1) + '%"><em>평균 ' + man(avg) + '</em></span></div>' +
         '<p class="ed-price-note" aria-hidden="true">평균 ' + man(avg) + '원 → 위스티아 ' + man(ours) + '원</p><p class="ed-price-src">* 2026년 11월 가격조사 기준</p></div></section>'
