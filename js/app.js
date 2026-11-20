@@ -956,7 +956,7 @@ function renderProposalPage(){
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
  const discounts=eventsDiscounts()
- app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+paybackSection(items,maximum)+'<a class="ev2-cta ev2-consult" href="/">AR 축가 자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></section>'+footer()
+ app.innerHTML='<section class="wistia-events ev2" aria-labelledby="wistiaEventsTitle"><header class="ev2-hero"><p class="ev2-k">WISTIA EVENTS</p><h1 data-svg-title="off" id="wistiaEventsTitle">위스티아 이벤트</h1><p class="ev2-lead">할인 혜택과 후기 페이백을 안내해 드려요</p></header><div class="ev2-wrap">'+discounts+paybackSection(items,maximum)+'</div></section>'+footer()
 }
 let contactQuote=null
 let inquiryUndecided=false,inquiryObserver=null

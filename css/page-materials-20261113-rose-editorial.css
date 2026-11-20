@@ -26,7 +26,7 @@
   #app .wistia-events.ev2 .pb-summary {background:#f9e4e6!important}
   #app .wistia-events.ev2 .pb-refund {padding:16px 18px!important}
   #app .wistia-events.ev2 .pb-eligibility {background:#f3ddd4!important}
-  #app .wistia-events.ev2 :is(.evd-icon,.ev2-cta) {
+  #app .wistia-events.ev2 .evd-icon {
     border:1px solid transparent!important;
     border-radius:15px!important;
     background:#efcdd0!important;
