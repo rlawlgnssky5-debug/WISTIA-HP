@@ -951,7 +951,7 @@ function renderProposalPage(){
  const faqItems=[['준비해야 할 사진이 있나요?','두 분의 사진·영상과 넣고 싶은 문구를 상담 후 안내해 드려요'],['상대방 몰래 준비할 수 있나요?','네, 비공개로 진행하고 연락도 신청하신 분께만 드려요'],['현장에서 바로 틀 수 있나요?','바로 상영할 수 있는 영상 파일로 전달해요, 사용 날짜가 정해져 있다면 상담에서 먼저 맞춰요'],['노래를 잘 못해도 괜찮을까요?','한 마디씩 끊어서 디렉팅을 받으며 녹음하고, 음정·박자 보정으로 자연스럽게 다듬어요']]
  const faq='<section class="ed-section pp-faq" id="ppFaq" data-svg-title="off"><header class="ed-heading" data-svg-title="off"><h2>자주 묻는 질문</h2></header>'+faqItems.map(([q,a],i)=>'<details'+(i===0?' open':'')+'><summary>Q. '+q+'</summary><p>'+a+'</p></details>').join('')+'<a class="pp-cta" href="'+proposalInquiryHref()+'">문의양식 작성하기</a></section>'
  const items=['반지만 주기엔 평범할까 걱정돼요','노래를 잘 못해도 괜찮을까요?','편지만으로는 부족한 것 같아요','들키지 않게 준비할 수 있을까요?']
- app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.price({others:[['A',280000],['B',279000],['C',240000],['D',240000]],ours:p.total,pre:'반지도 비싼데,',hook:'프로포즈 영상까지 비쌀 필요 있나요?',lead:'연말인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong>',tag:'프로포즈 필름 · 같은 구성 기준',label:'녹음·촬영·보정·믹싱·마스터링·영상 편집 포함 프로포즈 필름 가격 비교'})+soloReviewGrid()+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+faq+soloMapSection()+footer()+'<div class="home-dock" aria-label="예약 안내" data-dock-href="'+proposalInquiryHref()+'"><div class="home-offer" hidden><a data-home-offer-link></a></div><div class="home-dock-row"><a data-package-inquiry href="'+proposalInquiryHref()+'">문의양식 작성하기</a></div></div></div>'
+ app.innerHTML='<div class="solo-detail-scope ar-detail-scope ar-commerce-detail mobile-ar-solo pp-scope" data-ar-product="solo">'+hero+WistiaEditorial.price({others:[['A',280000],['B',279000],['C',240000],['D',240000]],ours:p.total,pre:'반지도 비싼데,',hook:'프로포즈 영상까지 비쌀 필요 있나요?',lead:'연말인 만큼,<br><strong>최저가는 위스티아가 잡겠습니다!</strong>',tag:'프로포즈 필름 · 같은 구성 기준',label:'녹음·촬영·보정·믹싱·마스터링·영상 편집 포함 프로포즈 필름 가격 비교'})+soloReviewGrid()+WistiaEditorial.worries('프로포즈',items)+film+WistiaEditorial.takes('POINT 02')+letter+ar+faq+soloMapSection()+footer()+'<div class="home-dock" aria-label="예약 안내" data-dock-href="'+proposalInquiryHref()+'"><div class="home-offer" hidden><a data-home-offer-link><em aria-hidden="true">✦</em><span><b>할인 적용</b> 가격으로 문의하기</span><i aria-hidden="true">›</i></a></div><div class="home-dock-row"><a data-package-inquiry href="'+proposalInquiryHref()+'">문의양식 작성하기</a></div></div></div>'
 }
 function renderEventsPage(){
  const items=EVENTS.filter(item=>(item.type||'discount')==='payback'),maximum=items.reduce((t,i)=>t+i.discount,0)
@@ -1193,7 +1193,7 @@ function soloMapSection({heading=true}={}){
 }
 function soloFooter(key='solo'){
  const channels=[['instagram','Instagram',config.accounts?.instagram||'https://www.instagram.com/wistia.studio/'],['youtube','YouTube',config.accounts?.youtube||'https://www.youtube.com/@wistia_film'],['kakao','Kakao 상담',kakao()]]
- return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><em aria-hidden="true">✦</em><span><b>할인 적용</b> 가격표 보기</span><i aria-hidden="true">›</i></a></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
+ return footer()+'<div class="home-dock" aria-label="예약 안내"><div class="home-offer" hidden><a data-home-offer-link><em aria-hidden="true">✦</em><span><b>할인 적용</b> 가격으로 문의하기</span><i aria-hidden="true">›</i></a></div><div class="home-dock-row"><a data-package-inquiry href="'+window.WistiaRecording.inquiryHref(window.WistiaRecording.selection(new URLSearchParams(location.search),key==='duo')).replace(/&/g,'&amp;')+'">문의양식 작성하기</a></div></div>'
 }
 function soloPosterStack(images){return '<div class="solo-poster-stack">'+images+'</div>'}
 function pcProductInformation(info,price){
@@ -1516,7 +1516,7 @@ function initHomeDock(root){
  }
  function checkReviews(){
   frame=0
-  const reviewLabel=root.querySelector('.arc-reviews #soloReviewTitle')
+  const reviewLabel=root.querySelector('.arc-reviews #soloReviewTitle, .pp-scope #soloReviewTitle')
   const dockTop=dock.getBoundingClientRect().top
   const visibleBottom=dockTop>0?Math.min(dockTop,window.innerHeight):window.innerHeight
   const reached=!!reviewLabel&&reviewLabel.getBoundingClientRect().bottom<=visibleBottom
