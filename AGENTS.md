@@ -1,5 +1,8 @@
 # 위스티아 홈페이지 작업 지침
 
+## 2026-11-20 — 헤더 WISTIA 로고는 링크가 아니다(누르면 아무 동작 없음, <span class="wordmark">) — 지훈: 로고 누르면 축가 AR로 가서 문제
+
+
 ## 2026-11-20 — 문의양식 1단계(구성) 삭제(축가 AR·프로포즈 둘 다): 바로 날짜·시간부터, 단계 표시는 1 날짜·시간 / 2 확인. 축가 AR만 날짜 달력 위에 인원(1인 / 2인 듀엣곡 +40,000) 선택(`recording.peoplePicker`), 녹음 시간 추가 선택은 없앴다(숨긴 recordingMinutes=120). 1단계 섹션은 숨긴 값(firstUse·recordingMinutes·영수증 슬롯)만 남김, 이전 버튼은 상세로. 프로포즈 문의 표시 product=proposal은 다른 페이지로 따라가지 않는다(navigationTarget)
 
 

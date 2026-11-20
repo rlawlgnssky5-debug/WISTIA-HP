@@ -1965,7 +1965,7 @@ function header(){
  document.querySelector("#floatingKakaoChat").href=kakao()
  document.querySelector("#mainMenu")?.remove()
  const siteHeader=document.querySelector("#siteHeader")
- siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><a class="wordmark" href="#/" aria-label="WISTIA 홈">'+img("assets/img/wistia-logo-transparent-q88.webp","위스티아")+'<span>WISTIA</span></a></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
+ siteHeader.innerHTML='<div class="header-inner shell"><div class="brand-group"><span class="wordmark">'+img("assets/img/wistia-logo-transparent-q88.webp","위스티아")+'<span>WISTIA</span></span></div><button id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button></div>';
  siteHeader.insertAdjacentHTML("afterend",navigationMenu())
 }
 let arCdRatioInstance=null,beforeAfterInstance=null,homeHighlightInstance=null,soloPoint04Cleanup=null
