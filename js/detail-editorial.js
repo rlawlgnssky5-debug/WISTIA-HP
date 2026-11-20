@@ -116,8 +116,8 @@
       // 2026-11-19 지훈: 상세 후킹 — 녹음 2시간·같은 구성 기준 실제 판매가(솔로) 비교, 다른 녹음실은 이름 없이 A~D, 평균 점선 + 손글씨
       const avg = others.reduce((sum, item) => sum + item[1], 0) / others.length
       const max = Math.max(...others.map(item => item[1]), ours)
-      // 2026-11-20 지훈: 더 극적으로 — 0원부터가 아니라 바닥을 올려 위스티아 막대가 22% 높이가 되게
-      const base = Math.max(0, (ours - 0.22 * max) / 0.78)
+      // 2026-11-20 지훈: 더 극적으로 — 0원부터가 아니라 바닥을 올려 위스티아 막대가 35% 높이가 되게(22%는 과해서 중간)
+      const base = Math.max(0, (ours - 0.35 * max) / 0.65)
       const pct = value => ((value - base) / (max - base) * 100).toFixed(1)
       const man = value => (Math.round(value / 1000) / 10) + '만'
       const bar = (name, value, us) => '<li class="ed-price-col' + (us ? ' is-us' : '') + '"><i style="height:' + pct(value) + '%"><b>' + man(value) + '</b></i><span>' + name + '</span></li>'
