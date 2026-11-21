@@ -17,7 +17,7 @@ api.mount(form,'solo');await flush()
 assert.equal(form.dataset.scheduleState,'unknown');assert.equal(status.hidden,true);assert.equal(requests.length,0)
 form.dataset.bookingCalendarOpened='true'
 date.value='2027-10-11';api.changed(date);await flush()
-assert.equal(form.dataset.scheduleState,'closed');assert.match(date.validationMessage,/월·화·수/)
+assert.equal(form.dataset.scheduleState,'closed');assert.match(date.validationMessage,/월·화는 휴무/)
 assert.equal(requests.length,0)
 date.value='2027-10-10';api.changed(date)
 assert.equal(form.dataset.scheduleState,'loading');assert.equal(status.hidden,true);assert.match(date.validationMessage,/확인/)

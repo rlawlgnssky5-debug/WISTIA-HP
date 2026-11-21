@@ -29,7 +29,7 @@
  function displayDate(value){const date=parseDate(value);return date?date.getUTCFullYear()+'년 '+(date.getUTCMonth()+1)+'월 '+date.getUTCDate()+'일 ('+weekdays[date.getUTCDay()]+')':'날짜를 선택해 주세요'}
  function isoDate(date){return date.toISOString().slice(0,10)}
  function bookingHorizon(today=calendarToday()){const year=Number(today.slice(0,4));return {minYear:year,maxYear:year+1,last:String(year+1)+'-12-31'}}
- function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||value<=bookingHorizon(today).last&&[0,4,5,6].includes(date.getUTCDay()))}
+ function selectableDate(value,key,today=calendarToday()){const date=parseDate(value);return !!date&&value>=today&&(key!=='bookingDate'||value<=bookingHorizon(today).last&&(global.WistiaBooking?.operatingDays||[0,3,4,5,6]).includes(date.getUTCDay()))}
  function selectableBookingDate(value,key){
   if(!selectableDate(value,key))return false
   if(key!=='bookingDate')return true
@@ -42,7 +42,7 @@
   const first=new Date(Date.UTC(year,month,1)),count=new Date(Date.UTC(year,month+1,0)).getUTCDate()
   let cells='<span class="calendar-empty" aria-hidden="true"></span>'.repeat(first.getUTCDay())
   for(let day=1;day<=count;day++){
-   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&[1,2,3].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&(!unknown||failed)
+   const date=new Date(Date.UTC(year,month,day)),value=isoDate(date),weekdayClosed=key==='bookingDate'&&![0,3,4,5,6].includes(date.getUTCDay()),notionClosed=key==='bookingDate'&&value>=today&&!weekdayClosed&&blocks!==null&&global.WistiaBooking?.dayClosed(value,product,blocks),closed=weekdayClosed||notionClosed,past=value<today,unknown=key==='bookingDate'&&blocks===null&&!past&&!weekdayClosed,enabled=selectableDate(value,key,today)&&!closed&&(!unknown||failed)
    const benefit=discounts&&key==='bookingDate'&&enabled?global.WistiaPackages?.advanceDiscount(value,today):null
    cells+='<button type="button" class="calendar-day'+(benefit?' earlybird-day earlybird-one':'')+(past?' is-past':'')+(notionClosed?' notion-closed':'')+(date.getUTCDay()===0||publicHolidays.has(value)?' calendar-red-day':'')+(value===selected?' is-selected':'')+(value===today?' is-today':'')+'" data-calendar-day="'+value+'"'+(benefit?' data-discount="'+benefit.amount+'"':'')+' tabindex="-1"'+(!enabled?' disabled':'')+' aria-label="'+displayDate(value)+(benefit?' · '+benefit.amount.toLocaleString('ko-KR')+'원 할인':'')+(weekdayClosed?' · 휴무':notionClosed&&!past?' · 마감':past?' · 예약불가':unknown?(failed?' · 카카오톡 확인 필요':' · 확인 중'):'')+'" aria-pressed="'+(value===selected)+'"'+(value===today?' aria-current="date"':'')+'><span>'+day+'</span></button>'
   }
