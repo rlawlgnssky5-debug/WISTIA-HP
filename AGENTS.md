@@ -1,6 +1,6 @@
 # 위스티아 홈페이지 작업 지침
 
-- 2026-11-22 첫 방문 팝업(시안 5 뱃지형): js/early-popup-20261122.js가 홈·/proposal에 처음 들어오면 0.9초 뒤 1:1 포스터 ‘사전 예약 할인 / 일찍 예약할수록 할인! / 1개월 일찍 1만원 · 2개월 일찍 2만원 / 방문일 기준 · 문의양식에서 자동 적용’, 버튼은 그 페이지 문의 주소(data-dock-href), 닫기·오늘 하루 보지 않기·바깥·Esc 모두 24시간 숨김(localStorage wistia_early_popup_until), navigator.webdriver면 안 띄움. ‘얼리버드’ 말은 쓰지 않는다. 문의 범례 작은 글씨도 ‘방문일 기준’. CSS는 home-polish 끝.
+- 2026-11-22 첫 방문 팝업(시안 5 뱃지형): js/early-popup-20261122.js가 홈·/proposal에 처음 들어오면 0.9초 뒤 1:1 포스터 ‘사전 예약 할인 / 일찍 예약할수록 할인! / 1개월 일찍 1만원 · 2개월 일찍 2만원 / 방문일 기준 · 문의양식에서 자동 적용’, 문의로 넘어가는 버튼은 없다(지훈: 바로 넘어가면 이상함) — 큰 버튼은 ‘닫기’(X·바깥·Esc와 같이 이번 방문 동안 숨김, sessionStorage), ‘오늘 하루 보지 않기’만 24시간 숨김(localStorage wistia_early_popup_until), navigator.webdriver면 안 띄움. ‘얼리버드’ 말은 쓰지 않는다. 문의 범례 작은 글씨도 ‘방문일 기준’. CSS는 home-polish 끝.
 
 - 2026-11-22 사전 예약 할인 2단계: 녹음일이 예약일+2개월 이후면 20,000(advance2), +1개월 이후면 10,000(advance1), 둘 중 하나 — package-pricing advanceDiscount 한 곳. 달력 −2만원 칸(earlybird-two), 문의 범례 두 줄, 홈·프로포즈 이벤트 줄 "일찍 예약할수록 최대 20,000원 할인", 이벤트 페이지 2개월 카드, SEO 대체글.
 
