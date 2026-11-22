@@ -460,8 +460,8 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
   /* 2026-11-20 지훈: 섹션은 흰 블록 / 핑크 블록 번갈아, 블록마다 위→아래 그라데이션(포스터 시안 2 느낌) */
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(#arcPrice,#arcWorries,#arcKey,#soloPoint04,#arcFaq) { background:linear-gradient(180deg,#fcecf0 0%,#fdf3f5 55%,#fffafb 100%) !important; }
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(#reviews,#arcRecording,#arcTuning,#arcRevision,.solo-map) { background:linear-gradient(180deg,#ffffff 0%,#fffafb 55%,#fcf0f3 100%) !important; }
-  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo.pp-scope :is(#arcPrice,#arcWorries,#arcRecording,#ppAr,.solo-map) { background:linear-gradient(180deg,#fcecf0 0%,#fdf3f5 55%,#fffafb 100%) !important; }
-  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo.pp-scope :is(#reviews,#ppFilm,#ppLetter,#ppFaq) { background:linear-gradient(180deg,#ffffff 0%,#fffafb 55%,#fcf0f3 100%) !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo.pp-scope :is(#arcPrice,#arcWorries,#arcRecording,#ppLetter,#ppFaq) { background:linear-gradient(180deg,#fcecf0 0%,#fdf3f5 55%,#fffafb 100%) !important; }
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo.pp-scope :is(#reviews,#ppFilm,#arcTuning,#ppAr,.solo-map) { background:linear-gradient(180deg,#ffffff 0%,#fffafb 55%,#fcf0f3 100%) !important; }
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo + .solo-footer-clean, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo .solo-footer-clean { border-top:1px solid #efd6dc !important; }
   /* 2026-11-21 지훈: 좁은 폰에서 제목이 잘림 — 화면 폭에 맞춰 줄이고, 그래도 넘치면 단어 단위로 줄바꿈 */
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .mobile-ar-solo :is(.ed-price-pre,.ed-price-hook,.ed-heading h2,.ed-heading h2 > span,.ed-heading h2 .ed-title,#soloReviewTitle,#soloReviewTitle strong,.solo-faq-heading h2,.solo-faq-heading h2 strong,.pp-faq h2,#soloMapTitle) { font-size:clamp(17px,5.6vw,22px) !important; white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important; }
@@ -525,4 +525,25 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
   html body dialog#earlyPopup.early-popup button.ep-cta { display:block; width:100%; text-align:center; padding:14px; border:0 !important; border-radius:99px !important; background:#b84a64 !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-weight:700 !important; font-size:15px !important; font-family:inherit; cursor:pointer; box-shadow:0 12px 24px -14px #b84a64; }
   html body dialog.early-popup .ep-close { border:0; background:none; color:#8c8287; font-size:13px; padding:6px; cursor:pointer; font-family:inherit; }
   html body dialog.early-popup .ep-x { position:absolute; top:10px; right:10px; width:36px; height:36px; border:0; border-radius:50%; background:rgba(255,255,255,.8); color:#6f6569; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  /* 2026-11-22 지훈: 프로포즈 보정 전후 플레이어 — 홈(home-detail-glass, 프로포즈는 안 불러옴)과 같은 모양 */
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-player {background: #ffffff !important;
+  border: 1px solid #f0e2e6 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 18px #6b354312 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning #wistiaBeforeAfter, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .wistia-ba-layout {background: transparent !important; padding: 0 !important; margin: 0 !important; width: 100% !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-player {padding: 18px 16px 18px !important; box-sizing: border-box !important; width: 100% !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-body {background: transparent !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-controls {margin: 4px 0 14px !important; padding: 0 !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-badge {margin: 0 0 6px !important; background: rgba(255,255,255,.7) !important; border: 1px solid #DE6E6F !important; font-size: 12px !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-wave {width: 100% !important; border-radius: 12px !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tabs {margin: 14px 0 0 !important; width: 100% !important; box-sizing: border-box !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab strong {font-size: 15px !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab small {font-size: 11px !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-time {font-size: 12px !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-time, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-time * {color: #6f6166 !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab.active {background: #9D4047 !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab:not(.active), html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab:not(.active) * {color: #6f5f66 !important;}
+  html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-badge b, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-badge u {color: #9D4047 !important;}
 }
