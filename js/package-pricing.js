@@ -62,7 +62,8 @@
   const event=activeMonthlyEvent()
   const offers=[{key:'first',label:'위스티아 첫 이용',discount:20000,detail:'별도 신청 없이 자동 적용'}]
   if(event)offers.push({key:'monthly',label:event.name,discount:event.amount,detail:event.detail})
-  offers.push({key:'advance1',label:'녹음일 1개월 이후',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
+  offers.push({key:'advance1',label:'1개월 일찍 예약',discount:10000,detail:'예약하는 날에서 1개월 이후의 녹음 일정에 적용돼요'})
+  offers.push({key:'advance2',label:'2개월 일찍 예약',discount:20000,detail:'예약하는 날에서 2개월 이후의 녹음 일정에 적용돼요 (1개월 할인 대신)'})
   return offers
  }
  function validDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value}
@@ -74,6 +75,8 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function advanceDiscount(date,reference=today()){
   if(!validDate(date)||!validDate(reference))return null
+  // 2026-11-22 지훈: 일찍 예약할수록 할인 — 2개월 이후 20,000 / 1개월 이후 10,000 (둘 중 하나)
+  if(date>=addMonths(reference,2))return {key:'advance2',label:'사전 예약 할인 (2개월 이후)',amount:20000}
   if(date>=addMonths(reference,1))return {key:'advance1',label:'사전 예약 할인 (1개월 이후)',amount:10000}
   return null
  }

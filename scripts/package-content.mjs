@@ -17,7 +17,7 @@ function seoFallback(){
   '<h2>녹음 2시간 + 보컬 튜닝 + 전문 믹싱 + 마스터링</h2>',
   '<section><h2>기본 구성</h2><ul>'+included.map(([label,price])=>'<li>'+esc(label)+' '+pricing.money(price)+'</li>').join('')+'<li>정가 '+pricing.money(list)+'</li></ul></section>',
   '<section><h2>옵션</h2><ul><li>인원 추가 (듀엣곡) +40,000원</li><li>녹음 1시간 추가 +60,000원</li></ul></section>',
-  '<section><h2>할인</h2><ul><li>첫 이용 20,000원 할인</li><li>이번 달 최저가 보상 이벤트 40,000원 할인</li><li>녹음일 1개월 이후 10,000원 할인</li><li>첫 이용 기준 '+pricing.money(start)+'</li></ul></section>'
+  '<section><h2>할인</h2><ul><li>첫 이용 20,000원 할인</li><li>이번 달 최저가 보상 이벤트 40,000원 할인</li><li>1개월 일찍 예약 10,000원 · 2개월 일찍 예약 20,000원 할인</li><li>첫 이용 기준 '+pricing.money(start)+'</li></ul></section>'
  ].join('')
 }
 
