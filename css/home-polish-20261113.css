@@ -546,4 +546,10 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab.active {background: #9D4047 !important;}
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab:not(.active), html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-tab:not(.active) * {color: #6f5f66 !important;}
   html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-badge b, html body #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .pp-scope #arcTuning .bap-badge u {color: #9D4047 !important;}
+  /* 2026-11-23 지훈: 문의양식 맨 위 상품 선택(시안 1 알약 탭) — booking-wizard productSwitch */
+  html body .wistia-wizard .wf-product-sub { margin:4px 0 12px !important; font-size:14px !important; color:#8a7c80 !important; }
+  html body .wistia-wizard .wf-product-seg { display:flex !important; gap:0 !important; padding:4px !important; margin:0 0 16px !important; border-radius:99px !important; background:#efe1e4 !important; }
+  html body .wistia-wizard .wf-product-seg button { flex:1 1 0 !important; min-height:46px !important; padding:0 8px !important; border:0 !important; border-radius:99px !important; background:transparent !important; box-shadow:none !important; color:#8a6670 !important; -webkit-text-fill-color:currentColor !important; font:600 15px/1.2 Pretendard,sans-serif !important; letter-spacing:-.02em !important; cursor:pointer; white-space:nowrap !important; transition:background-color .2s, color .2s, box-shadow .2s; }
+  html body .wistia-wizard .wf-product-seg button.is-on { background:#fff !important; color:#8c3f5a !important; box-shadow:0 4px 12px #6b354320 !important; }
+  html body .wistia-wizard .wf-product-seg button:focus-visible { outline:2px solid #b84a64 !important; outline-offset:2px !important; }
 }

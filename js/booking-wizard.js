@@ -13,6 +13,22 @@
  function bookingDateField(){return global.WistiaContact.dateField('bookingDate','녹음 날짜').replace('<legend>② 녹음 날짜</legend>','<legend class="sr-only">녹음 날짜 선택</legend>').replace('name="bookingDateMode" value="date"','name="bookingDateMode" value="date" checked').replace('value="unknown" data-contact-date-mode="bookingDate" checked','value="unknown" data-contact-date-mode="bookingDate"').replace('data-contact-date-panel="bookingDate" hidden','data-contact-date-panel="bookingDate"').replace('tabindex="-1" disabled data-calendar-value','tabindex="-1" data-calendar-value').replace('data-calendar="bookingDate" role="dialog"','data-calendar="bookingDate" data-calendar-immediate="true" role="group"').replace('aria-label="녹음 날짜 달력" hidden','aria-label="녹음 날짜 달력"').replace(/<button type="button" class="calendar-close"[\s\S]*?<\/button>/,'')}
  // 2026-11-20 지훈: 프로포즈 필름 문의(?product=proposal)는 고를 옵션이 없어 바로 날짜부터 — 1단계는 숨긴 값만
  const isProposal=form=>form?.dataset.product==='proposal'
+ // 2026-11-23 지훈: 문의양식 맨 위에서 셀프 축가 AR ↔ 프로포즈 필름 바로 고르기(시안 1 알약 탭) — 고른 날짜·시간은 그대로 가져간다
+ const SWITCH_KEY='wistia_product_switch'
+ function productSwitch(proposal){return '<p class="wf-product-sub">어떤 상품으로 문의하시나요?</p><div class="wf-product-seg" role="group" aria-label="문의 상품">'+[['solo','셀프 축가 AR'],['proposal','프로포즈 필름']].map(([key,label])=>{const on=(key==='proposal')===proposal;return '<button type="button" data-wf-product="'+key+'" aria-pressed="'+on+'"'+(on?' class="is-on"':'')+'>'+label+'</button>'}).join('')+'</div>'}
+ function switchProduct(form,key){
+  const date=form.querySelector('#contact-bookingDate')?.value||'',time=form.querySelector('#contact-time')?.value||''
+  try{if(date)global.sessionStorage.setItem(SWITCH_KEY,JSON.stringify({date,time}))}catch{}
+  const url=new URL(global.location.href);url.searchParams.delete('package');url.searchParams.delete('people');if(key==='proposal')url.searchParams.set('product','proposal');else url.searchParams.delete('product')
+  global.history.replaceState({...global.history.state},'',url.pathname+url.search);global.dispatchEvent(new global.PopStateEvent('popstate'))
+ }
+ function carrySchedule(form){
+  let carry=null;try{carry=JSON.parse(global.sessionStorage.getItem(SWITCH_KEY)||'null');global.sessionStorage.removeItem(SWITCH_KEY)}catch{}
+  if(!carry?.date)return false
+  const date=form.querySelector('#contact-bookingDate'),time=form.querySelector('#contact-time')
+  if(!global.WistiaContact.calendar.selectableDate(carry.date,'bookingDate'))return false
+  date.value=carry.date;time.value=carry.time||'';return true
+ }
  function render(key){
   const proposal=new URLSearchParams(global.location.search).get('product')==='proposal'
   const selected=recording.selection(new URLSearchParams(global.location.search),key==='duo')
@@ -21,7 +37,7 @@
    (proposal?'':recording.peoplePicker(selected))+'<div class="wf-schedule" data-wf-date-view>'+discountDates()+bookingDateField()+'<p class="wf-discount-banner" data-wf-advance-note aria-live="polite" hidden></p>'+error('bookingDate')+'<div class="wf-schedule wf-time-view" data-wf-time-view><div class="wf-schedule-heading"><p data-wf-selected-date tabindex="-1"></p><button type="button" data-wf-change-date>'+icon('calendar')+'날짜 다시 고르기</button></div>'+global.WistiaContact.timeField().replace('role="radiogroup"','role="group"').replace('<legend>방문 희망 시간</legend>','<legend>시작 시간 <small data-wf-duration>2시간 진행</small></legend><p class="wf-recording-range" data-wf-recording-range aria-live="polite"></p>')+error('timeStart')+'</div></div>',
    '<label class="wf-field wf-notes-field">특이사항 (선택)<textarea name="specialNotes" rows="3" maxlength="2000" placeholder="궁금한 사항이나 고민되는 부분을&#10;편하게 적어 주세요"></textarea></label><div class="wf-review" data-wf-review></div><p class="wf-payment">결제는 카카오톡에서 맞춤 상담 진행 후 진행돼요</p>'
   ]
-  return '<section class="wistia-wizard"><h1>'+(proposal?'프로포즈 필름 문의':'셀프 축가 문의')+'</h1><form id="contactInquiryForm" data-wizard="true"'+(proposal?' data-product="proposal"':'')+' data-step-total="'+steps.length+'" data-booking-calendar-opened="true" novalidate><p class="wf-step-label sr-only" data-wf-step-label aria-live="polite"></p><ol class="wf-progress wf-progress-three" aria-label="문의 단계" data-wf-progress-list>'+steps.map((title,i)=>i===0?'':'<li data-wf-progress="'+i+'"><button type="button" data-wf-goto="'+i+'" aria-label="'+i+'단계 '+title+'"><span>'+i+'</span><small>'+title+'</small></button></li>').join('')+'</ol>'+sections.map((body,i)=>'<section class="wf-step" data-wf-step="'+i+'"'+(i?' hidden':'')+'>'+('<h2 tabindex="-1"'+(i===0?' class="rc-step-title"':'')+'>'+(proposal&&i===0?'프로포즈 필름 구성':titles[i])+'</h2>')+body+'</section>').join('')+'<div class="wf-nav"><p data-wf-next-hint aria-live="polite" hidden>다음단계 눌러주세요!</p><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
+  return '<section class="wistia-wizard"><h1>문의하기</h1>'+productSwitch(proposal)+'<form id="contactInquiryForm" data-wizard="true"'+(proposal?' data-product="proposal"':'')+' data-step-total="'+steps.length+'" data-booking-calendar-opened="true" novalidate><p class="wf-step-label sr-only" data-wf-step-label aria-live="polite"></p><ol class="wf-progress wf-progress-three" aria-label="문의 단계" data-wf-progress-list>'+steps.map((title,i)=>i===0?'':'<li data-wf-progress="'+i+'"><button type="button" data-wf-goto="'+i+'" aria-label="'+i+'단계 '+title+'"><span>'+i+'</span><small>'+title+'</small></button></li>').join('')+'</ol>'+sections.map((body,i)=>'<section class="wf-step" data-wf-step="'+i+'"'+(i?' hidden':'')+'>'+('<h2 tabindex="-1"'+(i===0?' class="rc-step-title"':'')+'>'+(proposal&&i===0?'프로포즈 필름 구성':titles[i])+'</h2>')+body+'</section>').join('')+'<div class="wf-nav"><p data-wf-next-hint aria-live="polite" hidden>다음단계 눌러주세요!</p><button type="button" data-wf-prev>이전</button><button type="button" data-wf-next>다음 단계</button><button type="submit" class="wf-submit" hidden>작성한 내용으로 문의하기</button></div><p data-wf-submit-status role="status" hidden></p></form></section>'
  }
  function values(form){const v=Object.fromEntries(new FormData(form));v.firstVisit=recording.firstVisit();delete v.eventDate;delete v.eventDateMode;delete v.paybackBlog;delete v.paybackReaction;return v}
  function quote(form){const v=values(form),q=recording.quote(v);return {...q,v,options:q.options.map(o=>[o.label,o.price])}}
@@ -175,7 +191,8 @@
  function mount(root,{benefits,onPeople,onSubmit}){
   const form=root.querySelector('[data-wizard]'),state={step:0,benefits:benefits||[],draftKey:isProposal(form)?'proposal':values(form).people==='1'?'duo':'solo',draftReady:false,onPeople};states.set(form,state)
   form.querySelector('[data-wf-step-label]').insertAdjacentHTML('beforebegin','<aside class="wf-location-bar" aria-label="녹음실 위치와 예약 소요 시간"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><strong>부천시청역 1번 출구 · 도보 약 300m</strong><small>경기도 부천시 석천로170번길 19, 부광프라자 2층</small></div><span data-wf-location-duration>1곡 · 2시간</span></aside>')
-  restoreDraft(form,state,onPeople);if(state.step<1)state.step=1;onPeople(form.elements.people.value==='1'?'duo':'solo');state.draftReady=true
+  root.querySelector('.wf-product-seg')?.addEventListener('click',event=>{const button=event.target.closest('[data-wf-product]');if(button&&button.getAttribute('aria-pressed')!=='true')switchProduct(form,button.dataset.wfProduct)})
+  restoreDraft(form,state,onPeople);if(carrySchedule(form))state.step=1;if(state.step<1)state.step=1;onPeople(form.elements.people.value==='1'?'duo':'solo');state.draftReady=true
   form.addEventListener('change',event=>{
    event.stopPropagation();const el=event.target
    if(el.name==='people')onPeople(el.value==='1'?'duo':'solo')

@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-23 문의양식 맨 위 상품 선택(시안 1 알약 탭): 제목 ‘문의하기’ + ‘어떤 상품으로 문의하시나요?’ + [셀프 축가 AR | 프로포즈 필름] — 누르면 ?product=proposal을 붙이거나 빼서 같은 /event/solo를 다시 그린다(replaceState, 다른 쿼리 유지), 고른 녹음 날짜·시간은 sessionStorage(wistia_product_switch)로 넘겨 그대로 둔다. booking-wizard productSwitch/switchProduct/carrySchedule, CSS는 home-polish 끝.
+
 - 2026-11-22 프로포즈 상세에 보정 전후 플레이어(POINT 03, #arcTuning, 홈과 같은 모양 — home-detail-glass 규칙을 .pp-scope로 home-polish 끝에 복사), 편지 04·AR 버전 05, 섹션 색 흰/핑크 순서 다시 맞춤. 후기 제목은 AR·프로포즈 둘 다 ‘고객님들이 직접 / 남겨주신 후기’(‘축가 후기’ 쓰지 않음). 사전 예약 팝업은 페이지 안 이동(SPA)으로 프로포즈에 와도 뜨고, 닫기는 페이지별로 기억. 문의 범례 ‘방문일 기준’ 작은 글씨는 뺐다.
 
 - 2026-11-22 첫 방문 팝업(시안 5 뱃지형): js/early-popup-20261122.js가 홈·/proposal에 처음 들어오면 0.9초 뒤 1:1 포스터 ‘사전 예약 할인 / 일찍 예약할수록 할인! / 1개월 일찍 1만원 · 2개월 일찍 2만원 / 방문일 기준 · 문의양식에서 자동 적용’, 문의로 넘어가는 버튼은 없다(지훈: 바로 넘어가면 이상함) — 큰 버튼은 ‘닫기’(X·바깥·Esc와 같이 이번 방문 동안 숨김, sessionStorage), ‘오늘 하루 보지 않기’만 24시간 숨김(localStorage wistia_early_popup_until), navigator.webdriver면 안 띄움. ‘얼리버드’ 말은 쓰지 않는다. CSS는 home-polish 끝.
