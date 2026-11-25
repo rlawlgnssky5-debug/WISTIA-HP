@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-25 프로포즈 POINT 01 필름 흐름: ‘녹음 메이킹 1·2’를 ‘녹음 메이킹’ 하나로(5단계), 녹음 메이킹 사진은 making-v2.webp(지훈이 준 마이크 앞 노래 사진), 전하는 편지는 letter-v2.webp(손 흔드는 사진) — 위 사진 넘김·POINT 04 편지 사진도 같은 것으로, 예전 step-04~06은 지웠다.
+
 - 2026-11-25 뒤로가기 팝업 ‘잠깐만요!’(js/exit-popup-20261125.js): 홈·/proposal에서 화면을 한 번이라도 만진 손님이 뒤로가기를 누르면(주소 한 칸을 쌓아 두고 popstate를 capture로 먼저 받아 라우터 재렌더를 막음) 한 방문에 한 번(sessionStorage wistia_exit_popup_shown) — 지금 예약하면 받는 혜택표(정가 → 첫 이용 → N월 최저가 보상[→ 프로포즈는 연말 기념] → 지금 예약하면, 선택 할인 1·2개월 → 2개월 일찍 예약하면 160,000/200,000), 금액·달은 WistiaRecording.quote로 자동. 버튼: 할인가로 문의양식 작성하기(그 페이지 문의) · 그냥 나갈게요(카톡 채널 추가 버튼은 지훈이 빼라고 함)(진짜 뒤로) · X/바깥/Esc는 머무름. 다른 팝업이 열려 있으면 안 띄움, 자동화 브라우저 제외. CSS는 home-polish 끝.
 
 - 2026-11-23 문의양식 맨 위 상품 선택(시안 1 알약 탭): 제목 ‘문의하기’ + ‘어떤 상품으로 문의하시나요?’ + [셀프 축가 AR | 프로포즈 필름] — 누르면 ?product=proposal을 붙이거나 빼서 같은 /event/solo를 다시 그린다(replaceState, 다른 쿼리 유지), 고른 녹음 날짜·시간은 sessionStorage(wistia_product_switch)로 넘겨 그대로 둔다. booking-wizard productSwitch/switchProduct/carrySchedule, CSS는 home-polish 끝.
