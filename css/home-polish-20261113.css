@@ -552,4 +552,29 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
   html body .wistia-wizard .wf-product-seg button { flex:1 1 0 !important; min-height:46px !important; padding:0 8px !important; border:0 !important; border-radius:99px !important; background:transparent !important; box-shadow:none !important; color:#8a6670 !important; -webkit-text-fill-color:currentColor !important; font:600 15px/1.2 Pretendard,sans-serif !important; letter-spacing:-.02em !important; cursor:pointer; white-space:nowrap !important; transition:background-color .2s, color .2s, box-shadow .2s; }
   html body .wistia-wizard .wf-product-seg button.is-on { background:#fff !important; color:#8c3f5a !important; box-shadow:0 4px 12px #6b354320 !important; }
   html body .wistia-wizard .wf-product-seg button:focus-visible { outline:2px solid #b84a64 !important; outline-offset:2px !important; }
+  /* 2026-11-25 지훈: 뒤로가기 '잠깐만요!' 팝업 — js/exit-popup-20261125.js */
+  html body dialog#exitPopup.exit-popup { width:min(350px,calc(100vw - 28px)) !important; max-width:none !important; max-height:calc(100dvh - 24px) !important; overflow:auto !important; padding:0 !important; border:0 !important; border-radius:24px !important; background:#fff !important; box-shadow:0 30px 70px -30px rgba(80,30,45,.55) !important; color:#1e1a1b !important; font-family:Pretendard,sans-serif !important; letter-spacing:-.02em; }
+  html body dialog#exitPopup::backdrop { background:rgba(30,20,24,.45); }
+  html body dialog#exitPopup .xp-top { padding:26px 20px 4px; text-align:center; background:radial-gradient(120% 70% at 50% 0%,#fde3ea 0,#fff6f8 55%,#fff 100%); outline:none; }
+  html body dialog#exitPopup h2 { margin:0 !important; font:800 25px/1.3 Pretendard,sans-serif !important; color:#1e1a1b !important; }
+  html body dialog#exitPopup .xp-sub { margin:6px 0 0 !important; font-size:14px !important; color:#8a7c80 !important; }
+  html body dialog#exitPopup .xp-box { margin:14px 0 0; padding:13px 15px 12px; border-radius:16px; background:#fdf6f7; text-align:left; }
+  html body dialog#exitPopup .xp-cap { margin:0 0 6px !important; font-size:12px !important; font-weight:700 !important; color:#b84a64 !important; }
+  html body dialog#exitPopup .xp-cap.is-muted { color:#a0969a !important; }
+  html body dialog#exitPopup .xp-row { display:flex; justify-content:space-between; gap:10px; padding:4px 0; font-size:14px; color:#5a4a4f; }
+  html body dialog#exitPopup .xp-row b { color:#b84a64; font-weight:700; white-space:nowrap; }
+  html body dialog#exitPopup .xp-row.is-list, html body dialog#exitPopup .xp-row.is-list s { color:#a0969a; }
+  html body dialog#exitPopup .xp-total { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-top:7px; padding-top:9px; border-top:1px dashed #ead6db; font-weight:700; }
+  html body dialog#exitPopup .xp-total span { font-size:14px; }
+  html body dialog#exitPopup .xp-total b { font-size:21px; color:#1e1a1b; white-space:nowrap; }
+  html body dialog#exitPopup .xp-opt { margin-top:10px; padding-top:9px; border-top:1px solid #f1e3e6; }
+  html body dialog#exitPopup .xp-total.is-best { margin-top:2px; padding-top:5px; border-top:0; }
+  html body dialog#exitPopup .xp-total.is-best b { color:#b84a64; }
+  html body dialog#exitPopup .xp-actions { display:grid; gap:8px; padding:14px 16px 14px; }
+  html body dialog#exitPopup .xp-actions button { display:flex !important; align-items:center; justify-content:center; gap:7px; width:100%; border:0 !important; border-radius:99px !important; font:700 15px/1.2 Pretendard,sans-serif !important; letter-spacing:-.02em !important; cursor:pointer; -webkit-text-fill-color:currentColor !important; }
+  html body dialog#exitPopup button.xp-form { min-height:50px; background:#b84a64 !important; color:#fff !important; box-shadow:0 12px 24px -14px #b84a64 !important; }
+  html body dialog#exitPopup button.xp-kakao { min-height:48px; background:#fee500 !important; color:#191919 !important; box-shadow:none !important; }
+  html body dialog#exitPopup button.xp-leave { min-height:34px; background:none !important; color:#8c8287 !important; font-weight:500 !important; font-size:13px !important; box-shadow:none !important; }
+  html body dialog#exitPopup .xp-x { position:absolute; top:10px; right:10px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border:0; border-radius:50%; background:rgba(255,255,255,.8); color:#6f6569; cursor:pointer; }
+  html body dialog#exitPopup button:focus-visible { outline:2px solid #b84a64 !important; outline-offset:2px !important; }
 }
