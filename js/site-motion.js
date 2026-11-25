@@ -134,7 +134,7 @@
    document.querySelectorAll('.we-heading,.we-craft-grid,.we-location,.arc-point>header,.we-process li,.wistia-specialist-grid article,.wistia-location-details article,.arc-process li,.we-service .we-meta,.we-service h3').forEach(el=>{
     // Never hide elements already on screen or conversion controls
     if(el.getBoundingClientRect().top<innerHeight)return
-    gsap.from(el,{y:context.conditions.desktop?20:12,opacity:.3,duration:.7,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 93%',once:true}})
+    gsap.from(el,{y:context.conditions.desktop?20:12,opacity:.3,duration:.45,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 98%',once:true}})
    })
    if(context.conditions.desktop){
     const title=document.querySelector('.we-hero h1'),spans=[]
