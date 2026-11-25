@@ -127,7 +127,8 @@
    if(limited())return
    let lenis,tick
    if(context.conditions.desktop&&Lenis){
-    lenis=new Lenis({duration:.8,smoothWheel:true,syncTouch:false,prevent:node=>Boolean(node.closest('#mainMenu,dialog,.we-carousel,input,select,textarea,.bap-player,.wistia-ar,[data-calendar-times]'))})
+    // 2026-11-26 지훈: 비율·보정 플레이어(input·.bap-player·.wistia-ar) 위를 지날 때 부드러운 스크롤이 끊기고 일반 스크롤로 바뀌며 '삑' 튀던 문제 — 스크롤이 안에서 따로 움직이는 곳만 남김
+    lenis=new Lenis({duration:.8,smoothWheel:true,syncTouch:false,prevent:node=>Boolean(node.closest('#mainMenu,dialog,.we-carousel,select,textarea,[data-calendar-times]'))})
     lenis.on('scroll',ScrollTrigger.update);tick=time=>lenis.raf(time*1000);gsap.ticker.add(tick)
    }
    document.querySelectorAll('.we-heading,.we-craft-grid,.we-location,.arc-point>header,.we-process li,.wistia-specialist-grid article,.wistia-location-details article,.arc-process li,.we-service .we-meta,.we-service h3').forEach(el=>{

@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-26 PC 스크롤 끊김(보정 전후·비율 체험 근처) 수정: ① before-after.js가 멈춰 있어도 매 프레임 같은 글자를 다시 써서 approved-mobile-layout의 페이지 전체 글자 크기 검사가 매 프레임 돌았다 → 바뀐 글자만 쓰고, 매 프레임 갱신은 재생 중일 때만. POINT 04 시간 표시도 바뀔 때만. ② Lenis prevent에 input·.bap-player·.wistia-ar가 있어 커서가 그 위를 지나면 부드러운 스크롤이 멈추고 일반 스크롤로 바뀌며 튐 → 빼고 #mainMenu,dialog,.we-carousel,select,textarea,[data-calendar-times]만. ar-ratio-cd.js의 휠로 비율 바꾸기도 뺐다. 다시 매 프레임 DOM을 쓰는 코드를 넣지 않는다.
+
 - 2026-11-25 프로포즈 POINT 01 필름 흐름: ‘녹음 메이킹 1·2’를 ‘녹음 메이킹’ 하나로(5단계), 녹음 메이킹 사진은 making-v2.webp(지훈이 준 마이크 앞 노래 사진), 전하는 편지는 letter-v2.webp(손 흔드는 사진) — 위 사진 넘김·POINT 04 편지 사진도 같은 것으로, 예전 step-04~06은 지웠다.
 
 - 2026-11-25 뒤로가기 팝업 ‘잠깐만요!’(js/exit-popup-20261125.js): 홈·/proposal에서 화면을 한 번이라도 만진 손님이 뒤로가기를 누르면(주소 한 칸을 쌓아 두고 popstate를 capture로 먼저 받아 라우터 재렌더를 막음) 한 방문에 한 번(sessionStorage wistia_exit_popup_shown) — 지금 예약하면 받는 혜택표(정가 → 첫 이용 → N월 최저가 보상[→ 프로포즈는 연말 기념] → 지금 예약하면, 선택 할인 1·2개월 → 2개월 일찍 예약하면 160,000/200,000), 금액·달은 WistiaRecording.quote로 자동. 버튼: 할인가로 문의양식 작성하기(그 페이지 문의) · 그냥 나갈게요(카톡 채널 추가 버튼은 지훈이 빼라고 함)(진짜 뒤로) · X/바깥/Esc는 머무름. 다른 팝업이 열려 있으면 안 띄움, 자동화 브라우저 제외. CSS는 home-polish 끝.

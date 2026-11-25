@@ -39,14 +39,17 @@
     const position=()=>isPlaying&&audioCtx?Math.min(pausedAt+(audioCtx.currentTime-startedAt),duration()):pausedAt
     const ensureContext=()=>audioCtx||(audioCtx=new (global.AudioContext||global.webkitAudioContext)())
     function stopSource(){if(!source)return;source.onended=null;try{source.stop()}catch{}source.disconnect();source=null}
+    const setText=(el,value)=>{if(el&&el.textContent!==value)el.textContent=value}
+    const setAttr=(el,name,value)=>{if(el&&el.getAttribute(name)!==value)el.setAttribute(name,value)}
     function sync(){
       const current=position()
-      root.dataset.position=String(current)
+      if(root.dataset.position!==String(current))root.dataset.position=String(current)
       root.classList.toggle('is-playing',isPlaying)
-      timeNow.textContent=fmt(current);timeAll.textContent=fmt(duration())
+      // 2026-11-26: 바뀐 글자만 쓴다 — 매 프레임 같은 글자를 다시 쓰면 페이지 전체 글자 크기 검사(approved-mobile-layout)가 매 프레임 돌아 스크롤이 끊겼다
+      setText(timeNow,fmt(current));setText(timeAll,fmt(duration()))
       // Keep the inline SVG pair intact; CSS follows the actual playback state.
-      playLabel.textContent=isPlaying?'일시정지':'재생';playBtn.setAttribute('aria-label',isPlaying?'일시정지':'재생');playBtn.setAttribute('aria-pressed',String(isPlaying))
-      switchBtn.setAttribute('aria-label',mode==='before'?'보정 후로 전환하여 듣기':'보정 전으로 전환하여 듣기')
+      setText(playLabel,isPlaying?'일시정지':'재생');setAttr(playBtn,'aria-label',isPlaying?'일시정지':'재생');setAttr(playBtn,'aria-pressed',String(isPlaying))
+      setAttr(switchBtn,'aria-label',mode==='before'?'보정 후로 전환하여 듣기':'보정 전으로 전환하여 듣기')
       draw()
     }
     function start(offset){
@@ -108,7 +111,8 @@
     if(!PRESET){root.classList.add('is-loading');playBtn.setAttribute('aria-busy','true');load('before');load('after')}
     resize()
     global.addEventListener('resize',resize,{signal})
-    const tick=()=>{if(destroyed)return;sync();raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick)
+    // 재생 중일 때만 매 프레임 갱신 — 멈춰 있을 때는 재생·정지·전환·클릭·크기 변경 때만 그린다
+    const tick=()=>{if(destroyed)return;if(isPlaying)sync();raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick)
     return{setMode:activate,play,pause,destroy(){destroyed=true;playerObserver?.disconnect();document.body.classList.remove('is-vocal-comparison-visible');controller.abort();cancelAnimationFrame(raf);stopSource();isPlaying=false;audioCtx?.close();audioCtx=null}}
   }
   global.initWistiaBeforeAfter=initWistiaBeforeAfter
