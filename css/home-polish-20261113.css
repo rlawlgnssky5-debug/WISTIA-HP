@@ -573,7 +573,6 @@ html body #app#app section.info-page-location { padding-bottom:56px !important; 
   html body dialog#exitPopup .xp-actions { display:grid; gap:8px; padding:14px 16px 14px; }
   html body dialog#exitPopup .xp-actions button { display:flex !important; align-items:center; justify-content:center; gap:7px; width:100%; border:0 !important; border-radius:99px !important; font:700 15px/1.2 Pretendard,sans-serif !important; letter-spacing:-.02em !important; cursor:pointer; -webkit-text-fill-color:currentColor !important; }
   html body dialog#exitPopup button.xp-form { min-height:50px; background:#b84a64 !important; color:#fff !important; box-shadow:0 12px 24px -14px #b84a64 !important; }
-  html body dialog#exitPopup button.xp-kakao { min-height:48px; background:#fee500 !important; color:#191919 !important; box-shadow:none !important; }
   html body dialog#exitPopup button.xp-leave { min-height:34px; background:none !important; color:#8c8287 !important; font-weight:500 !important; font-size:13px !important; box-shadow:none !important; }
   html body dialog#exitPopup .xp-x { position:absolute; top:10px; right:10px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border:0; border-radius:50%; background:rgba(255,255,255,.8); color:#6f6569; cursor:pointer; }
   html body dialog#exitPopup button:focus-visible { outline:2px solid #b84a64 !important; outline-offset:2px !important; }

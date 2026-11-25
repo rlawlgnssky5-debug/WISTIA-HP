@@ -1,11 +1,10 @@
 /* 2026-11-25 지훈: 뒤로가기 누르면 한 번 더 붙잡는 '잠깐만요!' 팝업 — 이번 달 예약 혜택표(정가 → 첫 이용 → N월 최저가 보상 → 지금 예약하면,
-   선택 할인 1·2개월 → 2개월 일찍 예약하면) + 문의양식 작성하기 + 카톡으로 혜택 받아두기(채널 추가) + 그냥 나갈게요
+   선택 할인 1·2개월 → 2개월 일찍 예약하면) + 할인가로 문의양식 작성하기 + 그냥 나갈게요(카톡 채널 버튼은 지훈이 빼라고 함)
    홈(셀프 축가 AR)·/proposal(프로포즈 필름)에서만, 한 방문에 한 번, 화면을 한 번이라도 만진 사람만(크롬도 그렇게 막는다), 자동화 브라우저 제외
    금액은 WistiaRecording.quote 그대로 — 지어내지 않는다, 달 이름도 자동 */
 (() => {
   const SHOWN = 'wistia_exit_popup_shown'
   const PAGES = ['/', '/proposal']
-  const CHANNEL = 'https://pf.kakao.com/_GbExjX/friend'
   const path = () => location.pathname.replace(/\/+$/, '') || '/'
   const shown = () => { try { return sessionStorage.getItem(SHOWN) === '1' } catch { return true } }
   const markShown = () => { try { sessionStorage.setItem(SHOWN, '1') } catch {} }
@@ -44,13 +43,12 @@
     dialog.id = 'exitPopup'
     dialog.className = 'exit-popup'
     dialog.setAttribute('aria-labelledby', 'exitPopupTitle')
-    dialog.innerHTML = '<div class="xp-top" tabindex="-1" autofocus><h2 id="exitPopupTitle">잠깐만요!</h2><p class="xp-sub">이번 달 예약하면 받는 혜택이에요</p>' +
+    dialog.innerHTML = '<div class="xp-top" tabindex="-1" autofocus><h2 id="exitPopupTitle">잠깐만요!</h2><p class="xp-sub">지금 예약하면 받는 혜택이에요</p>' +
       '<div class="xp-box"><p class="xp-cap">' + b.title + '</p>' + row('정가', b.list, 'is-list') + b.rows.map(r => row(r[0], r[1])).join('') +
       '<div class="xp-total"><span>지금 예약하면</span><b>' + won(b.total) + '</b></div>' +
       (b.advance.length ? '<div class="xp-opt"><p class="xp-cap is-muted">선택 할인 · 사전 예약</p>' + b.advance.map(r => row(r[0], r[1])).join('') + '</div>' +
       '<div class="xp-total is-best"><span>2개월 일찍 예약하면</span><b>' + won(b.best) + '</b></div>' : '') + '</div></div>' +
-      '<div class="xp-actions"><button type="button" class="xp-form" data-xp="form">문의양식 작성하기</button>' +
-      '<button type="button" class="xp-kakao" data-xp="kakao"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3.5c-5 0-9 3.1-9 7 0 2.5 1.7 4.7 4.2 6l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.4 0 .7.1 1.1.1 5 0 9-3.1 9-7s-4-7.3-9-7.3Z"/></svg>카톡으로 혜택 받아두기</button>' +
+      '<div class="xp-actions"><button type="button" class="xp-form" data-xp="form">할인가로 문의양식 작성하기</button>' +
       '<button type="button" class="xp-leave" data-xp="leave">그냥 나갈게요</button></div>' +
       '<button type="button" class="xp-x" data-xp="stay" aria-label="닫기"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'
     document.body.append(dialog)
@@ -60,7 +58,6 @@
       if (!act) return
       close()
       if (act === 'form') go(inquiryHref(proposal))
-      else if (act === 'kakao') window.open(CHANNEL, '_blank', 'noopener')
       else if (act === 'leave') history.back()
     })
     dialog.addEventListener('cancel', event => { event.preventDefault(); close() })
