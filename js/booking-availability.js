@@ -1,9 +1,10 @@
 (function(global){
  'use strict'
  const operatingDays=[0,3,4,5,6] // 월·화 휴무
- // 2026-11-26 지훈: 2시간 고정 3타임 — 낮 13~15 · 오후 16~18 · 저녁 19~21, 하루 최대 3팀. 수·일은 오후 타임까지(13·16시), 목·금·토는 세 타임 모두
- const slotStarts=['13:00','16:00','19:00']
- function dayStarts(date){if(!validDate(date))return slotStarts;const day=new Date(date+'T12:00:00Z').getUTCDay();return day===0||day===3?slotStarts.slice(0,2):slotStarts}
+ // 2026-11-26 지훈: 2시간 고정 타임. 수·일은 낮 12~14 · 오후 15~17, 목·금·토는 낮 13~15 · 오후 16~18 · 저녁 19~21
+ const shortDayStarts=['12:00','15:00'],fullDayStarts=['13:00','16:00','19:00']
+ const slotStarts=['12:00','13:00','15:00','16:00','19:00']
+ function dayStarts(date){if(!validDate(date))return slotStarts;const day=new Date(date+'T12:00:00Z').getUTCDay();return day===0||day===3?shortDayStarts:fullDayStarts}
  function validDate(value){
   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false
   const parsed=new Date(value+'T12:00:00Z')
@@ -16,11 +17,10 @@
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // 정해진 타임 시작 시각이 아니거나 그날 열지 않는 타임이면 막는다(수·일 19시)
+ // 정해진 타임 시작 시각이 아니거나 그날 열지 않는 타임이면 막는다
  function offSlot(date,time){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;return !dayStarts(date).includes(time)}
  function slotBlocked(date,time,minutes,blocks){
-  if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
-  const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock>23*60)return true
+  if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   if(offSlot(date,time))return true
   // A new booking occupies its recording length + 30 min extra time + 30 min preparation.
   const start=Date.parse(date+'T'+time+':00+09:00'),end=start+(minutes+60)*60000
@@ -148,10 +148,10 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   if(selectedDates.has(activeForm)&&selectedDates.get(activeForm)!==date)ui.time.value=''
   selectedDates.set(activeForm,date)
   openList('');dateError('');resetTimes()
-  if(!date){ui.time.value='';message('수·일 13·16시 · 목·금·토 13·16·19시 (2시간씩) · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
+  if(!date){ui.time.value='';message('수·일 12·15시 · 목·금·토 13·16·19시 (2시간씩) · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
   if(!force&&activeForm.dataset.bookingCalendarOpened!=='true'){message('달력을 열어 예약 가능 시간을 확인해 주세요','unknown');return}
   if(!validDate(date)||date<today()){ui.time.value='';dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
-  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화는 휴무예요, 수·목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화 휴무 · 수·일 13·16시 · 목·금·토 13·16·19시','closed');return}
+  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화는 휴무예요, 수·목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화 휴무 · 수·일 12·15시 · 목·금·토 13·16·19시','closed');return}
   const hit=!force&&cache.get(date)
   if(hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
   // While checking, no time can be chosen as confirmed-available and the form cannot be copied.

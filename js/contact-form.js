@@ -12,8 +12,8 @@
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>(clock>=1440?'다음 날 ':'')+(Math.floor(clock/60)%24<12?'오전 ':'오후 ')+(Math.floor(clock/60)%12||12)+'시'+(clock%60?' '+clock%60+'분':'');return start>=13*60&&start<=23*60?label(start)+'~'+label(end)+' ('+(global.WistiaPackages?.hoursText(minutes)||(minutes/60)+'시간')+')':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- // 2026-11-26 지훈: 2시간 고정 3타임(낮 13~15 · 오후 16~18 · 저녁 19~21)
- const timeOptions=[['13:00','낮 타임 13:00~15:00'],['16:00','오후 타임 16:00~18:00'],['19:00','저녁 타임 19:00~21:00']].map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('')
+ // 2026-11-26 지훈: 2시간 고정 타임(수·일 12·15시, 목·금·토 13·16·19시)
+ const timeOptions=[['12:00','낮 타임 12:00~14:00'],['15:00','오후 타임 15:00~17:00'],['13:00','낮 타임 13:00~15:00'],['16:00','오후 타임 16:00~18:00'],['19:00','저녁 타임 19:00~21:00']].map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  const publicHolidays={has:date=>global.WistiaPackages?.isPublicHoliday(date)||false}
@@ -203,7 +203,8 @@
   const help=form.querySelector('[data-time-help]')
   help.classList.toggle('has-time-selection',validSelection)
   help.textContent=validSelection?clockLabel(start)+'~'+clockLabel(start+minutes):'시작 시간을 고르시면 상품 시간만큼 함께 선택돼요'
-  list.innerHTML=[...time.options].map(option=>{
+  const days=global.WistiaBooking?.dayStarts?.(date?.value)
+  list.innerHTML=[...time.options].filter(option=>!option.value||!days||days.includes(option.value)).map(option=>{
    const minute=clock(option.value),covered=validSelection&&!!option.value&&minute>=start&&minute<start+minutes,explain=known&&option.disabled&&['hours','duration'].includes(option.dataset.disabledReason)
    const closedReason=option.dataset.disabledReason==='booking'||option.dataset.disabledReason==='sunday'
    return '<button type="button" role="radio" aria-checked="'+(time.value===option.value)+'"'+(covered?' class="is-covered"':'')+' data-calendar-time="'+option.value+'"'+(explain?' aria-disabled="true" data-time-unavailable':!known||option.disabled?' disabled':'')+'>'+escape(option.value?clockLabel(minute):'미정')+(!covered&&known&&option.disabled&&(form.dataset.scheduleState==='loading'||closedReason)?'<small>'+closedLabel+'</small>':'')+'</button>'

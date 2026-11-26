@@ -38,7 +38,7 @@
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  // 2026-11-26 지훈: 예약은 2시간 고정 3타임(13·16·19시) — 녹음 1시간 + 촬영 1시간, 녹음 시간 추가는 없다
+  // 2026-11-26 지훈: 예약은 2시간 고정 타임(수·일 12·15시, 목·금·토 13·16·19시) — 녹음 1시간 + 촬영 1시간, 녹음 시간 추가는 없다
   const minutes=60,options=[]
   const optionTotal=options.reduce((sum,o)=>sum+o.price,0)
   return {v,minutes,recordingMinutes:minutes,filmingMinutes:60,making:false,bookingMinutes:minutes+60,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 1시간 + 튜닝·믹싱·마스터링 + 필름 편집'}}
