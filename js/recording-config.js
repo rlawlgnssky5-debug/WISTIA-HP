@@ -8,7 +8,7 @@
   ['recordingMaster','마스터링','전체 음질과 음압을 최종적으로 다듬어요',40000,'🎧']
  ]
  const list=included.reduce((sum,item)=>sum+item[3],0)
- const baseMinutes=120,extraHour=60000,duetFee=40000
+ const baseMinutes=120,duetFee=40000
  // 2026-11-20 지훈: 축가 AR에서 녹음 메이킹 옵션은 없앤다
  // 2026-11-20 지훈: 3일 이내 작업 옵션은 없앤다 — 작업 기간은 녹음일 기준 7일 이내 하나
  const keys=['firstUse','people','recordingMinutes']
@@ -24,7 +24,7 @@
  }
  function selection(params,duo=false){
   const tier=params.get('package'), v=preset(['A','B','C','D'].includes(tier)?tier:null,duo)
-  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?['120','180'].includes(val):['0','1'].includes(val))v[key]=val}
+  for(const key of keys){const val=params.get(key);if(key==='recordingMinutes'?val==='120':['0','1'].includes(val))v[key]=val}
   return v
  }
  // 2026-11-20 지훈: 프로포즈 필름 — 녹음 1시간 + 촬영 1시간(+영상 편집), 옵션 없음, 정가 280,000(축가 240,000 − 1시간 40,000 + 필름 80,000)
@@ -38,18 +38,17 @@
   const advance=prices.advanceDiscount(v.bookingDate,date)
   if(advance)discounts.push(advance)
   const discount=discounts.reduce((sum,d)=>sum+d.amount,0)
-  // 2026-11-20 지훈: 프로포즈 문의 1단계는 녹음 시간(1시간 기본 / 2시간 +60,000)만
-  const longer=v.recordingMinutes==='180',minutes=longer?120:60,options=[]
-  if(longer)options.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
+  // 2026-11-26 지훈: 예약은 2시간 고정 3타임(13·16·19시) — 녹음 1시간 + 촬영 1시간, 녹음 시간 추가는 없다
+  const minutes=60,options=[]
   const optionTotal=options.reduce((sum,o)=>sum+o.price,0)
   return {v,minutes,recordingMinutes:minutes,filmingMinutes:60,making:false,bookingMinutes:minutes+60,offer:true,advance,list:proposalList,base:proposalList,options,optionTotal,discounts,discount,total:proposalList+optionTotal-discount,delivery:'녹음일 기준 7일 이내',proposal:true,included:proposalIncluded,package:{key:'proposal',name:'프로포즈 필름',title:'녹음 1시간 + 촬영 1시간 + 튜닝·믹싱·마스터링 + 필름 편집'}}
  }
  function quote(v,date=prices.today()){
   if(v.product==='proposal')return proposalQuote(v,date)
-  const longer=v.recordingMinutes==='180', minutes=longer?180:baseMinutes, duet=v.people==='1'
+  // 2026-11-26 지훈: 녹음 2시간 고정(3타임), 녹음 1시간 추가는 없다
+  const minutes=baseMinutes, duet=v.people==='1'
   const selected=[]
   if(duet)selected.push({key:'duet',label:'2인 (듀엣곡)',price:duetFee})
-  if(longer)selected.push({key:'extraHour',label:'녹음 1시간 추가',price:extraHour})
   const discounts=[]
   // 2026-11-16 지훈: 첫 이용 할인은 문의 맨 위 스위치가 켜졌을 때만 (기본 켜짐)
   if(v.firstUse!=='0')discounts.push({key:'first',label:'첫 이용 할인',amount:20000})

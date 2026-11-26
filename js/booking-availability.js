@@ -1,6 +1,9 @@
 (function(global){
  'use strict'
- const operatingDays=[0,3,4,5,6] // 2026-11-21 지훈: 수요일도 운영(오후 4시 시작까지)
+ const operatingDays=[0,3,4,5,6] // 월·화 휴무
+ // 2026-11-26 지훈: 2시간 고정 3타임 — 낮 13~15 · 오후 16~18 · 저녁 19~21, 하루 최대 3팀. 수·일은 오후 타임까지(13·16시), 목·금·토는 세 타임 모두
+ const slotStarts=['13:00','16:00','19:00']
+ function dayStarts(date){if(!validDate(date))return slotStarts;const day=new Date(date+'T12:00:00Z').getUTCDay();return day===0||day===3?slotStarts.slice(0,2):slotStarts}
  function validDate(value){
   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false
   const parsed=new Date(value+'T12:00:00Z')
@@ -9,17 +12,16 @@
  function today(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
  function isOperatingDay(date){return validDate(date)&&operatingDays.includes(new Date(date+'T12:00:00Z').getUTCDay())}
  function duration(key){const selected=/^ar-(\d+)$/.exec(String(key));if(selected&&Number(selected[1])>=30&&Number(selected[1])<=600)return Number(selected[1]);return key==='duo'?120:['duet-film','wedding','proposal','solo-film'].includes(key)?180:60}
- function timeWindows(key){const minutes=duration(key);return Array.from({length:11},(_,i)=>{const hour=13+i;return {value:hour+':00',label:'오후 '+(hour-12)+'시',minutes}})}
+ function timeWindows(key){const minutes=duration(key);return slotStarts.map(value=>({value,label:value,minutes}))}
  // Server blocks are each booking's occupied window: start to stored end (which already
  // holds its 30-minute extra time) plus 30 minutes of preparation for the next customer.
  function cellBooked(date,time,blocks){const start=Date.parse(date+'T'+time+':00+09:00');return blocks.some(block=>start<Date.parse(block.end)&&start+30*60000>Date.parse(block.start))}
- // Operating days accept starts through 23:00; sessions may finish after midnight.
- // Sunday bookings still must end by 18:00; Wednesday starts only through 16:00 (2026-11-21 지훈); linked reservations remain blocking.
- function sundayEvening(date,time,minutes=60){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;const day=new Date(date+'T12:00:00+09:00').getUTCDay(),clock=Number(time.slice(0,2))*60+Number(time.slice(3));return (day===0&&clock+(Number(minutes)>0?Number(minutes):60)>18*60)||(day===3&&clock>16*60)} // fixed rule: on Sundays the studio is used until 18:00, so a booking must end by 18:00, on top of the Notion-linked blocks
+ // 정해진 타임 시작 시각이 아니거나 그날 열지 않는 타임이면 막는다(수·일 19시)
+ function offSlot(date,time){if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time||''))return false;return !dayStarts(date).includes(time)}
  function slotBlocked(date,time,minutes,blocks){
   if(!validDate(date)||!/^\d{2}:\d{2}$/.test(time)||!Number.isFinite(minutes)||minutes<=0)return true
   const clock=Number(time.slice(0,2))*60+Number(time.slice(3));if(clock<13*60||clock>23*60)return true
-  if(sundayEvening(date,time,minutes))return true
+  if(offSlot(date,time))return true
   // A new booking occupies its recording length + 30 min extra time + 30 min preparation.
   const start=Date.parse(date+'T'+time+':00+09:00'),end=start+(minutes+60)*60000
   if(!Number.isFinite(start))return true
@@ -34,23 +36,12 @@
   for(const block of [...blocks].sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){if(Date.parse(block.start)>covered)break;covered=Math.max(covered,Date.parse(block.end));if(covered>=end)return true}
   return timeWindows(key).every(({value:time})=>Date.parse(date+'T'+time+':00+09:00')<now||slotBlocked(date,time,duration(key),blocks))
  }
-// One studio timeline. Pack the earliest starts this product can still use.
-// Count session minutes only. slotBlocked already keeps the 30-minute buffers
-// against existing reservations, and that buffer is not added again here.
-// Three hours of bookable session time is one team: 3h → 1, 6h → 2, 9h → 3.
+// 남은 팀 = 그날 아직 고를 수 있는 타임 수(최대 3)
 function teamsRemaining(date,key,blocks,now=Date.now()){
  if(!validDate(date)||!isOperatingDay(date)||!Array.isArray(blocks))return 0
- let bookable=0
- // Capacity still measures free half-hours, independently of hourly start choices.
- for(let minute=13*60;minute<=23*60;minute+=30){
-  const time=Math.floor(minute/60)+':'+(minute%60?'30':'00')
-  const start=Date.parse(date+'T'+time+':00+09:00')
-  if(!Number.isFinite(start)||start<now||slotBlocked(date,time,30,blocks))continue
-  bookable+=30
- }
- return Math.floor(bookable/180)
+ return dayStarts(date).filter(time=>Date.parse(date+'T'+time+':00+09:00')>=now&&!slotBlocked(date,time,duration(key),blocks)).length
 }
- const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,teamsRemaining,sundayEvening,operatingDays}
+ const rules={validDate,validRange,today,isOperatingDay,duration,timeWindows,slotBlocked,cellBooked,dayClosed,teamsRemaining,offSlot,dayStarts,slotStarts,operatingDays}
  if(typeof module==='object'&&module.exports)module.exports=rules
  if(!global.document)return
  // Every check ends in a rendered schedule, a closed/unknown notice, or the Kakao fallback.
@@ -103,9 +94,9 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   for(const option of ui.time.options){
    if(!option.value)continue
    const clock=Number(option.value.slice(0,2))*60+Number(option.value.slice(3))
-   const reason=sundayEvening(ui.date.value,option.value,minutes)?'sunday':cellBooked(ui.date.value,option.value,blocks)?'booking':clock>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
+   const reason=offSlot(ui.date.value,option.value)?'slot':cellBooked(ui.date.value,option.value,blocks)?'booking':clock>23*60?'hours':Date.parse(ui.date.value+'T'+option.value+':00+09:00')<Date.now()?'past':slotBlocked(ui.date.value,option.value,minutes,blocks)?'duration':''
    option.dataset.disabledReason=reason;option.disabled=!!reason
-   if(reason==='booking'||reason==='sunday')option.textContent=option.dataset.originalLabel+' · 마감'
+   if(reason==='booking')option.textContent=option.dataset.originalLabel+' · 마감'
   }
   const invalidated=!!ui.time.selectedOptions[0]?.disabled
   if(invalidated)ui.time.value=''
@@ -157,10 +148,10 @@ function teamsRemaining(date,key,blocks,now=Date.now()){
   if(selectedDates.has(activeForm)&&selectedDates.get(activeForm)!==date)ui.time.value=''
   selectedDates.set(activeForm,date)
   openList('');dateError('');resetTimes()
-  if(!date){ui.time.value='';message('수(오후 4시까지)·목·금·토·일 운영 · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
+  if(!date){ui.time.value='';message('수·일 13·16시 · 목·금·토 13·16·19시 (2시간씩) · 날짜가 미정이면 상담에서 함께 정합니다','unknown');return}
   if(!force&&activeForm.dataset.bookingCalendarOpened!=='true'){message('달력을 열어 예약 가능 시간을 확인해 주세요','unknown');return}
   if(!validDate(date)||date<today()){ui.time.value='';dateError('오늘 이후의 날짜를 선택해 주세요');resetTimes(true);message('희망 예약일을 다시 선택해 주세요','closed');return}
-  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화는 휴무예요, 수(오후 4시까지)·목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화 휴무 · 수 오후 4시까지 · 목·금·토·일 운영','closed');return}
+  if(!isOperatingDay(date)){ui.time.value='';dateError('월·화는 휴무예요, 수·목·금·토·일 중 선택해 주세요');resetTimes(true);message('월·화 휴무 · 수·일 13·16시 · 목·금·토 13·16·19시','closed');return}
   const hit=!force&&cache.get(date)
   if(hit&&!dateFailures.has(date)&&Date.now()-hit.at<cacheMs){apply(hit.blocks);return}
   // While checking, no time can be chosen as confirmed-available and the form cannot be copied.

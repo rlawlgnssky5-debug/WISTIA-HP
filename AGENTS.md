@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-26 예약 시간 2시간 고정 3타임(지훈 확정): 낮 13~15 · 오후 16~18 · 저녁 19~21, 하루 최대 3팀. 월·화 휴무, 수·일은 낮·오후(13·16시)만, 목·금·토는 세 타임. booking-availability slotStarts/dayStarts/offSlot(예전 sundayEvening·13~23시 30분 단위 없앰), teamsRemaining은 남은 타임 수. 문의 시간 선택은 시안 3(해·노을·달 아이콘 + 낮/오후/저녁 타임 + 시간 + 예약 가능/선택됨/마감 카드, booking-wizard SLOTS, CSS home-polish 끝). 숨겨진 ‘녹음 1시간 추가’(recordingMinutes 180) 기능 삭제. JSON-LD 영업시간: 수·일 13~18, 목·금·토 13~21. 노션 기존 예약과 겹치는 타임은 그대로 마감.
+
 - 2026-11-26 섹션 움직임 더 빨리(지훈: 느리게 뜸): section-motion은 화면에 12%만 보여도 시작(threshold .12, 아래 6% 여유), 움직임 시간·지연 약 0.55배(가격 막대 간격 .12s, 말풍선 입력중 0.38s·간격 0.5s, 칩 간격 .25s, 영수증 출력 0.83s·도장 1.76s), 입력중 점 깜빡임 속도는 그대로. site-motion 등장 .45s · top 98%.
 
 - 2026-11-26 PC 스크롤 끊김(보정 전후·비율 체험 근처) 수정: ① before-after.js가 멈춰 있어도 매 프레임 같은 글자를 다시 써서 approved-mobile-layout의 페이지 전체 글자 크기 검사가 매 프레임 돌았다 → 바뀐 글자만 쓰고, 매 프레임 갱신은 재생 중일 때만. POINT 04 시간 표시도 바뀔 때만. ② Lenis prevent에 input·.bap-player·.wistia-ar가 있어 커서가 그 위를 지나면 부드러운 스크롤이 멈추고 일반 스크롤로 바뀌며 튐 → 빼고 #mainMenu,dialog,.we-carousel,select,textarea,[data-calendar-times]만. ar-ratio-cd.js의 휠로 비율 바꾸기도 뺐다. 다시 매 프레임 DOM을 쓰는 코드를 넣지 않는다.

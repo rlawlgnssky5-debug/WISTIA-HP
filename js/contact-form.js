@@ -12,7 +12,8 @@
  const escape=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))
  function formatTimeRange(value,minutes=60){const match=/^(\d{2}):(00|30)$/.exec(value||'');if(!match)return '미정';const start=Number(match[1])*60+Number(match[2]),end=start+minutes;const label=clock=>(clock>=1440?'다음 날 ':'')+(Math.floor(clock/60)%24<12?'오전 ':'오후 ')+(Math.floor(clock/60)%12||12)+'시'+(clock%60?' '+clock%60+'분':'');return start>=13*60&&start<=23*60?label(start)+'~'+label(end)+' ('+(global.WistiaPackages?.hoursText(minutes)||(minutes/60)+'시간')+')':'미정'}
  const welcome='🤍 🇼 🇪 🇱 🇨 🇴 🇲 🇪 🤍'
- const timeOptions=Array.from({length:11},(_,index)=>{const hour=13+index;return '<option value="'+hour+':00">오후 '+(hour-12)+'시</option>'}).join('')
+ // 2026-11-26 지훈: 2시간 고정 3타임(낮 13~15 · 오후 16~18 · 저녁 19~21)
+ const timeOptions=[['13:00','낮 타임 13:00~15:00'],['16:00','오후 타임 16:00~18:00'],['19:00','저녁 타임 19:00~21:00']].map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('')
  // Calendar display uses KST dates; form controls retain the existing ISO value.
  const weekdays=['일','월','화','수','목','금','토']
  const publicHolidays={has:date=>global.WistiaPackages?.isPublicHoliday(date)||false}
