@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-28 InquiryOpen `button_location`이 `wpr-target`으로 덮이던 버그(지훈): 물결 스크립트가 누르는 동안 붙이는 `wpr-*` 임시 클래스는 위치 판정에서 건너뛴다 — `data-inquiry-location` → id → `wpr-` 아닌 첫 클래스 → `data-home-offer-link`(home_offer)/`data-package-inquiry`(home_dock) → `.home-dock` → `section[id]` → inquiry_link. 물결 스크립트의 `wpr-target`은 손 떼는 transition용이라 남겨 둔다. 문의 스크립트 캐시 `?v=20261128-button-location-1`(8개 HTML), 기록은 `tests/button-location-20261128-qa.md`.
+
 - 2026-11-26 수·일 타임 변경(지훈): 수·일은 낮 12~14 · 오후 15~17(12·15시), 목·금·토는 13·16·19시 그대로. slotStarts는 다섯 시작 시각 전체, dayStarts가 요일별로 고른다. slotBlocked의 13~23시 제한 줄은 없앰(offSlot이 대신). JSON-LD 수·일 12~17. 정적 파일은 immutable 1년 캐시라 배포 중에 받은 옛 CSS가 남을 수 있음 → 바꿀 때 ?v= 꼭 새로.
 - 2026-11-26 예약 시간 2시간 고정 3타임(지훈 확정): 낮 13~15 · 오후 16~18 · 저녁 19~21, 하루 최대 3팀. 월·화 휴무, 수·일은 낮·오후(13·16시)만, 목·금·토는 세 타임. booking-availability slotStarts/dayStarts/offSlot(예전 sundayEvening·13~23시 30분 단위 없앰), teamsRemaining은 남은 타임 수. 문의 시간 선택은 시안 3(해·노을·달 아이콘 + 낮/오후/저녁 타임 + 시간 + 예약 가능/선택됨/마감 카드, booking-wizard SLOTS, CSS home-polish 끝). 숨겨진 ‘녹음 1시간 추가’(recordingMinutes 180) 기능 삭제. JSON-LD 영업시간: 수·일 13~18, 목·금·토 13~21. 노션 기존 예약과 겹치는 타임은 그대로 마감.
 

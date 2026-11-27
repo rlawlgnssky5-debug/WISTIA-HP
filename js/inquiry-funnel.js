@@ -78,6 +78,21 @@
     if (activeForm && (!activeForm.isConnected || activeForm.hidden || activeForm.closest('[hidden]'))) abandon("close");
     if (form) view(form);
   }
+  // press-ripple-20261116.js marks the pressed button with wpr-target/wpr-down; those classes say nothing about where the button is.
+  const notRipple = name => !/^wpr-/.test(name);
+  const slug = value => String(value).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 40);
+  function ownLocation(control) {
+    const declared = control.getAttribute("data-inquiry-location");
+    if (declared) return declared;
+    if (control.id) return control.id;
+    const own = [...control.classList].find(notRipple);
+    if (own) return own;
+    // Buttons that carry only a data hook are named after the block they sit in (bottom dock: offer banner and package link).
+    if (control.hasAttribute("data-home-offer-link")) return "home_offer";
+    if (control.hasAttribute("data-package-inquiry")) return "home_dock";
+    if (control.closest(".home-dock")) return "home_dock";
+    return control.closest("section[id]")?.id || "inquiry_link";
+  }
   function locationOf(control) {
     if (control.closest("#mainMenu")) return "menu";
     if (control.matches("#floatingPrice")) return "floating_price";
@@ -86,7 +101,7 @@
     if (control.closest(".hero")) return "home_hero";
     if (control.closest(".consult-choice-form")) return "consult_choice_form";
     if (control.closest(".footer,.solo16j-footer")) return "detail_footer";
-    return (control.id || control.classList[0] || control.closest("section")?.id || "inquiry_link").replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 40);
+    return slug(ownLocation(control));
   }
   // These do not open the inquiry form. They only open the consult-choice dialog.
   function opensChoiceDialogOnly(control) {
