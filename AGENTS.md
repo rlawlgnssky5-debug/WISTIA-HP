@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-28 예약 1단계 하단 바 고정(지훈): `page-materials-20261113-rose-editorial.css`의 `form[data-wf-current-step="1"] .wf-nav{position:relative}` 두 규칙을 지웠다 — 1단계도 2·3단계와 같이 `.wf-nav`가 화면 아래 고정이고, 말풍선(`data-wf-next-hint`)은 바 위에 absolute로 뜬다. 참고: 데스크톱에서도 2·3단계는 레이어 우선순위 때문에 이미 `fixed`다(booking-wizard의 780px `static` 규칙이 이기지 못함). CSS 캐시 `?v=20261128-wfnav-fixed-1`(8개 HTML), 기록은 `tests/wf-nav-step1-fixed-20261128-qa.md`.
+
 - 2026-11-28 InquiryOpen `button_location`이 `wpr-target`으로 덮이던 버그(지훈): 물결 스크립트가 누르는 동안 붙이는 `wpr-*` 임시 클래스는 위치 판정에서 건너뛴다 — `data-inquiry-location` → id → `wpr-` 아닌 첫 클래스 → `data-home-offer-link`(home_offer)/`data-package-inquiry`(home_dock) → `.home-dock` → `section[id]` → inquiry_link. 물결 스크립트의 `wpr-target`은 손 떼는 transition용이라 남겨 둔다. 문의 스크립트 캐시 `?v=20261128-button-location-1`(8개 HTML), 기록은 `tests/button-location-20261128-qa.md`.
 
 - 2026-11-26 수·일 타임 변경(지훈): 수·일은 낮 12~14 · 오후 15~17(12·15시), 목·금·토는 13·16·19시 그대로. slotStarts는 다섯 시작 시각 전체, dayStarts가 요일별로 고른다. slotBlocked의 13~23시 제한 줄은 없앰(offSlot이 대신). JSON-LD 수·일 12~17. 정적 파일은 immutable 1년 캐시라 배포 중에 받은 옛 CSS가 남을 수 있음 → 바꿀 때 ?v= 꼭 새로.
