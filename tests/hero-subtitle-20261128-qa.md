@@ -30,9 +30,13 @@
 → `?v=20261128-hero-sub`으로 8개 HTML(index, contact, events, proposal, event/solo, event/duo,
 info/faq, info/location)에서 올렸다. `index.html`은 `max-age=0, must-revalidate`라 별도 버전 없음.
 
-## 검증
+## 검증 (2026-11-28 01:47~01:50 KST, 실측)
 
-- 변경 diff: 두 파일 각 1줄, 문구만 제거(다른 문자 변화 없음).
-- 배포: main 푸시 → Cloudflare Workers Builds 자동 배포. `gh` 체크런과 라이브 HTML/JS 실측 결과는
-  배포 후 아래에 덧붙인다.
-- 라이브 `/`: HTTP 200, 히어로 부제목 `내 목소리로 미리 준비하는 축가`만 노출, `본식에서는 더 편안하게` 없음.
+- 커밋 `ed14fee` → `git push origin main` 정상(`b15d8df..ed14fee`).
+- `gh` 체크런 `Workers Builds: wistia` = **success** (`2026-11-27T16:48:41Z` = 01:48:41 KST). `wrangler deploy`는 필요 없음(main 푸시 → Cloudflare Workers Builds 자동 배포).
+- 라이브 `/` HTML: `.home-first-lead` = `내 목소리로 미리 준비하는 축가`, `본식에서는 더 편안하게` **0건**.
+- 라이브 `/js/app.js?v=20261128-hero-sub` sha256 = 커밋본과 **동일**(`df45f3b7…`), `heroCopy`의 `.ed-hero-lead` = `내 목소리로 미리 준비하는 축가`.
+- HTML 8개(`/`, `/proposal`, `/event/solo`, `/event/duo`, `/contact`, `/events`, `/info/faq`, `/info/location`) 모두 **200 OK** + `js/app.js?v=20261128-hero-sub` 참조. `/api/health` 200(`status: ok`), apex `wistiastudio.com` → www **308** 정상.
+- 실브라우저 로드 후 DOM 실측: `#app`의 `.ed-hero-lead` = `내 목소리로 미리 준비하는 축가`(구 문구 없음), 첫 페인트용 `[data-home-first-paint]`는 하이드레이션 후 사라짐 → 화면에 보이는 히어로가 app.js 문구임을 재확인.
+- 캡처: `handoffs/✏️-wistia-hp-히어로-부제목-문구-수정-및-배포/evidence/hero-after-20261128-014917.png`(팝업 닫은 뒤).
+- 히어로는 1인/2인 토글이 같은 `heroCopy`를 쓰므로 듀엣 보기에서도 같은 문구다. 반면 POINT 02 제목 등 상세 섹션의 `본식에서는 더 편안하게`, `본식에서는 더 안정적으로`는 그대로 남아 있다(의도).
