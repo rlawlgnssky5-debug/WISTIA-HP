@@ -1,5 +1,7 @@
 # 위스티아 홈페이지 작업 지침
 
+- 2026-11-28 메인 히어로 부제목에서 `, 본식에서는 더 편안하게` 삭제(지훈): `내 목소리로 미리 준비하는 축가`만 남긴다. 히어로 문구는 두 곳에 있었고 **둘 다** 고쳤다 — 첫 페인트용 정적 마크업 `index.html`의 `.home-first-lead`, JS 렌더 후 실제 화면인 `js/app.js` `mobileArSoloDetail`의 `heroCopy`(`.ed-hero-lead`). 홈은 `renderDetail("solo")` → `arCommerceDetail` → `mobileArSoloDetail`로 그려져 JS 쪽 문구가 최종 화면이다. `js/*`는 1년 immutable이라 app.js 캐시를 `?v=20261128-hero-sub`으로 8개 HTML에서 올렸다. POINT 02 제목(`본식에서는 더 편안하게<br>...`, 듀엣 상세)과 `본식에서는 더 안정적으로` 문구는 히어로가 아니라서 그대로다. 기록은 `tests/hero-subtitle-20261128-qa.md`.
+
 - 2026-11-28 예약 1단계 하단 바 고정(지훈): `page-materials-20261113-rose-editorial.css`의 `form[data-wf-current-step="1"] .wf-nav{position:relative}` 두 규칙을 지웠다 — 1단계도 2·3단계와 같이 `.wf-nav`가 화면 아래 고정이고, 말풍선(`data-wf-next-hint`)은 바 위에 absolute로 뜬다. 참고: 데스크톱에서도 2·3단계는 레이어 우선순위 때문에 이미 `fixed`다(booking-wizard의 780px `static` 규칙이 이기지 못함). CSS 캐시 `?v=20261128-wfnav-fixed-1`(8개 HTML), 기록은 `tests/wf-nav-step1-fixed-20261128-qa.md`.
 
 - 2026-11-28 InquiryOpen `button_location`이 `wpr-target`으로 덮이던 버그(지훈): 물결 스크립트가 누르는 동안 붙이는 `wpr-*` 임시 클래스는 위치 판정에서 건너뛴다 — `data-inquiry-location` → id → `wpr-` 아닌 첫 클래스 → `data-home-offer-link`(home_offer)/`data-package-inquiry`(home_dock) → `.home-dock` → `section[id]` → inquiry_link. 물결 스크립트의 `wpr-target`은 손 떼는 transition용이라 남겨 둔다. 문의 스크립트 캐시 `?v=20261128-button-location-1`(8개 HTML), 기록은 `tests/button-location-20261128-qa.md`.
